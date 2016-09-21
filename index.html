@@ -32,6 +32,7 @@
 </p>
 
 <script>
+$(function() {
   var ROUTES;
 
   function fmtRoute(r) {
@@ -135,7 +136,7 @@
       html: fmtRuns(data.sched)
     }).appendTo("#schedule");
   });
-
+});
 </script>
 
 <script>
