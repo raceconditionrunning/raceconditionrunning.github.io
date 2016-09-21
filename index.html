@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Race Condition Running</title>
   <link rel='stylesheet' type='text/css' href='style.css'>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
 
@@ -18,6 +19,32 @@
 <h2>Schedule</h2>
 
 <img src='img/16au-schedule.png' width='600'>
+
+<h2>Routes</h2>
+
+<div id='routes'></div>
+
+<script>
+  function fmtRoute(r) {
+    return "<a name='" + r.uid + "'>"
+         + "<a target='_blank' href='" + r.map + "'>"
+         + "<span class='fll'>" + r.name + "</span>"
+         + "<span class='flr'>" + r.dist + "</span>"
+         + "</a></a>";
+  }
+
+  $.getJSON("routedb.json", function(db) {
+    var rs = []
+    $.each(db.routes, function(i, r) {
+      rs.push("<li class='route' id='" + r.uid + "'>"
+              + fmtRoute(r) + "</li>");
+    });
+    $("<ul/>", {
+      "id": "route-list",
+      html: rs.join("\n")
+    }).appendTo("#routes");
+  });
+</script>
 
 </body>
 </html>

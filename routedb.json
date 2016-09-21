@@ -1,0 +1,8 @@
+{ "routes" :
+  [ { "uid"  : "green-lake-loop"
+    , "name" : "Green Lake Loop"
+    , "dist" : 2.75
+    , "map"  : "http://www.gmap-pedometer.com/?r=6862852"
+    }
+  ]
+}

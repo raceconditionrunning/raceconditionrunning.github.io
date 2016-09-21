@@ -10,3 +10,21 @@ a {
 a:hover {
   text-decoration: underline;
 }
+#route-list {
+  width: 200px;
+  list-style: none;
+  padding-left: 0;
+  margin-left: 20px;
+}
+#route-list a {
+  color: #18860F;
+}
+#route-list a:visited {
+  color: #5CAF55;
+}
+.fll {
+  float: left;
+}
+.flr {
+  float: right;
+}
