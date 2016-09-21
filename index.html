@@ -17,6 +17,8 @@
 <div style='clear: both;'></div>
 
 <h2>Schedule</h2>
+<p>Meet at the run start point. Brunch nearby after.</p>
+<div id='schedule'></div>
 
 <img src='img/16au-schedule.png' width='600'>
 
@@ -25,6 +27,8 @@
 <div id='routes'></div>
 
 <script>
+  var ROUTES;
+
   function fmtRoute(r) {
     var d = (Math.round(r.dist * 100) / 100).toFixed(2);
     return "<a name='" + r.uid + "'>"
@@ -35,16 +39,82 @@
   }
 
   $.getJSON("routedb.json", function(db) {
+    ROUTES = db.routes;
+
     var rs = []
     $.each(db.routes, function(i, r) {
-      rs.push("<li id='" + r.uid + "'>"
-              + fmtRoute(r) + "</li>");
+      rs.push( "<li id='" + r.uid + "'>"
+             + fmtRoute(r) + "</li>");
     });
+
     $("<ul/>", {
       "id": "route-list",
-      html: rs.join("\n")
+      html: rs.join("")
     }).appendTo("#routes");
   });
+
+  function lkup(uid) {
+    for(var i = 0; i < ROUTES.length; i++) {
+      var r = ROUTES[i];
+      if(r.uid == uid) {
+        return r;
+      }
+    }
+    console.log("lkup: could not find " + uid);
+  }
+
+  var monthName =
+    [ "Jan", "Feb", "Mar", "Apr", "May", "Jun"
+    , "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+
+  function fmtRun(run) {
+    var plan = run.plan;
+
+    var rows = "";
+    for(var i = 0; i < plan.length; i++) {
+      rows += "<tr class='run'>";
+
+      rows += "<td class='date'>";
+      if(i == 0) {
+        var d = new Date(run.date);
+        var M = monthName[d.getMonth()];
+        var D = d.getDate() + 1;
+        rows += M + " " + D;
+      }
+      rows += "</td>";
+
+      rows += "<td class='time'>";
+      rows += plan[i].time;
+      rows += "</td>";
+
+      var route = lkup(plan[i].route);
+      rows += "<td class='route'>"
+      rows += "<a href='" + route.map + "'>" + route.name + "</a>";
+      rows += "&nbsp; (" + route.dist + ")";
+      rows += "</td>";
+
+      rows += "</tr>";
+    }
+    return rows;
+  }
+
+  function fmtRuns(runs) {
+    var rows = "";
+    for(var i = 0; i < runs.length; i++) {
+      rows += fmtRun(runs[i]);
+      rows += "<tr class='spacer'></tr>";
+    }
+    return rows;
+  }
+
+  $.getJSON("sched.json", function(data) {
+    $("<table/>", {
+      "id": "runs",
+      html: fmtRuns(data.sched)
+    }).appendTo("#schedule");
+  });
+
 </script>
 
 </body>

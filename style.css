@@ -19,15 +19,21 @@ a:hover {
 #route-list li {
   padding-bottom: 25px;
 }
-#route-list a {
-  color: #18860F;
-}
-#route-list a:visited {
-  color: #5CAF55;
-}
 .fll {
   float: left;
 }
 .flr {
   float: right;
+}
+#runs {
+  margin-left: 20px;
+}
+.date {
+  width: 65px;
+}
+.time {
+  width: 35px;
+}
+.spacer {
+  height: 10px;
 }

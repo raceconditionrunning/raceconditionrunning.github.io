@@ -1,0 +1,27 @@
+{ "sched" :
+  [ { "date" : "2016-09-11"
+    , "plan" :
+      [ { "time"  : "9:00"
+        , "route" : "ob-gas-works-cse"
+        }
+      ]
+    }
+  , { "date" : "2016-09-17"
+    , "plan" :
+      [ { "time"  : "9:00"
+        , "route" : "ob-madrona-park-sailing-club"
+        }
+      ]
+    }
+  , { "date" : "2016-09-24"
+    , "plan" :
+      [ { "time"  : "9:00"
+        , "route" : "green-lake-loop"
+        }
+      , { "time"  : "9:30"
+        , "route" : "green-lake-loop"
+        }
+      ]
+    }
+  ]
+}
