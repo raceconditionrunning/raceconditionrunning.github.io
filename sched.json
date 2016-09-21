@@ -67,5 +67,46 @@
         }
       ]
     }
+  , { "date" : "2016-10-29"
+    , "plan" :
+      [ { "time"  : "9:00"
+        , "route" : "ob-madison-mt-baker-beach"
+        }
+      , { "time"  : "10:10"
+        , "route" : "ob-madison-interlaken"
+        }
+      ]
+    }
+  , { "date" : "2016-11-05"
+    , "plan" :
+      [ { "time"  : "9:00"
+        , "route" : "ob-gas-works-green-lake-loop"
+        }
+      , { "time"  : "10:10"
+        , "route" : "gas-works-fremont-cut-loop"
+        }
+      ]
+    }
+  , { "date" : "2016-11-12"
+    , "plan" :
+      [ { "time"  : "9:00"
+        , "route" : "pp-discovery-alki"
+        }
+      ]
+    }
+  , { "date" : "2016-11-19"
+    , "plan" :
+      [ { "time"  : "9:00"
+        , "route" : "lake-union-loop"
+        }
+      ]
+    }
+  , { "date" : "2016-11-27"
+    , "plan" :
+      [ { "time"  : "9:00"
+        , "route" : "seattle-half-16"
+        }
+      ]
+    }
   ]
 }

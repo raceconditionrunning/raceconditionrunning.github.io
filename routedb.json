@@ -19,6 +19,11 @@
     , "dist" : 3.45
     , "map"  : "http://www.gmap-pedometer.com/?r=6849842"
     }
+  , { "uid"  : "ob-madison-interlaken"
+    , "name" : "OB: Madison, Interlaken Park"
+    , "dist" : 3.85
+    , "map"  : "http://www.gmap-pedometer.com/?r=6957914"
+    }
   , { "uid"  : "ob-gas-works-cse"
     , "name" : "OB: Gas Works, CSE"
     , "dist" : 4
@@ -44,15 +49,45 @@
     , "dist" : 5.12
     , "map"  : "http://www.gmap-pedometer.com/?r=6957890"
     }
+  , { "uid"  : "gas-works-fremont-cut-loop"
+    , "name" : "Gas Works, Fremont Cut Loop"
+    , "dist" : 5.51
+    , "map"  : "http://www.gmap-pedometer.com/?r=6957927"
+    }
   , { "uid"  : "ob-madrona-park-sailing-club"
     , "name" : "OB: Madrona Park, Sailing Club"
     , "dist" : 6
     , "map"  : "http://www.gmap-pedometer.com/?r=6957722"
     }
+  , { "uid"  : "lake-union-loop"
+    , "name" : "Lake Union Loop"
+    , "dist" : 6.26
+    , "map"  : "http://www.gmap-pedometer.com/?r=6862845"
+    }
+  , { "uid"  : "ob-gas-works-green-lake-loop"
+    , "name" : "OB: Gas Works, Green Lake Loop"
+    , "dist" : 6.99
+    , "map"  : "http://www.gmap-pedometer.com/?r=6957923"
+    }
+  , { "uid"  : "ob-madison-mt-baker-beach"
+    , "name" : "OB: Madison, Mt. Baker Beach"
+    , "dist" : 7.19
+    , "map"  : "http://www.gmap-pedometer.com/?r=6957912"
+    }
   , { "uid"  : "ob-miller-park-mercer-island"
     , "name" : "OB: Miller Park, Mercer Island"
     , "dist" : 9.87
     , "map"  : "http://www.gmap-pedometer.com/?r=6957901"
+    }
+  , { "uid"  : "seattle-half-16"
+    , "name" : "Seattle Half 2016"
+    , "dist" : 13.2
+    , "map"  : "http://www.seattlemarathon.org/amica-insurance-seattle-marathon/"
+    }
+  , { "uid"  : "pp-discovery-alki"
+    , "name" : "PP: Discovery Park to Alki Beach"
+    , "dist" : 13.54
+    , "map"  : "http://www.gmap-pedometer.com/?r=6875370"
     }
   ]
 }
