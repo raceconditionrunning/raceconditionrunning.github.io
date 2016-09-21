@@ -26,17 +26,18 @@
 
 <script>
   function fmtRoute(r) {
+    var d = (Math.round(r.dist * 100) / 100).toFixed(2);
     return "<a name='" + r.uid + "'>"
          + "<a target='_blank' href='" + r.map + "'>"
          + "<span class='fll'>" + r.name + "</span>"
-         + "<span class='flr'>" + r.dist + "</span>"
+         + "<span class='flr'>" + d + "</span>"
          + "</a></a>";
   }
 
   $.getJSON("routedb.json", function(db) {
     var rs = []
     $.each(db.routes, function(i, r) {
-      rs.push("<li class='route' id='" + r.uid + "'>"
+      rs.push("<li id='" + r.uid + "'>"
               + fmtRoute(r) + "</li>");
     });
     $("<ul/>", {

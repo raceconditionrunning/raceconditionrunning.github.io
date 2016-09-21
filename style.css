@@ -11,10 +11,13 @@ a:hover {
   text-decoration: underline;
 }
 #route-list {
-  width: 200px;
+  width: 300px;
   list-style: none;
   padding-left: 0;
   margin-left: 20px;
+}
+#route-list li {
+  padding-bottom: 25px;
 }
 #route-list a {
   color: #18860F;

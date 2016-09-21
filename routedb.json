@@ -4,5 +4,15 @@
     , "dist" : 2.75
     , "map"  : "http://www.gmap-pedometer.com/?r=6862852"
     }
+  , { "uid"  : "ob-gas-works-cse"
+    , "name" : "OB: Gas Works, CSE"
+    , "dist" : 4
+    , "map"  : "http://www.gmap-pedometer.com/?r=6957721"
+    }
+  , { "uid"  : "ob-madrona-park-sailing-club"
+    , "name" : "OB: Madrona Park, Sailing Club"
+    , "dist" : 6
+    , "map"  : "http://www.gmap-pedometer.com/?r=6957722"
+    }
   ]
 }
