@@ -37,3 +37,9 @@ a:hover {
 .spacer {
   height: 10px;
 }
+.past, .past a, .past a:visited {
+  color: #ccc;
+}
+.next, .next a, .next a:visited {
+  font-weight: bold;
+}

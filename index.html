@@ -23,8 +23,6 @@
 <p>Meet at the run start point. Chit chat at conversation pace. Brunch nearby after.</p>
 <div id='schedule'></div>
 
-<img src='img/16au-schedule.png' width='600'>
-
 <h2>Routes</h2>
 
 <div id='routes'></div>
@@ -75,18 +73,30 @@
     , "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];
 
+  /* bad use of globals :( */
+  var today = new Date();
+  var afterNext = false;
+
   function fmtRun(run) {
+    var date = new Date(run.date);
     var plan = run.plan;
 
     var rows = "";
     for(var i = 0; i < plan.length; i++) {
-      rows += "<tr class='run'>";
+      if(date < today) {
+        rows += "<tr class='run past'>";
+      } else {
+        if(!afterNext) {
+          rows += "<tr class='run next'>";
+        } else {
+          rows += "<tr class='run'>";
+        }
+      }
 
       rows += "<td class='date'>";
       if(i == 0) {
-        var d = new Date(run.date);
-        var M = monthName[d.getMonth()];
-        var D = d.getDate() + 1;
+        var M = monthName[date.getMonth()];
+        var D = date.getDate() + 1;
         rows += M + " " + D;
       }
       rows += "</td>";
@@ -102,6 +112,10 @@
       rows += "</td>";
 
       rows += "</tr>";
+    }
+
+    if(date > today && !afterNext) {
+      afterNext = true;
     }
     return rows;
   }
