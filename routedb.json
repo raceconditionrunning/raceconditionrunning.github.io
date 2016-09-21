@@ -4,15 +4,55 @@
     , "dist" : 2.75
     , "map"  : "http://www.gmap-pedometer.com/?r=6862852"
     }
+  , { "uid"  : "dawg-dash-16"
+    , "name" : "2016 Seattle Dawg Dash 5k/10k"
+    , "dist" : 3.2
+    , "map"  : "http://depts.washington.edu/alumni/blogs/dawgdash/races/seattle/"
+    }
+  , { "uid"  : "portage-bay-loop"
+    , "name" : "Portage Bay Loop"
+    , "dist" : 3.23
+    , "map"  : "http://www.gmap-pedometer.com/?r=6849824"
+    }
+  , { "uid"  : "salmon-bay-loop"
+    , "name" : "Salmon Bay Loop"
+    , "dist" : 3.45
+    , "map"  : "http://www.gmap-pedometer.com/?r=6849842"
+    }
   , { "uid"  : "ob-gas-works-cse"
     , "name" : "OB: Gas Works, CSE"
     , "dist" : 4
     , "map"  : "http://www.gmap-pedometer.com/?r=6957721"
     }
+  , { "uid"  : "ob-cse-foster-island"
+    , "name" : "OB: CSE, Foster Island"
+    , "dist" : 4.14
+    , "map"  : "http://www.gmap-pedometer.com/?r=6849833"
+    }
+  , { "uid"  : "ob-sculpture-park-4"
+    , "name" : "OB: Olympic Sculpture Park"
+    , "dist" : 4.26
+    , "map"  : "http://www.gmap-pedometer.com/?r=6849837"
+    }
+  , { "uid"  : "ob-locks-gg"
+    , "name" : "OB: Locks, Golden Gardens"
+    , "dist" : 4.53
+    , "map"  : "http://www.gmap-pedometer.com/?r=6957881"
+    }
+  , { "uid"  : "lower-queen-anne-loop"
+    , "name" : "Lower Queen Anne Loop"
+    , "dist" : 5.12
+    , "map"  : "http://www.gmap-pedometer.com/?r=6957890"
+    }
   , { "uid"  : "ob-madrona-park-sailing-club"
     , "name" : "OB: Madrona Park, Sailing Club"
     , "dist" : 6
     , "map"  : "http://www.gmap-pedometer.com/?r=6957722"
+    }
+  , { "uid"  : "ob-miller-park-mercer-island"
+    , "name" : "OB: Miller Park, Mercer Island"
+    , "dist" : 9.87
+    , "map"  : "http://www.gmap-pedometer.com/?r=6957901"
     }
   ]
 }

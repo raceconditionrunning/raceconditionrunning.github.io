@@ -23,5 +23,49 @@
         }
       ]
     }
+  , { "date" : "2016-10-01"
+    , "plan" :
+      [ { "time"  : "9:00"
+        , "route" : "ob-cse-foster-island"
+        }
+      , { "time"  : "9:40"
+        , "route" : "portage-bay-loop"
+        }
+      ]
+    }
+  , { "date" : "2016-10-08"
+    , "plan" :
+      [ { "time"  : "9:00"
+        , "route" : "ob-locks-gg"
+        }
+      , { "time"  : "9:45"
+        , "route" : "salmon-bay-loop"
+        }
+      ]
+    }
+  , { "date" : "2016-10-15"
+    , "plan" :
+      [ { "time"  : "9:00"
+        , "route" : "lower-queen-anne-loop"
+        }
+      , { "time"  : "9:50"
+        , "route" : "ob-sculpture-park-4"
+        }
+      ]
+    }
+  , { "date" : "2016-10-22"
+    , "plan" :
+      [ { "time"  : "9:00"
+        , "route" : "ob-miller-park-mercer-island"
+        }
+      ]
+    }
+  , { "date" : "2016-10-23"
+    , "plan" :
+      [ { "time"  : "9:00"
+        , "route" : "dawg-dash-16"
+        }
+      ]
+    }
   ]
 }
