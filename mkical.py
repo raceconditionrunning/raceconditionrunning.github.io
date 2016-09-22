@@ -49,7 +49,7 @@ def main():
             e.add('summary', vText("%s (%s)" % (name, dist)))
             e.add('dtstart', vDatetime(start))
             e.add('dtend', vDatetime(end))
-            e.add('dstamp', vDatetime(now))
+            e.add('dtstamp', vDatetime(now))
             e.add('description', vUri(gmap))
             e.add('uid', vText(uid))
             cal.add_component(e)
