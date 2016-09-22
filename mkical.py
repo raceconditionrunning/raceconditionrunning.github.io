@@ -42,13 +42,14 @@ def main():
                                      , tzinfo=pytz.timezone('America/Los_Angeles')
                                      )
             end = start + datetime.timedelta(0, 10 * 60 * round(dist))
-
+            now = datetime.datetime.now(pytz.timezone('America/Los_Angeles'))
             uid = (str(start) + '@raceconditionrunning.com').translate(None, ' :-')
 
             e = Event()
             e.add('summary', vText("%s (%s)" % (name, dist)))
             e.add('dtstart', vDatetime(start))
             e.add('dtend', vDatetime(end))
+            e.add('dstamp', vDatetime(now))
             e.add('description', vUri(gmap))
             e.add('uid', vText(uid))
             cal.add_component(e)
