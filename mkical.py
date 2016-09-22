@@ -42,7 +42,7 @@ def main():
                                      , tzinfo=pytz.timezone('America/Los_Angeles')
                                      )
             end = start + datetime.timedelta(0, 10 * 60 * round(dist))
-            now = datetime.datetime.now(pytz.timezone('America/Los_Angeles'))
+            now = datetime.datetime.now(pytz.utc)
             uid = (str(start) + '@raceconditionrunning.com').translate(None, ' :-')
 
             e = Event()
