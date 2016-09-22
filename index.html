@@ -21,11 +21,15 @@
 
 <h2>Schedule</h2>
 <p>Meet at the run start point. Chit chat at conversation pace. Brunch nearby after.</p>
-<div id='schedule'></div>
+<div id='schedule'>
+  <table id='runs'></table>
+</div>
 
 <h2>Routes</h2>
 
-<div id='routes'></div>
+<div id='routes'>
+  <ul id='route-list'></ul>
+</div>
 
 <p style='padding-top: 20px;'>
   <img src='img/race-condition-running.jpg' width='600px'>
@@ -34,30 +38,7 @@
 <script>
 $(function() {
   var ROUTES;
-
-  function fmtRoute(r) {
-    var d = (Math.round(r.dist * 100) / 100).toFixed(2);
-    return "<a name='" + r.uid + "'>"
-         + "<a target='_blank' href='" + r.map + "'>"
-         + "<span class='fll'>" + r.name + "</span>"
-         + "<span class='flr'>" + d + "</span>"
-         + "</a></a>";
-  }
-
-  $.getJSON("routedb.json", function(db) {
-    ROUTES = db.routes;
-
-    var rs = []
-    $.each(db.routes, function(i, r) {
-      rs.push( "<li id='" + r.uid + "'>"
-             + fmtRoute(r) + "</li>");
-    });
-
-    $("<ul/>", {
-      "id": "route-list",
-      html: rs.join("")
-    }).appendTo("#routes");
-  });
+  var SCHED;
 
   function lkup(uid) {
     for(var i = 0; i < ROUTES.length; i++) {
@@ -74,67 +55,93 @@ $(function() {
     , "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];
 
-  /* bad use of globals :( */
-  var today = new Date();
-  var afterNext = false;
 
-  function fmtRun(run) {
-    var date = new Date(run.date);
-    var plan = run.plan;
+  function main() {
+    dispRoutes();
+    dispSched();
+  }
 
-    var rows = "";
-    for(var i = 0; i < plan.length; i++) {
-      if(date < today) {
-        rows += "<tr class='run past'>";
-      } else {
+  function dispRoutes() {
+    for(var i = 0; i < ROUTES.length; i++) {
+      $("<li/>", {
+        html: fmtRoute(ROUTES[i])
+      }).appendTo("#route-list");
+    }
+  }
+
+  function fmtRoute(r) {
+    var d = (Math.round(r.dist * 100) / 100).toFixed(2);
+    return "<a target='_blank' href='" + r.map + "'>"
+         + "<span class='fll'>" + r.name + "</span>"
+         + "<span class='flr'>" + d + "</span>"
+         + "</a>";
+  }
+
+  function dispSched() {
+    var today = new Date();
+    var afterNext = false;
+
+    var entries = [];
+    for(var i = 0; i < SCHED.length; i++) {
+      var run = SCHED[i];
+      var date = new Date(run.date);
+
+      var age = "past";
+      if(today < date) {
         if(!afterNext) {
-          rows += "<tr class='run next'>";
+          age = "next";
+          afterNext = true;
         } else {
-          rows += "<tr class='run'>";
+          age = "future";
         }
       }
 
-      rows += "<td class='date'>";
-      if(i == 0) {
-        var M = monthName[date.getMonth()];
-        var D = date.getDate() + 1;
-        rows += M + " " + D;
+      for(var j = 0; j < run.plan.length; j++) {
+        var phase = run.plan[j];
+        var route = lkup(phase.route);
+        var entry = { date: ""
+                    , time: phase.time
+                    , name: route.name
+                    , map:  route.map
+                    , dist: route.dist
+                    , age:  age
+                    };
+        if(j == 0) {
+          var M = monthName[date.getMonth()];
+          var D = date.getDate() + 1;
+          entry.date = M + " " + D;
+        }
+        entries.push(entry);
       }
-      rows += "</td>";
-
-      rows += "<td class='time'>";
-      rows += plan[i].time;
-      rows += "</td>";
-
-      var route = lkup(plan[i].route);
-      rows += "<td class='route'>";
-      rows += "<a target='_blank' href='" + route.map + "'>" + route.name + "</a>";
-      rows += "&nbsp; (" + route.dist + ")";
-      rows += "</td>";
-
-      rows += "</tr>";
+      entries.push(null);
     }
 
-    if(date > today && !afterNext) {
-      afterNext = true;
+    for(var i = 0; i < entries.length; i++) {
+      var e = entries[i];
+      var row = "";
+      if(e == null) {
+        row = "<tr class='spacer'></tr>";
+      } else {
+        row = "<tr class='" + e.age + "'>"
+            + "<td class='date'>" + e.date + "</td>"
+            + "<td class='time'>" + e.time + "</td>"
+            + "<td>"
+            +    "<a target='_blank' href='" + e.map + "'>"
+            +    e.name +  "</a>"
+            +    "&nbsp; (" + e.dist + ")"
+            + "</td>"
+            + "</tr>";
+      }
+      $("#runs").append(row);
     }
-    return rows;
   }
 
-  function fmtRuns(runs) {
-    var rows = "";
-    for(var i = 0; i < runs.length; i++) {
-      rows += fmtRun(runs[i]);
-      rows += "<tr class='spacer'></tr>";
-    }
-    return rows;
-  }
-
-  $.getJSON("sched.json", function(data) {
-    $("<table/>", {
-      "id": "runs",
-      html: fmtRuns(data.sched)
-    }).appendTo("#schedule");
+  $.getJSON("routedb.json", function(data) {
+    ROUTES = data.routes;
+    $.getJSON("sched.json", function(data) {
+      SCHED = data.sched;
+      main();
+    })
   });
 });
 </script>
