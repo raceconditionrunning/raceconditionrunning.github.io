@@ -17,18 +17,19 @@ def lkup(uid):
 
 def main():
     cal = Calendar()
-    cal.add('prodid', vText('rcc.ics'))
     cal.add('version', vText('2.0'))
-    cal.add('X-LIC-LOCATION', vText('America/Los_Angeles'))
-    cal.add('X-WR-$CALNAME', vText('Race Condition Running'))
+    cal.add('prodid', vText('-//Race Condition Running//NONSGML Run Calendar//EN'))
+    cal.add('X-WR-CALNAME', vText('Race Condition Running'))
+    cal.add('X-WR-CALDESC', vText('Race Condition Running'))
     cal.add('X-WR-TIMEZONE', vText('America/Los_Angeles'))
+    cal.add('X-PUBLISHED-TTL', vText('PT12H'))
 
     for run in sched:
         date = datetime.datetime.strptime(run["date"], "%Y-%m-%d")
         for phase in run["plan"]:
             time = datetime.datetime.strptime(phase["time"], "%H:%M")
             route = lkup(phase["route"])
-            name = route["name"].replace(":", "")
+            name = route["name"]
             gmap = route["map"]
             dist = route["dist"]
 
@@ -49,8 +50,8 @@ def main():
             e.add('summary', vText("%s (%s)" % (name, dist)))
             e.add('dtstart', vDatetime(start))
             e.add('dtend', vDatetime(end))
-            e.add('dtstamp', vDatetime(now))
             e.add('description', vUri(gmap))
+            e.add('dtstamp', vDatetime(now))
             e.add('uid', vText(uid))
             cal.add_component(e)
 
