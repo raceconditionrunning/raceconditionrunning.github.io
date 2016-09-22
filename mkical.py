@@ -43,11 +43,14 @@ def main():
                                      )
             end = start + datetime.timedelta(0, 10 * 60 * round(dist))
 
+            uid = (str(start) + '@raceconditionrunning.com').translate(None, ' :-')
+
             e = Event()
             e.add('summary', vText("%s (%s)" % (name, dist)))
             e.add('dtstart', vDatetime(start))
             e.add('dtend', vDatetime(end))
             e.add('description', vUri(gmap))
+            e.add('uid', vText(uid))
             cal.add_component(e)
 
     with open('rcc.ics', 'w') as f:
