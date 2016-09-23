@@ -4,6 +4,8 @@ from datetime import datetime, timedelta
 import pytz
 
 
+# TODO ical validator complains about this
+# possibly due to method:publish ?
 rivd = 'refresh-interval;value=duration'
 
 calHeader = \
@@ -66,10 +68,8 @@ def main():
                 end = dtstart(date, phases[i + 1])
             else:
                 end = start + timedelta(0, 10 * 60 * round(dist))
-
             uid = str(start) + '@raceconditionrunning.com'
             uid = uid.translate(None, ' :-,;')
-
             things.append({ 'summary'     : '%s (%s)' % (name, dist)
                           , 'dtstart'     : start
                           , 'dtend'       : end
@@ -91,6 +91,25 @@ def main():
                               , 'dtstamp'     : now
                               , 'uid'         : buid
                               })
+
+    # add wednesday runs
+    d0 = datetime.strptime(sched[0]['date'], '%Y-%m-%d')
+    d1 = datetime.strptime(sched[-1]['date'], '%Y-%m-%d')
+    delta = d1 - d0
+    for i in range(delta.days):
+        d = d0 + timedelta(days=i)
+        if d.weekday() == 2:
+            start = dtstart(d, {'time' : '5:30'})
+            end = start + timedelta(0, 60 * 60)
+            uid = str(start) + '@raceconditionrunning.com'
+            uid = uid.translate(None, ' :-,;')
+            things.append({ 'summary'     : 'Burke Run'
+                          , 'dtstart'     : start
+                          , 'dtend'       : end
+                          , 'description' : 'Meet in CSE Atrium'
+                          , 'dtstamp'     : now
+                          , 'uid'         : uid
+                          })
 
     cal = Calendar()
     for (k, v) in calHeader:
