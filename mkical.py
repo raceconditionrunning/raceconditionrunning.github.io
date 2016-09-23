@@ -3,20 +3,23 @@ from icalendar import Calendar, Event, vText, vDatetime, vUri
 from datetime import datetime, timedelta
 import pytz
 
+
+rivd = 'refresh-interval;value=duration'
+
 calHeader = \
-    [ ('version'          , '2.0')
-    , ('prodid'           , '-//Race Condition Running//NONSGML Race Condition Running//EN')
-    , ('url'              , 'http://raceconditionrunning.com/rcc.ics')
-    , ('name'             , 'Race Condition Running')
-    , ('x-wr-calname'     , 'Race Condition Running')
-    , ('description'      , 'Race Condition Running')
-    , ('x-wr-caldesc'     , 'Race Condition Running')
-    , ('timezone-id'      , 'America/Los_Angeles')
-    , ('x-wr-timezone'    , 'America/Los_Angeles')
-    , ('refresh-interval' , 'PT12H')
-    , ('x-published-ttl'  , 'PT12H')
-    , ('calscale'         , 'GREGORIAN')
-    , ('method'           , 'PUBLISH')
+    [ ('version'         , '2.0')
+    , ('prodid'          , '-//Race Condition Running//NONSGML Race Condition Running//EN')
+    , ('url'             , 'http://raceconditionrunning.com/rcc.ics')
+    , ('name'            , 'Race Condition Running')
+    , ('x-wr-calname'    , 'Race Condition Running')
+    , ('description'     , 'Race Condition Running')
+    , ('x-wr-caldesc'    , 'Race Condition Running')
+    , ('timezone-id'     , 'America/Los_Angeles')
+    , ('x-wr-timezone'   , 'America/Los_Angeles')
+    , (rivd              , 'PT12H')
+    , ('x-published-ttl' , 'PT12H')
+    , ('calscale'        , 'GREGORIAN')
+    , ('method'          , 'PUBLISH')
     ]
 
 def main():
@@ -84,7 +87,7 @@ def main():
                 things.append({ 'summary'     : 'Brunch'
                               , 'dtstart'     : bstart
                               , 'dtend'       : bend
-                              , 'description' : 'Brunch'
+                              , 'description' : 'Post-run brunch!'
                               , 'dtstamp'     : now
                               , 'uid'         : buid
                               })
