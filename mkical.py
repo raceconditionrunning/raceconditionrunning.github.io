@@ -1,59 +1,111 @@
 import json
 from icalendar import Calendar, Event, vText, vDatetime, vUri
-import datetime
+from datetime import datetime, timedelta
 import pytz
-import math
 
-with open('routedb.json') as f:
-    routes = json.load(f)["routes"]
-
-with open('sched.json') as f:
-    sched = json.load(f)["sched"]
-
-def lkup(uid):
-    for r in routes:
-        if r["uid"] == uid:
-            return r
+calHeader = \
+    [ ('version'          , '2.0')
+    , ('prodid'           , '-//Race Condition Running//NONSGML Race Condition Running//EN')
+    , ('url'              , 'http://raceconditionrunning.com/rcc.ics')
+    , ('name'             , 'Race Condition Running')
+    , ('x-wr-calname'     , 'Race Condition Running')
+    , ('description'      , 'Race Condition Running')
+    , ('x-wr-caldesc'     , 'Race Condition Running')
+    , ('timezone-id'      , 'America/Los_Angeles')
+    , ('x-wr-timezone'    , 'America/Los_Angeles')
+    , ('refresh-interval' , 'PT12H')
+    , ('x-published-ttl'  , 'PT12H')
+    , ('calscale'         , 'GREGORIAN')
+    , ('method'           , 'PUBLISH')
+    ]
 
 def main():
-    cal = Calendar()
-    cal.add('version', vText('2.0'))
-    cal.add('prodid', vText('-//Race Condition Running//NONSGML Run Calendar//EN'))
-    cal.add('X-WR-CALNAME', vText('Race Condition Running'))
-    cal.add('X-WR-CALDESC', vText('Race Condition Running'))
-    cal.add('X-WR-TIMEZONE', vText('America/Los_Angeles'))
-    cal.add('X-PUBLISHED-TTL', vText('PT12H'))
+    with open('routedb.json') as f:
+        routes = json.load(f)['routes']
 
+    with open('sched.json') as f:
+        sched = json.load(f)['sched']
+
+    def lkup(uid):
+        for r in routes:
+            if r['uid'] == uid:
+                return r
+
+    def dtstart(date, phase):
+      time = datetime.strptime(phase['time'], '%H:%M')
+      return datetime( date.year
+                     , date.month
+                     , date.day
+                     , time.hour
+                     , time.minute
+                     , 0
+                     , 0
+                     , tzinfo=pytz.timezone('America/Los_Angeles')
+                     )
+
+    # ics timestamps must be utc
+    now = datetime.now(pytz.utc)
+
+    # NOTE: assumes events back-to-back on single day
+    things = []
     for run in sched:
-        date = datetime.datetime.strptime(run["date"], "%Y-%m-%d")
-        for phase in run["plan"]:
-            time = datetime.datetime.strptime(phase["time"], "%H:%M")
-            route = lkup(phase["route"])
-            name = route["name"]
-            gmap = route["map"]
-            dist = route["dist"]
+        date = datetime.strptime(run['date'], '%Y-%m-%d')
+        phases = run['plan']
+        for i in range(len(phases)):
+            phase = phases[i]
+            route = lkup(phase['route'])
+            name = route['name']
+            gmap = route['map']
+            dist = route['dist']
 
-            start = datetime.datetime( date.year
-                                     , date.month
-                                     , date.day
-                                     , time.hour
-                                     , time.minute
-                                     , 0
-                                     , 0
-                                     , tzinfo=pytz.timezone('America/Los_Angeles')
-                                     )
-            end = start + datetime.timedelta(0, 10 * 60 * round(dist))
-            now = datetime.datetime.now(pytz.utc)
-            uid = (str(start) + '@raceconditionrunning.com').translate(None, ' :-')
+            start = dtstart(date, phase)
+            if i < len(phases) - 1:
+                end = dtstart(date, phases[i + 1])
+            else:
+                end = start + timedelta(0, 10 * 60 * round(dist))
 
-            e = Event()
-            e.add('summary', vText("%s (%s)" % (name, dist)))
-            e.add('dtstart', vDatetime(start))
-            e.add('dtend', vDatetime(end))
-            e.add('description', vUri(gmap))
-            e.add('dtstamp', vDatetime(now))
-            e.add('uid', vText(uid))
-            cal.add_component(e)
+            uid = str(start) + '@raceconditionrunning.com'
+            uid = uid.translate(None, ' :-,;')
+
+            things.append({ 'summary'     : '%s (%s)' % (name, dist)
+                          , 'dtstart'     : start
+                          , 'dtend'       : end
+                          , 'description' : gmap
+                          , 'dtstamp'     : now
+                          , 'uid'         : uid
+                          })
+
+            # add brunch after other phases
+            if i == len(phases) - 1:
+                bstart = end
+                bend = bstart + timedelta(0, 90 * 60)
+                buid = str(bstart) + '@raceconditionrunning.com'
+                buid = buid.translate(None, ' :-,;')
+                things.append({ 'summary'     : 'Brunch'
+                              , 'dtstart'     : bstart
+                              , 'dtend'       : bend
+                              , 'description' : 'Brunch'
+                              , 'dtstamp'     : now
+                              , 'uid'         : buid
+                              })
+
+    cal = Calendar()
+    for (k, v) in calHeader:
+        if v.startswith('http'):
+            cal.add(k, vUri(v))
+        else:
+            cal.add(k, vText(v))
+
+    for x in things:
+        e = Event()
+        for k, v in x.iteritems():
+            if isinstance(v, datetime):
+                e.add(k, vDatetime(v))
+            elif v.startswith('http'):
+                e.add(k, vUri(v))
+            else:
+                e.add(k, vText(v))
+        cal.add_component(e)
 
     with open('rcc.ics', 'w') as f:
         f.write(cal.to_ical())
