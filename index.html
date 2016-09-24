@@ -99,13 +99,16 @@ $(function() {
     var entries = [];
     for(var i = 0; i < SCHED.length; i++) {
       var run = SCHED[i];
-      // Set the date to midnight at the end of the day of the run
+      // Use correct timezone
       var tz = new Date().toLocaleTimeString('en-us', {timeZoneName:'short'}).split(' ')[2];
       var date = new Date(run.date + " " + tz);
-      date.setDate(date.getDate() + 1);
 
+      // Use midnight the day of the run for comparison
+      var dateMidnight = new Date(date);
+      dateMidnight.setDate(dateMidnight.getDate() + 1);
+      
       var age = "past";
-      if(today < date) {
+      if(today < dateMidnight) {
         if(!afterNext) {
           age = "next";
           afterNext = true;
