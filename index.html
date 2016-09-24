@@ -91,7 +91,7 @@ $(function() {
          + "<span class='flr'>" + d + "</span>"
          + "</a>";
   }
-  
+
   function dispSched() {
     var today = new Date();
     var afterNext = false;
@@ -101,13 +101,12 @@ $(function() {
       var run = SCHED[i];
       var date = new Date(run.date);
 
-      // Use midnight the day of the run for comparison
-      var tz = new Date().toLocaleTimeString('en-us', {timeZoneName:'short'}).split(' ')[2];
-      var dateMidnight = new Date(run.date + " " + tz);
-      dateMidnight.setDate(dateMidnight.getDate() + 1);
-      
+      // figure age with date after run
+      var ndate = new Date(run.date);
+      ndate.setDate(ndate.getDate() + 1);
+
       var age = "past";
-      if(today < dateMidnight) {
+      if(today < ndate) {
         if(!afterNext) {
           age = "next";
           afterNext = true;
