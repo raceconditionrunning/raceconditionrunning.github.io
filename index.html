@@ -99,12 +99,11 @@ $(function() {
     var entries = [];
     for(var i = 0; i < SCHED.length; i++) {
       var run = SCHED[i];
-      // Use correct timezone
-      var tz = new Date().toLocaleTimeString('en-us', {timeZoneName:'short'}).split(' ')[2];
-      var date = new Date(run.date + " " + tz);
+      var date = new Date(run.date);
 
       // Use midnight the day of the run for comparison
-      var dateMidnight = new Date(date);
+      var tz = new Date().toLocaleTimeString('en-us', {timeZoneName:'short'}).split(' ')[2];
+      var dateMidnight = new Date(run.date + " " + tz);
       dateMidnight.setDate(dateMidnight.getDate() + 1);
       
       var age = "past";
