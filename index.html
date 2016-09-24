@@ -91,6 +91,8 @@ $(function() {
          + "<span class='flr'>" + d + "</span>"
          + "</a>";
   }
+  
+  function()
 
   function dispSched() {
     var today = new Date();
@@ -99,7 +101,10 @@ $(function() {
     var entries = [];
     for(var i = 0; i < SCHED.length; i++) {
       var run = SCHED[i];
-      var date = new Date(run.date);
+      // Set the date to midnight at the end of the day of the run
+      var tz = new Date().toLocaleTimeString('en-us', {timeZoneName:'short'}).split(' ')[2];
+      var date = new Date(run.date + " " + tz);
+      date.setDate(date.getDate() + 1);
 
       var age = "past";
       if(today < date) {
