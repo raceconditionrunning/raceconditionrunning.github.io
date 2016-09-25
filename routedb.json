@@ -1,5 +1,10 @@
 { "routes" :
-  [ { "uid"  : "green-lake-loop"
+  [ { "uid"  : "seward-loop"
+    , "name" : "Seward Park Loop"
+    , "dist" : 2.40
+    , "map"  : "http://www.gmap-pedometer.com/?r=6862844"
+    }
+  , { "uid"  : "green-lake-loop"
     , "name" : "Green Lake Loop"
     , "dist" : 2.75
     , "map"  : "http://www.gmap-pedometer.com/?r=6862852"
@@ -58,6 +63,11 @@
     , "name" : "OB: Madrona Park, Sailing Club"
     , "dist" : 6
     , "map"  : "http://www.gmap-pedometer.com/?r=6957722"
+    }
+  , { "uid"  : "ob-green-lake-ravenna"
+    , "name" : "OB: Green Lake, Ravenna Park"
+    , "dist" : 6.12
+    , "map"  : "http://www.gmap-pedometer.com/?r=6862850"
     }
   , { "uid"  : "lake-union-loop"
     , "name" : "Lake Union Loop"
