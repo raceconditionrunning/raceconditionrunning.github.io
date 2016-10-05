@@ -103,8 +103,15 @@
     }
   , { "date" : "2016-11-27"
     , "plan" :
-      [ { "time"  : "9:00"
+      [ { "time"  : "7:30"
         , "route" : "seattle-half-16"
+        }
+      ]
+    }
+  , { "date" : "2016-12-03"
+    , "plan" :
+      [ { "time"  : "9:30"
+        , "route" : "redmond-reindeer-romp-16"
         }
       ]
     }

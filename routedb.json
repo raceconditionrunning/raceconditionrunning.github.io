@@ -99,5 +99,10 @@
     , "dist" : 13.54
     , "map"  : "http://www.gmap-pedometer.com/?r=6875370"
     }
+  , { "uid"  : "redmond-reindeer-romp-16"
+    , "name" : "Redmond Reindeer Romp 2016"
+    , "dist" : 13.2
+    , "map"  : "http://nwtrailruns.com/events/redmond-reindeer-romp/"
+    }
   ]
 }
