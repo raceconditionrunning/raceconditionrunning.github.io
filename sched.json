@@ -115,5 +115,15 @@
         }
       ]
     }
+  , { "date" : "2016-12-31"
+    , "plan" :
+      [ { "time"  : "8:30"
+        , "route" : "ob-magnolia-blvd-bridge"
+        }
+      , { "time"  : "9:45"
+        , "route" : "discovery-park-loop"
+        }
+      ]
+    }
   ]
 }
