@@ -1,19 +1,5 @@
 { "sched" :
-  [ { "date" : "2016-09-11"
-    , "plan" :
-      [ { "time"  : "9:00"
-        , "route" : "ob-gas-works-cse"
-        }
-      ]
-    }
-  , { "date" : "2016-09-17"
-    , "plan" :
-      [ { "time"  : "9:00"
-        , "route" : "ob-madrona-park-sailing-club"
-        }
-      ]
-    }
-  , { "date" : "2016-09-24"
+  [ { "date" : "2017-09-23"
     , "plan" :
       [ { "time"  : "9:00"
         , "route" : "green-lake-loop"
@@ -23,7 +9,7 @@
         }
       ]
     }
-  , { "date" : "2016-10-01"
+  , { "date" : "2017-10-30"
     , "plan" :
       [ { "time"  : "9:00"
         , "route" : "ob-cse-foster-island"
@@ -33,7 +19,7 @@
         }
       ]
     }
-  , { "date" : "2016-10-08"
+  , { "date" : "2017-10-07"
     , "plan" :
       [ { "time"  : "9:00"
         , "route" : "ob-locks-gg"
@@ -43,7 +29,7 @@
         }
       ]
     }
-  , { "date" : "2016-10-15"
+  , { "date" : "2017-10-14"
     , "plan" :
       [ { "time"  : "9:00"
         , "route" : "lower-queen-anne-loop"
@@ -53,21 +39,21 @@
         }
       ]
     }
-  , { "date" : "2016-10-22"
+  , { "date" : "2017-10-21"
     , "plan" :
       [ { "time"  : "9:00"
         , "route" : "ob-miller-park-mercer-island"
         }
       ]
     }
-  , { "date" : "2016-10-23"
+  , { "date" : "2017-10-22"
     , "plan" :
-      [ { "time"  : "9:00"
-        , "route" : "dawg-dash-16"
+      [ { "time"  : "7:30"
+        , "route" : "dawg-dash-17"
         }
       ]
     }
-  , { "date" : "2016-10-29"
+  , { "date" : "2017-10-28"
     , "plan" :
       [ { "time"  : "9:00"
         , "route" : "ob-madison-mt-baker-beach"
@@ -77,7 +63,7 @@
         }
       ]
     }
-  , { "date" : "2016-11-05"
+  , { "date" : "2017-11-04"
     , "plan" :
       [ { "time"  : "9:00"
         , "route" : "ob-gas-works-green-lake-loop"
@@ -87,35 +73,35 @@
         }
       ]
     }
-  , { "date" : "2016-11-12"
+  , { "date" : "2017-11-11"
     , "plan" :
       [ { "time"  : "9:00"
         , "route" : "pp-discovery-alki"
         }
       ]
     }
-  , { "date" : "2016-11-19"
+  , { "date" : "2017-11-18"
     , "plan" :
       [ { "time"  : "9:00"
         , "route" : "lake-union-loop"
         }
       ]
     }
-  , { "date" : "2016-11-27"
+  , { "date" : "2017-11-26"
     , "plan" :
       [ { "time"  : "7:30"
-        , "route" : "seattle-half-16"
+        , "route" : "seattle-half-17"
         }
       ]
     }
-  , { "date" : "2016-12-03"
+  , { "date" : "2017-12-02"
     , "plan" :
-      [ { "time"  : "9:30"
-        , "route" : "redmond-reindeer-romp-16"
+      [ { "time"  : "8:30"
+        , "route" : "redmond-reindeer-romp-17"
         }
       ]
     }
-  , { "date" : "2016-12-31"
+  , { "date" : "2017-12-31"
     , "plan" :
       [ { "time"  : "8:30"
         , "route" : "ob-magnolia-blvd-bridge"

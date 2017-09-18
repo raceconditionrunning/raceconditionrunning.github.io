@@ -9,8 +9,8 @@
     , "dist" : 2.75
     , "map"  : "http://www.gmap-pedometer.com/?r=6862852"
     }
-  , { "uid"  : "dawg-dash-16"
-    , "name" : "2016 Seattle Dawg Dash 5k/10k"
+  , { "uid"  : "dawg-dash-17"
+    , "name" : "2017 Seattle Dawg Dash 5k/10k"
     , "dist" : 3.2
     , "map"  : "http://depts.washington.edu/alumni/blogs/dawgdash/races/seattle/"
     }
@@ -99,8 +99,8 @@
     , "dist" : 9.87
     , "map"  : "http://www.gmap-pedometer.com/?r=6957901"
     }
-  , { "uid"  : "seattle-half-16"
-    , "name" : "Seattle Half 2016"
+  , { "uid"  : "seattle-half-17"
+    , "name" : "Seattle Half 2017"
     , "dist" : 13.2
     , "map"  : "http://www.seattlemarathon.org/amica-insurance-seattle-marathon/"
     }
@@ -109,8 +109,8 @@
     , "dist" : 13.54
     , "map"  : "http://www.gmap-pedometer.com/?r=6875370"
     }
-  , { "uid"  : "redmond-reindeer-romp-16"
-    , "name" : "Redmond Reindeer Romp 2016"
+  , { "uid"  : "redmond-reindeer-romp-17"
+    , "name" : "Redmond Reindeer Romp 2017"
     , "dist" : 13.2
     , "map"  : "http://nwtrailruns.com/events/redmond-reindeer-romp/"
     }
