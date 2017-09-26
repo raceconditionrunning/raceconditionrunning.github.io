@@ -92,18 +92,18 @@ def main():
                               , 'uid'         : buid
                               })
 
-    # add wednesday runs
+    # add Tuesday and Thursday runs
     d0 = datetime.strptime(sched[0]['date'], '%Y-%m-%d')
     d1 = datetime.strptime(sched[-1]['date'], '%Y-%m-%d')
     delta = d1 - d0
     for i in range(delta.days):
         d = d0 + timedelta(days=i)
-        if d.weekday() == 2:
+        if d.weekday() == 1 or d.weekday() == 3:
             start = dtstart(d, {'time' : '17:00'})
             end = start + timedelta(0, 60 * 60)
             uid = str(start) + '@raceconditionrunning.com'
             uid = uid.translate(None, ' :-,;')
-            things.append({ 'summary'     : 'Burke Run'
+            things.append({ 'summary'     : 'Short Runs'
                           , 'dtstart'     : start
                           , 'dtend'       : end
                           , 'description' : 'Meet in CSE Atrium'
