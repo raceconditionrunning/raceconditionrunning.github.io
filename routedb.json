@@ -117,7 +117,12 @@
   , { "uid"  : "ob-cse-magnuson-park"
     , "name" : "OB: CSE, Magnuson Park"
     , "dist" : 13.39
-    , "map"  : "http://www.gmap-pedometer.com/gp/bookmark/view/id/7169229"
+    , "map"  : "http://www.gmap-pedometer.com/?r=7169229"
+    }
+  , { "uid"  : "ob-cse-greenlake-union"
+    , "name" : "OB: CSE, Greenlake, Lake Union"
+    , "dist" : 12.47
+    , "map"  : "https://gmap-pedometer.com/?r=7169234"
     }
   ]
 }
