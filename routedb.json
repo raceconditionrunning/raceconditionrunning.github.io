@@ -1,5 +1,15 @@
 { "routes" :
-  [ { "uid"  : "seward-loop"
+  [ { "uid"  : "salmon-bay-fremont"
+    , "name" : "Locks: Salmon Bay, Fremont loop"
+    , "dist" : 6.30
+    , "map"  : "https://www.gmap-pedometer.com/gp/bookmark/view/id/7176070"
+    }
+  , { "uid"  : "gas-works-salmon-bay"
+    , "name" : "Locks: Gas works, Salmon Bay loop"
+    , "dist" : 8.03
+    , "map"  : "https://www.gmap-pedometer.com/gp/bookmark/view/id/7176073"
+    }
+  , { "uid"  : "seward-loop"
     , "name" : "Seward Park Loop"
     , "dist" : 2.40
     , "map"  : "http://www.gmap-pedometer.com/?r=6862844"
