@@ -1,11 +1,11 @@
 { "routes" :
   [ { "uid"  : "salmon-bay-fremont"
-    , "name" : "Locks: Salmon Bay, Fremont loop"
+    , "name" : "Locks, Salmon Bay, Fremont loop"
     , "dist" : 6.30
     , "map"  : "https://www.gmap-pedometer.com/gp/bookmark/view/id/7176070"
     }
   , { "uid"  : "gas-works-salmon-bay"
-    , "name" : "Locks: Gas works, Salmon Bay loop"
+    , "name" : "Gas works, Locks loop"
     , "dist" : 8.03
     , "map"  : "https://www.gmap-pedometer.com/gp/bookmark/view/id/7176073"
     }
