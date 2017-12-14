@@ -1,11 +1,21 @@
 { "routes" :
-  [ { "uid"  : "salmon-bay-fremont"
-    , "name" : "Locks, Salmon Bay, Fremont loop"
+  [ { "uid"  : "mercer-island-half"
+    , "name" : "Mercer Island Half Marathon"
+    , "dist" : 13.2
+    , "map"  : "http://mercerislandhalf.com/wp-content/uploads/2017/03/17-MIRHM-Half-Marathon-Course-Map-4.pdf"
+    }
+  , { "uid"  : "lord-hill-half"
+    , "name" : "Lord Hill Half Marathon"
+    , "dist" : 13.1
+    , "map"  : "http://www.evergreentrailruns.com/lord-hill-upcoming#half"
+    }
+  , { "uid"  : "salmon-bay-fremont"
+    , "name" : "Locks, Salmon Bay, Fremont Loop"
     , "dist" : 6.30
     , "map"  : "https://www.gmap-pedometer.com/gp/bookmark/view/id/7176070"
     }
   , { "uid"  : "gas-works-salmon-bay"
-    , "name" : "Gas works, Locks loop"
+    , "name" : "Gas works, Locks Loop"
     , "dist" : 8.03
     , "map"  : "https://www.gmap-pedometer.com/gp/bookmark/view/id/7176073"
     }
@@ -112,7 +122,7 @@
   , { "uid"  : "seattle-half-17"
     , "name" : "Seattle Half 2017"
     , "dist" : 13.2
-    , "map"  : "http://www.seattlemarathon.org/amica-insurance-seattle-marathon/"
+    , "map"  : "maps/seattle-half-17.png"
     }
   , { "uid"  : "pp-discovery-alki"
     , "name" : "PP: Discovery Park to Alki Beach"
