@@ -5,7 +5,7 @@
         , "route" : "greenlake-cse"
         }
       , { "time"  : "10:15"
-        , "route" : "greenlake-loop"
+        , "route" : "green-lake-loop"
         }
       ]
     }
@@ -32,20 +32,17 @@
   , { "date" : "2018-01-27"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "discovery-magnolia-loop"
+        , "route" : "ob-cse-520"
         }
-      , { "time"  : "10:10"
-        , "route" : "pp-discovery-gg"
-        }
-      , { "time"  : "10:40"
-        , "route" : "pp-gg-discovery"
+      , { "time"  : "10:15"
+        , "route" : "ob-cse-arboretum"
         }
       ]
     }
   , { "date" : "2018-02-03"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "ob-cse-webster-magnuson"
+        , "route" : "ob-madison-seward"
         }
       ]
     }
@@ -78,15 +75,21 @@
     }
   , { "date" : "2018-03-03"
     , "plan" :
-      [ { "time"  : "0:00"
-        , "route" : "TBD"
+      [ { "time"  : "8:50"
+        , "route" : "discovery-magnolia-loop"
+        }
+      , { "time"  : "10:30"
+        , "route" : "ob-discovery-gg"
         }
       ]
     }
   , { "date" : "2018-03-10"
     , "plan" :
-      [ { "time"  : "0:00"
-        , "route" : "TBD"
+      [ { "time"  : "8:50"
+        , "route" : "lake-union-loop"
+        }
+      , { "time"  : "9:50"
+        , "route" : "ob-gas-works-green-lake"
         }
       ]
     }
@@ -99,15 +102,18 @@
     }
   , { "date" : "2018-03-24"
     , "plan" :
-      [ { "time"  : "0:00"
-        , "route" : "TBD"
+      [ { "time"  : "8:50"
+        , "route" : "ob-madrona-park-sailing-club"
+        }
+      , { "time"  : "9:50"
+        , "route" : "ob-madrona-madison-park"
         }
       ]
     }
   , { "date" : "2018-03-31"
     , "plan" :
-      [ { "time"  : "0:00"
-        , "route" : "TBD"
+      [ { "time"  : "8:50"
+        , "route" : "ob-cse-seward"
         }
       ]
     }
