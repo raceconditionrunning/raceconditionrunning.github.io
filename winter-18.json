@@ -12,10 +12,10 @@
   , { "date" : "2018-01-13"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "ob-cse-magnuson-park"
+        , "route" : "ob-cse-520"
         }
-      , { "time"  : "10:30"
-        , "route" : "ob-cse-foster-island"
+      , { "time"  : "10:15"
+        , "route" : "ob-cse-arboretum"
         }
       ]
     }
@@ -32,17 +32,17 @@
   , { "date" : "2018-01-27"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "ob-cse-520"
-        }
-      , { "time"  : "10:15"
-        , "route" : "ob-cse-arboretum"
+        , "route" : "ob-madison-seward"
         }
       ]
     }
   , { "date" : "2018-02-03"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "ob-madison-seward"
+        , "route" : "ob-cse-magnuson-park"
+        }
+      , { "time"  : "10:30"
+        , "route" : "ob-cse-foster-island"
         }
       ]
     }
