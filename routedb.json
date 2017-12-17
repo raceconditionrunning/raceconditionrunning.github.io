@@ -74,6 +74,16 @@
     , "dist" : 4.53
     , "map"  : "http://www.gmap-pedometer.com/?r=6957881"
     }
+  , { "uid"  : "ob-discovery-gg"
+    , "name" : "OB: Discovery, Golden Gardens"
+    , "dist" : 7.43
+    , "map"  : "https://www.gmap-pedometer.com/?r=7176440"
+    }
+  , { "uid"  : "discovery-magnolia-loop"
+    , "name" : "Discovery Park, Magnolia Loop"
+    , "dist" : 7.34
+    , "map"  : "https://www.gmap-pedometer.com/?r=7176422"
+    }
   , { "uid"  : "lower-queen-anne-loop"
     , "name" : "Lower Queen Anne Loop"
     , "dist" : 5.12
@@ -103,6 +113,11 @@
     , "name" : "OB: Gas Works, Green Lake Loop"
     , "dist" : 6.99
     , "map"  : "http://www.gmap-pedometer.com/?r=6957923"
+    }
+  , { "uid"  : "ob-gas-works-green-lake"
+    , "name" : "OB: Gas Works, Green Lake"
+    , "dist" : 3
+    , "map"  : "https://www.gmap-pedometer.com/?r=7176445"
     }
   , { "uid"  : "ob-magnolia-blvd-bridge"
     , "name" : "OB: Magnolia Blvd, Magnolia Bridge"
@@ -136,13 +151,33 @@
     }
   , { "uid"  : "ob-cse-magnuson-park"
     , "name" : "OB: CSE, Magnuson Park"
-    , "dist" : 13.39
-    , "map"  : "http://www.gmap-pedometer.com/?r=7169229"
+    , "dist" : 10.07
+    , "map"  : "http://www.gmap-pedometer.com/?r=7177166"
     }
-  , { "uid"  : "ob-cse-greenlake-union"
-    , "name" : "OB: CSE, Greenlake, Lake Union"
+  , { "uid"  : "ob-cse-webster-magnuson"
+    , "name" : "OB: CSE, Webster, Magnuson"
+    , "dist" : 13.54
+    , "map"  : "http://www.gmap-pedometer.com/?r=7177170"
+    }
+  , { "uid"  : "magnuson-park-loop"
+    , "name" : "Magnuson Park Loop"
+    , "dist" : 2.46
+    , "map"  : "http://www.gmap-pedometer.com/?r=7177173"
+    }
+  , { "uid"  : "cse-greenlake-union"
+    , "name" : "CSE, Greenlake, Lake Union Loop"
     , "dist" : 12.47
     , "map"  : "https://gmap-pedometer.com/?r=7169234"
+    }
+  , { "uid"  : "greenlake-cse"
+    , "name" : "Greenlake, CSE Loop"
+    , "dist" : 7.85
+    , "map"  : "https://www.gmap-pedometer.com/?r=7176419"
+    }
+  , { "uid"  : "gas-works-queen-anne-loop"
+    , "name" : "Gas Works, Queen Anne Loop"
+    , "dist" : 9.06
+    , "map"  : "http://www.gmap-pedometer.com/?r=7177175"
     }
   ]
 }
