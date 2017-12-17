@@ -79,6 +79,16 @@
     , "dist" : 7.43
     , "map"  : "https://www.gmap-pedometer.com/?r=7176440"
     }
+  , { "uid"  : "pp-discovery-gg"
+    , "name" : "PP: Discovery, Golden Gardens"
+    , "dist" : 3.73
+    , "map"  : "https://www.gmap-pedometer.com/?r=7177200"
+    }
+  , { "uid"  : "pp-gg-discovery"
+    , "name" : "PP: Golden Gardens, Discovery"
+    , "dist" : 3.69
+    , "map"  : "http://www.gmap-pedometer.com/?r=7177202"
+    }
   , { "uid"  : "discovery-magnolia-loop"
     , "name" : "Discovery Park, Magnolia Loop"
     , "dist" : 7.34

@@ -11,36 +11,51 @@
     }
   , { "date" : "2018-01-13"
     , "plan" :
-      [ { "time"  : "0:00"
-        , "route" : "TBD"
+      [ { "time"  : "8:50"
+        , "route" : "ob-cse-magnuson-park"
+        }
+      , { "time"  : "10:30"
+        , "route" : "ob-cse-foster-island"
         }
       ]
     }
   , { "date" : "2018-01-20"
     , "plan" :
-      [ { "time"  : "0:00"
-        , "route" : "TBD"
+      [ { "time"  : "8:50"
+        , "route" : "gas-works-queen-anne-loop"
+        }
+      , { "time"  : "10:15"
+        , "route" : "ob-gas-works-green-lake"
         }
       ]
     }
   , { "date" : "2018-01-27"
     , "plan" :
-      [ { "time"  : "0:00"
-        , "route" : "TBD"
+      [ { "time"  : "8:50"
+        , "route" : "discovery-magnolia-loop"
+        }
+      , { "time"  : "10:10"
+        , "route" : "pp-discovery-gg"
+        }
+      , { "time"  : "10:40"
+        , "route" : "pp-gg-discovery"
         }
       ]
     }
   , { "date" : "2018-02-03"
     , "plan" :
-      [ { "time"  : "0:00"
-        , "route" : "TBD"
+      [ { "time"  : "8:50"
+        , "route" : "ob-cse-webster-magnuson"
         }
       ]
     }
   , { "date" : "2018-02-10"
     , "plan" :
-      [ { "time"  : "0:00"
-        , "route" : "TBD"
+      [ { "time"  : "8:50"
+        , "route" : "lower-queen-anne-loop"
+        }
+      , { "time"  : "9:50"
+        , "route" : "ob-sculpture-park-4"
         }
       ]
     }
@@ -53,8 +68,11 @@
     }
   , { "date" : "2018-02-24"
     , "plan" :
-      [ { "time"  : "0:00"
-        , "route" : "TBD"
+      [ { "time"  : "8:50"
+        , "route" : "salmon-bay-fremont"
+        }
+      , { "time"  : "9:50"
+        , "route" : "ob-locks-gg"
         }
       ]
     }
