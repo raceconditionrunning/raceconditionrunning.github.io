@@ -12,12 +12,12 @@
   , { "uid"  : "salmon-bay-fremont"
     , "name" : "Locks, Salmon Bay, Fremont Loop"
     , "dist" : 6.30
-    , "map"  : "https://www.gmap-pedometer.com/gp/bookmark/view/id/7176070"
+    , "map"  : "https://www.gmap-pedometer.com/?r=7176070"
     }
   , { "uid"  : "gas-works-salmon-bay"
     , "name" : "Gas works, Locks Loop"
     , "dist" : 8.03
-    , "map"  : "https://www.gmap-pedometer.com/gp/bookmark/view/id/7176073"
+    , "map"  : "https://www.gmap-pedometer.com/?r=7176073"
     }
   , { "uid"  : "seward-loop"
     , "name" : "Seward Park Loop"
@@ -64,6 +64,11 @@
     , "dist" : 4.14
     , "map"  : "http://www.gmap-pedometer.com/?r=6849833"
     }
+  , { "uid"  : "ob-cse-arboretum"
+    , "name" : "OB: CSE, Arboretum"
+    , "dist" : 4.04
+    , "map"  : "http://www.gmap-pedometer.com/?r=7177223"
+    }
   , { "uid"  : "ob-sculpture-park-4"
     , "name" : "OB: Olympic Sculpture Park"
     , "dist" : 4.26
@@ -78,16 +83,6 @@
     , "name" : "OB: Discovery, Golden Gardens"
     , "dist" : 7.43
     , "map"  : "https://www.gmap-pedometer.com/?r=7176440"
-    }
-  , { "uid"  : "pp-discovery-gg"
-    , "name" : "PP: Discovery, Golden Gardens"
-    , "dist" : 3.73
-    , "map"  : "https://www.gmap-pedometer.com/?r=7177200"
-    }
-  , { "uid"  : "pp-gg-discovery"
-    , "name" : "PP: Golden Gardens, Discovery"
-    , "dist" : 3.69
-    , "map"  : "http://www.gmap-pedometer.com/?r=7177202"
     }
   , { "uid"  : "discovery-magnolia-loop"
     , "name" : "Discovery Park, Magnolia Loop"
@@ -164,10 +159,15 @@
     , "dist" : 10.07
     , "map"  : "http://www.gmap-pedometer.com/?r=7177166"
     }
-  , { "uid"  : "ob-cse-webster-magnuson"
-    , "name" : "OB: CSE, Webster, Magnuson"
-    , "dist" : 13.54
-    , "map"  : "http://www.gmap-pedometer.com/?r=7177170"
+  , { "uid"  : "ob-madison-seward"
+    , "name" : "OB: Madison, Seward Park"
+    , "dist" : 13.82
+    , "map"  : "http://www.gmap-pedometer.com/?r=7177215"
+    }
+  , { "uid"  : "ob-cse-seward"
+    , "name" : "OB: CSE, Seward Park"
+    , "dist" : 15.01
+    , "map"  : "http://www.gmap-pedometer.com/?r=7177219"
     }
   , { "uid"  : "magnuson-park-loop"
     , "name" : "Magnuson Park Loop"
@@ -188,6 +188,21 @@
     , "name" : "Gas Works, Queen Anne Loop"
     , "dist" : 9.06
     , "map"  : "http://www.gmap-pedometer.com/?r=7177175"
+    }
+  , { "uid"  : "ob-cse-520"
+    , "name" : "OB: CSE, SR 520"
+    , "dist" : 8.00
+    , "map"  : "http://www.gmap-pedometer.com/?r=7177222"
+    }
+  , { "uid"  : "ob-madrona-madison-park"
+    , "name" : "OB: Madrona, Madison Park"
+    , "dist" : 4.14
+    , "map"  : "http://www.gmap-pedometer.com/?r=7177224"
+    }
+  , { "uid"  : "TBD"
+    , "name" : "TBD"
+    , "dist" : 0.00
+    , "map"  : "TBD"
     }
   ]
 }
