@@ -181,8 +181,8 @@
     }
   , { "uid"  : "greenlake-cse"
     , "name" : "Greenlake, CSE Loop"
-    , "dist" : 7.85
-    , "map"  : "https://www.gmap-pedometer.com/?r=7176419"
+    , "dist" : 8.29
+    , "map"  : "http://www.gmap-pedometer.com/?r=7182904"
     }
   , { "uid"  : "gas-works-queen-anne-loop"
     , "name" : "Gas Works, Queen Anne Loop"
