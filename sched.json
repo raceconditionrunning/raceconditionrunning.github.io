@@ -11,11 +11,8 @@
     }
   , { "date" : "2018-01-13"
     , "plan" :
-      [ { "time"  : "8:50"
-        , "route" : "gas-works-queen-anne-loop"
-        }
-      , { "time"  : "10:15"
-        , "route" : "ob-gas-works-green-lake"
+      [ { "time"  : "10:00"
+        , "route" : "magnuson-series"
         }
       ]
     }
@@ -114,6 +111,16 @@
     , "plan" :
       [ { "time"  : "8:50"
         , "route" : "ob-cse-seward"
+        }
+      ]
+    }
+  , { "date" : "2018-04-07"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "gas-works-queen-anne-loop"
+        }
+      , { "time"  : "10:15"
+        , "route" : "ob-gas-works-green-lake"
         }
       ]
     }
