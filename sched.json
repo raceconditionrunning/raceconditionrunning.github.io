@@ -29,7 +29,10 @@
   , { "date" : "2018-01-27"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "ob-madison-seward"
+        , "route" : "ob-washington-park-sailing-club"
+        }
+      , { "time"  : "10:50"
+        , "route" : "ob-madison-interlaken"
         }
       ]
     }
