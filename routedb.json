@@ -219,6 +219,11 @@
     , "dist" : 7.13
     , "map"  : "http://www.gmap-pedometer.com/?r=7194368"
     }
+  , { "uid"  : "cse-laurelhurst-loop"
+    , "name" : "CSE, Laurelhurst Loop"
+    , "dist" : 6.52
+    , "map"  : "http://www.gmap-pedometer.com/?r=7202894"
+    }
   , { "uid"  : "TBD"
     , "name" : "TBD"
     , "dist" : 0.00
