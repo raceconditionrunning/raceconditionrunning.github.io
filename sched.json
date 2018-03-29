@@ -56,80 +56,74 @@
   , { "date" : "2018-05-12"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "TBD"
+        , "route" : "cse-bryant-loop"
         }
-      , { "time"  : "10:40"
-        , "route" : "TBD"
+      , { "time"  : "10:10"
+        , "route" : "ob-cse-volunteer"
         }
       ]
     }
   , { "date" : "2018-05-19"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "TBD"
-        }
-      , { "time"  : "10:40"
-        , "route" : "TBD"
+        , "route" : "pp-discovery-alki"
         }
       ]
     }
   , { "date" : "2018-05-26"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "TBD"
+        , "route" : "lake-union-loop"
         }
-      , { "time"  : "10:40"
-        , "route" : "TBD"
+      , { "time"  : "10:10"
+        , "route" : "gas-works-fremont-cut-loop"
         }
       ]
     }
   , { "date" : "2018-06-02"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "TBD"
+        , "route" : "greenlake-cse"
         }
-      , { "time"  : "10:40"
-        , "route" : "TBD"
+      , { "time"  : "10:30"
+        , "route" : "green-lake-loop"
         }
       ]
     }
   , { "date" : "2018-06-09"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "TBD"
+        , "route" : "ob-discovery-gg"
         }
-      , { "time"  : "10:40"
-        , "route" : "TBD"
+      , { "time"  : "10:20"
+        , "route" : "discovery-magnolia-loop"
         }
       ]
     }
   , { "date" : "2018-06-16"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "TBD"
-        }
-      , { "time"  : "10:40"
-        , "route" : "TBD"
+        , "route" : "ob-madison-seward"
         }
       ]
     }
   , { "date" : "2018-06-23"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "TBD"
+        , "route" : "salmon-bay-fremont"
         }
-      , { "time"  : "10:40"
-        , "route" : "TBD"
+      , { "time"  : "10:10"
+        , "route" : "ob-locks-gg"
         }
       ]
     }
   , { "date" : "2018-06-30"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "TBD"
+        , "route" : "sculpture-park-lake-union"
         }
       , { "time"  : "10:40"
-        , "route" : "TBD"
+        , "route" : "ob-sculpture-park"
         }
       ]
     }

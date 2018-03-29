@@ -69,15 +69,25 @@
     , "dist" : 4.04
     , "map"  : "http://www.gmap-pedometer.com/?r=7177223"
     }
-  , { "uid"  : "ob-sculpture-park-4"
-    , "name" : "OB: Olympic Sculpture Park"
-    , "dist" : 4.26
-    , "map"  : "http://www.gmap-pedometer.com/?r=6849837"
+  , { "uid"  : "ob-cse-volunteer"
+    , "name" : "OB: CSE, Volunteer Park"
+    , "dist" : 5.30
+    , "map"  : "http://www.gmap-pedometer.com/?r=7218025"
     }
-  , { "uid"  : "ob-sculpture-park-5"
+  , { "uid"  : "cse-bryant-loop"
+    , "name" : "CSE, Bryant loop"
+    , "dist" : 6.06
+    , "map"  : "https://www.gmap-pedometer.com/?r=7218002"
+    }
+  , { "uid"  : "ob-sculpture-park"
     , "name" : "OB: Olympic Sculpture Park"
     , "dist" : 5.14
     , "map"  : "http://www.gmap-pedometer.com/?r=7197236"
+    }
+  , { "uid"  : "sculpture-park-lake-union"
+    , "name" : "Olympic Sculpture Park, Lake Union Loop"
+    , "dist" : 8.82
+    , "map"  : "http://www.gmap-pedometer.com/?r=7218070"
     }
   , { "uid"  : "ob-locks-gg"
     , "name" : "OB: Locks, Golden Gardens"
