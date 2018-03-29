@@ -85,7 +85,7 @@
     , "map"  : "http://www.gmap-pedometer.com/?r=7197236"
     }
   , { "uid"  : "sculpture-park-lake-union"
-    , "name" : "Olympic Sculpture Park, Lake Union Loop"
+    , "name" : "Sculpture Park, Lake Union"
     , "dist" : 8.82
     , "map"  : "http://www.gmap-pedometer.com/?r=7218070"
     }
