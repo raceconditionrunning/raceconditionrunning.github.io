@@ -114,6 +114,11 @@
     , "dist" : 6.12
     , "map"  : "http://www.gmap-pedometer.com/?r=6862850"
     }
+  , { "uid"  : "ob-cse-ravenna"
+    , "name" : "OB: CSE, Ravenna Park"
+    , "dist" : 4.12
+    , "map"  : "http://www.gmap-pedometer.com/?r=7218018"
+    }
   , { "uid"  : "lake-union-loop"
     , "name" : "Lake Union Loop"
     , "dist" : 6.26
@@ -144,6 +149,11 @@
     , "dist" : 9.87
     , "map"  : "http://www.gmap-pedometer.com/?r=6957901"
     }
+  , { "uid"  : "ob-miller-park-interlaken"
+    , "name" : "OB: Miller Park, Interlaken"
+    , "dist" : 3.07
+    , "map"  : "http://www.gmap-pedometer.com/?r=7218014"
+    }
   , { "uid"  : "seattle-half-17"
     , "name" : "Seattle Half 2017"
     , "dist" : 13.2
@@ -170,7 +180,7 @@
     , "map"  : "http://www.gmap-pedometer.com/?r=7177215"
     }
   , { "uid"  : "ob-cse-seward"
-    , "name" : "OB: CSE, Seward Park"
+    , "name" : "OB: CSE, Sailing Club"
     , "dist" : 15.01
     , "map"  : "http://www.gmap-pedometer.com/?r=7177219"
     }
@@ -205,7 +215,7 @@
     , "map"  : "http://www.gmap-pedometer.com/?r=7177224"
     }
   , { "uid"  : "magnuson-series"
-    , "name" : "5K (or 10K, 15K) race"
+    , "name" : "Magnuson series races"
     , "dist" : 3.10
     , "map"  : "http://magnusonseries.org"
     }
@@ -223,6 +233,21 @@
     , "name" : "CSE, Laurelhurst Loop"
     , "dist" : 6.52
     , "map"  : "http://www.gmap-pedometer.com/?r=7202894"
+    }
+  , { "uid"  : "spring-eagle"
+    , "name" : "Spring Eagle Trail Runs"
+    , "dist" : 13.1
+    , "map"  : "http://nwtrailruns.com/events/spring-eagle-trail-run"
+    }
+  , { "uid"  : "lake-relay"
+    , "name" : "Lake Hills 50k Relay"
+    , "dist" : 31
+    , "map"  : "http://nwtrailruns.com/events/lake-hills-50k-relay/"
+    }
+  , { "uid"  : "cse-arboretum-foster-loop"
+    , "name" : "CSE, Arboretum, Foster Island loop"
+    , "dist" : 7.35
+    , "map"  : "https://www.gmap-pedometer.com/?r=7214448"
     }
   , { "uid"  : "TBD"
     , "name" : "TBD"
