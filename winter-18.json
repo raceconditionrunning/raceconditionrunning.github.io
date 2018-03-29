@@ -4,35 +4,35 @@
       [ { "time"  : "8:50"
         , "route" : "greenlake-cse"
         }
-      , { "time"  : "10:15"
+      , { "time"  : "10:35"
         , "route" : "green-lake-loop"
         }
       ]
     }
   , { "date" : "2018-01-13"
     , "plan" :
-      [ { "time"  : "8:50"
-        , "route" : "ob-cse-520"
-        }
-      , { "time"  : "10:15"
-        , "route" : "ob-cse-arboretum"
+      [ { "time"  : "10:00"
+        , "route" : "magnuson-series"
         }
       ]
     }
   , { "date" : "2018-01-20"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "gas-works-queen-anne-loop"
+        , "route" : "ob-cse-520"
         }
-      , { "time"  : "10:15"
-        , "route" : "ob-gas-works-green-lake"
+      , { "time"  : "10:30"
+        , "route" : "ob-cse-arboretum"
         }
       ]
     }
   , { "date" : "2018-01-27"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "ob-madison-seward"
+        , "route" : "ob-washington-park-sailing-club"
+        }
+      , { "time"  : "10:50"
+        , "route" : "ob-madison-interlaken"
         }
       ]
     }
@@ -41,7 +41,7 @@
       [ { "time"  : "8:50"
         , "route" : "ob-cse-magnuson-park"
         }
-      , { "time"  : "10:30"
+      , { "time"  : "10:50"
         , "route" : "ob-cse-foster-island"
         }
       ]
@@ -51,8 +51,8 @@
       [ { "time"  : "8:50"
         , "route" : "lower-queen-anne-loop"
         }
-      , { "time"  : "9:50"
-        , "route" : "ob-sculpture-park-4"
+      , { "time"  : "10:00"
+        , "route" : "ob-sculpture-park-5"
         }
       ]
     }
@@ -68,7 +68,7 @@
       [ { "time"  : "8:50"
         , "route" : "salmon-bay-fremont"
         }
-      , { "time"  : "9:50"
+      , { "time"  : "10:10"
         , "route" : "ob-locks-gg"
         }
       ]
@@ -78,7 +78,7 @@
       [ { "time"  : "8:50"
         , "route" : "discovery-magnolia-loop"
         }
-      , { "time"  : "10:30"
+      , { "time"  : "10:20"
         , "route" : "ob-discovery-gg"
         }
       ]
@@ -88,7 +88,7 @@
       [ { "time"  : "8:50"
         , "route" : "lake-union-loop"
         }
-      , { "time"  : "9:50"
+      , { "time"  : "10:10"
         , "route" : "ob-gas-works-green-lake"
         }
       ]
@@ -105,7 +105,7 @@
       [ { "time"  : "8:50"
         , "route" : "ob-madrona-park-sailing-club"
         }
-      , { "time"  : "9:50"
+      , { "time"  : "10:10"
         , "route" : "ob-madrona-madison-park"
         }
       ]
@@ -117,6 +117,15 @@
         }
       ]
     }
+  , { "date" : "2018-04-07"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "gas-works-queen-anne-loop"
+        }
+      , { "time"  : "10:40"
+        , "route" : "ob-gas-works-green-lake"
+        }
+      ]
+    }
   ]
 }
-
