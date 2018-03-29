@@ -66,7 +66,7 @@
   , { "date" : "2018-05-19"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "pp-discovery-alki"
+        , "route" : "ob-overlake-lake-hill"
         }
       ]
     }

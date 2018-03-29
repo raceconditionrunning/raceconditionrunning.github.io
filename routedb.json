@@ -259,6 +259,16 @@
     , "dist" : 7.35
     , "map"  : "https://www.gmap-pedometer.com/?r=7214448"
     }
+  , { "uid"  : "ob-overlake-lake-hill"
+    , "name" : "OB: Overlake, Lake Hills Park"
+    , "dist" : 11.25
+    , "map"  : "https://www.gmap-pedometer.com/?r=7218048"
+    }
+  , { "uid"  : "lake-washington-loop"
+    , "name" : "Lake Washington Loop"
+    , "dist" : 19.01
+    , "map"  : "https://www.gmap-pedometer.com/?r=7218074"
+    }
   , { "uid"  : "TBD"
     , "name" : "TBD"
     , "dist" : 0.00
