@@ -39,7 +39,7 @@
   , { "date" : "2018-04-28"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "cse-arboretum-foster-loop"
+        , "route" : "ob-cse-burke"
         }
       , { "time"  : "10:20"
         , "route" : "ob-cse-ravenna"
