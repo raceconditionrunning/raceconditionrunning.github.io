@@ -11,12 +11,12 @@ So "5:30 pm" would be "17:30".
 
 To test locally, you can start a small Python webserver for this directory:
 ```
-  $ python test-server.py
+  $ python3 test-server.py
 ```
 After which the page will be available at [http://localhost:8000](http://localhost:8000).
 
 If you change the schedule, please update the iCal before pushing:
 ```
-  $ python mkical.py
+  $ python3 mkical.py
 ```
 NOTE this requires the [icalendar](http://icalendar.readthedocs.io/en/latest/) package.

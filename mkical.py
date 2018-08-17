@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import json
 from icalendar import Calendar, Event, vText, vDatetime, vUri
 from datetime import datetime, timedelta
@@ -69,7 +71,7 @@ def main():
             else:
                 end = start + timedelta(0, 10 * 60 * round(dist))
             uid = str(start) + '@raceconditionrunning.com'
-            uid = uid.translate(None, ' :-,;')
+            uid = uid.strip(' :-,;')
             things.append({ 'summary'     : '%s (%s)' % (name, dist)
                           , 'dtstart'     : start
                           , 'dtend'       : end
@@ -83,7 +85,7 @@ def main():
                 bstart = end
                 bend = bstart + timedelta(0, 90 * 60)
                 buid = str(bstart) + '@raceconditionrunning.com'
-                buid = buid.translate(None, ' :-,;')
+                buid = buid.strip(' :-,;')
                 things.append({ 'summary'     : 'Brunch'
                               , 'dtstart'     : bstart
                               , 'dtend'       : bend
@@ -102,7 +104,7 @@ def main():
             start = dtstart(d, {'time' : '17:00'})
             end = start + timedelta(0, 60 * 60)
             uid = str(start) + '@raceconditionrunning.com'
-            uid = uid.translate(None, ' :-,;')
+            uid = uid.strip(' :-,;')
             things.append({ 'summary'     : 'Short Runs'
                           , 'dtstart'     : start
                           , 'dtend'       : end
@@ -120,7 +122,7 @@ def main():
 
     for x in things:
         e = Event()
-        for k, v in x.iteritems():
+        for k, v in x.items():
             if isinstance(v, datetime):
                 e.add(k, vDatetime(v))
             elif v.startswith('http'):
@@ -129,7 +131,7 @@ def main():
                 e.add(k, vText(v))
         cal.add_component(e)
 
-    with open('rcc.ics', 'w') as f:
+    with open('rcc.ics', 'wb') as f:
         f.write(cal.to_ical())
 
 main()
