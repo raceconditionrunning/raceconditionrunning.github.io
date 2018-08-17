@@ -1,129 +1,15 @@
 { "sched" :
-  [ { "date" : "2018-03-31"
+  [ { "date" : "2018-10-14"
+    , "plan" :
+      [ { "time"  : "8:45"
+        , "route" : "dawg-dash-18"
+        }
+      ]
+    }
+  , { "date" : "2018-11-25"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "gas-works-queen-anne-loop"
-        }
-      , { "time"  : "10:40"
-        , "route" : "ob-gas-works-green-lake"
-        }
-      ]
-    }
-  , { "date" : "2018-04-07"
-    , "plan" :
-      [ { "time"  : "8:50"
-        , "route" : "ob-cse-520"
-        }
-      , { "time"  : "10:30"
-        , "route" : "ob-cse-arboretum"
-        }
-      ]
-    }
-  , { "date" : "2018-04-14"
-    , "plan" :
-      [ { "time"  : "8:00"
-        , "route" : "spring-eagle"
-        }
-      ]
-    }
-  , { "date" : "2018-04-21"
-    , "plan" :
-      [ { "time"  : "8:50"
-        , "route" : "ob-miller-park-mercer-island"
-        }
-      , { "time"  : "10:40"
-        , "route" : "ob-miller-park-interlaken"
-        }
-      ]
-    }
-  , { "date" : "2018-04-28"
-    , "plan" :
-      [ { "time"  : "8:50"
-        , "route" : "ob-cse-burke"
-        }
-      , { "time"  : "10:20"
-        , "route" : "ob-cse-ravenna"
-        }
-      ]
-    }
-  , { "date" : "2018-05-06"
-    , "plan" :
-      [ { "time"  : "8:00"
-        , "route" : "lake-relay"
-        }
-      ]
-    }
-  , { "date" : "2018-05-12"
-    , "plan" :
-      [ { "time"  : "8:50"
-        , "route" : "cse-bryant-loop"
-        }
-      , { "time"  : "10:10"
-        , "route" : "ob-cse-volunteer"
-        }
-      ]
-    }
-  , { "date" : "2018-05-19"
-    , "plan" :
-      [ { "time"  : "8:50"
-        , "route" : "ob-overlake-lake-hill"
-        }
-      ]
-    }
-  , { "date" : "2018-05-26"
-    , "plan" :
-      [ { "time"  : "8:50"
-        , "route" : "lake-union-loop"
-        }
-      , { "time"  : "10:10"
-        , "route" : "gas-works-fremont-cut-loop"
-        }
-      ]
-    }
-  , { "date" : "2018-06-02"
-    , "plan" :
-      [ { "time"  : "8:50"
-        , "route" : "greenlake-cse"
-        }
-      , { "time"  : "10:30"
-        , "route" : "green-lake-loop"
-        }
-      ]
-    }
-  , { "date" : "2018-06-09"
-    , "plan" :
-      [ { "time"  : "8:50"
-        , "route" : "ob-discovery-gg"
-        }
-      , { "time"  : "10:20"
-        , "route" : "discovery-magnolia-loop"
-        }
-      ]
-    }
-  , { "date" : "2018-06-16"
-    , "plan" :
-      [ { "time"  : "8:50"
-        , "route" : "ob-madison-seward"
-        }
-      ]
-    }
-  , { "date" : "2018-06-23"
-    , "plan" :
-      [ { "time"  : "8:50"
-        , "route" : "salmon-bay-fremont"
-        }
-      , { "time"  : "10:10"
-        , "route" : "ob-locks-gg"
-        }
-      ]
-    }
-  , { "date" : "2018-06-30"
-    , "plan" :
-      [ { "time"  : "8:50"
-        , "route" : "sculpture-park-lake-union"
-        }
-      , { "time"  : "10:40"
-        , "route" : "ob-sculpture-park"
+        , "route" : "seattle-half-18"
         }
       ]
     }

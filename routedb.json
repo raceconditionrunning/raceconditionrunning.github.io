@@ -9,6 +9,16 @@
     , "dist" : 13.1
     , "map"  : "http://www.evergreentrailruns.com/lord-hill-upcoming#half"
     }
+  , { "uid"  : "dawg-dash-18"
+    , "name" : "UW Dawg Dash 2018"
+    , "dist" : 6.2
+    , "map"  : "https://www.washington.edu/alumni/dawgdash"
+    }
+  , { "uid"  : "seattle-half-18"
+    , "name" : "Seattle Half 2018"
+    , "dist" : 13.1
+    , "map"  : "http://www.seattlemarathon.org/amica-insurance-seattle-marathon/"
+    }
   , { "uid"  : "salmon-bay-fremont"
     , "name" : "Salmon Bay, Fremont Loop"
     , "dist" : 6.30
