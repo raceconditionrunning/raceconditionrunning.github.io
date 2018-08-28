@@ -1,8 +1,8 @@
-import SimpleHTTPServer
-import SocketServer
+import http.server
+import socketserver
 
 PORT = 8000
 
-Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
-httpd = SocketServer.TCPServer(("", PORT), Handler)
+Handler = http.server.SimpleHTTPRequestHandler
+httpd = socketserver.TCPServer(("", PORT), Handler)
 httpd.serve_forever()
