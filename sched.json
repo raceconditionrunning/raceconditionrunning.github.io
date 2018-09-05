@@ -4,6 +4,9 @@
       [ { "time"  : "8:50"
         , "route" : "green-lake-loop"
         }
+      , { "time"  : "9:00"
+        , "route" : "paradise-valley"
+        }
       , { "time"  : "9:30"
         , "route" : "green-lake-loop"
         }

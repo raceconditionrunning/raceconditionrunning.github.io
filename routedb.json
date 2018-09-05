@@ -279,6 +279,11 @@
     , "dist" : 19.01
     , "map"  : "https://www.gmap-pedometer.com/?r=7218074"
     }
+  , { "uid"  : "paradise-valley"
+    , "name" : "Paradise Valley"
+    , "dist" : 13.1
+    , "map"  : "http://nwtrailruns.com/events/paradise-valley-trail-run/"
+    }
   , { "uid"  : "TBD"
     , "name" : "TBD"
     , "dist" : 0.00
