@@ -53,6 +53,16 @@
   , { "date" : "2018-11-03"
     , "plan" :
       [ { "time"  : "8:50"
+        , "route" : "lower-queen-anne-loop"
+        }
+      , { "time"  : "9:50"
+        , "route" : "ob-sculpture-park"
+        }
+      ]
+    }
+  , { "date" : "2018-11-10"
+    , "plan" :
+      [ { "time"  : "8:50"
         , "route" : "ob-gas-works-green-lake-loop"
         }
       , { "time"  : "10:10"
@@ -60,20 +70,10 @@
         }
       ]
     }
-  , { "date" : "2018-11-10"
-    , "plan" :
-      [ { "time"  : "8:50"
-        , "route" : "pp-discovery-alki"
-        }
-      ]
-    }
   , { "date" : "2018-11-17"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "ob-cse-foster-island"
-        }
-      , { "time"  : "9:40"
-        , "route" : "portage-bay-loop"
+        , "route" : "cse-greenlake-union"
         }
       ]
     }
@@ -104,10 +104,7 @@
   , { "date" : "2018-12-15"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "lower-queen-anne-loop"
-        }
-      , { "time"  : "9:50"
-        , "route" : "ob-sculpture-park"
+        , "route" : "pp-discovery-alki"
         }
       ]
     }
