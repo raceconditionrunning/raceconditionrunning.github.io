@@ -12,7 +12,7 @@
   , { "date" : "2018-09-22"
     , "plan" :
       [ { "time"  : "9:00"
-        , "route" : "paradise-valley"
+        , "route" : "paradise-valley-18"
         }
       ]
     }
@@ -50,7 +50,7 @@
   , { "date" : "2018-10-27"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "ob-miller-park-mercer-island"
+        , "route" : "ob-colman-seward"
         }
       ]
     }

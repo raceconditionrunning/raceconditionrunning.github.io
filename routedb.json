@@ -279,10 +279,15 @@
     , "dist" : 19.01
     , "map"  : "https://www.gmap-pedometer.com/?r=7218074"
     }
-  , { "uid"  : "paradise-valley"
-    , "name" : "Paradise Valley"
+  , { "uid"  : "paradise-valley-18"
+    , "name" : "Paradise Valley 18"
     , "dist" : 13.1
     , "map"  : "http://nwtrailruns.com/events/paradise-valley-trail-run/"
+    }
+  , { "uid"  : "ob-colman-seward"
+    , "name" : "OB: Colman Park, Sewark Park"
+    , "dist" : 9.63
+    , "map"  : "https://www.gmap-pedometer.com/?r=7298432"
     }
   , { "uid"  : "TBD"
     , "name" : "TBD"
