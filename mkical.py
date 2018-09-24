@@ -101,7 +101,7 @@ def main():
     for i in range(delta.days):
         d = d0 + timedelta(days=i)
         if d.weekday() == 1 or d.weekday() == 3:
-            start = dtstart(d, {'time' : '17:00'})
+            start = dtstart(d, {'time' : '16:40'})
             end = start + timedelta(0, 60 * 60)
             uid = str(start) + '@raceconditionrunning.com'
             uid = uid.strip(' :-,;')
