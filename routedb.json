@@ -149,9 +149,14 @@
     , "dist" : 6.99
     , "map"  : "http://www.gmap-pedometer.com/?r=6957923"
     }
+  , { "uid"  : "ob-green-lake-loop-gasworks"
+    , "name" : "OB: Green Lake Loop, Gas works"
+    , "dist" : 9.84
+    , "map"  : "http://www.gmap-pedometer.com/?r=7317466"
+    }
   , { "uid"  : "ob-gas-works-green-lake"
     , "name" : "OB: Gas Works, Green Lake"
-    , "dist" : 3
+    , "dist" : 6
     , "map"  : "https://www.gmap-pedometer.com/?r=7176445"
     }
   , { "uid"  : "ob-magnolia-blvd-bridge"

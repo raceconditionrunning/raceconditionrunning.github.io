@@ -67,10 +67,10 @@
   , { "date" : "2018-11-10"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "ob-gas-works-green-lake-loop"
+        , "route" : "ob-green-lake-loop-gasworks"
         }
-      , { "time"  : "10:10"
-        , "route" : "gas-works-fremont-cut-loop"
+      , { "time"  : "10:45"
+        , "route" : "green-lake-loop"
         }
       ]
     }
