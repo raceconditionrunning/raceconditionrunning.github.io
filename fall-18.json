@@ -1,0 +1,126 @@
+{ "sched" :
+  [ { "date" : "2018-09-22"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "green-lake-loop"
+        }
+      , { "time"  : "9:30"
+        , "route" : "green-lake-loop"
+        }
+      ]
+    }
+  , { "date" : "2018-09-22"
+    , "plan" :
+      [ { "time"  : "9:00"
+        , "route" : "paradise-valley-18"
+        }
+      ]
+    }
+  , { "date" : "2018-09-29"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "lake-union-loop"
+        }
+      ]
+    }
+  , { "date" : "2018-10-06"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "ob-locks-gg"
+        }
+      , { "time"  : "9:45"
+        , "route" : "salmon-bay-loop"
+        }
+      ]
+    }
+  , { "date" : "2018-10-14"
+    , "plan" :
+      [ { "time"  : "8:45"
+        , "route" : "dawg-dash-18"
+        }
+      ]
+    }
+  , { "date" : "2018-10-20"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "gas-works-salmon-bay"
+        }
+      ]
+    }
+  , { "date" : "2018-10-27"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "ob-colman-seward"
+        }
+      ]
+    }
+  , { "date" : "2018-11-03"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "lower-queen-anne-loop"
+        }
+      , { "time"  : "9:50"
+        , "route" : "ob-sculpture-park"
+        }
+      ]
+    }
+  , { "date" : "2018-11-10"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "ob-green-lake-loop-gasworks"
+        }
+      , { "time"  : "10:45"
+        , "route" : "green-lake-loop"
+        }
+      ]
+    }
+  , { "date" : "2018-11-17"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "cse-greenlake-union"
+        }
+      ]
+    }
+  , { "date" : "2018-11-25"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "seattle-half-18"
+        }
+      ]
+    }
+  , { "date" : "2018-12-01"
+    , "plan" :
+      [ { "time"  : "8:30"
+        , "route" : "redmond-reindeer-romp-18"
+        }
+      ]
+    }
+  , { "date" : "2018-12-08"
+    , "plan" :
+      [ { "time"  : "8:30"
+        , "route" : "ob-madison-mt-baker-beach"
+        }
+      , { "time"  : "9:50"
+        , "route" : "ob-madison-interlaken"
+        }
+      ]
+    }
+  , { "date" : "2018-12-14"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "pp-discovery-alki"
+        }
+      ]
+    }
+  , { "date" : "2018-12-29"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "ob-magnolia-blvd-bridge"
+        }
+      , { "time"  : "10:10"
+        , "route" : "discovery-park-loop"
+        }
+      ]
+    }
+  ]
+}

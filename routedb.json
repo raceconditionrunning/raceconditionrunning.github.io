@@ -294,6 +294,11 @@
     , "dist" : 9.63
     , "map"  : "https://www.gmap-pedometer.com/?r=7298432"
     }
+  , { "uid"  : "viaduct"
+    , "name" : "Tunnel to Viaduct"
+    , "dist" : 5.00
+    , "map"  : "https://fizzevents.enmotive.com/events/register/tunnel-to-viaduct-8k"
+    }
   , { "uid"  : "TBD"
     , "name" : "TBD"
     , "dist" : 0.00
