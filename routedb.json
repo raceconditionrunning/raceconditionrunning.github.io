@@ -308,6 +308,7 @@
     , "name" : "Ebey Kettle"
     , "dist" : 13.1
     , "map"  : "http://nwtrailruns.com/events/fort-ebey-kettles-trail-run/"
+  }
   , { "uid"  : "sammamish"
     , "name" : "Lake Sammamish"
     , "dist" : 13.1
