@@ -299,6 +299,25 @@
     , "dist" : 5.00
     , "map"  : "https://fizzevents.enmotive.com/events/register/tunnel-to-viaduct-8k"
     }
+  , { "uid"  : "arb-union"
+    , "name" : "Arboretum Lake Union"
+    , "dist" : 10
+    , "map"  : "https://www.strava.com/routes/15766760"
+    }
+  , { "uid"  : "ebey-kettle"
+    , "name" : "Ebey Kettle"
+    , "dist" : 13.1
+    , "map"  : "http://nwtrailruns.com/events/fort-ebey-kettles-trail-run/"
+  , { "uid"  : "sammamish"
+    , "name" : "Lake Sammamish"
+    , "dist" : 13.1
+    , "map"  : "http://lakesammamishhalf.com/"
+    }
+  , { "uid"  : "cse-seward"
+    , "name" : "PP: CSE Seward"
+    , "dist" : 12.77
+    , "map"  : "http://www.gmap-pedometer.com/?r=7329974"
+    }
   , { "uid"  : "TBD"
     , "name" : "TBD"
     , "dist" : 0.00
