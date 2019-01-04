@@ -302,7 +302,7 @@
   , { "uid"  : "arb-union"
     , "name" : "Arboretum Lake Union"
     , "dist" : 10
-    , "map"  : "https://www.strava.com/routes/15766760"
+    , "map"  : "https://www.gmap-pedometer.com/?r=7330234"
     }
   , { "uid"  : "ebey-kettle"
     , "name" : "Ebey Kettle"
