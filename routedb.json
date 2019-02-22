@@ -319,6 +319,11 @@
     , "dist" : 12.77
     , "map"  : "http://www.gmap-pedometer.com/?r=7329974"
     }
+  , { "uid"  : "SNOW"
+    , "name" : "SNOW"
+    , "dist" : 0.00
+    , "map"  : "SNOW"
+    }
   , { "uid"  : "TBD"
     , "name" : "TBD"
     , "dist" : 0.00

@@ -39,30 +39,30 @@
   , { "date" : "2019-02-09"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "ob-cse-magnuson-park"
+        , "route" : "SNOW"
         }
       , { "time"  : "10:50"
-        , "route" : "ob-cse-foster-island"
+        , "route" : "SNOW"
         }
       ]
     }
   , { "date" : "2019-02-16"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "lower-queen-anne-loop"
+        , "route" : "SNOW"
         }
       , { "time"  : "10:00"
-        , "route" : "ob-sculpture-park"
+        , "route" : "SNOW"
         }
       ]
     }
   , { "date" : "2019-02-23"
     , "plan" :
-      [ { "time"  : "9:00"
-        , "route" : "lord-hill-half"
+      [ { "time"  : "8:50"
+        , "route" : "lower-queen-anne-loop"
         }
-      , { "time"  : "9:40"
-        , "route" : "ebey-kettle"
+      , { "time"  : "10:00"
+        , "route" : "ob-sculpture-park"
         }
       ]
     }
