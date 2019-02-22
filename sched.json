@@ -59,10 +59,10 @@
   , { "date" : "2019-02-23"
     , "plan" :
       [ { "time"  : "8:50"
-        , "route" : "lower-queen-anne-loop"
+        , "route" : "ob-locks-discovery"
         }
-      , { "time"  : "10:00"
-        , "route" : "ob-sculpture-park"
+      , { "time"  : "10:10"
+        , "route" : "ob-locks-gg"
         }
       ]
     }

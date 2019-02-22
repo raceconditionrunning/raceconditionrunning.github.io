@@ -104,6 +104,11 @@
     , "dist" : 4.53
     , "map"  : "http://www.gmap-pedometer.com/?r=6957881"
     }
+  , { "uid"  : "ob-locks-discovery"
+    , "name" : "OB: Locks, Discovery Park"
+    , "dist" : 6.21
+    , "map"  : "http://www.gmap-pedometer.com/?r=7344701"
+    }
   , { "uid"  : "ob-discovery-gg"
     , "name" : "OB: Discovery, Golden Gardens"
     , "dist" : 7.43
