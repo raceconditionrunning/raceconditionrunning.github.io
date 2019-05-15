@@ -9,14 +9,14 @@ Most of the site content and iCal are generated from these files.
 NOTE: schedule times should be in 24 hour format.
 So "5:30 pm" would be "17:30".
 
-To test locally, you can start a small Python webserver for this directory:
-```
-  $ python3 test-server.py
-```
-After which the page will be available at [http://localhost:8000](http://localhost:8000).
+Install dependencies with `pip3 install -r requirements.txt` and
+`bundle install`.
+
+To test locally, run `make serve`.
+
+After which the page will be available at [http://localhost:4000](http://localhost:4000).
 
 If you change the schedule, please update the iCal before pushing:
 ```
-  $ python3 mkical.py
+  $ make rcc.ics
 ```
-NOTE this requires the [icalendar](http://icalendar.readthedocs.io/en/latest/) package.
