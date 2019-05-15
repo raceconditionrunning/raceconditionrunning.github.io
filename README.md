@@ -20,3 +20,15 @@ If you change the schedule, please update the iCal before pushing:
 ```
   $ make rcc.ics
 ```
+
+## Notes
+
+You may need a specific version of bundler (?!) which you can install with:
+```
+  $ gem install bundler -v 1.17.3
+```
+
+`watchy` is in npm which you can install with:
+```
+  $ npm install -g watchy
+```
