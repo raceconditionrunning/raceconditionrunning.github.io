@@ -1,1 +1,8 @@
+# jekyll stuff
+_site/
+
+# other built files
+rcc.ics
+
+# misc files
 .DS_Store

@@ -1,0 +1,29 @@
+url: http://raceconditionrunning.com
+
+permalink: /:title/
+
+markdown: kramdown
+kramdown:
+  entity_output: symbolic
+  auto_ids: False
+  input: GFM
+  hard_wrap: False
+  syntax_highlighter: rouge
+
+include:
+  - .nojekyll
+exclude:
+  - Makefile
+  - "README.md"
+  - Gemfile
+  - Gemfile.lock
+  - requirements.txt
+
+sass:
+  style: :compressed
+
+liquid:
+  error_mode: strict
+
+collections:
+  - brunch_reviews

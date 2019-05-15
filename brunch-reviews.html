@@ -1,0 +1,13 @@
+---
+layout: default
+---
+
+{% for review in site.brunch_reviews %}
+
+  <h2>{{ review.restaurant }}</h2>
+
+  {{ review.date | date_to_long_string }}
+
+  {{ review.content }}
+
+{% endfor %}

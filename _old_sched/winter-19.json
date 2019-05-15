@@ -1,0 +1,138 @@
+{ "sched" :
+  [ { "date" : "2019-01-12"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "greenlake-cse"
+        }
+      , { "time"  : "10:35"
+        , "route" : "green-lake-loop"
+        }
+      ]
+    }
+  , { "date" : "2019-01-19"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "ob-cse-520"
+        }
+      , { "time"  : "10:30"
+        , "route" : "ob-cse-arboretum"
+        }
+      ]
+    }
+  , { "date" : "2019-01-26"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "ob-washington-park-sailing-club"
+        }
+      , { "time"  : "10:50"
+        , "route" : "ob-madison-interlaken"
+        }
+      ]
+    }
+  , { "date" : "2019-02-02"
+    , "plan" :
+      [ { "time"  : "7:30"
+        , "route" : "viaduct"
+        }
+      ]
+    }
+  , { "date" : "2019-02-09"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "SNOW"
+        }
+      , { "time"  : "10:50"
+        , "route" : "SNOW"
+        }
+      ]
+    }
+  , { "date" : "2019-02-16"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "SNOW"
+        }
+      , { "time"  : "10:00"
+        , "route" : "SNOW"
+        }
+      ]
+    }
+  , { "date" : "2019-02-23"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "ob-locks-discovery"
+        }
+      , { "time"  : "10:10"
+        , "route" : "ob-locks-gg"
+        }
+      ]
+    }
+  , { "date" : "2019-03-02"
+    , "plan" :
+      [ { "time"  : "7:30"
+        , "route" : "sammamish"
+        }
+      , { "time"  : "8:50"
+        , "route" : "salmon-bay-fremont"
+        }
+      , { "time"  : "10:10"
+        , "route" : "ob-locks-gg"
+        }
+      ]
+    }
+  , { "date" : "2019-03-09"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "discovery-magnolia-loop"
+        }
+      , { "time"  : "10:20"
+        , "route" : "ob-discovery-gg"
+        }
+      ]
+    }
+  , { "date" : "2019-03-16"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "gas-works-salmon-bay"
+        }
+      ]
+    }
+  , { "date" : "2019-03-24"
+    , "plan" :
+      [ { "time"  : "9:00"
+        , "route" : "mercer-island-half"
+        }
+      ]
+    }
+  , { "date" : "2019-03-30"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "arb-union"
+        }
+      ]
+    }
+  , { "date" : "2019-04-06"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "cse-seward"
+        }
+      ]
+    }
+  , { "date" : "2019-04-13"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "gas-works-queen-anne-loop"
+        }
+      , { "time"  : "10:40"
+        , "route" : "ob-gas-works-green-lake"
+        }
+      ]
+    }
+  , { "date" : "2019-04-20"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "ob-overlake-lake-hill"
+        }
+      ]
+    }
+  ]
+}

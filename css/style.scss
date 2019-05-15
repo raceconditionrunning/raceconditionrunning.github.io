@@ -1,3 +1,7 @@
+---
+# this ensures Jekyll transforms the file into regular css
+---
+
 body {
   max-width: 650px;
   margin: 30px auto;
@@ -55,4 +59,20 @@ a:hover {
   content: "";
   clear: both;
   display: table;
+}
+
+#topnav {
+  text-align: center;
+
+  a {
+    text-align: center;
+    padding: 14px 16px;
+    color: black;
+    font-size: 16pt;
+
+    &:hover, &.active {
+      font-weight: bold;
+      text-decoration: none;
+    }
+  }
 }
