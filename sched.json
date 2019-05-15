@@ -134,5 +134,12 @@
         }
       ]
     }
+  , { "date" : "2019-05-14"
+    , "plan" :
+      [ { "time"  : "8:50"
+        , "route" : "pp-discovery-alki"
+        }
+      ]
+    }
   ]
 }
