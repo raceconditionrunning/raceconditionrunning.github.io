@@ -134,7 +134,7 @@
         }
       ]
     }
-  , { "date" : "2019-05-14"
+  , { "date" : "2019-05-18"
     , "plan" :
       [ { "time"  : "8:50"
         , "route" : "pp-discovery-alki"
