@@ -51,8 +51,8 @@ a:hover {
 
 .column {
   float: left;
-  width: 50%;
-  padding: 5px;
+  width: 48%;
+  padding: 5px 1% 5px 1%;
 }
 
 .row::after {
@@ -74,5 +74,15 @@ a:hover {
       font-weight: bold;
       text-decoration: none;
     }
+  }
+}
+
+.brunch-review {
+  img {
+    max-width: 90%;
+    max-height: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
   }
 }
