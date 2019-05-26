@@ -324,6 +324,16 @@
     , "dist" : 12.77
     , "map"  : "http://www.gmap-pedometer.com/?r=7329974"
     }
+  , { "uid"  : "west-seattle-loop-18"
+    , "name" : "West Seattle Loop 18"
+    , "dist" : 18.4
+    , "map"  : "https://www.gmap-pedometer.com/?r=7375664"
+    }
+  , { "uid"  : "west-seattle-loop-15"
+    , "name" : "West Seattle Loop 15"
+    , "dist" : 15.2
+    , "map"  : "https://www.gmap-pedometer.com/?r=7375666"
+    }
   , { "uid"  : "SNOW"
     , "name" : "SNOW"
     , "dist" : 0.00
