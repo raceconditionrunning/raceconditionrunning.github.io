@@ -2,7 +2,8 @@
 layout: default
 ---
 
-{% for review in site.brunch_reviews %}
+{% assign brunch_reviews_sorted = site.brunch_reviews | sort: 'date' | reverse %}
+{% for review in brunch_reviews_sorted %}
 
 <div class="brunch-review">
   <h2>{{ review.restaurant }}</h2>
