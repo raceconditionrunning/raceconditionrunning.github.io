@@ -1,0 +1,19 @@
+---
+layout: default
+---
+
+Here's the list of routes in our database (YAML file)!
+
+<div id='routes'>
+  <ul id='route-list'>
+    {% for r in site.data.routes %}
+    {% assign route = r[1] %}
+      <li>
+        <a target="_blank" href="{{ route.map }}">
+          <span class="fll">{{ route.name }}</span>
+          <span class="flr">{{ route.dist }}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>

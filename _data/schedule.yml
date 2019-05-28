@@ -1,0 +1,21 @@
+- date: "2019-05-11"
+  plan:
+    - time: "8:50"
+      route: "ob-miller-park-mercer-island"
+
+- date: "2019-05-18"
+  plan:
+    - time: "8:50"
+      route: "pp-discovery-alki"
+
+- date: "2019-05-25"
+  plan:
+    - time: "8:50"
+      route: west-seattle-loop-15
+
+- date: "2019-06-01"
+  plan:
+    - time: "8:50"
+      route: cse-woodinville-cafe
+    - time: "8:50"
+      route: cse-woodinville-cafe

@@ -2,7 +2,7 @@
 
 all: build
 
-rcc.ics: _bin/mkical.py sched.json routedb.json
+rcc.ics: _bin/mkical.py _data/schedule.yml _data/routes.yml
 	python3 $<
 
 build: rcc.ics

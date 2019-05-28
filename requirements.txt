@@ -1,1 +1,2 @@
 icalendar==4.0.3
+PyYAML==3.11

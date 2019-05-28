@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import json
+import yaml
 from icalendar import Calendar, Event, vText, vDatetime, vUri
 from datetime import datetime, timedelta
 import pytz
@@ -27,16 +27,14 @@ calHeader = \
     ]
 
 def main():
-    with open('routedb.json') as f:
-        routes = json.load(f)['routes']
+    with open('_data/routes.yml') as f:
+        routes = yaml.load(f)
 
-    with open('sched.json') as f:
-        sched = json.load(f)['sched']
+    with open('_data/schedule.yml') as f:
+        sched = yaml.load(f)
 
     def lkup(uid):
-        for r in routes:
-            if r['uid'] == uid:
-                return r
+      return routes[uid]
 
     def dtstart(date, phase):
       time = datetime.strptime(phase['time'], '%H:%M')

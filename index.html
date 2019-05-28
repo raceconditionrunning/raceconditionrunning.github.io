@@ -36,9 +36,30 @@ layout: default
   Please let us know on the UW CSE Slack or RCR Facebook page
   if you're joining and arrive 10 minutes before run!
 </p>
-<div id='schedule'>
-  <table id='runs'></table>
-</div>
+
+
+<div id='schedule'><table id='runs'>
+  {% for run in site.data.schedule %}
+  <tbody class="run" data-date="{{ run.date }}">
+    {% for plan in run.plan %}
+    <tr>
+      {% if forloop.first %}
+        <td class="date">{{ run.date | date: "%b %e" }}</td>
+      {% else %}
+        <td class="date"></td>
+      {% endif %}
+      <td class="time">{{ plan.time }}</td>
+      {% assign route = site.data.routes[plan.route] %}
+      <td nowrap>
+        <a target="_blank" href="{{ route.map }}">{{ route.name }}</a> &nbsp;
+        ({{ route.dist }})
+      </td>
+    </tr>
+    {% endfor %}
+    <tr class="spacer"></tr>
+  </tbody>
+  {% endfor %}
+</table></div>
 
 <h3>Tuesday</h3>
 
@@ -64,127 +85,32 @@ layout: default
 </p>
 -->
 
-
 {% include photo_carousel.html %}
 
-<h2>Routes</h2>
-
-<div id='routes'>
-  <ul id='route-list'></ul>
-</div>
-
-
 <script>
-$(function() {
-  var ROUTES;
-  var SCHED;
+function highlightDates() {
+  var today = new Date();
+  var afterNext = false;
 
-  function lkup(uid) {
-    for(var i = 0; i < ROUTES.length; i++) {
-      var r = ROUTES[i];
-      if(r.uid == uid) {
-        return r;
-      }
-    }
-    console.log("lkup: could not find " + uid);
-  }
+  $("tbody.run").each(function() {
+    var date = new Date($(this).data("date"));
+    date.setDate(date.getDate() + 1);
 
-  var monthName =
-    [ "Jan", "Feb", "Mar", "Apr", "May", "Jun"
-    , "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-    ];
-
-
-  function main() {
-    dispRoutes();
-    dispSched();
-  }
-
-  function dispRoutes() {
-    for(var i = 0; i < ROUTES.length; i++) {
-      $("<li/>", {
-        html: fmtRoute(ROUTES[i])
-      }).appendTo("#route-list");
-    }
-  }
-
-  function fmtRoute(r) {
-    var d = (Math.round(r.dist * 100) / 100).toFixed(2);
-    return "<a target='_blank' href='" + r.map + "'>"
-         + "<span class='fll'>" + r.name + "</span>"
-         + "<span class='flr'>" + d + "</span>"
-         + "</a>";
-  }
-
-  function dispSched() {
-    var today = new Date();
-    var afterNext = false;
-
-    var entries = [];
-    for(var i = 0; i < SCHED.length; i++) {
-      var run = SCHED[i];
-      var date = new Date(run.date);
-
-      // figure age with date after run
-      var ndate = new Date(run.date);
-      ndate.setDate(ndate.getDate() + 1);
-
-      var age = "past";
-      if(today < ndate) {
-        if(!afterNext) {
-          age = "next";
-          afterNext = true;
-        } else {
-          age = "future";
-        }
-      }
-
-      for(var j = 0; j < run.plan.length; j++) {
-        var phase = run.plan[j];
-        var route = lkup(phase.route);
-        var entry = { date: ""
-                    , time: phase.time
-                    , name: route.name
-                    , map:  route.map
-                    , dist: route.dist
-                    , age:  age
-                    };
-        if(j == 0) {
-          var M = monthName[date.getMonth()];
-          var D = date.getDate() + 1;
-          entry.date = M + " " + D;
-        }
-        entries.push(entry);
-      }
-      entries.push(null);
-    }
-
-    for(var i = 0; i < entries.length; i++) {
-      var e = entries[i];
-      var row = "";
-      if(e == null) {
-        row = "<tr class='spacer'></tr>";
+    var age = "past";
+    if(today < date) {
+      if(!afterNext) {
+        age = "next";
+        afterNext = true;
       } else {
-        row = "<tr class='" + e.age + "'>"
-            + "<td class='date'>" + e.date + "</td>"
-            + "<td class='time'>" + e.time + "</td>"
-            + "<td nowrap>"
-            +    "<a target='_blank' href='" + e.map + "'>"
-            +    e.name +  "</a>"
-            +    "&nbsp; (" + e.dist + ")"
-            + "</td>"
-            + "</tr>";
+        age = "future";
       }
-      $("#runs").append(row);
     }
-  }
 
-  $.getJSON("routedb.json", function(data) {
-    ROUTES = data.routes;
-    $.getJSON("sched.json", function(data) {
-      SCHED = data.sched;
-      main();
-    })
+    $(this).addClass(age);
   });
+}
+
+$(function() {
+  highlightDates();
 });
 </script>
