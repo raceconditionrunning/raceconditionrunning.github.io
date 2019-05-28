@@ -334,6 +334,11 @@
     , "dist" : 15.2
     , "map"  : "https://www.gmap-pedometer.com/?r=7375666"
     }
+  , { "uid"  : "cse-woodinville-cafe"
+    , "name" : "PP: CSE Woodinville Cafe"
+    , "dist" : 16.2
+    , "map"  : "https://www.gmap-pedometer.com/?r=7376251"
+    }
   , { "uid"  : "SNOW"
     , "name" : "SNOW"
     , "dist" : 0.00
