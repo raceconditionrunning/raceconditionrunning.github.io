@@ -6,8 +6,8 @@ Here's the list of routes in our database (YAML file)!
 
 <div id='routes'>
   <ul id='route-list'>
-    {% for r in site.data.routes %}
-    {% assign route = r[1] %}
+    {% assign sorted_routes = site.data.routes | sort: 'dist' %}
+    {% for route in sorted_routes %}
       <li>
         <a target="_blank" href="{{ route.map }}">
           <span class="fll">{{ route.name }}</span>

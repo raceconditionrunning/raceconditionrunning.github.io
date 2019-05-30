@@ -36,7 +36,7 @@ layout: default
         <td class="date"></td>
       {% endif %}
       <td class="time">{{ plan.time }}</td>
-      {% assign route = site.data.routes[plan.route] %}
+      {% assign route = site.data.routes | where: 'id', plan.route | first %}
       <td nowrap>
         <a target="_blank" href="{{ route.map }}">{{ route.name }}</a> &nbsp;
         ({{ route.dist }})
