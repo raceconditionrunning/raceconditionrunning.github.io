@@ -15,20 +15,24 @@ a:hover {
   text-decoration: underline dotted;
 }
 #route-list {
-  width: 300px;
-  list-style: none;
-  padding-left: 0;
-  margin-left: 20px;
+  th {text-align: left;}
+  td,th {
+      vertical-align: text-top;
+      padding: 5px;
+  }
+  ul.matched-runs {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li { padding: 0; }
+  }
 }
-#route-list li {
-  padding-bottom: 25px;
+.comma-sep {
+  li {display: inline;}
+  li:after {content: ", ";}
+  li:last-child:after {content: "";}
 }
-.fll {
-  float: left;
-}
-.flr {
-  float: right;
-}
+
 #runs {
   margin-left: 20px;
 }

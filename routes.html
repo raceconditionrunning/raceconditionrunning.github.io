@@ -2,18 +2,33 @@
 layout: default
 ---
 
-Here's the list of routes in our database (YAML file)!
-
-<div id='routes'>
-  <ul id='route-list'>
+<div id="routes">
+  <table id="route-list">
+    <tr>
+      <th>Route Name</th>
+      <th>Distance (mi)</th>
+      <th>Dates Run</th>
+    </tr>
     {% assign sorted_routes = site.data.routes | sort: 'dist' %}
     {% for route in sorted_routes %}
-      <li>
-        <a target="_blank" href="{{ route.map }}">
-          <span class="fll">{{ route.name }}</span>
-          <span class="flr">{{ route.dist }}</span>
-        </a>
-      </li>
+      <tr>
+        <td>
+          <a target="_blank" href="{{ route.map }}">
+            <span class="name">{{ route.name }}</span>
+          </a>
+        </td>
+        <td> <span class="dist">{{ route.dist }}</span> </td>
+        <td>
+          <ul class="matched-runs comma-sep">
+          {% for event in site.data.schedule %}
+            {% assign matched_runs = event.plan | where: 'route', route.id %}
+            {% for run in matched_runs %}
+              <li class="date">{{ event.date }}</li>
+            {% endfor %}
+          {% endfor %}
+          </ul>
+        </td>
+      </tr>
     {% endfor %}
-  </ul>
+  </table>
 </div>
