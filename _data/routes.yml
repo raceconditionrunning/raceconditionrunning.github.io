@@ -338,6 +338,11 @@ cse-woodinville-cafe:
   dist : 16.2
   map : "https://www.gmap-pedometer.com/?r=7376251"
 
+cse-cap-hill-parks-loop:
+  name: "CSE - Cap Hill Parks Loop"
+  dist: 8.2
+  map: "https://www.gmap-pedometer.com/?r=7377059"
+
 SNOW:
   name: "SNOW"
   dist: 0.00
