@@ -1,21 +1,21 @@
 - id: mercer-island-half
   name: "Mercer Island Half Marathon"
-  dist: 13.2
+  dist: 13.20
   map: "http://mercerislandhalf.com/wp-content/uploads/2017/03/17-MIRHM-Half-Marathon-Course-Map-4.pdf"
 
 - id: lord-hill-half
   name: "Lord Hill Half Marathon"
-  dist: 13.1
+  dist: 13.10
   map: "http://www.evergreentrailruns.com/lord-hill-upcoming#half"
 
 - id: dawg-dash-18
   name: "UW Dawg Dash 2018"
-  dist: 6.2
+  dist: 6.20
   map: "https://www.washington.edu/alumni/dawgdash"
 
 - id: seattle-half-18
   name: "Seattle Half 2018"
-  dist: 13.1
+  dist: 13.10
   map: "http://www.seattlemarathon.org/amica-insurance-seattle-marathon/"
 
 - id: salmon-bay-fremont
@@ -40,7 +40,7 @@
 
 - id: dawg-dash-17
   name: "2017 Seattle Dawg Dash 5k/10k"
-  dist: 3.2
+  dist: 3.20
   map: "http://depts.washington.edu/alumni/blogs/dawgdash/races/seattle/"
 
 - id: portage-bay-loop
@@ -60,12 +60,12 @@
 
 - id: discovery-park-loop
   name: "Discovery Park Loop"
-  dist: 4
+  dist: 4.00
   map: "http://www.gmap-pedometer.com/?r=7001206"
 
 - id: ob-gas-works-cse
   name: "OB: Gas Works, CSE"
-  dist: 4
+  dist: 4.00
   map: "http://www.gmap-pedometer.com/?r=6957721"
 
 - id: ob-cse-foster-island
@@ -130,7 +130,7 @@
 
 - id: ob-madrona-park-sailing-club
   name: "OB: Madrona Park, Sailing Club"
-  dist: 6
+  dist: 6.00
   map: "http://www.gmap-pedometer.com/?r=6957722"
 
 - id: ob-green-lake-ravenna
@@ -160,7 +160,7 @@
 
 - id: ob-gas-works-green-lake
   name: "OB: Gas Works, Green Lake"
-  dist: 6
+  dist: 6.00
   map: "https://www.gmap-pedometer.com/?r=7176445"
 
 - id: ob-magnolia-blvd-bridge
@@ -185,7 +185,7 @@
 
 - id: seattle-half-17
   name: "Seattle Half 2017"
-  dist: 13.2
+  dist: 13.20
   map: "maps/seattle-half-17.png"
 
 - id: pp-discovery-alki
@@ -195,7 +195,7 @@
 
 - id: redmond-reindeer-romp-18
   name: "Redmond Reindeer Romp 2018"
-  dist: 13.2
+  dist: 13.20
   map: "http://nwtrailruns.com/events/redmond-reindeer-romp/"
 
 - id: ob-cse-magnuson-park
@@ -265,12 +265,12 @@
 
 - id: spring-eagle
   name: "Spring Eagle Trail Runs"
-  dist: 13.1
+  dist: 13.10
   map: "http://nwtrailruns.com/events/spring-eagle-trail-run"
 
 - id: lake-relay
   name: "Lake Hills 50k Relay"
-  dist: 31
+  dist: 31.00
   map: "http://nwtrailruns.com/events/lake-hills-50k-relay/"
 
 - id: cse-arboretum-foster-loop
@@ -290,7 +290,7 @@
 
 - id: paradise-valley-18
   name: "Paradise Valley 18"
-  dist: 13.1
+  dist: 13.10
   map: "http://nwtrailruns.com/events/paradise-valley-trail-run/"
 
 - id: ob-colman-seward
@@ -305,17 +305,17 @@
 
 - id: arb-union
   name: "Arboretum Lake Union"
-  dist: 10
+  dist: 10.00
   map: "https://www.gmap-pedometer.com/?r=7330234"
 
 - id: ebey-kettle
   name: "Ebey Kettle"
-  dist: 13.1
+  dist: 13.10
   map: "http://nwtrailruns.com/events/fort-ebey-kettles-trail-run/"
 
 - id: sammamish
   name: "Lake Sammamish"
-  dist: 13.1
+  dist: 13.10
   map: "http://lakesammamishhalf.com/"
 
 - id: cse-seward
@@ -330,17 +330,17 @@
 
 - id: west-seattle-loop-15
   name: "West Seattle Loop 15"
-  dist: 15.2
+  dist: 15.20
   map: "https://www.gmap-pedometer.com/?r=7375666"
 
 - id: cse-woodinville-cafe
   name : "PP: CSE Woodinville Cafe"
-  dist : 16.2
+  dist : 16.20
   map : "https://www.gmap-pedometer.com/?r=7376251"
 
 - id: cse-cap-hill-parks-loop
   name: "CSE - Cap Hill Parks Loop"
-  dist: 8.2
+  dist: 8.20
   map: "https://www.gmap-pedometer.com/?r=7377059"
 
 - id: SNOW
