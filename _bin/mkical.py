@@ -34,7 +34,9 @@ def main():
         sched = yaml.load(f)
 
     def lkup(uid):
-      return routes[uid]
+      for r in routes:
+        if r ['id'] == uid:
+          return r
 
     def dtstart(date, phase):
       time = datetime.strptime(phase['time'], '%H:%M')
