@@ -5,7 +5,7 @@ layout: default
 {% assign brunch_reviews_sorted = site.brunch_reviews | sort: 'date' | reverse %}
 {% for review in brunch_reviews_sorted %}
 
-<div class="brunch-review">
+<div class="brunch-review" id="{{ review.id | remove_first: "/" | replace: "/", "-" | replace: "_", "-" }}">
   <h2>{{ review.restaurant }}</h2>
 
   {{ review.date | date_to_long_string }}

@@ -1,0 +1,25 @@
+---
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Race Condition Brunch Reviews</title>
+    <description>Seattle's premier running computer scientist brunch blog</description>
+    <link>{{ site.url }}/brunch-reviews/</link>
+    <atom:link href="{{ site.url }}/brunch-reviews/rss.xml" rel="self" type="application/rss+xml" />
+    <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
+    <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
+    <generator>Jekyll v{{ jekyll.version }}</generator>
+    {% assign brunch_reviews_sorted = site.brunch_reviews | sort: 'date' | reverse %}
+    {% for review in brunch_reviews_sorted %}
+      {% assign review_id = review.id | remove_first: "/" | replace: "/", "-" | replace: "_", "-" %}
+      <item>
+        <title>{{ review.restaurant | xml_escape }}</title>
+        <description>{{ review.content | xml_escape }}</description>
+        <pubDate>{{ review.date | date_to_rfc822 }}</pubDate>
+        <link>{{ site.url }}/brunch-reviews/#{{ review_id }}</link>
+        <guid isPermaLink="true">{{ site.url }}/brunch-reviews/#{{ review_id }}</guid>
+      </item>
+    {% endfor %}
+  </channel>
+</rss>
