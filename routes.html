@@ -17,7 +17,18 @@ layout: default
             <span class="name">{{ route.name }}</span>
           </a>
         </td>
-        <td> <span class="dist">{{ route.dist }}</span> </td>
+        {% comment %}
+
+          The following is a ridiculous hack to be able to format route
+          distances as %.2f
+
+          See: https://stackoverflow.com/questions/37862167/trailing-zeros-in-jekyll-liquid
+
+        {% endcomment %}
+        {% assign dist_split = route.dist | round: 2 | split: "." %}
+        {% assign dist_integral = dist_split[0] %}
+        {% assign dist_fractional = dist_split[1] | append: "00" | truncate: 2, "" %}
+        <td><span class="dist">{{ dist_integral }}.{{ dist_fractional }}</span></td>
         <td>
           <ul class="matched-runs comma-sep">
           {% for event in site.data.schedule %}
