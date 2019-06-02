@@ -2,6 +2,13 @@
 layout: default
 ---
 
+<div style="float: right">
+  <a target="_blank" href="rss.xml">
+    <b>RSS Feed</b>
+    <img src="/img/rss-icon.png" height="25px">
+  </a>
+</div>
+
 {% assign brunch_reviews_sorted = site.brunch_reviews | sort: 'date' | reverse %}
 {% for review in brunch_reviews_sorted %}
 

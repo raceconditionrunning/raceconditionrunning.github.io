@@ -76,9 +76,9 @@ recovering all right.
   <div class="column">
     <img src="/img/brunch-reviews/190601-woodinville-cafe/wcafe-french-toast.jpg" alt="French Toast">
   </div>
-  <div class="column">
-    <img src="/img/brunch-reviews/190601-woodinville-cafe/wcafe-bennies.jpg" alt="Benedicts">
-  </div>
+</div>
+<div class="row">
+  <img src="/img/brunch-reviews/190601-woodinville-cafe/wcafe-bennies.jpg" alt="Benedicts" width="48%">
 </div>
 
 ### Verdict
