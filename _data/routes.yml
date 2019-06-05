@@ -338,6 +338,11 @@
   dist : 16.20
   map : "https://www.gmap-pedometer.com/?r=7376251"
 
+- id: cse-locks-queen-anne-loop
+  name : "CSE Locks Queen Anne Loop"
+  dist : 16.93
+  map : "https://www.gmap-pedometer.com/?r=7378977"
+
 - id: cse-cap-hill-parks-loop
   name: "CSE - Cap Hill Parks Loop"
   dist: 8.20
