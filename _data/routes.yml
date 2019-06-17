@@ -348,6 +348,11 @@
   dist: 8.20
   map: "https://www.gmap-pedometer.com/?r=7377059"
 
+- id: cse-520-kirkland-marymoor
+  name: "PP: CSE - Kirkland - Marymoor"
+  dist: 18.00
+  map: "https://www.gmap-pedometer.com/?r=7382424"
+
 - id: SNOW
   name: "SNOW"
   dist: 0.00
