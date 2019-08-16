@@ -1,19 +1,130 @@
-- date: "2019-05-11"
+- date: "2019-08-17"
   plan:
     - time: "8:50"
-      route: "ob-miller-park-mercer-island"
+      route: green-lake-loop
+    - time: "9:20"
+      route: green-lake-loop
 
-- date: "2019-05-18"
+- date: "2019-08-24"
   plan:
     - time: "8:50"
-      route: "pp-discovery-alki"
+      route:
+        name: Interbay Loop
+        dist: 8.0
 
-- date: "2019-05-25"
+- date: "2019-08-31"
   plan:
     - time: "8:50"
-      route: west-seattle-loop-15
+      route:
+        name: SODO to West Seattle
+        dist: 10.0
 
-- date: "2019-06-01"
+- date: "2019-09-07"
   plan:
     - time: "8:50"
-      route: cse-woodinville-cafe
+      route:
+        name: Lake Union + Capitol Hill Loop
+        dist: 10.0
+
+- date: "2019-09-14"
+  plan:
+    - time: "8:50"
+      route:
+        name: "OB: Fremont, Ballard Locks"
+        dist: 8.0
+
+- date: "2019-09-21"
+  plan:
+    - time: "9:00"
+      route:
+        name: Paradise Valley Trail Run
+        map: http://nwtrailruns.com/events/paradise-valley-trail-run/
+        dist: 13.1
+
+- date: "2019-09-28"
+  plan:
+    - time: "8:50"
+      route:
+        name: "OB: Greenlake, Carkeek"
+        dist: 8.0
+    - time: "10:15"
+      route: green-lake-loop
+
+
+- date: "2019-10-05"
+  plan:
+    - time: "8:50"
+      route:
+        name: Queen Anne Loop
+        dist: 6.0
+    - time: "9:50"
+      route:
+        name: "OB: Sculpture Garden"
+        dist: 4.0
+
+- date: "2019-10-13"
+  plan:
+    - time: "9:00"
+      route:
+        name: Dawg Dash 10k 2019
+        dist: 6.2
+        map: https://www.washington.edu/alumni/dawgdash/
+
+- date: "2019-10-19"
+  plan:
+    - time: "7:00"
+      route:
+        name: Light Rail Relay
+
+- date: "2019-10-26"
+  plan:
+    - time: "8:50"
+      route:
+        name: "OB: Ballard Locks, Golden Gardens"
+        dist: 4.0
+    - time: "9:30"
+      route:
+        name: Locks, Discovery Loop
+        dist: 7.0
+
+- date: "2019-11-02"
+  plan:
+    - time: "8:50"
+      route:
+        name: "OB: CSE, Magnuson Park"
+        dist: 9.0
+
+- date: "2019-11-09"
+  plan:
+    - time: "8:50"
+      route:
+        name: "OB: Miller Playfield, Mercer Island"
+        dist: 10.0
+
+- date: "2019-11-16"
+  plan:
+    - time: "8:50"
+      route: pp-discovery-alki
+
+- date: "2019-11-23"
+  plan:
+    - time: "8:50"
+      route:
+        name: "PP: CSE, Columbia City"
+        dist: 8.0
+
+- date: "2019-12-01"
+  plan:
+    - time: "7:00"
+      route:
+        name: Seattle Half Marathon 2019
+        dist: 13.1
+        map: https://www.seattlemarathon.org/
+
+- date: "2019-12-07"
+  plan:
+    - time: "9:30"
+      route:
+        name: Reindeer Romp Trail Run
+        dist: 13.1
+        map: http://nwtrailruns.com/events/redmond-reindeer-romp/
