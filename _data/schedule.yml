@@ -54,13 +54,10 @@
 - date: "2019-10-05"
   plan:
     - time: "8:50"
-      route:
-        name: Queen Anne Loop
-        dist: 6.0
+      route: lower-queen-anne-loop
     - time: "9:50"
-      route:
-        name: "OB: Sculpture Garden"
-        dist: 4.0
+      route: ob-sculpture-park
+      notes: Aiming for closer to 4.
 
 - date: "2019-10-13"
   plan:
@@ -90,16 +87,13 @@
 - date: "2019-11-02"
   plan:
     - time: "8:50"
-      route:
-        name: "OB: CSE, Magnuson Park"
-        dist: 9.0
+      route: ob-cse-magnuson-park
+      notes: Aiming for 9, will cut it short at UVillage.
 
 - date: "2019-11-09"
   plan:
     - time: "8:50"
-      route:
-        name: "OB: Miller Playfield, Mercer Island"
-        dist: 10.0
+      route: ob-miller-park-mercer-island
 
 - date: "2019-11-16"
   plan:

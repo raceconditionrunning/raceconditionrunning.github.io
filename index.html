@@ -48,6 +48,12 @@ layout: default
         {% if route.map %}</a>{% endif %}
         {% if route.dist %}&nbsp; ({{ route.dist }}){% endif %}
       </td>
+      {% if plan.notes %}
+        <tr>
+          <td></td><td></td>
+          <td>{{ plan.notes }}</td>
+        </tr>
+      {% endif %}
     </tr>
     {% endfor %}
     <tr class="spacer"></tr>
