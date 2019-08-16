@@ -60,19 +60,29 @@ def main():
         phases = run['plan']
         for i in range(len(phases)):
             phase = phases[i]
-            route = lkup(phase['route'])
+
+            # If the route is just a string, it's a key into the routedb.
+            # Otherwise, it better be a map with the right keys itself.
+            if isinstance(phase['route'], str):
+              route = lkup(phase['route'])
+            else:
+              route = phase['route']
+
             name = route['name']
-            gmap = route['map']
-            dist = route['dist']
+            gmap = route['map'] if 'map' in route else ''
+            dist = route['dist'] if 'dist' in route else 0.0
+
+            event_name = '%s (%s)' % (name, dist) if dist > 0 else name
 
             start = dtstart(date, phase)
             if i < len(phases) - 1:
                 end = dtstart(date, phases[i + 1])
             else:
-                end = start + timedelta(0, 10 * 60 * round(dist))
+                delta = timedelta(0, 10 * 60 * round(dist if dist > 0 else 3))
+                end = start + delta
             uid = str(start) + '@raceconditionrunning.com'
             uid = uid.strip(' :-,;')
-            things.append({ 'summary'     : '%s (%s)' % (name, dist)
+            things.append({ 'summary'     : event_name
                           , 'dtstart'     : start
                           , 'dtend'       : end
                           , 'description' : gmap
@@ -81,7 +91,7 @@ def main():
                           })
 
             # add brunch after other phases
-            if i == len(phases) - 1:
+            if i == len(phases) - 1 and dist > 0:
                 bstart = end
                 bend = bstart + timedelta(0, 90 * 60)
                 buid = str(bstart) + '@raceconditionrunning.com'

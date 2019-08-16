@@ -37,9 +37,16 @@ layout: default
       {% endif %}
       <td class="time">{{ plan.time }}</td>
       {% assign route = site.data.routes | where: 'id', plan.route | first %}
+      {% if route %}{% else %}
+        {% assign route = plan.route %}
+      {% endif %}
       <td nowrap>
-        <a target="_blank" href="{{ route.map }}">{{ route.name }}</a> &nbsp;
-        ({{ route.dist }})
+        {% if route.map %}
+          <a target="_blank" href="{{ route.map }}">
+        {% endif %}
+        {{ route.name }}
+        {% if route.map %}</a>{% endif %}
+        {% if route.dist %}&nbsp; ({{ route.dist }}){% endif %}
       </td>
     </tr>
     {% endfor %}
