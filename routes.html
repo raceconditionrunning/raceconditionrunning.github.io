@@ -2,11 +2,14 @@
 layout: default
 ---
 
+CSE routes are routes that start and end at CSE.
+
 <div id="routes">
   <table id="route-list">
     <tr>
       <th>Route Name</th>
       <th>Distance (mi)</th>
+      <th>CSE Run?</th>
       <th>Dates Run</th>
     </tr>
     {% assign sorted_routes = site.data.routes | sort: 'dist' %}
@@ -29,6 +32,7 @@ layout: default
         {% assign dist_integral = dist_split[0] %}
         {% assign dist_fractional = dist_split[1] | append: "00" | truncate: 2, "" %}
         <td><span class="dist">{{ dist_integral }}.{{ dist_fractional }}</span></td>
+        <td>{% if route.cseroute %}Yes{% endif %}</td>
         <td>
           <ul class="matched-runs comma-sep">
           {% for event in site.data.schedule %}

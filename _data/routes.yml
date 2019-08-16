@@ -47,6 +47,7 @@
   name: "Portage Bay Loop"
   dist: 3.23
   map: "http://www.gmap-pedometer.com/?r=6849824"
+  cseroute: True
 
 - id: salmon-bay-loop
   name: "Salmon Bay Loop"
@@ -67,26 +68,31 @@
   name: "OB: Gas Works, CSE"
   dist: 4.00
   map: "http://www.gmap-pedometer.com/?r=6957721"
+  cseroute: True
 
 - id: ob-cse-foster-island
   name: "OB: CSE, Foster Island"
   dist: 4.14
   map: "http://www.gmap-pedometer.com/?r=6849833"
+  cseroute: True
 
 - id: ob-cse-arboretum
   name: "OB: CSE, Arboretum"
   dist: 4.04
   map: "http://www.gmap-pedometer.com/?r=7177223"
+  cseroute: True
 
 - id: ob-cse-volunteer
   name: "OB: CSE, Volunteer Park"
   dist: 5.30
   map: "http://www.gmap-pedometer.com/?r=7218025"
+  cseroute: True
 
 - id: cse-bryant-loop
   name: "CSE, Bryant loop"
   dist: 6.06
   map: "https://www.gmap-pedometer.com/?r=7218002"
+  cseroute: True
 
 - id: ob-sculpture-park
   name: "OB: Olympic Sculpture Park"
@@ -142,6 +148,7 @@
   name: "OB: CSE, Ravenna Park"
   dist: 4.12
   map: "http://www.gmap-pedometer.com/?r=7218018"
+  cseroute: True
 
 - id: lake-union-loop
   name: "Lake Union Loop"
@@ -202,6 +209,7 @@
   name: "OB: CSE, Magnuson Park"
   dist: 10.07
   map: "http://www.gmap-pedometer.com/?r=7177166"
+  cseroute: True
 
 - id: ob-madison-seward
   name: "OB: Madison, Seward Park"
@@ -212,6 +220,7 @@
   name: "OB: CSE, Sailing Club"
   dist: 15.01
   map: "http://www.gmap-pedometer.com/?r=7177219"
+  cseroute: True
 
 - id: magnuson-park-loop
   name: "Magnuson Park Loop"
@@ -222,11 +231,13 @@
   name: "CSE, Greenlake, Lake Union Loop"
   dist: 12.47
   map: "https://gmap-pedometer.com/?r=7169234"
+  cseroute: True
 
 - id: greenlake-cse
   name: "Greenlake, CSE Loop"
   dist: 8.46
   map: "http://www.gmap-pedometer.com/?r=7332362"
+  cseroute: True
 
 - id: gas-works-queen-anne-loop
   name: "Gas Works, Queen Anne Loop"
@@ -237,6 +248,7 @@
   name: "OB: CSE, SR 520"
   dist: 8.00
   map: "http://www.gmap-pedometer.com/?r=7177222"
+  cseroute: True
 
 - id: ob-madrona-madison-park
   name: "OB: Madrona, Madison Park"
@@ -257,11 +269,13 @@
   name: "OB: Run on Burke"
   dist: 7.13
   map: "http://www.gmap-pedometer.com/?r=7194368"
+  cseroute: True
 
 - id: cse-laurelhurst-loop
   name: "CSE, Laurelhurst Loop"
   dist: 6.52
   map: "http://www.gmap-pedometer.com/?r=7202894"
+  cseroute: True
 
 - id: spring-eagle
   name: "Spring Eagle Trail Runs"
@@ -277,6 +291,7 @@
   name: "CSE, Arboretum, Foster Island loop"
   dist: 7.35
   map: "https://www.gmap-pedometer.com/?r=7214448"
+  cseroute: True
 
 - id: ob-overlake-lake-hill
   name: "OB: Overlake, Lake Hills Park"
@@ -342,11 +357,13 @@
   name : "CSE Locks Queen Anne Loop"
   dist : 16.93
   map : "https://www.gmap-pedometer.com/?r=7378977"
+  cseroute: True
 
 - id: cse-cap-hill-parks-loop
   name: "CSE - Cap Hill Parks Loop"
   dist: 8.20
   map: "https://www.gmap-pedometer.com/?r=7377059"
+  cseroute: True
 
 - id: cse-520-kirkland-marymoor
   name: "PP: CSE - Kirkland - Marymoor"
