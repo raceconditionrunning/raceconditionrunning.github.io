@@ -8,9 +8,7 @@
 - date: "2019-08-24"
   plan:
     - time: "8:50"
-      route:
-        name: Interbay Loop
-        dist: 8.0
+      route: sculpture-park-interbay
 
 - date: "2019-08-31"
   plan:
@@ -29,9 +27,7 @@
 - date: "2019-09-14"
   plan:
     - time: "8:50"
-      route:
-        name: "OB: Fremont, Ballard Locks"
-        dist: 8.0
+      route: gas-works-salmon-bay
 
 - date: "2019-09-21"
   plan:
@@ -76,13 +72,10 @@
 - date: "2019-10-26"
   plan:
     - time: "8:50"
-      route:
-        name: "OB: Ballard Locks, Golden Gardens"
-        dist: 4.0
+      route: ob-locks-gg
     - time: "9:30"
-      route:
-        name: Locks, Discovery Loop
-        dist: 7.0
+      route: ob-locks-discovery
+      notes: Aiming for closer to 7.
 
 - date: "2019-11-02"
   plan:
