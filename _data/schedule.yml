@@ -115,3 +115,9 @@
         name: Reindeer Romp Trail Run
         dist: 13.1
         map: http://nwtrailruns.com/events/redmond-reindeer-romp/
+
+- date: "2020-03-14"
+  plan:
+    - time: "8:50"
+      route:
+        name: PLACEHOLDER
