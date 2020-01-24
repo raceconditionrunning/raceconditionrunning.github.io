@@ -26,6 +26,7 @@ calHeader = \
     , ('method'          , 'PUBLISH')
     ]
 
+
 def main():
     with open('_data/routes.yml') as f:
         routes = yaml.load(f)
@@ -105,23 +106,20 @@ def main():
                               })
 
     # add Tuesday and Thursday runs
-    d0 = datetime.strptime(sched[0]['date'], '%Y-%m-%d')
-    d1 = datetime.strptime(sched[-1]['date'], '%Y-%m-%d')
-    delta = d1 - d0
-    for i in range(delta.days):
-        d = d0 + timedelta(days=i)
-        if d.weekday() == 1 or d.weekday() == 3:
-            start = dtstart(d, {'time' : '16:40'})
-            end = start + timedelta(0, 60 * 60)
-            uid = str(start) + '@raceconditionrunning.com'
-            uid = uid.strip(' :-,;')
-            things.append({ 'summary'     : 'Short Runs'
-                          , 'dtstart'     : start
-                          , 'dtend'       : end
-                          , 'description' : 'Meet in CSE Atrium'
-                          , 'dtstamp'     : now
-                          , 'uid'         : uid
-                          })
+    start = dtstart(datetime.strptime("2015-01-06", '%Y-%m-%d'),
+                    {'time' : '16:40'})
+    end = start + timedelta(0, 60 * 60)
+    uid = 'shortruns@raceconditionrunning.com'
+    things.append({
+        'summary'     : 'Short Run',
+        'dtstart'     : start,
+        'dtend'       : end,
+        'location'    : 'Meet in CSE1 atrium',
+        'description' : 'Usually 4 miles on Tuesday and 6 miles on Thursday.',
+        'dtstamp'     : now,
+        'uid'         : uid,
+        'rrule'       : {'FREQ': 'WEEKLY', 'BYDAY': ['TU', 'TH']}
+    })
 
     cal = Calendar()
     for (k, v) in calHeader:
@@ -135,8 +133,10 @@ def main():
         for k, v in x.items():
             if isinstance(v, datetime):
                 e.add(k, vDatetime(v))
-            elif v.startswith('http'):
+            elif isinstance(v, str) and v.startswith('http'):
                 e.add(k, vUri(v))
+            elif k.lower() == 'rrule': # XXX: ugly hack
+                e.add(k, v)
             else:
                 e.add(k, vText(v))
         cal.add_component(e)
@@ -144,4 +144,6 @@ def main():
     with open('rcc.ics', 'wb') as f:
         f.write(cal.to_ical())
 
-main()
+
+if __name__ == '__main__':
+  main()
