@@ -10,8 +10,8 @@
     <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
     <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
     <generator>Jekyll v{{ jekyll.version }}</generator>
-    {% assign brunch_reviews_sorted = site.brunch-reviews | sort: 'date' | reverse | limit:5 %}
-    {% for review in brunch_reviews_sorted %}
+    {% assign brunch_reviews_sorted = site.brunch-reviews | sort: 'date' | reverse %}
+    {% for review in brunch_reviews_sorted limit:5 %}
       {% assign review_id = review.id | remove_first: "/" | replace: "/", "-" | replace: "_", "-" %}
       <item>
         <title>{{ review.restaurant | xml_escape }}</title>
