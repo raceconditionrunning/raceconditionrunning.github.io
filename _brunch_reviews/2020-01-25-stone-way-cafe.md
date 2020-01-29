@@ -22,7 +22,7 @@ fact, rain until later in the day. For a time, this prognostication holds true.
 The runner deftly avoids puddles, diverting around them and hurdling over them
 as the situation demands. The overcast weather is almost perfect, save the
 excessive humidity. The runner temporarily forgets the trials and tribulations
-winter running can bring and looks forward to another nine miles of perfect
+winter running can bring and looks forward to another nine miles of excellent
 conditions.
 
 ##### Act 2
@@ -61,20 +61,20 @@ service is relatively quick. Brunching at Stone Way is always a good decision.
 
 A group favorite is always their breakfast burritos. They're closer in size to
 two meals than one, but after a long run they're perfect. They pair perfectly
-with Valentina hot sauce.
+with Valentina hot sauce. The sliced and toasted corn muffin
+is not to be missed.
 
 ![Breakfast Burritos][burrito]
 
 They also have excellent desserts; this reviewer stole bites of some kind of pie
-and a bread pudding, and both were excellent. The sliced and toasted corn muffin
-is also not to be missed.
+and a bread pudding, and both were delicious.
 
 There are no hip-hop onions nor rap-scallions in this establishment. It has a
 decidedly indie vibe, hosting local musicians many evenings. According to local
-news, this establishment will be closed at some point to allow for high-density
-housing shops to be built in its place &mdash; leading this reviewer to conclude
-that maybe gentrifications isn't so great. Don't miss your chance to brunch here
-while you still can.
+news, Stone Way will be closed at some point to allow for high-density housing
+and shops to be built in its place &mdash; leading us to conclude that maybe
+gentrifications isn't so great. Don't miss your chance to brunch here while you
+still can.
 
 
 ### Verdict
