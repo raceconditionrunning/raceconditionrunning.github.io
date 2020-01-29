@@ -1,4 +1,5 @@
 ---
+layout: brunch-review
 restaurant: El Chupacabra
 author: Ellis Michael
 ---

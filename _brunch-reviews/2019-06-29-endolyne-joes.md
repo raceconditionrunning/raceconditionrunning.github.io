@@ -1,4 +1,5 @@
 ---
+layout: brunch-review
 restaurant: Endolyne Joe's
 author: Ellis Michael
 ---

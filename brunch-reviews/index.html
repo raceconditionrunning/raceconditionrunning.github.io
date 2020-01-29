@@ -2,22 +2,23 @@
 layout: default
 ---
 
-<div style="float: right">
+{% assign sorted_brunch_reviews = site.brunch-reviews | sort: 'date' | reverse %}
+{% assign latest_review = sorted_brunch_reviews | first %}
+
+<div id="brunch-reviews-sidebar">
   <a target="_blank" href="rss.xml">
     <b>RSS Feed</b>
     <img src="/img/rss-icon.png" height="25px">
   </a>
+  <hr>
+  <h4>Previous Reviews</h4>
+  {% for review in sorted_brunch_reviews offset:1 %}
+    <div><a href="{{ review.url }}">{{review.title}}</a></div>
+  {% endfor %}
 </div>
 
-{% assign brunch_reviews_sorted = site.brunch_reviews | sort: 'date' | reverse %}
-{% for review in brunch_reviews_sorted %}
-
-<div class="brunch-review" id="{{ review.id | remove_first: "/" | replace: "/", "-" | replace: "_", "-" }}">
-  <h2>{{ review.restaurant }}</h2>
-
-  {{ review.date | date_to_long_string }}
-
-  {{ review.content }}
+<div class="brunch-review">
+  <h2>{{ latest_review.restaurant }}</h2>
+  {{ latest_review.date | date_to_long_string }}
+  {{ latest_review.content }}
 </div>
-
-{% endfor %}

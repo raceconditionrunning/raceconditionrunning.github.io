@@ -26,4 +26,5 @@ liquid:
   error_mode: strict
 
 collections:
-  - brunch_reviews
+  brunch-reviews:
+    output: true

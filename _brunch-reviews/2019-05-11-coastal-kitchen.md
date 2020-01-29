@@ -1,4 +1,5 @@
 ---
+layout: brunch-review
 restaurant: Coastal Kitchen
 published: false
 ---

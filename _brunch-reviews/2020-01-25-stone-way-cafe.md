@@ -1,4 +1,5 @@
 ---
+layout: brunch-review
 restaurant: Stone Way Cafe
 author: Ellis Michael
 ---

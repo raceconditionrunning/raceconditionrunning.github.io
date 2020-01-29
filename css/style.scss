@@ -3,7 +3,7 @@
 ---
 
 body {
-  max-width: 650px;
+  max-width: 750px;
   margin: 30px auto;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 12pt;
@@ -88,4 +88,12 @@ a:hover {
     margin-right: auto;
     display: block;
   }
+}
+
+#brunch-reviews-sidebar {
+  float: right;
+  padding: 10px;
+  margin: 5px;
+  border-style: inset;
+  border-width: 2px;
 }

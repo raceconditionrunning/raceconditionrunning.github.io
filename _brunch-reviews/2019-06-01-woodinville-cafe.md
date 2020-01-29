@@ -1,4 +1,5 @@
 ---
+layout: brunch-review
 restaurant: Woodinville Cafe
 author: Zach Tatlock
 ---
