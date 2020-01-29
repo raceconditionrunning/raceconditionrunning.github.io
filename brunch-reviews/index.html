@@ -13,7 +13,7 @@ layout: default
   <hr>
   <h4>Previous Reviews</h4>
   {% for review in sorted_brunch_reviews offset:1 %}
-    <div><a href="{{ review.url }}">{{review.title}}</a></div>
+    <div><a href="{{ review.url }}">{{ review.restaurant }}</a></div>
   {% endfor %}
 </div>
 
