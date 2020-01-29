@@ -1,5 +1,6 @@
 # jekyll stuff
 _site/
+.jekyll-cache/
 
 # misc files
 .DS_Store

@@ -12,4 +12,4 @@ serve:
 	watchy -w _config.yml -- bundle exec jekyll serve --watch --drafts --host=0.0.0.0
 
 clean:
-	rm -rf _site/
+	rm -rf _site/ .jekyll-cache/
