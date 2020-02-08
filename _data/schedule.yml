@@ -12,9 +12,7 @@
 - date: "2020-02-08"
   plan:
     - time: "8:50"
-      route:
-          name: CSE to Pancake Corral
-          dist: 8.0
+      route: cse-portagebay-lakeunion
 
 - date: "2020-02-15"
   plan:
