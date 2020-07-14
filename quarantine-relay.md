@@ -144,7 +144,7 @@ Common themes:
 
 ### Conclusion
 
-With p < 0.5 and no change of Type II Error, the relay was Type I fun. 10/10
+With p < 0.5 and no chance of Type II Error, the relay was Type I fun. 10/10
 experts agree, would do again.
 
 
