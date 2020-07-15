@@ -7,7 +7,7 @@ layout: default
 ### Abstract
 
 A ragtag group of hooligans and ne'er-do-wells run around the city for seemingly
-no reason whatsoever. The appear to enjoy it and take numerous photos along the
+no reason whatsoever. They appear to enjoy it and take numerous photos along the
 way. This document serves as a record of the events of the first RCR Quarantine
 Relay so that future generations --- or more likely, the extraterrestrials who
 eventually find Earth after humanity is wiped out by the giant meteor we all
