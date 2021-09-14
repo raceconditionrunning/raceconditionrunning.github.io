@@ -19,53 +19,62 @@ layout: default
   <a href = "http://raceconditionrunning.com/rcc.ics"> http://raceconditionrunning.com/rcc.ics </a>
 </p>
 <p>
-  Please let us know on the UW CSE Slack or RCR Facebook page
-  if you're joining and arrive 10 minutes before run!
+  Please let us know on the UW CSE Slack
+  if you're joining (✋)  and arrive 10 minutes before run!
 </p>
 
-<h3>Weekend (usually Saturday)</h3>
-
-<div id='schedule'><table id='runs'>
-  {% for run in site.data.schedule %}
-  <tbody class="run" data-date="{{ run.date }}">
-    {% for plan in run.plan %}
-    <tr>
-      {% if forloop.first %}
+<dl>
+  <dt>Weekend (usually Saturday)</dt>
+  <dd>
+    <div id='schedule'><table id='runs'>
+      {% for run in site.data.schedule %}
+      <tbody class="run" data-date="{{ run.date }}">
+      {% for plan in run.plan %}
+      <tr>
+        {% if forloop.first %}
         <td class="date">{{ run.date | date: "%b %e" }}</td>
-      {% else %}
+        {% else %}
         <td class="date"></td>
-      {% endif %}
-      <td class="time">{{ plan.time }}</td>
-      {% assign route = site.data.routes | where: 'id', plan.route | first %}
-      {% if route %}{% else %}
-        {% assign route = plan.route %}
-      {% endif %}
-      <td nowrap>
-        {% if route.map %}
-          <a target="_blank" href="{{ route.map }}">
         {% endif %}
-        {{ route.name }}
-        {% if route.map %}</a>{% endif %}
-        {% if route.dist %}&nbsp; ({{ route.dist }}){% endif %}
-      </td>
-      {% if plan.notes %}
-        <tr>
-          <td></td><td></td>
-          <td>{{ plan.notes }}</td>
-        </tr>
+        <td class="time">{{ plan.time }}</td>
+        {% if plan.route.name and plan.route.map %}
+          {% assign route = plan.route %}
+        {% else if plan.route_id %}
+          {% assign route = site.data.routes | where: 'id', plan.route_id | first %}
+          {% unless route %}
+            <td>ERROR: No route for id '{{plan.route_id}}'</td>
+            {% continue %}
+          {% endunless %}
+        {% endif %}
+        <td nowrap>
+          {% if route.map %}
+          <a target="_blank" href="{{ route.map }}">
+            {% endif %}
+            {{ route.name }}
+            {% if route.map %}</a>{% endif %}
+          {% if route.dist %}&nbsp; ({{ route.dist }}){% endif %}
+        </td>
+        {% if plan.notes %}
+      <tr>
+        <td></td><td></td>
+        <td>{{ plan.notes }}</td>
+      </tr>
       {% endif %}
-    </tr>
-    {% endfor %}
-    <tr class="spacer"></tr>
-  </tbody>
-  {% endfor %}
-</table></div>
+      </tr>
+      {% endfor %}
+      <tr class="spacer"></tr>
+      </tbody>
+      {% endfor %}
+    </table></div>
+  </dd>
+  <dt>Tuesday</dt>
+  <dd>Meet in CSE atrium at 4:40 pm and do 3-4 miles. Run starts at 4:45 pm sharp!</dd>
+  <dt>Wednesday</dt>
+  <dd>Meet in CSE atrium at 4:40 pm and do 1-2 miles. Run starts at 4:45 pm sharp!</dd>
+  <dt>Thursday</dt>
+  <dd>Meet in CSE atrium at 4:40 pm and do 6-8 miles. Run starts at 4:45 pm sharp!</dd>
+</dl>
 
-<h3>Tuesday</h3>
-
-<p style='margin-left: 25px;'>
-  Meet in CSE atrium at 4:40 pm and do 3-4 miles. Run starts at 4:45 pm sharp!
-</p>
 
 <h3>Thursday</h3>
 

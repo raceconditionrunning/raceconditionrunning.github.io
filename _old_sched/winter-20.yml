@@ -1,0 +1,62 @@
+- date: "2020-01-25"
+  plan:
+    - time: "8:50"
+      route_id: ob-gas-works-green-lake
+
+- date: "2020-02-01"
+  plan:
+    - time: "8:50"
+      route_id: ob-sculpture-park
+      notes: Aiming for 7 miles total
+
+- date: "2020-02-08"
+  plan:
+    - time: "8:50"
+      route_id: cse-portagebay-lakeunion
+
+- date: "2020-02-15"
+  plan:
+    - time: "8:50"
+      route_id: ob-discovery-gg
+      notes: Aiming for 9 miles total
+
+- date: "2020-02-22"
+  plan:
+    - time: "8:50"
+      route_id: ob-washington-park-sailing-club
+
+- date: "2020-02-29"
+  plan:
+    - time: "8:00"
+      route:
+        name: Lord Hill
+        map: https://runsignup.com/Race/Events/WA/Snohomish/LordHillTrailRun
+    - time: "8:50"
+      route_id: pp-discovery-alki
+
+- date: "2020-03-7"
+  plan:
+    - time: "8:00"
+      route:
+        name: Lake Sammamish Half
+        map: https://lakesammamishhalf.com/
+        dist: 13.1
+    - time: "8:50"
+      route_id:
+        name: "OB: Greenlake, Carkeek"
+        dist: 8.0
+
+# - date: "2020-03-14"
+#   plan:
+
+- date: "2020-03-22"
+  plan:
+    - time: "9:00"
+      route:
+        name: Mercer Island Half
+        map: http://mercerislandhalf.com/
+
+- date: "2020-04-19"
+  plan:
+    - time: "8:00"
+      route_id: lake-relay
