@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Light Rail Relay 2021 | Race Condition Running</title>
+    <meta name="description" content="Relay along the Link Line 1 happening October 2nd, 2021.">
+    <meta name="theme-color" content="#6abf4a">
+    <meta property="og:image" content="https://raceconditionrunning.com/img/light-rail-relay-og-banner.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://raceconditionrunning.com/light-rail-relay">
+    <meta property="og:title" content="Light Rail Relay 2021 | Race Condition Running">
+    <meta property="og:description" content="Relay along the Link Line 1 happening October 2nd, 2021.">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css'
+          rel='stylesheet'/>
+
+    <script src="maps/link-line-1.geojson"></script>
+    <script src="maps/light-rail-relay-legs.geojson"></script>
+    <script src="maps/light-rail-relay-stations.geojson"></script>
+
+</head>
+<style>
+    body {
+        margin: 0;
+        margin-top: 2rem;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    ::selection {
+        background: #85db5d;
+    }
+
+    a {
+        color: #6abf4a;
+    }
+
+    h1, h2, h3, p {
+
+    }
+
+    ul {
+        padding: 0
+    }
+
+    .imprint {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-style: italic;
+        font-weight: 300;
+    }
+
+    .imprint a {
+        text-decoration: none;
+        color: lightgray;
+    }
+
+    .imprint img {
+        width: 100px;
+        opacity: .5;
+    }
+
+    #map {
+        height: 70vh;
+    }
+
+    .wrapper {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 0 1rem
+    }
+
+
+    dt {
+        font-weight: bold;
+    }
+
+    dd {
+        margin-left: 0;
+        margin-bottom: 1rem
+    }
+
+    header {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    header h1 {
+        margin: 0;
+    }
+
+    section {
+        margin-bottom: 4rem;
+    }
+
+    .subheader {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        margin-left: 2rem;
+    }
+
+    .subheader h2 {
+        margin-bottom: .5rem
+    }
+
+    .button-container {
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-button {
+        background-color: #6abf4a;
+        font-weight: bold;
+        font-size: 1.5rem;
+        padding: .5rem 1rem;
+        color: white;
+        text-decoration: none;
+    }
+
+    .leaflet-popup-content {
+        font-size: 1rem;
+        margin: 1rem;
+    }
+
+    .leaflet-container a.leaflet-popup-close-button {
+        padding: .5rem .5rem 0 0;
+    }
+
+    .leaflet-popup-content h3 {
+        margin-top: 0;
+        margin-bottom: .5rem;
+    }
+
+    .leaflet-popup-content-wrapper {
+        box-shadow: 0 3px 14px rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+    }
+
+    .leaflet-popup {
+        bottom: 1rem !important;
+        left: 1rem !important;
+    }
+
+    .leaflet-popup-tip-container {
+        top: 0px !important;
+        overflow: auto important !;
+        display: none;
+    }
+
+    .leaflet-popup-tip {
+        box-shadow: none !important;
+        background-clip: none !important;
+        display: none;
+    }
+
+    .leaflet-popup:before {
+        display: none;
+        content: "";
+        position: absolute;
+        border: 13px solid transparent;
+        border-bottom-color: white;
+        bottom: 0px;
+        margin-left: -13px;
+    }
+
+    .station-marker {
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 2rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+        letter-spacing: -1px;
+    }
+
+    .station-name {
+        font-size: 1rem
+    }
+
+    .leaflet-container a {
+        color: grey;
+    }
+
+    footer {
+        margin: 6rem 0 6rem 0;
+    }
+</style>
+<body>
+
+<section>
+    <div class="wrapper">
+        <p class="imprint"><a href="/">Race Condition Running</a></p>
+        <header>
+            <h1><img src="img/light-rail-relay-2021-logo.svg" width="300px" alt="Light Rail Relay 2021"/>
+            </h1>
+            <div class="subheader">
+                <h2>October 2nd</h2>
+                <div class="button-container"><a href="https://forms.gle/GC6xmrdtKjndUkvH9" class="hero-button">Sign
+                    Up</a></div>
+            </div>
+        </header>
+        <p style="width: 500px; margin: 0 auto; font-size: 1.25rem">We're running a relay along the Link 1 line to
+            celebrate the opening of the <a href="">Northgate Extension</a>. You're invited.</p>
+    </div>
+</section>
+
+<section>
+    <div class="wrapper">
+        <h2>Route</h2>
+        <p>The relay will start at Angle Lake station and follow the entire operational line to Northgate, with
+            exchanges and selfies at each station on the way. More than one runner will be assigned to each leg.</p>
+    </div>
+    <div id="map"></div>
+</section>
+
+<section style="display: none">
+    <div class="wrapper">
+        <h2>Schedule</h2>
+    </div>
+</section>
+
+<section>
+    <div class="wrapper">
+        <h2>Relay Day Procedures</h2>
+        <ul>
+            <li>Dress visibly. Bright colors, hi-viz and reflective if you've got it.</li>
+            <li>Arrive at the northbound train platform comfortably ahead of when your leg is scheduled to start.
+                Incoming runners will find you on the platform.
+            </li>
+            <li>Take a selfie! Many stations have cool sculptures or architecture which you can try to include.</li>
+            <li>Run your assigned leg(s) on the exact specified route. Deviations from the route or the leg schedule
+                will have cascading effects on timing.
+            </li>
+            <li>If you need to drop out during the run, post in the Slack channel.</li>
+            <li>When you get to the station, quickly find the waiting runners. Once you've selfied as a group, wave
+                goodbye to anyone who's ending their run.
+            </li>
+            <li>When you end your run, post the approximate time in the channel.</li>
+        </ul>
+    </div>
+</section>
+
+<section>
+    <div class="wrapper">
+        <h2>FAQ</h2>
+        <dl>
+            <dt>Who can participate?</dt>
+            <dd>Anyone in the CSE community.</dd>
+            <dt>How far do I need to run?</dt>
+            <dd>You can choose how far, and we'll be able to accommodate any distance between .5 miles to 20 miles.</dd>
+            <dt>How fast do I need to run?</dt>
+            <dd>Also up to you. We'll schedule the relay according to your pace estimate, taking into account things
+                like the elevation change and the street context as well.
+            </dd>
+            <dt>I'm uncomfortable or unsure about signing up because I don't know enough about where I'd be running.
+            </dt>
+            <dd>The organizers have run the course and put together some notes about what to expect along each leg, so
+                do click around the route map. Multiple people will be assigned to each leg and at least one experienced
+                runner will be in the group at all times. Please note any particular concerns or constraints on the
+                open-ended part of the sign-up form so we can accommodate you.
+            </dd>
+            <dt>How do I sign up?</dt>
+            <dd>Here's <a href="https://forms.gle/GC6xmrdtKjndUkvH9">the sign up form</a>. Fill it out as soon as you
+                can and before September 25th at the latest.
+            </dd>
+        </dl>
+    </div>
+</section>
+<footer>
+    <p class="imprint"><a href="/"><img src="img/happy-toast.svg"/></a></p>
+</footer>
+
+<script>
+    let stationToName = new Array(stations.features.length);
+    for (let i = 0; i < stations.features.length; i++) {
+        let station = stations.features[i];
+        stationToName[station.properties.id] = station.properties.name
+    }
+    // initialize the map
+    let map = L.map('map', {fullscreenControl: true}).setView([47.60640473782326, -122.32747365635417], 10);
+
+    // load a tile layer
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        minZoom: 11,
+        id: 'nickswalker/cktf8e9eo31cd18pcj0o5v11w',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1Ijoibmlja3N3YWxrZXIiLCJhIjoiY2t0ZjgyenE4MDR1YjJ1cno0N3hxYzI4YSJ9.ivPdsoEtV9TaLGbOOfFXKA'
+    }).addTo(map);
+
+    function onEachFeature(feature, layer) {
+        layer.bindTooltip(feature.properties.name, {
+            "offset": [20, 0],
+            "direction": "right",
+            "className": "station-name",
+            opacity: 0.75
+        });
+    }
+
+
+    let stationButtonLayer = L.geoJSON(stations, {
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, {
+                radius: 10,
+                weight: 0,
+                opacity: 0,
+                'fill-opacity': 0.0,
+                color: "rgba(0,0,0,0)"
+            });
+        },
+        onEachFeature: onEachFeature
+    })
+    stationButtonLayer.on('mouseover', function (e) {
+        e.layer.openPopup();
+    });
+    stationButtonLayer.on('mouseout', function (e) {
+        this.closePopup();
+    });
+    let stationLabels = L.geoJSON(stations, {
+        pointToLayer: function (feature, latlng) {
+            let marker = L.circleMarker(latlng, {
+                radius: 0,
+                weight: 0,
+                opacity: 0,
+                fillOpacity: 0
+            });
+            let stationId = feature.properties.id
+            marker.bindTooltip(stationId.toString(), {
+                "permanent": true,
+                "offset": L.point(0, 0),
+                "direction": "center",
+                "className": "station-marker"
+            })
+            return marker;
+
+        },
+    })
+
+    let clicked = undefined
+
+    function clickFeature(e) {
+        if (clicked) {
+            clicked.setStyle({color: "#6abf4a"});
+        }
+        var feature = e.layer;
+        feature.setStyle({
+            color: '#497f32',
+        });
+        clicked = feature;
+    }
+
+    const routeLayer = L.geoJSON(route, {
+        "interactive": false, "style": {
+            "color": "#aaa",
+            "weight": 2,
+            "opacity": 1.0,
+            //"dashArray": '4, 12'
+        }
+    });
+
+
+    routeLayer.addTo(map);
+    const legsLayer = L.geoJSON(legs, {
+        "style": {"color": "#6abf4a", "weight": 6}, onEachFeature: function (feature, layer) {
+            let content = "<h3>" + stationToName[feature.properties.start] + " to " + stationToName[feature.properties.end] + "</h3>"
+            content += "<b>Distance:</b> " + String(feature.properties.distance) + "mi<br/>"
+            content += "<b>Climbing:</b> " + String(feature.properties.climbing) + "ft<br/>"
+            content += "<b>Notes</b>: " + feature.properties.notes
+            layer.bindPopup(content)
+            layer.getPopup().on('remove', function () {
+                layer.setStyle({"color": "#6abf4a"})
+
+            })
+        }
+    })
+    legsLayer.on("click", clickFeature)
+    legsLayer.addTo(map);
+    stationButtonLayer.addTo(map);
+    stationLabels.addTo(map);
+    map.fitBounds(legsLayer.getBounds().pad(0.1))
+</script>
+
+</body>
+</html>
