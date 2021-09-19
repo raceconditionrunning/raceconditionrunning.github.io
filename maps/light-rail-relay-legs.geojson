@@ -10,7 +10,7 @@
                                         "start": 17,
                                         "end": 18,
                                         "distance": 2.4,
-                                        "climbing": 108,
+                                        "climbing": 262,
                                         "notes": "Largely residential, with nice trees. Beware root-heaved sidewalks with significant leaf cover. Mind the climb (though the grade is fair throughout)."
                                     }
                                 }
@@ -48,7 +48,7 @@
                         "end": 17,
                         "distance": 1.09,
                         "climbing": 176,
-                        "notes": "Home turf. Enjoy the jaunt through campus and marvel at the first new station on the extension. Fair climb"
+                        "notes": "Home turf. Enjoy the jaunt through campus and marvel at the first new station on the extension. Fair climb."
                     }
                 }
             ]
@@ -170,7 +170,7 @@
                         "end": 9,
                         "distance": 0.68,
                         "climbing": 12,
-                        "notes": "Entirely on the SODO trail, a dedicated multi-use pathway that runs along the link line and the busway."
+                        "notes": "Entirely on the SODO trail, a dedicated multi-use pathway that runs along the Link and the busway."
                     }
                 }
             ]
@@ -188,7 +188,7 @@
                         "end": 8,
                         "distance": 1.31,
                         "climbing": 11,
-                        "notes": "Beacon Ave is a commercial corridor with good sidewalks. Good views of West Seattle as you drop into SODO"
+                        "notes": "Beacon Ave is a commercial corridor with good sidewalks. Good views of West Seattle as you drop into SODO."
                     }
                 }
             ]
@@ -224,7 +224,7 @@
                         "end": 6,
                         "distance": 1.6,
                         "climbing": 23,
-                        "notes": "Good, wide sidewalk."
+                        "notes": "Good, wide sidewalk. MLK is fairly built up in this area."
                     }
                 }
             ]
@@ -242,7 +242,7 @@
                         "end": 5,
                         "distance": 1.6,
                         "climbing": 37,
-                        "notes": "Good, wide sidewalk."
+                        "notes": "Good, wide sidewalk. MLK is fairly built up in this area."
                     }
                 }
             ]
@@ -278,7 +278,7 @@
                         "end": 3,
                         "distance": 6.44,
                         "climbing": 690,
-                        "notes": "Charming Tukwila suburbs and glimpses of the Duwamish. Crossing I-5 involves a brief jaunt on a low-traffic, one-lane vehicle road before turning onto S 129th St. to cut East."
+                        "notes": "Charming Tukwila suburbs and glimpses of the Duwamish. Crossing I-5 involves a brief jaunt on a low-traffic, one-lane vehicle road before turning onto S 129th St to cut East."
                     }
                 }
             ]
@@ -297,7 +297,7 @@
                         "end": 2,
                         "distance": 1.6,
                         "climbing": 105,
-                        "notes": "Along Highway 99. Sidewalks are good, though narrow when passing over Highway 518. More hotels"
+                        "notes": "Along Highway 99. Sidewalks are good, though narrow when passing over Highway 518. More hotels."
                     }
                 }
             ]
