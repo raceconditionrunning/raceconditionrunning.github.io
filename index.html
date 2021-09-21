@@ -16,64 +16,65 @@ layout: default
 <p>
   If you are having trouble accessing the calendar, try manually by adding
   the following url to your calendar application:
-  <a href = "http://raceconditionrunning.com/rcc.ics"> http://raceconditionrunning.com/rcc.ics </a>
+  <a href = "http://raceconditionrunning.com/rcc.ics">http://raceconditionrunning.com/rcc.ics</a>
 </p>
 <p>
-  Please let us know on the UW CSE Slack or RCR Facebook page
-  if you're joining and arrive 10 minutes before run!
+  Please let us know on the UW CSE Slack
+  if you're joining (✋)!
 </p>
 
-<h3>Weekend (usually Saturday)</h3>
+<dl>
+  <dt>Weekend (usually Saturday)</dt>
 
-<div id='schedule'><table id='runs'>
-  {% for run in site.data.schedule %}
-  <tbody class="run" data-date="{{ run.date }}">
-    {% for plan in run.plan %}
-    <tr>
-      {% if forloop.first %}
+  <dd>
+    <p>Arrive 10 minutes before the run!</p>
+    <table id='runs'>
+      {% for run in site.data.schedule %}
+      <tbody class="run" data-date="{{ run.date }}">
+      {% for plan in run.plan %}
+      <tr>
+        {% if forloop.first %}
         <td class="date">{{ run.date | date: "%b %e" }}</td>
-      {% else %}
+        {% else %}
         <td class="date"></td>
-      {% endif %}
-      <td class="time">{{ plan.time }}</td>
-      {% assign route = site.data.routes | where: 'id', plan.route | first %}
-      {% if route %}{% else %}
-        {% assign route = plan.route %}
-      {% endif %}
-      <td nowrap>
-        {% if route.map %}
-          <a target="_blank" href="{{ route.map }}">
         {% endif %}
-        {{ route.name }}
-        {% if route.map %}</a>{% endif %}
-        {% if route.dist %}&nbsp; ({{ route.dist }}){% endif %}
-      </td>
-      {% if plan.notes %}
-        <tr>
-          <td></td><td></td>
-          <td>{{ plan.notes }}</td>
-        </tr>
+        <td class="time">{{ plan.time }}</td>
+        {% assign route = site.data.routes | where: 'id', plan.route | first %}
+        {% if route %}{% else %}
+        {% assign route = plan.route %}
+        {% endif %}
+        <td nowrap>
+          {% if route.map %}
+          <a target="_blank" href="{{ route.map }}">
+            {% endif %}
+            {{ route.name }}
+            {% if route.map %}</a>{% endif %}
+          {% if route.dist %}&nbsp; ({{ route.dist }}){% endif %}
+        </td>
+        {% if plan.notes %}
+      <tr>
+        <td></td><td></td>
+        <td>{{ plan.notes }}</td>
+      </tr>
       {% endif %}
-    </tr>
-    {% endfor %}
-    <tr class="spacer"></tr>
-  </tbody>
-  {% endfor %}
-</table></div>
+      </tr>
+      {% endfor %}
+      <tr class="spacer"></tr>
+      </tbody>
+      {% endfor %}
+      <tfoot id="schedule-finished" style="display: none"><tr><td colspan="3">A new schedule is coming! <a href="https://github.com/raceconditionrunning/raceconditionrunning.github.io">Contribute on GitHub</a></td></tr></tfoot>
+    </table>
+  </dd>
+  <dt>Tuesday</dt>
+  <dd>Meet in CSE atrium at 4:40 pm and do 3-4 miles. Run starts at 4:45 pm sharp!</dd>
+  <dt>Wednesday</dt>
+  <dd>Meet in CSE atrium at 4:40 pm and do 1-2 miles. Run starts at 4:45 pm sharp!</dd>
+  <dt>Thursday</dt>
+  <dd>Meet in CSE atrium at 4:40 pm and do 6-8 miles. Run starts at 4:45 pm sharp!</dd>
+</dl>
 
-<h3>Tuesday</h3>
 
-<p style='margin-left: 25px;'>
-  Meet in CSE atrium at 4:40 pm and do 3-4 miles. Run starts at 4:45 pm sharp!
-</p>
-
-<h3>Thursday</h3>
-
-<p style='margin-left: 25px;'>
-  Meet in CSE atrium at 4:40 pm and do 6-8 miles. Run starts at 4:45 pm sharp!
-</p>
-
-<h2 style='padding-top: 20px;'>
+<h2>
   Strava
   <a target="_blank"
      href="https://www.strava.com/clubs/raceconditionrunning">
@@ -100,45 +101,44 @@ layout: default
 <h2>Photo Album</h2>
 <p>Check out our photos <a href = "https://photos.app.goo.gl/DW9MRhNTi2vLwYor1">here</a>!</p>
 
-<!--
-<p style='padding-top: 20px;'>
-<div class="row">
-  <div class="column">
-    <img src='img/race-condition-running2.jpg' style="width:100%">
-  </div>
-  <div class="column">
-    <img src='img/race-condition-running1.jpg' style="width:100%">
-  </div>
-</div>
-</p>
--->
-
 {% include photo_carousel.html %}
 
 <script>
-function highlightDates() {
-  var today = new Date();
-  var afterNext = false;
+  function highlightDates() {
+    const today = new Date();
+    let afterNext = false;
+    let runs = Array.prototype.slice.call(document.querySelectorAll("tbody.run"))
+    runs.forEach(function(element) {
+      let date = new Date(element.attributes["date"]);
+      date.setDate(date.getDate() + 1);
 
-  $("tbody.run").each(function() {
-    var date = new Date($(this).data("date"));
-    date.setDate(date.getDate() + 1);
-
-    var age = "past";
-    if(today < date) {
-      if(!afterNext) {
-        age = "next";
-        afterNext = true;
-      } else {
-        age = "future";
+      let age = "past";
+      if(today < date) {
+        if(!afterNext) {
+          age = "next";
+          afterNext = true;
+        } else {
+          age = "future";
+        }
       }
+
+      element.classList.add(age);
+    });
+  }
+
+  function noteScheduleEnd() {
+    let runs = Array.prototype.slice.call(document.querySelectorAll("tbody.run"))
+    let scheduleFinished = runs.every(function (element){
+      return element.classList.contains("past")
+    })
+    if (scheduleFinished) {
+      document.getElementById("schedule-finished").style.display = ""
     }
+  }
 
-    $(this).addClass(age);
-  });
-}
+  document.addEventListener('DOMContentLoaded', function () {
+    highlightDates();
+    noteScheduleEnd();
+  }, false);
 
-$(function() {
-  highlightDates();
-});
 </script>
