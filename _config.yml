@@ -2,6 +2,9 @@ url: http://raceconditionrunning.com
 
 permalink: /:title/
 
+plugins:
+  - jekyll-redirect-from
+
 markdown: kramdown
 kramdown:
   entity_output: symbolic
