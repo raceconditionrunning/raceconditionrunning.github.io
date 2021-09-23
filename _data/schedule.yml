@@ -1,62 +1,80 @@
-- date: "2020-01-25"
+- date: "2021-09-25"
   plan:
-    - time: "8:50"
-      route: ob-gas-works-green-lake
+    - time: "8:30"
+      route_id: green-lake-loop
+    - time: "9:10"
+      route_id: green-lake-loop
+    - time: "9:40"
+      route_id: green-lake-loop
 
-- date: "2020-02-01"
-  plan:
-    - time: "8:50"
-      route: ob-sculpture-park
-      notes: Aiming for 7 miles total
-
-- date: "2020-02-08"
-  plan:
-    - time: "8:50"
-      route: cse-portagebay-lakeunion
-
-- date: "2020-02-15"
-  plan:
-    - time: "8:50"
-      route: ob-discovery-gg
-      notes: Aiming for 9 miles total
-
-- date: "2020-02-22"
-  plan:
-    - time: "8:50"
-      route: ob-washington-park-sailing-club
-
-- date: "2020-02-29"
-  plan:
-    - time: "8:00"
-      route:
-        name: Lord Hill
-        map: https://runsignup.com/Race/Events/WA/Snohomish/LordHillTrailRun
-    - time: "8:50"
-      route: pp-discovery-alki
-
-- date: "2020-03-7"
-  plan:
-    - time: "8:00"
-      route:
-        name: Lake Sammamish Half
-        map: https://lakesammamishhalf.com/
-        dist: 13.1
-    - time: "8:50"
-      route:
-        name: "OB: Greenlake, Carkeek"
-        dist: 8.0
-
-# - date: "2020-03-14"
-#   plan:
-
-- date: "2020-03-22"
+- date: "2021-10-02"
   plan:
     - time: "9:00"
       route:
-        name: Mercer Island Half
-        map: http://mercerislandhalf.com/
+        name: Light Rail Relay 2021
+        map: light-rail-relay
+        dist: 26.85
 
-- date: "2020-04-19"
+- date: "2021-10-10"
   plan:
-    - time: "8:00"
-      route: lake-relay
+    - time: "9:00"
+      route:
+        name: Dawg Dash 2021
+        map: https://www.washington.edu/alumni/events/alaska-airlines-dawg-dash/
+        dist: 3.1
+
+- date: "2021-10-16"
+  plan:
+    - time: "8:30"
+      route_id: gas-works-fremont-cut-loop
+    - time: "9:50"
+      route_id: ob-gas-works-cse
+
+- date: "2021-10-23"
+  plan:
+    - time: "8:30"
+      route_id: ob-cse-volunteer
+    - time: "9:30"
+      route_id: cse-bryant-loop
+
+- date: "2021-10-30"
+  plan:
+    - time: "8:30"
+      route_id: ob-gas-works-green-lake-loop
+
+- date: "2021-11-06"
+  plan:
+    - time: "8:30"
+      route_id: cse-portagebay-lakeunion
+
+- date: "2021-11-13"
+  plan:
+    - time: "8:30"
+      route_id: arb-union
+      notes: CCW
+
+- date: "2021-11-20"
+  plan:
+    - time: "8:30"
+      route_id: gas-works-queen-anne-loop
+
+- date: "2021-11-28"
+  plan:
+    - time: "7:00"
+      route:
+        name: Seattle Half Marathon
+        map: https://www.seattlemarathon.org/marathon
+        dist: 13.1
+
+- date: "2021-12-04"
+  plan:
+    - time: "9:30"
+      route:
+        name: Redmond Reindeer Romp
+        map: https://nwtrailruns.com/events/redmond-reindeer-romp/
+        dist: 5.0
+
+- date: "2021-12-11"
+  plan:
+    - time: "8:30"
+      route_id: ob-locks-discovery

@@ -62,24 +62,22 @@ def main():
         for i in range(len(phases)):
             phase = phases[i]
 
-            # If the route is just a string, it's a key into the routedb.
-            # Otherwise, it better be a map with the right keys itself.
-            if isinstance(phase['route'], str):
-              route = lkup(phase['route'])
+            if 'route_id' in phase.keys():
+              route = lkup(phase['route_id'])
             else:
               route = phase['route']
 
             name = route['name']
             gmap = route['map'] if 'map' in route else ''
-            dist = route['dist'] if 'dist' in route else 0.0
+            dist = route['dist'] if 'dist' in route else None
 
-            event_name = '%s (%s)' % (name, dist) if dist > 0 else name
+            event_name = f'{name} ({dist})' if dist else name
 
             start = dtstart(date, phase)
             if i < len(phases) - 1:
                 end = dtstart(date, phases[i + 1])
             else:
-                delta = timedelta(0, 10 * 60 * round(dist if dist > 0 else 3))
+                delta = timedelta(0, 10 * 60 * round(dist if dist else 3))
                 end = start + delta
             uid = str(start) + '@raceconditionrunning.com'
             uid = uid.strip(' :-,;')
@@ -115,10 +113,10 @@ def main():
         'dtstart'     : start,
         'dtend'       : end,
         'location'    : 'Meet in CSE1 atrium',
-        'description' : 'Usually 4 miles on Tuesday and 6 miles on Thursday.',
+        'description' : 'Usually 4 miles on Tuesday, 2 miles on Wednesday, and 6 miles on Thursday.',
         'dtstamp'     : now,
         'uid'         : uid,
-        'rrule'       : {'FREQ': 'WEEKLY', 'BYDAY': ['TU', 'TH']}
+        'rrule'       : {'FREQ': 'WEEKLY', 'BYDAY': ['TU', 'WE', 'TH']}
     })
 
     cal = Calendar()

@@ -19,13 +19,11 @@ layout: default
   <a href = "http://raceconditionrunning.com/rcc.ics">http://raceconditionrunning.com/rcc.ics</a>
 </p>
 <p>
-  Please let us know on the UW CSE Slack
-  if you're joining (✋)!
+  Please let us know on the UW CSE Slack if you're joining (✋)!
 </p>
 
 <dl>
   <dt>Weekend (usually Saturday)</dt>
-
   <dd>
     <p>Arrive 10 minutes before the run!</p>
     <table id='runs'>
@@ -39,9 +37,14 @@ layout: default
         <td class="date"></td>
         {% endif %}
         <td class="time">{{ plan.time }}</td>
-        {% assign route = site.data.routes | where: 'id', plan.route | first %}
-        {% if route %}{% else %}
-        {% assign route = plan.route %}
+        {% if plan.route.name and plan.route.map %}
+          {% assign route = plan.route %}
+        {% else if plan.route_id %}
+          {% assign route = site.data.routes | where: 'id', plan.route_id | first %}
+          {% unless route %}
+            <td>ERROR: No route for id '{{plan.route_id}}'</td>
+            {% continue %}
+          {% endunless %}
         {% endif %}
         <td nowrap>
           {% if route.map %}
@@ -64,6 +67,7 @@ layout: default
       {% endfor %}
       <tfoot id="schedule-finished" style="display: none"><tr><td colspan="3">A new schedule is coming! <a href="https://github.com/raceconditionrunning/raceconditionrunning.github.io">Contribute on GitHub</a></td></tr></tfoot>
     </table>
+
   </dd>
   <dt>Tuesday</dt>
   <dd>Meet in CSE atrium at 4:40 pm and do 3-4 miles. Run starts at 4:45 pm sharp!</dd>
@@ -72,7 +76,6 @@ layout: default
   <dt>Thursday</dt>
   <dd>Meet in CSE atrium at 4:40 pm and do 6-8 miles. Run starts at 4:45 pm sharp!</dd>
 </dl>
-
 
 <h2>
   Strava
@@ -109,7 +112,7 @@ layout: default
     let afterNext = false;
     let runs = Array.prototype.slice.call(document.querySelectorAll("tbody.run"))
     runs.forEach(function(element) {
-      let date = new Date(element.attributes["date"]);
+      let date = new Date(element.getAttribute("data-date"));
       date.setDate(date.getDate() + 1);
 
       let age = "past";
