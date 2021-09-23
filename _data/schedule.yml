@@ -13,7 +13,7 @@
       route:
         name: Light Rail Relay 2021
         map: light-rail-relay
-        dist: 0.50-13.00
+        dist: 26.85
 
 - date: "2021-10-10"
   plan:
@@ -60,18 +60,21 @@
 
 - date: "2021-11-28"
   plan:
-    - time: "TBA"
+    - time: "7:00"
       route:
         name: Seattle Half Marathon
         map: https://www.seattlemarathon.org/marathon
-        dist: 13.2
+        dist: 13.1
 
 - date: "2021-12-04"
   plan:
-    - time: "8:30"
-      route_id: gas-works-salmon-bay
+    - time: "9:30"
+      route:
+        name: Redmond Reindeer Romp
+        map: https://nwtrailruns.com/events/redmond-reindeer-romp/
+        dist: 5.0
 
 - date: "2021-12-11"
   plan:
     - time: "8:30"
-      route_id: pp-discovery-alki
+      route_id: ob-locks-discovery
