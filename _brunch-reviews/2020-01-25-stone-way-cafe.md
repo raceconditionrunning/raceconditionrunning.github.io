@@ -74,7 +74,7 @@ There are no hip-hop onions nor rap-scallions in this establishment. It has a
 decidedly indie vibe, hosting local musicians many evenings. According to local
 news, Stone Way will be closed at some point to allow for high-density housing
 and shops to be built in its place &mdash; leading us to conclude that maybe
-gentrifications isn't so great. Don't miss your chance to brunch here while you
+gentrification isn't so great. Don't miss your chance to brunch here while you
 still can.
 
 
