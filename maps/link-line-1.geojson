@@ -505,6 +505,55 @@ let route = [
             }
         },
         {
+                "type": "Feature",
+                "id": "way/824708855",
+                "properties": {
+                    "@id": "way/824708855",
+                    "electrified": "contact_line",
+                    "frequency": "0",
+                    "gauge": "1435",
+                    "layer": "-3",
+                    "level": "-4",
+                    "name": "Line 1",
+                    "operator": "Sound Transit",
+                    "railway": "light_rail",
+                    "railway:preferred_direction": "forward",
+                    "source": "King County GIS",
+                    "tunnel": "yes",
+                    "voltage": "1500",
+                    "@timestamp": "2021-03-12T19:00:26Z",
+                    "@version": 4,
+                    "@changeset": 100926952,
+                    "@user": "clay_c",
+                    "@uid": 119881,
+                    "@osm3s:version": 0.6,
+                    "@osm3s:generator": "Overpass API 0.7.56.9 76e5016d",
+                    "@osm3s:timestamp_osm_base": "2021-09-23T03:12:00Z",
+                    "@osm3s:copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+                },
+                "geometry": {
+                    "type": "LineString",
+                    "coordinates": [
+                        [
+                            -122.3036691,
+                            47.6491621
+                        ],
+                        [
+                            -122.3036908,
+                            47.6498555
+                        ],
+                        [
+                            -122.3037057,
+                            47.6503827
+                        ],
+                        [
+                            -122.30371,
+                            47.6505358
+                        ]
+                    ]
+                }
+            },
+        {
             "type": "Feature",
             "id": "way/911001820",
             "properties": {
