@@ -112,7 +112,7 @@ layout: default
     let afterNext = false;
     let runs = Array.prototype.slice.call(document.querySelectorAll("tbody.run"))
     runs.forEach(function(element) {
-      let date = new Date(element.attributes["date"]);
+      let date = new Date(element.getAttribute("data-date"));
       date.setDate(date.getDate() + 1);
 
       let age = "past";
