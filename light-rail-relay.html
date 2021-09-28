@@ -201,7 +201,22 @@ redirect_from:
     footer {
         margin: 6rem 0 6rem 0;
     }
-</style>
+    #schedule td {
+        padding-right: 1.5rem;
+    }
+    #schedule tbody td {
+        white-space: nowrap;
+
+    }
+    #schedule tbody td:first-of-type {
+        text-align: center;
+    }
+    #schedule thead th {
+        text-align: left;
+        margin-right: .5rem;
+    }
+
+    </style>
 <body>
 
 <section>
@@ -230,9 +245,37 @@ redirect_from:
     <div id="map"></div>
 </section>
 
-<section style="display: none">
+<section>
     <div class="wrapper">
-        <h2>Schedule</h2>
+        <h2>Preliminary Schedule</h2>
+        <table id="schedule">
+            <tbody>
+            <thead>
+            <th>Leg</th><th>Time</th><th>Start Station</th> <th>Distance @ Pace</th><th>Runners</th>
+            </thead>
+            <tr><td>0</td> <td>T+0:00:00</td> <td>Angle Lake</td> <td>1.78 mi @ 8:00</td> <td><b>Ellis</b>, Jamie</td></tr>
+            <tr><td>1</td> <td>T+0:18:00</td> <td>SeaTac/Airport</td> <td>1.60 mi @ 8:00</td> <td><b>Ellis</b>, Jamie</td></tr>
+            <tr><td>2</td> <td>T+0:35:00</td> <td>Tukwila International Blvd</td> <td>6.46 mi @ 8:00</td> <td><b>Ellis</b>, Jamie, Johanna</td></tr>
+            <tr><td>3</td> <td>T+1:31:00</td> <td>Rainier Beach</td> <td>1.11 mi @11:20</td> <td>Sidd, <b>Yuxuan</b></td></tr>
+            <tr><td>4</td> <td>T+1:48:00</td> <td>Othello</td> <td>1.60 mi @12:00</td> <td>Brett, James, Jennifer, Lancelot, Max, Sameer, Sidd, Swati, <b>Yuxuan</b>, Zach</td></tr>
+            <tr><td>5</td> <td>T+2:11:00</td> <td>Columbia City</td> <td>1.24 mi @12:00</td> <td>Brett, Edward, James, Jennifer, Lancelot, Max, Sameer, Sidd, Swati, <b>Yuxuan</b>, Zach</td></tr>
+            <tr><td>6</td> <td>T+2:30:00</td> <td>Mount Baker</td> <td>0.82 mi @12:00</td> <td>Edward, Lancelot, Sidd, Swati, <b>Yuxuan</b>, Zach</td></tr>
+            <tr><td>7</td> <td>T+2:44:00</td> <td>Beacon Hill</td> <td>1.31 mi @12:00</td> <td>Edward, Jingwei, Lancelot, Swati, <b>Zach</b></td></tr>
+            <tr><td>8</td> <td>T+3:04:00</td> <td>SODO</td> <td>0.68 mi @12:00</td> <td>Edward, Ethan, Ewin, Jingwei, Lancelot, Nick, Swati, <b>Zach</b></td></tr>
+            <tr><td>9</td> <td>T+3:16:00</td> <td>Stadium</td> <td>0.60 mi @12:00</td> <td>Ethan, Ewin, Lancelot, Nick, Swati, <b>Zach</b></td></tr>
+            <tr><td>10</td> <td>T+3:27:00</td> <td>International District/Chinatown</td> <td>0.35 mi @ 9:00</td> <td>Ethan, Ewin, <b>Nick</b></td></tr>
+            <tr><td>11</td> <td>T+3:34:00</td> <td>Pioneer Square</td> <td>0.49 mi @12:00</td> <td><b>Chandra</b>, Ethan, Ewin, Nick, Reshabh</td></tr>
+            <tr><td>12</td> <td>T+3:44:00</td> <td>University Street</td> <td>1.05 mi @20:00</td> <td><b>Chandra</b>, Ethan, Ewin, Nick, Vishwas</td></tr>
+            <tr><td>13</td> <td>T+4:09:00</td> <td>Westlake</td> <td>0.96 mi @10:00</td> <td><b>Chandra</b>, Ethan, Ewin, Nick</td></tr>
+            <tr><td>14</td> <td>T+4:23:00</td> <td>Capitol Hill</td> <td>2.78 mi @10:00</td> <td><b>Chandra</b>, Ethan, Ewin, Nick</td></tr>
+            <tr><td>15</td> <td>T+4:55:00</td> <td>University of Washington</td> <td>1.04 mi @10:00</td> <td>Amal, <b>Chandra</b>, Maya, Nick</td></tr>
+            <tr><td>16</td> <td>T+5:09:00</td> <td>U-District</td> <td>1.23 mi @10:00</td> <td>Amal, <b>Chandra</b>, Maya, Nick</td></tr>
+            <tr><td>17</td> <td>T+5:25:00</td> <td>Roosevelt</td> <td>2.25 mi @10:00</td> <td><b>Chandra</b>, Nick</td></tr>
+            <tr><td>END</td> <td>T+5:51:00</td></tr>
+            </tbody>
+        </table>
+
+        <p>Leg leaders are marked in <b>bold</b>.</p>
     </div>
 </section>
 
@@ -241,6 +284,7 @@ redirect_from:
         <h2>Relay Day Procedures</h2>
         <ul>
             <li>Dress visibly. Bright colors, hi-viz and reflective if you've got it.</li>
+            <li>Bring and wear your mask when inside station areas.</li>
             <li>Arrive at the northbound train platform comfortably ahead of when your leg is scheduled to start.
                 Incoming runners will find you on the platform.
             </li>
@@ -279,11 +323,14 @@ redirect_from:
                 open-ended part of the sign-up form so we can accommodate you.
             </dd>
             <dt>Is there anything planned for after the run?</dt>
-            <dd>We are tentatively planning to enjoy the <a href="https://udistrictseattle.com/udistrict-station-opening-festival">U-District Station Opening Festival's Food Walk</a> after the conclusion of the relay around 6:00PM. Besides the festival, consider visiting the extension stations. <a href="https://www.theurbanist.org/2021/09/13/a-transit-riders-guide-to-the-northgate-link-light-rail-extension/">Sound Transit says</a> they'll be providing a "museum-like experience" at the new stations from October 2nd through the 31st.</dd>
+            <dd>We are tentatively planning to enjoy the <a href="https://udistrictseattle.com/udistrict-station-opening-festival">U-District Station Opening Festival's Food Walk</a> after the conclusion of the relay around 6:00PM. Besides the festival, consider visiting the extension stations. <a href="https://www.theurbanist.org/2021/09/13/a-transit-riders-guide-to-the-northgate-link-light-rail-extension/">Sound Transit says</a> they'll be providing a "museum-like experience" at the new stations from October 2nd through the 31st. A [beautiful new pedestrian bridge in Northgate](https://www.shorelineareanews.com/2021/09/grand-opening-for-john-lewis-memorial.html) is also set to open on October 2nd and is well worth checking out.</dd>
+            <dt>Can I still sign up?</dt>
+            <dd>Yes, but do it now. The overall structure of the schedule is unlikely to change, but we may be able to meet your preferences by adding you to legs on the current schedule. Please indicate the portion of the existing schedule that you'd like to join for in the free response question on the signup form.</dd>
             <dt>How do I sign up?</dt>
-            <dd>Here's <a href="https://forms.gle/GC6xmrdtKjndUkvH9">the sign up form</a>. Fill it out as soon as you
-                can. Signups after September 25th may have fewer of their preferences satisfied.
+            <dd>Here's <a href="https://forms.gle/GC6xmrdtKjndUkvH9">the sign up form</a>.
             </dd>
+            <dt>I want to update my preferences.</dt>
+            <dd>You can update your signup form responses by accessing the form with the same Google account. Note that scheduling flexibility is reduced at this point, and will continue to tighten up to the day of the event.</dd>
         </dl>
     </div>
 </section>
@@ -298,7 +345,14 @@ redirect_from:
         stationToName[station.properties.id] = station.properties.name
     }
     // initialize the map
-    let map = L.map('map', {fullscreenControl: true}).setView([47.60640473782326, -122.32747365635417], 10);
+    let map = L.map('map', {
+        fullscreenControl: true,
+        scrollWheelZoom: false
+    }).setView([47.60640473782326, -122.32747365635417], 10);
+
+    // Allow scroll interaction while the user is engaged with the map, but not while just landing or casually scrolling the page
+    map.on('focus', function() { map.scrollWheelZoom.enable(); });
+    map.on('blur', function() { map.scrollWheelZoom.disable(); });
 
     // load a tile layer
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
