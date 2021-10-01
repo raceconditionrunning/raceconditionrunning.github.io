@@ -201,6 +201,10 @@ redirect_from:
     footer {
         margin: 6rem 0 6rem 0;
     }
+
+    #schedule-section .wrapper {
+        max-width: 1000px;
+    }
     #schedule td {
         padding-right: 1.5rem;
     }
@@ -211,11 +215,26 @@ redirect_from:
     #schedule tbody td:first-of-type {
         text-align: center;
     }
+    #schedule tbody td:last-of-type {
+        white-space: break-spaces;
+    }
     #schedule thead th {
         text-align: left;
         margin-right: .5rem;
     }
 
+    #countdown {
+        text-align: center;
+        background-color: #4daeec;
+        font-size: 36px;
+        font-weight: 300;
+        padding: 4rem 0;
+
+        color: white;
+    }
+    #countdown .wrapper {
+        max-width: none;
+    }
     </style>
 <body>
 
@@ -227,8 +246,9 @@ redirect_from:
             </h1>
             <div class="subheader">
                 <h2>October 2nd</h2>
-                <div class="button-container"><a href="https://forms.gle/GC6xmrdtKjndUkvH9" class="hero-button">Sign
-                    Up</a></div>
+                <!--<div class="button-container"><a href="https://forms.gle/GC6xmrdtKjndUkvH9" class="hero-button">Sign
+                    Up</a></div> -->
+                <div class="button-container"><a href="https://docs.google.com/spreadsheets/d/1wFvyhVMUVqJ3DTGJMr0fr9nrX8zU8nl4uux4AY_H01E/edit?usp=sharing" class="hero-button">Follow Along</a></div>
             </div>
         </header>
         <p style="width: 500px; margin: 0 auto; font-size: 1.25rem">We're running a relay along the Link 1 line to
@@ -236,7 +256,7 @@ redirect_from:
     </div>
 </section>
 
-<section>
+<section id="course-map">
     <div class="wrapper">
         <h2>Route</h2>
         <p>The relay will start at Angle Lake station and follow the entire operational line to Northgate, with
@@ -245,37 +265,46 @@ redirect_from:
     <div id="map"></div>
 </section>
 
-<section>
+<section id="schedule-section">
     <div class="wrapper">
-        <h2>Preliminary Schedule</h2>
+        <h2>Schedule</h2>
         <table id="schedule">
             <tbody>
             <thead>
-            <th>Leg</th><th>Time</th><th>Start Station</th> <th>Distance @ Pace</th><th>Runners</th>
+            <th>Leg</th><th>Time</th><th>Start Station</th> <th>Distance (mi) @ Pace</th><th>Runners</th>
             </thead>
-            <tr><td>0</td> <td>T+0:00:00</td> <td>Angle Lake</td> <td>1.78 mi @ 8:00</td> <td><b>Ellis</b>, Jamie</td></tr>
-            <tr><td>1</td> <td>T+0:18:00</td> <td>SeaTac/Airport</td> <td>1.60 mi @ 8:00</td> <td><b>Ellis</b>, Jamie</td></tr>
-            <tr><td>2</td> <td>T+0:35:00</td> <td>Tukwila International Blvd</td> <td>6.46 mi @ 8:00</td> <td><b>Ellis</b>, Jamie, Johanna</td></tr>
-            <tr><td>3</td> <td>T+1:31:00</td> <td>Rainier Beach</td> <td>1.11 mi @11:20</td> <td>Sidd, <b>Yuxuan</b></td></tr>
-            <tr><td>4</td> <td>T+1:48:00</td> <td>Othello</td> <td>1.60 mi @12:00</td> <td>Brett, James, Jennifer, Lancelot, Max, Sameer, Sidd, Swati, <b>Yuxuan</b>, Zach</td></tr>
-            <tr><td>5</td> <td>T+2:11:00</td> <td>Columbia City</td> <td>1.24 mi @12:00</td> <td>Brett, Edward, James, Jennifer, Lancelot, Max, Sameer, Sidd, Swati, <b>Yuxuan</b>, Zach</td></tr>
-            <tr><td>6</td> <td>T+2:30:00</td> <td>Mount Baker</td> <td>0.82 mi @12:00</td> <td>Edward, Lancelot, Sidd, Swati, <b>Yuxuan</b>, Zach</td></tr>
-            <tr><td>7</td> <td>T+2:44:00</td> <td>Beacon Hill</td> <td>1.31 mi @12:00</td> <td>Edward, Jingwei, Lancelot, Swati, <b>Zach</b></td></tr>
-            <tr><td>8</td> <td>T+3:04:00</td> <td>SODO</td> <td>0.68 mi @12:00</td> <td>Edward, Ethan, Ewin, Jingwei, Lancelot, Nick, Swati, <b>Zach</b></td></tr>
-            <tr><td>9</td> <td>T+3:16:00</td> <td>Stadium</td> <td>0.60 mi @12:00</td> <td>Ethan, Ewin, Lancelot, Nick, Swati, <b>Zach</b></td></tr>
-            <tr><td>10</td> <td>T+3:27:00</td> <td>International District/Chinatown</td> <td>0.35 mi @ 9:00</td> <td>Ethan, Ewin, <b>Nick</b></td></tr>
-            <tr><td>11</td> <td>T+3:34:00</td> <td>Pioneer Square</td> <td>0.49 mi @12:00</td> <td><b>Chandra</b>, Ethan, Ewin, Nick, Reshabh</td></tr>
-            <tr><td>12</td> <td>T+3:44:00</td> <td>University Street</td> <td>1.05 mi @20:00</td> <td><b>Chandra</b>, Ethan, Ewin, Nick, Vishwas</td></tr>
-            <tr><td>13</td> <td>T+4:09:00</td> <td>Westlake</td> <td>0.96 mi @10:00</td> <td><b>Chandra</b>, Ethan, Ewin, Nick</td></tr>
-            <tr><td>14</td> <td>T+4:23:00</td> <td>Capitol Hill</td> <td>2.78 mi @10:00</td> <td><b>Chandra</b>, Ethan, Ewin, Nick</td></tr>
-            <tr><td>15</td> <td>T+4:55:00</td> <td>University of Washington</td> <td>1.04 mi @10:00</td> <td>Amal, <b>Chandra</b>, Maya, Nick</td></tr>
-            <tr><td>16</td> <td>T+5:09:00</td> <td>U-District</td> <td>1.23 mi @10:00</td> <td>Amal, <b>Chandra</b>, Maya, Nick</td></tr>
-            <tr><td>17</td> <td>T+5:25:00</td> <td>Roosevelt</td> <td>2.25 mi @10:00</td> <td><b>Chandra</b>, Nick</td></tr>
-            <tr><td>END</td> <td>T+5:51:00</td></tr>
+            <tr><td>0</td> <td>9:30</td> <td>Angle Lake</td> <td>1.8 @ 8:00</td> <td><b>Ellis</b>, Nick</td></tr>
+            <tr><td>1</td> <td>9:49</td> <td>SeaTac/Airport</td> <td>1.5 mi @ 8:00</td> <td><b>Ellis</b>, Nick</td></tr>
+            <tr><td>2</td> <td>10:05</td> <td>Tukwila International Blvd</td> <td>6.6 mi @ 8:00</td> <td><b>Ellis</b>, Johanna, Nick</td></tr>
+            <tr><td>3</td> <td>11:03</td> <td>Rainier Beach</td> <td>1.1 @12:00</td> <td>Sidd, Swati, <b>Yuxuan</b></td></tr>
+            <tr><td>4</td> <td>11:21</td> <td>Othello</td> <td>1.6 @12:00</td> <td>Brett, James, Jennifer, Lancelot, Max, Sameer, Sidd, Swati, <b>Yuxuan</b>, Zach</td></tr>
+            <tr><td>5</td> <td>11:45</td> <td>Columbia City</td> <td>1.2 @12:00</td> <td>Brett, James, Jennifer, Lancelot, Max, Sameer, Sidd, Swati, <b>Yuxuan</b>, Zach</td></tr>
+            <tr><td>6</td> <td>12:04</td> <td>Mount Baker</td> <td>0.8 @12:00</td> <td>Lancelot, Sidd, Swati, <b>Yuxuan</b>, Zach</td></tr>
+            <tr><td>7</td> <td>12:18</td> <td>Beacon Hill</td> <td>1.3 @12:00</td> <td>Lancelot, Swati, <b>Zach</b></td></tr>
+            <tr><td>8</td> <td>12:38</td> <td>SODO</td> <td>0.7 @12:00</td> <td>Jingwei, Lancelot, Pratyush, <b>Zach</b></td></tr>
+            <tr><td>9</td> <td>12:51</td> <td>Stadium</td> <td>0.8 @12:00</td> <td>Jingwei, Lancelot, Pratyush, <b>Zach</b></td></tr>
+            <tr><td>10</td> <td>1:04</td> <td>International District/Chinatown</td> <td>0.3 @ 12:50</td> <td>Jingwei, Lancelot, Pratyush, Suneja, <b>Zach</b></td></tr>
+            <tr><td>11</td> <td>1:13</td> <td>Pioneer Square</td> <td>0.5 @12:50</td> <td><b>Chandra</b>, Ethan, Ewin, Reshabh, Suneja</td></tr>
+            <tr><td>12</td> <td>1:24</td> <td>University Street</td> <td>1.1 @20:00</td> <td><b>Chandra</b>, Ethan, Ewin, Suneja, Vishwas</td></tr>
+            <tr><td>13</td> <td>1:49</td> <td>Westlake</td> <td>1.0 @10:00</td> <td><b>Chandra</b>, Ethan, Ewin</td></tr>
+            <tr><td>14</td> <td>2:03</td> <td>Capitol Hill</td> <td>2.8 @10:00</td> <td><b>Chandra</b>, Edward, Ethan, Ewin, Jamie</td></tr>
+            <tr><td>15</td> <td>2:35</td> <td>University of Washington</td> <td>1.1 @10:00</td> <td>Amal, <b>Chandra</b>, Edward, Ethan, Ewin, Jamie, Maya</td></tr>
+            <tr><td>16</td> <td>2:50</td> <td>U-District</td> <td>1.4 @10:00</td> <td>Amal, <b>Chandra</b>, Ethan, Ewin, Jamie, Maya</td></tr>
+            <tr><td>17</td> <td>3:08</td> <td>Roosevelt</td> <td>2.4 @10:00</td> <td><b>Chandra</b>, Jamie</td></tr>
+            <tr><td></td> <td>3:36</td></tr>
             </tbody>
+            <tfoot>
+            <tr><td>🍻</td><td>5:00</td><td colspan="3"><a href="https://udistrictseattle.com/udistrict-station-opening-festival">U-District Station Opening Festival Food Walk</a></td></tr>
+            </tfoot>
         </table>
 
-        <p>Leg leaders are marked in <b>bold</b>.</p>
+        <p>Leg leaders are marked in <b>bold</b>. Times nominal. Follow the <a href="https://docs.google.com/spreadsheets/d/1wFvyhVMUVqJ3DTGJMr0fr9nrX8zU8nl4uux4AY_H01E/edit?usp=sharing">live schedule</a> for up-to-date estimates.</p>
+    </div>
+</section>
+
+<section id="countdown">
+    <div class="wrapper"> The relay starts <span id="static-count" style="">soon</span><span id="dynamic-count" style="display:none">in
+        <span id="days"></span> day<span id="day-plural">s</span> <span id="hours"></span> hour<span id="hour-plural">s</span> <span id="minutes"></span> minute<span id="minute-plural">s</span> and <span id="seconds"></span> second<span id="second-plural">s</span></span>.
     </div>
 </section>
 
@@ -285,18 +314,24 @@ redirect_from:
         <ul>
             <li>Dress visibly. Bright colors, hi-viz and reflective if you've got it.</li>
             <li>Bring and wear your mask when inside station areas.</li>
-            <li>Arrive at the northbound train platform comfortably ahead of when your leg is scheduled to start.
+            <li>Arrive at the northbound (or center) train platform comfortably ahead of when your leg is scheduled to start. Find anyone else starting with you and make yourselves easy to spot.
                 Incoming runners will find you on the platform.
             </li>
             <li>Take a selfie! Many stations have cool sculptures or architecture which you can try to include.</li>
-            <li>Run your assigned leg(s), closely following the specified route. Deviations from the route or the leg schedule
-                will have cascading effects on timing.
-            </li>
+            <li>Run your assigned leg(s). You can choose to run extra legs if you feel up for it, but the pace will be as scheduled.</li>
             <li>If you need to drop out during the run, post in the Slack channel.</li>
             <li>When you get to the station, quickly find the waiting runners. Once you've selfied as a group, wave
                 goodbye to anyone who's ending their run.
             </li>
             <li>When you end your run, post the approximate time that the next leg started at in the channel.</li>
+        </ul>
+        <h3>Leg Leaders</h3>
+        <ul>
+            <li>You are responsible for the safety, fun, and timing of your legs, in that order.</li>
+            <li>Know the people on your legs and which exchanges to expect them at.</li>
+            <li>You may start a leg early if everyone is present. Do not start a leg late if you can avoid it. Suggest an alternate start for late runners if the schedule accommodates.</li>
+            <li>Study your legs' routes and run them closely. Deviations from the route or the schedule will have cascading effects on timing.</li>
+            <li>You're in charge of the baton.</li>
         </ul>
     </div>
 </section>
@@ -323,14 +358,11 @@ redirect_from:
                 open-ended part of the sign-up form so we can accommodate you.
             </dd>
             <dt>Is there anything planned for after the run?</dt>
-            <dd>We are tentatively planning to enjoy the <a href="https://udistrictseattle.com/udistrict-station-opening-festival">U-District Station Opening Festival's Food Walk</a> after the conclusion of the relay around 6:00PM. Besides the festival, consider visiting the extension stations. <a href="https://www.theurbanist.org/2021/09/13/a-transit-riders-guide-to-the-northgate-link-light-rail-extension/">Sound Transit says</a> they'll be providing a "museum-like experience" at the new stations from October 2nd through the 31st. A [beautiful new pedestrian bridge in Northgate](https://www.shorelineareanews.com/2021/09/grand-opening-for-john-lewis-memorial.html) is also set to open on October 2nd and is well worth checking out.</dd>
+            <dd>We are planning to enjoy the <a href="https://udistrictseattle.com/udistrict-station-opening-festival">U-District Station Opening Festival's Food Walk</a> after the conclusion of the relay at 5:00PM. Besides the festival, consider visiting the extension stations. <a href="https://www.soundtransit.org/blog/platform/welcome-to-opening-day-month">Sound Transit says</a> they'll be providing a "museum-like experience" at the new stations from October 2nd through the 31st. A <a href="https://www.shorelineareanews.com/2021/09/grand-opening-for-john-lewis-memorial.html">beautiful new pedestrian bridge in Northgate</a> is also set to open on October 2nd and is well worth checking out.</dd>
             <dt>Can I still sign up?</dt>
-            <dd>Yes, but do it now. The overall structure of the schedule is unlikely to change, but we may be able to meet your preferences by adding you to legs on the current schedule. Please indicate the portion of the existing schedule that you'd like to join for in the free response question on the signup form.</dd>
-            <dt>How do I sign up?</dt>
-            <dd>Here's <a href="https://forms.gle/GC6xmrdtKjndUkvH9">the sign up form</a>.
-            </dd>
+            <dd>No, but you can join for any scheduled legs that you are able to. Please message us in the event Slack channel, #light-rail-relay-2021.</dd>
             <dt>I want to update my preferences.</dt>
-            <dd>You can update your signup form responses by accessing the form with the same Google account. Note that scheduling flexibility is reduced at this point, and will continue to tighten up to the day of the event.</dd>
+            <dd>You can reduce or increase the number of legs that you run if it does not affect the pace schedule, otherwise there will be no changes.</dd>
         </dl>
     </div>
 </section>
@@ -455,6 +487,50 @@ redirect_from:
     stationButtonLayer.addTo(map);
     stationLabels.addTo(map);
     map.fitBounds(legsLayer.getBounds().pad(0.1))
+
+    var countDownDate = new Date("Oct 2, 2021 9:30:00").getTime();
+    let countdown = setInterval(function() {
+        document.getElementById("static-count").style.display = "none";
+        document.getElementById("dynamic-count").style.display = "";
+        var now = new Date().getTime();
+        var timeleft = countDownDate - now;
+
+        var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+        document.getElementById("days").innerHTML = days
+        document.getElementById("hours").innerHTML = hours
+        document.getElementById("minutes").innerHTML = minutes
+        document.getElementById("seconds").innerHTML = seconds
+
+        if (seconds === 1) {
+            document.getElementById("second-plural").style.display = "none"
+        } else {
+            document.getElementById("second-plural").style.display = ""
+        }
+        if (minutes === 1) {
+            document.getElementById("minute-plural").style.display = "none"
+        } else {
+            document.getElementById("minute-plural").style.display = ""
+        }
+        if (hours === 1) {
+            document.getElementById("hour-plural").style.display = "none"
+        } else {
+            document.getElementById("hour-plural").style.display = ""
+        }
+        if (days === 1) {
+            document.getElementById("day-plural").style.display = "none"
+        } else {
+            document.getElementById("day-plural").style.display = ""
+        }
+        if (timeleft < 0) {
+            clearInterval(countdown);
+
+            //document.getElementById("secs").innerHTML = ""
+            document.getElementById("countdown").style.display = "none";
+        }
+    }, 1000)
 </script>
 
 </body>
