@@ -212,15 +212,23 @@ redirect_from:
         white-space: nowrap;
 
     }
-    #schedule tbody td:first-of-type {
+    #schedule td:first-of-type {
         text-align: center;
     }
-    #schedule tbody td:last-of-type {
+    #schedule td:last-of-type {
         white-space: break-spaces;
     }
     #schedule thead th {
         text-align: left;
         margin-right: .5rem;
+    }
+
+    #finish-row td {
+        border-top: 1px solid lightgray;
+        font-weight: bold;
+    }
+    #finish-row {
+        padding-bottom: 1rem;
     }
 
     #countdown {
@@ -271,34 +279,34 @@ redirect_from:
         <table id="schedule">
             <tbody>
             <thead>
-            <th>Leg</th><th>Time</th><th>Start Station</th> <th>Distance (mi) @ Pace</th><th>Runners</th>
+            <th>Leg</th><th>Time</th><th>Start Station</th> <th>Miles</th><th>Pace</th><th>Elev. Gain</th><th>Runners</th>
             </thead>
-            <tr><td>0</td> <td>9:30</td> <td>Angle Lake</td> <td>1.8 @ 8:00</td> <td><b>Ellis</b>, Nick</td></tr>
-            <tr><td>1</td> <td>9:49</td> <td>SeaTac/Airport</td> <td>1.5 mi @ 8:00</td> <td><b>Ellis</b>, Nick</td></tr>
-            <tr><td>2</td> <td>10:05</td> <td>Tukwila International Blvd</td> <td>6.6 mi @ 8:00</td> <td><b>Ellis</b>, Johanna, Nick</td></tr>
-            <tr><td>3</td> <td>11:03</td> <td>Rainier Beach</td> <td>1.1 @12:00</td> <td>Swati, <b>Yuxuan</b></td></tr>
-            <tr><td>4</td> <td>11:21</td> <td>Othello</td> <td>1.6 @12:00</td> <td>Brett, James, Jennifer, Lancelot, Max, Sameer, Sidd, Swati, <b>Yuxuan</b>, Zach</td></tr>
-            <tr><td>5</td> <td>11:45</td> <td>Columbia City</td> <td>1.2 @12:00</td> <td>Brett, Ethan, James, Jennifer, Lancelot, Max, Sameer, Sidd, Swati, <b>Yuxuan</b>, Zach</td></tr>
-            <tr><td>6</td> <td>12:04</td> <td>Mount Baker</td> <td>0.8 @12:00</td> <td>Ethan, Lancelot, Sidd, Swati, <b>Yuxuan</b>, Zach</td></tr>
-            <tr><td>7</td> <td>12:18</td> <td>Beacon Hill</td> <td>1.3 @12:00</td> <td>Ethan, Lancelot, Sidd, Swati, <b>Zach</b></td></tr>
-            <tr><td>8</td> <td>12:38</td> <td>SODO</td> <td>0.7 @12:00</td> <td>Ethan, Jingwei, Lancelot, Pratyush, <b>Zach</b></td></tr>
-            <tr><td>9</td> <td>12:51</td> <td>Stadium</td> <td>0.8 @12:00</td> <td>Ethan, Jingwei, Lancelot, Pratyush, <b>Zach</b></td></tr>
-            <tr><td>10</td> <td>1:04</td> <td>International District/Chinatown</td> <td>0.3 @ 12:50</td> <td>Ethan, Jingwei, Lancelot, Pratyush, Suneja, <b>Zach</b></td></tr>
-            <tr><td>11</td> <td>1:13</td> <td>Pioneer Square</td> <td>0.5 @12:50</td> <td><b>Chandra</b>, Ethan, Ewin, Reshabh, Suneja</td></tr>
-            <tr><td>12</td> <td>1:24</td> <td>University Street</td> <td>1.1 @20:00</td> <td><b>Chandra</b>, Ethan, Ewin, Suneja, Vishwas</td></tr>
-            <tr><td>13</td> <td>1:49</td> <td>Westlake</td> <td>1.0 @10:00</td> <td><b>Chandra</b>, Ethan, Ewin</td></tr>
-            <tr><td>14</td> <td>2:03</td> <td>Capitol Hill</td> <td>2.8 @10:00</td> <td><b>Chandra</b>, Edward, Ethan, Ewin, Jamie</td></tr>
-            <tr><td>15</td> <td>2:35</td> <td>University of Washington</td> <td>1.1 @10:00</td> <td>Amal, <b>Chandra</b>, Edward, Ewin, Jamie, Maya</td></tr>
-            <tr><td>16</td> <td>2:50</td> <td>U-District</td> <td>1.4 @10:00</td> <td>Amal, <b>Chandra</b>, Ewin, Jamie, Maya</td></tr>
-            <tr><td>17</td> <td>3:08</td> <td>Roosevelt</td> <td>2.4 @10:00</td> <td><b>Chandra</b>, Jamie</td></tr>
-            <tr><td></td> <td>3:36</td></tr>
+            <tr><td>0</td> <td>9:30</td> <td>Angle Lake</td> <td>1.8</td> <td>8:00</td> <td>47</td> <td><b><u>Ellis</u></b>, <u>Nick</u></td></tr>
+            <tr><td>1</td> <td>9:49</td> <td>SeaTac/Airport</td> <td>1.5</td> <td>8:00</td> <td>105</td> <td><b>Ellis</b>, Nick</td></tr>
+            <tr><td>2</td> <td>10:05</td> <td>Tukwila International Blvd</td> <td>6.6</td> <td>8:00</td> <td>590</td> <td><b>Ellis</b>, <u>Johanna</u>, Nick</td></tr>
+            <tr><td>3</td> <td>11:03</td> <td>Rainier Beach</td> <td>1.1</td> <td>12:00</td> <td>74</td> <td><u>Swati</u>, <b><u>Yuxuan</u></b></td></tr>
+            <tr><td>4</td> <td>11:21</td> <td>Othello</td> <td>1.6</td> <td>12:00</td> <td>37</td> <td><u>Brett</u>, <u>James</u>, <u>Jennifer</u>, <u>Lancelot</u>, <u>Max</u>, <u>Sameer</u>, <u>Sidd</u>, Swati, <b>Yuxuan</b>, Zach</td></tr>
+            <tr><td>5</td> <td>11:45</td> <td>Columbia City</td> <td>1.2</td> <td>12:00</td> <td>23</td> <td>Brett, <u>Ethan</u>, James, Jennifer, Lancelot, Max, Sameer, Sidd, Swati, <b>Yuxuan</b>, <u>Zach</u></td></tr>
+            <tr><td>6</td> <td>12:04</td> <td>Mount Baker</td> <td>0.8</td> <td>12:00</td> <td>251</td> <td>Ethan, Lancelot, Sidd, Swati, <b>Yuxuan</b>, Zach</td></tr>
+            <tr><td>7</td> <td>12:18</td> <td>Beacon Hill</td> <td>1.3</td> <td>12:00</td> <td>11</td> <td>Ethan, Lancelot, Sidd, Swati, <b>Zach</b></td></tr>
+            <tr><td>8</td> <td>12:38</td> <td>SODO</td> <td>0.7</td> <td>12:00</td> <td>12</td> <td>Ethan, <u>Jingwei</u>, Lancelot, Sidd, <u>Pratyush</u>, <b>Zach</b></td></tr>
+            <tr><td>9</td> <td>12:51</td> <td>Stadium</td> <td>0.8</td> <td>12:00</td> <td>38</td> <td>Ethan, Jingwei, Lancelot, Pratyush, <b>Zach</b></td></tr>
+            <tr><td>10</td> <td>1:04</td> <td>International District/Chinatown</td> <td>0.3</td> <td>12:50</td> <td>25</td> <td>Ethan, Jingwei, Lancelot, Pratyush, <b>Zach</b></td></tr>
+            <tr><td>11</td> <td>1:13</td> <td>Pioneer Square</td> <td>0.5</td> <td>12:50</td> <td>54</td> <td><b><u>Chandra</u></b>, Ethan, <u>Ewin</u>, <u>Reshabh</u></td></tr>
+            <tr><td>12</td> <td>1:24</td> <td>University Street</td> <td>1.1</td> <td>20:00</td> <td>73</td> <td><b>Chandra</b>, Ethan, Ewin, <u>Vishwas</u></td></tr>
+            <tr><td>13</td> <td>1:49</td> <td>Westlake</td> <td>1.0</td> <td>10:00</td> <td>274</td> <td><b>Chandra</b>, Ethan, Ewin</td></tr>
+            <tr><td>14</td> <td>2:03</td> <td>Capitol Hill</td> <td>2.8</td> <td>10:00</td> <td>228</td> <td><b>Chandra</b>, Edward, Ewin, <u>Jamie</u></td></tr>
+            <tr><td>15</td> <td>2:35</td> <td>University of Washington</td> <td>1.1</td> <td>10:00</td> <td>176</td> <td><u>Amal</u>, <b>Chandra</b>, Edward, Ewin, Jamie, <u>Maya</u></td></tr>
+            <tr><td>16</td> <td>2:50</td> <td>U-District</td> <td>1.4</td> <td>10:00</td> <td>111</td> <td>Amal, <b>Chandra</b>, Ewin, Jamie, Maya</td></tr>
+            <tr><td>17</td> <td>3:08</td> <td>Roosevelt</td> <td>2.4</td> <td>10:00</td> <td>261</td> <td><b>Chandra</b>, Jamie</td></tr>
+            <tr id="finish-row"><td>Finish</td><td>3:36</td> <td></td><td>27.9</td><td></td><td>2390</td></tr>
             </tbody>
             <tfoot>
             <tr><td>🍻</td><td>5:00</td><td colspan="3"><a href="https://udistrictseattle.com/udistrict-station-opening-festival">U-District Station Opening Festival Food Walk</a></td></tr>
             </tfoot>
         </table>
 
-        <p>Leg leaders are marked in <b>bold</b>. Times nominal. Follow the <a href="https://docs.google.com/spreadsheets/d/1wFvyhVMUVqJ3DTGJMr0fr9nrX8zU8nl4uux4AY_H01E/edit?usp=sharing">live schedule</a> for up-to-date estimates.</p>
+        <p>Leg leaders are marked in <b>bold</b>. <u>Underlined</u> name indicates first leg. Times nominal. Follow the <a href="https://docs.google.com/spreadsheets/d/1wFvyhVMUVqJ3DTGJMr0fr9nrX8zU8nl4uux4AY_H01E/edit?usp=sharing">live schedule</a> for up-to-date estimates.</p>
     </div>
 </section>
 
@@ -317,20 +325,20 @@ redirect_from:
             <li>Arrive at the northbound (or center) train platform comfortably ahead of when your leg is scheduled to start. Find anyone else starting with you and make yourselves easy to spot.
                 Incoming runners will find you on the platform.
             </li>
-            <li>Take a selfie! Many stations have cool sculptures or architecture which you can try to include.</li>
-            <li>Run your assigned leg(s). You can choose to run extra legs if you feel up for it, but the pace will be as scheduled.</li>
+            <li>Take a selfie! Many stations have cool sculptures or architecture which you can include.</li>
+            <li>Run your assigned leg(s). You may run extra legs if you feel up for it, but the pace will be as scheduled.</li>
             <li>If you need to drop out during the run, post in the Slack channel.</li>
             <li>When you get to the station, quickly find the waiting runners. Once you've selfied as a group, wave
                 goodbye to anyone who's ending their run.
             </li>
-            <li>When you end your run, post the approximate time that the next leg started at in the channel.</li>
+            <li>When you end your run, post the approximate time that the next leg started in the channel.</li>
         </ul>
         <h3>Leg Leaders</h3>
         <ul>
             <li>You are responsible for the safety, fun, and timing of your legs, in that order.</li>
             <li>Know the people on your legs and which exchanges to expect them at.</li>
             <li>You may start a leg early if everyone is present. Do not start a leg late if you can avoid it. Suggest an alternate start for late runners if the schedule accommodates.</li>
-            <li>Study your legs' routes and run them closely. Deviations from the route or the schedule will have cascading effects on timing.</li>
+            <li>Study your legs' routes and run them closely. When the route does not take the shortest path, it's to avoid steep climbs, dangerous roads or bad sidewalks. Deviations from the route or the schedule may be dangerous and will have cascading effects on timing.</li>
             <li>You're in charge of the baton.</li>
         </ul>
     </div>
