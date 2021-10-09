@@ -20,5 +20,5 @@
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-  new Splide( '#image-slider', {'type': 'fade', 'autoplay': true, 'lazyLoad': 'nearby', 'pagination': false, 'start': getRandomInt(0, numPhotos)} ).mount();
+  new Splide( '#image-slider', {'type': 'fade', 'autoplay': true, 'rewind': true, 'lazyLoad': 'nearby', 'pagination': false, 'start': getRandomInt(0, numPhotos)} ).mount();
 </script>
