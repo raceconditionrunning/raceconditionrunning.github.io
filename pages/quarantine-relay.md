@@ -1,4 +1,5 @@
 ---
+permalink: quarantine-relay/
 layout: default
 ---
 

@@ -1,4 +1,5 @@
 ---
+permalink: routes/
 layout: default
 ---
 
@@ -16,7 +17,7 @@ CSE routes are routes that start and end at CSE.
     {% for route in sorted_routes %}
       <tr>
         <td>
-          <a target="_blank" href="{{ route.map }}">
+          <a target="_blank" href="{{ route.map }}" title="{{ route.id }}">
             <span class="name">{{ route.name }}</span>
           </a>
         </td>
@@ -31,12 +32,12 @@ CSE routes are routes that start and end at CSE.
         {% assign dist_split = route.dist | round: 2 | split: "." %}
         {% assign dist_integral = dist_split[0] %}
         {% assign dist_fractional = dist_split[1] | append: "00" | truncate: 2, "" %}
-        <td><span class="dist">{{ dist_integral }}.{{ dist_fractional }}</span></td>
+        <td><span class="dist" title="{{ route.dist | times: 1.609 | round: 1}}km">{{ dist_integral }}.{{ dist_fractional }}</span></td>
         <td>{% if route.cseroute %}Yes{% endif %}</td>
         <td>
           <ul class="matched-runs comma-sep">
           {% for event in site.data.schedule %}
-            {% assign matched_runs = event.plan | where: 'route', route.id %}
+            {% assign matched_runs = event.plan | where: 'route_id', route.id %}
             {% for run in matched_runs %}
               <li class="date">{{ event.date }}</li>
             {% endfor %}
