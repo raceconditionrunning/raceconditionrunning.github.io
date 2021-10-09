@@ -4,6 +4,7 @@ permalink: /:title/
 
 plugins:
   - jekyll-redirect-from
+  - jekyll-sitemap
 
 markdown: kramdown
 kramdown:
