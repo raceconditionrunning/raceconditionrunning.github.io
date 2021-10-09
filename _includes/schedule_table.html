@@ -1,0 +1,77 @@
+<table class='schedule-table'>
+    {% for run in include.schedule %}
+    {% if run.cancelled %}
+    {% assign cancelled-class = "cancelled" %}
+    {% else %}
+    {% assign cancelled-class = "" %}
+    {% endif %}
+    <tbody class="run" data-date="{{ run.date }}">
+    {% for plan in run.plan %}
+    {% if plan.cancelled %}
+    {% assign part-cancelled-class = "cancelled" %}
+    {% else %}
+    {% assign part-cancelled-class = "" %}
+    {% endif %}
+    <tr class="{{ cancelled-class }} {{part-cancelled-class}}">
+        {% if forloop.first %}
+        <td class="date"><time datetime="{{ run.date }}" title="{{run.date | date: '%A'}}">{{ run.date | date: "%b %e" }}</time></td>
+        {% else %}
+        <td class="date"></td>
+        {% endif %}
+        <td class="time">{{ plan.time }}</td>
+        {% if plan.route.name %}
+        {% assign route = plan.route %}
+        {% else if plan.route_id %}
+        {% assign route = site.data.routes | where: 'id', plan.route_id | first %}
+        {% unless route %}
+        <td>ERROR: No route for id '{{plan.route_id}}'</td>
+        {% continue %}
+        {% endunless %}
+        {% endif %}
+        <td nowrap>
+            {% if route.map %}
+            <a target="_blank" href="{{ route.map }}">
+                {% endif %}
+                {{ route.name }}
+                {% if route.map %}</a>{% endif %}
+            {% if route.dist %}&nbsp; (<span title="{{ route.dist | times: 1.609 | round: 1}}km">{{ route.dist | round: 1}})</span>{% endif %}
+        </td>
+    </tr>
+    {% if plan.notes %}
+    <tr>
+        <td></td><td></td>
+        <td>{{ plan.notes }}</td>
+    </tr>
+    {% endif %}
+    {% if plan.cancelled %}
+    <tr class="cancellation-note">
+        <td></td>
+        <td></td>
+        <td>{{ plan.cancelled }}</td>
+    </tr>
+    {% endif %}
+
+    {% if plan.highlight-image %}
+    <tr>
+        <td></td>
+        <td></td>
+        <td>
+            <a href="{{ route.map }}">
+        <img src="{{ plan.highlight-image }}" />
+            </a>
+        </td>
+    </tr>
+    {% endif %}
+
+    {% endfor %}
+    {% if run.cancelled %}
+    <tr class="cancellation-note">
+        <td></td>
+        <td></td>
+        <td>{{ run.cancelled }}</td>
+    </tr>
+    {% endif %}
+    </tbody>
+    {% endfor %}
+    <tfoot id="schedule-finished" style="display: none"><tr><td colspan="3">A new schedule is coming! <a href="https://github.com/raceconditionrunning/raceconditionrunning.github.io">Contribute on GitHub</a></td></tr></tfoot>
+</table>

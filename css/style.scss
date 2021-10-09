@@ -59,14 +59,27 @@ dd {
   text-align: right;
   padding-right: 10px;
 }
-.spacer {
-  height: 15px;
-}
 .past, .past a, .past a:visited {
   color: #ccc;
 }
 .next, .next a, .next a:visited {
   font-weight: bold;
+}
+
+.cancelled {
+  text-decoration: line-through;
+}
+
+tbody tr:last-child td {
+  padding-bottom: 1rem;
+}
+
+.cancellation-note td{
+  font-style: italic;
+}
+
+.schedule-table img {
+  max-height: 200px;
 }
 
 .column {

@@ -1,0 +1,36 @@
+---
+permalink: lore/
+layout: default
+schedules:
+  - 14-autumn
+  - 15-winter
+  - 15-spring
+  - 15-autumn
+  - 16-winter
+  - 16-spring
+  - 16-summer
+  - 16-autumn
+  - 17-winter
+  - 17-spring
+  - 17-autumn
+  - 18-winter
+  - 18-spring
+  - 18-autumn
+  - 19-winter
+  - 19-spring
+  - 19-summer
+  - 19-autumn
+  - 20-winter
+  - 20-spring
+  - 20-summer
+  - 21-spring
+  - 21-summer
+---
+
+{% for quarter_schedule_key in page.schedules reversed %}
+
+<h2>{{quarter_schedule_key | split: "-" | reverse | join: " " | capitalize}}</h2>
+{% assign quarter_schedule = site.data[quarter_schedule_key] | reverse %}
+{% include schedule_table.html schedule=quarter_schedule %}
+
+{% endfor %}

@@ -26,47 +26,7 @@ layout: default
   <dt>Weekend (usually Saturday)</dt>
   <dd>
     <p>Arrive 10 minutes before the run!</p>
-    <table id='runs'>
-      {% for run in site.data.schedule %}
-      <tbody class="run" data-date="{{ run.date }}">
-      {% for plan in run.plan %}
-      <tr>
-        {% if forloop.first %}
-        <td class="date">{{ run.date | date: "%b %e" }}</td>
-        {% else %}
-        <td class="date"></td>
-        {% endif %}
-        <td class="time">{{ plan.time }}</td>
-        {% if plan.route.name and plan.route.map %}
-          {% assign route = plan.route %}
-        {% else if plan.route_id %}
-          {% assign route = site.data.routes | where: 'id', plan.route_id | first %}
-          {% unless route %}
-            <td>ERROR: No route for id '{{plan.route_id}}'</td>
-            {% continue %}
-          {% endunless %}
-        {% endif %}
-        <td nowrap>
-          {% if route.map %}
-          <a target="_blank" href="{{ route.map }}">
-            {% endif %}
-            {{ route.name }}
-            {% if route.map %}</a>{% endif %}
-          {% if route.dist %}&nbsp; ({{ route.dist }}){% endif %}
-        </td>
-        {% if plan.notes %}
-      <tr>
-        <td></td><td></td>
-        <td>{{ plan.notes }}</td>
-      </tr>
-      {% endif %}
-      </tr>
-      {% endfor %}
-      <tr class="spacer"></tr>
-      </tbody>
-      {% endfor %}
-      <tfoot id="schedule-finished" style="display: none"><tr><td colspan="3">A new schedule is coming! <a href="https://github.com/raceconditionrunning/raceconditionrunning.github.io">Contribute on GitHub</a></td></tr></tfoot>
-    </table>
+    {% include schedule_table.html schedule=site.data.schedule %}
 
   </dd>
   <dt>Tuesday</dt>
