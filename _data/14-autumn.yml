@@ -1,0 +1,94 @@
+- date: '2014-8-31'
+  plan:
+    - time: '10:00'
+      route:
+        name: "CSE - Foster Island - Montlake Playfield Loop"
+        map: "http://www.gmap-pedometer.com/?r=6422125"
+        dist: 4.44
+- date: '2014-9-07'
+  plan:
+    - time: '10:00'
+      route_id: ob-cse-gas-works
+- date: '2014-9-13'
+  plan:
+    - time: '10:00'
+      route:
+        name: "Gasworks - Portage Bay loop"
+        map: "http://www.gmap-pedometer.com/?r=6435531"
+        dist: 5.55
+- date: '2014-9-21'
+  plan:
+    - time: '9:30'
+      route_id: lake-union-loop
+- date: '2014-9-28'
+  plan:
+    - time: '9:30'
+      route_id: ob-gas-works-green-lake-loop
+- date: '2014-10-05'
+  plan:
+    - time: '9:20'
+      route:
+        name: "Gasworks - Interlaken - Arb Loop"
+        map: "http://www.gmap-pedometer.com/?r=6453578"
+        dist: 8.48
+- date: '2014-10-12'
+  plan:
+    - time: '9:20'
+      route:
+        name: "Gasworks - Discovery Locks Loop"
+        map: "http://www.gmap-pedometer.com/?r=6458968"
+        dist: 9.61
+- date: '2014-10-19'
+  plan:
+    - time: '9:20'
+      route:
+        name: "Dawg Dash 2014"
+        dist: 6.2
+        map: "http://onlineraceresults.com/event/view_event.php?event_id=14593"
+- date: '2014-10-26'
+  plan:
+    - time: '8:30'
+      route:
+        name: "Gasworks - Arb - Interlaken - Lake Union Loop"
+        map: "http://www.gmap-pedometer.com/?r=6470012"
+        dist: 10.19
+- date: '2014-11-02'
+  plan:
+    - time: '8:30'
+      route_id: ob-miller-park-mercer-island
+- date: '2014-11-09'
+  plan:
+    - time: '8:30'
+      route:
+        name: "Gasworks - Arb - Interlaken - Lake Union Loop"
+        map: "http://www.gmap-pedometer.com/?r=6478747"
+        dist: 11.53
+- date: '2014-11-16'
+  plan:
+    - time: '9:00'
+      route:
+        name: "OB: Gasworks - Burke"
+        map: "https://www.gmap-pedometer.com/?r=6482702"
+        dist: 11.30
+- date: '2014-11-23'
+  plan:
+    - time: '9:00'
+      route_id: gas-works-salmon-bay
+- date: '2014-11-30'
+  plan:
+    - time: '9:00'
+      route:
+        name: "Seattle Half Marathon 2014"
+        dist: 13.1
+        map: https://results.chronotrack.com/event/results/event/event-11529
+- date: '2014-12-07'
+  plan:
+    - time: '9:00'
+      route_id: lake-union-loop
+- date: '2014-12-14'
+  plan:
+    - time: '9:00'
+      route:
+        name: "Gasworks - UW - Ravenna - Greenlake Loop"
+        map: "http://www.gmap-pedometer.com/?r=6496031"
+        dist: 9.15

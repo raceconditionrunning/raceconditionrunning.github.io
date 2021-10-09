@@ -1,0 +1,112 @@
+- date: '2015-09-06'
+  plan:
+    - time: '10:00'
+      route_id: discovery-park-loop
+- date: '2015-09-20'
+  plan:
+    - time: '9:00'
+      route_id: discovery-park-loop
+- date: '2015-09-27'
+  plan:
+    - time: '9:00'
+      route:
+        name: "OB: CSE - Arboretum"
+        dist: 5.57
+        map: "http://www.gmap-pedometer.com/?r=6721502"
+- date: '2015-10-04'
+  plan:
+    - time: '9:30'
+      route_id: green-lake-loop
+    - time: '10:00'
+      route_id: green-lake-loop
+- date: '2015-10-11'
+  plan:
+    - time: '9:30'
+      route_id: ob-cse-ravenna-park
+    - time: '10:15'
+      route:
+        name: "OB: CSE - Portage Bay Loop"
+        map: "http://www.gmap-pedometer.com/?r=6732039"
+        dist: 3.36
+- date: '2015-10-18'
+  plan:
+    - time: '7:30'
+      route:
+        name: "Dawg Dash 2015"
+        dist: 3.10
+        map: "http://onlineraceresults.com/event/view_event.php?event_id=16658"
+    - time: '9:30'
+      route_id: ob-locks-discovery-park
+    - time: '10:30'
+      route_id: locks-ballard-bridge-loop
+- date: '2015-10-25'
+  plan:
+    - time: '9:30'
+      route_id: lake-union-loop
+    - time: '10:45'
+      route:
+        name: "OB: Gasworks - Burke West"
+        map: "http://www.gmap-pedometer.com/?r=6741132"
+        dist: 3
+- date: '2015-11-01'
+  plan:
+    - time: '9:30'
+      route:
+        name: "OB: Greenlake - Gasworks - Ravenna Loop"
+        dist: 7.5
+        map: "http://www.gmap-pedometer.com/?r=6744200"
+    - time: '10:45'
+      route_id: green-lake-loop
+
+- date: '2015-11-15'
+  plan:
+    - time: '10:00'
+      route_id: lake-union-loop
+      notes: "CCW"
+    - time: '11:00'
+      route_id: gas-works-salmon-bay
+
+
+- date: '2015-11-29'
+  plan:
+    - time: '7:30'
+      route:
+        name: "Seattle Half Marathon 2015"
+        dist: 13.1
+        map: "https://results.chronotrack.com/event/results/event/event-18056"
+
+- date: '2015-12-06'
+  plan:
+    - time: '10:00'
+      route_id: green-lake-loop
+
+- date: '2015-12-13'
+  plan:
+    - time: '9:00'
+      route:
+        name: "OB: CSE - Arboretum - Interlaken - Portage Bay Loop"
+        map: "http://www.gmap-pedometer.com/?r=6764453"
+        dist: 6.6
+    - time: "10:30"
+      route:
+        name: "CSE - Nature Trail Loop"
+        map: "http://www.gmap-pedometer.com/?r=6764452"
+        dist: 3.48
+- date: '2015-12-20'
+  plan:
+    - time: '10:00'
+      route:
+        name: "OB: Greenlake - Gasworks - UW"
+        map: "https://www.mapmyrun.com/routes/view/944854659"
+        dist: 6
+    - time: '11:00'
+      route_id: green-lake-loop
+- date: '2015-12-27'
+  plan:
+    - time: '10:00'
+      route:
+        name: "OB: Greenlake - Golden Gardens - Greenwood Loop"
+        map: "https://www.mapmyrun.com/routes/view/948974023"
+        dist: 10
+    - time: '11:30'
+      route_id: green-lake-loop

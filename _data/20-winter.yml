@@ -17,7 +17,7 @@
 - date: "2020-02-15"
   plan:
     - time: "8:50"
-      route_id: ob-discovery-gg
+      route_id: ob-discovery-golden-gardens
       notes: Aiming for 9 miles total
 
 - date: "2020-02-22"
@@ -27,18 +27,15 @@
 
 - date: "2020-02-29"
   plan:
-    - time: "8:00"
-      route:
-        name: Lord Hill
-        map: https://runsignup.com/Race/Events/WA/Snohomish/LordHillTrailRun
     - time: "8:50"
-      route_id: pp-discovery-alki
+      route_id: ob-miller-park-mercer-island
 
 - date: "2020-03-7"
   plan:
     - time: "8:00"
+      cancelled: "Pandemic"
       route:
-        name: Lake Sammamish Half
+        name: "Lake Sammamish Half"
         map: https://lakesammamishhalf.com/
         dist: 13.1
     - time: "8:50"
@@ -46,17 +43,14 @@
         name: "OB: Greenlake, Carkeek"
         dist: 8.0
 
-# - date: "2020-03-14"
-#   plan:
-
-- date: "2020-03-22"
+- date: "2020-03-14"
   plan:
-    - time: "9:00"
-      route:
-        name: Mercer Island Half
-        map: http://mercerislandhalf.com/
+    - time: "8:50"
+      route_id: ob-cse-burke
+      notes: "Aiming for 12"
 
-- date: "2020-04-19"
+- date: "2020-03-21"
   plan:
-    - time: "8:00"
-      route_id: lake-relay
+    - time: "8:50"
+      route_id: lake-union-loop
+      notes: "CSE start"

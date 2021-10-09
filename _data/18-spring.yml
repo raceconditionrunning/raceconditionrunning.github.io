@@ -1,0 +1,82 @@
+- date: '2018-03-31'
+  plan:
+    - time: '8:50'
+      route_id: gas-works-queen-anne-loop
+    - time: '10:40'
+      route_id: ob-gas-works-green-lake
+- date: '2018-04-07'
+  plan:
+    - time: '8:50'
+      route_id: ob-cse-520
+    - time: '10:30'
+      route_id: ob-cse-arboretum
+- date: '2018-04-14'
+  plan:
+    - time: '8:00'
+      route:
+        name: "Spring Eagle Trail Runs"
+        dist: 13.10
+        map: "http://nwtrailruns.com/events/spring-eagle-trail-run"
+- date: '2018-04-21'
+  plan:
+    - time: '8:50'
+      route_id: ob-miller-park-mercer-island
+    - time: '10:40'
+      route_id: ob-miller-park-interlaken
+- date: '2018-04-28'
+  plan:
+    - time: '8:50'
+      route_id: ob-cse-burke
+    - time: '10:20'
+      route_id: ob-cse-ravenna-park
+- date: '2018-05-06'
+  plan:
+    - time: '8:00'
+      route:
+        name: "Lake Hills 50k Relay"
+        dist: 31.00
+        map: "http://nwtrailruns.com/events/lake-hills-50k-relay/"
+- date: '2018-05-12'
+  plan:
+    - time: '8:50'
+      route_id: cse-bryant-loop
+    - time: '10:10'
+      route_id: ob-cse-volunteer
+- date: '2018-05-19'
+  plan:
+    - time: '8:50'
+      route_id: ob-overlake-lake-hill
+- date: '2018-05-26'
+  plan:
+    - time: '8:50'
+      route_id: lake-union-loop
+    - time: '10:10'
+      route_id: gas-works-fremont-cut-loop
+- date: '2018-06-02'
+  plan:
+    - time: '8:50'
+      route_id: greenlake-cse
+    - time: '10:30'
+      route_id: green-lake-loop
+- date: '2018-06-09'
+  plan:
+    - time: '8:50'
+      route_id: ob-discovery-golden-gardens
+    - time: '10:20'
+      route_id: discovery-magnolia-loop
+- date: '2018-06-16'
+  plan:
+    - time: '8:50'
+      route_id: ob-madison-seward
+- date: '2018-06-23'
+  plan:
+    - time: '8:50'
+      route_id: salmon-bay-fremont
+    - time: '10:10'
+      route_id: ob-locks-golden-gardens
+- date: '2018-06-30'
+  plan:
+    - time: '8:50'
+      route_id: sculpture-park-lake-union
+    - time: '10:40'
+      route_id: ob-sculpture-park

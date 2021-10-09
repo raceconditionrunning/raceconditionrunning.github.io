@@ -1,0 +1,84 @@
+- date: '2018-09-22'
+  plan:
+    - time: '8:50'
+      route_id: green-lake-loop
+    - time: '9:30'
+      route_id: green-lake-loop
+- date: '2018-09-22'
+  plan:
+    - time: '9:00'
+      route:
+        name: "Paradise Valley Trail Run"
+        dist: 13.10
+        map: "https://www.webscorer.com/race?raceid=152659"
+- date: '2018-09-29'
+  plan:
+    - time: '8:50'
+      route_id: lake-union-loop
+- date: '2018-10-06'
+  plan:
+    - time: '8:50'
+      route_id: ob-locks-golden-gardens
+    - time: '9:45'
+      route_id: locks-ballard-bridge-loop
+- date: '2018-10-14'
+  plan:
+    - time: '8:45'
+      route:
+        name: "Dawg Dash 2018"
+        dist: 6.20
+        map: "http://onlineraceresults.com/event/view_event.php?event_id=21582"
+- date: '2018-10-20'
+  plan:
+    - time: '8:50'
+      route_id: gas-works-salmon-bay
+- date: '2018-10-27'
+  plan:
+    - time: '8:50'
+      route_id: ob-colman-seward
+- date: '2018-11-03'
+  plan:
+    - time: '8:50'
+      route_id: lower-queen-anne-loop
+    - time: '9:50'
+      route_id: ob-sculpture-park
+- date: '2018-11-10'
+  plan:
+    - time: '8:50'
+      route_id: ob-green-lake-loop-gasworks
+    - time: '10:45'
+      route_id: green-lake-loop
+- date: '2018-11-17'
+  plan:
+    - time: '8:50'
+      route_id: cse-greenlake-union
+- date: '2018-11-25'
+  plan:
+    - time: '8:50'
+      route:
+        name: "Seattle Half Marathon 2018"
+        dist: 13.10
+        map: "https://results.chronotrack.com/event/results/event/event-38948"
+- date: '2018-12-01'
+  plan:
+    - time: '8:30'
+      route:
+        name: "Redmond Reindeer Romp 2018"
+        dist: 13.10
+        map: "https://www.webscorer.com/race?raceid=163121"
+- date: '2018-12-08'
+  plan:
+    - time: '8:30'
+      route_id: ob-madison-mt-baker-beach
+    - time: '9:50'
+      route_id: ob-madison-interlaken
+- date: '2018-12-14'
+  plan:
+    - time: '8:50'
+      route_id: pp-discovery-alki
+- date: '2018-12-29'
+  plan:
+    - time: '8:50'
+      route_id: ob-magnolia-blvd-bridge
+    - time: '10:10'
+      route_id: discovery-park-loop

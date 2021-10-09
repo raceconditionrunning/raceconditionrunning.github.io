@@ -1,0 +1,13 @@
+- date: '2017-05-07'
+  plan:
+    - time: '9:30'
+      route_id: lake-union-loop
+- date: '2017-05-14'
+  plan:
+    - time: '9:30'
+      route_id: lake-union-loop
+
+- date: '2017-06-04'
+  plan:
+    - time: '9:00'
+      route_id: lake-union-loop

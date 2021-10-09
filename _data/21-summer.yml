@@ -1,0 +1,86 @@
+- date: '2021-06-12'
+  plan:
+    - time: "8:30"
+      route:
+        name: "OB: Miller Park - Lake Washington Boulevard"
+        dist: 8.19
+- date: '2021-06-19'
+  plan:
+    - time: "8:30"
+      route:
+        name: "OB: Arboretum - Burke Northeast"
+        dist: 9.33
+        map: "https://onthegomap.com/s/09hrn98a"
+- date: '2021-06-26'
+  plan:
+    - time: "7:00"
+      route_id: lake-union-loop
+- date: '2021-07-01'
+  plan:
+    - time: "8:00"
+      route_id: ob-locks-golden-gardens
+    - time: "8:50"
+      route_id: discovery-park-loop
+- date: '2021-07-09'
+  plan:
+    - time: "7:30"
+      route:
+        name: "Ragnar Road Northwest Passage"
+        map: "https://www.runragnar.com/event-detail/relay/northwestpassage"
+        dist: 200
+- date: '2021-07-17'
+  plan:
+    - time: "8:30"
+      route:
+        name: "PP: CSE - Ravenna - Greenlake CCW - Stone Way"
+        dist: 6
+- date: '2021-07-24'
+  plan:
+    - time: "7:30"
+      route:
+        name: "Jack and Jill's Downhill Marathon"
+        map: "http://jackjillmarathon.com"
+        dist: 26.2
+
+- date: '2021-07-30'
+  plan:
+    - time: "8:30"
+      route_id: lake-union-loop
+      notes: "CSE start"
+- date: '2021-08-07'
+  plan:
+    - time: "8:30"
+      route:
+        name: "PP: Rainier Beach Station - SODO Station"
+        map: "https://onthegomap.com/s/2bvi8ejk"
+        dist: 6.59
+- date: '2021-08-21'
+  plan:
+    - time: "9:00"
+      route:
+        name: "Perigo Parkrun"
+        map: "https://www.parkrun.us/perrigo/"
+        dist: 3.1
+- date: '2021-08-28'
+  plan:
+    - time: "8:30"
+      route_id: ob-miller-park-mercer-island
+- date: '2021-09-04'
+  plan:
+    - time: "9:00"
+      route:
+        name: "PP: Angle Lake Station to Rainier Beach Station"
+        map: "https://onthegomap.com/?m=r&u=mi&w[]=Routes+may+not+be+suitable+for+public+use.&c[]=Route+data+%C2%A92021+On+The+Go+Map%2C+OpenStreetMap+Contributors&d=14709&f=1dd75f8743&n=1&dm=1&context=share&r2=cjkX9lekgNy35Q56e1k1C0s12o40W1q3Gm2A0Kg14c1680o3EW14M4Q2_3GS4s2Cy18m2Ag2AY14u18K0u6IK2Q2o12E2m14C0E2y15m25u1381a13Y25K1Y13m27o25U3Q2W24_11a11q27a39G1e39s23S1_39cDX1M1K1E0Y21_79M1m25W6Bm1C6EW35e5BK0Y39i37O1u138081s25k11U1E0y32g16W3Ay14O4Y5Y1o1AQ8O6SAk1Gg1GC2_1MW4s1e1Mc2a1s1QY3o1Y1Gg2W1SEC6q2g1GAKCGAg1Sk3y1W1GW1G_1W1a2Y1W3m1k2c1k7w3u3s164SGQGo4e2a2Us1UW1Ey3_12Kc4W2MIAK2141A0424282666D60k5w2e2o1w1U3A44De15GVy2Hq12I0A52300304406109m20808020_102062202d541ICUE226761Y3o16Lk1Ku2k1y1Y1OCMAk1SOCe1QSEMEm2c1k1MSEO0o2i1e3s1e2g1MEOCQEOCA7g1Mo1QKA64u1SC6UGC6c1KMA42g2c1s1SMCW1Gi1OW2W1k1O84E8KASEUG1W11Y37E0G0s34U1s21q20A0c31U0O0q23o60y11_10C0g40Y11a50q11q21i40M0M1e51Y21g70K5qD1_10Y10QC13a10k86Q1c22AC4YB442e1322A00Gq12o2020c22A0I0e32W20y22A0y61c10A0Im3i3z1s1X1m2t1OKY1UKOUc1IOMOi1Iq2i1c2k1_1w1KKY5a5e3e388c1c1A8e7Y7w1w1CEk3j3_2n2g4Z3s1b1o1h1a1n1Up1Mp1MX2Et1Ch28p5CZ1GRa1h1H_1Lg4z1iBb2kBFu2Be1X1s23EDF1526EGN_1~3y9Tg2Pg2BW1Dc1b1i3w4ATW2UNQX1q2f3m6b8yg1vr1y6j8m6f6w3n4w6b9Y2r2w7h8m9X9u2X2_1Z1a1Fy1Ji2Dy33u84k53iA1yARs4He4Ho3Fy17g4DY3Be6Ni4PM3e2Fa17K5e3Ps3Tw5f1q15q15y14m2Ac6s1g2Ku1Ik1E"
+        dist: 9.14
+- date: '2021-09-11'
+  plan:
+    - time: "8:30"
+      route:
+        name: "PP: CSE to Northgate to Greenlake"
+        dist: 9.5
+- date: '2021-09-18'
+  plan:
+    - time: "8:30"
+      route:
+        name: "PP: Burke@Magnusson to Bothell"
+        dist: 10.0

@@ -1,14 +1,14 @@
 - date: "2019-08-17"
   plan:
     - time: "8:50"
-      route: green-lake-loop
+      route_id: green-lake-loop
     - time: "9:20"
-      route: green-lake-loop
+      route_id: green-lake-loop
 
 - date: "2019-08-24"
   plan:
     - time: "8:50"
-      route: sculpture-park-interbay
+      route_id: sculpture-park-interbay
 
 - date: "2019-08-31"
   plan:
@@ -27,14 +27,14 @@
 - date: "2019-09-14"
   plan:
     - time: "8:50"
-      route: gas-works-salmon-bay
+      route_id: gas-works-salmon-bay
 
 - date: "2019-09-21"
   plan:
     - time: "9:00"
       route:
         name: Paradise Valley Trail Run
-        map: http://nwtrailruns.com/events/paradise-valley-trail-run/
+        map: "https://www.webscorer.com/race?raceid=196328"
         dist: 13.1
 
 - date: "2019-09-28"
@@ -44,59 +44,62 @@
         name: "OB: Greenlake, Carkeek"
         dist: 8.0
     - time: "10:15"
-      route: green-lake-loop
+      route_id: green-lake-loop
 
 
 - date: "2019-10-05"
   plan:
     - time: "8:50"
-      route: lower-queen-anne-loop
+      route_id: lower-queen-anne-loop
     - time: "9:50"
-      route: ob-sculpture-park
+      route_id: ob-sculpture-park
       notes: Aiming for closer to 4.
 
 - date: "2019-10-13"
   plan:
     - time: "9:00"
       route:
-        name: Dawg Dash 10k 2019
+        name: Dawg Dash 2019
         dist: 6.2
         map: https://www.washington.edu/alumni/dawgdash/
 
 - date: "2019-10-20"
   plan:
     - time: "7:00"
+      cancelled: "Light Rail construction"
       route:
         name: Light Rail Relay
+    - time: "9:00"
+      route_id: ob-washington-park-sailing-club
 
 - date: "2019-10-26"
   plan:
     - time: "8:50"
-      route: ob-locks-gg
+      route_id: ob-locks-golden-gardens
     - time: "9:30"
-      route: ob-locks-discovery
+      route_id: ob-locks-discovery-park
       notes: Aiming for closer to 7.
 
 - date: "2019-11-02"
   plan:
     - time: "8:50"
-      route: ob-cse-magnuson-park
+      route_id: ob-cse-magnuson-park
       notes: Aiming for 9, will cut it short at UVillage.
 
 - date: "2019-11-09"
   plan:
     - time: "8:50"
-      route: ob-miller-park-mercer-island
+      route_id: ob-miller-park-mercer-island
 
 - date: "2019-11-16"
   plan:
     - time: "8:50"
-      route: pp-discovery-alki
+      route_id: pp-discovery-alki
 
 - date: "2019-11-23"
   plan:
     - time: "8:50"
-      route:
+      route_id:
         name: "PP: CSE, Columbia City"
         dist: 8.0
 
@@ -104,9 +107,9 @@
   plan:
     - time: "7:00"
       route:
-        name: Seattle Half Marathon 2019
+        name: "Seattle Half Marathon 2019"
         dist: 13.1
-        map: https://www.seattlemarathon.org/
+        map: "https://raceday.enmotive.com/#/events/2019-amica-insurance-seattle-marathon/results"
 
 - date: "2019-12-07"
   plan:
@@ -114,4 +117,4 @@
       route:
         name: Reindeer Romp Trail Run
         dist: 13.1
-        map: http://nwtrailruns.com/events/redmond-reindeer-romp/
+        map: "https://www.webscorer.com/race?raceid=205021"

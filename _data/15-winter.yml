@@ -1,0 +1,42 @@
+- date: '2015-01-25'
+  plan:
+    - time: '9:30'
+      route:
+        name: "Gasworks - Interlaken - Portage Bay Loop"
+        map: "http://www.gmap-pedometer.com/?r=6521373"
+        dist: 6.38
+- date: '2015-02-01'
+  plan:
+    - time: '9:30'
+      route_id: gas-works-salmon-bay
+- date: '2015-02-08'
+  plan:
+    - time: '9:30'
+      route_id: lake-union-loop
+- date: '2015-02-15'
+  plan:
+    - time: '9:30'
+      route_id: ob-gas-works-green-lake-loop
+- date: '2015-02-22'
+  plan:
+    - time: '9:30'
+      route_id: gas-works-salmon-bay
+- date: '2015-03-01'
+  plan:
+    - time: '9:30'
+      route:
+        name: "Gasworks - Interlaken - Eastlake Loop"
+        map: "http://www.gmap-pedometer.com/?r=6545344"
+        dist: 9.62
+
+- date: '2015-03-08'
+  plan:
+    - time: '9:30'
+      route_id: ob-miller-park-mercer-island
+- date: '2015-03-15'
+  plan:
+    - time: '9:30'
+      route:
+        name: "OB: CSE - Burke"
+        map: "https://www.strava.com/activities/268729809"
+        dist: 11.15

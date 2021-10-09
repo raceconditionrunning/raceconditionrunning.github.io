@@ -1,0 +1,73 @@
+- date: '2019-01-12'
+  plan:
+    - time: '8:50'
+      route_id: greenlake-cse
+    - time: '10:35'
+      route_id: green-lake-loop
+- date: '2019-01-19'
+  plan:
+    - time: '8:50'
+      route_id: ob-cse-520
+    - time: '10:30'
+      route_id: ob-cse-arboretum
+- date: '2019-01-26'
+  plan:
+    - time: '8:50'
+      route_id: ob-washington-park-sailing-club
+    - time: '10:50'
+      route_id: ob-madison-interlaken
+- date: '2019-02-02'
+  plan:
+    - time: '7:30'
+      route:
+        name: "Tunnel to Viaduct"
+        dist: 5.00
+        map: "https://fizzevents.enmotive.com/events/register/tunnel-to-viaduct-8k"
+- date: '2019-02-09'
+  cancelled: "Snow"
+  plan:
+    - time: '8:50'
+      route_id: ob-cse-magnuson-park
+    - time: '10:50'
+      route_id: ob-cse-foster-island
+- date: '2019-02-16'
+  cancelled: "Snow"
+  plan:
+    - time: '8:50'
+      route_id: lower-queen-anne-loop
+    - time: '10:00'
+      route_id: ob-sculpture-park
+- date: '2019-02-23'
+  plan:
+    - time: '8:50'
+      route_id: ob-locks-discovery-park
+    - time: '10:10'
+      route_id: ob-locks-golden-gardens
+- date: '2019-03-02'
+  plan:
+    - time: '7:30'
+      route:
+          name: "Lake Sammamish"
+          dist: 13.10
+          map: "http://lakesammamishhalf.com/"
+    - time: '8:50'
+      route_id: salmon-bay-fremont
+    - time: '10:10'
+      route_id: ob-locks-golden-gardens
+- date: '2019-03-09'
+  plan:
+    - time: '8:50'
+      route_id: discovery-magnolia-loop
+    - time: '10:20'
+      route_id: ob-discovery-golden-gardens
+- date: '2019-03-16'
+  plan:
+    - time: '8:50'
+      route_id: gas-works-salmon-bay
+- date: '2019-03-24'
+  plan:
+    - time: '9:00'
+      route:
+        name: "Mercer Island Half Marathon"
+        dist: 13.10
+        map: "http://mercerislandhalf.com/wp-content/uploads/2017/03/17-MIRHM-Half-Marathon-Course-Map-4.pdf"

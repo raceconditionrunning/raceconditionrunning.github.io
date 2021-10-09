@@ -1,0 +1,80 @@
+- date: '2017-09-23'
+  plan:
+    - time: '8:50'
+      route_id: green-lake-loop
+    - time: '9:30'
+      route_id: green-lake-loop
+- date: '2017-09-30'
+  plan:
+    - time: '8:50'
+      route_id: ob-cse-foster-island
+    - time: '9:40'
+      route_id: portage-bay-loop
+- date: '2017-10-07'
+  plan:
+    - time: '8:50'
+      route_id: ob-locks-golden-gardens
+    - time: '9:45'
+      route_id: locks-ballard-bridge-loop
+- date: '2017-10-14'
+  plan:
+    - time: '8:50'
+      route_id: lower-queen-anne-loop
+    - time: '9:50'
+      route_id: ob-sculpture-park
+- date: '2017-10-21'
+  plan:
+    - time: '8:50'
+      route_id: ob-miller-park-mercer-island
+- date: '2017-10-22'
+  plan:
+    - time: '7:30'
+      route:
+        name: "Dawg Dash 2017"
+        dist: 3.10
+        map: "http://onlineraceresults.com/race/view_race.php?race_id=61686"
+- date: '2017-10-28'
+  plan:
+    - time: '8:50'
+      route_id: ob-madison-mt-baker-beach
+    - time: '10:10'
+      route_id: ob-madison-interlaken
+- date: '2017-11-04'
+  plan:
+    - time: '8:50'
+      route_id: ob-gas-works-green-lake-loop
+    - time: '10:10'
+      route_id: gas-works-fremont-cut-loop
+- date: '2017-11-11'
+  plan:
+    - time: '8:50'
+      route_id: pp-discovery-alki
+- date: '2017-11-18'
+  plan:
+    - time: '8:50'
+      route_id: lake-union-loop
+- date: '2017-11-26'
+  plan:
+    - time: '7:30'
+      route:
+        name: "Seattle Half Marathon 2017"
+        dist: 13.10
+        map: "maps/seattle-half-17.png"
+- date: '2017-12-02'
+  plan:
+    - time: '8:30'
+      route:
+        name: "Redmond Reindeer Romp 2017"
+        dist: 13.10
+        map: "http://nwtrailruns.com/events/redmond-reindeer-romp/"
+- date: '2017-12-16'
+  plan:
+    - time: '8:50'
+      route_id: gas-works-salmon-bay
+- date: '2017-12-30'
+  plan:
+    - time: '8:50'
+      route_id: ob-magnolia-blvd-bridge
+    - time: '10:10'
+      route_id: discovery-park-loop
+
