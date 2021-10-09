@@ -126,3 +126,17 @@ nav {
   border-style: inset;
   border-width: 2px;
 }
+
+#image-slider .splide__track{
+  height: 400px;
+}
+
+#image-slider .splide__slide {
+  height: 400px;
+}
+
+.splide__slide img {
+  width: 100%; /* or any custom size */
+  height: 100%;
+  object-fit: contain;
+}
