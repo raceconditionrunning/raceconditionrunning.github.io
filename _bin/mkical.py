@@ -104,8 +104,16 @@ def main():
                               })
 
     # add Tuesday and Thursday runs
-    start = dtstart(datetime.strptime("2015-01-06", '%Y-%m-%d'),
-                    {'time' : '16:40'})
+    def previous_tuesday(datetime_date):
+        while datetime_date.weekday() != 1:
+            datetime_date -= timedelta(1)
+        return datetime_date
+
+    first_run = min([datetime.strptime(r['date'], '%Y-%m-%d').date() for r in sched])
+    start = min(previous_tuesday(datetime.today().date()),
+                previous_tuesday(first_run))
+    start = dtstart(start, {'time' : '16:40'})
+
     end = start + timedelta(0, 60 * 60)
     uid = 'shortruns@raceconditionrunning.com'
     things.append({
