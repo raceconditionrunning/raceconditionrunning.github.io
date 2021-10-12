@@ -112,7 +112,7 @@ def main():
         'summary'     : 'Short Run',
         'dtstart'     : start,
         'dtend'       : end,
-        'location'    : 'Meet in CSE1 atrium',
+        'location'    : 'Meet outside CSE 2',
         'description' : 'Usually 4 miles on Tuesday, 2 miles on Wednesday, and 6 miles on Thursday.',
         'dtstamp'     : now,
         'uid'         : uid,
