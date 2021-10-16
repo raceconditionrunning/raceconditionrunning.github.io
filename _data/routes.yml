@@ -286,8 +286,8 @@
   map: "https://www.gmap-pedometer.com/?r=7375666"
 
 - id: sodo-west-seattle-hook-half
-  name: "SODO <-> West Seattle Hook Half"
-  dist: 13.25
+  name: "RCR West Seattle Half"
+  dist: 13.1
   map: "https://onthegomap.com/s/v8qu7a5s"
 
 - id: cse-woodinville-cafe
