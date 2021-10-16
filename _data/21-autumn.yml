@@ -76,9 +76,10 @@
         dist: 13.1
       cancelled: "We don't like the route"
     - time: "8:30"
-      route:
-        name: RCR West Seattle Half
-        dist: 13.1
+      route_id: sodo-west-seattle-hook-half
+        #      route:
+        #        name: RCR West Seattle Half
+        #        dist: 13.1
 
 - date: "2021-12-04"
   plan:
