@@ -8,8 +8,8 @@ rcc.ics: _bin/mkical.py _data/schedule.yml _data/routes.yml
 build: rcc.ics
 	bundle exec jekyll build
 
-serve:
+serve: rcc.ics
 	watchy -w _config.yml -- bundle exec jekyll serve --watch --drafts --host=0.0.0.0
 
 clean:
-	rm -rf _site/ .jekyll-cache/
+	rm -rf _site/ .jekyll-cache/ rcc.ics
