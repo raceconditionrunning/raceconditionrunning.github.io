@@ -1,34 +1,24 @@
 # Race Condition Running
 
+[![Build Status](https://github.com/raceconditionrunning/raceconditionrunning.github.io/actions/workflows/github-pages.yml/badge.svg)](https://github.com/raceconditionrunning/raceconditionrunning.github.io/actions/workflows/github-pages.yml)
+
 This repo contains the website for Race Condition Running
   http://raceconditionrunning.com/
-
-Routes are in `routedb.json` and the current schedule is in `sched.json`.
-Most of the site content and iCal are generated from these files.
-
-NOTE: schedule times should be in 24 hour format.
-So "5:30 pm" would be "17:30".
 
 Install dependencies with `pip3 install -r requirements.txt` and
 `bundle install`.
 
-To test locally, run `make serve`.
+To test locally, run `make serve` (requires `watchy`; install with
+`npm install -g watchy`), after which the page will be available at
+[http://localhost:4000](http://localhost:4000).
 
-After which the page will be available at [http://localhost:4000](http://localhost:4000).
+The entire site is built by `_bin/mkical.py` and Jekyll; the live site is built
+and deployed by a GitHub action and served by GitHub pages.
 
-If you change the schedule, please update the iCal before pushing:
-```
-  $ make rcc.ics
-```
+## Important Files and Folders
 
-## Notes
-
-You may need a specific version of bundler (?!) which you can install with:
-```
-  $ gem install bundler -v 1.17.3
-```
-
-`watchy` is in npm which you can install with:
-```
-  $ npm install -g watchy
-```
+- Routes are in `_data/routes.yml`.
+- The current schedule is in `_data/schedule.yml`.  
+  NOTE: Schedule times should be in 24 hour format. So "5:30 pm" would be
+  "17:30".
+- To create a new brunch review, add a new file to the `_brunch-reviews` folder.
