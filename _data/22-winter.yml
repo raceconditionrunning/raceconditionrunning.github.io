@@ -1,0 +1,36 @@
+- date: "2022-01-08"
+  plan:
+    - time: "8:30"
+- date: "2022-01-15"
+  plan:
+    - time: "8:30"
+- date: "2022-01-22"
+  plan:
+    - time: "8:30"
+- date: "2022-01-29"
+  plan:
+    - time: "8:30"
+- date: "2022-02-05"
+  plan:
+    - time: "8:30"
+- date: "2022-02-12"
+  plan:
+    - time: "8:30"
+- date: "2022-02-19"
+  plan:
+    - time: "8:30"
+- date: "2022-02-26"
+  plan:
+    - time: "8:30"
+- date: "2022-03-05"
+  plan:
+    - time: "8:30"
+- date: "2022-03-12"
+  plan:
+    - time: "8:30"
+- date: "2022-03-19"
+  plan:
+    - time: "8:30"
+- date: "2022-03-26"
+  plan:
+    - time: "8:30"
