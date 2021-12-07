@@ -59,9 +59,12 @@ def main():
     for run in sched:
         date = datetime.strptime(run['date'], '%Y-%m-%d')
         phases = run['plan']
+        if 'cancelled' in run.keys():
+            continue
         for i in range(len(phases)):
             phase = phases[i]
-
+            if 'cancelled' in phase.keys():
+                continue
             if 'route_id' in phase.keys():
               route = lkup(phase['route_id'])
             else:

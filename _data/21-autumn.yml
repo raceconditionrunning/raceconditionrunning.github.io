@@ -85,6 +85,9 @@
         name: Redmond Reindeer Romp
         map: https://nwtrailruns.com/events/redmond-reindeer-romp/
         dist: 5.0
+      cancelled: "Sold out"
+    - time: "8:30"
+      route_id: ob-madison-mt-baker-beach
 
 - date: "2021-12-11"
   plan:

@@ -12,23 +12,27 @@
     {% else %}
     {% assign part-cancelled-class = "" %}
     {% endif %}
-    <tr class="{{ cancelled-class }} {{part-cancelled-class}}">
+    <tr class="{{ cancelled-class }}">
         {% if forloop.first %}
         <td class="date"><time datetime="{{ run.date }}" title="{{run.date | date: '%A'}}">{{ run.date | date: "%b %e" }}</time></td>
         {% else %}
         <td class="date"></td>
         {% endif %}
-        <td class="time">{{ plan.time }}</td>
+        <td class="time {{part-cancelled-class}}">{{ plan.time }}</td>
         {% if plan.route.name %}
         {% assign route = plan.route %}
         {% else if plan.route_id %}
         {% assign route = site.data.routes | where: 'id', plan.route_id | first %}
+        {% if route == nil and plan.route == nil %}
+        <td>TBD</td>
+        {% continue %}
+        {% endif %}
         {% unless route %}
         <td>ERROR: No route for id '{{plan.route_id}}'</td>
         {% continue %}
         {% endunless %}
         {% endif %}
-        <td nowrap>
+        <td nowrap class="{{part-cancelled-class}}">
             {% if route.map %}
             <a target="_blank" href="{{ route.map }}">
                 {% endif %}
