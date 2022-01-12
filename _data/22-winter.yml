@@ -2,7 +2,7 @@
   plan:
     - time: '8:50'
       route:
-        name: Kirkland Marymoor Loop (Starting Point TBD)
+        name: Redmond Marymoor Loop (Starting Point TBD)
         dist: 10.0
         map: https://connect.garmin.com/modern/course/1641480
 
