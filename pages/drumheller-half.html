@@ -23,8 +23,8 @@ redirect_from:
 <style>
     body {
         margin: 0;
-        font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-        font-size: 16px;
+        font-family: 'Yrsa', serif;
+        font-size: 24px;
         line-height: 1.5;
     }
 
@@ -69,6 +69,18 @@ redirect_from:
         padding: 0 1rem
     }
 
+    .call-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+    .hero-button {
+        background-color: #333;
+        font-size: 1.5rem;
+        padding: .75rem 1.5rem;
+        color: white;
+        text-decoration: none;
+        margin: 0 auto;
+    }
 
     dt {
         font-weight: bold;
@@ -82,10 +94,16 @@ redirect_from:
 
     header h1 {
         margin: 0;
+        overflow: hidden;
     }
 
     #hero {
         padding: 2rem 0;
+        margin-bottom: 0;
+    }
+
+    #hero .wrapper {
+        /*max-height: 80vh;*/
     }
 
     #hero .date {
@@ -187,20 +205,32 @@ redirect_from:
         margin-bottom: 4rem;
     }
 
-    #history {
-        font-family: 'Yrsa', serif;
-        font-size: 18px;
+
+    h2, h3, .hero-button {
+        font-family: "Avenir Next", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-weight: 700;
+        font-size: 30px;
+    }
+
+    .hero-button {
+        font-weight: 600;
     }
 
     #overview {
+        max-width: 500px;
+        margin: 0 auto;
+        text-align: justify;
+        margin-bottom: 4rem;
+    }
+
+    #history, #overview {
         font-weight: 100;
-        font-size: 24px;
+
         font-family: 'Yrsa', serif;
     }
 
     blockquote {
         font-style: italic;
-        font-size: 24px;
         padding: 0;
         margin: 0;
 
@@ -234,8 +264,37 @@ redirect_from:
     <div class="wrapper">
         <p>Join us for 110 fast, flat laps around Drumheller Fountain. Stick around after to enjoy food and music at the
             <a href="https://udistrictstreetfair.org">U-District StreetFair</a>.
-
         </p>
+        <div class="call-wrapper">
+            <a class="hero-button" href="https://forms.gle/PyxEtHKWQyCkDew17">Sign Up</a>
+        </div>
+
+    </div>
+</section>
+
+<section>
+    <div class="wrapper">
+        <h2>Course Map</h2>
+        <p>We will run on the concrete slab that encircles Drumheller Fountain. While campus foot traffic is reduced on weekends, you can still expect to navigate around fountain-admirers, passers-by and cyclists. The fountain will be on starting at 8. There is no shade.</p>
+        <img src="/img/dhm-course-map.svg" />
+    </div>
+</section>
+
+<section>
+    <div class="wrapper">
+        <h2>FAQ</h2>
+        <dl>
+            <dt>Who can participate?</dt>
+            <dd>Anyone in the CSE community.</dd>
+            <dt>How will you keep track of distance?</dt>
+            <dd>We're leaving this responsibility to the participants. We recommend running with a device capable of counting laps or someone else who has one. GPS will clip the curve, so don't rely on it for more than a couple laps at a time.</dd>
+            <dt>Which direction do we run?</dt>
+            <dd>You should alternate directions during the run to balance the strain of the curve between your legs. Change directions only at the end of a lap though, or you'll make counting harder.</dd>
+            <dt>Do I have to run the whole thing?</dt>
+            <dd>No. You're welcome to come join for a few laps.</dd>
+            <dt>How fast do I need to run?</dt>
+            <dd>You should be able to complete your chosen distance in under 2.5 hours.</dd>
+        </dl>
     </div>
 </section>
 
