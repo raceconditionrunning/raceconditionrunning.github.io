@@ -22,3 +22,9 @@ and deployed by a GitHub action and served by GitHub pages.
   NOTE: Schedule times should be in 24 hour format. So "5:30 pm" would be
   "17:30".
 - To create a new brunch review, add a new file to the `_brunch-reviews` folder.
+
+## Preparing Images
+
+Use ImageMagick to compress images. Converting to high quality WebP with a max edge length of 2000 works well:
+
+    mogrify -quality 90 -resize 2000x2000 -format webp -auto-orient *.jpg

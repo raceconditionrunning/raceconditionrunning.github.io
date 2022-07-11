@@ -10,20 +10,27 @@ redirect_from:
     <title>Light Rail Relay 2021</title>
     <meta name="description" content="Relay along the Link Line 1 happening October 2nd, 2021.">
     <meta name="theme-color" content="#6abf4a">
-    <meta property="og:image" content="https://raceconditionrunning.com/img/light-rail-relay-og-banner.png">
+    <meta property="og:image" content="https://raceconditionrunning.com/img/lrr21/light-rail-relay-og-banner.png">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://raceconditionrunning.com/light-rail-relay">
     <meta property="og:title" content="Light Rail Relay 2021">
     <meta property="og:description" content="Relay along the Link Line 1 happening October 2nd, 2021.">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+          integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
           crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+            integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
             crossorigin=""></script>
     <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
     <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css'
           rel='stylesheet'/>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.js"
+            charset="utf-8"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
 
     <script src="/maps/link-line-1.geojson"></script>
     <script src="/maps/light-rail-relay-legs.geojson"></script>
@@ -34,7 +41,7 @@ redirect_from:
     body {
         margin: 0;
         margin-top: 2rem;
-        font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !important;
         font-size: 16px;
         line-height: 1.5;
     }
@@ -45,14 +52,18 @@ redirect_from:
 
     a {
         color: #6abf4a;
-    }
-
-    h1, h2, h3, p {
-
+        --bs-link-hover-color: #6dd047
     }
 
     ul {
-        padding: 0
+        /* Don't jam bullet at edge of screen on mobile */
+        padding-left: .2rem
+    }
+    
+    @media screen and (min-width: 700px) {
+        ul {
+            padding-left: 0;
+        }
     }
 
     .imprint {
@@ -76,13 +87,6 @@ redirect_from:
         height: 70vh;
     }
 
-    .wrapper {
-        max-width: 700px;
-        margin: 0 auto;
-        padding: 0 1rem
-    }
-
-
     dt {
         font-weight: bold;
     }
@@ -93,42 +97,31 @@ redirect_from:
     }
 
     header {
-        display: flex;
-        align-content: center;
-        justify-content: center;
         margin-bottom: 1rem;
     }
 
-    header h1 {
-        margin: 0;
+    header img {
+        flex: 1;
+        aspect-ratio: 1;
+        max-width: 300px;
     }
 
     section {
         margin-bottom: 4rem;
     }
 
-    .subheader {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        margin-left: 2rem;
-    }
-
-    .subheader h2 {
-        margin-bottom: .5rem
-    }
-
-    .button-container {
-        margin-bottom: 1.5rem;
-    }
-
     .hero-button {
         background-color: #6abf4a;
         font-weight: bold;
         font-size: 1.5rem;
-        padding: .5rem 1rem;
+        --bs-btn-hover-bg: #6dd047;
+        --bs-btn-hover-color: white;
+        --bs-btn-hover-border-color: transparent;
         color: white;
-        text-decoration: none;
+    }
+
+    .btn {
+        border-radius: 0;
     }
 
     .leaflet-popup-content {
@@ -202,33 +195,16 @@ redirect_from:
         margin: 6rem 0 6rem 0;
     }
 
-    #schedule-section .wrapper {
-        max-width: 1000px;
+    .container {
+        max-width: 700px;
     }
-    #schedule td {
-        padding-right: 1.5rem;
-    }
-    #schedule tbody td {
-        white-space: nowrap;
 
-    }
-    #schedule td:first-of-type {
-        text-align: center;
-    }
-    #schedule td:last-of-type {
-        white-space: break-spaces;
-    }
-    #schedule thead th {
-        text-align: left;
-        margin-right: .5rem;
+    #schedule-section .container {
+        max-width: 1000px;
     }
 
     #finish-row td {
-        border-top: 1px solid lightgray;
         font-weight: bold;
-    }
-    #finish-row {
-        padding-bottom: 1rem;
     }
 
     #countdown {
@@ -237,35 +213,137 @@ redirect_from:
         font-size: 36px;
         font-weight: 300;
         padding: 4rem 0;
-
         color: white;
     }
-    #countdown .wrapper {
+
+    #countdown .container {
         max-width: none;
     }
-    </style>
+
+    #epilogue {
+        margin-top: 4rem;
+        padding-top: 4rem;
+    }
+
+    #epilogue .container {
+        margin-bottom: 2rem;
+    }
+
+    #epilogue h1 {
+        margin-bottom: 2rem;
+        font-weight: bold;
+    }
+
+    #epilogue h2 {
+        margin-bottom: 1rem;
+    }
+
+    figure {
+        max-width: 1200px;
+        margin: 0 auto 2rem auto;
+    }
+
+    figure img {
+        width: 100%;
+    }
+
+    .gallery ul {
+        display: flex;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    .gallery.respect-dimensions ul {
+        flex-wrap: nowrap;
+        height: 40vh;
+    }
+
+    .gallery.respect-dimensions li {
+
+    }
+
+    .gallery.respect-dimensions img {
+        width: 100%;
+        object-fit: contain;
+    }
+
+    .gallery.allow-cropping {
+    }
+
+    .gallery.allow-cropping li {
+        height: 40vh;
+        flex-grow: 1;
+    }
+
+    .gallery.allow-cropping img {
+        max-height: 100%;
+        min-width: 100%;
+        object-fit: cover;
+        vertical-align: bottom;
+    }
+
+    figure > .image-grid {
+        margin-bottom: .25rem;
+    }
+    .image-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(auto-fit, minmax(210px, auto));
+        justify-items: center;
+        overflow: hidden;
+        grid-gap: .25rem;
+
+    }
+
+    .image-grid img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .two-up-one-down :nth-child(3) {
+        grid-column: span 2;
+    }
+
+    .one-left-two-right {
+        grid-template-columns: 4fr 5fr;
+    }
+
+    .one-left-two-right :nth-child(1) {
+        grid-row: span 2;
+    }
+
+    hr {
+        width: 8rem;
+        margin: 4rem auto;
+        display: block;
+        border: 1px solid #ccc;
+    }
+</style>
 <body>
 
 <section>
-    <div class="wrapper">
+    <div class="container">
         <p class="imprint"><a href="/">Race Condition Running</a></p>
-        <header>
-            <h1><img src="/img/light-rail-relay-2021-logo.svg" width="300px" alt="Light Rail Relay 2021"/>
-            </h1>
-            <div class="subheader">
-                <h2>October 2nd</h2>
+        <header class="d-flex flex-wrap align-items-center justify-content-center gap-3">
+            <img src="/img/lrr21/light-rail-relay-2021-logo.svg" alt="Light Rail Relay 2021"/>
+            <div class="subheader d-flex flex-column align-items-sm-right align-items-center">
+                <h2 class="align-self-sm-left">October 2nd</h2>
                 <!--<div class="button-container"><a href="https://forms.gle/GC6xmrdtKjndUkvH9" class="hero-button">Sign
                     Up</a></div> -->
-                <div class="button-container"><a href="https://docs.google.com/spreadsheets/d/1wFvyhVMUVqJ3DTGJMr0fr9nrX8zU8nl4uux4AY_H01E/edit?usp=sharing" class="hero-button">Follow Along</a></div>
+                <!--div class="button-container"><a href="https://docs.google.com/spreadsheets/d/1wFvyhVMUVqJ3DTGJMr0fr9nrX8zU8nl4uux4AY_H01E/edit?usp=sharing" class="hero-button">Follow Along</a></div-->
+                <div class="button-container"><a href="#epilogue" class="btn hero-button">Read Epilogue</a></div>
             </div>
         </header>
-        <p style="width: 500px; margin: 0 auto; font-size: 1.25rem">We're running a relay along the Link 1 line to
-            celebrate the opening of the <a href="">Northgate Extension</a>. You're invited.</p>
+        <p class="lead">We're running a relay along the Link 1 line to
+            celebrate the opening of the <a
+                    href="https://www.soundtransit.org/system-expansion/northgate-link-extension">Northgate
+                Extension</a>. You're invited.</p>
     </div>
 </section>
 
 <section id="course-map">
-    <div class="wrapper">
+    <div class="container">
         <h2>Route</h2>
         <p>The relay will start at Angle Lake station and follow the entire operational line to Northgate, with
             exchanges and selfies at each station on the way. More than one runner will be assigned to each leg.</p>
@@ -274,59 +352,236 @@ redirect_from:
 </section>
 
 <section id="schedule-section">
-    <div class="wrapper">
+    <div class="container">
         <h2>Schedule</h2>
-        <table id="schedule">
-            <tbody>
-            <thead>
-            <th>Leg</th><th>Time</th><th>Start Station</th> <th>Miles</th><th>Pace</th><th>Elev. Gain</th><th>Runners</th>
-            </thead>
-            <tr><td>0</td> <td>9:30</td> <td>Angle Lake</td> <td>1.8</td> <td>8:00</td> <td>47</td> <td><b><u>Ellis</u></b>, <u>Nick</u></td></tr>
-            <tr><td>1</td> <td>9:49</td> <td>SeaTac/Airport</td> <td>1.5</td> <td>8:00</td> <td>105</td> <td><b>Ellis</b>, Nick</td></tr>
-            <tr><td>2</td> <td>10:05</td> <td>Tukwila International Blvd</td> <td>6.6</td> <td>8:00</td> <td>590</td> <td><b>Ellis</b>, <u>Johanna</u>, Nick</td></tr>
-            <tr><td>3</td> <td>11:03</td> <td>Rainier Beach</td> <td>1.1</td> <td>12:00</td> <td>74</td> <td><u>Swati</u>, <b><u>Yuxuan</u></b></td></tr>
-            <tr><td>4</td> <td>11:21</td> <td>Othello</td> <td>1.6</td> <td>12:00</td> <td>37</td> <td><u>Brett</u>, <u>James</u>, <u>Jennifer</u>, <u>Lancelot</u>, <u>Max</u>, <u>Sameer</u>, <u>Sidd</u>, Swati, <b>Yuxuan</b>, Zach</td></tr>
-            <tr><td>5</td> <td>11:45</td> <td>Columbia City</td> <td>1.2</td> <td>12:00</td> <td>23</td> <td>Brett, <u>Ethan</u>, James, Jennifer, Lancelot, Max, Sameer, Sidd, Swati, <b>Yuxuan</b>, <u>Zach</u></td></tr>
-            <tr><td>6</td> <td>12:04</td> <td>Mount Baker</td> <td>0.8</td> <td>12:00</td> <td>251</td> <td>Ethan, Lancelot, Sidd, Swati, <b>Yuxuan</b>, Zach</td></tr>
-            <tr><td>7</td> <td>12:18</td> <td>Beacon Hill</td> <td>1.3</td> <td>12:00</td> <td>11</td> <td>Ethan, Lancelot, Sidd, Swati, <b>Zach</b></td></tr>
-            <tr><td>8</td> <td>12:38</td> <td>SODO</td> <td>0.7</td> <td>12:00</td> <td>12</td> <td>Ethan, <u>Jingwei</u>, Lancelot, Sidd, <u>Pratyush</u>, <b>Zach</b></td></tr>
-            <tr><td>9</td> <td>12:51</td> <td>Stadium</td> <td>0.8</td> <td>12:00</td> <td>38</td> <td>Ethan, Jingwei, Lancelot, Pratyush, <b>Zach</b></td></tr>
-            <tr><td>10</td> <td>1:04</td> <td>International District/Chinatown</td> <td>0.3</td> <td>12:50</td> <td>25</td> <td>Ethan, Jingwei, Lancelot, Pratyush, <b>Zach</b></td></tr>
-            <tr><td>11</td> <td>1:13</td> <td>Pioneer Square</td> <td>0.5</td> <td>12:50</td> <td>54</td> <td><b><u>Chandra</u></b>, Ethan, <u>Ewin</u>, <u>Reshabh</u></td></tr>
-            <tr><td>12</td> <td>1:24</td> <td>University Street</td> <td>1.1</td> <td>20:00</td> <td>73</td> <td><b>Chandra</b>, Ethan, Ewin, <u>Vishwas</u></td></tr>
-            <tr><td>13</td> <td>1:49</td> <td>Westlake</td> <td>1.0</td> <td>10:00</td> <td>274</td> <td><b>Chandra</b>, Ethan, Ewin</td></tr>
-            <tr><td>14</td> <td>2:03</td> <td>Capitol Hill</td> <td>2.8</td> <td>10:00</td> <td>228</td> <td><b>Chandra</b>, Edward, Ewin, <u>Jamie</u></td></tr>
-            <tr><td>15</td> <td>2:35</td> <td>University of Washington</td> <td>1.1</td> <td>10:00</td> <td>176</td> <td><u>Amal</u>, <b>Chandra</b>, Edward, Ewin, Jamie, <u>Maya</u></td></tr>
-            <tr><td>16</td> <td>2:50</td> <td>U-District</td> <td>1.4</td> <td>10:00</td> <td>111</td> <td>Amal, <b>Chandra</b>, Ewin, Jamie, Maya</td></tr>
-            <tr><td>17</td> <td>3:08</td> <td>Roosevelt</td> <td>2.4</td> <td>10:00</td> <td>261</td> <td><b>Chandra</b>, Jamie</td></tr>
-            <tr id="finish-row"><td>Finish</td><td>3:36</td> <td></td><td>27.9</td><td></td><td>2390</td></tr>
-            </tbody>
-            <tfoot>
-            <tr><td>🍻</td><td>5:00</td><td colspan="3"><a href="https://udistrictseattle.com/udistrict-station-opening-festival">U-District Station Opening Festival Food Walk</a></td></tr>
-            </tfoot>
-        </table>
+        <div class="table-responsive">
+            <table class="table" id="schedule">
+                <tbody>
+                <thead>
+                <th>Leg</th>
+                <th>Time</th>
+                <th>Start Station</th>
+                <th>Miles</th>
+                <th>Pace</th>
+                <th>Elev. Gain</th>
+                <th>Runners</th>
+                </thead>
+                <tr>
+                    <td>0</td>
+                    <td>9:30</td>
+                    <td>Angle Lake</td>
+                    <td>1.8</td>
+                    <td>8:00</td>
+                    <td>47</td>
+                    <td><b><u>Ellis</u></b>, <u>Nick</u></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>9:49</td>
+                    <td>SeaTac/Airport</td>
+                    <td>1.5</td>
+                    <td>8:00</td>
+                    <td>105</td>
+                    <td><b>Ellis</b>, Nick</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>10:05</td>
+                    <td>Tukwila International Blvd</td>
+                    <td>6.6</td>
+                    <td>8:00</td>
+                    <td>590</td>
+                    <td><b>Ellis</b>, <u>Johanna</u>, Nick</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>11:03</td>
+                    <td>Rainier Beach</td>
+                    <td>1.1</td>
+                    <td>12:00</td>
+                    <td>74</td>
+                    <td><u>Swati</u>, <b><u>Yuxuan</u></b></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>11:21</td>
+                    <td>Othello</td>
+                    <td>1.6</td>
+                    <td>12:00</td>
+                    <td>37</td>
+                    <td><u>Brett</u>, <u>James</u>, <u>Jennifer</u>, <u>Lancelot</u>, <u>Max</u>, <u>Sameer</u>,
+                        <u>Sidd</u>, Swati, <b>Yuxuan</b>, Zach
+                    </td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>11:45</td>
+                    <td>Columbia City</td>
+                    <td>1.2</td>
+                    <td>12:00</td>
+                    <td>23</td>
+                    <td>Brett, <u>Ethan</u>, James, Jennifer, Lancelot, Max, Sameer, Sidd, Swati, <b>Yuxuan</b>,
+                        <u>Zach</u></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>12:04</td>
+                    <td>Mount Baker</td>
+                    <td>0.8</td>
+                    <td>12:00</td>
+                    <td>251</td>
+                    <td>Ethan, Lancelot, Sidd, Swati, <b>Yuxuan</b>, Zach</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>12:18</td>
+                    <td>Beacon Hill</td>
+                    <td>1.3</td>
+                    <td>12:00</td>
+                    <td>11</td>
+                    <td>Ethan, Lancelot, Sidd, Swati, <b>Zach</b></td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>12:38</td>
+                    <td>SODO</td>
+                    <td>0.7</td>
+                    <td>12:00</td>
+                    <td>12</td>
+                    <td>Ethan, <u>Jingwei</u>, Lancelot, Sidd, <u>Pratyush</u>, <b>Zach</b></td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>12:51</td>
+                    <td>Stadium</td>
+                    <td>0.8</td>
+                    <td>12:00</td>
+                    <td>38</td>
+                    <td>Ethan, Jingwei, Lancelot, Pratyush, <b>Zach</b></td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>1:04</td>
+                    <td>International District/Chinatown</td>
+                    <td>0.3</td>
+                    <td>12:50</td>
+                    <td>25</td>
+                    <td>Ethan, Jingwei, Lancelot, Pratyush, <b>Zach</b></td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>1:13</td>
+                    <td>Pioneer Square</td>
+                    <td>0.5</td>
+                    <td>12:50</td>
+                    <td>54</td>
+                    <td><b><u>Chandra</u></b>, Ethan, <u>Ewin</u>, <u>Reshabh</u></td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>1:24</td>
+                    <td>University Street</td>
+                    <td>1.1</td>
+                    <td>20:00</td>
+                    <td>73</td>
+                    <td><b>Chandra</b>, Ethan, Ewin, <u>Vishwas</u></td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>1:49</td>
+                    <td>Westlake</td>
+                    <td>1.0</td>
+                    <td>10:00</td>
+                    <td>274</td>
+                    <td><b>Chandra</b>, Ethan, Ewin</td>
+                </tr>
+                <tr>
+                    <td>14</td>
+                    <td>2:03</td>
+                    <td>Capitol Hill</td>
+                    <td>2.8</td>
+                    <td>10:00</td>
+                    <td>228</td>
+                    <td><b>Chandra</b>, Edward, Ewin, <u>Jamie</u></td>
+                </tr>
+                <tr>
+                    <td>15</td>
+                    <td>2:35</td>
+                    <td>University of Washington</td>
+                    <td>1.1</td>
+                    <td>10:00</td>
+                    <td>176</td>
+                    <td><u>Amal</u>, <b>Chandra</b>, Edward, Ewin, Jamie, <u>Maya</u></td>
+                </tr>
+                <tr>
+                    <td>16</td>
+                    <td>2:50</td>
+                    <td>U-District</td>
+                    <td>1.4</td>
+                    <td>10:00</td>
+                    <td>111</td>
+                    <td>Amal, <b>Chandra</b>, Ewin, Jamie, Maya</td>
+                </tr>
+                <tr>
+                    <td>17</td>
+                    <td>3:08</td>
+                    <td>Roosevelt</td>
+                    <td>2.4</td>
+                    <td>10:00</td>
+                    <td>261</td>
+                    <td><b>Chandra</b>, Jamie</td>
+                </tr>
+                <tr id="finish-row">
+                    <td>Finish</td>
+                    <td>3:36</td>
+                    <td></td>
+                    <td>27.9</td>
+                    <td></td>
+                    <td>2390</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td>🍻</td>
+                    <td>5:00</td>
+                    <td colspan="7"><a href="https://udistrictseattle.com/udistrict-station-opening-festival">U-District
+                        Station Opening Festival Food Walk</a></td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
 
-        <p>Leg leaders are marked in <b>bold</b>. <u>Underlined</u> name indicates first leg. Times nominal. Follow the <a href="https://docs.google.com/spreadsheets/d/1wFvyhVMUVqJ3DTGJMr0fr9nrX8zU8nl4uux4AY_H01E/edit?usp=sharing">live schedule</a> for up-to-date estimates.</p>
+        <p>Leg leaders are marked in <b>bold</b>. <u>Underlined</u> name indicates first leg. Times nominal. Follow the
+            <a href="https://docs.google.com/spreadsheets/d/1wFvyhVMUVqJ3DTGJMr0fr9nrX8zU8nl4uux4AY_H01E/edit?usp=sharing">live
+                schedule</a> for up-to-date estimates.</p>
     </div>
 </section>
 
 <section id="countdown">
-    <div class="wrapper"> The relay starts <span id="static-count" style="">soon</span><span id="dynamic-count" style="display:none">in
-        <span id="days"></span> day<span id="day-plural">s</span> <span id="hours"></span> hour<span id="hour-plural">s</span> <span id="minutes"></span> minute<span id="minute-plural">s</span> and <span id="seconds"></span> second<span id="second-plural">s</span></span>.
+    <div class="container"> The relay starts <span id="static-count" style="">soon</span><span id="dynamic-count"
+                                                                                               style="display:none">in
+        <span id="days"></span> day<span id="day-plural">s</span> <span id="hours"></span> hour<span
+                id="hour-plural">s</span> <span id="minutes"></span> minute<span id="minute-plural">s</span> and <span
+                id="seconds"></span> second<span id="second-plural">s</span></span>.
     </div>
 </section>
 
 <section>
-    <div class="wrapper">
+    <div class="container">
         <h2>Relay Day Procedures</h2>
         <ul>
             <li>Dress visibly. Bright colors, hi-viz and reflective if you've got it.</li>
             <li>Bring and wear your mask when inside station areas.</li>
-            <li>Arrive at the northbound (or center) train platform comfortably ahead of when your leg is scheduled to start. Find anyone else starting with you and make yourselves easy to spot.
+            <li>Arrive at the northbound (or center) train platform comfortably ahead of when your leg is scheduled to
+                start. Find anyone else starting with you and make yourselves easy to spot.
                 Incoming runners will find you on the platform.
             </li>
             <li>Take a selfie! Many stations have cool sculptures or architecture which you can include.</li>
-            <li>Run your assigned leg(s). You may run extra legs if you feel up for it, but the pace will be as scheduled.</li>
+            <li>Run your assigned leg(s). You may run extra legs if you feel up for it, but the pace will be as
+                scheduled.
+            </li>
             <li>If you need to drop out during the run, post in the Slack channel.</li>
             <li>When you get to the station, quickly find the waiting runners. Once you've selfied as a group, wave
                 goodbye to anyone who's ending their run.
@@ -337,15 +592,20 @@ redirect_from:
         <ul>
             <li>You are responsible for the safety, fun, and timing of your legs, in that order.</li>
             <li>Know the people on your legs and which exchanges to expect them at.</li>
-            <li>You may start a leg early if everyone is present. Do not start a leg late if you can avoid it. Suggest an alternate start for late runners if the schedule accommodates.</li>
-            <li>Study your legs' routes and run them closely. When the route does not take the shortest path, it's to avoid steep climbs, dangerous roads or bad sidewalks. Deviations from the route or the schedule may be dangerous and will have cascading effects on timing.</li>
+            <li>You may start a leg early if everyone is present. Do not start a leg late if you can avoid it. Suggest
+                an alternate start for late runners if the schedule accommodates.
+            </li>
+            <li>Study your legs' routes and run them closely. When the route does not take the shortest path, it's to
+                avoid steep climbs, dangerous roads or bad sidewalks. Deviations from the route or the schedule may be
+                dangerous and will have cascading effects on timing.
+            </li>
             <li>You're in charge of the baton.</li>
         </ul>
     </div>
 </section>
 
 <section>
-    <div class="wrapper">
+    <div class="container">
         <h2>FAQ</h2>
         <dl>
             <dt>Who can participate?</dt>
@@ -354,10 +614,14 @@ redirect_from:
             <dd>You can choose how far, and we'll be able to accommodate any distance between .5 miles to 20 miles.</dd>
             <dt>How fast do I need to run?</dt>
             <dd>Also up to you. We'll schedule the relay according to your pace estimate, taking into account things
-                like the elevation change and the street context as well. You may be scheduled to run more slowly than your preference to accommodate other runners.
+                like the elevation change and the street context as well. You may be scheduled to run more slowly than
+                your preference to accommodate other runners.
             </dd>
             <dt>I'm unsure how fast or how far I can run.</dt>
-            <dd>We recommend you join an <a href="/">RCR weekday run</a> before the relay so that we can figure out what's appropriate. This is especially important if you're new to running or if you're returning after a long break.</dd>
+            <dd>We recommend you join an <a href="/">RCR weekday run</a> before the relay so that we can figure out
+                what's appropriate. This is especially important if you're new to running or if you're returning after a
+                long break.
+            </dd>
             <dt>I'm uncomfortable or unsure about signing up because I don't know enough about where I'd be running.
             </dt>
             <dd>The organizers have run the course and put together some notes about what to expect along each leg, so
@@ -366,19 +630,286 @@ redirect_from:
                 open-ended part of the sign-up form so we can accommodate you.
             </dd>
             <dt>Is there anything planned for after the run?</dt>
-            <dd>We are planning to enjoy the <a href="https://udistrictseattle.com/udistrict-station-opening-festival">U-District Station Opening Festival's Food Walk</a> after the conclusion of the relay at 5:00PM. Besides the festival, consider visiting the extension stations. <a href="https://www.soundtransit.org/blog/platform/welcome-to-opening-day-month">Sound Transit says</a> they'll be providing a "museum-like experience" at the new stations from October 2nd through the 31st. A <a href="https://www.shorelineareanews.com/2021/09/grand-opening-for-john-lewis-memorial.html">beautiful new pedestrian bridge in Northgate</a> is also set to open on October 2nd and is well worth checking out.</dd>
+            <dd>We are planning to enjoy the <a href="https://udistrictseattle.com/udistrict-station-opening-festival">U-District
+                Station Opening Festival's Food Walk</a> after the conclusion of the relay at 5:00PM. Besides the
+                festival, consider visiting the extension stations. <a
+                        href="https://www.soundtransit.org/blog/platform/welcome-to-opening-day-month">Sound Transit
+                    says</a> they'll be providing a "museum-like experience" at the new stations from October 2nd
+                through the 31st. A <a
+                        href="https://www.shorelineareanews.com/2021/09/grand-opening-for-john-lewis-memorial.html">beautiful
+                    new pedestrian bridge in Northgate</a> is also set to open on October 2nd and is well worth checking
+                out.
+            </dd>
             <dt>Can I still sign up?</dt>
-            <dd>No, but you can join for any scheduled legs that you are able to. Please message us in the event Slack channel, #light-rail-relay-2021.</dd>
+            <dd>No, but you can join for any scheduled legs that you are able to. Please message us in the event Slack
+                channel, #light-rail-relay-2021.
+            </dd>
             <dt>I want to update my preferences.</dt>
-            <dd>You can reduce or increase the number of legs that you run if it does not affect the pace schedule, otherwise there will be no changes.</dd>
+            <dd>You can reduce or increase the number of legs that you run if it does not affect the pace schedule,
+                otherwise there will be no changes.
+            </dd>
         </dl>
     </div>
 </section>
+<hr/>
+<section id="epilogue">
+
+    <div class="container">
+        <h1>Epilogue</h1>
+        <p>On October 2nd, 2021 24 runners carried the baton from Angle Lake to Northgate. It was just seven and half
+            hours of running, but the event was years coming.</p>
+        <p>Two years prior, RCR ran the Northwest Passage Ragnar, a relay event where teams of 12 runners split up the
+            200 miles from the Canadian border down to Blaine, Washington. Ragnars are not easy. You're running day and
+            night on the shoulder of the roads a third of the way across the state. When you're not running, you're
+            crammed in a team van heading to the next exchange. Even just getting to the start line is a serious
+            undertaking. Lodging and transportation for 12 people in small-town Washington is tricky to arrange and
+            expensive. All of this contributes to the experience (maybe not the cost), but it does beg the question; was
+            there a way for more of the club to get to enjoy something like the Ragnar experience?</p>
+        <p>Ellis and Zach were just through dropping off the rental vans when the answer became obvious. A Light Rail
+            Relay. Running along a transit line removed the transportation hassles, and the stations were natural
+            exchange points.</p>
+
+    </div>
+
+    <figure class="image-grid">
+        <a href="/img/lrr21/batons.webp">
+            <img src="/img/lrr21/batons.webp"/>
+        </a>
+        <a href="/img/lrr21/materials.webp">
+            <img src="/img/lrr21/materials.webp"/>
+        </a>
+    </figure>
+    <div class="container">
+        <p>A pandemic would intercede (spawning <a href="/quarantine-relay/">its own event</a>) but it was an idea that
+            was too good not to try. When I saw that the Northgate Link extension stations finally had an official
+            opening date I knew it was our perfect chance. Several scouting runs, some drawing, a bunch of advertising,
+            <a href="https://github.com/raceconditionrunning/relay-scheduler">some ASP</a>, a few trips to
+            hardware and art supply stores and everything was in order.</p>
+
+    </div>
+    <figure>
+    <div class="image-grid two-up-one-down">
+        <a href="/img/lrr21/udistrict1.webp">
+            <img src="/img/lrr21/udistrict1.webp"/>
+        </a>
+
+        <a href="/img/lrr21/udistrict2.webp">
+            <img src="/img/lrr21/udistrict2.webp"/>
+        </a>
+
+        <a href="/img/lrr21/udistrict3.webp">
+            <img src="/img/lrr21/udistrict3.webp"/>
+        </a>
+    </div>
+
+
+    <div class="image-grid one-left-two-right">
+        <a href="/img/lrr21/roosevelt2.webp">
+            <img src="/img/lrr21/roosevelt2.webp"/>
+        </a>
+        <a href="/img/lrr21/roosevelt1.webp">
+            <img src="/img/lrr21/roosevelt1.webp"/>
+        </a>
+
+        <a href="/img/lrr21/roosevelt3.webp">
+            <img src="/img/lrr21/roosevelt3.webp"/>
+        </a>
+
+    </div>
+
+    <div class="image-grid">
+        <a href="/img/lrr21/northgate1.webp">
+            <img src="/img/lrr21/northgate1.webp"/>
+        </a>
+
+        <a href="/img/lrr21/northgate2.webp">
+            <img src="/img/lrr21/northgate2.webp"/>
+        </a>
+    </div>
+    </figure>
+
+    <div class="container">
+
+        <p>Not everything went exactly to plan. In many respects, they went better. Folks got a bit lost on the way to Capitol Hill, but then they ran into people giving out free ice cream. We had welcome support from Lauren and Stephen. Sahil joined us on a whim. Baby Zoe made her RCR debut. Several people had such good runs
+            that they <a href="https://docs.google.com/spreadsheets/d/1wFvyhVMUVqJ3DTGJMr0fr9nrX8zU8nl4uux4AY_H01E/edit#gid=0">stayed on past their scheduled legs</a>.</p>
+
+        <p>We ran past planes taking off from Sea-Tac. We admired the art in the South Seattle stations. We saw the city
+            and the Sound from the top of Beacon Hill. We ran with the freight trains through SODO. We ran through the
+            iconic Pike Place Market and the historic Volunteer Park. We marveled at three new light rail stations. It was everything that's great about Seattle, and it was us.</p>
+
+        <p><i>Nick Walker</i></p>
+    </div>
+
+    <div class="gallery allow-cropping">
+        <ul>
+            <li>
+                <a href="/img/lrr21/0.webp">
+                    <img src="/img/lrr21/0.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/1.webp">
+                    <img src="/img/lrr21/1.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/2.webp">
+                    <img src="/img/lrr21/2.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/3.webp">
+                    <img src="/img/lrr21/3.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/4.webp">
+                    <img src="/img/lrr21/4.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/5.webp">
+                    <img src="/img/lrr21/5.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/5_2.webp">
+                    <img src="/img/lrr21/5_2.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/6.webp">
+                    <img src="/img/lrr21/6.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/7.webp">
+                    <img src="/img/lrr21/7.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/7_2.webp">
+                    <img src="/img/lrr21/7_2.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/8.webp">
+                    <img src="/img/lrr21/8.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/9.webp">
+                    <img src="/img/lrr21/9.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/10.webp">
+                    <img src="/img/lrr21/10.webp"/>
+                </a>
+            </li>
+
+            <li>
+                <a href="/img/lrr21/11.webp">
+                    <img src="/img/lrr21/11.webp"/>
+                </a>
+            </li>
+
+            <li>
+                <a href="/img/lrr21/12.webp">
+                    <img src="/img/lrr21/12.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/12_2.webp">
+                    <img src="/img/lrr21/12_2.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/13.webp">
+                    <img src="/img/lrr21/13.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/14.webp">
+                    <img src="/img/lrr21/14.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/14_2.webp">
+                    <img src="/img/lrr21/14_2.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/15.webp">
+                    <img src="/img/lrr21/15.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/15_2.webp">
+                    <img src="/img/lrr21/15_2.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/15_3.webp">
+                    <img src="/img/lrr21/15_3.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/16.webp">
+                    <img src="/img/lrr21/16.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/16_2.webp">
+                    <img src="/img/lrr21/16_2.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/16_3.webp">
+                    <img src="/img/lrr21/16_3.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/17.webp">
+                    <img src="/img/lrr21/17.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/17_2.webp">
+                    <img src="/img/lrr21/17_2.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/17_3.webp">
+                    <img src="/img/lrr21/17_3.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/18.webp">
+                    <img src="/img/lrr21/18.webp"/>
+                </a>
+            </li>
+
+            <li>
+                <a href="/img/lrr21/18_2.webp">
+                    <img src="/img/lrr21/18_2.webp"/>
+                </a>
+            </li>
+            <li>
+                <a href="/img/lrr21/18_3.webp">
+                    <img src="/img/lrr21/18_3.webp"/>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</section>
+
 <footer>
     <p class="imprint"><a href="/"><img src="/img/happy-toast.svg" alt="A happy piece of toast who is running"/></a></p>
 </footer>
 
-<script>
+<script type="module">
     let stationToName = new Array(stations.features.length);
     for (let i = 0; i < stations.features.length; i++) {
         let station = stations.features[i];
@@ -391,8 +922,12 @@ redirect_from:
     }).setView([47.60640473782326, -122.32747365635417], 10);
 
     // Allow scroll interaction while the user is engaged with the map, but not while just landing or casually scrolling the page
-    map.on('focus', function() { map.scrollWheelZoom.enable(); });
-    map.on('blur', function() { map.scrollWheelZoom.disable(); });
+    map.on('focus', function () {
+        map.scrollWheelZoom.enable();
+    });
+    map.on('blur', function () {
+        map.scrollWheelZoom.disable();
+    });
 
     // load a tile layer
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -404,6 +939,7 @@ redirect_from:
         zoomOffset: -1,
         accessToken: 'pk.eyJ1Ijoibmlja3N3YWxrZXIiLCJhIjoiY2t0ZjgyenE4MDR1YjJ1cno0N3hxYzI4YSJ9.ivPdsoEtV9TaLGbOOfFXKA'
     }).addTo(map);
+    L.control.locate({keepCurrentZoomLevel: true, flyTo: true}).addTo(map);
 
     function onEachFeature(feature, layer) {
         layer.bindTooltip(feature.properties.name, {
@@ -459,7 +995,7 @@ redirect_from:
         if (clicked) {
             clicked.setStyle({color: "#6abf4a"});
         }
-        var feature = e.layer;
+        let feature = e.layer;
         feature.setStyle({
             color: '#497f32',
         });
@@ -479,7 +1015,7 @@ redirect_from:
     routeLayer.addTo(map);
     const legsLayer = L.geoJSON(legs, {
         "style": {"color": "#6abf4a", "weight": 6}, onEachFeature: function (feature, layer) {
-            let content = "<h3>" + stationToName[feature.properties.start] + " to " + stationToName[feature.properties.end] + "</h3>"
+            let content = "<h4>" + stationToName[feature.properties.start] + " to " + stationToName[feature.properties.end] + "</h4>"
             content += "<b>Distance:</b> " + String(feature.properties.distance) + "mi<br/>"
             content += "<b>Climbing:</b> " + String(feature.properties.climbing) + "ft<br/>"
             content += "<b>Notes</b>: " + feature.properties.notes
@@ -496,17 +1032,17 @@ redirect_from:
     stationLabels.addTo(map);
     map.fitBounds(legsLayer.getBounds().pad(0.1))
 
-    var countDownDate = new Date("Oct 2, 2021 9:30:00").getTime();
-    let countdown = setInterval(function() {
+    let countDownDate = new Date("Oct 2, 2021 9:30:00").getTime();
+    let countdown = setInterval(function () {
         document.getElementById("static-count").style.display = "none";
         document.getElementById("dynamic-count").style.display = "";
-        var now = new Date().getTime();
-        var timeleft = countDownDate - now;
+        let now = new Date().getTime();
+        let timeleft = countDownDate - now;
 
-        var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+        let days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+        let hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
         document.getElementById("days").innerHTML = days
         document.getElementById("hours").innerHTML = hours
         document.getElementById("minutes").innerHTML = minutes
