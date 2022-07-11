@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Race Condition Running</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   <link rel='stylesheet' type='text/css' href='/css/style.css'>
 
   <!-- favicon -->
@@ -23,26 +24,34 @@
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="WrPqIrZlSl3HcFgqvyw3hRpeYOgaxXfyjEXTtctEJhY" />
 </head>
 <body>
 
+<div class="container">
 <div style='float: right;'>
   <img src='/img/rcc-logo.png' width='150' alt='RCC Logo'>
 </div>
 
 <h1>Race Condition Running</h1>
+</div>
 
-<hr>
-
-<nav>
-  <a href="/"{% if page.url == "/" %} class="active"{% endif %}>Schedule</a>
-  <a href="/routes/"{% if page.url == "/routes/" %} class="active"{% endif %}>Routes</a>
-  <a href="/brunch-reviews/"{% if page.url == "/brunch-reviews/" %} class="active"{% endif %}>Brunch Reviews</a>
-  <a href="/lore/"{% if page.url == "/lore/" %} class="active"{% endif %}>Lore</a>
-  <a href="/quarantine-relay/"{% if page.url == "/quarantine-relay/" %} class="active"{% endif %}>Quarantine Relay</a>
+<nav class="navbar navbar-expand-sm mb-4" role="navigation">
+    <ul class="navbar-nav justify-content-between">
+    <li class="nav-item"><a href="/"{% if page.url == "/" %} class="active"{% endif %}>Schedule</a></li>
+    <li class="nav-item"><a href="/routes/"{% if page.url == "/routes/" %} class="active"{% endif %}>Routes</a></li>
+    <li class="nav-item"><a href="/brunch-reviews/"{% if page.url == "/brunch-reviews/" %} class="active"{% endif %}>Brunch Reviews</a></li>
+    <li class="nav-item"><a href="/lore/"{% if page.url == "/lore/" %} class="active"{% endif %}>Lore</a></li>
+    <li class="nav-item dropdown dropdown-center"><a href="#" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
+      <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
+        <li><a class="dropdown-item" href="/drumheller-half/">Drumheller Half</a></li>
+        <li><a class="dropdown-item" href="/light-rail-relay/">Light Rail Relay</a></li>
+        <li><a class="dropdown-item" href="/quarantine-relay/" {% if page.url == "/quarantine-relay/" %} class="active"{% endif %}>Quarantine Relay</a></li>
+      </ul>
+    </li>
+    </ul>
 </nav>
-
-<hr>
 
 {{ content }}
 
@@ -55,6 +64,7 @@
   ga('create', 'UA-84537680-1', 'auto');
   ga('send', 'pageview');
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 
 </body>
 </html>
