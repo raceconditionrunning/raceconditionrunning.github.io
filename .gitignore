@@ -1,6 +1,8 @@
 # jekyll stuff
 _site/
 .jekyll-cache/
+.bundle/
+vendor/
 
 # auto-built iCal file
 rcc.ics
