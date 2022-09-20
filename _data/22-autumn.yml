@@ -1,0 +1,24 @@
+- date: "2022-09-24"
+  plan:
+    - time: "7:30"
+      route:
+        name: Moran Constitutional Relay
+        map: https://nwtrailruns.com/events/moran-constitutional-relay/
+        dist: 71.6
+
+- date: "2022-10-01"
+  plan:
+    - time: "9:30"
+      route:
+        name: Light Rail Relay 2022
+        map: /light-rail-relay
+        dist: 27.9
+      highlight-image: /img/lrr22/lrr-og-banner.png
+
+- date: "2022-10-09"
+  plan:
+    - time: "9:00"
+      route:
+        name: Dawg Dash 2022
+        map: https://www.washington.edu/alumni/dawgdash/
+        dist: 6.2
