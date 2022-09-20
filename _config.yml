@@ -1,4 +1,4 @@
-url: http://raceconditionrunning.com
+url: https://raceconditionrunning.com
 
 permalink: /:title/
 
@@ -21,6 +21,7 @@ exclude:
   - "README.md"
   - Gemfile
   - Gemfile.lock
+  - posters
   - requirements.txt
 
 sass:
