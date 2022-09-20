@@ -12,9 +12,9 @@
     - time: "9:30"
       route:
         name: Light Rail Relay 2021
-        map: /light-rail-relay
+        map: /light-rail-relay-21
         dist: 27.9
-      highlight-image: /img/light-rail-relay-og-banner.png
+      highlight-image: /img/lrr21/light-rail-relay-og-banner.png
 
 - date: "2021-10-09"
   plan:
