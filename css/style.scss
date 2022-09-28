@@ -77,6 +77,10 @@ tbody tr:last-child td {
   max-height: 200px;
 }
 
+tr:has(+ tr.schedule-highlight-row) td {
+  border-bottom: none;
+}
+
 .column {
   float: left;
   width: 48%;
