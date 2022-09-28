@@ -12,7 +12,7 @@ redirect_from:
     <title>Light Rail Relay 2022</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Relay along the Link Line 1 happening October 1st, 2022.">
-    <meta name="theme-color" content="#6abf4a">
+    <meta name="theme-color" content="#000000">
     <meta property="og:image" content="https://raceconditionrunning.com/img/lrr22/lrr-og-banner.png">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://raceconditionrunning.com/light-rail-relay/">
@@ -35,11 +35,20 @@ redirect_from:
 
 
     <script src="/maps/link-line-1.geojson"></script>
-    <script src="/maps/light-rail-relay-legs.geojson"></script>
+    <script src="/maps/light-rail-relay-legs-22.geojson"></script>
     <script src="/maps/light-rail-relay-stations.geojson"></script>
 
 </head>
 <style>
+
+    :root {
+        --theme-primary-color: #5fac56;
+        --theme-primary-color-bright: #6cc462;
+        --bs-btn-hover-bg: var(--theme-primary-color-bright);
+        --bs-link-hover-color: #6cc462;
+        --bs-btn-hover-color: white;
+        --bs-btn-hover-border-color: transparent;
+    }
     body {
         margin: 0;
         font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !important;
@@ -52,13 +61,12 @@ redirect_from:
     }
 
     a {
-        color: #5fac56;
-        --bs-link-hover-color: #6cc462
+        color: var(--theme-primary-color);
     }
 
     ul {
         /* Don't jam bullet at edge of screen on mobile */
-        padding-left: .2rem
+        padding-left: 1rem
     }
     
     @media screen and (min-width: 700px) {
@@ -119,7 +127,7 @@ redirect_from:
     }
 
     .one-bg {
-        background-color: #5fac56;
+        background-color: var(--theme-primary-color);
     }
 
     .black-bg {
@@ -127,17 +135,22 @@ redirect_from:
         color: white
     }
     .hero-button {
-        background-color: #5fac56;
+        background-color: var(--theme-primary-color);
         font-weight: bold;
         font-size: 1.5rem;
-        --bs-btn-hover-bg: #6cc462;
-        --bs-btn-hover-color: white;
-        --bs-btn-hover-border-color: transparent;
         color: white;
     }
 
     .btn {
         border-radius: 0;
+    }
+
+    .btn-outline-primary {
+        border-color: transparent !important;
+        background-color: var(--theme-primary-color);
+        color: white;
+        --bs-btn-hover-bg: var(--theme-primary-color-bright);
+        --bs-btn-hover-border-color: transparent;
     }
 
     .leaflet-popup-content {
@@ -360,10 +373,11 @@ redirect_from:
 </section>
 
 <section id="course-map">
-    <div class="container mb-4">
+    <div class="container pb-4 mb-4">
         <h2>Route</h2>
         <p>The relay will start at Angle Lake station and follow the entire operational line to Northgate, with
             exchanges and selfies at each station on the way. More than one runner will be assigned to each leg.</p>
+        <a href="/maps/light-rail-relay-22.gpx" class="btn btn-outline-primary">Download Route GPX</a>
     </div>
     <div id="map"></div>
 </section>
@@ -431,7 +445,7 @@ redirect_from:
             <dt>Who can participate?</dt>
             <dd>Anyone in the CSE community.</dd>
             <dt>How far do I need to run?</dt>
-            <dd>You can choose how far, and we'll be able to accommodate any distance between .5 miles to 28 miles.</dd>
+            <dd>You can choose how far, and we'll be able to accommodate any distance between .5 miles and 28 miles.</dd>
             <dt>How fast do I need to run?</dt>
             <dd>Also up to you. We'll schedule the relay according to your pace estimate, taking into account things
                 like the elevation change and the street context as well. You may be scheduled to run more slowly than
@@ -585,7 +599,8 @@ redirect_from:
         "style": {"color": "#5fac56", "weight": 6}, onEachFeature: function (feature, layer) {
             let content = "<h4>" + stationToName[feature.properties.start] + " to " + stationToName[feature.properties.end] + "</h4>"
             content += "<b>Distance:</b> " + String(feature.properties.distance) + "mi<br/>"
-            content += "<b>Climbing:</b> " + String(feature.properties.climbing) + "ft<br/>"
+            content += "<b>Ascent:</b> " + String(feature.properties.ascent) + "ft<br/>"
+            content += "<b>Descent:</b> " + String(feature.properties.descent) + "ft<br/>"
             content += "<b>Notes</b>: " + feature.properties.notes
             layer.bindPopup(content)
             layer.getPopup().on('remove', function () {
