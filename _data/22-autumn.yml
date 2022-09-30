@@ -12,7 +12,7 @@
       route:
         name: Light Rail Relay 2022
         map: /light-rail-relay
-        dist: 28.2
+        dist: 28.3
       highlight-image: /img/lrr22/lrr-og-banner.png
 
 - date: "2022-10-09"
