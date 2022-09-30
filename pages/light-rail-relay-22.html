@@ -47,6 +47,7 @@ redirect_from:
         --bs-btn-hover-bg: var(--theme-primary-color-bright);
         --bs-link-hover-color: #6cc462;
         --bs-btn-hover-color: white;
+        --bs-btn-active-bg: var(--theme-primary-color-bright);
         --bs-btn-hover-border-color: transparent;
     }
     body {
@@ -151,6 +152,7 @@ redirect_from:
         color: white;
         --bs-btn-hover-bg: var(--theme-primary-color-bright);
         --bs-btn-hover-border-color: transparent;
+        --bs-btn-active-bg: var(--theme-primary-color-bright);
     }
 
     .leaflet-popup-content {
@@ -362,9 +364,9 @@ redirect_from:
             <div class="subheader d-flex flex-column align-items-center">
                 <h2 class="mb-3">October 1st</h2>
                 <p class="lead">We're running a relay along the Link 1 Line. You're invited.</p>
-                <div class="button-container"><a href="https://forms.gle/QWPAZ2EjVERVeKtk8" class="btn hero-button">Sign
-                    Up</a></div>
-                <!--div class="button-container"><a href="https://docs.google.com/spreadsheets/d/1wFvyhVMUVqJ3DTGJMr0fr9nrX8zU8nl4uux4AY_H01E/edit?usp=sharing" class="btn hero-button">Follow Along</a></div-->
+                <!--div class="button-container"><a href="https://forms.gle/QWPAZ2EjVERVeKtk8" class="btn hero-button">Sign
+                    Up</a></div-->
+                <div class="button-container"><a href="https://docs.google.com/spreadsheets/d/1rd9Si3BcPgqt3fWxoHnuUB0rnN00XLtziMaHSPpQt14/edit#gid=0" class="btn hero-button">Follow Along</a></div>
                 <!--<div class="button-container"><a href="#epilogue" class="btn hero-button">Read Epilogue</a></div>-->
             </div>
             </div>
@@ -382,10 +384,208 @@ redirect_from:
     <div id="map"></div>
 </section>
 
-<section id="schedule-section-tbd">
+<section id="schedule-section">
     <div class="container">
         <h2>Schedule</h2>
-        <p><i>Coming soon</i></p>
+        <div class="table-responsive">
+            <table class="table" id="schedule">
+                <tbody>
+                <thead>
+                <th>Leg</th>
+                <th>Time</th>
+                <th>Start Station</th>
+                <th>Miles</th>
+                <th>Pace</th>
+                <th>Elev. Gain</th>
+                <th>Runners</th>
+                </thead>
+                <tr>
+                    <td>0</td>
+                    <td>9:30</td>
+                    <td>Angle Lake</td>
+                    <td>1.8</td>
+                    <td>9:00</td>
+                    <td>55</td>
+                    <td><b><u>Ellis</u></b>, <u>Nick</u></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>9:50</td>
+                    <td>SeaTac/Airport</td>
+                    <td>1.5</td>
+                    <td>9:00</td>
+                    <td>97</td>
+                    <td><b>Ellis</b>, Nick</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>10:08</td>
+                    <td>Tukwila International Blvd</td>
+                    <td>6.6</td>
+                    <td>9:00</td>
+                    <td>600</td>
+                    <td><b>Ellis</b>, Nick</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>11:12</td>
+                    <td>Rainier Beach</td>
+                    <td>1.1</td>
+                    <td>11:00</td>
+                    <td>82</td>
+                    <td><u>Dhruba</u>, Ellis, <u>James</u>, Nick, <b><u>Zach T.</u></b></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>11:28</td>
+                    <td>Othello</td>
+                    <td>1.6</td>
+                    <td>11:00</td>
+                    <td>39</td>
+                    <td>Dhruba, Ellis, James, Nick, <b>Zach T.</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>11:50</td>
+                    <td>Columbia City</td>
+                    <td>1.2</td>
+                    <td>11:00</td>
+                    <td>26</td>
+                    <td>Dhruba, James, <b>Zach T.</b></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>12:09</td>
+                    <td>Mount Baker</td>
+                    <td>0.8</td>
+                    <td>11:00</td>
+                    <td>257</td>
+                    <td>Dhruba, <b>James</b></td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>12:21</td>
+                    <td>Beacon Hill</td>
+                    <td>1.3</td>
+                    <td>9:30</td>
+                    <td>15</td>
+                    <td>Dhruba, <b>James</b></td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>12:39</td>
+                    <td>SODO</td>
+                    <td>0.7</td>
+                    <td>9:30</td>
+                    <td>15</td>
+                    <td>Dhruba, <u>Edward</u>, <b>James</b>, <u>Lauren</u>, <u>Zach E.</u></td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>12:54</td>
+                    <td>Stadium</td>
+                    <td>0.8</td>
+                    <td>16:00</td>
+                    <td>47</td>
+                    <td>Dhruba, Edward, <b>James</b>, Lauren, Zach E.</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>1:10</td>
+                    <td>International District/Chinatown</td>
+                    <td>0.3</td>
+                    <td>16:00</td>
+                    <td>44</td>
+                    <td><u>Brett</u>, <u>Chandra</u>, Dhruba, <b>Edward</b>, <u>Ethan</u>, James, <u>Justin</u>, Lauren, <u>Marius</u>, Zach E.</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>1:19</td>
+                    <td>Pioneer Square</td>
+                    <td>0.5</td>
+                    <td>16:00</td>
+                    <td>66</td>
+                    <td>Brett, Chandra, <b>Edward</b>, Ethan, Justin, Lauren, Marius, Zach E.</td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>1:31</td>
+                    <td>University Street</td>
+                    <td>1.1</td>
+                    <td>16:00</td>
+                    <td>97</td>
+                    <td>Brett, <b>Chandra</b>, Ethan, Justin, Lauren, Marius, <u>Ryan</u>, Zach E.</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>1:51</td>
+                    <td>Westlake</td>
+                    <td>1.0</td>
+                    <td>11:00</td>
+                    <td>245</td>
+                    <td>Brett, <b>Chandra</b>, Ethan, Justin, Marius</td>
+                </tr>
+                <tr>
+                    <td>14</td>
+                    <td>2:08</td>
+                    <td>Capitol Hill</td>
+                    <td>2.8</td>
+                    <td>12:00</td>
+                    <td>252</td>
+                    <td>Brett, <b>Chandra</b>, Ethan, <u>Ewin</u>, Justin, Marius, <u>Yuxuan</u></td>
+                </tr>
+                <tr>
+                    <td>15</td>
+                    <td>2:46</td>
+                    <td>University of Washington</td>
+                    <td>1.1</td>
+                    <td>12:00</td>
+                    <td>176</td>
+                    <td>Ewin, <u>Kevin</u>, <u>Maya</u>, <b>Yuxuan</b></td>
+                </tr>
+                <tr>
+                    <td>16</td>
+                    <td>3:05</td>
+                    <td>U-District</td>
+                    <td>1.4</td>
+                    <td>12:00</td>
+                    <td>120</td>
+                    <td>Ewin, Kevin, Maya, <b>Yuxuan</b></td>
+                </tr>
+                <tr>
+                    <td>17</td>
+                    <td>3:26</td>
+                    <td>Roosevelt</td>
+                    <td>2.4</td>
+                    <td>12:00</td>
+                    <td>263</td>
+                    <td>Ewin, <b>Yuxuan</b></td>
+                </tr>
+                <tr id="finish-row">
+                    <td>Finish</td>
+                    <td>3:59</td>
+                    <td></td>
+                    <td>28.2</td>
+                    <td></td>
+                    <td>2496</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td>🍻</td>
+                    <td>5:00</td>
+                    <td colspan="7"><a href="https://www.udistrictseattle.com/udistrictfoodwalk">U-District Food Walk and Street Party</a></td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <p>Leg leaders are marked in <b>bold</b>. <u>Underlined</u> name indicates first leg. Times nominal. Follow the
+            <a href="https://docs.google.com/spreadsheets/d/1rd9Si3BcPgqt3fWxoHnuUB0rnN00XLtziMaHSPpQt14/edit#gid=0">live
+                schedule</a> for up-to-date estimates.</p>
     </div>
 </section>
 
@@ -396,8 +596,10 @@ redirect_from:
         <ul>
             <li>Dress visibly. Bright colors, hi-viz and reflective if you've got it.</li>
             <li>Arrive at the northbound (or center) train platform comfortably ahead of when your leg is scheduled to
-                start. Find anyone else starting with you and make yourselves easy to spot.
-                Incoming runners will find you on the platform.
+                start. Find anyone else starting with you and make yourselves easy to spot. For open stations (e.g South Seattle stations)
+                exchanges are from the northbound or center platform. For underground stations (e.g. most stations north of Stadium) exchanges
+                are at the station entrance marked with a number on the route map. Most underground stations have multiple entrances spread out across a couple blocks so it is important
+                that you carefully study the map.
             </li>
             <li>Take a selfie! Many stations have <a href="https://www.soundtransit.org/sites/default/files/2016_start-on-link-map.pdf">cool sculptures or architecture</a> which you can include.</li>
             <li>Run your assigned leg(s). You may run extra legs if you feel up for it, but the pace will be as
@@ -468,14 +670,14 @@ redirect_from:
             </dd>
             <dt>Is there anything planned for after the run?</dt>
             <dd>We are planning to enjoy the <a href="https://udistrictseattle.com/udistrictfoodwalk">U-District
-                Food Walk</a> after the conclusion of the relay at 5:00PM. According to the U-District Partnership,
+                Food Walk and Street Party</a> after the conclusion of the relay at 5:00PM. According to the U-District Partnership,
                 this year's food walk will have an "After Party" with "$4 drink specials from your favorite
                 neighborhood establishments between 6pm-10pm, along with a breakdancing competition, outdoor music,
                 and dance party right on the Ave."
             </dd>
             <dt>Can I still sign up?</dt>
-            <dd>You can sign up until the weekend before the event. Beyond that point, no, but you can join for any scheduled legs
-                that you are able to. Please message us in the event Slack channel, #light-rail-relay-2022, so we know to expect you.
+            <dd>You can sign up until the initial schedule is made a few days before the event. Beyond that point, no, but you can join for any scheduled legs
+                that you are able to. Please message us in the event Slack channel, #light-rail-relay-22, so we know to expect you.
             </dd>
             <dt>I want to update my preferences.</dt>
             <dd>You can update your responses on the entry form until the weekend before the event. After that point, you can
