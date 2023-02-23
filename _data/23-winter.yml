@@ -1,0 +1,20 @@
+- date: "2023-02-25"
+  plan:
+    - time: "9:00"
+      route_id: beacon-lwb-seward-columbia
+
+- date: "2023-03-04"
+  plan:
+    - time: "9:00"
+      route_id: gas-works-kotkins-pier-salmon-bay
+
+- date: "2023-03-11"
+  plan:
+    - time: "9:00"
+      route_id: cap-hill-station-i90-ob
+
+- date: "2023-03-18"
+  plan:
+    - time: "9:00"
+      route_id: uw-jays-cafe-p2p
+
