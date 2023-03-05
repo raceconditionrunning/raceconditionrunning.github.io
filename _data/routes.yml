@@ -362,3 +362,32 @@
   dist: 12.2
   map: "https://onthegomap.com/s/9f25pcsk"
 
+- id: uw-to-sodo-station-lwb
+  name: "P2P: UW to SODO Station via LWB"
+  dist: 9.6
+  map: "https://onthegomap.com/s/4rgmm89h"
+
+- id: uw-to-pancake-corral
+  name: "UW to Chase Pancake Corral, Beaches"
+  dist: 10.3
+  map: "https://onthegomap.com/s/6pvff027"
+
+- id: roosevelt-magnuson-loop
+  name: "Roosevelt Station, Magnuson Loop"
+  dist: 8.5
+  map: "https://onthegomap.com/s/okme0g3a"
+
+- id: roosevelt-green-lake-loop
+  name: "Roosevelt Station, Green Lake Loop"
+  dist: 4.3
+  map: "https://onthegomap.com/s/4ufanab9"
+
+- id: westlake-sculpture-queen-anne
+  name: "Westlake Station, Sculpture Park, Queen Anne Loop"
+  dist: 7.2
+  map: "https://onthegomap.com/s/i7mlk4f4"
+
+- id: westlake-sodo-industrial-p2p
+  name: "Westlake Station, SODO, Industrial P2P"
+  dist: 4.0
+  map: "https://onthegomap.com/s/m8pat8st"
