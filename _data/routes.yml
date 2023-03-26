@@ -391,3 +391,19 @@
   name: "Westlake Station, SODO, Industrial P2P"
   dist: 4.0
   map: "https://onthegomap.com/s/m8pat8st"
+
+- id: westlake-sculpture-elliot-ob
+  name: "Westlake Station, Sculpture Park, Elliot Bay OB"
+  dist: 10.2
+  map: "https://onthegomap.com/s/sj71l2mu"
+
+- id: beacon-chief-sealth-ob
+  name: "Beacon Hill Station, Chief Sealth OB"
+  dist: 7.6
+  map: "https://onthegomap.com/s/393e6oir"
+
+- id: beacon-mt-sound-ob
+  name: "Beacon Hill Station, Mt to Sound OB"
+  dist: 4.2
+  map: "https://onthegomap.com/s/1fd0jvte"
+
