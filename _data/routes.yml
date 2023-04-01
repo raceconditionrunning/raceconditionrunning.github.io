@@ -407,3 +407,17 @@
   dist: 4.2
   map: "https://onthegomap.com/s/1fd0jvte"
 
+- id: westlake-queen-anne-loop
+  name: "Westlake Station, Queen Anne Loop"
+  dist: 7.75
+  map: "https://onthegomap.com/s/nlfgct9h"
+
+- id: westlake-alibertos
+  name: "Westlake Station, SODO Station P2P"
+  dist: 4.7
+  map: "https://onthegomap.com/s/sghgkk1c"
+
+- id: roosevelt-big-carkeek-loop
+  name: "Roosevelt Station, Big Carkeek Loop"
+  dist: 11.4
+  map: "https://onthegomap.com/s/de8kdgkq"

@@ -17,3 +17,14 @@
     - time: "10:30"
       route_id: roosevelt-green-lake-loop
 
+- date: "2023-04-15"
+  plan:
+    - time: "9:00"
+      route_id: westlake-queen-anne-loop
+    - time: "10:15"
+      route_id: westlake-alibertos
+
+- date: "2023-04-22"
+  plan:
+    - time: "9:00"
+      route_id: northgate-shoreline-beach
