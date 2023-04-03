@@ -421,3 +421,8 @@
   name: "Roosevelt Station, Big Carkeek Loop"
   dist: 11.4
   map: "https://onthegomap.com/s/de8kdgkq"
+
+- id: cap-hill-lwb-loop
+  name: "Capitol Hill Station, LWB Loop"
+  dist: 10.8
+  map: "https://onthegomap.com/s/hsspqidq"

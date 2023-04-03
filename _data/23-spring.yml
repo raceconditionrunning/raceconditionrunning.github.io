@@ -13,18 +13,31 @@
 - date: "2023-04-08"
   plan:
     - time: "9:00"
+      route_id: cap-hill-lwb-loop
+
+- date: "2023-04-15"
+  plan:
+    - time: "9:00"
       route_id: roosevelt-magnuson-loop
     - time: "10:30"
       route_id: roosevelt-green-lake-loop
 
-- date: "2023-04-15"
+- date: "2023-04-22"
   plan:
     - time: "9:00"
       route_id: westlake-queen-anne-loop
     - time: "10:15"
       route_id: westlake-alibertos
 
-- date: "2023-04-22"
+- date: "2023-04-29"
   plan:
     - time: "9:00"
       route_id: northgate-shoreline-beach
+
+- date: "2023-05-20"
+  plan:
+    - time: "7:30"
+      route:
+        name: Drumheller Half Marathon 2023
+        map: /drumheller-half
+        dist: 13.1
