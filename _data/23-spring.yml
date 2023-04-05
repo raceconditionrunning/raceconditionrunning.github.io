@@ -36,8 +36,8 @@
 
 - date: "2023-05-20"
   plan:
-    - time: "7:30"
+    - time: "7:50"
       route:
         name: Drumheller Half Marathon 2023
-        map: /drumheller-half
+        map: https://forms.gle/bde3tdHKBHWdNwWf9
         dist: 13.1
