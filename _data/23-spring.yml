@@ -53,3 +53,18 @@
         name: Drumheller Half Marathon 2023
         map: https://forms.gle/bde3tdHKBHWdNwWf9
         dist: 13.1
+
+- date: "2023-05-27"
+  plan:
+    - time: "9:00"
+      route_id: gas-works-kotkins-pier-salmon-bay
+
+- date: "2023-06-03"
+  plan:
+    - time: "9:00"
+      route_id: sodo-west-seattle-hook-half
+
+- date: "2023-06-10"
+  plan:
+    - time: "9:00"
+      route_id: roosevelt-big-carkeek-loop
