@@ -30,16 +30,16 @@
 - date: "2023-04-29"
   plan:
     - time: "9:00"
-      route_id: westlake-queen-anne-loop
+      route_id: uw-lake-union-loop
     - time: "10:15"
-      route_id: westlake-alibertos
+      route_id: uw-portage-bay-agua-verde
 
 - date: "2023-05-06"
   plan:
     - time: "9:00"
-      route_id: uw-lake-union-loop
+      route_id: westlake-queen-anne-loop
     - time: "10:15"
-      route_id: uw-portage-bay-agua-verde
+      route_id: westlake-alibertos
 
 - date: "2023-05-13"
   plan:
