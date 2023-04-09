@@ -25,14 +25,26 @@
 - date: "2023-04-22"
   plan:
     - time: "9:00"
-      route_id: westlake-queen-anne-loop
-    - time: "10:15"
-      route_id: westlake-alibertos
+      route_id: northgate-shoreline-beach
 
 - date: "2023-04-29"
   plan:
     - time: "9:00"
-      route_id: northgate-shoreline-beach
+      route_id: westlake-queen-anne-loop
+    - time: "10:15"
+      route_id: westlake-alibertos
+
+- date: "2023-05-06"
+  plan:
+    - time: "9:00"
+      route_id: uw-lake-union-loop
+    - time: "10:15"
+      route_id: uw-portage-bay-agua-verde
+
+- date: "2023-05-13"
+  plan:
+    - time: "9:00"
+      route_id: uw-bellevue-tc
 
 - date: "2023-05-20"
   plan:
