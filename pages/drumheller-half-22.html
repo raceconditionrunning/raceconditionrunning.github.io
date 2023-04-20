@@ -1,7 +1,7 @@
 ---
-permalink: drumheller-half/
+permalink: drumheller-half-22/
 redirect_from:
-- /dhm/
+- /dhm22/
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -10,16 +10,18 @@ redirect_from:
     <title>Drumheller Half Marathon 2022</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="13.1 miles around Drumheller Fountain, May 21st, 2022.">
-    <meta property="og:image" content="https://raceconditionrunning.com/img/dhm-22-og.png">
+    <meta property="og:image" content="https://raceconditionrunning.com/img/dhm22/dhm-22-og.png">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://raceconditionrunning.com/drumheller-half/">
+    <meta property="og:url" content="https://raceconditionrunning.com/drumheller-half-22/">
     <meta property="og:title" content="Drumheller Half Marathon 2022">
     <meta property="og:description" content="Experience the fountain and the mountain. May 21st, 2022.">
-    <link href="/img/dhm-favicon.png" rel="icon" type="image/png"/>
+    <link href="/img/dhm22/dhm-favicon.png" rel="icon" type="image/png"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha256-wLz3iY/cO4e6vKZ4zRmo4+9XDpMcgKOvv/zEU3OMlRo=" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Yrsa:ital,wght@0,300;0,700;1,300&display=swap"
           rel="stylesheet">
+
 </head>
 <style>
     body {
@@ -31,11 +33,9 @@ redirect_from:
 
     a {
         color: #333333;
+        --bs-link-hover-color: #555;
     }
 
-    h1, h2, h3, p {
-
-    }
 
     hr {
         width: 6rem;
@@ -45,7 +45,7 @@ redirect_from:
     }
 
     ul {
-        padding: 0
+        padding-left: 0
     }
 
     .imprint {
@@ -64,7 +64,7 @@ redirect_from:
         opacity: .5;
     }
 
-    .wrapper {
+    .container {
         max-width: 700px;
         margin: 0 auto;
         padding: 0 1rem
@@ -74,13 +74,16 @@ redirect_from:
         display: flex;
         justify-content: center;
     }
+    .btn {
+        border-radius: 0;
+    }
     .hero-button {
+        --bs-btn-hover-bg: #555;
         background-color: #333;
-        font-size: 1.5rem;
-        padding: .75rem 1.5rem;
+        --bs-btn-hover-color: white;
+        --bs-btn-hover-border-color: transparent;
         color: white;
         text-decoration: none;
-        margin: 0 auto;
     }
 
     dt {
@@ -101,10 +104,6 @@ redirect_from:
     #hero {
         padding: 2rem 0;
         margin-bottom: 0;
-    }
-
-    #hero .wrapper {
-        /*max-height: 80vh;*/
     }
 
     #hero .date {
@@ -154,15 +153,6 @@ redirect_from:
         }
     }
 
-    @keyframes pulse {
-        from {
-            opacity: .6;
-        }
-        to {
-            opacity: .4;
-        }
-    }
-
     .gradient-swipe {
         animation: sunrise 30s linear forwards;
     }
@@ -207,10 +197,10 @@ redirect_from:
     }
 
 
-    h2, h3, .hero-button {
+    h1, h2, h3, .hero-button {
         font-family: "Avenir Next", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
         font-weight: 700;
-        font-size: 30px;
+
     }
 
     .hero-button {
@@ -230,30 +220,51 @@ redirect_from:
         font-family: 'Yrsa', serif;
     }
 
-    blockquote {
+    .blockquote {
         font-style: italic;
-        padding: 0;
-        margin: 0;
-
+        font-size: 1.5rem;
     }
 
     footer {
         margin: 6rem 0 6rem 0;
     }
+
+    #epilogue {
+        margin-top: 4rem;
+        padding-top: 4rem;
+    }
+
+    figure {
+        max-width: 1200px;
+        margin: 0 auto 2rem auto;
+    }
+
+    figure img {
+        width: 100%;
+    }
+
+    #epilogue .container {
+        margin-bottom: 2rem;
+    }
+
+    #epilogue h1 {
+        margin-bottom: 2rem;
+    }
+
 </style>
 <body>
 
 <section id="hero" class="gradient-swipe">
-    <div class="wrapper">
+    <div class="container d-flex flex-column gap-3">
         <p class="imprint"><a href="/">Race Condition Running</a></p>
         <header>
-            <h1>
-                <div id="logo">
-                    <img id="overlay" src="/img/dhm-22-inner.webp" width="700px"
-                         alt="Line art of a fountain surrounding by text Drumheller Half Marathon 2022"/>
-                    <img id="underlay" class="rotating" src="/img/dhm-22-outer.webp" width="700px"/>
-                </div>
-            </h1>
+
+            <div id="logo">
+                <img id="overlay" src="/img/dhm22/dhm-22-inner.webp" width="700px"
+                     alt="Line art of a fountain surrounding by text Drumheller Half Marathon 2022"/>
+                <img id="underlay" class="rotating" src="/img/dhm22/dhm-22-outer.webp" width="700px" alt=""/>
+            </div>
+
 
         </header>
         <p class="date">7:30AM Saturday, May 21st</p>
@@ -262,27 +273,31 @@ redirect_from:
 </section>
 
 <section id="overview">
-    <div class="wrapper">
+    <div class="container">
         <p>Join us for 110 fast, flat laps around Drumheller Fountain. Stick around after to enjoy food and music at the
-            <a href="https://udistrictstreetfair.org">U-District StreetFair</a>.
+            <a href="https://udistrictstreetfair.org">U-District Street Fair</a>.
         </p>
         <div class="call-wrapper">
-            <a class="hero-button" href="https://forms.gle/PyxEtHKWQyCkDew17">Sign Up</a>
+            <!--a class="btn btn-lg hero-button" href="https://forms.gle/PyxEtHKWQyCkDew17">Sign Up</a-->
+            <a class="btn btn-lg hero-button" href="#epilogue">Read Epilogue</a>
         </div>
 
     </div>
 </section>
 
 <section>
-    <div class="wrapper">
+    <div class="container">
+        <div class="alert alert-dark" role="alert">
+            This event took place in 2022. Looking for <a href="/dhm">a more recent Drumheller Half</a>?
+        </div>
         <h2>Course Map</h2>
         <p>We will run on the concrete slab that encircles Drumheller Fountain. While campus foot traffic is reduced on weekends, you can still expect to navigate around fountain-admirers, passers-by and cyclists. The fountain will be on starting at 8. There is no shade.</p>
-        <img src="/img/dhm-course-map.svg" />
+        <img src="/img/dhm22/dhm-course-map.svg" />
     </div>
 </section>
 
 <section>
-    <div class="wrapper">
+    <div class="container">
         <h2>FAQ</h2>
         <dl>
             <dt>Who can participate?</dt>
@@ -301,9 +316,10 @@ redirect_from:
 
 <hr/>
 
-<section id="history" class="">
-    <div class="wrapper">
-        <blockquote>Rainier Vista, partly framed by Johnson and Mary Gates halls, is the most sacred space on campus.
+<section id="history">
+    <div class="container">
+        <figure>
+        <blockquote class="blockquote">Rainier Vista, partly framed by Johnson and Mary Gates halls, is the most sacred space on campus.
             The vista was first conceived as a centerpiece of the campus plan by the Olmsted Brothers in 1906, when the
             elusive mountain revealed itself during the firm's visit to Seattle to develop a plan for the Alaska Yukon
             Pacific Exposition. Rainier Vista is the most dramatic borrowing from nature on any campus in the United
@@ -313,9 +329,34 @@ redirect_from:
             vaporous curtains we may gaze upon Mt. Rainier, a three-mile…flow…of rock and ice. A spectacle of unending
             fascination!&#8221;
         </blockquote>
-        <p>Norman J. Johnston, <cite>The Fountain and the Mountain</cite></p>
+        <figcaption class="blockquote-footer">Norman J. Johnston, <cite title="The Fountain and the Mountain">The Fountain and the Mountain</cite>
+        </figcaption>
+        </figure>
 
     </div>
+</section>
+
+<hr/>
+
+<section id="epilogue">
+    <div class="container">
+        <h1>Epilogue</h1>
+        <p>Eleven runners convened at the fountain for the first ever Drumheller Half Marathon. Counting laps was manageable as a group, and it didn't seem to cause any great difficulty even as we split up for the last few kilometers. Thomas W. sped away first, setting the course record at 2:02:05.</p>
+        <p><i>Nick Walker</i></p>
+
+    </div>
+    <figure>
+        <a href="/img/dhm22/start_selfie.webp">
+            <img src="/img/dhm22/start_selfie.webp" alt="A selfie of nine smiling runners standing in front of Drumheller fountain"/>
+        </a>
+        <figcaption class="p-3">Start line selfie. Not pictured, a couple runners that would join us part way through.</figcaption>
+    </figure>
+    <figure>
+        <a href="/img/dhm22/fountain-mountain-runners.webp">
+            <img src="/img/dhm22/fountain-mountain-runners.webp" alt="Drumheller Fountain gushing in front of Rainier Vista trees, with Mount Rainier visible in the distance"/>
+        </a>
+        <figcaption class="p-3">The fountain, the mountain and the runners.</figcaption>
+    </figure>
 </section>
 
 
