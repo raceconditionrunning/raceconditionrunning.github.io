@@ -1,0 +1,406 @@
+---
+permalink: drumheller-half-23/
+redirect_from:
+- /dhm/
+- /drumheller-half/
+- /dhm23/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drumheller Half Marathon 2023</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="13.1 miles around Drumheller Fountain, May 20th, 2023.">
+    <meta property="og:image" content="https://raceconditionrunning.com/img/dhm23/dhm-23-og.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://raceconditionrunning.com/drumheller-half-23/">
+    <meta property="og:title" content="Drumheller Half Marathon 2023">
+    <meta property="og:description" content="Experience the fountain and the mountain. May 20th, 2023.">
+    <link href="/img/dhm23/dhm-favicon.png" rel="icon" type="image/png"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha256-wLz3iY/cO4e6vKZ4zRmo4+9XDpMcgKOvv/zEU3OMlRo=" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Yrsa:ital,wght@0,300;0,700;1,300&family=Prompt:wght@700&display=swap"
+          rel="stylesheet">
+
+</head>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Yrsa', serif;
+        font-size: 24px;
+        line-height: 1.5;
+        background-color: #010101;
+        color:#eee;
+    }
+
+    a {
+        color: #ddd;
+        --bs-link-hover-color: #bbb;
+    }
+
+    hr {
+        width: 6rem;
+        margin: 4rem auto;
+        display: block;
+        border: 1px solid #DDD;
+    }
+
+    ul {
+        padding-left: 0
+    }
+
+    .imprint {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-weight: 300;
+        filter: invert();
+    }
+
+    .imprint a {
+        text-decoration: none;
+        color: #999;
+    }
+
+    .imprint img {
+        width: 100px;
+        opacity: .5;
+    }
+
+    .container {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 0 1rem
+    }
+
+    .call-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+    .btn {
+        border-radius: 0;
+    }
+    .hero-button {
+        --bs-btn-hover-bg: #eee;
+        background-color: #ccc;
+        --bs-btn-hover-color: black;
+        --bs-btn-hover-border-color: transparent;
+        color: black;
+        text-decoration: none;
+        opacity: 1;
+    }
+
+    dt {
+        font-weight: bold;
+    }
+
+    dd {
+        margin-left: 0;
+        margin-bottom: 1rem
+    }
+
+    header {
+        margin-bottom: 1rem;
+    }
+
+    header h1 {
+        margin: 0;
+        overflow: hidden;
+    }
+
+    #hero {
+        padding: 2rem 0;
+        margin-bottom: 0;
+        position: relative;
+
+    }
+
+    #hero img {
+        display: block;
+        margin: 0 auto;
+    }
+
+    #hero .date {
+        font-weight: 100;
+        font-size: 24px;
+        text-align: center;
+    }
+
+    #hero .imprint, #hero .date {
+        opacity: 0;
+        animation: fade-in 1s ease forwards;
+        animation-delay: 3s;
+    }
+
+    #hero .background-container {
+        display: inline-block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+    }
+    .background-container canvas {
+        width: 100%;
+        height: 100%;
+    }
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    #logo {
+        position: relative;
+        max-width: 100%;
+        background: radial-gradient(closest-side, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0));
+        pointer-events: none;
+    }
+
+    #logo img {
+    }
+
+    #underlay-cw, #underlay-ccw {
+        position: absolute;
+        width: 180%;
+        left: -40%;
+        top: -35%;
+        filter: blur(.5px); /* Lessen moire, aliasing */
+        z-index: -1;
+
+    }
+
+    @keyframes rotating {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(-360deg);
+        }
+    }
+
+    .rotating {
+        animation: fade-in 10s ease, rotating 600s linear infinite;
+
+    }
+    .rotating.ccw {
+        animation: fade-in 10s ease, rotating 600s reverse linear infinite;
+    }
+
+    section {
+        margin-bottom: 4rem;
+    }
+
+
+    h1, h2, h3, .hero-button {
+        font-family: "Avenir Next", "Prompt", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-weight: 700;
+
+    }
+
+    .hero-button {
+        font-weight: 600;
+    }
+
+    #overview {
+        max-width: 500px;
+        margin: 0 auto;
+        text-align: justify;
+        margin-bottom: 4rem;
+    }
+
+    #course-map {
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    #history, #overview {
+        font-weight: 100;
+
+        font-family: 'Yrsa', serif;
+    }
+
+    .blockquote {
+        font-style: italic;
+        font-size: 1.5rem;
+    }
+
+    .blockquote-footer {
+        color: #888;
+    }
+    footer {
+        margin: 6rem 0 6rem 0;
+    }
+
+    #epilogue {
+        margin-top: 4rem;
+        padding-top: 4rem;
+    }
+
+    figure {
+        max-width: 1200px;
+        margin: 0 auto 2rem auto;
+    }
+
+    figure img {
+        width: 100%;
+    }
+
+    #epilogue .container {
+        margin-bottom: 2rem;
+    }
+
+    #epilogue h1 {
+        margin-bottom: 2rem;
+    }
+
+    .cert-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+
+    .usatf-certificate {
+        font-size: 1rem;
+        font-family: "Avenir Next", "Prompt", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        border: 2px solid #aaa;
+        border-radius: 1rem;
+        display: inline-flex;
+        gap: 1rem;
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: 0;
+        padding: 1rem 1rem;
+        text-decoration: none;
+    }
+
+    .usatf-certificate:hover img {
+        opacity: .8;
+    }
+
+    .usatf-certificate img {
+        height: 6rem
+    }
+    .usatf-certificate .details {
+        align-self: center;
+    }
+    .usatf-certificate,
+    .usatf-certificate h2,
+    .usatf-certificate p {
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+</style>
+<body>
+
+<section id="hero">
+    <div class="container d-flex flex-column gap-3">
+        <p class="imprint"><a href="/">Race Condition Running</a></p>
+        <header>
+
+            <div id="logo">
+                <img id="overlay" src="/img/dhm23/dhm23.svg"
+                     alt="Line art of a fountain surrounded by text Drumheller Half Marathon 2023"/>
+                <img id="underlay-cw" class="rotating" src="/img/dhm23/rose.webp" alt=""/>
+                <img id="underlay-ccw" class="rotating ccw" src="/img/dhm23/rose.webp" alt=""/>
+            </div>
+
+
+        </header>
+        <p class="date">7:50AM Saturday, May 20th</p>
+
+    </div>
+    <div class="background-container">
+        <canvas id="no-background-animation"></canvas>
+    </div>
+</section>
+
+<section id="overview">
+    <div class="container">
+        <p>Join us for 110 laps around Drumheller Fountain. Stick around after to enjoy food and music at the
+            <a href="https://udistrictstreetfair.org">U-District Street Fair</a>.
+        </p>
+        <div class="call-wrapper">
+            <a class="btn btn-lg hero-button" href="https://forms.gle/tk9xDDHgaXMzLMDC8">Sign Up</a>
+            <!--<a class="btn btn-lg hero-button" href="#epilogue">Read Epilogue</a>-->
+        </div>
+
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <h2>Course Map</h2>
+        <p>The course begins with a short segment down the upper vista, followed by 110 laps around Drumheller Fountain. Runners must enter the first loop from the east of the finish line if they are going to run counterclockwise, and from the west otherwise. Runners can change loop direction at any time, but must do so by rounding the marker placed at the north end of the finish line.</p>
+        <p>While campus foot traffic is reduced on weekends, expect to navigate around fountain-admirers, passers-by and cyclists. The fountain will start up at 8. There is no shade.</p>
+        <img id="course-map" src="/img/dhm23/dhm-course-map.svg" alt="A map of the course showing the start line 120.50m north of the fountain, followed by 110 laps of the 190.70m fountain loop.">
+        <div class="cert-wrapper">
+            <a class="usatf-certificate" href="https://certifiedroadraces.com/certificate/?type=m&id=2487">
+                <img src="/img/dhm23/usatf-certified-course-white.svg" alt=""/>
+                <div class="details">
+                    <h2>USATF Certificate</h2>
+                    <span>WA23019RMB</span>
+                    <p><b>Effective</b>: 4/15/23<br/>
+                    <b>Through</b>: 12/31/33</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <h2>FAQ</h2>
+        <dl>
+            <dt>Who can participate?</dt>
+            <dd>Anyone in the CSE community.</dd>
+            <dt>How will you keep track of distance?</dt>
+            <dd><a href="/dhm22">Last year</a> we ran as a group and counted laps out loud. GPS will clip the curve, so don't rely on it for more than a couple laps at a time.</dd>
+            <dt>Which direction do we run?</dt>
+            <dd>You should alternate directions during the run to balance the strain of the curve between your legs. Change directions only at the end of a lap, and only by rounding the finish line marker.</dd>
+            <dt>Do I have to run the whole thing?</dt>
+            <dd>No. You're welcome to come join for a few laps.</dd>
+            <dt>How fast do I need to run?</dt>
+            <dd>You should be able to complete your chosen distance in under 2.5 hours.</dd>
+        </dl>
+    </div>
+</section>
+
+<hr/>
+
+<section id="history">
+    <div class="container">
+        <figure>
+        <blockquote class="blockquote">Rainier Vista, partly framed by Johnson and Mary Gates halls, is the most sacred space on campus.
+            The vista was first conceived as a centerpiece of the campus plan by the Olmsted Brothers in 1906, when the
+            elusive mountain revealed itself during the firm's visit to Seattle to develop a plan for the Alaska Yukon
+            Pacific Exposition. Rainier Vista is the most dramatic borrowing from nature on any campus in the United
+            States, with Mount Rainier as its climax, and with both architecture and landscape reinforcing its thrust
+            past a minor view of the city toward the mountain beyond. As Edmond Meany put it, &#8220;No campus in all the
+            world can equal Rainier Vista. In those rare moments when Mother Nature in kindly mood pulls aside the
+            vaporous curtains we may gaze upon Mt. Rainier, a three-mile…flow…of rock and ice. A spectacle of unending
+            fascination!&#8221;
+        </blockquote>
+        <figcaption class="blockquote-footer">Norman J. Johnston, <cite title="The Fountain and the Mountain">The Fountain and the Mountain</cite>
+        </figcaption>
+        </figure>
+
+    </div>
+</section>
+
+
+<footer>
+    <p class="imprint"><a href="/"><img src="/img/happy-toast.svg" alt="A happy piece of toast who is running"/></a></p>
+</footer>
+
+</body>
+</html>

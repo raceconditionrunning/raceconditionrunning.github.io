@@ -45,10 +45,11 @@
     <li class="nav-item"><a href="/lore/"{% if page.url == "/lore/" %} class="active"{% endif %}>Lore</a></li>
     <li class="nav-item dropdown dropdown-center"><a href="#" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
       <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
-          <li><a class="dropdown-item" href="/light-rail-relay-22/">Light Rail Relay 22</a></li>
-          <li><a class="dropdown-item" href="/drumheller-half/">Drumheller Half</a></li>
-          <li><a class="dropdown-item" href="/light-rail-relay-21/">Light Rail Relay 21</a></li>
-          <li><a class="dropdown-item" href="/quarantine-relay/" {% if page.url == "/quarantine-relay/" %} class="active"{% endif %}>Quarantine Relay</a></li>
+          <li><a class="dropdown-item" href="/drumheller-half-23/">Drumheller Half '23</a></li>
+          <li><a class="dropdown-item" href="/light-rail-relay-22/">Light Rail Relay '22</a></li>
+          <li><a class="dropdown-item" href="/drumheller-half-22/">Drumheller Half '22</a></li>
+          <li><a class="dropdown-item " href="/light-rail-relay-21/">Light Rail Relay '21</a></li>
+          <li><a class="dropdown-item {% if page.url == "/quarantine-relay/" %} active{% endif %}" href="/quarantine-relay/">Quarantine Relay</a></li>
       </ul>
     </li>
     </ul>
