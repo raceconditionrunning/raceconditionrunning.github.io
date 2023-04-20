@@ -1,38 +1,21 @@
 ---
 permalink: lore/
 layout: default
-schedules:
-  - 14-autumn
-  - 15-winter
-  - 15-spring
-  - 15-autumn
-  - 16-winter
-  - 16-spring
-  - 16-summer
-  - 16-autumn
-  - 17-winter
-  - 17-spring
-  - 17-autumn
-  - 18-winter
-  - 18-spring
-  - 18-autumn
-  - 19-winter
-  - 19-spring
-  - 19-summer
-  - 19-autumn
-  - 20-winter
-  - 20-spring
-  - 20-summer
-  - 21-spring
-  - 21-summer
-  - 21-autumn
-  - 22-winter
 ---
 
-{% for quarter_schedule_key in page.schedules reversed %}
-
+{% comment %}We want the schedules to appear in the correct quarter order, which Jekyll can't do unless we
+     mark the ordering into the schedule files{% endcomment %}
+{% assign current_year =  site.time | date: '%y' %}
+{% for year in (14..current_year) reversed %}
+  {% assign quarters = "winter, spring, summer, autumn" | split: ", " %}
+    {% for quarter in quarters reversed %}
+      {% assign quarter_schedule_key = year | append: "-" | append: quarter %}
+      {% if site.data.schedules[quarter_schedule_key] == nil %}
+        {% continue %}
+      {% endif %}
+      {% assign quarter_schedule = site.data.schedules[quarter_schedule_key]%}
 <h2>{{quarter_schedule_key | split: "-" | reverse | join: " " | capitalize}}</h2>
-{% assign quarter_schedule = site.data[quarter_schedule_key] | reverse %}
-{% include schedule_table.html schedule=quarter_schedule %}
-
+      {% assign quarter_schedule = site.data.schedules[quarter_schedule_key] | reverse %}
+      {% include schedule_table.html schedule=quarter_schedule show_header=forloop.first%}
+    {% endfor %}
 {% endfor %}
