@@ -1,5 +1,14 @@
 <div class=" table-responsive">
 <table class='schedule-table table'>
+    {% if include.show_header %}
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th class="text-end">Time</th>
+        <th>Route (miles)</th>
+    </tr>
+    </thead>
+    {% endif %}
     {% for run in include.schedule %}
     {% if run.cancelled %}
     {% assign cancelled-class = "cancelled" %}
@@ -19,7 +28,7 @@
         {% else %}
         <td class="date"></td>
         {% endif %}
-        <td class="time {{part-cancelled-class}}">{{ plan.time }}</td>
+        <td class="time {{part-cancelled-class}} text-end">{{ plan.time }}</td>
         {% if plan.route.name %}
         {% assign route = plan.route %}
         {% else if plan.route_id %}

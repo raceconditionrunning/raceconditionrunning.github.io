@@ -51,7 +51,6 @@ dd {
   width: 60px;
 }
 .time {
-  text-align: right;
   padding-right: 10px;
 }
 .past, .past a, .past a:visited {
@@ -77,8 +76,14 @@ tbody tr:last-child td {
   max-height: 200px;
 }
 
-tr:has(+ tr.schedule-highlight-row) td {
+.schedule-table tr > td:first-of-type {
+  padding: .5rem 0;
+}
+
+tr:has(+ tr.schedule-highlight-row) td,
+tr:has(+ tr) td {
   border-bottom: none;
+  padding-bottom: .25rem;
 }
 
 .column {
