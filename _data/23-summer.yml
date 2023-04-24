@@ -1,0 +1,80 @@
+- date: "2023-06-17"
+  plan:
+    - time: "9:00"
+      route_id: cap-hill-station-i90-ob
+
+#- date: "2023-06-24"
+#  plan:
+#    - time: "9:00"
+#      route_id: TBD
+
+#- date: "2023-07-01"
+#  plan:
+#    - time: "9:00"
+#      route_id: TBD
+
+#- date: "2023-07-08"
+#  plan:
+#    - time: "9:00"
+#      route_id: TBD
+
+- date: "2023-07-14"
+  plan:
+    - time: "8:00"
+      route:
+        name: Ragnar Northwest Passage 2023
+        map: https://www.runragnar.com/event-detail/relay/northwestpassage#course
+        dist: 200
+
+#- date: "2023-07-22"
+#  plan:
+#    - time: "9:00"
+#      route_id: TBD
+
+- date: "2023-07-29"
+  plan:
+    - time: "6:30"
+      route:
+        name: Jack and Jill's Downhill (Half) Marathon
+        map: http://jackjillmarathon.com/the-half-marathon
+        dist: 13.1
+
+#- date: "2023-08-05"
+#  plan:
+#    - time: "9:00"
+#      route_id: TBD
+
+#- date: "2023-08-12"
+#  plan:
+#    - time: "9:00"
+#      route_id: TBD
+
+#- date: "2023-08-19"
+#  plan:
+#    - time: "9:00"
+#      route_id: TBD
+
+#- date: "2023-08-26"
+#  plan:
+#    - time: "9:00"
+#      route_id: TBD
+
+#- date: "2023-09-02"
+#  plan:
+#    - time: "9:00"
+#      route_id: TBD
+
+#- date: "2023-09-09"
+#  plan:
+#    - time: "9:00"
+#      route_id: TBD
+
+#- date: "2023-09-16"
+#  plan:
+#    - time: "9:00"
+#      route_id: TBD
+
+#- date: "2023-09-23"
+#  plan:
+#    - time: "9:00"
+#      route_id: TBD
