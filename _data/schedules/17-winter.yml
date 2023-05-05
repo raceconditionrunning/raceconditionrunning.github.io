@@ -42,7 +42,7 @@
       route:
         name: "Lord Hill Half Marathon"
         dist: 13.10
-        map: "http://www.evergreentrailruns.com/lord-hill-upcoming#half"
+        map: "https://www.webscorer.com/race?raceid=92994"
 - date: '2017-02-25'
   plan:
     - time: '7:30'

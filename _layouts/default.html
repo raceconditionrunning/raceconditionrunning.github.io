@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Race Condition Running</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha256-wLz3iY/cO4e6vKZ4zRmo4+9XDpMcgKOvv/zEU3OMlRo=" crossorigin="anonymous">
-  <link rel='stylesheet' type='text/css' href='/css/style.css'>
+  <link rel='stylesheet' type='text/css' href='{{ site.baseurl }}/css/style.css'>
 
   <!-- favicon -->
   <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
@@ -29,30 +29,31 @@
 </head>
 <body>
 
-<div class="container">
-<div style='float: right;'>
-  <img src='/img/rcc-logo.png' width='150' alt='RCC Logo'>
-</div>
-
-<h1>Race Condition Running</h1>
-</div>
+<header class="container">
+    <a href="/" class="text-dark">
+        <img src='{{ site.baseurl }}/img/rcc-logo.png' width='150' alt='RCC Logo' class="float-end">
+        <h1>Race Condition Running</h1>
+    </a>
+</header>
 
 <nav class="navbar navbar-expand-sm mb-4" role="navigation">
-    <ul class="navbar-nav justify-content-between">
-    <li class="nav-item"><a href="/"{% if page.url == "/" %} class="active"{% endif %}>Schedule</a></li>
-    <li class="nav-item"><a href="/routes/"{% if page.url == "/routes/" %} class="active"{% endif %}>Routes</a></li>
-    <li class="nav-item"><a href="/brunch-reviews/"{% if page.url == "/brunch-reviews/" %} class="active"{% endif %}>Brunch Reviews</a></li>
-    <li class="nav-item"><a href="/lore/"{% if page.url == "/lore/" %} class="active"{% endif %}>Lore</a></li>
-    <li class="nav-item dropdown dropdown-center"><a href="#" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
-      <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
-          <li><a class="dropdown-item" href="/drumheller-half-23/">Drumheller Half '23</a></li>
-          <li><a class="dropdown-item" href="/light-rail-relay-22/">Light Rail Relay '22</a></li>
-          <li><a class="dropdown-item" href="/drumheller-half-22/">Drumheller Half '22</a></li>
-          <li><a class="dropdown-item " href="/light-rail-relay-21/">Light Rail Relay '21</a></li>
-          <li><a class="dropdown-item {% if page.url == "/quarantine-relay/" %} active{% endif %}" href="/quarantine-relay/">Quarantine Relay</a></li>
-      </ul>
-    </li>
-    </ul>
+    <div class="container-fluid">
+        <ul class="navbar-nav justify-content-between">
+            <li class="nav-item"><a href="{{ site.baseurl }}/"{% if page.url == "/" %} class="active"{% endif %}>Schedule</a></li>
+            <li class="nav-item"><a href="{{ site.baseurl }}/routes/"{% if page.url == "/routes/" %} class="active"{% endif %}>Routes</a></li>
+            <li class="nav-item"><a href="{{ site.baseurl }}/brunch-reviews/"{% if page.url == "/brunch-reviews/" %} class="active"{% endif %}>Brunch Reviews</a></li>
+            <li class="nav-item"><a href="{{ site.baseurl }}/lore/"{% if page.url == "/lore/" %} class="active"{% endif %}>Lore</a></li>
+            <li class="nav-item dropdown dropdown-center"><a href="#" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
+              <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
+                  <li><a class="dropdown-item" href="{{ site.baseurl }}/drumheller-half-23/">Drumheller Half '23</a></li>
+                  <li><a class="dropdown-item" href="{{ site.baseurl }}/light-rail-relay-22/">Light Rail Relay '22</a></li>
+                  <li><a class="dropdown-item" href="{{ site.baseurl }}/drumheller-half-22/">Drumheller Half '22</a></li>
+                  <li><a class="dropdown-item " href="{{ site.baseurl }}/light-rail-relay-21/">Light Rail Relay '21</a></li>
+                  <li><a class="dropdown-item {% if page.url == "/quarantine-relay/" %} active{% endif %}" href="/quarantine-relay/">Quarantine Relay</a></li>
+              </ul>
+            </li>
+        </ul>
+    </div>
 </nav>
 
 <div class="container">

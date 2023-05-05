@@ -60,7 +60,7 @@
       route:
         name: "Seattle Half Marathon 2016"
         dist: 13.10
-        map: "maps/seattle-half-17.png"
+        map: "/maps/seattle-half-17.png"
 
 - date: '2016-12-03'
   plan:

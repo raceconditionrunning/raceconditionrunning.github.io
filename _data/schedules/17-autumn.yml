@@ -59,7 +59,7 @@
       route:
         name: "Seattle Half Marathon 2017"
         dist: 13.10
-        map: "maps/seattle-half-17.png"
+        map: "/maps/seattle-half-17.png"
 - date: '2017-12-02'
   plan:
     - time: '8:30'

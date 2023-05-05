@@ -27,10 +27,10 @@ Both wet and dry, the burritos here are quite good — good enough to satisfy bo
 
 <div class="row">
   <div class="column">
-    <img src="/img/brunch-reviews/el-chupacabra/dry-burrito.jpg" alt="Dry Burrito">
+    <img src="{{ site.baseurl }}/img/brunch-reviews/el-chupacabra/dry-burrito.jpg" alt="Dry Burrito">
   </div>
   <div class="column">
-    <img src="/img/brunch-reviews/el-chupacabra/wet-burrito.jpg" alt="Wet Burrito">
+    <img src="{{ site.baseurl }}/img/brunch-reviews/el-chupacabra/wet-burrito.jpg" alt="Wet Burrito">
   </div>
 </div>
 
@@ -50,5 +50,5 @@ Also, bean dip is inferior to guacamole, and don't let anyone tell you otherwise
 
 
 [elchweb]: https://www.elchupacabraseattle.com/
-[d-to-a-route]: /img/brunch-reviews/el-chupacabra/discovery-to-alki-route.png
-[elch]: /img/brunch-reviews/el-chupacabra/el-chupacabra.jpg
+[d-to-a-route]: {{ site.baseurl }}/img/brunch-reviews/el-chupacabra/discovery-to-alki-route.png
+[elch]: {{ site.baseurl }}/img/brunch-reviews/el-chupacabra/el-chupacabra.jpg

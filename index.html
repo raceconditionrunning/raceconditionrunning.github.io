@@ -6,9 +6,9 @@ layout: default
 <h2>
   Schedule
   <!-- add a query param on ics link to bypass cache for testing (e.g. ?foo) -->
-  <a target="_blank"
-     href="http://www.google.com/calendar/render?cid=http://raceconditionrunning.com/rcc.ics">
-    <img src='img/cal-icon.png' height='25px'>
+  <a class="btn btn-outline-primary float-end" target="_blank"
+     href="http://www.google.com/calendar/render?cid={{ site.url }}/rcc.ics">
+    Subscribe 📆
   </a>
 </h2>
 
@@ -16,7 +16,7 @@ layout: default
 <p>
   If you are having trouble accessing the calendar, try manually by adding
   the following url to your calendar application:
-  <a href = "http://raceconditionrunning.com/rcc.ics">http://raceconditionrunning.com/rcc.ics</a>
+  <a href="{{ site.baseurl }}/rcc.ics">{{ site.url }}/rcc.ics</a>
 </p>
 <p>
   Please let us know on the
@@ -40,24 +40,30 @@ layout: default
   <dd>Meet in CSE atrium at 4:40 pm 5:30 pm and do 6-8 miles. Run starts at 4:45 pm sharp!</dd>
 </dl>
 
+
+<div class="float-sm-end m-sm-2">
+  <iframe allowtransparency frameborder='0' height='160' scrolling='no' src='https://www.strava.com/clubs/raceconditionrunning/latest-rides/9992908d136b0e840a8537bb0b56b823a1d2f83c?show_rides=false' width='300'></iframe>
+</div>
+
+<section>
 <h2>
   Strava
   <a target="_blank"
      href="https://www.strava.com/clubs/raceconditionrunning">
-    <img src='img/strava-logo.png' height='25px'>
+    <img src='{{ site.baseurl }}/img/strava-logo.png' height='25px'>
   </a>
 </h2>
+</section>
+
 <p>
   We have a <a href="https://www.strava.com/clubs/raceconditionrunning">Strava
   club</a>! Join and help us increase our weekly club miles!
 </p>
-<div style='text-align: center;'>
-  <iframe allowtransparency frameborder='0' height='160' scrolling='no' src='https://www.strava.com/clubs/451449/latest-rides/9992908d136b0e840a8537bb0b56b823a1d2f83c?show_rides=false' width='300'></iframe>
-</div>
 
-<h2>Weekend Haiku</h2>
 
-<p style='font-style: italic; line-height: 25px; margin-left: 20px;'>
+<h2 style="clear:both">Weekend Haiku</h2>
+
+<p class="ms-sm-4 fst-italic">
   meet at run start point<br>
   chit chat conversation pace<br>
   brunch nearby after

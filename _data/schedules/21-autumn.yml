@@ -72,7 +72,7 @@
     - time: "7:00"
       route:
         name: Seattle Half Marathon 2021
-        map: https://www.seattlemarathon.org/marathon
+        map: https://web.archive.org/web/20211115194137/https://www.seattlemarathon.org/marathon
         dist: 13.1
       cancelled: "We don't like the route"
     - time: "8:30"

@@ -59,5 +59,5 @@ Music: on point
 Chill Factor: *Laissez le bon temps rouler*
 
 
-[endolynejoes]: http://www.chowfoods.com/endolyne-joes
-[ggtows]: /img/brunch-reviews/190629-endolyne-joes/golden-gardens-to-west-seattle.png
+[endolynejoes]: https://endolynejoes.com/
+[ggtows]: {{ site.baseurl }}/img/brunch-reviews/190629-endolyne-joes/golden-gardens-to-west-seattle.png

@@ -20,7 +20,7 @@ effects of quarantine life in the first months A.C. (after COVID-19).
 
 It would have been around this time of the year that one of RCR’s main events
 --- the Ragnar Relay --- takes place. Last year, we ran the [Ragnar Northwest
-Passage Relay](/img/ragnar-team-photo.jpg) and had a blast! We were really
+Passage Relay]({{ site.baseurl }}/img/ragnar-team-photo-2019.jpg) and had a blast! We were really
 looking forward to reliving this kind of experience, which essentially was a
 group camping/road trip. Unfortunately,
 [2020](https://twitter.com/NSLCpunk/status/1275822899279073280)
@@ -83,7 +83,7 @@ Final details:
 <li> Weather: perfect! It drizzled a bit in the morning but the sun came out during most of the day.</li>
 <li> 
   Giant collage of handoff selfies? Check.
-  <img src="/img/quarantine-relay-collage-small.png" style="max-width: 100%">
+  <img src="{{ site.baseurl }}/img/quarantine-relay-collage-small.png" style="max-width: 100%">
 </li>
 <li>
   Huge map with even more selfies? Also check.
