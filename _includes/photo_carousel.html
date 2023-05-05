@@ -1,13 +1,12 @@
-<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.0.9/dist/js/splide.min.js" integrity="sha256-O2NSUQPlwXGZdxFbM6btTnSdHsw8BcCcpJJWq6pwrsU=" crossorigin="anonymous"></script>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.0.9/dist/css/splide.min.css" integrity="sha256-vnIcA0IxxVO/dQ6l9ZAl6i8HhSMouOB9zG0R+HsQaA4=" crossorigin="anonymous">
+<script src=" https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+<link href=" https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
 
 <div id="image-slider" class="splide">
   <div class="splide__track">
     <ul class="splide__list">
     {% for photo_url in site.data.photo-urls %}
     <li class="splide__slide">
-      <img data-splide-lazy="{{ photo_url }}" />
+      <img data-splide-lazy="{{ photo_url }}" src="#"/>
     </li>
     {% endfor %}
     </ul>

@@ -74,10 +74,16 @@ tbody tr:last-child td {
 
 .schedule-table img {
   max-height: 200px;
+  max-width: 100%;
 }
 
 .schedule-table tr > td:first-of-type {
   padding: .5rem 0;
+}
+
+td {
+  white-space: normal !important;
+  word-wrap: break-word;
 }
 
 tr:has(+ tr.schedule-highlight-row) td,
@@ -98,18 +104,40 @@ tr:has(+ tr) td {
   display: table;
 }
 
+:target {
+  animation: target-fade 3s 1;
+}
+
+@keyframes target-fade {
+  0% { background-color: rgba(255, 255, 0, 0.3); }
+  100% { background-color: rgba(255,255,0,0); }
+}
+
+header {
+  overflow: auto;
+}
+
+header img {
+  height: 4rem;
+}
+
 nav {
-  text-align: center;
   border: 1px solid lightgray;
   border-width: 1px 0;
 
   .navbar-nav {
     flex: 1;
+    gap: .5rem;
+    @media (min-width: 768px) {
+      gap: 1rem;
+    }
   }
   li {
     text-align: center;
-    padding: .5rem;
-    font-size: 1.5rem;
+    font-size: 1.125rem;
+    @media (min-width: 768px) {
+      font-size: 1.5rem;
+    }
     a {
       color: black;
     }
@@ -135,12 +163,16 @@ nav {
   border-width: 2px;
 }
 
+#image-slider {
+  background-color: #f6f6f6
+}
+
 #image-slider .splide__track{
-  height: 400px;
+  max-height: 70vh;
 }
 
 #image-slider .splide__slide {
-  height: 400px;
+  max-height: 70vh;
 }
 
 .splide__slide img {
@@ -148,3 +180,4 @@ nav {
   height: 100%;
   object-fit: contain;
 }
+

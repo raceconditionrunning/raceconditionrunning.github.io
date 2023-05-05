@@ -6,7 +6,10 @@ layout: default
 {% comment %}We want the schedules to appear in the correct quarter order, which Jekyll can't do unless we
      mark the ordering into the schedule files{% endcomment %}
 {% assign current_year =  site.time | date: '%y' %}
+
+
 {% for year in (14..current_year) reversed %}
+{% assign needs_header = true %}
   {% assign quarters = "winter, spring, summer, autumn" | split: ", " %}
     {% for quarter in quarters reversed %}
       {% assign quarter_schedule_key = year | append: "-" | append: quarter %}
@@ -14,8 +17,11 @@ layout: default
         {% continue %}
       {% endif %}
       {% assign quarter_schedule = site.data.schedules[quarter_schedule_key]%}
-<h2>{{quarter_schedule_key | split: "-" | reverse | join: " " | capitalize}}</h2>
+<h3 id="{{quarter_schedule_key}}" class="mt-2">{{quarter_schedule_key | split: "-" | reverse | join: " " | capitalize}} <a href="#{{quarter_schedule_key}}" class="text-muted float-end">#</a></h3>
       {% assign quarter_schedule = site.data.schedules[quarter_schedule_key] | reverse %}
-      {% include schedule_table.html schedule=quarter_schedule show_header=forloop.first%}
+      {% include schedule_table.html schedule=quarter_schedule show_header=needs_header%}
+      {% if needs_header %}
+      {% assign needs_header = false %}
+      {% endif %}
     {% endfor %}
 {% endfor %}

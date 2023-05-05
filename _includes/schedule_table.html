@@ -1,4 +1,4 @@
-<div class=" table-responsive">
+<div class="table-responsive">
 <table class='schedule-table table'>
     {% if include.show_header %}
     <thead>
@@ -15,7 +15,7 @@
     {% else %}
     {% assign cancelled-class = "" %}
     {% endif %}
-    <tbody class="run" data-date="{{ run.date }}">
+    <tbody class="run" data-date="{{ run.date }}" id="{{run.date | slugify}}">
     {% for plan in run.plan %}
     {% if plan.cancelled %}
     {% assign part-cancelled-class = "cancelled" %}
@@ -42,7 +42,7 @@
         {% continue %}
         {% endunless %}
         {% endif %}
-        <td nowrap class="{{part-cancelled-class}}">
+        <td class="{{part-cancelled-class}}">
             {% if route.map %}
             <a target="_blank" href="{{ route.map }}">
                 {% endif %}
