@@ -28,13 +28,18 @@ redirect_from:
 
 </head>
 <style>
+
     body {
-        margin: 0;
+        color:#eee;
+        background-color: #010101;
         font-family: 'Yrsa', serif;
+        margin: 0;
         font-size: 24px;
         line-height: 1.5;
-        background-color: #010101;
-        color:#eee;
+    }
+
+    ::selection {
+        background: #666;
     }
 
     a {
@@ -57,17 +62,28 @@ redirect_from:
         text-align: center;
         margin-bottom: 1.5rem;
         font-weight: 300;
-        filter: invert();
+        text-shadow: 0 0 10px black;
     }
 
     .imprint a {
         text-decoration: none;
         color: #999;
+        transition: .3s;
+    }
+
+    .imprint a:hover {
+        color: #bbb;
     }
 
     .imprint img {
         width: 100px;
         opacity: .5;
+        filter: invert();
+        transition: .3s;
+    }
+
+    .imprint:hover img {
+        opacity: .8;
     }
 
     .container {
@@ -80,9 +96,7 @@ redirect_from:
         display: flex;
         justify-content: center;
     }
-    .btn {
-        border-radius: 0;
-    }
+
     .hero-button {
         --bs-btn-hover-bg: #eee;
         background-color: #ccc;
@@ -103,7 +117,7 @@ redirect_from:
     }
 
     header {
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
     }
 
     header h1 {
@@ -112,7 +126,7 @@ redirect_from:
     }
 
     #hero {
-        padding: 2rem 0;
+        padding: 2rem 0 calc(min(2rem + 20vw, 14rem)) 0;
         margin-bottom: 0;
         position: relative;
         overflow-x: clip;
@@ -125,8 +139,8 @@ redirect_from:
 
     #hero .date {
         font-weight: 100;
-        font-size: 24px;
         text-align: center;
+        font-size: 24px;
     }
 
     #hero .imprint, #hero .date {
@@ -147,11 +161,7 @@ redirect_from:
     #logo {
         position: relative;
         max-width: 100%;
-        background: radial-gradient(closest-side, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0));
         pointer-events: none;
-    }
-
-    #logo img {
     }
 
     #underlay-cw, #underlay-ccw {
@@ -185,7 +195,6 @@ redirect_from:
         margin-bottom: 4rem;
     }
 
-
     h1, h2, h3, .hero-button {
         font-family: "Avenir Next", "Prompt", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
         font-weight: 700;
@@ -199,7 +208,7 @@ redirect_from:
     #overview {
         max-width: 500px;
         margin: 0 auto;
-        text-align: justify;
+        text-align: center;
         margin-bottom: 4rem;
     }
 
@@ -231,6 +240,14 @@ redirect_from:
         padding-top: 4rem;
     }
 
+    #epilogue .container {
+        margin-bottom: 2rem;
+    }
+
+    #epilogue h1 {
+        margin-bottom: 2rem;
+    }
+
     figure {
         max-width: 1200px;
         margin: 0 auto 2rem auto;
@@ -238,14 +255,6 @@ redirect_from:
 
     figure img {
         width: 100%;
-    }
-
-    #epilogue .container {
-        margin-bottom: 2rem;
-    }
-
-    #epilogue h1 {
-        margin-bottom: 2rem;
     }
 
     .cert-wrapper {
@@ -265,14 +274,23 @@ redirect_from:
         margin-bottom: 0;
         padding: 1rem 1rem;
         text-decoration: none;
+        color: #ddd;
+        transition: .3s;
+    }
+
+    .usatf-certificate:hover {
+        color: white;
+        border: 2px solid #ccc;
     }
 
     .usatf-certificate:hover img {
-        opacity: .8;
+        opacity: 1;
     }
 
     .usatf-certificate img {
-        height: 6rem
+        height: 6rem;
+        opacity: .8;
+        transition: .3s;
     }
     .usatf-certificate .details {
         align-self: center;
@@ -282,6 +300,23 @@ redirect_from:
     .usatf-certificate p {
         font-size: 1rem;
         margin-bottom: 0;
+    }
+    .table {
+        background: transparent;
+        color: white;
+        width: auto;
+        min-width: 200px;
+        font-size: 21px;
+        line-height: 36px;
+    }
+    .table th {
+
+    }
+    .table tr td {
+        border-bottom-width: 0;
+    }
+    .table thead  {
+        border-bottom-width: 1px;
     }
 </style>
 <body>
@@ -308,7 +343,7 @@ redirect_from:
 
 <section id="overview">
     <div class="container">
-        <p>Join us for 110 laps around Drumheller Fountain. Stick around after to enjoy food and music at the
+        <p>Join us for 110 laps around Drumheller Fountain. Stick around after for food and music at the
             <a href="https://udistrictstreetfair.org">U-District Street Fair</a>.
         </p>
         <div class="call-wrapper">
@@ -322,7 +357,7 @@ redirect_from:
 <section>
     <div class="container">
         <h2>Course Map</h2>
-        <p>The course begins with a short segment down the upper vista, followed by 110 laps around Drumheller Fountain. Runners must enter the first loop from the east of the finish line if they are going to run counterclockwise, and from the west otherwise. Runners can change loop direction at any time, but must do so by rounding the marker placed at the north end of the finish line.</p>
+        <p>The course begins with a short segment down the upper vista, followed by 110 laps around Drumheller Fountain. Runners must enter the first loop from the east of the finish line if they are going to run counterclockwise and from the west otherwise. Runners can change loop direction at any time, but must do so by rounding the marker placed at the north end of the finish line.</p>
         <p>While campus foot traffic is reduced on weekends, expect to navigate around fountain-admirers, passers-by and cyclists. The fountain will start up at 8. There is no shade.</p>
         <img id="course-map" src="{{ site.baseurl }}/img/dhm23/dhm-course-map.svg" alt="A map of the course showing the start line 120.50m north of the fountain, followed by 110 laps of the 190.70m fountain loop.">
         <div class="cert-wrapper">
@@ -348,9 +383,18 @@ redirect_from:
             <dt>How will you keep track of distance?</dt>
             <dd><a href="{{ site.baseurl }}/dhm22">Last year</a> we ran as a group and counted laps out loud. GPS will clip the curve, so don't rely on it for more than a couple laps at a time.</dd>
             <dt>Which direction do we run?</dt>
-            <dd>You should alternate directions during the run to balance the strain of the curve between your legs. Change directions only at the end of a lap, and only by rounding the finish line marker.</dd>
+            <dd>You should alternate directions during the run to balance the strain across your legs. Change directions only at the end of a lap and only by rounding the finish line marker.</dd>
             <dt>Do I have to run the whole thing?</dt>
-            <dd>No. You're welcome to come join for a few laps.</dd>
+            <dd>No. You're welcome to come join for any number of laps. They don't have to be consecutive either! Here are some lap counts for common distances. Add a lap if not starting at the official start line.
+
+            <table class="table table-sm ms-2 mt-2 mb-4">
+                <thead><tr><th scope="col">Distance</th><th scope="col">Laps</th></tr></thead>
+                <tbody>
+                <tr><td>5k</td> <td>26</td></tr>
+                <tr><td>10k</td> <td>52</td></tr>
+                <tr><td>10mi</td><td>84</td></tr>
+                </tbody>
+            </table></dd>
             <dt>How fast do I need to run?</dt>
             <dd>You should be able to complete your chosen distance in under 2.5 hours.</dd>
         </dl>
