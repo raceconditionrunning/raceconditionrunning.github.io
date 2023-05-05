@@ -9,3 +9,7 @@ rcc.ics
 
 # misc files
 .DS_Store
+
+# Bundler
+.bundle/
+vendor/
