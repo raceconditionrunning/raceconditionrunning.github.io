@@ -17,7 +17,8 @@ layout: default
         {% continue %}
       {% endif %}
       {% assign quarter_schedule = site.data.schedules[quarter_schedule_key]%}
-<h3 id="{{quarter_schedule_key}}" class="mt-2">{{quarter_schedule_key | split: "-" | reverse | join: " " | capitalize}} <a href="#{{quarter_schedule_key}}" class="text-muted float-end">#</a></h3>
+      {% assign schedule_name = quarter | append: " '" | append: year | capitalize %}
+<h3 id="{{quarter_schedule_key}}" class="mt-2">{{ schedule_name }} <a href="#{{quarter_schedule_key}}" class="anchor-link" aria-label="Link to this section. {{ schedule_name }}"></a></h3>
       {% assign quarter_schedule = site.data.schedules[quarter_schedule_key] | reverse %}
       {% include schedule_table.html schedule=quarter_schedule show_header=needs_header%}
       {% if needs_header %}

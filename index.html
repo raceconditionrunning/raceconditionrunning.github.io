@@ -2,44 +2,71 @@
 layout: default
 ---
 
+<div class="container text-center">
+  <div class="card-group  mb-3">
+    <div class="col card border-light">
+      <div class="card-body">
+      <h6 class="card-title">Tuesday</h6>
+      <p class="card-text"><span class="text-decoration-underline" title="5-6km">3-4 miles</span><br/>
+        <span>Meet in front of CSE2 at 4:40pm.</span> <span class="text-secondary">Run starts at
+      4:45pm sharp.</span></p>
+    </div>
+    </div>
+    <div class="col card border-light">
+      <div class="card-body">
+      <h6 class="card-title">Wednesday</h6>
+      <p class="card-text"><span class="text-decoration-underline" title="2-3km">1-2 miles</span><br/>
+        <span>Meet in front of CSE2 at 4:40pm.</span> <span class="text-secondary">Run starts at
+      4:45pm sharp.</span></p>
+    </div>
+    </div>
+    <div class="col card border-light">
+      <div class="card-body">
+      <h6 class="card-title">Thursday</h6>
+      <p class="card-text"><span class="text-decoration-underline" title="10-13km">6-8 miles</span><br/>
+        <span>Meet in front of CSE2 at 4:40pm.</span> <span class="text-secondary">Run starts at
+      4:45pm sharp.</span></p>
+    </div>
+    </div>
+    <div class="col card border-light">
+      <div class="card-body">
+      <h6 class="card-title">Saturday (Usually)</h6>
+      <p class="card-text"><span class="text-decoration-underline" title="⁉️">Distance varies</span><br/>
+        <span>Check schedule for details. Brunch after.</span></p>
+    </div>
+    </div>
+  </div>
+</div>
 
-<h2>
-  Schedule
-  <!-- add a query param on ics link to bypass cache for testing (e.g. ?foo) -->
-  <a class="btn btn-outline-primary float-end" target="_blank"
-     href="http://www.google.com/calendar/render?cid={{ site.url }}/rcc.ics">
-    Subscribe 📆
-  </a>
-</h2>
+<ul>
+  <li>Please let us know on the
+  <a href='https://uw-cse.slack.com/archives/C2GHJ6AR3'>UW CSE Slack</a>
+    if you're joining (✋)!</li>
 
-
-<p>
+<li>Runs are at conversational pace (often <span class="text-decoration-underline" title="6:15-7:30 min/km"> 10-12 min/mi</span>).</li>
+</ul>
+<a class="btn btn-outline-primary float-end" target="_blank"
+   href="http://www.google.com/calendar/render?cid={{ site.url }}/rcc.ics">
+  Subscribe 📆
+</a>
+<p class="text-secondary">
   If you are having trouble accessing the calendar, try manually by adding
   the following url to your calendar application:
   <a href="{{ site.baseurl }}/rcc.ics">{{ site.url }}/rcc.ics</a>
+</p>   <!-- add a query param on ics link to bypass cache for testing (e.g. ?foo) -->
+
+
+<h2>Weekends</h2>
+<p>Arrive 10 minutes before the run!</p>
+
+
+<p class="fst-italic">
+  meet at run start point<br>
+  chit chat conversation pace<br>
+  brunch nearby after
 </p>
-<p>
-  Please let us know on the
-  <a href='https://uw-cse.slack.com/archives/C2GHJ6AR3'>UW CSE Slack</a>
-  if you're joining (✋)!
-</p>
 
-<dl>
-  <dt>Weekend (usually Saturday)</dt>
-  <dd>
-    <p>Arrive 10 minutes before the run!</p>
-    {% include schedule_table.html schedule=site.data.schedule show_header=true %}
-
-  </dd>
-
-  <dt>Tuesday</dt>
-  <dd>Meet in CSE atrium at 4:40 pm and do 3-4 miles. Run starts at 4:45 pm sharp!</dd>
-  <dt>Wednesday</dt>
-  <dd>Meet in CSE atrium at 4:40 pm and do 1-2 miles. Run starts at 4:45 pm sharp!</dd>
-  <dt>Thursday</dt>
-  <dd>Meet in CSE atrium at 4:40 pm 5:30 pm and do 6-8 miles. Run starts at 4:45 pm sharp!</dd>
-</dl>
-
+{% include schedule_table.html schedule=site.data.schedule show_header=true %}
 
 <div class="float-sm-end m-sm-2">
   <iframe allowtransparency frameborder='0' height='160' scrolling='no' src='https://www.strava.com/clubs/raceconditionrunning/latest-rides/9992908d136b0e840a8537bb0b56b823a1d2f83c?show_rides=false' width='300'></iframe>
@@ -48,10 +75,6 @@ layout: default
 <section>
 <h2>
   Strava
-  <a target="_blank"
-     href="https://www.strava.com/clubs/raceconditionrunning">
-    <img src='{{ site.baseurl }}/img/strava-logo.png' height='25px'>
-  </a>
 </h2>
 </section>
 
@@ -61,17 +84,9 @@ layout: default
 </p>
 
 
-<h2 style="clear:both">Weekend Haiku</h2>
 
-<p class="ms-sm-4 fst-italic">
-  meet at run start point<br>
-  chit chat conversation pace<br>
-  brunch nearby after
-</p>
+<h2 style="clear:both">Photo Album <a class="float-end btn btn-outline-primary" href="https://photos.app.goo.gl/DW9MRhNTi2vLwYor1">🌆 See Album</a></h2>
 
-
-<h2>Photo Album</h2>
-<p>Check out our photos <a href = "https://photos.app.goo.gl/DW9MRhNTi2vLwYor1">here</a>!</p>
 
 {% include photo_carousel.html %}
 
