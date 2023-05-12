@@ -441,3 +441,8 @@
   name: "UW, Portage Bay, Agua Verde"
   dist: 3.3
   map: "https://onthegomap.com/s/kt5qp6ek"
+
+- id: roosevelt-one-greenlake-loop
+  name: "Roosevelt Station, One Green Lake Loop"
+  dist: 3.6
+  map: "https://onthegomap.com/s/jhb6rbn7"
