@@ -31,7 +31,7 @@
 #    - time: "9:00"
 #      route_id: TBD
 
-- date: "2023-07-29"
+- date: "2023-07-30"
   plan:
     - time: "6:30"
       route:
