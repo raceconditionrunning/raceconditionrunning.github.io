@@ -1,0 +1,32 @@
+---
+permalink: events/
+layout: default
+---
+
+<div class="container">
+{% assign current_year =  site.time | date: '%y' %}
+{% for year in (14..current_year) reversed %}
+{% assign quarters = "winter, spring, summer, autumn" | split: ", " %}
+{% for quarter in quarters reversed %}
+{% assign quarter_schedule_key = year | append: "-" | append: quarter %}
+{% if site.data.schedules[quarter_schedule_key] == nil %}
+{% continue %}
+{% endif %}
+{% assign quarter_schedule = site.data.schedules[quarter_schedule_key]%}
+{% assign quarter_schedule = site.data.schedules[quarter_schedule_key] | reverse %}
+{% for run in quarter_schedule %}
+{% if run.cancelled or run.plan[0].cancelled %}
+{% continue %}
+{% endif %}
+{% if run.plan[0].route.name contains "Light Rail Relay" or run.plan[0].route.name contains "Quarantine" or run.plan[0].route.name contains "Drumheller Half" %}
+<a href="{{run.plan[0].route.map}}">
+    <h3>{{run.plan[0].route.name}}</h3>
+    <h5>{{ run.date | date: "%A %B, %e %Y"}}</h5>
+    <img class="img-fluid mb-3" alt="" src="{{run.plan[0].highlight-image}}"/>
+</a>
+    <hr class="mb-3"/>
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endfor %}
+</div>

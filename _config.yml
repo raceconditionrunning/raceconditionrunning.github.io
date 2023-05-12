@@ -14,8 +14,6 @@ kramdown:
   hard_wrap: False
   syntax_highlighter: rouge
 
-include:
-  - .nojekyll
 exclude:
   - Makefile
   - "README.md"
