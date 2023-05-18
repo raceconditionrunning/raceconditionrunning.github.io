@@ -28,7 +28,6 @@ redirect_from:
 
 </head>
 <style>
-
     body {
         color:#eee;
         background-color: #010101;
@@ -198,7 +197,10 @@ redirect_from:
     h1, h2, h3, .hero-button {
         font-family: "Avenir Next", "Prompt", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
         font-weight: 700;
+    }
 
+    h3 {
+        font-weight: 500;
     }
 
     .hero-button {
@@ -335,7 +337,7 @@ redirect_from:
 
 
         </header>
-        <p class="date">7:50AM Saturday, May 20th</p>
+        <p class="date">7:50AM Saturday, May 20th, 2023</p>
 
     </div>
 
@@ -357,9 +359,9 @@ redirect_from:
 
 <section>
     <div class="container">
-        <h2>Course Map</h2>
-        <p>The course begins with a short segment down the upper vista, followed by 110 laps around Drumheller Fountain. Runners must enter the first loop from the east of the finish line if they are going to run counterclockwise and from the west otherwise. Runners can change loop direction at any time, but must do so by rounding the marker placed at the north end of the finish line.</p>
-        <p>While campus foot traffic is reduced on weekends, expect to navigate around fountain-admirers, passers-by and cyclists. The fountain will start up at 8. There is no shade.</p>
+        <h2 id="course">Course</h2>
+        <p>The course begins with a short segment down the upper vista, followed by 110 laps around Drumheller Fountain. Runners will enter first loop from the east of the finish line and begin by running counterclockwise. The direction will flip every 20 minutes, and runners must change directions only by rounding the marker placed at the north end of the finish line. Failure to follow these instructions will prevent us from giving you an official finish time.</p>
+        <p>While campus foot traffic is reduced on weekends, expect to navigate around fountain-admirers, passers-by and cyclists. The fountain—and the race—will start at 8:00:00. <a href="https://shademap.app/@47.65378,-122.3075,17.185z,1684335621728t,0b,0p,0m">There is essentially no shade</a>.</p>
         <img id="course-map" src="{{ site.baseurl }}/img/dhm23/dhm-course-map.svg" alt="A map of the course showing the start line 120.50m north of the fountain, followed by 110 laps of the 190.70m fountain loop.">
         <div class="cert-wrapper">
             <a class="usatf-certificate" href="https://certifiedroadraces.com/certificate/?type=m&id=2487">
@@ -377,19 +379,37 @@ redirect_from:
 
 <section>
     <div class="container">
-        <h2>FAQ</h2>
+        <h2 id="race-day">Race Day Procedures</h2>
+        <ul>
+            <li>Bring a water bottle</li>
+            <li>Dress for sun and heat</li>
+            <li>Be at the start line at 7:50AM for brief course instructions and the start photo</li>
+        </ul>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <h2 id="faq">FAQ</h2>
         <dl>
             <dt>Who can participate?</dt>
             <dd>Anyone in the CSE community.</dd>
             <dt>Do I need to bring anything?</dt>
-            <dd>Bring water and sunscreen. The forecast calls for sun and temperatures approaching 70°F by the end of the run. Please dress appropriately as there is no shade on the course.</dd>
-            <dt>How will you keep track of distance?</dt>
-            <dd><a href="{{ site.baseurl }}/dhm22">Last year</a> we ran as a group and counted laps out loud. We will have a couple <a href="https://en.wikipedia.org/wiki/Tally_counter">tally counters</a> available if you want mechanical assistance. GPS will clip the curve, so don't rely on it for more than a couple laps at a time.</dd>
+            <dd>Bring a water bottle. As of 10:00PM on 5/18 the forecast calls for partly cloudy skies and temperatures approaching 65°F by the end of the run. Please prepare appropriately as the course is <a href="https://shademap.app/@47.65378,-122.3075,17.185z,1684335621728t,0b,0p,0m">essentially without shade</a>.</dd>
+            <dt>How do we keep track of distance?</dt>
+            <dd>Count your laps. Use a running watch, if you're wearing one. Or we'll have a couple <a href="https://en.wikipedia.org/wiki/Tally_counter">tally counters</a> available if you want mechanical assistance. <a href="{{ site.baseurl }}/dhm22">Last year</a> we ran as a group and counted laps out loud. GPS will clip the curve, so don't rely on it for more than a couple laps at a time.</dd>
+            <dt>Will the course be crowded?</dt>
+            <dd>There is plenty of space. We are expecting around 20 participants, and only half plan to complete 13.1 miles. That being said, here is the course etiquette:
+                <ul>
+                    <li>Step to the outside of the course before stopping</li>
+                    <li>Groups: Do not run more than 3 abreast and yield the innermost lane around the fountain to faster runners</li>
+                    <li>Faster runners: Pass on the outside if you need to</li>
+                </ul>
+            </dd>
             <dt>Which direction do we run?</dt>
-            <dd>You should alternate directions during the run to balance the strain across your legs. Change directions only at the end of a lap and only by rounding the finish line marker.</dd>
+            <dd>The race will begin counterclockwise and alternate directions every 20 minutes to help balance the strain across your legs. Having the field run a single direction at a time will help us manage course congestion. Change directions only at the end of a lap and only by rounding the finish line marker.</dd>
             <dt>Do I have to run the whole thing?</dt>
-            <dd>No. You're welcome to come join for any number of laps. They don't have to be consecutive either! Here are some lap counts for common distances. Add a lap if not starting at the official start line.
-
+            <dd>No. You're welcome to come join for any number of laps. They don't have to be consecutive either! Here are some unofficial lap counts for common distances. Add a lap if not starting at the official start line.
             <table class="table table-sm ms-2 mt-2 mb-4">
                 <thead><tr><th scope="col">Distance</th><th scope="col">Laps</th></tr></thead>
                 <tbody>
@@ -398,8 +418,12 @@ redirect_from:
                 <tr><td>10mi</td><td>84</td></tr>
                 </tbody>
             </table></dd>
+            <dt>Can I take breaks?</dt>
+            <dd>Yes. You can hang out at the aid station or any of the benches surrounding the course. You must continue running the lap in the same direction as when you stopped or the lap will not count. We recommend you start and stop only at the finish line so you can begin the next lap without this risk.</dd>
             <dt>How fast do I need to run?</dt>
             <dd>You should be able to complete your chosen distance in under 2.5 hours.</dd>
+            <dt>What if I'm late?</dt>
+            <dd>Run from the start line and join us! You must enter the course from "behind" the finish line in the direction that the field is running at the time you join. So, if we're running counter-clockwise, start your first loop by crossing over the finish line from the east, and otherwise from the west. Note that this event is <a href="https://www.runnersworld.com/training/a20793329/chip-time-vs-gun-time/">gun time</a> only.</dd>
         </dl>
     </div>
 </section>
