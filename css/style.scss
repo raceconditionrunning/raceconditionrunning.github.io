@@ -47,12 +47,7 @@ dd {
   li:last-child:after {content: "";}
 }
 
-.date {
-  width: 60px;
-}
-.time {
-  padding-right: 10px;
-}
+
 .past, .past a, .past a:visited {
   color: #ccc;
 }
@@ -65,7 +60,7 @@ dd {
 }
 
 tbody tr:last-child td {
-  padding-bottom: 1rem;
+  padding-bottom: .5rem;
 }
 
 .cancellation-note td{
@@ -77,8 +72,8 @@ tbody tr:last-child td {
   max-width: 100%;
 }
 
-.schedule-table tr > td:first-of-type {
-  padding: .5rem 0;
+.schedule-table tr > td:first-of-type, .table > :not(caption) > * > * {
+  padding: .25rem;
 }
 
 td {
