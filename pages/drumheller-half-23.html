@@ -26,8 +26,19 @@ redirect_from:
     <link href="https://fonts.googleapis.com/css2?family=Yrsa:ital,wght@0,300;0,700;1,300&family=Prompt:wght@700&display=swap"
           rel="stylesheet">
 
+    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.25.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.9.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.22.1"></script>
+    <script src="{{ site.baseurl }}/results/dhm23.json" > </script>
+
+
 </head>
 <style>
+    .laps-graph {
+        width: 100%
+    }
     body {
         color:#eee;
         background-color: #010101;
@@ -317,9 +328,183 @@ redirect_from:
     .table tr td {
         border-bottom-width: 0;
     }
-    .table thead  {
+
+    .table thead {
         border-bottom-width: 1px;
     }
+
+    .result-detail {
+        padding: 1rem;
+    }
+
+    .laps-graph rect {
+        transition: .15s;
+    }
+
+
+    .laps-graph .tick line {
+        color: white;
+        opacity: .5;
+    }
+
+    .laps-graph .minor {
+        opacity: .4;
+        color: white
+    }
+
+    .laps-graph .horizontal-grid {
+        color: white;
+        opacity: .5;
+    }
+
+    .laps-graph .data-bar {
+        fill: #777;
+        opacity: .9;
+        stroke: #aaa;
+        stroke-width: .5px;
+    }
+
+    .laps-graph .data-bar.extra {
+        fill: #555
+    }
+
+    .laps-graph .data-bar.highlighted {
+        fill: #999;
+    }
+
+    .laps-graph #flaglines line {
+        stroke: #ccc;
+        stroke-width: 1px
+    }
+
+    .laps-graph .finish-flag[data-lap-target='110'] line {
+        stroke: rgb(0,177,220);
+    }
+
+    .laps-graph .finish-flag[data-lap-target='110'] polygon {
+        fill: rgb(0,177,220);
+    }
+
+    .laps-graph .finish-flag[data-lap-target='84'] line {
+        stroke: #65b900;
+    }
+
+    .laps-graph .finish-flag[data-lap-target='84'] polygon {
+        fill: #65b900;
+    }
+
+    .laps-graph .finish-flag[data-lap-target='52'] line {
+        stroke: #DC00D1;
+    }
+
+    .laps-graph .finish-flag[data-lap-target='52'] polygon {
+        fill: #DC00D1;
+    }
+
+    .laps-graph .finish-flag[data-lap-target='26'] line {
+        stroke: #dc8400;
+    }
+
+    .laps-graph .finish-flag[data-lap-target='26'] polygon {
+        fill: #dc8400;
+    }
+
+    .tabulator {
+        font-size: 24px;
+    }
+
+    .tabulator,
+    .tabulator .tabulator-header .tabulator-col,
+    .tabulator .tabulator-header,
+    .tabulator .tabulator-tableholder .tabulator-table,
+    .tabulator .tabulator-footer {
+        background-color: transparent;
+    }
+
+    .tabulator-row.tabulator-group {
+        background-color: rgba(255, 255, 255, 0.075) !important;
+    }
+
+    .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs {
+        background-color: transparent !important;
+    }
+
+    .tabulator-row, .tabulator-row.tabulator-row-even {
+        background-color: transparent;
+    }
+
+    .tabulator-row.details-opened.tabulator-selectable,
+    .tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
+        transition: .2s;
+    }
+
+    .tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+        background-color: rgba(255, 255, 255, .3);
+    }
+
+    .tabulator-row.tabulator-selectable:hover {
+        background-color: rgba(255, 255, 255, .3);
+    }
+
+    .tabulator-row.details-opened.tabulator-selectable,
+    .tabulator-row.details-opened.tabulator-selectable:hover {
+        background-color: #111;
+    }
+
+    .tabulator .tabulator-header {
+        border-top: none;
+    }
+
+    .laps-table {
+        padding: 1rem;
+    }
+
+    .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-bottom {
+        border-top: 2px solid #999;
+    }
+
+    .laps-table.tabulator .tabulator-header {
+        border-bottom: 1px dashed #999;
+    }
+
+    .laps-table .tabulator-row {
+        border-bottom: 1px dashed #999;
+    }
+
+    .laps-table .tabulator-row .tabulator-cell {
+        padding: 4px;
+    }
+    .laps-table.tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-bottom {
+        border-top: 1px dashed #999;
+        border-bottom: none;
+    }
+
+    .tabulator-row.tabulator-group {
+        border-top: 1px dashed #999;
+        border-right: none;
+    }
+
+    .tabulator-row.tabulator-group:first-of-type {
+        /* Hide the "official laps" header */
+        display: none;
+    }
+
+    .laps-table .tabulator-footer {
+        border-top: 1px dashed #999;
+        border-bottom: none;
+    }
+
+    .tabulator-tableholder, .tabulator-table {
+        max-width: 100%;
+    }
+
+    .direction-symbol {
+        font-weight: bold;
+        font-size: 80%;
+        vertical-align: 1px;
+    }
+
+
 </style>
 <body>
 
@@ -349,9 +534,10 @@ redirect_from:
             <a href="https://udistrictstreetfair.org">U-District Street Fair</a>.
         </p>
         <div class="call-wrapper gap-2">
-            <a class="btn btn-lg hero-button " href="https://forms.gle/tk9xDDHgaXMzLMDC8">Sign Up</a>
+            <!--a class="btn btn-lg hero-button " href="https://forms.gle/tk9xDDHgaXMzLMDC8">Sign Up</a-->
+            <a class="btn btn-lg hero-button" href="#results">Results</a>
             <a class="btn btn-lg hero-button" href="https://forms.gle/qDgVHA3Kw1HVFDrN8">Order Shirt</a>
-            <!--<a class="btn btn-lg hero-button" href="#epilogue">Read Epilogue</a>-->
+            <!--a class="btn btn-lg hero-button" href="#epilogue">Read Epilogue</a-->
         </div>
 
     </div>
@@ -423,10 +609,43 @@ redirect_from:
             <dt>How fast do I need to run?</dt>
             <dd>You should be able to complete your chosen distance in under 2.5 hours.</dd>
             <dt>What if I'm late?</dt>
-            <dd>Run from the start line and join us! You must enter the course from "behind" the finish line in the direction that the field is running at the time you join. So, if we're running counter-clockwise, start your first loop by crossing over the finish line from the east, and otherwise from the west. Note that this event is <a href="https://www.runnersworld.com/training/a20793329/chip-time-vs-gun-time/">gun time</a> only.</dd>
+            <dd>Run from the start line and join us! You must enter the course from "behind" the finish line in the direction that the field is running at the time you join. So, if we're running counterclockwise, start your first loop by crossing over the finish line from the east, and otherwise from the west. Note that this event is <a href="https://www.runnersworld.com/training/a20793329/chip-time-vs-gun-time/">gun time</a> only.</dd>
         </dl>
     </div>
 </section>
+
+<section id="results">
+    <div class="container">
+
+        <h2>Results</h2>
+        <h4>Official</h4>
+    </div>
+    <div class="container-xxl">
+        <div id="results-table-official" class="mb-4"></div>
+    </div>
+    <div class="container">
+        <h4>Unofficial</h4>
+    </div>
+</section>
+
+<section id="results">
+    <div class="container-xxl">
+        <h2 class="mb-4">Results</h2>
+        <h3>Official</h3>
+        <div id="results-table-official" class="mb-5"></div>
+        <hr/>
+        <h3>Unofficial</h3>
+        <div id="results-table-unofficial" class="mb-5"></div>
+    </div>
+
+</section>
+
+<!--<section id="epilogue">
+    <div class="container">
+        <h2>Epilogue</h2>
+    </div>
+
+</section>-->
 
 <hr/>
 
@@ -452,8 +671,588 @@ redirect_from:
 
 
 <footer>
-    <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg" alt="A happy piece of toast who is running"/></a></p>
+    <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg"
+                                                          alt="A happy piece of toast who is running"/></a></p>
 </footer>
+
+<template id="result-detail-template">
+    <div class="result-detail-holder">
+        <div class="result-detail">
+            <p>
+                <span class="total-laps"></span>
+                <span class="average-pace"></span>
+            </p>
+            <div class="laps-graph d-block"></div>
+            <div class="pace-graph d-block"></div>
+            <div class="laps-table d-block"></div>
+        </div>
+    </div>
+</template>
+
+<script type="text/javascript">
+    let directionChanges = [60 * 20 + 26, 60 * 40 + 14, 59 * 60 + 48, 80 * 60, 100 * 60 + 12, 120 * 60 + 20, 140 * 60]
+    let officialResults = []
+    let unofficialResults = []
+    for (let i = 0; i < dhm23Results.length; i++) {
+        let entry = dhm23Results[i]
+        let countedLaps = Math.min(entry.lapTimes.length, 111)
+        entry["finishTime"] = entry.lapTimes.slice(0, countedLaps).reduce((a, b) => a + b, 0)
+        entry["nLaps"] = entry.lapTimes.length
+        if (entry.lapTimes.length < 111) {
+            unofficialResults.push(entry)
+        } else {
+            officialResults.push(entry)
+        }
+    }
+
+    function formatDuration(seconds, includeHours = true, includeMilliseconds = false, trimLeadingZeros = false) {
+        let date = new Date(0);
+
+        let milliseconds = (seconds % 1.0) * 1000
+        if (milliseconds > 0 && !includeMilliseconds) {
+            // If we're not showing the milliseconds, have to round up
+            // World Athletics Technical Rules, 19.24.5
+            // For all races, all times not ending in zero shall be converted and recorded
+            // to the next longer whole second, e.g. 2:09:44.3 shall be recorded as
+            // 2:09:45.
+            date.setSeconds(seconds + 1);
+        } else {
+            date.setSeconds(seconds)
+            date.setMilliseconds(milliseconds)
+        }
+        let start = 14
+        let end = 19
+
+        if (includeHours) {
+            start -= 2
+        }
+        if (includeMilliseconds) {
+            end += 2
+        }
+        let result = date.toISOString().substring(start, end)
+        if (trimLeadingZeros) {
+            result = result.replace(/^0+/, '')
+        }
+        return result
+    }
+
+    function formatPace(seconds, unit = " /mi") {
+        let date = new Date(0);
+        date.setSeconds(seconds);
+        let start = 14
+        if (seconds > 3600) {
+            start = 12
+        }
+        let pace = date.toISOString().substring(start, 19).replace(/^0+/, '')
+        return pace + unit
+    }
+
+    function lapPaceChart(data, lapTarget=Number.MAX_VALUE, onBarClick) {
+        // Declare the chart dimensions and margins.
+        const width = 1264;
+        const height = 500;
+        const marginTop = 30;
+        const marginRight = 30;
+        const marginBottom = 30;
+        const marginLeft = 60;
+
+        let sansFontStack = 'Avenir Next, Prompt, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif'
+        // Declare the x (horizontal position) scale.
+        const x = d3.scaleLinear()
+            .domain([0, d3.max(data, (d) => d.timeElapsed)]) // descending frequency
+            .range([marginLeft, width - marginRight])
+        let slowestPace = d3.max(data, (d) => d.paceMi) + 90
+        slowestPace = Math.floor(slowestPace / 60) * 60
+        let fastestPace = d3.min(data, (d) => d.paceMi) - 60
+        fastestPace = Math.floor(fastestPace / 60) * 60
+
+        let lowYTick = fastestPace
+        let highYTick = slowestPace + 60
+        const ySpread = Math.min(highYTick - lowYTick, 60 * 60)
+        highYTick = lowYTick + ySpread
+
+
+        let majorYTicks = [lowYTick]
+        let allYTicks = [lowYTick]
+        for (let i = 1; majorYTicks[i - 1] < highYTick; i++) {
+            majorYTicks.push(majorYTicks[i - 1] + 60)
+        }
+        for (let i = 1; allYTicks[i - 1] < highYTick; i++) {
+            allYTicks.push(allYTicks[i - 1] + 20)
+        }
+        while (majorYTicks.length > 20) {
+            majorYTicks = majorYTicks.filter((value, index, Arr) =>
+                index % 2 === 0
+            );
+            allYTicks = majorYTicks
+        }
+        let lowXTick = 0
+        let highXTick = d3.max(data, d => d.timeElapsed)
+        highXTick = Math.floor(highXTick / (60 * 10)) * 60 * 10
+        let allXTicks = [lowXTick]
+        let majorXTicks = [lowXTick]
+        for (let i = 1; allXTicks[i - 1] < highXTick; i++) {
+            allXTicks.push(allXTicks[i - 1] + 60 * 10)
+        }
+        for (let i = 1; majorXTicks[i - 1] < highXTick; i++) {
+            majorXTicks.push(majorXTicks[i - 1] + 60 * 20)
+        }
+        let y
+        let y_inv
+
+        if (ySpread > (60 * 10)) {
+            let exponent = 1/2
+            if (ySpread > (60 * 30)) {
+                exponent = 1/64
+            }
+            y = d3.scalePow()
+                .exponent(exponent)
+                .domain([lowYTick, highYTick])
+                .range([marginTop, height - marginBottom]).clamp(true)
+
+            y_inv = d3.scalePow()
+                .exponent(exponent)
+                .domain([highYTick, lowYTick])
+                .range([marginTop, height - marginBottom]).clamp(true)
+        } else {
+            // Declare the y (vertical position) scale.
+            y = d3.scaleLinear()
+                .domain([lowYTick, highYTick])
+                .range([marginTop, height - marginBottom]).clamp(true)
+
+            y_inv = d3.scaleLinear()
+                .domain([highYTick, lowYTick])
+                .range([marginTop, height - marginBottom]).clamp(true)
+        }
+
+        // Create the SVG container.
+        const svg = d3.create("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("viewBox", [0, 0, width, height])
+            .attr("style", "max-width: 100%; height: auto;")
+            .style("-webkit-tap-highlight-color", "transparent")
+            .style("overflow", "visible")
+            .on("pointerenter pointermove", pointermoved)
+            .on("pointerleave", pointerleft)
+            .on("touchstart", event => event.preventDefault());
+
+        // Grid lines
+        svg.append("g")
+            .attr("stroke", "lightgrey")
+            .attr("stroke-width", "1px")
+            .attr("fill", "none")
+            .attr("shape-rendering", "crispEdges")
+            .selectAll()
+            .data(majorYTicks.slice(0, majorYTicks.length - 2))
+            .join("line")
+            .attr("class", "horizontal-grid")
+            .attr("x1", marginLeft)
+            .attr("x2", width - marginRight)
+            .attr("y1",  d => y(d))
+            .attr("y2", d => y(d))
+
+        let mean = d3.mean(d3.map(data, d => d.paceMi))
+        svg.append("g")
+            .append("line")
+            .attr("x1", marginLeft)
+            .attr("x2", width)
+            .attr("y1", y(mean))
+            .attr("y2", y(mean))
+            .attr("stroke", "lightgrey")
+            .attr("stroke-width", "1px")
+            .attr("stroke-dasharray", "6 2")
+
+
+        const pairs = [[{timeElapsed: 0}, data[0]]]
+        for (let i = 0; i < data.length - 1; i++) {
+            pairs.push([data[i], data[i + 1]])
+        }
+
+        // Add a rect for each bar.
+        let bars = svg.append("g")
+            .attr('id', "bars")
+            .selectAll()
+            .data(pairs)
+            .join("rect")
+            .attr("x", (pair) => x(pair[0].timeElapsed))
+            .attr("y", (pair) => height - marginBottom - y_inv(pair[1].paceMi) + y_inv(highYTick))
+            .attr("height", (pair) => y_inv(pair[1].paceMi) - y_inv(highYTick))
+            .attr("width", (pair) => x(pair[1].timeElapsed) - x(pair[0].timeElapsed))
+            .attr("class", "data-bar")
+            .attr("data-lap-num", pair => pair[0].n)
+            .on("click", event => {
+                onBarClick(Number(event.target.attributes["data-lap-num"].value))
+            })
+
+        let barNodes = bars.nodes()
+        if (barNodes.length > 111) {
+            d3.selectAll(barNodes.slice(111, barNodes.length)).classed("extra", true)
+        }
+
+        let xAxis = d3.axisBottom(x)
+            .tickValues(allXTicks)
+            .tickFormat((d, i) => formatDuration(d))
+            .tickSizeOuter(0)
+
+        // Add the x-axis and label.
+        svg.append("g")
+            .attr("transform", `translate(0,${height - marginBottom})`)
+            .call(xAxis)
+            .call(g => {
+                if (allXTicks.length !== allXTicks.length) {
+                    g.selectAll(".tick").filter(i => i % 2).classed("minor", true)
+                }
+            })
+            .call(g => g.select(".domain").remove())
+
+        let yAxis = d3.axisLeft(y)
+            .tickValues(allYTicks.slice(0, allYTicks.length - 3))
+            .tickFormat((y, i) => {
+                if (y % 60 === 0) {
+                    return formatPace(y)
+                } else {
+                    return ""
+                }
+            })
+        // Add the y-axis and label, and remove the domain line.
+        svg.append("g")
+            .attr("color", "#666")
+            .attr("transform", `translate(${marginLeft},0)`)
+            .call(yAxis)
+            .call(g => {
+                if (allYTicks.length !== majorYTicks.length) {
+                    g.selectAll(".tick").filter(i => i % 3 !== 0).classed("minor", true)
+                }
+            })
+            .call(g => g.select(".domain").remove())
+            .call(g => g.append("text")
+                .attr("x", -10)
+                .attr("y", 10)
+                .attr("fill", "currentColor")
+                .attr("text-anchor", "end")
+                .text("↑ Pace"));
+
+        // Lines that show up when you hover a bar
+        svg.append("g")
+            .attr("id", "flaglines")
+            .selectAll()
+            .data(pairs)
+            .join("line")
+            .attr("x1", (pair) => x(pair[1].timeElapsed))
+            .attr("x2", (pair) => x(pair[1].timeElapsed))
+            //.attr("y1", (pair) => height - marginBottom - y_inv(pair[1].paceMi) + y_inv(slowestPace))
+            .attr("y1", (pair) => height - marginBottom)
+            .attr("y2", 0)
+            .attr("fill", "none")
+            .attr("display", "none")
+
+
+        if (data.length > lapTarget) {
+            let finishTime = data[lapTarget].timeElapsed
+            let flag = svg.append("g")
+                .classed("finish-flag", true)
+                .attr("data-lap-target", lapTarget)
+
+            flag.append("line")
+                .attr("stroke-width", "1px")
+                .attr("x1", x(finishTime))
+                .attr("x2", x(finishTime))
+                .attr("y1", marginBottom)
+                .attr("y2", height - marginTop)
+
+            let flag_group = flag.append("g")
+                .attr("transform", `translate(${x(finishTime)},0)`)
+
+            let flag_shape = flag_group.append("polygon")
+                .attr("points", "0,0 -90,0 -80,16 -90,33 0,33")
+
+            let text = flag_group.append("text")
+                .attr("fill", "white")
+                .attr("text-anchor", "end")
+                .attr("alignment-baseline", "middle")
+                .attr("font-family", sansFontStack)
+                .attr("font-weight", 600)
+                .attr("font-size", "16px")
+                .attr("x", -10)
+                .attr("y", 22)
+                .text(formatDuration(finishTime))
+            const {x: bb_x, y: bb_y, width: w, height: h} = text.node().getBBox();
+
+        }
+
+        const tooltip = svg.append("g")
+            .style("pointer-events", "none");
+
+        function pointermoved(event) {
+            let i = d3.bisect(d3.map(data, d => d.timeElapsed), x.invert(d3.pointer(event)[0]));
+            // Bisect will return an index above the last element
+            i = Math.min(Math.max(0, i), data.length - 1)
+            svg.select(`#bars .highlighted`).classed("highlighted", false)
+            svg.selectAll('#flaglines line').attr("display", "none")
+            svg.select(`#bars rect:nth-child(${i + 1})`).classed("highlighted", true)
+            svg.select(`#flaglines line:nth-child(${i + 1})`).attr("display", "")
+            tooltip.style("display", null);
+
+            const path = tooltip.selectAll("rect")
+                .data([,])
+                .join("rect")
+                .attr("fill", "white")
+                .attr("stroke", "black");
+
+            const text = tooltip.selectAll("text")
+                .data([,])
+                .join("text")
+                .call(text => text
+                    .selectAll("tspan")
+                    .data(`Lap ${i} ${data[i].direction ? (data[i].direction === "CCW"? '↺': '⟳') : ""}\n${(data[i].time).toFixed(2)}s\t${formatPace(data[i].paceMi)}\n${formatDuration(data[i].timeElapsed)}\t ${(data[i].distanceElapsed / 1609.34).toFixed(2)} mi`.split(/\n/))
+                    .join("tspan")
+                    .attr("x", 0)
+                    .attr("y", (_, i) => `${i * 1.1}em`)
+                    .attr("font-weight", (_, i) => i ? null : "bold")
+                    .text(d => d));
+
+            const {x: bb_x, y: bb_y, width: w, height: h} = text.node().getBBox();
+            text.attr("transform", `translate(${12},${12 - bb_y})`);
+            path.attr("width", w + 24)
+                .attr("height", h + 24)
+
+            let xPosition = 6 + x(data[i].timeElapsed)
+            if (xPosition > 1000) {
+                xPosition = x(data[i].timeElapsed) - w - 30
+            }
+            tooltip.attr("transform", `translate(${xPosition},0)`);
+            svg.property("value", data[i]).dispatch("input", {bubbles: true});
+        }
+
+        function pointerleft() {
+            tooltip.style("display", "none");
+            svg.select(`#bars .highlighted`).classed("highlighted", false)
+            svg.selectAll(`#flaglines line`).attr("display", "none")
+            svg.node().value = null;
+            svg.dispatch("input", {bubbles: true});
+        }
+
+        // Return the SVG element.
+        return svg.node();
+    }
+
+    function addResultsDetails(data, paceGraphContainer, lapsGraphContainer, tableContainer) {
+        let lapObjects = []
+        let timeElapsed = 0
+        let distanceElapsed = 0
+        let directionIndex = 0
+        let lapsRun = data.lapTimes.length - 1
+        let goals = [26, 52, 84, 110]
+        let lapTarget = goals[Math.max(d3.bisectLeft(goals, lapsRun) - 1, 0)]
+        for (let i = 0; i < data.lapTimes.length; i++) {
+            const lapDistance = i > 0 ? 190.70 : 120.50
+            let pace = lapDistance / data.lapTimes[i]
+            let lapStartTime = timeElapsed
+            timeElapsed += data.lapTimes[i]
+            distanceElapsed += lapDistance
+            if (lapStartTime > directionChanges[directionIndex]) {
+                directionIndex += 1
+            }
+            let direction = directionIndex % 2 === 0 ? "CCW" : "CW"
+            if (i === 0) {
+                // 0th lap is entrance from upper vista
+                direction = null
+            }
+            lapObjects.push({
+                "n": i,
+                "time": data.lapTimes[i],
+                "distance": lapDistance,
+                "distanceElapsed": distanceElapsed,
+                "timeElapsed": timeElapsed,
+                "pace": pace,
+                "paceMi": 1609.34 / pace,
+                "paceKm": 1000 / pace,
+                "extra": i > lapTarget,
+                "direction": direction
+            })
+        }
+
+        lapsGraphContainer.appendChild(lapPaceChart(lapObjects, lapTarget, (barNumber)=> {
+            view.scrollToRow(barNumber)
+        }))
+
+        let view
+        let lapsTable = new Promise((resolve, reject) => {
+            view = new Tabulator(tableContainer, {
+                data: lapObjects,
+                selectable: false,
+                index: "n",
+                groupBy: "extra",
+                height: 300,
+                responsiveLayout: "collapse",
+                resizableColumnFit: true,
+                initialSort: [{column: "n", dir: "asc"}],
+                columns: [
+                    {title: "N", field: "n", sorter: "number", responsive: 0},
+                    {
+                        title: "Time",
+                        field: "time",
+                        formatter: cell => formatDuration(cell.getValue(), false, true),
+                        bottomCalc: (values, data, calcParams) => {
+                            if (values.length === 0) {
+                                return ""
+                            }
+                            let averagePace = values.reduce((a, b) => a + b, 0) / values.length
+                            return formatDuration(averagePace, false, true)
+                        }
+                    },
+                    {
+                        title: "Pace /mi",
+                        field: "paceMi",
+                        formatter: (cell) => formatDuration(cell.getValue(), false, false, true),
+                        bottomCalc: (values, data, calcParams) => {
+                            if (values.length === 0) {
+                                return ""
+                            }
+                            let averagePace = values.reduce((a, b) => a + b, 0) / values.length
+                            return formatPace(averagePace, "")
+                        }
+                    },
+                    {
+                        title: "Elapsed", field: "timeElapsed", formatter: (cell) =>
+                            `<a href='https://youtu.be/lmwxMUa7bvI?t=${Math.floor(cell.getValue())}'>${formatDuration(cell.getValue(), true, false)}</a>`
+
+                        , headerSort: false
+                    },
+                    {title: "Meters", field: "distanceElapsed", responsive: 4, width: 200, headerSort: false, formatter: cell => cell.getValue().toFixed(1)},
+                    {
+                        title: "Direction",
+                        field: "direction",
+                        responsive: 5,
+                        width: 200,
+                        headerSort: false,
+                        bottomCalc: (values, data, calcParams) => {
+                            if (values.length === 0) {
+                                return []
+                            }
+                            let counts = values.filter(a => a).reduce((a, b) => b === "CCW" ? [a[0] + 1, a[1]] : [a[0], a[1] + 1], [0, 0])
+                            return counts
+                        },
+                        bottomCalcFormatter: (cell, data, params) => {
+                            let counts = cell.getValue()
+                            return `${counts[0]}<span class='direction-symbol'>↺</span> ${counts[1]}<span class='direction-symbol'>⟳</span>`
+                        }
+                    }
+                ]
+            })
+            view.on("tableBuilt", () => view.setGroupHeader(function (value, count, data, group) {
+                if (value) {
+                    return "Extra Laps (" + count + ")"; //return the header contents
+                } else {
+                    return ""
+                }
+
+            }));
+            view.on("renderComplete", resolve)
+
+        })
+        return Promise.all([lapsTable])
+    }
+
+    let rowFormatter = function (row, e) {
+        let rowElement = row.getElement()
+        rowElement.id = `#result-${row.getData().id}`
+        let detailFragment = detailTemplate.cloneNode(true)
+        //create and style holder elements
+        const id = row.getData().id
+        let containerElement = detailFragment.querySelector(".result-detail-holder")
+        containerElement.setAttribute('id', "result-detail-" + id + "");
+        containerElement.setAttribute("hidden", "hidden")
+        rowElement.appendChild(detailFragment);
+    }
+
+    let expandRow = function (row) {
+        row.getElement().classList.toggle("details-opened")
+        let detailsContainer = row.getElement()?.querySelector(".result-detail-holder")
+        if (!detailsContainer.classList.contains("initialized")) {
+            // Tabulator and Vega won't render correctly unless the parent element is visible
+            detailsContainer.toggleAttribute("hidden")
+            addResultsDetails(row.getData(), detailsContainer.querySelector(".pace-graph"), detailsContainer.querySelector(".laps-graph"), detailsContainer.querySelector(".laps-table")).then(() => {
+                row.getTable().redraw()
+            })
+            detailsContainer.classList.add("initialized")
+        } else {
+            detailsContainer.toggleAttribute("hidden")
+            row.getTable().redraw()
+        }
+    }
+
+    function scrollToResult(table) {
+        let hash = window.location.hash
+        if (hash) {
+            let id = Number(hash.match(/\d+(?=\D*$)/)[0])
+            let row = table.getRow(id); //return row component with index of 1
+
+            if (row) {
+                // Need to have table in view for it to fully load
+                table.element.scrollIntoView({
+                    behavior: 'smooth'
+                });
+                // HACK: wait a bit so scroll ends
+                setTimeout(() => table.scrollToRow(id, "center", false).then(() => expandRow(row)), 750)
+
+            }
+        }
+    }
+
+    function rowClicked(e, row) {
+        if (!(e.target.classList.contains("tabulator-row") || e.target.classList.contains("tabulator-cell"))) {
+            return
+        }
+        expandRow(row)
+        let currentHash = window.location.hash
+        let newHash = `#result-${row.getData().id}`
+        if (!row.getElement().querySelector(".result-detail-holder").attributes["hidden"]) {
+            history.replaceState(undefined, undefined, newHash)
+        } else if (currentHash === newHash) {
+            history.replaceState(undefined, undefined, " ")
+        }
+    }
+
+    let detailTemplate = document.getElementById("result-detail-template").content
+    let officialTable = new Tabulator("#results-table-official", {
+        data: officialResults,
+        layout: "fitDataFill",
+        nestedData: true,
+        initialSort: [{column: "finishTime", dir: "asc"}],
+        columns: [
+            {title: "Name", field: "name"},
+            {
+                title: "Finish Time", field: "finishTime", sorter: "number", formatter: cell => formatDuration(cell.getValue(), true)
+            }
+        ],
+        rowFormatter: rowFormatter
+    })
+
+    let unofficialTable = new Tabulator("#results-table-unofficial", {
+        data: unofficialResults,
+        layout: "fitDataFill",
+        nestedData: true,
+        initialSort: [{column: "nLaps", dir: "desc"}],
+        columns: [
+            {title: "Name", field: "name"},
+            {
+                title: "Laps", field: "nLaps", sorter: "number", formatter: (cell) => {
+                    return cell.getData().nLaps - 1
+                }
+            }
+        ],
+        rowFormatter: rowFormatter
+    })
+
+    officialTable.on("tableBuilt", () => scrollToResult(officialTable))
+    unofficialTable.on("tableBuilt", () => scrollToResult(unofficialTable))
+
+    officialTable.on("rowClick", rowClicked)
+    unofficialTable.on("rowClick", rowClicked)
+
+</script>
 
 </body>
 </html>
