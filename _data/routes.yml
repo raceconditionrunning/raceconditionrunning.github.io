@@ -446,3 +446,9 @@
   name: "Roosevelt Station, One Green Lake Loop"
   dist: 3.6
   map: "https://onthegomap.com/s/jhb6rbn7"
+
+- id: ob-arboretum-lwb-colman
+  name: "OB: Arboretum, LWB, Colman"
+  dist: 6.9
+  map: "https://onthegomap.com/s/0viljrvr"
+
