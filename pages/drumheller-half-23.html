@@ -18,7 +18,8 @@ redirect_from:
     <meta property="og:title" content="Drumheller Half Marathon 2023">
     <meta property="og:description" content="Experience the fountain and the mountain. May 20th, 2023.">
     <link href="{{ site.baseurl }}/img/dhm23/dhm-favicon.png" rel="icon" type="image/png"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha256-wLz3iY/cO4e6vKZ4zRmo4+9XDpMcgKOvv/zEU3OMlRo=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha256-wLz3iY/cO4e6vKZ4zRmo4+9XDpMcgKOvv/zEU3OMlRo=" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -27,11 +28,15 @@ redirect_from:
           rel="stylesheet">
 
     <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_bootstrap5.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"
+            integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega@5.25.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.9.1"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.22.1"></script>
-    <script src="{{ site.baseurl }}/results/dhm23.json" > </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"
+            integrity="sha512-M7nHCiNUOwFt6Us3r8alutZLm9qMt4s9951uo8jqO4UwJ1hziseL6O3ndFyigx6+LREfZqnhHxYjKRJ8ZQ69DQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ site.baseurl }}/results/dhm23.json"></script>
 
 
 </head>
@@ -39,8 +44,9 @@ redirect_from:
     .laps-graph {
         width: 100%
     }
+
     body {
-        color:#eee;
+        color: #eee;
         background-color: #010101;
         font-family: 'Yrsa', serif;
         margin: 0;
@@ -49,7 +55,7 @@ redirect_from:
     }
 
     ::selection {
-        background: #666;
+        background: #ccc;
     }
 
     a {
@@ -117,8 +123,39 @@ redirect_from:
         opacity: 1;
     }
 
-    dt {
-        font-weight: bold;
+    .accordion-header button {
+        font-size: 24px;
+        font-family: 'Yrsa', serif;
+    }
+
+    .accordion-item:first-of-type,
+    .accordion-flush .accordion-item:first-of-type .accordion-button {
+        border-radius: 1rem 1rem 0 0;
+    }
+    .accordion-item:last-of-type {
+        border-radius: 0 0 1rem 1rem;
+    }
+
+    .accordion, .accordion-button {
+        background-color: transparent;
+        color: white;
+
+    }
+
+    .accordion-item {
+        background-color: #111;
+        color: white;
+        border-bottom: 1px solid #666;
+    }
+
+    .accordion-button:not(.collapsed) {
+        background-color: #333;
+        color: white;
+        box-shadow: none;
+    }
+
+    .accordion-button:not(.collapsed)::after {
+        filter: saturate(0%);
     }
 
     dd {
@@ -197,6 +234,7 @@ redirect_from:
         animation: fade-in 10s ease, rotating 600s linear infinite;
 
     }
+
     .rotating.ccw {
         animation: fade-in 10s ease, rotating 600s reverse linear infinite;
     }
@@ -244,6 +282,7 @@ redirect_from:
     .blockquote-footer {
         color: #888;
     }
+
     footer {
         margin: 6rem 0 6rem 0;
     }
@@ -305,15 +344,18 @@ redirect_from:
         opacity: .8;
         transition: .3s;
     }
+
     .usatf-certificate .details {
         align-self: center;
     }
+
     .usatf-certificate,
     .usatf-certificate h2,
     .usatf-certificate p {
         font-size: 1rem;
         margin-bottom: 0;
     }
+
     .table {
         background: transparent;
         color: white;
@@ -322,9 +364,11 @@ redirect_from:
         font-size: 21px;
         line-height: 36px;
     }
+
     .table th {
 
     }
+
     .table tr td {
         border-bottom-width: 0;
     }
@@ -546,9 +590,15 @@ redirect_from:
 <section>
     <div class="container">
         <h2 id="course">Course</h2>
-        <p>The course begins with a short segment down the upper vista, followed by 110 laps around Drumheller Fountain. Runners will enter first loop from the east of the finish line and begin by running counterclockwise. The direction will flip every 20 minutes, and runners must change directions only by rounding the marker placed at the north end of the finish line. Failure to follow these instructions will prevent us from giving you an official finish time.</p>
-        <p>While campus foot traffic is reduced on weekends, expect to navigate around fountain-admirers, passers-by and cyclists. The fountain—and the race—will start at 8:00:00. <a href="https://shademap.app/@47.65378,-122.3075,17.185z,1684335621728t,0b,0p,0m">There is essentially no shade</a>.</p>
-        <img id="course-map" src="{{ site.baseurl }}/img/dhm23/dhm-course-map.svg" alt="A map of the course showing the start line 120.50m north of the fountain, followed by 110 laps of the 190.70m fountain loop.">
+        <p>The course begins with a short segment down the upper vista, followed by 110 laps around Drumheller Fountain.
+            Runners will enter first loop from the east of the finish line and begin by running counterclockwise. The
+            direction will flip every 20 minutes, and runners must change directions only by rounding the marker placed
+            at the north end of the finish line. Failure to follow these instructions will prevent us from giving you an
+            official finish time.</p>
+        <p>While campus foot traffic is reduced on weekends, expect to navigate around fountain-admirers, passers-by and
+            cyclists. The fountain—and the race—will start at 8:00.</p>
+        <img id="course-map" src="{{ site.baseurl }}/img/dhm23/dhm-course-map.svg"
+             alt="A map of the course showing the start line 120.50m north of the fountain, followed by 110 laps of the 190.70m fountain loop.">
         <div class="cert-wrapper">
             <a class="usatf-certificate" href="https://certifiedroadraces.com/certificate/?type=m&id=2487">
                 <img src="{{ site.baseurl }}/img/dhm23/usatf-certified-course-white.svg" alt=""/>
@@ -576,55 +626,206 @@ redirect_from:
 
 <section>
     <div class="container">
-        <h2 id="faq">FAQ</h2>
-        <dl>
-            <dt>Who can participate?</dt>
-            <dd>Anyone in the CSE community.</dd>
-            <dt>Do I need to bring anything?</dt>
-            <dd>Bring a water bottle. As of 10:00PM on 5/18 the forecast calls for partly cloudy skies and temperatures approaching 65°F by the end of the run. Please prepare appropriately as the course is <a href="https://shademap.app/@47.65378,-122.3075,17.185z,1684335621728t,0b,0p,0m">essentially without shade</a>.</dd>
-            <dt>How do we keep track of distance?</dt>
-            <dd>Count your laps. Use a running watch, if you're wearing one. Or we'll have a couple <a href="https://en.wikipedia.org/wiki/Tally_counter">tally counters</a> available if you want mechanical assistance. <a href="{{ site.baseurl }}/dhm22">Last year</a> we ran as a group and counted laps out loud. GPS will clip the curve, so don't rely on it for more than a couple laps at a time.</dd>
-            <dt>Will the course be crowded?</dt>
-            <dd>There is plenty of space. We are expecting around 20 participants, and only half plan to complete 13.1 miles. That being said, here is the course etiquette:
-                <ul>
-                    <li>Step to the outside of the course before stopping</li>
-                    <li>Groups: Do not run more than 3 abreast and yield the innermost lane around the fountain to faster runners</li>
-                    <li>Faster runners: Pass on the outside if you need to</li>
-                </ul>
-            </dd>
-            <dt>Which direction do we run?</dt>
-            <dd>The race will begin counterclockwise and alternate directions every 20 minutes to help balance the strain across your legs. Having the field run a single direction at a time will help us manage course congestion. Change directions only at the end of a lap and only by rounding the finish line marker.</dd>
-            <dt>Do I have to run the whole thing?</dt>
-            <dd>No. You're welcome to come join for any number of laps. They don't have to be consecutive either! Here are some unofficial lap counts for common distances. Add a lap if not starting at the official start line.
-            <table class="table table-sm ms-2 mt-2 mb-4">
-                <thead><tr><th scope="col">Distance</th><th scope="col">Laps</th></tr></thead>
-                <tbody>
-                <tr><td>5k</td> <td>26</td></tr>
-                <tr><td>10k</td> <td>52</td></tr>
-                <tr><td>10mi</td><td>84</td></tr>
-                </tbody>
-            </table></dd>
-            <dt>Can I take breaks?</dt>
-            <dd>Yes. You can hang out at the aid station or any of the benches surrounding the course. You must continue running the lap in the same direction as when you stopped or the lap will not count. We recommend you start and stop only at the finish line so you can begin the next lap without this risk.</dd>
-            <dt>How fast do I need to run?</dt>
-            <dd>You should be able to complete your chosen distance in under 2.5 hours.</dd>
-            <dt>What if I'm late?</dt>
-            <dd>Run from the start line and join us! You must enter the course from "behind" the finish line in the direction that the field is running at the time you join. So, if we're running counterclockwise, start your first loop by crossing over the finish line from the east, and otherwise from the west. Note that this event is <a href="https://www.runnersworld.com/training/a20793329/chip-time-vs-gun-time/">gun time</a> only.</dd>
-        </dl>
-    </div>
-</section>
+        <h2 id="faq" class="mb-4">FAQ</h2>
+        <div id="faq-accordion" class="accordion accordion-flush">
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqOne" aria-expanded="true" aria-controls="faqOne">Who can
+                        participate?
+                    </button>
+                </h3>
+                <div id="faqOne" class="accordion-collapse collapse" aria-labelledby="faq-headingOne"
+                     data-bs-parent="#faq-accordion">
 
-<section id="results">
-    <div class="container">
+                    <div class="accordion-body">Anyone in the CSE community.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqTwo" aria-expanded="true" aria-controls="faqTwo">Do I need to
+                        bring anything?
+                    </button>
+                </h3>
+                <div id="faqTwo" class="accordion-collapse collapse" aria-labelledby="faq-headingTwo"
+                     data-bs-parent="#faq-accordion">
 
-        <h2>Results</h2>
-        <h4>Official</h4>
-    </div>
-    <div class="container-xxl">
-        <div id="results-table-official" class="mb-4"></div>
-    </div>
-    <div class="container">
-        <h4>Unofficial</h4>
+                    <div class="accordion-body">Bring a water bottle. As of 10:00PM on 5/18 the forecast calls for
+                        partly
+                        cloudy skies and temperatures approaching 65°F by the end of the run. Please prepare
+                        appropriately
+                        as the course is <a
+                                href="https://shademap.app/@47.65378,-122.3075,17.185z,1684335621728t,0b,0p,0m">essentially
+                            without shade</a>.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqThree" aria-expanded="true" aria-controls="faqThree">How do we
+                        keep track of distance?
+                    </button>
+                </h3>
+                <div id="faqThree" class="accordion-collapse collapse" aria-labelledby="faq-headingThree"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">Count your laps. Use a running watch, if you're wearing one. Or
+                        we'll have a
+                        couple <a href="https://en.wikipedia.org/wiki/Tally_counter">tally counters</a> available if
+                        you
+                        want mechanical assistance. <a href="{{ site.baseurl }}/dhm22">Last year</a> we ran as a
+                        group and
+                        counted laps out loud. GPS will clip the curve, so don't rely on it for more than a couple
+                        laps at a
+                        time.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqFour" aria-expanded="true" aria-controls="faqFour">Will the
+                        course be crowded?
+                    </button>
+                </h3>
+                <div id="faqFour" class="accordion-collapse collapse" aria-labelledby="faq-headingFour"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">There is plenty of space. We are expecting around 20
+                        participants, and only
+                        half plan to complete 13.1 miles. That being said, here is the course etiquette:
+                        <ul>
+                            <li>Step to the outside of the course before stopping</li>
+                            <li>Groups: Do not run more than 3 abreast and yield the innermost lane around the
+                                fountain to
+                                faster runners
+                            </li>
+                            <li>Faster runners: Pass on the outside if you need to</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqFive" aria-expanded="true" aria-controls="faqFive">Which
+                        direction do we run?
+                    </button>
+                </h3>
+                <div id="faqFive" class="accordion-collapse collapse" aria-labelledby="faq-headingFive"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">The race will begin counterclockwise and alternate directions
+                        every 20
+                        minutes to help balance the strain across your legs. Having the field run a single
+                        direction at a
+                        time will help us manage course congestion. Change directions only at the end of a lap
+                        and only by
+                        rounding the finish line marker.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingSix">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqSix" aria-expanded="true" aria-controls="faqSix">Do I have to
+                        run the whole thing?
+                    </button>
+                </h3>
+                <div id="faqSix" class="accordion-collapse collapse" aria-labelledby="faq-headingSix"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">No. You're welcome to come join for any number of laps. They
+                        don't have to
+                        be consecutive either! Here are some unofficial lap counts for common distances. Add a
+                        lap if not
+                        starting at the official start line.
+                        <table class="table table-sm ms-2 mt-2 mb-4">
+                            <thead>
+                            <tr>
+                                <th scope="col">Distance</th>
+                                <th scope="col">Laps</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>5k</td>
+                                <td>26</td>
+                            </tr>
+                            <tr>
+                                <td>10k</td>
+                                <td>52</td>
+                            </tr>
+                            <tr>
+                                <td>10mi</td>
+                                <td>84</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingSeven">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqSeven" aria-expanded="true" aria-controls="faqSeven">Can I
+                        take breaks?
+                    </button>
+                </h3>
+                <div id="faqSeven" class="accordion-collapse collapse" aria-labelledby="faq-headingSeven"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">Yes. You can hang out at the aid station or any of the benches
+                        surrounding
+                        the course. You must continue running the lap in the same direction as when you stopped
+                        or the lap
+                        will not count. We recommend you start and stop only at the finish line so you can begin
+                        the next
+                        lap without this risk.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingEight">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqEight" aria-expanded="true" aria-controls="faqEight">How fast
+                        do I need to run?
+                    </button>
+                </h3>
+                <div id="faqEight" class="accordion-collapse collapse" aria-labelledby="faq-headingOEight"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">You should be able to complete your chosen distance in under 2.5
+                        hours.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingNine">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqNine" aria-expanded="true" aria-controls="faqNine">What if I'm
+                        late?
+                    </button>
+                </h3>
+                <div id="faqNine" class="accordion-collapse collapse" aria-labelledby="faq-headingNine"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">Run from the start line and join us! You must enter the course
+                        from "behind"
+                        the finish line in the direction that the field is running at the time you join. So, if
+                        we're
+                        running counterclockwise, start your first loop by crossing over the finish line from
+                        the east, and
+                        otherwise from the west. Note that this event is <a
+                                href="https://www.runnersworld.com/training/a20793329/chip-time-vs-gun-time/">gun
+                            time</a>
+                        only.
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
