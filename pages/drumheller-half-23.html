@@ -252,6 +252,24 @@ redirect_from:
         font-weight: 500;
     }
 
+    .anchor-link {
+        padding: 0 .175rem;
+        font-weight: 400;
+        color: rgba(255,255,255,0.5);
+        text-decoration: none;
+        opacity: 0;
+        transition: color 0.15s ease-in-out,opacity 0.15s ease-in-out;
+    }
+
+    .anchor-link::after {
+        content: "#";
+    }
+
+    .anchor-link:focus, .anchor-link:hover, :hover > .anchor-link, :target > .anchor-link {
+        text-decoration: none;
+        opacity: 1;
+    }
+
     .hero-button {
         font-weight: 600;
     }
@@ -589,7 +607,7 @@ redirect_from:
 
 <section>
     <div class="container">
-        <h2 id="course">Course</h2>
+        <h2 id="course">Course <a href="#course" class="anchor-link" aria-label="Link to this section. Course"></a></h2>
         <p>The course begins with a short segment down the upper vista, followed by 110 laps around Drumheller Fountain.
             Runners will enter first loop from the east of the finish line and begin by running counterclockwise. The
             direction will flip every 20 minutes, and runners must change directions only by rounding the marker placed
@@ -615,7 +633,7 @@ redirect_from:
 
 <section>
     <div class="container">
-        <h2 id="race-day">Race Day Procedures</h2>
+        <h2>Race Day <a href="#race-day" class="anchor-link" aria-label="Link to this section. Race Day"></a></h2>
         <ul>
             <li>Bring a water bottle</li>
             <li>Dress for sun and heat</li>
@@ -626,7 +644,7 @@ redirect_from:
 
 <section>
     <div class="container">
-        <h2 id="faq" class="mb-4">FAQ</h2>
+        <h2 class="mb-4" id="faq">FAQ <a href="#faq" class="anchor-link" aria-label="Link to this section. FAQ"></a></h2>
         <div id="faq-accordion" class="accordion accordion-flush">
             <div class="accordion-item">
                 <h3 class="accordion-header" id="faq-headingOne">
@@ -829,9 +847,9 @@ redirect_from:
     </div>
 </section>
 
-<section id="results">
+<section>
     <div class="container-xxl">
-        <h2 class="mb-4">Results</h2>
+        <h2 class="mb-4" id="results">Results <a href="#results" class="anchor-link" aria-label="Link to this section. Results"></a></h2>
         <h3>Official</h3>
         <div id="results-table-official" class="mb-5"></div>
         <hr/>
