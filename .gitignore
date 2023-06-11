@@ -13,3 +13,4 @@ rcc.ics
 # Bundler
 .bundle/
 vendor/
+.vendor/
