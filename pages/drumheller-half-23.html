@@ -916,6 +916,9 @@ redirect_from:
         let entry = dhm23Results[i]
         let countedLaps = Math.min(entry.lapTimes.length, 111)
         entry["finishTime"] = entry.lapTimes.slice(0, countedLaps).reduce((a, b) => a + b, 0)
+        entry["5kTime"] = countedLaps >= 26 ? entry.lapTimes.slice(0, 26).reduce((a, b) => a + b, 0) : Infinity
+        entry["10kTime"] = countedLaps >= 52 ? entry.lapTimes.slice(0, 52).reduce((a, b) => a + b, 0) : Infinity
+        entry["10miTime"] = countedLaps >= 84 ? entry.lapTimes.slice(0, 84).reduce((a, b) => a + b, 0) : Infinity
         entry["nLaps"] = entry.lapTimes.length
         if (entry.lapTimes.length < 111) {
             unofficialResults.push(entry)
@@ -925,6 +928,11 @@ redirect_from:
     }
 
     function formatDuration(seconds, includeHours = true, includeMilliseconds = false, trimLeadingZeros = false) {
+        if (!Number.isFinite(seconds)) {
+            // Don't render Infinity, NaN, etc.
+            return "";
+        }
+
         let date = new Date(0);
 
         let milliseconds = (seconds % 1.0) * 1000
@@ -1444,6 +1452,15 @@ redirect_from:
             {title: "Name", field: "name"},
             {
                 title: "Finish Time", field: "finishTime", sorter: "number", formatter: cell => formatDuration(cell.getValue(), true)
+            },
+            {
+                title: "5k Time", field: "5kTime", sorter: "number", formatter: cell => formatDuration(cell.getValue(), true)
+            },
+            {
+                title: "10k Time", field: "10kTime", sorter: "number", formatter: cell => formatDuration(cell.getValue(), true)
+            },
+            {
+                title: "10mi Time", field: "10miTime", sorter: "number", formatter: cell => formatDuration(cell.getValue(), true)
             }
         ],
         rowFormatter: rowFormatter
@@ -1460,6 +1477,15 @@ redirect_from:
                 title: "Laps", field: "nLaps", sorter: "number", formatter: (cell) => {
                     return cell.getData().nLaps - 1
                 }
+            },
+            {
+                title: "5k Time", field: "5kTime", sorter: "number", formatter: cell => formatDuration(cell.getValue(), true)
+            },
+            {
+                title: "10k Time", field: "10kTime", sorter: "number", formatter: cell => formatDuration(cell.getValue(), true)
+            },
+            {
+                title: "10mi Time", field: "10miTime", sorter: "number", formatter: cell => formatDuration(cell.getValue(), true)
             }
         ],
         rowFormatter: rowFormatter
