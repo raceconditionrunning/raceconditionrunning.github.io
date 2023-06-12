@@ -30,6 +30,8 @@ redirect_from:
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.js"
             charset="utf-8"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha256-wLz3iY/cO4e6vKZ4zRmo4+9XDpMcgKOvv/zEU3OMlRo=" crossorigin="anonymous">
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js" ></script>
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
 
     <script src="{{ site.baseurl }}/maps/link-line-1.geojson"></script>
     <script src="{{ site.baseurl }}/maps/light-rail-relay-legs-21.geojson"></script>
@@ -63,6 +65,24 @@ redirect_from:
         ul {
             padding-left: 0;
         }
+    }
+
+    .anchor-link {
+        padding: 0 .175rem;
+        font-weight: 400;
+        color: #6abf4a;
+        text-decoration: none;
+        opacity: 0;
+        transition: color 0.15s ease-in-out,opacity 0.15s ease-in-out;
+    }
+
+    .anchor-link::after {
+        content: "#";
+    }
+
+    .anchor-link:focus, .anchor-link:hover, :hover > .anchor-link, :target > .anchor-link {
+        text-decoration: none;
+        opacity: 1;
     }
 
     .imprint {
@@ -107,6 +127,10 @@ redirect_from:
 
     section {
         margin-bottom: 4rem;
+    }
+
+    .lead {
+        max-width: 340px;
     }
 
     .hero-button {
@@ -198,10 +222,6 @@ redirect_from:
         max-width: 700px;
     }
 
-    #schedule-section .container {
-        max-width: 1000px;
-    }
-
     #finish-row td {
         font-weight: bold;
     }
@@ -219,23 +239,6 @@ redirect_from:
         max-width: none;
     }
 
-    #epilogue {
-        margin-top: 4rem;
-        padding-top: 4rem;
-    }
-
-    #epilogue .container {
-        margin-bottom: 2rem;
-    }
-
-    #epilogue h1 {
-        margin-bottom: 2rem;
-        font-weight: bold;
-    }
-
-    #epilogue h2 {
-        margin-bottom: 1rem;
-    }
 
     figure {
         max-width: 1200px;
@@ -266,21 +269,35 @@ redirect_from:
         object-fit: contain;
     }
 
-    .gallery.allow-cropping {
+    .masonry {
+        background-color: rgba(0,0,0,.05);
+    }
+    /* clear fix */
+    .masonry:after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+    .masonry > a {
+        float: left;
     }
 
-    .gallery.allow-cropping li {
-        height: 40vh;
-        flex-grow: 1;
+    .masonry img {
+        display: block;
+        max-width: 100%;
     }
 
-    .gallery.allow-cropping img {
-        max-height: 100%;
-        min-width: 100%;
-        object-fit: cover;
-        vertical-align: bottom;
+    .masonry .grid-sizer,
+    .masonry a {
+        width: 50%;
     }
 
+    @media screen and (width > 720px) {
+        .masonry .grid-sizer,
+        .masonry a {
+            width: 33.33%;
+        }
+    }
     figure > .image-grid {
         margin-bottom: .25rem;
     }
@@ -334,7 +351,7 @@ redirect_from:
                 <div class="button-container"><a href="#epilogue" class="btn hero-button">Read Epilogue</a></div>
             </div>
         </header>
-        <p class="lead">We're running a relay along the Link 1 line to
+        <p class="lead text-center mx-auto">We're running a relay along the Link 1 line to
             celebrate the opening of the <a
                     href="https://www.soundtransit.org/system-expansion/northgate-link-extension">Northgate
                 Extension</a>. You're invited.</p>
@@ -346,7 +363,7 @@ redirect_from:
         <div class="alert alert-info" role="alert">
             This event took place in 2021. Looking for <a href="{{ site.baseurl }}/lrr">a more recent Light Rail Relay</a>?
         </div>
-        <h2>Route</h2>
+        <h2 id="route">Route <a href="#route" class="anchor-link" aria-label="Link to this section. Route"></a></h2>
         <p>The relay will start at Angle Lake station and follow the entire operational line to Northgate, with
             exchanges and selfies at each station on the way. More than one runner will be assigned to each leg.</p>
     </div>
@@ -354,10 +371,10 @@ redirect_from:
 </section>
 
 <section id="schedule-section">
-    <div class="container">
-        <h2>Schedule</h2>
+    <div class="container-xxl">
+        <h2 id="schedule">Schedule <a href="#schedule" class="anchor-link" aria-label="Link to this section. Schedule"></a></h2>
         <div class="table-responsive">
-            <table class="table" id="schedule">
+            <table class="table" id="schedule-table">
                 <tbody>
                 <thead>
                 <th>Leg</th>
@@ -572,7 +589,7 @@ redirect_from:
 
 <section>
     <div class="container">
-        <h2>Relay Day Procedures</h2>
+        <h2 id="procedures">Relay Day Procedures <a href="#procedures" class="anchor-link" aria-label="Link to this section. Relay Day Procedures"></a></h2>
         <ul>
             <li>Dress visibly. Bright colors, hi-viz and reflective if you've got it.</li>
             <li>Bring and wear your mask when inside station areas.</li>
@@ -608,7 +625,7 @@ redirect_from:
 
 <section>
     <div class="container">
-        <h2>FAQ</h2>
+        <h2 id="faq">FAQ <a href="#faq" class="anchor-link" aria-label="Link to this section. FAQ"></a></h2>
         <dl>
             <dt>Who can participate?</dt>
             <dd>Anyone in the CSE community.</dd>
@@ -654,10 +671,10 @@ redirect_from:
     </div>
 </section>
 <hr/>
-<section id="epilogue">
+<section>
 
     <div class="container">
-        <h1>Epilogue</h1>
+        <h1 id="epilogue">Epilogue <a href="#epilogue" class="anchor-link" aria-label="Link to this section. Epilogue"></a></h1>
         <p>On October 2nd, 2021 24 runners carried the baton from Angle Lake to Northgate. It was just seven and half
             hours of running, but the event was years coming.</p>
         <p>Two years prior, RCR ran the Northwest Passage Ragnar, a relay event where teams of 12 runners split up the
@@ -742,168 +759,135 @@ redirect_from:
         <p><i>Nick Walker</i></p>
     </div>
 
-    <div class="gallery allow-cropping">
-        <ul>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/0.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/0.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/1.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/1.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/2.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/2.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/3.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/3.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/4.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/4.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/5.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/5.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/5_2.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/5_2.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/6.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/6.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/7.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/7.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/7_2.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/7_2.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/8.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/8.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/9.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/9.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/10.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/10.webp"/>
-                </a>
-            </li>
+    <div class="w-100">
+        <div class="masonry">
+            <div class="grid-sizer"></div>
+            <a href="{{ site.baseurl }}/img/lrr21/0.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/0.webp"/>
+            </a>
 
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/11.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/11.webp"/>
-                </a>
-            </li>
+            <a href="{{ site.baseurl }}/img/lrr21/1.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/1.webp"/>
+            </a>
 
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/12.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/12.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/12_2.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/12_2.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/13.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/13.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/14.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/14.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/14_2.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/14_2.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/15.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/15.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/15_2.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/15_2.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/15_3.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/15_3.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/16.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/16.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/16_2.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/16_2.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/16_3.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/16_3.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/17.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/17.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/17_2.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/17_2.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/17_3.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/17_3.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/18.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/18.webp"/>
-                </a>
-            </li>
+            <a href="{{ site.baseurl }}/img/lrr21/2.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/2.webp"/>
+            </a>
 
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/18_2.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/18_2.webp"/>
-                </a>
-            </li>
-            <li>
-                <a href="{{ site.baseurl }}/img/lrr21/18_3.webp">
-                    <img src="{{ site.baseurl }}/img/lrr21/18_3.webp"/>
-                </a>
-            </li>
+            <a href="{{ site.baseurl }}/img/lrr21/3.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/3.webp"/>
+            </a>
 
-        </ul>
+            <a href="{{ site.baseurl }}/img/lrr21/4.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/4.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/5.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/5.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/5_2.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/5_2.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/6.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/6.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/7.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/7.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/7_2.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/7_2.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/8.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/8.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/9.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/9.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/10.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/10.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/11.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/11.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/12.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/12.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/12_2.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/12_2.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/13.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/13.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/14.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/14.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/14_2.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/14_2.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/15.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/15.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/15_2.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/15_2.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/15_3.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/15_3.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/16.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/16.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/16_2.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/16_2.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/16_3.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/16_3.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/17.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/17.webp"/>
+            </a>
+
+
+            <a href="{{ site.baseurl }}/img/lrr21/17_2.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/17_2.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/17_3.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/17_3.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/18.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/18.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/18_2.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/18_2.webp"/>
+            </a>
+
+            <a href="{{ site.baseurl }}/img/lrr21/18_3.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/18_3.webp"/>
+            </a>
+
+        </div>
     </div>
 </section>
 
@@ -1077,6 +1061,20 @@ redirect_from:
             document.getElementById("countdown").style.display = "none";
         }
     }, 1000)
+
+    document.addEventListener('DOMContentLoaded', function(e) {
+        let container = document.querySelector(".masonry")
+        let msnry = new Masonry(container, {
+            itemSelector: 'a',
+            columnWidth: '.grid-sizer',
+            percentPosition: true
+        });
+        // layout Masonry after each image loads
+        imagesLoaded(container,  function () {
+            console.log("hi")
+            msnry.layout()
+        });
+    })
 </script>
 
 </body>
