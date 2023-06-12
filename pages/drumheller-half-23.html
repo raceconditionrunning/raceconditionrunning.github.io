@@ -71,7 +71,14 @@ redirect_from:
     }
 
     ul {
-        padding-left: 0
+        /* Don't jam bullet at edge of screen on mobile */
+        padding-left: 1rem
+    }
+
+    @media screen and (min-width: 700px) {
+        ul {
+            padding-left: 0;
+        }
     }
 
     .imprint {
@@ -469,6 +476,12 @@ redirect_from:
 
     .laps-graph .finish-flag[data-lap-target='26'] polygon {
         fill: #dc8400;
+    }
+
+    .laps-graph .finish-flag text {
+        font-family: 'Avenir Next', Prompt, 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+        font-weight: bold;
+        font-size: 16px;
     }
 
     .tabulator {
@@ -916,9 +929,9 @@ redirect_from:
         let entry = dhm23Results[i]
         let countedLaps = Math.min(entry.lapTimes.length, 111)
         entry["finishTime"] = entry.lapTimes.slice(0, countedLaps).reduce((a, b) => a + b, 0)
-        entry["5kTime"] = countedLaps >= 26 ? entry.lapTimes.slice(0, 26).reduce((a, b) => a + b, 0) : Infinity
-        entry["10kTime"] = countedLaps >= 52 ? entry.lapTimes.slice(0, 52).reduce((a, b) => a + b, 0) : Infinity
-        entry["10miTime"] = countedLaps >= 84 ? entry.lapTimes.slice(0, 84).reduce((a, b) => a + b, 0) : Infinity
+        entry["5kTime"] = countedLaps > 26 ? entry.lapTimes.slice(0, 27).reduce((a, b) => a + b, 0) : Infinity
+        entry["10kTime"] = countedLaps > 52 ? entry.lapTimes.slice(0, 53).reduce((a, b) => a + b, 0) : Infinity
+        entry["10miTime"] = countedLaps > 84 ? entry.lapTimes.slice(0, 85).reduce((a, b) => a + b, 0) : Infinity
         entry["nLaps"] = entry.lapTimes.length
         if (entry.lapTimes.length < 111) {
             unofficialResults.push(entry)
@@ -975,15 +988,18 @@ redirect_from:
     }
 
     function lapPaceChart(data, lapTarget=Number.MAX_VALUE, onBarClick) {
+        /**
+         * Make an SVG viz of a participants lap data. Design based on
+         * Strava's lap analysis view
+         */
         // Declare the chart dimensions and margins.
-        const width = 1264;
-        const height = 500;
+        const width = 1000;
+        const height = 400;
         const marginTop = 30;
         const marginRight = 30;
         const marginBottom = 30;
         const marginLeft = 60;
 
-        let sansFontStack = 'Avenir Next, Prompt, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif'
         // Declare the x (horizontal position) scale.
         const x = d3.scaleLinear()
             .domain([0, d3.max(data, (d) => d.timeElapsed)]) // descending frequency
@@ -1028,7 +1044,7 @@ redirect_from:
         let y_inv
 
         if (ySpread > (60 * 10)) {
-            let exponent = 1/2
+            let exponent = 1/32
             if (ySpread > (60 * 30)) {
                 exponent = 1/64
             }
@@ -1054,8 +1070,6 @@ redirect_from:
 
         // Create the SVG container.
         const svg = d3.create("svg")
-            .attr("width", width)
-            .attr("height", height)
             .attr("viewBox", [0, 0, width, height])
             .attr("style", "max-width: 100%; height: auto;")
             .style("-webkit-tap-highlight-color", "transparent")
@@ -1109,7 +1123,7 @@ redirect_from:
             .attr("class", "data-bar")
             .attr("data-lap-num", pair => pair[0].n)
             .on("click", event => {
-                onBarClick(Number(event.target.attributes["data-lap-num"].value))
+                onBarClick(parseInt(event.target.attributes["data-lap-num"].value))
             })
 
         let barNodes = bars.nodes()
@@ -1124,6 +1138,7 @@ redirect_from:
 
         // Add the x-axis and label.
         svg.append("g")
+            .attr("class", "x-axis")
             .attr("transform", `translate(0,${height - marginBottom})`)
             .call(xAxis)
             .call(g => {
@@ -1160,21 +1175,6 @@ redirect_from:
                 .attr("text-anchor", "end")
                 .text("↑ Pace"));
 
-        // Lines that show up when you hover a bar
-        svg.append("g")
-            .attr("id", "flaglines")
-            .selectAll()
-            .data(pairs)
-            .join("line")
-            .attr("x1", (pair) => x(pair[1].timeElapsed))
-            .attr("x2", (pair) => x(pair[1].timeElapsed))
-            //.attr("y1", (pair) => height - marginBottom - y_inv(pair[1].paceMi) + y_inv(slowestPace))
-            .attr("y1", (pair) => height - marginBottom)
-            .attr("y2", 0)
-            .attr("fill", "none")
-            .attr("display", "none")
-
-
         if (data.length > lapTarget) {
             let finishTime = data[lapTarget].timeElapsed
             let flag = svg.append("g")
@@ -1189,7 +1189,7 @@ redirect_from:
                 .attr("y2", height - marginTop)
 
             let flag_group = flag.append("g")
-                .attr("transform", `translate(${x(finishTime)},0)`)
+                .attr("transform", `translate(${x(finishTime) + .5},0)`)
 
             let flag_shape = flag_group.append("polygon")
                 .attr("points", "0,0 -90,0 -80,16 -90,33 0,33")
@@ -1198,15 +1198,27 @@ redirect_from:
                 .attr("fill", "white")
                 .attr("text-anchor", "end")
                 .attr("alignment-baseline", "middle")
-                .attr("font-family", sansFontStack)
-                .attr("font-weight", 600)
-                .attr("font-size", "16px")
                 .attr("x", -10)
                 .attr("y", 22)
                 .text(formatDuration(finishTime))
             const {x: bb_x, y: bb_y, width: w, height: h} = text.node().getBBox();
 
         }
+
+        // Lines that show up when you hover a bar
+        svg.append("g")
+            .attr("id", "flaglines")
+            .selectAll()
+            .data(pairs)
+            .join("line")
+            .attr("x1", (pair) => x(pair[1].timeElapsed))
+            .attr("x2", (pair) => x(pair[1].timeElapsed))
+            //.attr("y1", (pair) => height - marginBottom - y_inv(pair[1].paceMi) + y_inv(slowestPace))
+            .attr("y1", (pair) => height - marginBottom)
+            .attr("y2", 0)
+            .attr("fill", "none")
+            .attr("display", "none")
+
 
         const tooltip = svg.append("g")
             .style("pointer-events", "none");
@@ -1245,7 +1257,7 @@ redirect_from:
                 .attr("height", h + 24)
 
             let xPosition = 6 + x(data[i].timeElapsed)
-            if (xPosition > 1000) {
+            if (xPosition + w > width) {
                 xPosition = x(data[i].timeElapsed) - w - 30
             }
             tooltip.attr("transform", `translate(${xPosition},0)`);
@@ -1260,6 +1272,9 @@ redirect_from:
             svg.dispatch("input", {bubbles: true});
         }
 
+        // Future responsive handler
+        //window.addEventListener('resize', () => {} );
+
         // Return the SVG element.
         return svg.node();
     }
@@ -1271,7 +1286,7 @@ redirect_from:
         let directionIndex = 0
         let lapsRun = data.lapTimes.length - 1
         let goals = [26, 52, 84, 110]
-        let lapTarget = goals[Math.max(d3.bisectLeft(goals, lapsRun) - 1, 0)]
+        let lapTarget = goals[Math.max(d3.bisectRight(goals, lapsRun) - 1, 0)]
         for (let i = 0; i < data.lapTimes.length; i++) {
             const lapDistance = i > 0 ? 190.70 : 120.50
             let pace = lapDistance / data.lapTimes[i]
@@ -1370,7 +1385,7 @@ redirect_from:
             })
             view.on("tableBuilt", () => view.setGroupHeader(function (value, count, data, group) {
                 if (value) {
-                    return "Extra Laps (" + count + ")"; //return the header contents
+                    return "Extra Laps (" + count + ")";
                 } else {
                     return ""
                 }
@@ -1413,7 +1428,7 @@ redirect_from:
     function scrollToResult(table) {
         let hash = window.location.hash
         if (hash) {
-            let id = Number(hash.match(/\d+(?=\D*$)/)[0])
+            let id = parseInt(hash.match(/\d+(?=\D*$)/)[0])
             let row = table.getRow(id); //return row component with index of 1
 
             if (row) {
@@ -1447,6 +1462,7 @@ redirect_from:
         data: officialResults,
         layout: "fitDataFill",
         nestedData: true,
+        responsiveLayout: true,
         initialSort: [{column: "finishTime", dir: "asc"}],
         columns: [
             {title: "Name", field: "name"},
@@ -1454,13 +1470,13 @@ redirect_from:
                 title: "Finish Time", field: "finishTime", sorter: "number", formatter: cell => formatDuration(cell.getValue(), true)
             },
             {
-                title: "5k Time", field: "5kTime", sorter: "number", formatter: cell => formatDuration(cell.getValue(), true)
+                title: "5k Time", field: "5kTime", sorter: "number", responsive: 3, formatter: cell => formatDuration(cell.getValue(), true)
             },
             {
-                title: "10k Time", field: "10kTime", sorter: "number", formatter: cell => formatDuration(cell.getValue(), true)
+                title: "10k Time", field: "10kTime", sorter: "number", responsive: 2, formatter: cell => formatDuration(cell.getValue(), true)
             },
             {
-                title: "10mi Time", field: "10miTime", sorter: "number", formatter: cell => formatDuration(cell.getValue(), true)
+                title: "10mi Time", field: "10miTime", sorter: "number", responsive: 1, formatter: cell => formatDuration(cell.getValue(), true)
             }
         ],
         rowFormatter: rowFormatter
@@ -1470,6 +1486,7 @@ redirect_from:
         data: unofficialResults,
         layout: "fitDataFill",
         nestedData: true,
+        responsiveLayout: true,
         initialSort: [{column: "nLaps", dir: "desc"}],
         columns: [
             {title: "Name", field: "name"},
@@ -1479,13 +1496,13 @@ redirect_from:
                 }
             },
             {
-                title: "5k Time", field: "5kTime", sorter: "number", formatter: cell => formatDuration(cell.getValue(), true)
+                title: "5k Time", field: "5kTime", sorter: "number", responsive: 3, formatter: cell => formatDuration(cell.getValue(), true)
             },
             {
-                title: "10k Time", field: "10kTime", sorter: "number", formatter: cell => formatDuration(cell.getValue(), true)
+                title: "10k Time", field: "10kTime", sorter: "number", responsive: 2, formatter: cell => formatDuration(cell.getValue(), true)
             },
             {
-                title: "10mi Time", field: "10miTime", sorter: "number", formatter: cell => formatDuration(cell.getValue(), true)
+                title: "10mi Time", field: "10miTime", sorter: "number", responsive: 1, formatter: cell => formatDuration(cell.getValue(), true)
             }
         ],
         rowFormatter: rowFormatter
