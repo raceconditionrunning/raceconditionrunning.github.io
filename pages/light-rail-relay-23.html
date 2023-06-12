@@ -1,0 +1,456 @@
+---
+permalink: light-rail-relay-23/
+redirect_from:
+- /lrr/
+- /light-rail-relay/
+- /lrr23/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Light Rail Relay 2022</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Relay along the Link Line 1 happening September 30th, 2023.">
+    <meta name="theme-color" content="#000000">
+    <meta property="og:image" content="{{ site.baseurl }}/img/lrr23/lrr-og-banner.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ site.baseurl }}/light-rail-relay-23/">
+    <meta property="og:title" content="Light Rail Relay 2023">
+    <meta property="og:description" content="Relay along the Link Line 1 happening September 30th, 2023.">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+          integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+            integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+            crossorigin=""></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css'
+          rel='stylesheet'/>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.js"
+            charset="utf-8"></script>
+
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js" ></script>
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha256-wLz3iY/cO4e6vKZ4zRmo4+9XDpMcgKOvv/zEU3OMlRo=" crossorigin="anonymous">
+
+
+    <script src="{{ site.baseurl }}/maps/link-line-1.geojson"></script>
+    <script src="{{ site.baseurl }}/maps/light-rail-relay-legs-22.geojson"></script>
+    <script src="{{ site.baseurl }}/maps/light-rail-relay-stations-22.geojson"></script>
+
+</head>
+<style>
+
+    :root {
+        --theme-primary-color: #5fac56;
+        --theme-primary-color-bright: #6cc462;
+        --bs-btn-hover-bg: var(--theme-primary-color-bright);
+        --bs-link-hover-color: #6cc462;
+        --bs-btn-hover-color: white;
+        --bs-btn-active-bg: var(--theme-primary-color-bright);
+        --bs-btn-hover-border-color: transparent;
+    }
+    body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !important;
+        font-size: 16px;
+        line-height: 1.5;
+        background-color: black;
+    }
+
+    ::selection {
+        background: #70cc66;
+    }
+
+    a {
+        color: var(--theme-primary-color);
+    }
+
+    ul {
+        /* Don't jam bullet at edge of screen on mobile */
+        padding-left: 1rem
+    }
+
+    @media screen and (min-width: 700px) {
+        ul {
+            padding-left: 0;
+        }
+    }
+
+    .lead {
+        max-width: 330px;
+    }
+
+    .anchor-link {
+        padding: 0 .175rem;
+        font-weight: 400;
+        color: #6abf4a;
+        text-decoration: none;
+        opacity: 0;
+        transition: color 0.15s ease-in-out,opacity 0.15s ease-in-out;
+    }
+
+    .anchor-link::after {
+        content: "#";
+    }
+
+    .anchor-link:focus, .anchor-link:hover, :hover > .anchor-link, :target > .anchor-link {
+        text-decoration: none;
+        opacity: 1;
+    }
+
+    .imprint {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-style: italic;
+        font-weight: 300;
+    }
+
+    .imprint a {
+        text-decoration: none;
+        color: #666;
+    }
+
+    .imprint img {
+        width: 100px;
+        opacity: .5;
+    }
+
+    #map {
+        height: 70vh;
+    }
+
+    dt {
+        font-weight: bold;
+    }
+
+    dd {
+        margin-left: 0;
+        margin-bottom: 1rem
+    }
+
+    header {
+        margin-bottom: 1rem;
+    }
+
+    header img {
+        flex: 1;
+        max-width: 100%;
+        max-height: 12rem;
+        margin: 0 auto;
+        padding: 1rem .5rem;
+        display: block;
+    }
+
+    section {
+        margin-bottom: 4rem;
+    }
+
+    .lead {
+        text-align: center;
+    }
+
+    .one-bg {
+        background-color: var(--theme-primary-color);
+    }
+
+    .black-bg {
+        background-color: black;
+        color: white
+    }
+    .hero-button {
+        background-color: var(--theme-primary-color);
+        font-weight: bold;
+        font-size: 1.5rem;
+        color: white;
+    }
+
+    .btn {
+        border-radius: 0;
+    }
+
+    .btn-outline-primary {
+        border-color: transparent !important;
+        background-color: var(--theme-primary-color);
+        color: white;
+        --bs-btn-hover-bg: var(--theme-primary-color-bright);
+        --bs-btn-hover-border-color: transparent;
+        --bs-btn-active-bg: var(--theme-primary-color-bright);
+    }
+
+    .leaflet-popup-content {
+        font-size: 1rem;
+        margin: 1rem;
+    }
+
+    .leaflet-container a.leaflet-popup-close-button {
+        padding: .5rem .5rem 0 0;
+    }
+
+    .leaflet-popup-content h3 {
+        margin-top: 0;
+        margin-bottom: .5rem;
+    }
+
+    .leaflet-popup-content-wrapper {
+        box-shadow: 0 3px 14px rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+    }
+
+    .leaflet-popup {
+        bottom: 1rem !important;
+        left: 1rem !important;
+    }
+
+    .leaflet-popup-tip-container {
+        top: 0px !important;
+        overflow: auto !important;
+        display: none;
+    }
+
+    .leaflet-popup-tip {
+        box-shadow: none !important;
+        background-clip: none !important;
+        display: none;
+    }
+
+    .leaflet-popup:before {
+        display: none;
+        content: "";
+        position: absolute;
+        border: 13px solid transparent;
+        border-bottom-color: white;
+        bottom: 0px;
+        margin-left: -13px;
+    }
+
+    .station-marker {
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 2rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+        letter-spacing: -1px;
+    }
+
+    .station-name {
+        font-size: 1rem
+    }
+
+    .leaflet-container a {
+        color: grey;
+    }
+
+    footer {
+        margin: 6rem 0 6rem 0;
+    }
+
+    .container {
+        max-width: 700px;
+    }
+
+    #finish-row td {
+        font-weight: bold;
+    }
+
+    #countdown {
+        text-align: center;
+        background-color: black;
+        font-size: 36px;
+        font-weight: 300;
+        padding: 4rem 0;
+        color: white;
+    }
+
+    #countdown .container {
+        max-width: none;
+    }
+
+    figure {
+        max-width: 1200px;
+        margin: 0 auto 2rem auto;
+    }
+
+    figure img {
+        width: 100%;
+    }
+
+    .gallery ul {
+        display: flex;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    .gallery.respect-dimensions ul {
+        flex-wrap: nowrap;
+        height: 40vh;
+    }
+
+    .gallery.respect-dimensions li {
+
+    }
+
+    .gallery.respect-dimensions img {
+        width: 100%;
+        object-fit: contain;
+    }
+
+    .masonry {
+        background-color: rgba(0,0,0,.05);
+    }
+
+    /* clear fix */
+    .masonry:after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+    .masonry > a {
+        float: left;
+    }
+
+    .masonry img {
+        display: block;
+        max-width: 100%;
+    }
+
+    .masonry .grid-sizer,
+    .masonry a {
+        width: 50%;
+    }
+
+    @media screen and (width > 720px) {
+        .masonry .grid-sizer,
+        .masonry a {
+            width: 33.33%;
+        }
+    }
+
+    figure > .image-grid {
+        margin-bottom: .25rem;
+    }
+    .image-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(auto-fit, minmax(210px, auto));
+        justify-items: center;
+        overflow: hidden;
+        grid-gap: .25rem;
+
+    }
+
+    .image-grid img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .two-up-one-down :nth-child(3) {
+        grid-column: span 2;
+    }
+
+    .one-left-two-right {
+        grid-template-columns: 4fr 5fr;
+    }
+
+    .one-left-two-right :nth-child(1) {
+        grid-row: span 2;
+    }
+
+    hr {
+        width: 8rem;
+        margin: 4rem auto;
+        display: block;
+        border: 1px solid #ccc;
+    }
+</style>
+<body>
+
+<section>
+    <div class="black-bg pt-4 pb-4">
+        <p class="imprint"><a href="{{ site.baseurl }}/">Race Condition Running</a></p>
+        <header class="d-flex flex-wrap align-items-center justify-content-center gap-3">
+            <div class="one-bg w-100 mb-4">
+                <img src="{{ site.baseurl }}/img/lrr22/lrr-1-white.svg" alt="Light Rail Relay" class="p-sm-4"/>
+            </div>
+            <div class=" w-100">
+                <div class="subheader d-flex flex-column align-items-center">
+                    <h2 class="mb-3">September 30th</h2>
+                    <p class="lead"> The relay along the Link 1 Line starts <span id="static-count" style="">soon</span><span id="dynamic-count"
+                                                                                                                                style="display:none">in
+        <span id="days"></span> day<span id="day-plural">s</span> <span id="hours"></span> hour<span
+                            id="hour-plural">s</span> <span id="minutes"></span> minute<span id="minute-plural">s</span> and <span
+                            id="seconds"></span> second<span id="second-plural">s</span></span>.
+               </p>
+                    <!--div class="button-container"><a href="https://forms.gle/QWPAZ2EjVERVeKtk8" class="btn hero-button">Sign
+                        Up</a></div-->
+                    <!--div class="button-container"><a href="https://docs.google.com/spreadsheets/d/1rd9Si3BcPgqt3fWxoHnuUB0rnN00XLtziMaHSPpQt14/edit#gid=0" class="btn hero-button">Follow Along</a></div-->
+                    <!--div class="button-container"><a href="#epilogue" class="btn hero-button">Read Epilogue</a></div-->
+                </div>
+            </div>
+        </header>
+    </div>
+</section>
+
+<section id="countdown">
+
+</section>
+
+<script>
+    let countDownDate = new Date("Sept 30, 2023 9:30:00").getTime();
+    function updateCountdown(includeSeconds) {
+        document.getElementById("static-count").style.display = "none";
+        document.getElementById("dynamic-count").style.display = "";
+        let now = new Date().getTime();
+        let timeleft = countDownDate - now;
+
+        let days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+        let hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+        document.getElementById("days").innerHTML = days
+        document.getElementById("hours").innerHTML = hours
+        document.getElementById("minutes").innerHTML = minutes
+        document.getElementById("seconds").innerHTML = seconds
+
+        if (seconds === 1) {
+            document.getElementById("second-plural").style.display = "none"
+        } else {
+            document.getElementById("second-plural").style.display = ""
+        }
+        if (minutes === 1) {
+            document.getElementById("minute-plural").style.display = "none"
+        } else {
+            document.getElementById("minute-plural").style.display = ""
+        }
+        if (hours === 1) {
+            document.getElementById("hour-plural").style.display = "none"
+        } else {
+            document.getElementById("hour-plural").style.display = ""
+        }
+        if (days === 1) {
+            document.getElementById("day-plural").style.display = "none"
+        } else {
+            document.getElementById("day-plural").style.display = ""
+        }
+        if (timeleft < 0) {
+            clearInterval(countdown);
+
+            //document.getElementById("secs").innerHTML = ""
+            document.getElementById("countdown").style.display = "none";
+        }
+    }
+    updateCountdown()
+    let countdown = setInterval(updateCountdown, 1000)
+
+</script>
+
+</body>
+</html>

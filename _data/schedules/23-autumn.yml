@@ -1,0 +1,15 @@
+- date: "2023-09-23"
+  plan:
+    - time: "7:30"
+      route:
+        name: Moran Constitutional Relay
+        map: https://nwtrailruns.com/events/moran-constitutional-relay/
+        dist: 71.6
+
+- date: "2023-09-30"
+  plan:
+    - time: "9:30"
+      route:
+        name: Light Rail Relay 2023
+        map: /light-rail-relay-23
+        dist: 28.3
