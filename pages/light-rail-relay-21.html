@@ -33,9 +33,6 @@ redirect_from:
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js" ></script>
     <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
 
-    <script src="{{ site.baseurl }}/maps/link-line-1.geojson"></script>
-    <script src="{{ site.baseurl }}/maps/light-rail-relay-legs-21.geojson"></script>
-    <script src="{{ site.baseurl }}/maps/light-rail-relay-stations.geojson"></script>
 
 </head>
 <style>
@@ -896,173 +893,187 @@ redirect_from:
 </footer>
 
 <script type="module">
-    let stationToName = new Array(stations.features.length);
-    for (let i = 0; i < stations.features.length; i++) {
-        let station = stations.features[i];
-        stationToName[station.properties.id] = station.properties.name
-    }
-    // initialize the map
-    let map = L.map('map', {
-        fullscreenControl: true,
-        scrollWheelZoom: false
-    }).setView([47.60640473782326, -122.32747365635417], 10);
 
-    // Allow scroll interaction while the user is engaged with the map, but not while just landing or casually scrolling the page
-    map.on('focus', function () {
-        map.scrollWheelZoom.enable();
-    });
-    map.on('blur', function () {
-        map.scrollWheelZoom.disable();
-    });
+    Promise.all([
+        fetch("{{ site.baseurl }}/maps/link-line-1.geojson"),
+        fetch("{{ site.baseurl }}/maps/light-rail-relay-legs-21.geojson"),
+        fetch("{{ site.baseurl }}/maps/light-rail-relay-stations-21.geojson")
+    ])
+        .then(responses => Promise.all(responses.map(res => res.json())))
+        .then(([route, legs, stations]) => {
+            let stationToName = new Array(stations.features.length);
+            for (let i = 0; i < stations.features.length; i++) {
+                let station = stations.features[i];
+                stationToName[station.properties.id] = station.properties.name
+            }
+            // initialize the map
+            let map = L.map('map', {
+                fullscreenControl: true,
+                scrollWheelZoom: false
+            }).setView([47.60640473782326, -122.32747365635417], 10);
 
-    // load a tile layer
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        minZoom: 11,
-        id: 'nickswalker/cktf8e9eo31cd18pcj0o5v11w',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: 'pk.eyJ1Ijoibmlja3N3YWxrZXIiLCJhIjoiY2t0ZjgyenE4MDR1YjJ1cno0N3hxYzI4YSJ9.ivPdsoEtV9TaLGbOOfFXKA'
-    }).addTo(map);
-    L.control.locate({keepCurrentZoomLevel: true, flyTo: true}).addTo(map);
+            // Allow scroll interaction while the user is engaged with the map, but not while just landing or casually scrolling the page
+            map.on('focus', () => map.scrollWheelZoom.enable());
+            map.on('blur', () => map.scrollWheelZoom.disable());
 
-    function onEachFeature(feature, layer) {
-        layer.bindTooltip(feature.properties.name, {
-            "offset": [20, 0],
-            "direction": "right",
-            "className": "station-name",
-            opacity: 0.75
-        });
-    }
+            // load a tile layer
+            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                maxZoom: 18,
+                minZoom: 11,
+                id: 'nickswalker/cktf8e9eo31cd18pcj0o5v11w',
+                tileSize: 512,
+                zoomOffset: -1,
+                accessToken: 'pk.eyJ1Ijoibmlja3N3YWxrZXIiLCJhIjoiY2t0ZjgyenE4MDR1YjJ1cno0N3hxYzI4YSJ9.ivPdsoEtV9TaLGbOOfFXKA'
+            }).addTo(map);
+            L.control.locate({keepCurrentZoomLevel: true, flyTo: true}).addTo(map);
+
+            function onEachFeature(feature, layer) {
+                layer.bindTooltip(feature.properties.name, {
+                    "offset": [20, 0],
+                    "direction": "right",
+                    "className": "station-name",
+                    opacity: 0.75
+                });
+            }
 
 
-    let stationButtonLayer = L.geoJSON(stations, {
-        pointToLayer: function (feature, latlng) {
-            return L.circleMarker(latlng, {
-                radius: 10,
-                weight: 0,
-                opacity: 0,
-                'fill-opacity': 0.0,
-                color: "rgba(0,0,0,0)"
-            });
-        },
-        onEachFeature: onEachFeature
-    })
-    stationButtonLayer.on('mouseover', function (e) {
-        e.layer.openPopup();
-    });
-    stationButtonLayer.on('mouseout', function (e) {
-        this.closePopup();
-    });
-    let stationLabels = L.geoJSON(stations, {
-        pointToLayer: function (feature, latlng) {
-            let marker = L.circleMarker(latlng, {
-                radius: 0,
-                weight: 0,
-                opacity: 0,
-                fillOpacity: 0
-            });
-            let stationId = feature.properties.id
-            marker.bindTooltip(stationId.toString(), {
-                "permanent": true,
-                "offset": L.point(0, 0),
-                "direction": "center",
-                "className": "station-marker"
+            let stationButtonLayer = L.geoJSON(stations, {
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, {
+                        radius: 10,
+                        weight: 0,
+                        opacity: 0,
+                        'fill-opacity': 0.0,
+                        color: "rgba(0,0,0,0)"
+                    });
+                },
+                onEachFeature: onEachFeature
             })
-            return marker;
+            stationButtonLayer.on('mouseover', e => e.layer.openPopup());
+            stationButtonLayer.on('mouseout', function (e) {this.closePopup()} );
+            let stationLabels = L.geoJSON(stations, {
+                pointToLayer: function (feature, latlng) {
+                    let marker = L.circleMarker(latlng, {
+                        radius: 0,
+                        weight: 0,
+                        opacity: 0,
+                        fillOpacity: 0
+                    });
+                    let stationId = feature.properties.id
+                    marker.bindTooltip(stationId.toString(), {
+                        "permanent": true,
+                        "offset": L.point(0, 0),
+                        "direction": "center",
+                        "className": "station-marker"
+                    })
+                    return marker;
 
-        },
-    })
-
-    let clicked = undefined
-
-    function clickFeature(e) {
-        if (clicked) {
-            clicked.setStyle({color: "#6abf4a"});
-        }
-        let feature = e.layer;
-        feature.setStyle({
-            color: '#497f32',
-        });
-        clicked = feature;
-    }
-
-    const routeLayer = L.geoJSON(route, {
-        "interactive": false, "style": {
-            "color": "#aaa",
-            "weight": 2,
-            "opacity": 1.0,
-            //"dashArray": '4, 12'
-        }
-    });
-
-
-    routeLayer.addTo(map);
-    const legsLayer = L.geoJSON(legs, {
-        "style": {"color": "#6abf4a", "weight": 6}, onEachFeature: function (feature, layer) {
-            let content = "<h4>" + stationToName[feature.properties.start] + " to " + stationToName[feature.properties.end] + "</h4>"
-            content += "<b>Distance:</b> " + String(feature.properties.distance) + "mi<br/>"
-            content += "<b>Climbing:</b> " + String(feature.properties.climbing) + "ft<br/>"
-            content += "<b>Notes</b>: " + feature.properties.notes
-            layer.bindPopup(content)
-            layer.getPopup().on('remove', function () {
-                layer.setStyle({"color": "#6abf4a"})
-
+                },
             })
-        }
-    })
-    legsLayer.on("click", clickFeature)
-    legsLayer.addTo(map);
-    stationButtonLayer.addTo(map);
-    stationLabels.addTo(map);
-    map.fitBounds(legsLayer.getBounds().pad(0.1))
+
+            let clicked = undefined
+
+            function clickFeature(e) {
+                if (clicked) {
+                    clicked.setStyle({color: "#6abf4a"});
+                }
+                let feature = e.layer;
+                feature.setStyle({
+                    color: '#497f32',
+                });
+                clicked = feature;
+            }
+
+            const routeLayer = L.geoJSON(route, {
+                "interactive": false, "style": {
+                    "color": "#aaa",
+                    "weight": 2,
+                    "opacity": 1.0,
+                    //"dashArray": '4, 12'
+                }
+            });
+
+            routeLayer.addTo(map);
+            const legsLayer = L.geoJSON(legs, {
+                "style": {"color": "#6abf4a", "weight": 6}, onEachFeature: function (feature, layer) {
+                    let content = "<h4>" + stationToName[feature.properties.start] + " to " + stationToName[feature.properties.end] + "</h4>"
+                    content += "<b>Distance:</b> " + String(feature.properties.distance) + "mi<br/>"
+                    content += "<b>Climbing:</b> " + String(feature.properties.climbing) + "ft<br/>"
+                    content += "<b>Notes</b>: " + feature.properties.notes
+                    layer.bindPopup(content)
+                    layer.getPopup().on('remove', function () {
+                        layer.setStyle({"color": "#6abf4a"})
+
+                    })
+                }
+            })
+            legsLayer.on("click", clickFeature)
+            legsLayer.addTo(map);
+            stationButtonLayer.addTo(map);
+            stationLabels.addTo(map);
+            map.fitBounds(legsLayer.getBounds().pad(0.1))
+        })
 
     let countDownDate = new Date("Oct 2, 2021 9:30:00").getTime();
-    let countdown = setInterval(function () {
-        document.getElementById("static-count").style.display = "none";
-        document.getElementById("dynamic-count").style.display = "";
-        let now = new Date().getTime();
-        let timeleft = countDownDate - now;
+    addEventListener("DOMContentLoaded", (event) => {
+        const daysEl = document.getElementById("days")
+        const hoursEl = document.getElementById("hours")
+        const minutesEl = document.getElementById("minutes")
+        const secondsEl = document.getElementById("seconds")
 
-        let days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
-        let hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
-        document.getElementById("days").innerHTML = days
-        document.getElementById("hours").innerHTML = hours
-        document.getElementById("minutes").innerHTML = minutes
-        document.getElementById("seconds").innerHTML = seconds
+        const secondPluralEl = document.getElementById("second-plural")
+        const minutePluralEl = document.getElementById("minute-plural")
+        const hourPluralEl = document.getElementById("hour-plural")
+        const dayPluralEl = document.getElementById("day-plural")
+        let countdownInterval
+        function updateCountdown(includeSeconds) {
+            document.getElementById("static-count").style.display = "none";
+            document.getElementById("dynamic-count").style.display = "";
+            let now = new Date().getTime();
+            let timeleft = countDownDate - now;
 
-        if (seconds === 1) {
-            document.getElementById("second-plural").style.display = "none"
-        } else {
-            document.getElementById("second-plural").style.display = ""
-        }
-        if (minutes === 1) {
-            document.getElementById("minute-plural").style.display = "none"
-        } else {
-            document.getElementById("minute-plural").style.display = ""
-        }
-        if (hours === 1) {
-            document.getElementById("hour-plural").style.display = "none"
-        } else {
-            document.getElementById("hour-plural").style.display = ""
-        }
-        if (days === 1) {
-            document.getElementById("day-plural").style.display = "none"
-        } else {
-            document.getElementById("day-plural").style.display = ""
-        }
-        if (timeleft < 0) {
-            clearInterval(countdown);
+            let days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+            daysEl.innerHTML = days
+            hoursEl.innerHTML = hours
+            minutesEl.innerHTML = minutes
+            secondsEl.innerHTML = seconds
 
-            //document.getElementById("secs").innerHTML = ""
-            document.getElementById("countdown").style.display = "none";
-        }
-    }, 1000)
+            if (seconds === 1) {
+                secondPluralEl.style.display = "none"
+            } else {
+                secondPluralEl.style.display = ""
+            }
+            if (minutes === 1) {
+                minutePluralEl.style.display = "none"
+            } else {
+                minutePluralEl.style.display = ""
+            }
+            if (hours === 1) {
+                hourPluralEl.style.display = "none"
+            } else {
+                hourPluralEl.style.display = ""
+            }
+            if (days === 1) {
+                dayPluralEl.style.display = "none"
+            } else {
+                dayPluralEl.style.display = ""
+            }
+            if (timeleft < 0) {
+                clearInterval(countdownInterval);
 
-    document.addEventListener('DOMContentLoaded', function(e) {
+                //document.getElementById("secs").innerHTML = ""
+                document.getElementById("countdown").style.display = "none";
+            }
+        }
+        updateCountdown()
+        countdownInterval = setInterval(updateCountdown, 1000)
+    });
+
+    document.addEventListener('DOMContentLoaded', e => {
         let container = document.querySelector(".masonry")
         let msnry = new Masonry(container, {
             itemSelector: 'a',
@@ -1071,7 +1082,6 @@ redirect_from:
         });
         // layout Masonry after each image loads
         imagesLoaded(container,  function () {
-            console.log("hi")
             msnry.layout()
         });
     })
