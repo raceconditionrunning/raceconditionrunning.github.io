@@ -1,0 +1,1008 @@
+---
+permalink: ragnar-23/
+redirect_from:
+- /ragnar/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RCR Ragnar NWP 2023 Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="theme-color" content="#000000">
+    <!--<meta property="og:image" content="{{ site.baseurl }}/img/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ site.baseurl }}/ragnar-23/">
+    <meta property="og:title" content="">
+    <meta property="og:description" content=".">-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+          integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+            integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+            crossorigin=""></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css'
+          rel='stylesheet'/>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.js"
+            charset="utf-8"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-sidebar-v2@3.2.3/css/leaflet-sidebar.min.css" integrity="sha256-10dwwxs/pdWEYoC56aJvmY3kbMMa9/3uSWWNkGcrGq8=" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-sidebar-v2@3.2.3/js/leaflet-sidebar.min.js" integrity="sha256-4r81BYKeNxSG+nrK/UPQq75pDlH+GkiZn/zc/xkNMLA=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"
+            integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha256-wLz3iY/cO4e6vKZ4zRmo4+9XDpMcgKOvv/zEU3OMlRo=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+
+</head>
+<style>
+
+    :root {
+        --theme-primary-color: #F17A21;
+        --theme-primary-color-bright: #ff6f00;
+        --bs-btn-hover-bg: var(--theme-primary-color-bright);
+        --bs-link-hover-color: var(--theme-primary-color-bright);
+        --bs-btn-hover-color: white;
+        --bs-btn-active-bg: var(--theme-primary-color-bright);
+        --bs-btn-hover-border-color: transparent;
+    }
+    body {
+        margin: 0;
+        font-family:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+
+    a {
+        color: var(--theme-primary-color);
+    }
+    .btn-outline-primary {
+        --bs-btn-color: var(--theme-primary-color);
+        --bs-btn-border-color: var(--theme-primary-color);
+        --bs-btn-hover-bg: var(--theme-primary-color);
+        --bs-btn-hover-border-color: var(--theme-primary-color);
+
+        color: var(--theme-primary-color)
+    }
+
+    ul {
+        /* Don't jam bullet at edge of screen on mobile */
+        padding-left: 1rem
+    }
+
+    @media screen and (min-width: 700px) {
+        ul {
+            padding-left: 0;
+        }
+    }
+
+    .imprint {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-style: italic;
+        font-weight: 300;
+    }
+
+    .imprint a {
+        text-decoration: none;
+        color: #666;
+    }
+
+    .imprint img {
+        width: 100px;
+        opacity: .5;
+    }
+
+    #map {
+        height: 100vh
+    }
+
+    .leaflet-sidebar-tabs > li.active, .leaflet-sidebar-tabs > ul > li.active,
+    .leaflet-sidebar-header {
+        background-color: var(--theme-primary-color);
+    }
+
+    .leaflet-container {
+        font-size: inherit;
+    }
+
+    .leaflet-sidebar-close {
+        margin-right: 1rem;
+    }
+
+    .leaflet-sidebar-header {
+        position: sticky;
+        top: 0
+    }
+
+    .leaflet-popup-content {
+        font-size: 1rem;
+        margin: 1rem;
+    }
+
+    .leaflet-container {
+        font-family: inherit;
+    }
+
+    .leaflet-container a.leaflet-popup-close-button {
+        padding: .5rem .5rem 0 0;
+    }
+
+    .leaflet-popup-content h3 {
+        margin-top: 0;
+        margin-bottom: .5rem;
+    }
+
+    .leaflet-popup-content-wrapper {
+        box-shadow: 0 3px 14px rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+    }
+
+    .leaflet-popup {
+        bottom: 1rem !important;
+        left: 1rem !important;
+    }
+
+    .leaflet-popup-tip-container {
+        top: 0px !important;
+        overflow: auto !important;
+        display: none;
+    }
+
+    .leaflet-popup-tip {
+        box-shadow: none !important;
+        background-clip: none !important;
+        display: none;
+    }
+
+    .leaflet-popup:before {
+        display: none;
+        content: "";
+        position: absolute;
+        border: 13px solid transparent;
+        border-bottom-color: white;
+        bottom: 0px;
+        margin-left: -13px;
+    }
+
+    .station-marker {
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 2rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+        letter-spacing: -1px;
+    }
+
+    .station-name {
+        font-size: 1rem
+    }
+
+    .leaflet-container a {
+        color: inherit;
+    }
+
+    @keyframes leaflet-livemarker-pulsate {
+        from {
+            transform: scale(0.2);
+            opacity: 0.0;
+        }
+        5% {
+            opacity: .6;
+        }
+        95% {
+            transform: scale(1.3);
+            opacity: 0;
+        }
+        to {
+            transform: scale(0.7);
+            opacity: 0;
+        }
+    }
+
+    .leaflet-livemarker,
+    .leaflet-livemarker-small {
+        width: 36px;
+        height: 36px;
+        background: #fff;
+        border-radius: 50%;
+    }
+    .leaflet-livemarker i.inner,
+    .leaflet-livemarker-small i.inner {
+        display: block;
+        background: #38f;
+        width: calc(100% - 6px);
+        height: calc(100% - 6px);
+        border-radius: 50%;
+        margin-left: 3px;
+        margin-top: 3px;
+    }
+    .leaflet-livemarker-small {
+        width: 17px;
+        height: 17px;
+    }
+
+    .leaflet-livemarker i.pulse,
+    .leaflet-livemarker-small i.pulse {
+        display: block;
+        animation: leaflet-livemarker-pulsate 1.5s ease-in-out infinite;
+        //border:1pt solid #fff;
+        --pulse-color: #444;
+        border-radius:51px;
+        box-shadow:inset 0 0 3px var(--pulse-color), inset 0 0 3px var(--pulse-color), inset 0 0 3px var(--pulse-color), 0 0 3px var(--pulse-color), 0 0 3px var(--pulse-color), 0 0 3px var(--pulse-color);
+        /* set the ring's new dimension and re-center it */
+        height:70px!important;
+        width:70px!important;
+        position: absolute;
+        top: -18px;
+        left: -18px
+    }
+
+    .leaflet-livemarker-small i.pulse {
+        height: 39px !important;
+        width: 39px !important;
+        top: -11px;
+        left: -11px;
+    }
+
+    .leaflet-livemarker::after {
+        content: attr(data-age);
+        background-color: white;
+        color: #38f;
+        font-size: 1rem;
+        padding: 1px 8px;
+        position: absolute;
+        top: -8px;
+        left: 24px;
+        text-align: center;
+        border-radius: 20px;
+    }
+
+    .leaflet-livemarker i.inner::after {
+        content: attr(data-label-text);
+        text-align: center;
+        color: #EEE;
+        font-size: 1rem;
+        text-align: center;
+        display: block;
+        font-style: normal;
+
+    }
+
+    .leaflet-livemarker.stale i.inner {
+        background-color: #6584b2;
+    }
+
+    .leaflet-livemarker.stale::after {
+        color: #6584b2;
+    }
+
+    .leaflet-livemarker .image {
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        height: 80%;
+        width: 80%;
+        border-radius: 50%;
+    }
+</style>
+<body>
+
+
+<section id="course-map">
+    <div id="sidebar" class="leaflet-sidebar collapsed">
+        <!-- Nav tabs -->
+        <div class="leaflet-sidebar-tabs">
+            <ul role="tablist"> <!-- top aligned tabs -->
+                <!--li><a href="#assignments" role="tab"><i class="bi bi-calendar-range-fill"></i></a></li-->
+                <li><a href="#leg-notes" role="tab"><i class="bi bi-info-circle-fill"></i></a></li>
+                <li><a href="#turn-by-turn" role="tab"><i class="bi bi-person-fill"></i></a></li>
+                <li><a href="#van-directions" role="tab"><i class="bi bi-car-front-fill"></i></a></li>
+            </ul>
+
+        </div>
+
+        <!-- Tab panes -->
+        <div class="leaflet-sidebar-content">
+            <div class="leaflet-sidebar-pane" id="assignments">
+                <h1 class="leaflet-sidebar-header mb-2">
+                    Leg Assignments
+                    <div class="leaflet-sidebar-close"><i class="bi bi-caret-left"></i></div>
+                </h1>
+                <div id="assignments-content"></div>
+            </div>
+            <div class="leaflet-sidebar-pane" id="leg-notes">
+                <h1 class="leaflet-sidebar-header mb-2">
+                    Leg Info
+                    <div class="leaflet-sidebar-close"><i class="bi bi-caret-left"></i></div>
+                </h1>
+                <div id="leg-notes-content"></div>
+            </div>
+
+            <div class="leaflet-sidebar-pane" id="turn-by-turn">
+                <h1 class="leaflet-sidebar-header mb-2">
+                    Runner Directions
+                    <div class="leaflet-sidebar-close"><i class="bi bi-caret-left"></i></div>
+                </h1>
+                <div id="turn-by-turn-content"></div>
+            </div>
+
+            <div class="leaflet-sidebar-pane" id="van-directions">
+                <h1 class="leaflet-sidebar-header mb-2">
+                    Van Directions
+                    <div class="leaflet-sidebar-close"><i class="bi bi-caret-left"></i></div>
+                </h1>
+                <div id="van-directions-content"></div>
+            </div>
+
+
+        </div>
+    </div>
+    <div id="map"></div>
+</section>
+
+
+<!--footer>
+    <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg" alt="A happy piece of toast running"/></a></p>
+</footer-->
+
+<!--suppress JSVoidFunctionReturnValueUsed -->
+<script type="module">
+
+    (function(window) {
+        let icon = L.divIcon({
+            className: "leaflet-livemarker",
+            iconSize: [34, 34],
+            iconAnchor: [17, 17],
+            popupAnchor: [0, -20],
+            labelAnchor: [11, -3],
+            html: '<i class="inner"></i>'
+        });
+
+        let iconPulsing = L.divIcon({
+            className: "leaflet-livemarker",
+            iconSize: [34, 34],
+            iconAnchor: [17, 17],
+            popupAnchor: [0, -20],
+            labelAnchor: [11, -3],
+            html: '<i class="inner"></i><i class="pulse"></i>'
+        });
+
+        let iconSmall = L.divIcon({
+            className: "leaflet-livemarker-small",
+            iconSize: [17, 17],
+            iconAnchor: [9, 9],
+            popupAnchor: [0, -10],
+            labelAnchor: [3, -4],
+            html: '<i class="inner"></i>'
+        });
+        let iconPulsingSmall = L.divIcon({
+            className: "leaflet-livemarker-small",
+            iconSize: [17, 17],
+            iconAnchor: [9, 9],
+            popupAnchor: [0, -10],
+            labelAnchor: [3, -4],
+            html: '<i class="inner"></i><i class="pulse"></i>'
+        });
+        let circleStyle = {
+            stroke: true,
+            color: "#03f",
+            weight: 1,
+            opacity: 0.5,
+            fillOpacity: 0.10,
+            fillColor: "#03f",
+            clickable: false
+        };
+
+        L.UserMarker = L.Marker.extend({
+            options: {
+                timestamp: -1,
+                pulsing: false,
+                smallIcon: false,
+                accuracy: 0,
+                circleOpts: circleStyle
+            },
+
+            initialize: function(latlng, options) {
+                options = L.Util.setOptions(this, options);
+
+                this.setPulsing(this.options.pulsing);
+                this._accMarker = L.circle(latlng, this.options.accuracy, this.options.circleOpts);
+                this._timestamp = this.options.timestamp
+                // call super
+                L.Marker.prototype.initialize.call(this, latlng, this.options);
+
+                this.on("move", function() {
+                    this._accMarker.setLatLng(this.getLatLng());
+                }).on("remove", function() {
+                    this._map.removeLayer(this._accMarker);
+                });
+            },
+            _configureIcon: function() {
+                if (this.options.smallIcon) {
+                    this.setIcon(!!this._pulsing ? iconPulsingSmall : iconSmall);
+                } else {
+                    this.setIcon(!!this._pulsing ? iconPulsing : icon);
+                }
+                if (this._icon) {
+                    if (this._imageData) {
+                        let src = `'data:image/png;base64,${this._imageData.replaceAll("'", "")}'`;
+                        let contents = `<img class='image' alt='' src=${src} height='20' width='20'>`
+                        this._icon.innerHTML += contents
+                    }
+                    if (this._text) {
+                        this._icon.querySelector(".inner").setAttribute("data-label-text", this._text)
+
+                    }
+                    if (this._stale) {
+                        this._icon.classList.add("stale")
+                    } else {
+                        this._icon.classList.remove("stale")
+                    }
+                }
+
+            },
+
+            setPulsing: function(pulsing) {
+                // Idempotent
+                if (pulsing === this._pulsing) return;
+                this._pulsing = pulsing;
+
+               this._configureIcon()
+            },
+            setTimestamp: function (timestamp) {
+                this._timestamp = timestamp
+
+            },
+
+            setStale: function (stale) {
+                // Idempotent
+                if (this._stale === stale) {
+                    return;
+                }
+                this._stale = stale
+                this._configureIcon()
+            },
+
+            setImage: function (imageData) {
+
+                this._imageData = imageData
+
+                this._configureIcon()
+
+            },
+
+            setText: function (initials) {
+                this._text = initials.substring(0,2)
+                this._configureIcon()
+            },
+
+            updateDisplayedAge: function () {
+                let now = new Date().getTime() / 1000;
+                let age = now - this._timestamp;
+                this._age = age
+                let minutes = Math.floor((age % (60 * 60)) / (60));
+                let seconds = Math.floor((age % (60)));
+                let ageStr
+                if (age < 60) {
+                    ageStr = `${seconds}s`
+                } else {
+                    ageStr = `${minutes}m`
+                }
+                this._icon?.setAttribute("data-age", ageStr)
+            },
+
+            setAccuracy: function(accuracy)	{
+                this._accuracy = accuracy;
+                if (!this._accMarker) {
+                    this._accMarker = L.circle(this._latlng, accuracy, this.options.circleOpts).addTo(this._map);
+                } else {
+                    this._accMarker.setRadius(accuracy);
+                }
+            },
+
+            onAdd: function(map) {
+                // super
+                L.Marker.prototype.onAdd.call(this, map);
+                this._accMarker.addTo(map);
+
+                this._configureIcon()
+            }
+        });
+
+        L.userMarker = function (latlng, options) {
+            return new L.UserMarker(latlng, options);
+
+        };
+    })(window);
+
+    function addressToString(address) {
+        let base = `${address.name}\n${address.address_1}\n${address.city}, ${address.state} ${address.postal_code}`
+        if (address.note !== null && address.note) {
+            base += `\n` + address.note
+        }
+        return base
+    }
+
+    function formatLocationFrameString(frame, configuredName) {
+        let base
+        if (configuredName) {
+            base = `<h5>${configuredName} (${frame.tid})</h5>`
+        } else {
+            base = `<h5>${frame.tid}</h5>`
+        }
+        if (frame.vel !== undefined) {
+            base += `${frame.vel} km/h`
+            if (frame.cog !== undefined) {
+                base += ` ${frame.cog}° ${cogToArrow(frame.cog)}</br>`
+            }
+        }
+        if (frame.alt !== undefined) {
+            base += `Elev. ${frame.alt}m`
+            if (frame.vac !== undefined) {
+                base += ` (±${frame.vac}m)`
+            }
+            base += "</br>"
+        }
+        base += `Battery ${frame.batt}\%`
+        return base
+    }
+
+    function cogToArrow(cog) {
+        // Degrees from North, clockwise
+        let index = Math.round((cog / 45) % 8)
+        return ['↑','↗','→','↘','↓','↙','←','↖'][index]
+    }
+
+    function coordsToGPX(coords, legNumber) {
+        let points = ""
+        for (let coord of coords) {
+            points +=  `    <rtept lat="${coord[1]}" lon="${coord[0]}"/>\n`
+        }
+        return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<gpx version="1.1" creator="https://raceconditionrunning.com" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata>
+    <name>NWP Leg ${legNumber}</name>
+    <link href="{{url}}/{{permalink}}">
+      <text>Race Condition Running Ragnar NWP 2023</text>
+    </link>
+    <time>${new Date().toISOString()}</time>
+    <copyright author="OpenStreetMap Contributors">
+      <year>2023</year>
+    </copyright>
+  </metadata>
+  <rte>
+    <name>NWP Leg ${legNumber}</name>
+    ${points}
+  </rte>
+</gpx>`
+    }
+
+    function download(content, mimeType, filename){
+        const a = document.createElement('a') // Create "a" element
+        const blob = new Blob([content], {type: mimeType}) // Create a blob (file-like object)
+        const url = URL.createObjectURL(blob) // Create an object URL from blob
+        a.setAttribute('href', url) // Set "a" element link
+        a.setAttribute('download', filename) // Set download filename
+        a.click() // Start downloading
+    }
+
+
+    Promise.all([
+        fetch("{{ site.baseurl }}/maps/ragnar-nwp-23.json")
+    ])
+        .then(responses => Promise.all(responses.map(res => res.json())))
+        .then(([legs]) => {
+            let routeGeoJSON = {type: "FeatureCollection", features: []}
+            let exchangesGeoJSON = { "type": "FeatureCollection",
+                "features": [
+                    {"type": "Feature",
+                        "properties": {
+                            "id": 0,
+                            "address": {}
+                        },
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [
+                                -122.753892034, 49.001428375
+                            ]
+                        }}
+                ]
+            }
+            exchangesGeoJSON.features.push()
+            for (let i = 0; i < legs.length; i++) {
+                let leg = legs[i]
+                let points = legs[i].points
+
+                let coordinates = []
+                for (let point of points) {
+                    coordinates.push([point.lon, point.lat, point.ele])
+                }
+                let segment = {"type": "Feature",
+                    "geometry": {
+                        "type": "LineString",
+                    "coordinates": coordinates
+                },
+                "properties": {
+                    "notes": leg.notes,
+                    "turnByTurn": leg.turn_by_turn,
+                    "vanDirections": leg.van_directions,
+                    "vanSupport": leg.van_support,
+                    "ascent": leg.elevation_gain_m,
+                    "descent": leg.elevation_loss_m,
+                    "difficulty": leg.difficulty,
+                    "legNumber": leg.leg_number,
+                    "distance": leg.distance
+                }}
+                routeGeoJSON.features.push(segment)
+                let exchange =  {
+                    "type": "Feature",
+                    "properties": {
+                        "id": i + 1,
+                        "address": leg.exchange_address,
+                        "addressString": addressToString(leg.exchange_address)
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            leg.end_point.long, leg.end_point.lat
+                        ]
+                    }
+                }
+                exchangesGeoJSON.features.push(exchange)
+
+            }
+
+            // initialize the map
+            let map = L.map('map', {
+                fullscreenControl: true,
+                scrollWheelZoom: false
+            })//.setView([47.60640473782326, -122.32747365635417], 10);
+            map.createPane("marks")
+            map.getPane("marks").style.zIndex = 650;
+            // Allow scroll interaction while the user is engaged with the map, but not while just landing or casually scrolling the page
+            map.on('focus', () => map.scrollWheelZoom.enable());
+            map.on('blur', () => map.scrollWheelZoom.disable());
+
+            // load a tile layer
+            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                maxZoom: 18,
+                minZoom: 9,
+                id: 'nickswalker/cljjd8u5w001701rgbzkp6r62',
+                tileSize: 512,
+                zoomOffset: -1,
+                accessToken: 'pk.eyJ1Ijoibmlja3N3YWxrZXIiLCJhIjoiY2t0ZjgyenE4MDR1YjJ1cno0N3hxYzI4YSJ9.ivPdsoEtV9TaLGbOOfFXKA'
+            }).addTo(map);
+            L.control.locate({keepCurrentZoomLevel: true, flyTo: true}).addTo(map);
+
+            function downloadLegGPX(legNumber) {
+                let gpxString = coordsToGPX(routeGeoJSON.features[legNumber - 1].geometry.coordinates, legNumber)
+                download(gpxString, "application/gpx+xml", `ragnar-nwp-leg-${legNumber}.gpx`)
+            }
+            // Make it easy to call from in-line onlick attributes
+            window.downloadLegGPX = downloadLegGPX
+
+            function updateMarkerAges() {
+                let allowPulse = websocket?.readyState === WebSocket.OPEN
+                for (let [name, marker] of Object.entries(liveMarkers)) {
+                    marker.updateDisplayedAge()
+                    if (marker._age > 60 * 60) {
+                        marker.remove()
+                        delete liveMarkers[name]
+                        continue
+                    }
+                    else if (marker._age > 5 * 60) {
+                        marker.setStale(true)
+                    }
+                    marker.setPulsing(allowPulse)
+                }
+            }
+
+            let updateInterval = setInterval(updateMarkerAges, 1000)
+
+            let liveMarkers = {}
+            let userMetadata = {}
+            let latestLocationMessages = {}
+            let liveMarkersLayer = L.featureGroup([])
+            liveMarkersLayer.on("mouseover", function(e){
+                let layer = e.layer
+                layer.bindTooltip(formatLocationFrameString(latestLocationMessages[layer._tid]), {direction: "left", offset: [-20,0]})
+                layer.openTooltip()
+            })
+            liveMarkersLayer.on("mouseout", function(e){
+                let layer = e.layer
+                layer.closeTooltip()
+            })
+            function updateLiveMarkers(eventData) {
+                latestLocationMessages[eventData.tid] = eventData
+                if (liveMarkers[eventData.tid]) {
+                    let marker = liveMarkers[eventData.tid]
+                    marker.setLatLng([eventData.lat, eventData.lon])
+                    marker.setTimestamp(eventData.tst)
+                    marker.setStale(false)
+                    marker.updateDisplayedAge()
+                    if (eventData.acc) {
+                        marker.setAccuracy(eventData.acc)
+                    }
+                } else {
+                    if (eventData.face) {
+                        userMetadata[eventData.tid] = {image: eventData.face, name: eventData.name}
+                    }
+                    // Don't make the marker if all we have is old data
+                    if (((new Date().getTime() / 1000) - eventData.tst) > 60 * 60) {
+                        return;
+                    }
+                    let marker = L.userMarker([eventData.lat, eventData.lon], {
+                        radius: 8,
+                        fillColor: "#ff7800",
+                        color: "#000",
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 0.8,
+                        riseOnHover: true,
+                        pane: "marks"
+                    })
+                    marker._tid = eventData.tid
+                    marker.setTimestamp(eventData.tst)
+                    marker.setAccuracy(eventData.acc)
+                    if (eventData.face) {
+                        userMetadata[eventData.tid] = eventData.face
+                        marker.setImage(eventData.face)
+                    } else if (userMetadata[eventData.tid] && userMetadata[eventData.tid].image) {
+                        // May have cached image from the initial last location/card lookup
+                        marker.setImage(userMetadata[eventData.tid].image)
+                    }
+                    else {
+                        marker.setText(eventData.tid)
+                    }
+                    liveMarkersLayer.addLayer(marker)
+                    marker.updateDisplayedAge()
+                    liveMarkers[eventData.tid] = marker
+                }
+            }
+
+            const url = new URL("wss://location.nickwalker.us/ws")
+            const lastLocationsUrl = new URL("https://location.nickwalker.us/api/0/last")
+
+            function getLastLocations(url) {
+
+                const data = fetch(url)
+                    .then(async response => {
+                        if (!response.ok) {
+                            throw new Error('API response is not "ok".');
+                        }
+                        const data = await response.json();
+                        return data;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        throw new Error("Unable to connect to API.");
+                    }).then( data => data.forEach(frame => updateLiveMarkers(frame)));
+            }
+
+            let websocket
+            let websocketTryInterval
+            function configureWebsocket(url){
+               websocket = new WebSocket(url);
+                console.log(`CONNECTING TO: ${url.href}`);
+
+                websocket.addEventListener("open", () => {
+                    clearInterval(websocketTryInterval)
+                    websocketTryInterval = null
+                    console.log('CONNECTED');
+                    const msg = 'Hello.';
+                    console.log(`SENT: ${msg}`);
+                    websocket.send(msg);
+                });
+                websocket.addEventListener("close", () => {
+                    console.log('CLOSED');
+                    websocket = null
+                    websocketTryInterval = setTimeout(() => console.log("trying") || configureWebsocket(url), 20 * 1000)
+                });
+                websocket.addEventListener("message", event => {
+                    if (!event.data) {
+                        console.log("PING");
+                    } else {
+                        console.log(event.data);
+                        let payload
+                        try {
+                            payload = JSON.parse(event.data)
+                        } catch (e) {
+                            // Wasn't a json blob
+                            return
+                        }
+                        if (payload._type === "location") {
+                            updateLiveMarkers(payload)
+                        }
+                    }
+                });
+                websocket.addEventListener("error", event => {
+                    console.error(event);
+                    console.log(`<span style="color: red;">ERROR: ${ event.data } </span>`);
+                });
+            }
+
+            let exchanges = L.geoJSON(exchangesGeoJSON, {
+                pointToLayer: function (feature, latlng) {
+                    let labelMarker = L.circleMarker(latlng, {
+                        radius: 0,
+                        weight: 0,
+                        opacity: 0,
+                        fillOpacity: 0
+                    });
+                    let exchangeNumber = feature.properties.id
+                    labelMarker.bindTooltip(exchangeNumber.toString(), {
+                        "permanent": true,
+                        "offset": L.point(0, 0),
+                        "direction": "center",
+                        "className": "station-marker",
+
+                    })
+                    let backingCircle = L.circleMarker(latlng, {
+                        radius: 10,
+                        weight: 0,
+                        opacity: 0,
+                        color: "rgba(0,0,0,0)"
+                    });
+                    //backingCircle
+                    return L.featureGroup([labelMarker, backingCircle]);
+
+                },
+                onEachFeature(feature, layer) {
+                    if (feature.properties.addressString) {
+                        layer.bindTooltip(feature.properties.addressString.replaceAll("\n", "<br/>"), {
+                            "offset": [20, 0],
+                            "direction": "right",
+                            "className": "station-name",
+                            opacity: 0.75
+                        });
+                    }
+                    layer.on('mouseover', e => {
+                        e.layer.openTooltip();
+                    });
+                    layer.on('mouseout', function (e) {
+                        this.closeTooltip();
+                    });
+                }
+            })
+
+            exchanges.on("click", function (e) {
+                if (clickedLeg) {
+                    clickedLeg.setStyle({color: "#fd8f00"})
+                    clickedLeg = null
+                }
+                let parent = e.layer._eventParents;
+
+                let layer = parent[Object.keys(parent)[0]]
+                if (clickedExchange === layer) {
+                    // Allow unselection
+                    clickedExchange = null
+                    return
+                }
+
+                clickedExchange = layer
+                sidebar.open("van-directions")
+            })
+
+
+
+            let clickedLeg = null
+            let clickedExchange = null
+            let activeSidebarPane = "leg-notes"
+
+            function scrollToActiveLeg(pane, smooth=true) {
+                let legElement
+                if (clickedLeg) {
+                    let legNumber = clickedLeg.feature.properties.legNumber
+                    legElement = pane.querySelector(`.leg-${legNumber}`)
+                } else if (clickedExchange) {
+                    let exchangeNumber = clickedExchange.feature.properties.id
+                    legElement = pane.querySelector(`.exchange-${exchangeNumber}`)
+                } else {
+                    return
+                }
+                if (!legElement) {
+                    return;
+                }
+                let scrollContainer = document.querySelector(".leaflet-sidebar-content")
+
+                let behavior = smooth ? "smooth": "auto"
+                scrollContainer.scrollTo({top:legElement.offsetTop - 50, behavior: behavior})
+
+            }
+            let landmarksLayer = L.layerGroup(
+                [
+                    L.marker([48.45154231200904, -122.33830566334503], {pane: "marks"}).bindTooltip("Olive Garden"),
+                    L.marker([48.4018902105624, -122.54771489680212]).bindTooltip("House", {pane: "marks"}),
+                    L.marker([48.78399873230745, -122.4856908161194]).bindTooltip("Denny's", {pane: "marks"}),
+                    L.marker([48.43547800734311, -122.33940669208073]).bindTooltip("Denny's", {pane: "marks"}),
+                ],)
+
+
+            const sideBarVanDirections = document.getElementById("van-directions-content")
+            const sideBarLegNotes = document.getElementById("leg-notes-content")
+            const sideBarTurnByTurn = document.getElementById("turn-by-turn-content")
+            const legsLayer = L.geoJSON(routeGeoJSON, {
+                "style": {"color": "#fd8f00", "weight": 6}, onEachFeature: function (feature, layer) {
+                    let legNumber = feature.properties.legNumber
+                    let exchange = exchangesGeoJSON.features[legNumber]
+
+                    layer.bindTooltip(`Leg ${legNumber}`, {
+                        opacity: 0.75
+                    })
+                    let makeHeader = (idPrefix, type) => `<h3 id="${idPrefix}-${legNumber}" class="mb-2 leg-${legNumber}">Leg ${legNumber} <a href="${idPrefix}-${legNumber}" class="anchor-link" aria-label="Link to this section. Leg ${legNumber} ${type}"></a></h3>`
+                    let content = ""
+                    content += "<b>Distance:</b> " + String(feature.properties.distance) + "mi<br/>"
+                    content += "<b>Ascent:</b> " + String(feature.properties.ascent) + "ft<br/>"
+                    content += "<b>Descent:</b> " + String(feature.properties.descent) + "ft<br/>"
+                    content += "<b>Notes</b>: " + feature.properties.notes
+                    sideBarLegNotes.innerHTML += `<div class="mb-4">${makeHeader("leg-notes", "Notes")}${content}</div>`
+                    sideBarTurnByTurn.innerHTML += `<div class="mb-4"><a class="btn btn-outline-secondary float-end gpx-download download-${legNumber} mx-2" href="#" onclick="downloadLegGPX(${legNumber})">GPX</a>${makeHeader("leg-runner-directions", "Runner Directions")}${feature.properties.turnByTurn}</div>`
+                    sideBarVanDirections.innerHTML += `<div class="mb-4">${makeHeader("leg-van-directions", "Van Directions")}${feature.properties.vanDirections}<br/><h6 class="exchange-${exchange.properties.id}">Exchange ${exchange.properties.id}</h6>${exchange.properties.addressString.replaceAll('\n',"<br/>")}</div>`
+                }
+            })
+            legsLayer.on("click", function (e) {
+                if (clickedExchange) {
+                    // Only one kind of selection at a time
+                    clickedExchange = null
+                }
+                if (clickedLeg) {
+                    clickedLeg.setStyle({color: "#fd8f00"});
+                }
+                let layer = e.layer;
+                if (layer === clickedLeg) {
+                    // Allow unselection
+                    clickedLeg = null;
+                    return;
+                }
+                layer.setStyle({
+                    color: '#b24d00',
+                });
+                clickedLeg = layer
+                sidebar.open(activeSidebarPane)
+            })
+
+
+            let sidebar = L.control.sidebar({
+                autopan: true,       // whether to maintain the centered map point when opening the sidebar
+                closeButton: true,    // whether t add a close button to the panes
+                container: document.getElementById("sidebar"), // the DOM container or #ID of a predefined sidebar container that should be used
+                position: 'left',     // left or right
+            }).addTo(map).close();
+            let lastActiveTab = null
+            sidebar.on('content', function(e) {
+                activeSidebarPane = e.id
+                let smooth = false
+                if (lastActiveTab && lastActiveTab === e.id) {
+                    smooth = true
+                }
+                scrollToActiveLeg(document.getElementById(e.id), smooth)
+                lastActiveTab = e.id
+            })
+
+
+
+            legsLayer.addTo(map)
+            exchanges.addTo(map)
+
+            liveMarkersLayer.addTo(map)
+            map.fitBounds(legsLayer.getBounds().pad(0.1))
+            let layerControl = L.control.layers({}, {"Runners": liveMarkersLayer, "Legs": legsLayer, "Exchanges": exchanges, "Landmarks": landmarksLayer}).addTo(map);
+
+            getLastLocations(lastLocationsUrl)
+            configureWebsocket(url)
+        })
+</script>
+
+</body>
+</html>
