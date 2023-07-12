@@ -115,6 +115,11 @@ def main():
             datetime_date -= timedelta(1)
         return datetime_date
 
+    def next_tuesday(datetime_date):
+        while datetime_date.weekday() != 1:
+            datetime_date += timedelta(1)
+        return datetime_date
+
     first_run = min([datetime.strptime(r['date'], '%Y-%m-%d').date() for r in sched])
     start = min(previous_tuesday(datetime.today().date()),
                 previous_tuesday(first_run))
@@ -151,14 +156,14 @@ def main():
     }
 
     first_block = copy.deepcopy(short_run_block_template)
-    start = dtstart(start, first_block_start_time)
+    start = next_tuesday(dtstart(start, first_block_start_time))
     first_block['dtstart'] = start
     first_block['dtend'] = start + timedelta(0, 60 * 60)
     first_block['rrule']['UNTIL'] = end_date
     first_block['uid'] = 'shortruns_1@raceconditionrunning.com'
     weekday_runs.append(first_block)
     second_block = copy.deepcopy(short_run_block_template)
-    start = dtstart(end_date, second_block_start_time)
+    start = next_tuesday(dtstart(end_date, second_block_start_time))
     second_block['dtstart'] = start
     second_block['dtend'] = start + timedelta(0, 60 * 60)
     second_block['rrule']['UNTIL'] = next_start
