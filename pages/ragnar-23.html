@@ -845,9 +845,6 @@ redirect_from:
                 download(gpxString, "application/gpx+xml", `ragnar-nwp-leg-${legNumber}.gpx`)
             }
 
-            // Make it easy to call from in-line onlick attributes
-            window.downloadLegGPX = downloadLegGPX
-
             function updateMarkerAges() {
                 let allowPulse = websocket?.readyState === WebSocket.OPEN
                 for (let [name, marker] of Object.entries(liveMarkers)) {
@@ -909,7 +906,7 @@ redirect_from:
                         marker.setAccuracy(eventData.acc)
                     }
                 } else {
-                    console.log(eventData)
+                    userMetadata[eventData.tid] = {}
                     if (eventData.face || eventData.name) {
                         userMetadata[eventData.tid] = {image: eventData.face, name: eventData.name}
                     }
@@ -1162,7 +1159,7 @@ redirect_from:
                     }
 
                     sideBarLegNotes.innerHTML += `<div class="mb-4">${makeHeader("leg-notes", "Notes")}${content}</div>`
-                    sideBarTurnByTurn.innerHTML += `<div class="mb-4"><a class="btn btn-outline-secondary float-end gpx-download download-${legNumber} mx-2" href="#" onclick="downloadLegGPX(${legNumber})">GPX</a>${makeHeader("leg-runner-directions", "Runner Directions")}${feature.properties.turnByTurn}</div>`
+                    sideBarTurnByTurn.innerHTML += `<div class="mb-4"><a class="btn btn-outline-secondary float-end gpx-download download-${legNumber} mx-2" data-leg-number="${legNumber}" href="#">GPX</a>${makeHeader("leg-runner-directions", "Runner Directions")}${feature.properties.turnByTurn}</div>`
                     sideBarVanDirections.innerHTML += `<div class="mb-4">${makeHeader("leg-van-directions", "Van Directions")}${feature.properties.vanDirections}<br/><h6 class="exchange-${exchange.properties.id} mb-0">Exchange ${exchange.properties.id}</h6>${exchange.properties.addressString.replaceAll('\n', "<br/>")}</div>`
                 }
             })
@@ -1298,6 +1295,13 @@ redirect_from:
                         return
                     }
                     map.setView(runnerMarkerLayer.getLatLng(), 14)
+                })
+            })
+            document.querySelectorAll(".gpx-download").forEach(element => {
+                let legNumber = element.attributes["data-leg-number"].value
+                element.addEventListener("click", (event)=> {
+                    downloadLegGPX(legNumber)
+                    event.preventDefault()
                 })
             })
         })
