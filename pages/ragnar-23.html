@@ -676,21 +676,57 @@ redirect_from:
         } else {
             base = `<h5>${frame.tid}</h5>`
         }
-        if (frame.vel !== undefined) {
-            base += `${frame.vel} km/h`
+        if (frame.vel !== undefined && frame.vel !== 0) {
+            base += `${formatDuration(96.56064 * frame.vel, false, false, true)} /mi `
             if (frame.cog !== undefined) {
-                base += ` ${frame.cog}° ${cogToArrow(frame.cog)}</br>`
+                base += `${frame.cog}° ${cogToArrow(frame.cog)}</br>`
             }
         }
         if (frame.alt !== undefined) {
-            base += `Elev. ${frame.alt}m`
+            base += `Elev. ${frame.alt}m `
             if (frame.vac !== undefined) {
-                base += ` (±${frame.vac}m)`
+                base += `(±${frame.vac}m)`
             }
             base += "</br>"
         }
         base += `Battery ${frame.batt}\%`
         return base
+    }
+
+    function formatDuration(seconds, includeHours = true, includeMilliseconds = false, trimLeadingZeros = false) {
+        if (!Number.isFinite(seconds)) {
+            // Don't render Infinity, NaN, etc.
+            return "";
+        }
+
+        let date = new Date(0);
+
+        let milliseconds = (seconds % 1.0) * 1000
+        if (milliseconds > 0 && !includeMilliseconds) {
+            // If we're not showing the milliseconds, have to round up
+            // World Athletics Technical Rules, 19.24.5
+            // For all races, all times not ending in zero shall be converted and recorded
+            // to the next longer whole second, e.g. 2:09:44.3 shall be recorded as
+            // 2:09:45.
+            date.setSeconds(seconds + 1);
+        } else {
+            date.setSeconds(seconds)
+            date.setMilliseconds(milliseconds)
+        }
+        let start = 14
+        let end = 19
+
+        if (includeHours) {
+            start -= 2
+        }
+        if (includeMilliseconds) {
+            end += 2
+        }
+        let result = date.toISOString().substring(start, end)
+        if (trimLeadingZeros) {
+            result = result.replace(/^0+/, '')
+        }
+        return result
     }
 
     function cogToArrow(cog) {
@@ -822,6 +858,7 @@ redirect_from:
                 fullscreenControl: true,
                 scrollWheelZoom: false
             })//.setView([47.60640473782326, -122.32747365635417], 10);
+            L.control.scale().addTo(map);
             map.createPane("marks")
             map.getPane("marks").style.zIndex = 650;
             // Allow scroll interaction while the user is engaged with the map, but not while just landing or casually scrolling the page
@@ -978,7 +1015,7 @@ redirect_from:
                 websocket.addEventListener("close", () => {
                     console.log('CLOSED');
                     websocket = null
-                    websocketTryInterval = setTimeout(() => console.log("trying") || configureWebsocket(url), 20 * 1000)
+                    websocketTryInterval = setTimeout(() => console.log("trying") || configureWebsocket(url), 10 * 1000)
                 });
                 websocket.addEventListener("message", event => {
                     if (!event.data) {
@@ -1304,6 +1341,20 @@ redirect_from:
                     event.preventDefault()
                 })
             })
+            document.addEventListener("visibilitychange", () => {
+                if (document.visibilityState === "visible") {
+                    getLastLocations(lastLocationsUrl)
+                    configureWebsocket(url)
+                    updateInterval = setInterval(updateMarkerAges, 1000)
+                    console.log("Page visible")
+
+                } else {
+                    clearInterval(updateInterval)
+                    clearInterval(websocketTryInterval)
+                    websocket.close()
+                    console.log("Page hidden")
+                }
+            });
         })
 
 </script>
