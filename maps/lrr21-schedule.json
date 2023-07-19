@@ -1,0 +1,183 @@
+[
+  {
+    "leg": 0,
+    "start_exchange": "Angle Lake",
+    "end_exchange": "SeaTac/Airport",
+    "runners": ["Ellis", "Nick"],
+    "leader": "Ellis",
+    "pace_mi": 480,
+    "distance_mi": 1.8,
+    "ascent_ft": 47
+  },
+  {
+    "leg": 1,
+    "start_exchange": "SeaTac/Airport",
+    "end_exchange": "Tukwila International Blvd",
+    "runners": ["Ellis", "Nick"],
+    "leader": "Ellis",
+    "pace_mi": 480,
+    "distance_mi": 1.5,
+    "ascent_ft": 105
+  },
+  {
+    "leg": 2,
+    "start_exchange": "Tukwila International Blvd",
+    "end_exchange": "Rainier Beach",
+    "runners": ["Ellis", "Johanna", "Nick"],
+    "leader": "Ellis",
+    "pace_mi": 480,
+    "distance_mi": 6.6,
+    "ascent_ft": 590
+  },
+  {
+    "leg": 3,
+    "start_exchange": "Rainier Beach",
+    "end_exchange": "Othello",
+    "runners": ["Swati", "Yuxuan"],
+    "leader": "Yuxuan",
+    "pace_mi": 720,
+    "distance_mi": 1.1,
+    "ascent_ft": 74
+  },
+  {
+    "leg": 4,
+    "start_exchange": "Othello",
+    "end_exchange": "Columbia City",
+    "runners": ["Brett", "James", "Jennifer", "Lancelot", "Max", "Sameer", "Sidd", "Swati", "Yuxuan", "Zach"],
+    "leader": "Yuxuan",
+    "pace_mi": 720,
+    "distance_mi": 1.6,
+    "ascent_ft": 37
+  },
+  {
+    "leg": 5,
+    "start_exchange": "Columbia City",
+    "end_exchange": "Mount Baker",
+    "runners": ["Brett", "Ethan", "James", "Jennifer", "Lancelot", "Max", "Sameer", "Sidd", "Swati", "Yuxuan", "Zach"],
+    "leader": "Yuxuan",
+    "pace_mi": 720,
+    "distance_mi": 1.2,
+    "ascent_ft": 23
+  },
+  {
+    "leg": 6,
+    "start_exchange": "Mount Baker",
+    "end_exchange": "Beacon Hill",
+    "runners": ["Ethan", "Lancelot", "Sidd", "Swati", "Yuxuan", "Zach"],
+    "leader": "Yuxuan",
+    "pace_mi": 720,
+    "distance_mi": 0.8,
+    "ascent_ft": 251
+  },
+  {
+    "leg": 7,
+    "start_exchange": "Beacon Hill",
+    "end_exchange": "SODO",
+    "runners": ["Ethan", "Lancelot", "Sidd", "Swati", "Zach"],
+    "leader": "Zach",
+    "pace_mi": 720,
+    "distance_mi": 1.3,
+    "ascent_ft": 11
+  },
+  {
+    "leg": 8,
+    "start_exchange": "SODO",
+    "end_exchange": "Stadium",
+    "runners": ["Ethan", "Jingwei", "Lancelot", "Sidd", "Pratyush", "Zach"],
+    "leader": "Zach",
+    "pace_mi": 720,
+    "distance_mi": 0.7,
+    "ascent_ft": 12
+  },
+  {
+    "leg": 9,
+    "start_exchange": "Stadium",
+    "end_exchange": "International District/Chinatown",
+    "runners": ["Ethan", "Jingwei", "Lancelot", "Pratyush", "Zach"],
+    "leader": "Zach",
+    "pace_mi": 770,
+    "distance_mi": 0.8,
+    "ascent_ft": 38
+  },
+  {
+    "leg": 10,
+    "start_exchange": "International District/Chinatown",
+    "end_exchange": "Pioneer Square",
+    "runners": ["Chandra", "Ethan", "Ewin", "Reshabh"],
+    "leader": "Chandra",
+    "pace_mi": 770,
+    "distance_mi": 0.3,
+    "ascent_ft": 25
+  },
+  {
+    "leg": 11,
+    "start_exchange": "Pioneer Square",
+    "end_exchange": "University Street",
+    "runners": ["Chandra", "Ethan", "Ewin", "Vishwas"],
+    "leader": "Chandra",
+    "pace_mi": 1200,
+    "distance_mi": 0.5,
+    "ascent_ft": 54
+  },
+  {
+    "leg": 12,
+    "start_exchange": "University Street",
+    "end_exchange": "Westlake",
+    "runners": ["Chandra", "Ethan", "Ewin"],
+    "leader": "Chandra",
+    "pace_mi": 600,
+    "distance_mi": 1.1,
+    "ascent_ft": 73
+  },
+  {
+    "leg": 13,
+    "start_exchange": "Westlake",
+    "end_exchange": "Capitol Hill",
+    "runners": ["Chandra", "Edward", "Ewin", "Jamie"],
+    "leader": "Chandra",
+    "pace_mi": 600,
+    "distance_mi": 1.0,
+    "ascent_ft": 274
+  },
+  {
+    "leg": 14,
+    "start_exchange": "Capitol Hill",
+    "end_exchange": "University of Washington",
+    "runners": ["Amal", "Chandra", "Edward", "Ewin", "Jamie", "Maya"],
+    "leader": "Chandra",
+    "pace_mi": 600,
+    "distance_mi": 2.8,
+    "ascent_ft": 228
+  },
+  {
+    "leg": 15,
+    "start_exchange": "University of Washington",
+    "end_exchange": "U-District",
+    "runners": ["Amal", "Chandra", "Ewin", "Jamie", "Maya"],
+    "leader": "Chandra",
+    "pace_mi": 600,
+    "distance_mi": 1.1,
+    "ascent_ft": 176
+  },
+  {
+    "leg": 16,
+    "start_exchange": "U-District",
+    "end_exchange": "Roosevelt",
+    "runners": ["Chandra", "Jamie"],
+    "leader": "Chandra",
+    "pace_mi": 600,
+    "distance_mi": 1.4,
+    "ascent_ft": 111
+  },
+  {
+    "leg": 17,
+    "start_exchange": "Roosevelt",
+    "end_exchange": "Northgate",
+    "runners": ["Chandra", "Jamie"],
+    "leader": "Chandra",
+    "pace_mi": 600,
+    "distance_mi": 2.4,
+    "ascent_ft": 261
+  }
+
+]

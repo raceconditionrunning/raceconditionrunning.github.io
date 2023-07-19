@@ -486,13 +486,10 @@ redirect_from:
     <div id="map"></div>
 </section>
 
-
-<!--footer>
-    <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg" alt="A happy piece of toast running"/></a></p>
-</footer-->
-
 <!--suppress JSVoidFunctionReturnValueUsed -->
 <script type="module">
+
+    import {download, legToGPX, formatDuration} from "../js/common.js";
 
     (function (window) {
         let icon = L.divIcon({
@@ -693,41 +690,6 @@ redirect_from:
         return base
     }
 
-    function formatDuration(seconds, includeHours = true, includeMilliseconds = false, trimLeadingZeros = false) {
-        if (!Number.isFinite(seconds)) {
-            // Don't render Infinity, NaN, etc.
-            return "";
-        }
-
-        let date = new Date(0);
-
-        let milliseconds = (seconds % 1.0) * 1000
-        if (milliseconds > 0 && !includeMilliseconds) {
-            // If we're not showing the milliseconds, have to round up
-            // World Athletics Technical Rules, 19.24.5
-            // For all races, all times not ending in zero shall be converted and recorded
-            // to the next longer whole second, e.g. 2:09:44.3 shall be recorded as
-            // 2:09:45.
-            date.setSeconds(seconds + 1);
-        } else {
-            date.setSeconds(seconds)
-            date.setMilliseconds(milliseconds)
-        }
-        let start = 14
-        let end = 19
-
-        if (includeHours) {
-            start -= 2
-        }
-        if (includeMilliseconds) {
-            end += 2
-        }
-        let result = date.toISOString().substring(start, end)
-        if (trimLeadingZeros) {
-            result = result.replace(/^0+/, '')
-        }
-        return result
-    }
 
     function cogToArrow(cog) {
         // Degrees from North, clockwise
@@ -735,38 +697,6 @@ redirect_from:
         return ['↑', '↗', '→', '↘', '↓', '↙', '←', '↖'][index]
     }
 
-    function coordsToGPX(coords, legNumber) {
-        let points = ""
-        for (let coord of coords) {
-            points += `    <rtept lat="${coord[1]}" lon="${coord[0]}"/>\n`
-        }
-        return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<gpx version="1.1" creator="https://raceconditionrunning.com" xmlns="http://www.topografix.com/GPX/1/1">
-  <metadata>
-    <name>NWP Leg ${legNumber}</name>
-    <link href="{{url}}/{{permalink}}">
-      <text>Race Condition Running Ragnar NWP 2023</text>
-    </link>
-    <time>${new Date().toISOString()}</time>
-    <copyright author="OpenStreetMap Contributors">
-      <year>2023</year>
-    </copyright>
-  </metadata>
-  <rte>
-    <name>NWP Leg ${legNumber}</name>
-    ${points}
-  </rte>
-</gpx>`
-    }
-
-    function download(content, mimeType, filename) {
-        const a = document.createElement('a') // Create "a" element
-        const blob = new Blob([content], {type: mimeType}) // Create a blob (file-like object)
-        const url = URL.createObjectURL(blob) // Create an object URL from blob
-        a.setAttribute('href', url) // Set "a" element link
-        a.setAttribute('download', filename) // Set download filename
-        a.click() // Start downloading
-    }
 
 
     Promise.all([
@@ -878,7 +808,7 @@ redirect_from:
             L.control.locate({keepCurrentZoomLevel: true, flyTo: true}).addTo(map);
 
             function downloadLegGPX(legNumber) {
-                let gpxString = coordsToGPX(routeGeoJSON.features[legNumber - 1].geometry.coordinates, legNumber)
+                let gpxString = legToGPX(routeGeoJSON.features[legNumber - 1].geometry.coordinates, legNumber)
                 download(gpxString, "application/gpx+xml", `ragnar-nwp-leg-${legNumber}.gpx`)
             }
 
@@ -1269,8 +1199,9 @@ redirect_from:
                 "Landmarks": landmarksLayer
             }).addTo(map);
 
-            getLastLocations(lastLocationsUrl)
-            configureWebsocket(url)
+            // Disabled after the event
+            //getLastLocations(lastLocationsUrl)
+            //configureWebsocket(url)
             document.querySelectorAll(".leg-link").forEach(element => {
                 let legNumber = parseInt(element.innerHTML.match(/L([^)]+)/)[1])
                 let legLayer = null
@@ -1343,14 +1274,14 @@ redirect_from:
             })
             document.addEventListener("visibilitychange", () => {
                 if (document.visibilityState === "visible") {
-                    getLastLocations(lastLocationsUrl)
-                    configureWebsocket(url)
-                    updateInterval = setInterval(updateMarkerAges, 1000)
+                    //getLastLocations(lastLocationsUrl)
+                    //configureWebsocket(url)
+                    //updateInterval = setInterval(updateMarkerAges, 1000)
                     console.log("Page visible")
 
                 } else {
-                    clearInterval(updateInterval)
-                    clearInterval(websocketTryInterval)
+                    //clearInterval(updateInterval)
+                    //clearInterval(websocketTryInterval)
                     websocket.close()
                     console.log("Page hidden")
                 }

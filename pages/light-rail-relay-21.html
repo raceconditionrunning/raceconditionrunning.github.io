@@ -29,7 +29,10 @@ redirect_from:
           href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.js"
             charset="utf-8"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha256-wLz3iY/cO4e6vKZ4zRmo4+9XDpMcgKOvv/zEU3OMlRo=" crossorigin="anonymous">
+    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_bootstrap5.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-t4GWSVZO1eC8BM339Xd7Uphw5s17a86tIZIj8qRxhnKub6WoyhnrxeCIMeAqBPgdZGlCcG2PrZjMc+Wr78+5Xg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js" ></script>
     <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
 
@@ -219,8 +222,62 @@ redirect_from:
         max-width: 700px;
     }
 
-    #finish-row td {
-        font-weight: bold;
+    .tabulator,
+    .tabulator .tabulator-header .tabulator-col,
+    .tabulator .tabulator-header,
+    .tabulator .tabulator-tableholder .tabulator-table,
+    .tabulator .tabulator-footer,
+    .tabulator .tabulator-footer .tabulator-calcs-holder,
+    .tabulator .tabulator-footer .tabulator-calcs-holder .tabulator-row{
+        background-color: transparent !important;
+    }
+
+    .tabulator {
+        color: var(--bs-body-color);
+    }
+
+    .tabulator-row.tabulator-group {
+        background-color: rgba(255, 255, 255, 0.075) !important;
+    }
+
+    .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs {
+        background-color: transparent !important;
+    }
+
+    .tabulator-row, .tabulator-row.tabulator-row-even {
+        background-color: transparent;
+    }
+
+    .tabulator-row,
+    .tabulator .tabulator-header {
+        border: none;
+    }
+
+    .tabulator-row .tabulator-responsive-collapse {
+        border-top: 0px;
+        padding-bottom: 1rem;
+        white-space: normal;
+    }
+
+    .tabulator-responsive-collapse strong {
+        font-weight: 500;
+    }
+
+    .tabulator .tabulator-footer {
+        border: none !important;
+    }
+
+    .tabulator .tabulator-footer .tabulator-calcs-holder {
+        border: none;
+        border-top: 1px solid #ddd;
+    }
+
+    .leg-leader {
+        font-weight: 700;
+    }
+
+    .first-leg {
+        text-decoration: underline;
     }
 
     #countdown {
@@ -357,7 +414,7 @@ redirect_from:
 
 <section id="course-map">
     <div class="container">
-        <div class="alert alert-info" role="alert">
+        <div class="alert alert-secondary" role="alert">
             This event took place in 2021. Looking for <a href="{{ site.baseurl }}/lrr">a more recent Light Rail Relay</a>?
         </div>
         <h2 id="route">Route <a href="#route" class="anchor-link" aria-label="Link to this section. Route"></a></h2>
@@ -370,205 +427,7 @@ redirect_from:
 <section id="schedule-section">
     <div class="container-xxl">
         <h2 id="schedule">Schedule <a href="#schedule" class="anchor-link" aria-label="Link to this section. Schedule"></a></h2>
-        <div class="table-responsive">
-            <table class="table" id="schedule-table">
-                <tbody>
-                <thead>
-                <th>Leg</th>
-                <th>Time</th>
-                <th>Start Station</th>
-                <th>Miles</th>
-                <th>Pace</th>
-                <th>Elev. Gain</th>
-                <th>Runners</th>
-                </thead>
-                <tr>
-                    <td>0</td>
-                    <td>9:30</td>
-                    <td>Angle Lake</td>
-                    <td>1.8</td>
-                    <td>8:00</td>
-                    <td>47</td>
-                    <td><b><u>Ellis</u></b>, <u>Nick</u></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>9:49</td>
-                    <td>SeaTac/Airport</td>
-                    <td>1.5</td>
-                    <td>8:00</td>
-                    <td>105</td>
-                    <td><b>Ellis</b>, Nick</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>10:05</td>
-                    <td>Tukwila International Blvd</td>
-                    <td>6.6</td>
-                    <td>8:00</td>
-                    <td>590</td>
-                    <td><b>Ellis</b>, <u>Johanna</u>, Nick</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>11:03</td>
-                    <td>Rainier Beach</td>
-                    <td>1.1</td>
-                    <td>12:00</td>
-                    <td>74</td>
-                    <td><u>Swati</u>, <b><u>Yuxuan</u></b></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>11:21</td>
-                    <td>Othello</td>
-                    <td>1.6</td>
-                    <td>12:00</td>
-                    <td>37</td>
-                    <td><u>Brett</u>, <u>James</u>, <u>Jennifer</u>, <u>Lancelot</u>, <u>Max</u>, <u>Sameer</u>,
-                        <u>Sidd</u>, Swati, <b>Yuxuan</b>, Zach
-                    </td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>11:45</td>
-                    <td>Columbia City</td>
-                    <td>1.2</td>
-                    <td>12:00</td>
-                    <td>23</td>
-                    <td>Brett, <u>Ethan</u>, James, Jennifer, Lancelot, Max, Sameer, Sidd, Swati, <b>Yuxuan</b>,
-                        <u>Zach</u></td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>12:04</td>
-                    <td>Mount Baker</td>
-                    <td>0.8</td>
-                    <td>12:00</td>
-                    <td>251</td>
-                    <td>Ethan, Lancelot, Sidd, Swati, <b>Yuxuan</b>, Zach</td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>12:18</td>
-                    <td>Beacon Hill</td>
-                    <td>1.3</td>
-                    <td>12:00</td>
-                    <td>11</td>
-                    <td>Ethan, Lancelot, Sidd, Swati, <b>Zach</b></td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td>12:38</td>
-                    <td>SODO</td>
-                    <td>0.7</td>
-                    <td>12:00</td>
-                    <td>12</td>
-                    <td>Ethan, <u>Jingwei</u>, Lancelot, Sidd, <u>Pratyush</u>, <b>Zach</b></td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td>12:51</td>
-                    <td>Stadium</td>
-                    <td>0.8</td>
-                    <td>12:00</td>
-                    <td>38</td>
-                    <td>Ethan, Jingwei, Lancelot, Pratyush, <b>Zach</b></td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>1:04</td>
-                    <td>International District/Chinatown</td>
-                    <td>0.3</td>
-                    <td>12:50</td>
-                    <td>25</td>
-                    <td>Ethan, Jingwei, Lancelot, Pratyush, <b>Zach</b></td>
-                </tr>
-                <tr>
-                    <td>11</td>
-                    <td>1:13</td>
-                    <td>Pioneer Square</td>
-                    <td>0.5</td>
-                    <td>12:50</td>
-                    <td>54</td>
-                    <td><b><u>Chandra</u></b>, Ethan, <u>Ewin</u>, <u>Reshabh</u></td>
-                </tr>
-                <tr>
-                    <td>12</td>
-                    <td>1:24</td>
-                    <td>University Street</td>
-                    <td>1.1</td>
-                    <td>20:00</td>
-                    <td>73</td>
-                    <td><b>Chandra</b>, Ethan, Ewin, <u>Vishwas</u></td>
-                </tr>
-                <tr>
-                    <td>13</td>
-                    <td>1:49</td>
-                    <td>Westlake</td>
-                    <td>1.0</td>
-                    <td>10:00</td>
-                    <td>274</td>
-                    <td><b>Chandra</b>, Ethan, Ewin</td>
-                </tr>
-                <tr>
-                    <td>14</td>
-                    <td>2:03</td>
-                    <td>Capitol Hill</td>
-                    <td>2.8</td>
-                    <td>10:00</td>
-                    <td>228</td>
-                    <td><b>Chandra</b>, Edward, Ewin, <u>Jamie</u></td>
-                </tr>
-                <tr>
-                    <td>15</td>
-                    <td>2:35</td>
-                    <td>University of Washington</td>
-                    <td>1.1</td>
-                    <td>10:00</td>
-                    <td>176</td>
-                    <td><u>Amal</u>, <b>Chandra</b>, Edward, Ewin, Jamie, <u>Maya</u></td>
-                </tr>
-                <tr>
-                    <td>16</td>
-                    <td>2:50</td>
-                    <td>U-District</td>
-                    <td>1.4</td>
-                    <td>10:00</td>
-                    <td>111</td>
-                    <td>Amal, <b>Chandra</b>, Ewin, Jamie, Maya</td>
-                </tr>
-                <tr>
-                    <td>17</td>
-                    <td>3:08</td>
-                    <td>Roosevelt</td>
-                    <td>2.4</td>
-                    <td>10:00</td>
-                    <td>261</td>
-                    <td><b>Chandra</b>, Jamie</td>
-                </tr>
-                <tr id="finish-row">
-                    <td>Finish</td>
-                    <td>3:36</td>
-                    <td></td>
-                    <td>27.9</td>
-                    <td></td>
-                    <td>2390</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                </tbody>
-                <tfoot>
-                <tr>
-                    <td>🍻</td>
-                    <td>5:00</td>
-                    <td colspan="7"><a href="https://udistrictseattle.com/udistrict-station-opening-festival">U-District
-                        Station Opening Festival Food Walk</a></td>
-                </tr>
-                </tfoot>
-            </table>
-        </div>
-
+        <div id="schedule-table"></div>
         <p>Leg leaders are marked in <b>bold</b>. <u>Underlined</u> name indicates first leg. Times nominal. Follow the
             <a href="https://docs.google.com/spreadsheets/d/1wFvyhVMUVqJ3DTGJMr0fr9nrX8zU8nl4uux4AY_H01E/edit?usp=sharing">live
                 schedule</a> for up-to-date estimates.</p>
@@ -687,14 +546,7 @@ redirect_from:
 
     </div>
 
-    <figure class="image-grid">
-        <a href="{{ site.baseurl }}/img/lrr21/batons.webp">
-            <img src="{{ site.baseurl }}/img/lrr21/batons.webp"/>
-        </a>
-        <a href="{{ site.baseurl }}/img/lrr21/materials.webp">
-            <img src="{{ site.baseurl }}/img/lrr21/materials.webp"/>
-        </a>
-    </figure>
+
     <div class="container">
         <p>A pandemic would intercede (spawning <a href="/quarantine-relay/">its own event</a>) but it was an idea that
             was too good not to try. When I saw that the Northgate Link extension stations finally had an official
@@ -893,18 +745,18 @@ redirect_from:
 </footer>
 
 <script type="module">
+    import {createCountdown, formatLegDescription, processRelayGeoJSON, createScheduleTable} from "../js/common.js";
 
     Promise.all([
-        fetch("{{ site.baseurl }}/maps/link-line-1.geojson"),
-        fetch("{{ site.baseurl }}/maps/light-rail-relay-legs-21.geojson"),
-        fetch("{{ site.baseurl }}/maps/light-rail-relay-stations-21.geojson")
+        fetch("{{ site.baseurl }}/maps/link-light-rail.geojson"),
+        fetch("{{ site.baseurl }}/maps/lrr21.geojson")
     ])
         .then(responses => Promise.all(responses.map(res => res.json())))
-        .then(([route, legs, stations]) => {
-            let stationToName = new Array(stations.features.length);
-            for (let i = 0; i < stations.features.length; i++) {
-                let station = stations.features[i];
-                stationToName[station.properties.id] = station.properties.name
+        .then(([route, relay]) => {
+            let [legs, exchanges] = processRelayGeoJSON(relay)
+            let exchangeNames = new Array(exchanges.length);
+            for (let exchange of exchanges.features) {
+                exchangeNames[exchange.properties.id] = exchange.properties.name
             }
             // initialize the map
             let map = L.map('map', {
@@ -938,7 +790,7 @@ redirect_from:
             }
 
 
-            let stationButtonLayer = L.geoJSON(stations, {
+            let stationButtonLayer = L.geoJSON(exchanges, {
                 pointToLayer: function (feature, latlng) {
                     return L.circleMarker(latlng, {
                         radius: 10,
@@ -952,7 +804,7 @@ redirect_from:
             })
             stationButtonLayer.on('mouseover', e => e.layer.openPopup());
             stationButtonLayer.on('mouseout', function (e) {this.closePopup()} );
-            let stationLabels = L.geoJSON(stations, {
+            let stationLabels = L.geoJSON(exchanges, {
                 pointToLayer: function (feature, latlng) {
                     let marker = L.circleMarker(latlng, {
                         radius: 0,
@@ -997,10 +849,7 @@ redirect_from:
             routeLayer.addTo(map);
             const legsLayer = L.geoJSON(legs, {
                 "style": {"color": "#6abf4a", "weight": 6}, onEachFeature: function (feature, layer) {
-                    let content = "<h4>" + stationToName[feature.properties.start] + " to " + stationToName[feature.properties.end] + "</h4>"
-                    content += "<b>Distance:</b> " + String(feature.properties.distance) + "mi<br/>"
-                    content += "<b>Climbing:</b> " + String(feature.properties.climbing) + "ft<br/>"
-                    content += "<b>Notes</b>: " + feature.properties.notes
+                    let content = formatLegDescription(exchangeNames[feature.properties.start_exchange], exchangeNames[feature.properties.end_exchange], feature.properties)
                     layer.bindPopup(content)
                     layer.getPopup().on('remove', function () {
                         layer.setStyle({"color": "#6abf4a"})
@@ -1015,63 +864,13 @@ redirect_from:
             map.fitBounds(legsLayer.getBounds().pad(0.1))
         })
 
-    let countDownDate = new Date("Oct 2, 2021 9:30:00").getTime();
-    addEventListener("DOMContentLoaded", (event) => {
-        const daysEl = document.getElementById("days")
-        const hoursEl = document.getElementById("hours")
-        const minutesEl = document.getElementById("minutes")
-        const secondsEl = document.getElementById("seconds")
-
-        const secondPluralEl = document.getElementById("second-plural")
-        const minutePluralEl = document.getElementById("minute-plural")
-        const hourPluralEl = document.getElementById("hour-plural")
-        const dayPluralEl = document.getElementById("day-plural")
-        let countdownInterval
-        function updateCountdown(includeSeconds) {
-            document.getElementById("static-count").style.display = "none";
-            document.getElementById("dynamic-count").style.display = "";
-            let now = new Date().getTime();
-            let timeleft = countDownDate - now;
-
-            let days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
-            let hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            let minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
-            let seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
-            daysEl.innerHTML = days
-            hoursEl.innerHTML = hours
-            minutesEl.innerHTML = minutes
-            secondsEl.innerHTML = seconds
-
-            if (seconds === 1) {
-                secondPluralEl.style.display = "none"
-            } else {
-                secondPluralEl.style.display = ""
-            }
-            if (minutes === 1) {
-                minutePluralEl.style.display = "none"
-            } else {
-                minutePluralEl.style.display = ""
-            }
-            if (hours === 1) {
-                hourPluralEl.style.display = "none"
-            } else {
-                hourPluralEl.style.display = ""
-            }
-            if (days === 1) {
-                dayPluralEl.style.display = "none"
-            } else {
-                dayPluralEl.style.display = ""
-            }
-            if (timeleft < 0) {
-                clearInterval(countdownInterval);
-
-                //document.getElementById("secs").innerHTML = ""
-                document.getElementById("countdown").style.display = "none";
-            }
-        }
-        updateCountdown()
-        countdownInterval = setInterval(updateCountdown, 1000)
-    });
+    let startTime = new Date("Oct 2, 2021 9:30:00");
+    createCountdown(startTime.getTime())
+    fetch('{{ site.baseurl }}/maps/lrr21-schedule.json')
+        .then(res => res.json())
+        .then(schedule => {
+            createScheduleTable("#schedule-table", schedule, startTime)
+        })
 
     document.addEventListener('DOMContentLoaded', e => {
         let container = document.querySelector(".masonry")

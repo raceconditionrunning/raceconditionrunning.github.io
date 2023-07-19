@@ -29,12 +29,14 @@ redirect_from:
           href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.js"
             charset="utf-8"></script>
+    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_bootstrap5.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
 
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js" ></script>
     <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha256-wLz3iY/cO4e6vKZ4zRmo4+9XDpMcgKOvv/zEU3OMlRo=" crossorigin="anonymous">
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js" integrity="sha512-3dZ9wIrMMij8rOH7X3kLfXAzwtcHpuYpEgQg1OA4QAob1e81H8ntUQmQm3pBudqIoySO5j0tHN4ENzA6+n2r4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-t4GWSVZO1eC8BM339Xd7Uphw5s17a86tIZIj8qRxhnKub6WoyhnrxeCIMeAqBPgdZGlCcG2PrZjMc+Wr78+5Xg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 <style>
@@ -72,6 +74,12 @@ redirect_from:
         ul {
             padding-left: 0;
         }
+    }
+
+    .container {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 0 1rem
     }
 
     .anchor-link {
@@ -176,8 +184,17 @@ redirect_from:
         margin: 1rem;
     }
 
+    .leaflet-container {
+        font-family: var(--bs-font-sans-serif);
+        font-size: 1rem;
+    }
+
     .leaflet-container a.leaflet-popup-close-button {
         padding: .5rem .5rem 0 0;
+    }
+
+    .leaflet-popup-content p {
+        margin: 0;
     }
 
     .leaflet-popup-content h3 {
@@ -242,12 +259,62 @@ redirect_from:
         margin: 6rem 0 6rem 0;
     }
 
-    .container {
-        max-width: 700px;
+    .tabulator,
+    .tabulator .tabulator-header .tabulator-col,
+    .tabulator .tabulator-header,
+    .tabulator .tabulator-tableholder .tabulator-table,
+    .tabulator .tabulator-footer,
+    .tabulator .tabulator-footer .tabulator-calcs-holder,
+    .tabulator .tabulator-footer .tabulator-calcs-holder .tabulator-row{
+        background-color: transparent !important;
     }
 
-    #finish-row td {
-        font-weight: bold;
+    .tabulator {
+        color: var(--bs-body-color);
+    }
+
+    .tabulator-row.tabulator-group {
+        background-color: rgba(255, 255, 255, 0.075) !important;
+    }
+
+    .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs {
+        background-color: transparent !important;
+    }
+
+    .tabulator-row, .tabulator-row.tabulator-row-even {
+        background-color: transparent;
+    }
+
+    .tabulator-row,
+    .tabulator .tabulator-header {
+        border: none;
+    }
+
+    .tabulator-row .tabulator-responsive-collapse {
+        border-top: 0px;
+        padding-bottom: 1rem;
+        white-space: normal;
+    }
+
+    .tabulator-responsive-collapse strong {
+        font-weight: 500;
+    }
+
+    .tabulator .tabulator-footer {
+        border: none !important;
+    }
+
+    .tabulator .tabulator-footer .tabulator-calcs-holder {
+        border: none;
+        border-top: 1px solid #ddd;
+    }
+
+    .leg-leader {
+        font-weight: 700;
+    }
+
+    .first-leg {
+        text-decoration: underline;
     }
 
     #countdown {
@@ -270,6 +337,11 @@ redirect_from:
 
     figure img {
         width: 100%;
+    }
+
+    .accordion {
+        --bs-accordion-active-color: var(--bs-body-color);
+        --bs-accordion-active-bg: #eee;
     }
 
     .gallery ul {
@@ -363,8 +435,8 @@ redirect_from:
 </style>
 <body>
 
-<section>
-    <div class="black-bg pt-4 pb-4">
+<section class="black-bg mb-0 pb-4">
+    <div class="pt-4 pb-4">
         <p class="imprint"><a href="{{ site.baseurl }}/">Race Condition Running</a></p>
         <header class="d-flex flex-wrap align-items-center justify-content-center gap-3">
             <div class="one-bg w-100 mb-4">
@@ -373,6 +445,7 @@ redirect_from:
             <div class=" w-100">
             <div class="subheader d-flex flex-column align-items-center">
                 <h2 class="mb-3">October 1st, 2022</h2>
+
                 <p class="lead">We're running a relay along the Link 1 Line. You're invited.</p>
                 <!--div class="button-container"><a href="https://forms.gle/QWPAZ2EjVERVeKtk8" class="btn hero-button">Sign
                     Up</a></div-->
@@ -385,213 +458,26 @@ redirect_from:
 </section>
 
 <section id="course-map">
+    <div id="map" class="mb-4"></div>
+
+
     <div class="container pb-4 mb-4">
+        <div class="alert alert-secondary" role="alert">
+            This event took place in 2022. Looking for <a href="{{ site.baseurl }}/lrr">a more recent Light Rail Relay</a>?
+        </div>
+
         <h2 id="route">Route <a href="#route" class="anchor-link" aria-label="Link to this section. Route"></a></h2>
         <p>The relay will start at Angle Lake station and follow the entire operational line to Northgate, with
             exchanges and selfies at each station on the way. More than one runner will be assigned to each leg.</p>
-        <a href="/maps/light-rail-relay-22.gpx" class="btn btn-outline-primary">Download Route GPX</a>
+        <a href="#" class="btn btn-outline-primary" id="download-route-gpx-btn" hidden>Download Route GPX</a>
     </div>
-    <div id="map"></div>
 </section>
 
 <section id="schedule-section">
     <div class="container-xxl">
         <h2 id="schedule">Schedule <a href="#schedule" class="anchor-link" aria-label="Link to this section. Schedule"></a></h2>
-        <div class="table-responsive">
-            <table class="table" id="schedule-table">
-                <tbody>
-                <thead>
-                <th>Leg</th>
-                <th>Time</th>
-                <th>Start Station</th>
-                <th>Miles</th>
-                <th>Pace</th>
-                <th>Elev. Gain</th>
-                <th>Runners</th>
-                </thead>
-                <tr>
-                    <td>0</td>
-                    <td>9:30</td>
-                    <td>Angle Lake</td>
-                    <td>1.8</td>
-                    <td>9:00</td>
-                    <td>55</td>
-                    <td><b><u>Ellis</u></b>, <u>Nick</u></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>9:50</td>
-                    <td>SeaTac/Airport</td>
-                    <td>1.5</td>
-                    <td>9:00</td>
-                    <td>97</td>
-                    <td><b>Ellis</b>, Nick</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>10:08</td>
-                    <td>Tukwila International Blvd</td>
-                    <td>6.6</td>
-                    <td>9:00</td>
-                    <td>600</td>
-                    <td><b>Ellis</b>, Nick</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>11:12</td>
-                    <td>Rainier Beach</td>
-                    <td>1.1</td>
-                    <td>11:00</td>
-                    <td>82</td>
-                    <td><u>Dhruba</u>, Ellis, <u>James</u>, Nick, <b><u>Zach T.</u></b></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>11:28</td>
-                    <td>Othello</td>
-                    <td>1.6</td>
-                    <td>11:00</td>
-                    <td>39</td>
-                    <td>Dhruba, Ellis, James, Nick, <b>Zach T.</b>
-                    </td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>11:50</td>
-                    <td>Columbia City</td>
-                    <td>1.2</td>
-                    <td>11:00</td>
-                    <td>26</td>
-                    <td>Dhruba, James, <b>Zach T.</b></td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>12:09</td>
-                    <td>Mount Baker</td>
-                    <td>0.8</td>
-                    <td>11:00</td>
-                    <td>257</td>
-                    <td>Dhruba, <b>James</b></td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>12:21</td>
-                    <td>Beacon Hill</td>
-                    <td>1.3</td>
-                    <td>9:30</td>
-                    <td>15</td>
-                    <td>Dhruba, <b>James</b></td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td>12:39</td>
-                    <td>SODO</td>
-                    <td>0.7</td>
-                    <td>9:30</td>
-                    <td>15</td>
-                    <td>Dhruba, <u>Edward</u>, <b>James</b>, <u>Lauren</u>, <u>Zach E.</u></td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td>12:54</td>
-                    <td>Stadium</td>
-                    <td>0.8</td>
-                    <td>16:00</td>
-                    <td>47</td>
-                    <td>Dhruba, Edward, <b>James</b>, Lauren, Zach E.</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>1:10</td>
-                    <td>International District/Chinatown</td>
-                    <td>0.3</td>
-                    <td>16:00</td>
-                    <td>44</td>
-                    <td><u>Brett</u>, <u>Chandra</u>, Dhruba, <b>Edward</b>, <u>Ethan</u>, James, <u>Justin</u>, Lauren, <u>Marius</u>, Zach E.</td>
-                </tr>
-                <tr>
-                    <td>11</td>
-                    <td>1:19</td>
-                    <td>Pioneer Square</td>
-                    <td>0.6</td>
-                    <td>16:00</td>
-                    <td>101</td>
-                    <td>Brett, Chandra, <b>Edward</b>, Ethan, Justin, Lauren, Marius, Zach E.</td>
-                </tr>
-                <tr>
-                    <td>12</td>
-                    <td>1:31</td>
-                    <td>University Street</td>
-                    <td>1.1</td>
-                    <td>16:00</td>
-                    <td>97</td>
-                    <td>Brett, <b>Chandra</b>, Ethan, Justin, Lauren, Marius, <u>Ryan</u>, Zach E.</td>
-                </tr>
-                <tr>
-                    <td>13</td>
-                    <td>1:51</td>
-                    <td>Westlake</td>
-                    <td>1.0</td>
-                    <td>11:00</td>
-                    <td>245</td>
-                    <td>Brett, <b>Chandra</b>, Ethan, Justin, Marius</td>
-                </tr>
-                <tr>
-                    <td>14</td>
-                    <td>2:08</td>
-                    <td>Capitol Hill</td>
-                    <td>2.8</td>
-                    <td>12:00</td>
-                    <td>252</td>
-                    <td>Brett, <b>Chandra</b>, Ethan, <u>Ewin</u>, Justin, Marius, <u>Yuxuan</u></td>
-                </tr>
-                <tr>
-                    <td>15</td>
-                    <td>2:46</td>
-                    <td>University of Washington</td>
-                    <td>1.1</td>
-                    <td>12:00</td>
-                    <td>176</td>
-                    <td>Ewin, <u>Kevin</u>, <u>Maya</u>, <b>Yuxuan</b></td>
-                </tr>
-                <tr>
-                    <td>16</td>
-                    <td>3:05</td>
-                    <td>U-District</td>
-                    <td>1.4</td>
-                    <td>12:00</td>
-                    <td>120</td>
-                    <td>Ewin, Kevin, Maya, <b>Yuxuan</b></td>
-                </tr>
-                <tr>
-                    <td>17</td>
-                    <td>3:26</td>
-                    <td>Roosevelt</td>
-                    <td>2.4</td>
-                    <td>12:00</td>
-                    <td>263</td>
-                    <td>Ewin, <b>Yuxuan</b></td>
-                </tr>
-                <tr id="finish-row">
-                    <td>Finish</td>
-                    <td>3:59</td>
-                    <td></td>
-                    <td>28.3</td>
-                    <td></td>
-                    <td>2496</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                </tbody>
-                <tfoot>
-                <tr>
-                    <td>🍻</td>
-                    <td>5:00</td>
-                    <td colspan="7"><a href="https://www.udistrictseattle.com/udistrictfoodwalk">U-District Food Walk and Street Party</a></td>
-                </tr>
-                </tfoot>
-            </table>
-        </div>
+
+        <div id="schedule-table"></div>
 
         <p>Leg leaders are marked in <b>bold</b>. <u>Underlined</u> name indicates first leg. Times nominal. Follow the
             <a href="https://docs.google.com/spreadsheets/d/1rd9Si3BcPgqt3fWxoHnuUB0rnN00XLtziMaHSPpQt14/edit#gid=0">live
@@ -652,52 +538,161 @@ redirect_from:
 <section>
     <div class="container">
         <h2 id="faq">FAQ <a href="#faq" class="anchor-link" aria-label="Link to this section. FAQ"></a></h2>
-        <dl>
-            <dt>Why do this?</dt>
-            <dd>If you already run with RCR, think of it as an extra-special weekend run. If you don't, think of the Light Rail Relay
-                as a chance to meet a bunch of new friends. Running from station to station also helps you appreciate
-                how the Link ties together different parts of the city. Check out <a href="/light-rail-relay-21#epilogue">the photos from last year</a> if you still need convincing.</dd>
-            <dt>Who can participate?</dt>
-            <dd>Anyone in the CSE community.</dd>
-            <dt>How far do I need to run?</dt>
-            <dd>You can choose how far, and we'll be able to accommodate any distance between .5 miles and 28 miles.</dd>
-            <dt>How fast do I need to run?</dt>
-            <dd>Also up to you. We'll schedule the relay according to your pace estimate, taking into account things
-                like the elevation change and the street context as well. You may be scheduled to run more slowly than
-                your preference to accommodate other runners.
-            </dd>
-            <dt>Will I be too slow?</dt>
-            <dd>No. We typically plan the legs through the downtown core only modestly faster than walking pace, so we'll have no problem accommodating
-                a broad range of abilities.</dd>
-            <dt>I'm unsure how fast or how far I can run.</dt>
-            <dd>We recommend you join an <a href="/">RCR weekday run</a> before the relay so that we can figure out
-                what's appropriate. This is especially important if you're new to running or if you're returning after a
-                long break.
-            </dd>
-            <dt>I'm uncomfortable or unsure about signing up because I don't know enough about where I'd be running.
-            </dt>
-            <dd>The organizers have run the course and put together some notes about what to expect along each leg, so
-                do click around the route map. Multiple people will be assigned to each leg and at least one experienced
-                runner will be in the group at all times. Please note any particular concerns or constraints on the
-                open-ended part of the sign-up form so we can accommodate you.
-            </dd>
-            <dt>Is there anything planned for after the run?</dt>
-            <dd>We are planning to enjoy the <a href="https://udistrictseattle.com/udistrictfoodwalk">U-District
-                Food Walk and Street Party</a> after the conclusion of the relay at 5:00PM. According to the U-District Partnership,
-                this year's food walk will have an "After Party" with "$4 drink specials from your favorite
-                neighborhood establishments between 6pm-10pm, along with a breakdancing competition, outdoor music,
-                and dance party right on the Ave."
-            </dd>
-            <dt>Can I still sign up?</dt>
-            <dd>You can sign up until the initial schedule is made a few days before the event. Beyond that point, no, but you can join for any scheduled legs
-                that you are able to. Please message us in the event Slack channel, #light-rail-relay-22, so we know to expect you.
-            </dd>
-            <dt>I want to update my preferences.</dt>
-            <dd>You can update your responses on the entry form until the weekend before the event. After that point, you can
-                reduce or increase the number of legs that you run if it does not affect the pace schedule,
-                otherwise there will be no changes.
-            </dd>
-        </dl>
+
+        <div id="faq-accordion" class="accordion">
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqOne" aria-expanded="true" aria-controls="faqOne">
+                        Why do this?
+                    </button>
+                </h3>
+                <div id="faqOne" class="accordion-collapse collapse" aria-labelledby="faq-headingOne"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        If you already run with RCR, think of it as an extra-special weekend run. If you don't, think of the Light Rail Relay
+                        as a chance to meet a bunch of new friends. Running from station to station also helps you appreciate
+                        how the Link ties together different parts of the city. Check out <a href="/light-rail-relay-21#epilogue">the photos from last year</a> if you still need convincing.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqTwo" aria-expanded="true" aria-controls="faqOne">Who can participate?
+                    </button>
+                </h3>
+                <div id="faqTwo" class="accordion-collapse collapse" aria-labelledby="faq-headingTwo"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        Anyone in the CSE community.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqThree" aria-expanded="true" aria-controls="faqThree">How far do I need to run?
+                    </button>
+                </h3>
+                <div id="faqThree" class="accordion-collapse collapse" aria-labelledby="faq-headingThree"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">You can choose how far, and we'll be able to accommodate any distance between .5 miles and 28 miles.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqFour" aria-expanded="true" aria-controls="faqFour">How fast do I need to run?
+                    </button>
+                </h3>
+                <div id="faqFour" class="accordion-collapse collapse" aria-labelledby="faq-headingFour"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        Also up to you. We'll schedule the relay according to your pace estimate, taking into account things like the elevation change and the street context as well. You may be scheduled to run more slowly than your preference to accommodate other runners.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqFive" aria-expanded="true" aria-controls="faqFive">Will I be too slow?
+                    </button>
+                </h3>
+                <div id="faqFive" class="accordion-collapse collapse" aria-labelledby="faq-headingFive"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        No. We typically plan the legs through the downtown core only modestly faster than walking pace, so we'll have no problem accommodating a broad range of abilities.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingSix">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqSix" aria-expanded="true" aria-controls="faqSix">I'm unsure how fast or how far I can run.
+                    </button>
+                </h3>
+                <div id="faqSix" class="accordion-collapse collapse" aria-labelledby="faq-headingSix"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        We recommend you join an <a href="{{ site.baseurl }}/">RCR weekday run</a> before the relay so that we can figure out
+                        what's appropriate. This is especially important if you're new to running or if you're returning after a
+                        long break.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingSeven">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqSeven" aria-expanded="true" aria-controls="faqSeven">I'm uncomfortable or unsure about signing up because I don't know enough about where I'd be running.
+                    </button>
+                </h3>
+                <div id="faqSeven" class="accordion-collapse collapse" aria-labelledby="faq-headingSeven"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        The organizers have run the course and put together some notes about what to expect along each leg, so do click around the route map. Multiple people will be assigned to each leg and at least one experienced runner will be in the group at all times. Please note any particular concerns or constraints on the open-ended part of the sign-up form so we can accommodate you.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingEight">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqEight" aria-expanded="true" aria-controls="faqEight">
+                        Is there anything planned for after the run?
+                    </button>
+                </h3>
+                <div id="faqEight" class="accordion-collapse collapse" aria-labelledby="faq-headingEight"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        We are planning to enjoy the <a href="https://udistrictseattle.com/udistrictfoodwalk">U-District
+                        Food Walk and Street Party</a> after the conclusion of the relay at 5:00PM. According to the U-District Partnership,
+                        this year's food walk will have an "After Party" with "$4 drink specials from your favorite
+                        neighborhood establishments between 6pm-10pm, along with a breakdancing competition, outdoor music,
+                        and dance party right on the Ave."
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingNine">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqNine" aria-expanded="true" aria-controls="faqNine">
+                        Can I still sign up?
+                    </button>
+                </h3>
+                <div id="faqNine" class="accordion-collapse collapse" aria-labelledby="faq-headingNine"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        You can sign up until the initial schedule is made a few days before the event. Beyond that point, no, but you can join for any scheduled legs that you are able to. Please message us in the event Slack channel, #light-rail-relay-22, so we know to expect you.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingTen">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqTen" aria-expanded="true" aria-controls="faqTen">
+                        I want to update my preferences.
+                    </button>
+                </h3>
+                <div id="faqTen" class="accordion-collapse collapse" aria-labelledby="faq-headingTen"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        You can update your responses on the entry form until the weekend before the event. After that point, you can reduce or increase the number of legs that you run if it does not affect the pace schedule, otherwise there will be no changes.
+                    </div>
+                </div>
+            </div>
+
+
+    </div>
     </div>
 </section>
 
@@ -818,19 +813,26 @@ redirect_from:
 </footer>
 
 <script type="module">
+    import {relayToGPX, createCountdown, download, formatLegDescription, processRelayGeoJSON, createScheduleTable} from "../js/common.js";
+
     Promise.all([
-        fetch("{{ site.baseurl }}/maps/link-line-1.geojson"),
-        fetch("{{ site.baseurl }}/maps/light-rail-relay-legs-22.geojson"),
-        fetch("{{ site.baseurl }}/maps/light-rail-relay-stations-22.geojson")
+        fetch("{{ site.baseurl }}/maps/link-light-rail.geojson"),
+        fetch("{{ site.baseurl }}/maps/lrr22.geojson")
     ])
     .then(responses => Promise.all(responses.map(res => res.json())))
-    .then(([route, legs, stations]) => {
-
-        let stationToName = new Array(stations.features.length);
-        for (let i = 0; i < stations.features.length; i++) {
-            let station = stations.features[i];
-            stationToName[station.properties.id] = station.properties.name
+    .then(([route, relay]) => {
+        let [legs, exchanges] = processRelayGeoJSON(relay)
+        let exchangeNames = new Array(exchanges.length);
+        for (let exchange of exchanges.features) {
+            exchangeNames[exchange.properties.id] = exchange.properties.name
         }
+        const downloadRouteButton = document.getElementById("download-route-gpx-btn")
+        downloadRouteButton.addEventListener("click", event => {
+            let gpxString = relayToGPX("Race Condition Running Light Rail Relay 2022", "Light Rail Relay 2022", legs.features, exchanges.features, 2022)
+            download(gpxString, "application/gpx+xml", `light-rail-relay-2022.gpx`)
+            event.preventDefault()
+        })
+        downloadRouteButton.hidden = false
         // initialize the map
         let map = L.map('map', {
             fullscreenControl: true,
@@ -853,17 +855,7 @@ redirect_from:
         }).addTo(map);
         L.control.locate({keepCurrentZoomLevel: true, flyTo: true}).addTo(map);
 
-        function onEachFeature(feature, layer) {
-            layer.bindTooltip(feature.properties.name, {
-                "offset": [20, 0],
-                "direction": "right",
-                "className": "station-name",
-                opacity: 0.75
-            });
-        }
-
-
-        let stationButtonLayer = L.geoJSON(stations, {
+        let stationButtonLayer = L.geoJSON(exchanges, {
             pointToLayer: function (feature, latlng) {
                 return L.circleMarker(latlng, {
                     radius: 10,
@@ -873,15 +865,17 @@ redirect_from:
                     color: "rgba(0,0,0,0)"
                 });
             },
-            onEachFeature: onEachFeature
+            onEachFeature: function(feature, layer) {
+                layer.bindTooltip(feature.properties.name, {
+                    "offset": [20, 0],
+                    "direction": "right",
+                    "className": "station-name",
+                    opacity: 0.75
+                })
+            }
         })
-        stationButtonLayer.on('mouseover', e => {
-            e.layer.openPopup();
-        });
-        stationButtonLayer.on('mouseout', function (e) {
-            this.closePopup();
-        });
-        let stationLabels = L.geoJSON(stations, {
+
+        let stationLabels = L.geoJSON(exchanges, {
             pointToLayer: function (feature, latlng) {
                 let marker = L.circleMarker(latlng, {
                     radius: 0,
@@ -903,17 +897,6 @@ redirect_from:
 
         let clicked = undefined
 
-        function clickFeature(e) {
-            if (clicked) {
-                clicked.setStyle({color: "#6cc462"});
-            }
-            let feature = e.layer;
-            feature.setStyle({
-                color: '#497f32',
-            });
-            clicked = feature;
-        }
-
         const routeLayer = L.geoJSON(route, {
             "interactive": false, "style": {
                 "color": "#aaa",
@@ -923,15 +906,10 @@ redirect_from:
             }
         });
 
-
         routeLayer.addTo(map);
         const legsLayer = L.geoJSON(legs, {
             "style": {"color": "#5fac56", "weight": 6}, onEachFeature: function (feature, layer) {
-                let content = "<h4>" + stationToName[feature.properties.start] + " to " + stationToName[feature.properties.end] + "</h4>"
-                content += "<b>Distance:</b> " + String(feature.properties.distance) + "mi<br/>"
-                content += "<b>Ascent:</b> " + String(feature.properties.ascent) + "ft<br/>"
-                content += "<b>Descent:</b> " + String(feature.properties.descent) + "ft<br/>"
-                content += "<b>Notes</b>: " + feature.properties.notes
+                let content = formatLegDescription(exchangeNames[feature.properties.start_exchange], exchangeNames[feature.properties.end_exchange], feature.properties)
                 layer.bindPopup(content)
                 layer.getPopup().on('remove', function () {
                     layer.setStyle({"color": "#5fac56"})
@@ -939,70 +917,34 @@ redirect_from:
                 })
             }
         })
-        legsLayer.on("click", clickFeature)
+        legsLayer.on("click", function(e) {
+            if (clicked) {
+                clicked.setStyle({color: "#6cc462"});
+            }
+            let feature = e.layer;
+            if (clicked === feature) {
+                clicked = null
+                // Allow unselection
+                return
+            }
+            feature.setStyle({
+                color: '#497f32',
+            });
+            clicked = feature;
+        })
         legsLayer.addTo(map);
         stationButtonLayer.addTo(map);
         stationLabels.addTo(map);
         map.fitBounds(legsLayer.getBounds().pad(0.1))
     })
 
-    let countDownDate = new Date("Oct 1, 2022 9:30:00").getTime();
-    addEventListener("DOMContentLoaded", (event) => {
-        const daysEl = document.getElementById("days")
-        const hoursEl = document.getElementById("hours")
-        const minutesEl = document.getElementById("minutes")
-        const secondsEl = document.getElementById("seconds")
-
-        const secondPluralEl = document.getElementById("second-plural")
-        const minutePluralEl = document.getElementById("minute-plural")
-        const hourPluralEl = document.getElementById("hour-plural")
-        const dayPluralEl = document.getElementById("day-plural")
-        let countdownInterval
-        function updateCountdown(includeSeconds) {
-            document.getElementById("static-count").style.display = "none";
-            document.getElementById("dynamic-count").style.display = "";
-            let now = new Date().getTime();
-            let timeleft = countDownDate - now;
-
-            let days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
-            let hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            let minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
-            let seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
-            daysEl.innerHTML = days
-            hoursEl.innerHTML = hours
-            minutesEl.innerHTML = minutes
-            secondsEl.innerHTML = seconds
-
-            if (seconds === 1) {
-                secondPluralEl.style.display = "none"
-            } else {
-                secondPluralEl.style.display = ""
-            }
-            if (minutes === 1) {
-                minutePluralEl.style.display = "none"
-            } else {
-                minutePluralEl.style.display = ""
-            }
-            if (hours === 1) {
-                hourPluralEl.style.display = "none"
-            } else {
-                hourPluralEl.style.display = ""
-            }
-            if (days === 1) {
-                dayPluralEl.style.display = "none"
-            } else {
-                dayPluralEl.style.display = ""
-            }
-            if (timeleft < 0) {
-                clearInterval(countdownInterval);
-
-                //document.getElementById("secs").innerHTML = ""
-                document.getElementById("countdown").style.display = "none";
-            }
-        }
-        updateCountdown()
-        countdownInterval = setInterval(updateCountdown, 1000)
-    });
+    let startTime = new Date("Oct 1, 2022 9:30:00");
+    createCountdown(startTime.getTime())
+    fetch('{{ site.baseurl }}/maps/lrr22-schedule.json')
+        .then(res => res.json())
+        .then(schedule => {
+            createScheduleTable("#schedule-table", schedule, startTime)
+        })
 
     document.addEventListener('DOMContentLoaded', e => {
         let container = document.querySelector(".masonry")
