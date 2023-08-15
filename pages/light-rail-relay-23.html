@@ -6,10 +6,10 @@ redirect_from:
 - /lrr23/
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <title>Light Rail Relay 2022</title>
+    <title>Light Rail Relay 2023</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Relay along the Link Line 1 happening September 30th, 2023.">
     <meta name="theme-color" content="#000000">
@@ -18,51 +18,55 @@ redirect_from:
     <meta property="og:url" content="{{ site.baseurl }}/light-rail-relay-23/">
     <meta property="og:title" content="Light Rail Relay 2023">
     <meta property="og:description" content="Relay along the Link Line 1 happening September 30th, 2023.">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
-          integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
-          crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
-            integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
-            crossorigin=""></script>
-    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
-    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css'
-          rel='stylesheet'/>
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.js"
-            charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@3.2.0/dist/maplibre-gl.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@3.2.0/dist/maplibre-gl.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js" integrity="sha512-3dZ9wIrMMij8rOH7X3kLfXAzwtcHpuYpEgQg1OA4QAob1e81H8ntUQmQm3pBudqIoySO5j0tHN4ENzA6+n2r4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_bootstrap5.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+    <!--script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js" ></script>
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-t4GWSVZO1eC8BM339Xd7Uphw5s17a86tIZIj8qRxhnKub6WoyhnrxeCIMeAqBPgdZGlCcG2PrZjMc+Wr78+5Xg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js" ></script>
-    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha256-wLz3iY/cO4e6vKZ4zRmo4+9XDpMcgKOvv/zEU3OMlRo=" crossorigin="anonymous">
-
-
-    <script src="{{ site.baseurl }}/maps/link-line-1.geojson"></script>
-    <script src="{{ site.baseurl }}/maps/light-rail-relay-legs-22.geojson"></script>
-    <script src="{{ site.baseurl }}/maps/light-rail-relay-stations-22.geojson"></script>
 
 </head>
 <style>
+    @font-face {
+        font-family: "Seattle Transit Dot Matrix 15";
+        src: local("seattle_transit_dot_matrix_15"),
+        url("https://files.nickwalker.us/seattle_transit_dot_matrix_15.woff2") format("woff2");
+        /* Hosted externally until finalized
+        url("{{ base_url }}/fonts/seattle_transit_dot_matrix_15.woff2") format("woff2");*/
+    }
+    @font-face {
+        font-family: "Seattle Transit Dot Matrix 7";
+        src: local("seattle_transit_dot_matrix_7"),
+        url("https://files.nickwalker.us/seattle_transit_dot_matrix_7.woff2") format("woff2");
+        /*url("{{ base_url }}/fonts/seattle_transit_dot_matrix_7.woff2") format("woff2")*/;
+    }
 
     :root {
         --theme-primary-color: #5fac56;
         --theme-primary-color-bright: #6cc462;
-        --bs-btn-hover-bg: var(--theme-primary-color-bright);
         --bs-link-hover-color: #6cc462;
-        --bs-btn-hover-color: white;
-        --bs-btn-active-bg: var(--theme-primary-color-bright);
-        --bs-btn-hover-border-color: transparent;
+        --dot-size: clamp(0.15rem, 0.125rem + .26666667vw, .5333333rem);
+        --bs-body-bg: #010101;
+        --bs-body-color: #fefefe;
     }
+
     body {
         margin: 0;
-        font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !important;
+        font-family: var(--bs-font-sans-serif);
         font-size: 16px;
         line-height: 1.5;
-        background-color: black;
     }
 
     ::selection {
         background: #70cc66;
+    }
+
+    #title ::selection {
+        background: #333;
     }
 
     a {
@@ -78,10 +82,6 @@ redirect_from:
         ul {
             padding-left: 0;
         }
-    }
-
-    .lead {
-        max-width: 330px;
     }
 
     .anchor-link {
@@ -102,23 +102,19 @@ redirect_from:
         opacity: 1;
     }
 
-    .imprint {
-        text-align: center;
-        margin-bottom: 1.5rem;
-        font-style: italic;
-        font-weight: 300;
-    }
-
     .imprint a {
         text-decoration: none;
-        color: #666;
     }
 
     .imprint img {
         width: 100px;
         opacity: .5;
+        filter: invert();
     }
 
+    #map-container {
+        height: 100%;
+    }
     #map {
         height: 70vh;
     }
@@ -136,36 +132,18 @@ redirect_from:
         margin-bottom: 1rem;
     }
 
-    header img {
-        flex: 1;
-        max-width: 100%;
-        max-height: 12rem;
-        margin: 0 auto;
-        padding: 1rem .5rem;
-        display: block;
-    }
-
     section {
         margin-bottom: 4rem;
-    }
-
-    .lead {
-        text-align: center;
     }
 
     .one-bg {
         background-color: var(--theme-primary-color);
     }
 
-    .black-bg {
-        background-color: black;
-        color: white
-    }
     .hero-button {
-        background-color: var(--theme-primary-color);
         font-weight: bold;
-        font-size: 1.5rem;
-        color: white;
+        font-size: 1rem;
+
     }
 
     .btn {
@@ -173,79 +151,60 @@ redirect_from:
     }
 
     .btn-outline-primary {
-        border-color: transparent !important;
-        background-color: var(--theme-primary-color);
-        color: white;
+        --bs-btn-color: var(--theme-primary-color);
         --bs-btn-hover-bg: var(--theme-primary-color-bright);
+        --bs-btn-hover-color: var(--bs-body-color);
         --bs-btn-hover-border-color: transparent;
-        --bs-btn-active-bg: var(--theme-primary-color-bright);
+        --bs-btn-active-bg: var(--theme-primary-color);
+        --bs-btn-active-border-color: var(--theme-primary-color);
+        --bs-btn-active-color: #eee;
+        --bs-btn-border-color: var(--theme-primary-color-bright);
     }
 
-    .leaflet-popup-content {
+    .maplibregl-map {
+        font-family: var(--bs-font-sans-serif);
         font-size: 1rem;
-        margin: 1rem;
     }
 
-    .leaflet-container a.leaflet-popup-close-button {
-        padding: .5rem .5rem 0 0;
+    .maplibregl-popup-content {
+        font-size: 1rem;
+        --bs-body-color: black;
+        color: black;
     }
 
-    .leaflet-popup-content h3 {
+    .maplibregl-popup-close-button {
+        color: black;
+    }
+
+    .maplibregl-popup-content h3 {
+        font-size: 1.25rem;
+        margin-top: 0;
+        margin-bottom: .25rem;
+    }
+    .maplibregl-popup-content h4 {
+        font-size: 1rem;
         margin-top: 0;
         margin-bottom: .5rem;
     }
 
-    .leaflet-popup-content-wrapper {
-        box-shadow: 0 3px 14px rgba(0, 0, 0, 0.1);
-        border-radius: 3px;
+    .exchange-name-popup .maplibregl-popup-content
+     {
+        background-color: rgba(255, 255, 255, 0.8);
     }
 
-    .leaflet-popup {
-        bottom: 1rem !important;
-        left: 1rem !important;
+    .exchange-name-popup .maplibregl-popup-tip {
+        border-right-color: rgba(255, 255, 255, 0.8);
     }
-
-    .leaflet-popup-tip-container {
-        top: 0px !important;
-        overflow: auto !important;
+    .leg-popup .maplibregl-popup-tip {
         display: none;
     }
 
-    .leaflet-popup-tip {
-        box-shadow: none !important;
-        background-clip: none !important;
+    .exchange-name-popup .maplibregl-popup-close-button {
         display: none;
     }
 
-    .leaflet-popup:before {
-        display: none;
-        content: "";
-        position: absolute;
-        border: 13px solid transparent;
-        border-bottom-color: white;
-        bottom: 0px;
-        margin-left: -13px;
-    }
-
-    .station-marker {
-        font-size: 1rem;
-        font-weight: bold;
-        border-radius: 2rem;
-        width: 1.5rem;
-        height: 1.5rem;
-        text-align: center;
-        margin: 0;
-        padding: 0;
-        box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-        letter-spacing: -1px;
-    }
-
-    .station-name {
-        font-size: 1rem
-    }
-
-    .leaflet-container a {
-        color: grey;
+    .mapboxgl-ctrl-attrib.mapboxgl-compact, .maplibregl-ctrl-attrib.maplibregl-compact {
+        background-color: rgba(255, 255, 255, 0.6);
     }
 
     footer {
@@ -260,15 +219,6 @@ redirect_from:
         font-weight: bold;
     }
 
-    #countdown {
-        text-align: center;
-        background-color: black;
-        font-size: 36px;
-        font-weight: 300;
-        padding: 4rem 0;
-        color: white;
-    }
-
     #countdown .container {
         max-width: none;
     }
@@ -278,178 +228,705 @@ redirect_from:
         margin: 0 auto 2rem auto;
     }
 
-    figure img {
-        width: 100%;
-    }
-
-    .gallery ul {
-        display: flex;
-        list-style: none;
-        flex-wrap: wrap;
-    }
-
-    .gallery.respect-dimensions ul {
-        flex-wrap: nowrap;
-        height: 40vh;
-    }
-
-    .gallery.respect-dimensions li {
-
-    }
-
-    .gallery.respect-dimensions img {
-        width: 100%;
-        object-fit: contain;
-    }
-
-    .masonry {
-        background-color: rgba(0,0,0,.05);
-    }
-
-    /* clear fix */
-    .masonry:after {
-        content: '';
-        display: block;
-        clear: both;
-    }
-    .masonry > a {
-        float: left;
-    }
-
-    .masonry img {
-        display: block;
-        max-width: 100%;
-    }
-
-    .masonry .grid-sizer,
-    .masonry a {
-        width: 50%;
-    }
-
-    @media screen and (width > 720px) {
-        .masonry .grid-sizer,
-        .masonry a {
-            width: 33.33%;
-        }
-    }
-
-    figure > .image-grid {
-        margin-bottom: .25rem;
-    }
-    .image-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: repeat(auto-fit, minmax(210px, auto));
-        justify-items: center;
-        overflow: hidden;
-        grid-gap: .25rem;
-
-    }
-
-    .image-grid img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .two-up-one-down :nth-child(3) {
-        grid-column: span 2;
-    }
-
-    .one-left-two-right {
-        grid-template-columns: 4fr 5fr;
-    }
-
-    .one-left-two-right :nth-child(1) {
-        grid-row: span 2;
-    }
-
     hr {
         width: 8rem;
         margin: 4rem auto;
         display: block;
         border: 1px solid #ccc;
     }
+
+    header {
+        margin: 0 auto;
+
+    }
+
+    .platform-sign {
+        max-width: calc(var(--dot-size) * 130);
+        box-sizing: content-box;
+        padding: calc(var(--dot-size) * 2);
+    }
+    section#title .subheader, section#title .imprint {
+        max-width: calc(var(--dot-size) * 130);
+        text-align: left;
+        font-weight: 300;
+    }
+
+    .subheader p, .subheader p a {
+        color: grey;
+    }
+
+    .dot-matrix-background {
+        background-image: radial-gradient(rgba(62,49,34,.15) 50%, transparent 50%);
+        background-size: calc(var(--dot-size) * 1.001) calc(var(--dot-size) * 1.001);
+        background-position: -.4px .4px;
+    }
+
+
+    .dot-matrix {
+        text-shadow:   0 0 10px rgba(255,220,75,.3), 0 0 20px rgba(255,220,75,.6);
+        color: orange;
+        text-align: left;
+        margin-bottom: 0;
+    }
+
+    .dot-matrix::selection {
+        background: #333;
+    }
+
+    .dot-matrix-green {
+        text-shadow:   0 0 10px rgba(95,172,86,.3), 0 0 20px rgba(95,172,86,.6);
+        color: var(--theme-primary-color);
+    }
+
+
+    .dot-matrix.mb-1 {
+        margin-bottom: var(--dot-size);
+    }
+
+    .dot-matrix-15 {
+        font-family: "Seattle Transit Dot Matrix 15";
+        font-size: calc(var(--dot-size) * 15);
+        line-height: calc(1 + 1/15);
+    }
+
+    .dot-matrix-7 {
+        font-family: "Seattle Transit Dot Matrix 7";
+        font-size: calc(var(--dot-size) * 7);
+        line-height: calc(1 + 1/7);
+    }
+
+    .accordion-item ul {
+        padding-left: 1rem;
+    }
+
+    .accordion-item:first-of-type,
+    .accordion-flush .accordion-item:first-of-type .accordion-button {
+        border-radius: 1rem 1rem 0 0;
+    }
+    .accordion-item:last-of-type {
+        border-radius: 0 0 1rem 1rem;
+    }
+
+    .accordion, .accordion-button {
+        background-color: transparent;
+        color: white;
+
+    }
+
+    .accordion-item {
+        background-color: #111;
+        color: white;
+        border-bottom: 1px solid #666;
+    }
+
+    .accordion-button:not(.collapsed) {
+        background-color: #333;
+        color: white;
+        box-shadow: none;
+    }
+
+    .accordion-button::after {
+        filter: saturate(0%);
+    }
+
+    .tabulator,
+    .tabulator .tabulator-header .tabulator-col,
+    .tabulator .tabulator-header,
+    .tabulator .tabulator-tableholder .tabulator-table,
+    .tabulator .tabulator-footer,
+    .tabulator .tabulator-footer .tabulator-calcs-holder,
+    .tabulator .tabulator-footer .tabulator-calcs-holder .tabulator-row{
+        background-color: transparent !important;
+    }
+
+    .tabulator {
+        color: var(--bs-body-color);
+    }
+
+    .tabulator-row.tabulator-group {
+        background-color: rgba(255, 255, 255, 0.075) !important;
+    }
+
+    .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs {
+        background-color: transparent !important;
+    }
+
+    .tabulator-row, .tabulator-row.tabulator-row-even {
+        background-color: transparent;
+    }
+
+    .tabulator-row,
+    .tabulator .tabulator-header {
+        border: none;
+    }
+
+    .tabulator-row .tabulator-responsive-collapse {
+        border-top: 0px;
+        padding-bottom: 1rem;
+        white-space: normal;
+    }
+    .tabulator-responsive-collapse strong {
+        font-weight: 500;
+    }
+
+    .tabulator .tabulator-footer {
+        border: none !important;
+    }
+
+    .tabulator .tabulator-footer .tabulator-calcs-holder {
+        border: none;
+        border-top: 1px solid #AAA;
+    }
+
+    .leg-leader {
+        font-weight: 700;
+    }
+
+    .first-leg {
+        text-decoration: underline;
+    }
+
+
+    .imprint {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-style: italic;
+        font-weight: 300;
+    }
+
+    .imprint a {
+        text-decoration: none;
+        color: #666;
+    }
+
+    .imprint img {
+        width: 100px;
+        opacity: .5;
+    }
+
 </style>
 <body>
 
-<section>
-    <div class="black-bg pt-4 pb-4">
-        <p class="imprint"><a href="{{ site.baseurl }}/">Race Condition Running</a></p>
-        <header class="d-flex flex-wrap align-items-center justify-content-center gap-3">
-            <div class="one-bg w-100 mb-4">
-                <img src="{{ site.baseurl }}/img/lrr22/lrr-1-white.svg" alt="Light Rail Relay" class="p-sm-4"/>
-            </div>
-            <div class=" w-100">
-                <div class="subheader d-flex flex-column align-items-center">
-                    <h2 class="mb-3">September 30th</h2>
-                    <p class="lead"> The relay along the Link 1 Line starts <span id="static-count" style="">soon</span><span id="dynamic-count"
-                                                                                                                                style="display:none">in
-        <span id="days"></span> day<span id="day-plural">s</span> <span id="hours"></span> hour<span
-                            id="hour-plural">s</span> <span id="minutes"></span> minute<span id="minute-plural">s</span> and <span
-                            id="seconds"></span> second<span id="second-plural">s</span></span>.
-               </p>
-                    <!--div class="button-container"><a href="https://forms.gle/QWPAZ2EjVERVeKtk8" class="btn hero-button">Sign
-                        Up</a></div-->
-                    <!--div class="button-container"><a href="https://docs.google.com/spreadsheets/d/1rd9Si3BcPgqt3fWxoHnuUB0rnN00XLtziMaHSPpQt14/edit#gid=0" class="btn hero-button">Follow Along</a></div-->
-                    <!--div class="button-container"><a href="#epilogue" class="btn hero-button">Read Epilogue</a></div-->
+<section id="title">
+    <div class="black-bg pt-4 pb-2">
+
+
+        <header class="platform-sign dot-matrix-background px-2 px-sm-0">
+
+            <div class="container-xxl px-0">
+                <div class="logo-symbols dot-matrix dot-matrix-7 mb-1"><span class="dot-matrix-green">&#x2460;</span>&thinsp;-&#127939;&#127939;&thinsp;-&thinsp;&#128648;&thinsp;&#x2192;</div>
+
+                <h1 class="dot-matrix dot-matrix-15 mb-1">Light Rail Relay</h1>
+
+                <div id="countdown" class="dot-matrix dot-matrix-7 ">
+                        Arriving <span id="static-count" style="">soon</span><span id="dynamic-count"
+                                                                          style="display:none">in
+            <span id="days"></span>d&nbsp;<span id="day-plural"></span><span id="hours"></span>h&nbsp;<span id="minutes"></span>min<span class="flashing">.</span></span>
+
+                </div>
+                <div id="countdown-ended" style="display: none" class="dot-matrix dot-matrix-7">
+                    September 30th, 2023
                 </div>
             </div>
         </header>
+        <div class="subheader mx-auto px-2 px-sm-0">
+            <p>September 30th. A relay along the Link 1 Line by <a href="{{ site.baseurl }}/" class="fst-italic text-decoration-none">Race Condition Running</a>.</p>
+            <div class="button-container"><a href="https://forms.gle/mudG4DHJFhPuqYbV6" class="btn btn-outline btn-outline-primary hero-button">Sign
+                Up</a></div>
+            <!--div class="button-container"><a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing" class="btn hero-button">Follow Along</a></div-->
+            <!--div class="button-container"><a href="#epilogue" class="btn hero-button">Read Epilogue</a></div-->
+
+        </div>
     </div>
 </section>
 
-<section id="countdown">
+
+<section id="map">
+    <div id="map-container" tabindex="0"></div>
 
 </section>
 
-<script>
-    let countDownDate = new Date("Sept 30, 2023 9:30:00").getTime();
-    function updateCountdown(includeSeconds) {
-        document.getElementById("static-count").style.display = "none";
-        document.getElementById("dynamic-count").style.display = "";
-        let now = new Date().getTime();
-        let timeleft = countDownDate - now;
+<section>
+    <div class="container pb-4 mb-4">
+        <h2 id="route">Route <a href="#route" class="anchor-link" aria-label="Link to this section. Route"></a></h2>
+        <p>The relay will start at Angle Lake station and follow the entire operational line to Northgate, with
+            exchanges and selfies at each station on the way.</p>
+        <a href="#" class="btn btn-outline-primary" id="download-route-gpx-btn" hidden>Download Route GPX</a>
+    </div>
+</section>
 
-        let days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
-        let hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
-        document.getElementById("days").innerHTML = days
-        document.getElementById("hours").innerHTML = hours
-        document.getElementById("minutes").innerHTML = minutes
-        document.getElementById("seconds").innerHTML = seconds
 
-        if (seconds === 1) {
-            document.getElementById("second-plural").style.display = "none"
-        } else {
-            document.getElementById("second-plural").style.display = ""
-        }
-        if (minutes === 1) {
-            document.getElementById("minute-plural").style.display = "none"
-        } else {
-            document.getElementById("minute-plural").style.display = ""
-        }
-        if (hours === 1) {
-            document.getElementById("hour-plural").style.display = "none"
-        } else {
-            document.getElementById("hour-plural").style.display = ""
-        }
-        if (days === 1) {
-            document.getElementById("day-plural").style.display = "none"
-        } else {
-            document.getElementById("day-plural").style.display = ""
-        }
-        if (timeleft < 0) {
-            clearInterval(countdown);
+<section id="schedule-section" style="display: none">
+    <div class="container-xxl">
+        <h2 id="schedule">Schedule <a href="#schedule" class="anchor-link" aria-label="Link to this section. Schedule"></a></h2>
+        <div class="table-responsive mb-4" id="schedule-table">
 
-            //document.getElementById("secs").innerHTML = ""
-            document.getElementById("countdown").style.display = "none";
+        </div>
+
+        <p>Leg leaders are marked in <span class="leg-leader">bold</span>. <span class="first-leg">Underlined</span> name indicates first leg. Times nominal. Follow the
+            <a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing">live
+                schedule</a> for up-to-date estimates.</p>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <h2 id="faq">FAQ <a href="#faq" class="anchor-link" aria-label="Link to this section. FAQ"></a></h2>
+
+        <div id="faq-accordion" class="accordion accordion-flush">
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqOne" aria-expanded="true" aria-controls="faqOne">
+                        Why do this?
+                    </button>
+                </h3>
+                <div id="faqOne" class="accordion-collapse collapse" aria-labelledby="faq-headingOne"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        It's a great way to experience different parts of the city, and there's no better way to appreciate what Link does for Seattle than to run the route. If you're new to the running club, it's a chance to make some new friends too. Check out <a href="/light-rail-relay-22#epilogue">the photos from last year</a> if you still need convincing.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqTwo" aria-expanded="true" aria-controls="faqTwo">Who can participate?
+                    </button>
+                </h3>
+                <div id="faqTwo" class="accordion-collapse collapse" aria-labelledby="faq-headingTwo"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        <p>Anyone in the CSE community is welcome to run as part of the Race Condition Running team.</p>
+
+                        <p>New for this year, we're also inviting runners from other running groups who would like to form a team to complete the relay.  If you're interested in forming a team, please see the instructions below.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingEleven">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqEleven" aria-expanded="true" aria-controls="faqEleven">How can I make a team?
+                    </button>
+                </h3>
+                <div id="faqEleven" class="accordion-collapse collapse" aria-labelledby="faq-headingEleven"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        <p>Any group (or individual) who would like to form a team is welcome. Teams will:</p>
+                        <ul>
+                        <li>Ensure all members are registered</li>
+                        <li>Have at least one runner present at the Angle Lake Station platform at 09:30 on the morning of the event to receive their baton.</li>
+                        <li>Carry their baton through all 19 stations</li>
+                        <li>Document station visits with baton selfies</li>
+                        <li>Gather and submit the selfies after the event</li>
+                    </ul>
+
+                        <p>There are three team categories for results purposes: <b>Competitive</b> for teams of four, <b>Ultra</b> for teams of one, and <b>Open</b> for all other formats. We will provide recommended leg assignments based on your runners' preferences.</p>
+
+                        <p>Teams are responsible for their own logistics during the event. We recommend following the route, but you are free to make modifications.</p>
+
+                        <p>If you're interested in forming a team, please <a href="mailto:nick.s.walker@icloud.com">email us</a> with your team name and category. Once your team is confirmed, point your runners to the <a href="https://forms.gle/mudG4DHJFhPuqYbV6">sign-up form</a>.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqThree" aria-expanded="true" aria-controls="faqThree">How far do I need to run?
+                    </button>
+                </h3>
+                <div id="faqThree" class="accordion-collapse collapse" aria-labelledby="faq-headingThree"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">You can choose how far, and we'll be able to accommodate any distance between .5 miles and 28 miles.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqFour" aria-expanded="true" aria-controls="faqFour">How fast do I need to run?
+                    </button>
+                </h3>
+                <div id="faqFour" class="accordion-collapse collapse" aria-labelledby="faq-headingFour"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        Also up to you. We'll schedule the relay according to your pace estimate, taking into account things like the elevation change and the street context as well. You may be scheduled to run more slowly than your preference to accommodate other runners.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqFive" aria-expanded="true" aria-controls="faqFive">Will I be too slow?
+                    </button>
+                </h3>
+                <div id="faqFive" class="accordion-collapse collapse" aria-labelledby="faq-headingFive"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        No. We typically plan the legs through the downtown core only modestly faster than walking pace, so we'll have no problem accommodating a broad range of abilities.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingSix">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqSix" aria-expanded="true" aria-controls="faqSix">I'm unsure how fast or how far I can run.
+                    </button>
+                </h3>
+                <div id="faqSix" class="accordion-collapse collapse" aria-labelledby="faq-headingSix"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        We recommend you join an <a href="{{ site.baseurl }}/">RCR weekday run</a> before the relay so that we can figure out
+                        what's appropriate. This is especially important if you're new to running or if you're returning after a
+                        long break.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingSeven">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqSeven" aria-expanded="true" aria-controls="faqSeven">I'm unsure about signing up because I don't know enough about where I'd be running.
+                    </button>
+                </h3>
+                <div id="faqSeven" class="accordion-collapse collapse" aria-labelledby="faq-headingSeven"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        The organizers have run the course and put together some notes about what to expect along each leg, so do click around the route map. For the RCR team, multiple people will be assigned to each leg and at least one experienced runner will be in the group at all times. Please note any particular concerns or constraints on the open-ended part of the sign-up form so we can accommodate you.
+                    </div>
+                </div>
+            </div>
+            <!--div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingEight">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqEight" aria-expanded="true" aria-controls="faqEight">
+                        Is there anything planned for after the run?
+                    </button>
+                </h3>
+                <div id="faqEight" class="accordion-collapse collapse" aria-labelledby="faq-headingEight"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        We are planning to enjoy the <a href="https://udistrictseattle.com/udistrictfoodwalk">U-District
+                        Food Walk and Street Party</a> after the conclusion of the relay at 5:00PM. According to the U-District Partnership,
+                        this year's food walk will have an "After Party" with "$4 drink specials from your favorite
+                        neighborhood establishments between 6pm-10pm, along with a breakdancing competition, outdoor music,
+                        and dance party right on the Ave."
+                    </div>
+                </div>
+            </div-->
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingNine">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqNine" aria-expanded="true" aria-controls="faqNine">
+                        Can I still sign up?
+                    </button>
+                </h3>
+                <div id="faqNine" class="accordion-collapse collapse" aria-labelledby="faq-headingNine"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        You can sign up until the initial schedule is made a few days before the event. Beyond that point, no, but you can join for any scheduled legs that you are able to. Please message us in the event Slack channel, #light-rail-relay-23, so we know to expect you.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-headingTen">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faqTen" aria-expanded="true" aria-controls="faqTen">
+                        I want to update my preferences.
+                    </button>
+                </h3>
+                <div id="faqTen" class="accordion-collapse collapse" aria-labelledby="faq-headingTen"
+                     data-bs-parent="#faq-accordion">
+
+                    <div class="accordion-body">
+                        You can update your responses on the entry form until the weekend before the event. After that point, you can reduce or increase the number of legs that you run if it does not affect the pace schedule, otherwise there will be no changes.
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg" alt="A happy piece of toast running"/></a></p>
+</footer>
+<script type="module">
+    import { isMapboxURL, transformMapboxUrl } from "https://cdn.jsdelivr.net/npm/maplibregl-mapbox-request-transformer@0.0.2/src/index.min.js"
+    import { relayToGPX, download, createCountdown, formatLegDescription, processRelayGeoJSON, createScheduleTable} from "../js/common.js";
+
+    const mapboxKey = 'pk.eyJ1Ijoibmlja3N3YWxrZXIiLCJhIjoiY2t0ZjgyenE4MDR1YjJ1cno0N3hxYzI4YSJ9.ivPdsoEtV9TaLGbOOfFXKA'
+    const transformRequest = (url, resourceType) => {
+        if (isMapboxURL(url)) {
+            return transformMapboxUrl(url, resourceType, mapboxKey)
         }
+        return {url}
     }
-    updateCountdown()
-    let countdown = setInterval(updateCountdown, 1000)
 
+    fetch("{{ site.baseurl }}/maps/lrr23-map-style.json").then( res => res.json()).then(
+        style => {
+            var map = new maplibregl.Map({
+                container: 'map-container', // container id
+                attributionControl: false,
+                style: style,
+                center: [-122.32747365635417,47.60640473782326],
+                zoom: 9,
+                minZoom: 9,
+                maxBounds: [[-122.90236980551624, 47.23422996598591], [-121.60263821424818, 47.83106353346886]],
+                transformRequest: transformRequest
+            });
+            // Don't break basic page scrolling until the map is focused
+            map.scrollZoom.disable()
+            let container = document.getElementById("map-container")
+            // container needs to have tabindex=0 to be focusable
+            map.on("click", () => container.focus())
+            map.on("pitchstart", () => container.focus())
+            map.on("drag", () => container.focus())
+            container.addEventListener('focus', () => map.scrollZoom.enable());
+            container.addEventListener('blur', () => map.scrollZoom.disable());
+            let nav = new maplibregl.NavigationControl();
+            map.addControl(nav, 'top-left');
+            map.addControl(new maplibregl.FullscreenControl({container: document.querySelector('map-container')}), 'top-left');
+            map.addControl(new maplibregl.GeolocateControl({
+                positionOptions: {
+                    enableHighAccuracy: true
+                },
+                trackUserLocation: true
+            }), 'top-left');
+            let scale = new maplibregl.ScaleControl({
+                maxWidth: 80,
+                unit: 'imperial'
+            });
+            map.addControl(scale);
+            map.addControl(new maplibregl.AttributionControl({
+                compact: true
+            }));
+            Promise.all([
+                new Promise((resolve, reject) => {
+                    map.on('load', () => {
+                        resolve();
+                    })
+                }),
+                Promise.all([
+                    fetch("{{ site.baseurl }}/maps/link-light-rail.geojson"),
+                    fetch("{{ site.baseurl }}/maps/lrr22.geojson"),
+                ])
+                    .then(responses => Promise.all(responses.map((res => res.json()))))
+            ]).then(([_, [railLines, relay]]) => {
+
+                let [legs, exchanges] = processRelayGeoJSON(relay)
+                let exchangeNames = new Array(exchanges.length);
+                for (let exchange of exchanges.features) {
+                    exchangeNames[exchange.properties.id] = exchange.properties.name
+                }
+                let legsData = legs.features
+                const relayBounds = legsData.reduce((bounds, leg) => leg.geometry.coordinates.reduce((bounds, coord) => {
+                    return bounds.extend(coord);
+                }, bounds), new maplibregl.LngLatBounds(legsData[0].geometry.coordinates[0], legsData[0].geometry.coordinates[0]));
+                const downloadRouteButton = document.getElementById("download-route-gpx-btn")
+                downloadRouteButton.addEventListener("click", event => {
+
+                    let gpxString = relayToGPX("Race Condition Running Light Rail Relay 2023", "Light Rail Relay 2023", legs.features, exchanges.features, 2023)
+                    download(gpxString, "application/gpx+xml", `light-rail-relay-2023.gpx`)
+                    event.preventDefault()
+                })
+                downloadRouteButton.hidden = false
+                map.fitBounds(relayBounds, {
+                    padding: 32
+                });
+                function hideAttribution() {
+                    let attribution = document.querySelector(".maplibregl-compact-show")
+                    if (attribution) {
+                        attribution.classList.remove("maplibregl-compact-show")
+                        attribution.classList.remove("mapboxgl-compact-show")
+                    }
+                }
+                window.addEventListener("resize", function() {
+                    if (window.innerWidth < 768) {
+                        hideAttribution()
+                    }
+                })
+                if (window.innerWidth < 768) {
+                    hideAttribution()
+                }
+
+                map.addSource('route', {
+                    'type': 'geojson',
+                    'data': railLines
+                });
+
+                map.addLayer({
+                    'id': 'route',
+                    'type': 'line',
+                    'source': 'route',
+                    'layout': {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                    },
+                    'paint': {
+                        'line-color': '#777',
+                        'line-width': 1
+                    }
+                });
+                map.addSource('legs', {
+                    'type': 'geojson',
+                    'generateId': true,
+                    'data': legs
+                });
+
+                map.addLayer({
+                    'id': 'legs',
+                    'type': 'line',
+                    'source': 'legs',
+                    'layout': {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                    },
+                    'paint': {
+                        'line-color': ['case', ['boolean', ['feature-state', 'selected'], false], '#468040', '#6cc462'],
+                        'line-width': 8
+                    }
+                });
+                map.addSource('exchanges', {
+                    'type': 'geojson',
+                    'generateId': true,
+                    'data': exchanges
+                });
+
+                map.addLayer({
+                    'id': 'exchange-circle',
+                    'type': 'circle',
+                    'source': 'exchanges',
+                    minzoom: 9,
+                    'paint': {
+                        'circle-radius': 16,
+                        'circle-color': '#fff'
+                    }
+                });
+
+                map.addLayer({
+                    id: 'exchange-id',
+                    type: 'symbol',
+                    source: 'exchanges',
+                    minzoom: 9,
+                    layout: {
+                        'text-field': '{id}',
+                        'text-font': ['Open Sans Semibold'],
+                        'text-size': 16
+                    }
+                });
+
+                let currentExchangePopup = null;
+                let currentHoveredExchange = null;
+                // When a click event occurs on a feature in the places layer, open a popup at the
+                // location of the feature, with description HTML from its properties.
+                map.on('mousemove', 'exchange-circle', (e) => {
+                    if (e.features.length > 0) {
+                        let feature = e.features[0]
+                        if (currentExchangePopup) {
+                            if (currentHoveredExchange === feature.properties.id) {
+                                return
+                            }
+                            currentExchangePopup.remove()
+                        }
+
+
+                        const description = feature.properties.name;
+                        currentHoveredExchange = feature.properties.id;
+                        let markerHeight = 16, markerRadius = 8, linearOffset = 4;
+                        currentExchangePopup = new maplibregl.Popup({offset: [16, 0], className: "exchange-name-popup", closeButton: false, anchor: 'left'})
+                            .setLngLat(feature.geometry.coordinates)
+                            .setHTML(description)
+                            .setMaxWidth("350px")
+                            .addTo(map);
+                    } else if (currentExchangePopup) {
+                        currentExchangePopup.remove()
+                        currentExchangePopup = null
+                        currentHoveredExchange = null
+                    }
+                });
+
+                map.on("mouseenter", "exchange-circle", (e) => {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+
+                // Change it back to a pointer when it leaves.
+                map.on('mouseleave', 'exchange-circle', () => {
+                    map.getCanvas().style.cursor = '';
+                    currentExchangePopup.remove()
+                    currentExchangePopup = null
+                    currentHoveredExchange = null
+                });
+
+                let currentActiveLeg = null
+                let currentLegPopup = null
+                map.on('click', 'legs', (e) => {
+                    const coordinates = e.features[0].geometry.coordinates;
+                    const leg = e.features[0]
+                    const bounds = coordinates.reduce((bounds, coord) => {
+                        return bounds.extend(coord);
+                    }, new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
+                    currentLegPopup = new maplibregl.Popup({anchor: "bottom-left", offset:[16, 0], className: "leg-popup"})
+                        .setLngLat([bounds.getEast(), bounds.getCenter().lat])
+                        .setMaxWidth("300px")
+                        .setHTML(formatLegDescription(exchangeNames[leg.properties.start_exchange], exchangeNames[leg.properties.end_exchange], leg.properties))
+                        .on("close", () => {
+                            map.setFeatureState(
+                                {source: 'legs', id: leg.id},
+                                {selected: false}
+                            );
+                            currentActiveLeg = null
+                            container.focus()
+                        })
+                        .addTo(map);
+                    map.fitBounds(bounds, {
+                        padding: 32
+                    });
+                    if (currentActiveLeg) {
+                        map.setFeatureState(
+                            {source: 'legs', id: currentActiveLeg.id},
+                            {selected: false}
+                        );
+                    }
+                    map.setFeatureState(
+                        {source: 'legs', id: leg.id},
+                        {selected: true}
+                    );
+                    currentActiveLeg = leg
+                })
+
+                // Change the cursor to a pointer when the mouse is over the places layer.
+                map.on('mouseenter', 'legs', () => {
+                    map.getCanvas().style.cursor = 'pointer';
+
+                });
+
+                // Change it back to a pointer when it leaves.
+                map.on('mouseleave', 'legs', () => {
+                    map.getCanvas().style.cursor = '';
+                });
+            });
+
+        }
+    )
+
+    let startTime = new Date("Sept 30, 2023 9:30:00")
+    fetch('{{ site.baseurl }}/maps/lrr23-schedule.json')
+        .then(res => res.json())
+        .then(schedule => {
+            createScheduleTable("#schedule-table", schedule, startTime)
+        })
+
+    createCountdown(startTime.getTime(), "countdown-ended")
 </script>
 
 </body>

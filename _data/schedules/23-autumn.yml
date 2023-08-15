@@ -13,3 +13,20 @@
         name: Light Rail Relay 2023
         map: /light-rail-relay-23
         dist: 28.3
+      highlight-image: /img/lrr23/lrr-og-banner.png
+
+- date: "2023-10-08"
+  plan:
+    - time: "9:00"
+      route:
+        name: Dawg Dash 10K
+        map: https://www.washington.edu/alumni/events/alaska-airlines-dawg-dash-2023/
+        dist: 6.2
+
+- date: "2023-11-26"
+  plan:
+    - time: "6:00"
+      route:
+        name: Seattle Half Marathon
+        map: https://www.seattlemarathon.org/
+        dist: 13.1
