@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
   <meta charset="UTF-8">
   <title>Race Condition Running</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha256-wLz3iY/cO4e6vKZ4zRmo4+9XDpMcgKOvv/zEU3OMlRo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-t4GWSVZO1eC8BM339Xd7Uphw5s17a86tIZIj8qRxhnKub6WoyhnrxeCIMeAqBPgdZGlCcG2PrZjMc+Wr78+5Xg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel='stylesheet' type='text/css' href='{{ site.baseurl }}/css/style.css'>
 
   <!-- favicon -->
@@ -30,7 +30,7 @@
 <body>
 
 <header class="container">
-    <a href="/" class="text-dark">
+    <a href="/" class="text-body">
         <img src='{{ site.baseurl }}/img/rcc-logo.png' width='150' alt='RCC Logo' class="float-end">
         <h1>Race Condition Running</h1>
     </a>
@@ -45,6 +45,7 @@
             <li class="nav-item"><a href="{{ site.baseurl }}/lore/"{% if page.url == "/lore/" %} class="active"{% endif %}>Lore</a></li>
             <li class="nav-item dropdown dropdown-center"><a href="{{site.baseurl}}/events" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
               <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
+                  <li><a class="dropdown-item " href="{{ site.baseurl }}/light-rail-relay-23/">Light Rail Relay '23</a></li>
                   <li><a class="dropdown-item" href="{{ site.baseurl }}/drumheller-half-23/">Drumheller Half '23</a></li>
                   <li><a class="dropdown-item" href="{{ site.baseurl }}/light-rail-relay-22/">Light Rail Relay '22</a></li>
                   <li><a class="dropdown-item" href="{{ site.baseurl }}/drumheller-half-22/">Drumheller Half '22</a></li>
