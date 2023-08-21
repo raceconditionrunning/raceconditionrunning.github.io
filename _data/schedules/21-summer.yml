@@ -28,6 +28,7 @@
         name: "Ragnar Road Northwest Passage"
         map: "https://www.runragnar.com/event-detail/relay/northwestpassage"
         dist: 200
+      highlight-image: /img/ragnar-team-2021.webp
 - date: '2021-07-17'
   plan:
     - time: "8:30"
