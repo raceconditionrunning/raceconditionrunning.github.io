@@ -125,11 +125,11 @@ def main():
                 previous_tuesday(first_run))
     summer_start_date = f"{first_run.year}-W24"
     summer_start_date = datetime.strptime(summer_start_date + '-1', "%Y-W%W-%w")
-    summer_end_date = f"{first_run.year}-W35"
+    summer_end_date = f"{first_run.year}-W38"
     summer_end_date = datetime.strptime(summer_end_date + '-1', "%Y-W%W-%w")
     next_summer_start_date = f"{first_run.year + 1}-W24"
     next_summer_start_date = datetime.strptime(next_summer_start_date + '-1', "%Y-W%W-%w")
-    next_summer_end_date = f"{first_run.year + 1}-W35"
+    next_summer_end_date = f"{first_run.year + 1}-W38"
     next_summer_end_date = datetime.strptime(next_summer_end_date + '-1', "%Y-W%W-%w")
     block_dates = [summer_start_date, summer_end_date, next_summer_start_date, next_summer_end_date]
     block_is_summer = [True, False, True, False]
