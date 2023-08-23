@@ -182,9 +182,9 @@ export function createCountdown(countDownDate, unhideOnCompletion) {
             }
             flashingEls.forEach(el => {
                 if (seconds % 2 === 0) {
-                    el.style.display = "none"
+                    el.style.visibility = "visible"
                 } else {
-                    el.style.display = ""
+                    el.style.visibility = "hidden"
                 }
             })
             if (timeleft < 0) {

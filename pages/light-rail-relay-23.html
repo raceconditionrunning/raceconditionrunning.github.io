@@ -4,6 +4,8 @@ redirect_from:
 - /lrr/
 - /light-rail-relay/
 - /lrr23/
+team_registration_link: https://forms.gle/rPGW6fWT4wytm7be7
+registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
 ---
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
@@ -49,7 +51,7 @@ redirect_from:
         --theme-primary-color: #5fac56;
         --theme-primary-color-bright: #6cc462;
         --bs-link-hover-color: #6cc462;
-        --dot-size: clamp(0.15rem, 0.125rem + .26666667vw, .5333333rem);
+        --dot-size: clamp(0.125rem, 0.1125rem + .26666667vw, .5333333rem);
         --bs-body-bg: #010101;
         --bs-body-color: #fefefe;
     }
@@ -431,178 +433,177 @@ redirect_from:
         </header>
         <div class="subheader mx-auto px-2 px-sm-0">
             <p>September 30th. A relay along the Link 1 Line by <a href="{{ site.baseurl }}/" class="fst-italic text-decoration-none">Race Condition Running</a>.</p>
-            <div class="button-container"><a href="https://forms.gle/mudG4DHJFhPuqYbV6" class="btn btn-outline btn-outline-primary hero-button">Sign
-                Up</a></div>
-            <!--div class="button-container"><a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing" class="btn hero-button">Follow Along</a></div-->
-            <!--div class="button-container"><a href="#epilogue" class="btn hero-button">Read Epilogue</a></div-->
+            <div class="button-container">
+                <a href="{{ page.registration_link }}" class="btn btn-outline btn-outline-primary hero-button">Sign Up</a>
+                <a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary hero-button">Add Team</a>
+                <!--a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing" class="btn hero-button">Follow Along</a></div-->
+                <!--div class="button-container"><a href="#epilogue" class="btn hero-button">Read Epilogue</a-->
+                </div>
 
+
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
-<section id="map">
-    <div id="map-container" tabindex="0"></div>
+    <section id="map">
+        <div id="map-container" tabindex="0"></div>
 
-</section>
+    </section>
 
-<section>
-    <div class="container pb-4 mb-4">
-        <h2 id="route">Route <a href="#route" class="anchor-link" aria-label="Link to this section. Route"></a></h2>
-        <p>The relay will start at Angle Lake station and follow the entire operational line to Northgate, with
-            exchanges and selfies at each station on the way.</p>
-        <a href="#" class="btn btn-outline-primary" id="download-route-gpx-btn" hidden>Download Route GPX</a>
-    </div>
-</section>
-
-
-<section id="schedule-section" style="display: none">
-    <div class="container-xxl">
-        <h2 id="schedule">Schedule <a href="#schedule" class="anchor-link" aria-label="Link to this section. Schedule"></a></h2>
-        <div class="table-responsive mb-4" id="schedule-table">
-
+    <section>
+        <div class="container pb-4 mb-4">
+            <h2 id="route">Route <a href="#route" class="anchor-link" aria-label="Link to this section. Route"></a></h2>
+            <h5>18 legs - 28.10 mi ↑2200ft ↓2300ft</h5>
+            <p>The relay will start at Angle Lake station and follow the entire operational line to Northgate, with
+                exchanges and selfies at each station on the way. The route passes through Sea-Tac and Tukwila before traversing the length of Seattle.</p>
+            <a href="#" class="btn btn-outline-primary" id="download-route-gpx-btn" hidden>Download Route GPX</a>
         </div>
+    </section>
 
-        <p>Leg leaders are marked in <span class="leg-leader">bold</span>. <span class="first-leg">Underlined</span> name indicates first leg. Times nominal. Follow the
-            <a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing">live
-                schedule</a> for up-to-date estimates.</p>
-    </div>
-</section>
 
-<section>
-    <div class="container">
-        <h2 id="faq">FAQ <a href="#faq" class="anchor-link" aria-label="Link to this section. FAQ"></a></h2>
+    <section id="schedule-section" style="display: none">
+        <div class="container-xxl">
+            <h2 id="schedule">Schedule <a href="#schedule" class="anchor-link" aria-label="Link to this section. Schedule"></a></h2>
+            <div class="table-responsive mb-4" id="schedule-table">
 
-        <div id="faq-accordion" class="accordion accordion-flush">
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingOne">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqOne" aria-expanded="true" aria-controls="faqOne">
-                        Why do this?
-                    </button>
-                </h3>
-                <div id="faqOne" class="accordion-collapse collapse" aria-labelledby="faq-headingOne"
-                     data-bs-parent="#faq-accordion">
+            </div>
 
-                    <div class="accordion-body">
-                        It's a great way to experience different parts of the city, and there's no better way to appreciate what Link does for Seattle than to run the route. If you're new to the running club, it's a chance to make some new friends too. Check out <a href="/light-rail-relay-22#epilogue">the photos from last year</a> if you still need convincing.
+            <p>Leg leaders are marked in <span class="leg-leader">bold</span>. <span class="first-leg">Underlined</span> name indicates first leg. Times nominal. Follow the
+                <a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing">live
+                    schedule</a> for up-to-date estimates.</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2 id="faq">FAQ <a href="#faq" class="anchor-link" aria-label="Link to this section. FAQ"></a></h2>
+
+            <div id="faq-accordion" class="accordion accordion-flush mb-4">
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faq-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#faqOne" aria-expanded="true" aria-controls="faqOne">
+                            Why do this?
+                        </button>
+                    </h3>
+                    <div id="faqOne" class="accordion-collapse collapse" aria-labelledby="faq-headingOne"
+                         data-bs-parent="#faq-accordion">
+
+                        <div class="accordion-body">
+                            It's a chance to experience different parts of the city, and there's no better way to appreciate what Link does for Seattle than to run the route. If you're the competitive type, you may like the idea <a href="https://www.youtube.com/watch?v=OMNFRFUM4IM">of</a> <a href="https://www.youtube.com/watch?v=TaMiV3Wus9c">racing</a> <a href="https://www.youtube.com/watch?v=3x3HDTY919g">trains</a>. Or maybe you're an ultra-runner keen on establishing Seattle's first great urban FKT. Check out <a href="{{ site.baseurl }}/light-rail-relay-22#epilogue">the photos from last year</a> if you still need convincing.
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqTwo" aria-expanded="true" aria-controls="faqTwo">Who can participate?
-                    </button>
-                </h3>
-                <div id="faqTwo" class="accordion-collapse collapse" aria-labelledby="faq-headingTwo"
-                     data-bs-parent="#faq-accordion">
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faq-headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#faqTwo" aria-expanded="true" aria-controls="faqTwo">Who can participate?
+                        </button>
+                    </h3>
+                    <div id="faqTwo" class="accordion-collapse collapse" aria-labelledby="faq-headingTwo"
+                         data-bs-parent="#faq-accordion">
 
-                    <div class="accordion-body">
-                        <p>Anyone in the CSE community is welcome to run as part of the Race Condition Running team.</p>
+                        <div class="accordion-body">
+                            <p>Anyone in the CSE community is welcome to run as part of the Race Condition Running team. See the <a href="#faq-rcr">section below</a> for details about the team.</p>
 
-                        <p>New for this year, we're also inviting runners from other running groups who would like to form a team to complete the relay.  If you're interested in forming a team, please see the instructions below.</p>
+                            <p>New for this year, we're also inviting other running groups who would like to form teams to complete the relay.  If you're interested in forming a team, please see the instructions below.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingEleven">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqEleven" aria-expanded="true" aria-controls="faqEleven">How can I make a team?
-                    </button>
-                </h3>
-                <div id="faqEleven" class="accordion-collapse collapse" aria-labelledby="faq-headingEleven"
-                     data-bs-parent="#faq-accordion">
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faq-headingFour">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#faqFour" aria-expanded="true" aria-controls="faqFour">How can I make a team?
+                        </button>
+                    </h3>
+                    <div id="faqFour" class="accordion-collapse collapse" aria-labelledby="faq-headingFour"
+                         data-bs-parent="#faq-accordion">
 
-                    <div class="accordion-body">
-                        <p>Any group (or individual) who would like to form a team is welcome. Teams will:</p>
-                        <ul>
-                        <li>Ensure all members are registered</li>
-                        <li>Have at least one runner present at the Angle Lake Station platform at 09:30 on the morning of the event to receive their baton.</li>
-                        <li>Carry their baton through all 19 stations</li>
-                        <li>Document station visits with baton selfies</li>
-                        <li>Gather and submit the selfies after the event</li>
-                    </ul>
+                        <div class="accordion-body">
+                            <p>Anyone who would like to form a team is welcome. There are three team categories for results purposes: <b>Competitive</b> for teams of four, <b>Ultra</b> for teams of one, and <b>Open</b> for all other formats. All teams will:</p>
+                            <ul>
+                            <li>Ensure all members are registered.</li>
+                            <li>Have a runner present at the Angle Lake Station platform at 09:30 on the morning of the event to receive their baton.</li>
+                            <li>Carry their baton through all 19 stations.</li>
+                            <li>Document station visits with baton selfies.</li>
+                            <li>Gather and submit selfies after the event.</li>
+                        </ul>
 
-                        <p>There are three team categories for results purposes: <b>Competitive</b> for teams of four, <b>Ultra</b> for teams of one, and <b>Open</b> for all other formats. We will provide recommended leg assignments based on your runners' preferences.</p>
+                            <p>Teams are responsible for their own logistics during the event. We recommend following the route, but competitive teams are free to cut some corners if they wish.</p>
 
-                        <p>Teams are responsible for their own logistics during the event. We recommend following the route, but you are free to make modifications.</p>
-
-                        <p>If you're interested in forming a team, please <a href="mailto:nick.s.walker@icloud.com">email us</a> with your team name and category. Once your team is confirmed, point your runners to the <a href="https://forms.gle/mudG4DHJFhPuqYbV6">sign-up form</a>.</p>
+                            <p>If you're interested in forming a team, please complete the <a href="{{ page.team_registration_link}}">team signup</a>. There is no cost to register. If there are more teams than we can handle, we may ask any clubs fielding multiple teams to consolidate. Once your team is confirmed, you and your runners will be able to use the main <a href="{{ page.registration_link }}">sign-up form</a>.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqThree" aria-expanded="true" aria-controls="faqThree">How far do I need to run?
-                    </button>
-                </h3>
-                <div id="faqThree" class="accordion-collapse collapse" aria-labelledby="faq-headingThree"
-                     data-bs-parent="#faq-accordion">
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faq-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#faqThree" aria-expanded="true" aria-controls="faqThree">How do we assign legs?
+                        </button>
+                    </h3>
+                    <div id="faqThree" class="accordion-collapse collapse" aria-labelledby="faq-headingThree"
+                         data-bs-parent="#faq-accordion">
 
-                    <div class="accordion-body">You can choose how far, and we'll be able to accommodate any distance between .5 miles and 28 miles.</div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingFour">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqFour" aria-expanded="true" aria-controls="faqFour">How fast do I need to run?
-                    </button>
-                </h3>
-                <div id="faqFour" class="accordion-collapse collapse" aria-labelledby="faq-headingFour"
-                     data-bs-parent="#faq-accordion">
-
-                    <div class="accordion-body">
-                        Also up to you. We'll schedule the relay according to your pace estimate, taking into account things like the elevation change and the street context as well. You may be scheduled to run more slowly than your preference to accommodate other runners.
+                        <div class="accordion-body">Competitive format teams must have exactly four runners and each runner must run at least one leg. If your goal is to go fast, you probably want to break the distance as evenly as possible, but you'll have to weigh whether to cycle runners more frequently (risking botched exchanges) against running for longer blocks. Open format teams have no constraints. The RCR team treats the event like a big long-run, with multiple runners on each leg. See our previous schedules from <a href="{{ site.baseurl }}/light-rail-relay-21#schedule">2021</a> and <a href="{{ site.baseurl }}/light-rail-relay-22#schedule">2022</a> to get the idea. In any case, we'll collect your runners' preferences and send them to you along with a recommended schedule.</div>
                     </div>
                 </div>
-            </div>
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingFive">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqFive" aria-expanded="true" aria-controls="faqFive">Will I be too slow?
-                    </button>
-                </h3>
-                <div id="faqFive" class="accordion-collapse collapse" aria-labelledby="faq-headingFive"
-                     data-bs-parent="#faq-accordion">
 
-                    <div class="accordion-body">
-                        No. We typically plan the legs through the downtown core only modestly faster than walking pace, so we'll have no problem accommodating a broad range of abilities.
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faq-headingFive">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#faqFive" aria-expanded="true" aria-controls="faqFive">What counts as a station selfie?
+                        </button>
+                    </h3>
+                    <div id="faqFive" class="accordion-collapse collapse" aria-labelledby="faq-headingFive"
+                         data-bs-parent="#faq-accordion">
+
+                        <div class="accordion-body">
+                            Your baton and all team members participating in the exchange (continuing, beginning or ending their run at the station) must be included in the photo. It must be possible to positively identify that the photo was taken from within 100m of the station platform as the crow flies. You don't need to take the photo on the platform or even from within the fare zone! The easiest way to manage exchanges is to meet on the surface level at the exact points marked on the route then take a photo with the nearest station art or signage.
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingSix">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqSix" aria-expanded="true" aria-controls="faqSix">I'm unsure how fast or how far I can run.
-                    </button>
-                </h3>
-                <div id="faqSix" class="accordion-collapse collapse" aria-labelledby="faq-headingSix"
-                     data-bs-parent="#faq-accordion">
 
-                    <div class="accordion-body">
-                        We recommend you join an <a href="{{ site.baseurl }}/">RCR weekday run</a> before the relay so that we can figure out
-                        what's appropriate. This is especially important if you're new to running or if you're returning after a
-                        long break.
+
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faq-headingSeven">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#faqSeven" aria-expanded="true" aria-controls="faqSeven">Is this safe?
+                        </button>
+                    </h3>
+                    <div id="faqSeven" class="accordion-collapse collapse" aria-labelledby="faq-headingSeven"
+                         data-bs-parent="#faq-accordion">
+
+                        <div class="accordion-body">
+                            Running the Light Rail Relay involves the same kinds of danger that you would encounter on any run in Seattle. Although unlikely, there is risk of harm from vehicle traffic, falling, or medical complications. The course is open and you are responsible for your own safety. During registration, you will be asked to sign a liability waiver acknowledging these risks. That being said, the organizers have run the route multiple times without incident. Click around the route map to see our notes.
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingSeven">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqSeven" aria-expanded="true" aria-controls="faqSeven">I'm unsure about signing up because I don't know enough about where I'd be running.
-                    </button>
-                </h3>
-                <div id="faqSeven" class="accordion-collapse collapse" aria-labelledby="faq-headingSeven"
-                     data-bs-parent="#faq-accordion">
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faq-headingEight">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#faqEight" aria-expanded="true" aria-controls="faqEight">
+                            How do we manage our team's logistics?
+                        </button>
+                    </h3>
+                    <div id="faqEight" class="accordion-collapse collapse" aria-labelledby="faq-headingEight"
+                         data-bs-parent="#faq-accordion">
 
-                    <div class="accordion-body">
-                        The organizers have run the course and put together some notes about what to expect along each leg, so do click around the route map. For the RCR team, multiple people will be assigned to each leg and at least one experienced runner will be in the group at all times. Please note any particular concerns or constraints on the open-ended part of the sign-up form so we can accommodate you.
+                        <div class="accordion-body">
+                            <h5>Competitive teams</h5>
+                            <p>A group chat is probably sufficient, depending on how you decide to divide up legs. Consider having the next runner bring something for the previous to eat and drink.</p>
+                            <h5>Open teams</h5>
+                            <p>Make a schedule and stick to it. We'll provide a recommended schedule based on your runners' preferences, but it's up to the team captain (person who added the team) to finalize and distribute assignments. We'll also provide a Google Sheets spreadsheet which you can use to manage live tracking during the event. You can see RCR's from <a href="https://docs.google.com/spreadsheets/d/1wFvyhVMUVqJ3DTGJMr0fr9nrX8zU8nl4uux4AY_H01E/edit?usp=sharing">2021</a> and <a href="https://docs.google.com/spreadsheets/d/1rd9Si3BcPgqt3fWxoHnuUB0rnN00XLtziMaHSPpQt14/edit#gid=0">2022</a> as examples.</p>
+                            <h5>Ultra teams</h5>
+                            <p>The route is only slightly longer than a marathon, making it easy to run unsupported. Otherwise, there are lots of shops along the way for water and food.</p>
+                            <h5>All teams</h5>
+                            <p>Exchanges: The easiest way to manage exchanges is to meet on the surface level at the exact points marked on the route then take a photo with the nearest station art or signage. </p>
+                            <p>Getting around: Exchanges are conveniently accessible via light rail and other transit services. See <a href="https://seattletransitblog.com/seattle-for-visitors/">Seattle Transit Blog's page</a> for a refresher on how to get around using transit, and check the <a href="https://support.myorca.com/hc/en-us/articles/10743519362317-Visitor-s-Guide-to-Using-Public-Transit-in-the-Seattle-area">ORCA site</a> for recommendations on how to purchase fares. UW students can ride for free using their Husky IDs.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!--div class="accordion-item">
+
+                <!--div class="accordion-item">
                 <h3 class="accordion-header" id="faq-headingEight">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#faqEight" aria-expanded="true" aria-controls="faqEight">
@@ -621,30 +622,136 @@ redirect_from:
                     </div>
                 </div>
             </div-->
+
+            </div>
+
+        <h4 id="faq-rcr">RCR Team <a href="#faq-rcr" class="anchor-link" aria-label="Link to this section. RCR FAQ"></a></h4>
+
+        <p>RCR is participating in the <b>Open Category</b> with multiple runners assigned to each leg.</p>
+        <div id="faq-rcr-accordion" class="accordion accordion-flush">
             <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingNine">
+                <h3 class="accordion-header" id="faq-rcr-headingTwo">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqNine" aria-expanded="true" aria-controls="faqNine">
-                        Can I still sign up?
+                            data-bs-target="#faq-rcrTwo" aria-expanded="true" aria-controls="faq-rcrTwo">Who can join the RCR team?
                     </button>
                 </h3>
-                <div id="faqNine" class="accordion-collapse collapse" aria-labelledby="faq-headingNine"
-                     data-bs-parent="#faq-accordion">
+                <div id="faq-rcrTwo" class="accordion-collapse collapse" aria-labelledby="faq-rcr-headingTwo"
+                     data-bs-parent="#faq-rcr-accordion">
 
                     <div class="accordion-body">
-                        You can sign up until the initial schedule is made a few days before the event. Beyond that point, no, but you can join for any scheduled legs that you are able to. Please message us in the event Slack channel, #light-rail-relay-23, so we know to expect you.
+                        <p>Anyone in the CSE community is welcome to run as part of the Race Condition Running team. We interpret this broadly.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-rcr-headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faq-rcrThree" aria-expanded="true" aria-controls="faq-rcrThree">How far do I need to run?
+                    </button>
+                </h3>
+                <div id="faq-rcrThree" class="accordion-collapse collapse" aria-labelledby="faq-rcr-headingThree"
+                     data-bs-parent="#faq-rcr-accordion">
+
+                    <div class="accordion-body">You can choose how far, and we'll be able to accommodate any distance between .5 miles and 28 miles.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-rcr-headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faq-rcrFour" aria-expanded="true" aria-controls="faq-rcrFour">How fast do I need to run?
+                    </button>
+                </h3>
+                <div id="faq-rcrFour" class="accordion-collapse collapse" aria-labelledby="faq-rcr-headingFour"
+                     data-bs-parent="#faq-rcr-accordion">
+
+                    <div class="accordion-body">
+                        Also up to you. We'll plan based on your pace estimate, taking into account things like the elevation change and the street context as well. You may be scheduled to run more slowly than your preference to accommodate other runners.
                     </div>
                 </div>
             </div>
             <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingTen">
+                <h3 class="accordion-header" id="faq-rcr-headingEleven">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqTen" aria-expanded="true" aria-controls="faqTen">
+                            data-bs-target="#faq-rcrEleven" aria-expanded="true" aria-controls="faq-rcrEleven">How long is this going to take?
+                    </button>
+                </h3>
+                <div id="faq-rcrEleven" class="accordion-collapse collapse" aria-labelledby="faq-rcr-headingEleven"
+                     data-bs-parent="#faq-rcr-accordion">
+
+                    <div class="accordion-body">
+                        <p>Depends on how long and where you want to run. The RCR team typically takes about 6.5 hours to complete the event (running from 09:30 to 16:00). If you have a hard time constraint, please include it in your registration comments.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-rcr-headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faq-rcrFive" aria-expanded="true" aria-controls="faq-rcrFive">Will I be too slow?
+                    </button>
+                </h3>
+                <div id="faq-rcrFive" class="accordion-collapse collapse" aria-labelledby="faq-rcr-headingFive"
+                     data-bs-parent="#faq-rcr-accordion">
+
+                    <div class="accordion-body">
+                        No. We typically plan the legs through the downtown core only modestly faster than walking pace, so we'll have no problem accommodating a broad range of abilities.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-rcr-headingSix">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faq-rcrSix" aria-expanded="true" aria-controls="faq-rcrSix">I'm unsure how fast or how far I can run.
+                    </button>
+                </h3>
+                <div id="faq-rcrSix" class="accordion-collapse collapse" aria-labelledby="faq-rcr-headingSix"
+                     data-bs-parent="#faq-rcr-accordion">
+
+                    <div class="accordion-body">
+                        We recommend you join an <a href="{{ site.baseurl }}/">RCR weekday run</a> before the relay so that we can figure out
+                        what's appropriate. This is especially important if you're new to running or if you're returning after a
+                        long break.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-rcr-headingSeven">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faq-rcrSeven" aria-expanded="true" aria-controls="faq-rcrSeven">I'm unsure about signing up because I don't know enough about where I'd be running.
+                    </button>
+                </h3>
+                <div id="faq-rcrSeven" class="accordion-collapse collapse" aria-labelledby="faq-rcr-headingSeven"
+                     data-bs-parent="#faq-rcr-accordion">
+
+                    <div class="accordion-body">
+                        The organizers have run the course and put together some notes about what to expect along each leg, so do click around the route map. For the RCR team, multiple people will be assigned to each leg and at least one experienced runner will be in the group at all times. Please note any concerns or constraints on the open-ended part of the sign-up form so we can accommodate you.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-rcr-headingNine">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faq-rcrNine" aria-expanded="true" aria-controls="faq-rcrNine">
+                        Can I still sign up?
+                    </button>
+                </h3>
+                <div id="faq-rcrNine" class="accordion-collapse collapse" aria-labelledby="faq-rcr-headingNine"
+                     data-bs-parent="#faq-rcr-accordion">
+
+                    <div class="accordion-body">
+                        The form will stay open until the Sunday before the event. Once it closes, the schedule won't be changed to accommodate your preferences, but you can join for any legs that you are able to. Please message us in the event Slack channel, #light-rail-relay-23, so we know to expect you.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="faq-rcr-headingTen">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faq-rcrTen" aria-expanded="true" aria-controls="faq-rcrTen">
                         I want to update my preferences.
                     </button>
                 </h3>
-                <div id="faqTen" class="accordion-collapse collapse" aria-labelledby="faq-headingTen"
-                     data-bs-parent="#faq-accordion">
+                <div id="faq-rcrTen" class="accordion-collapse collapse" aria-labelledby="faq-rcr-headingTen"
+                     data-bs-parent="#faq-rcr-accordion">
 
                     <div class="accordion-body">
                         You can update your responses on the entry form until the weekend before the event. After that point, you can reduce or increase the number of legs that you run if it does not affect the pace schedule, otherwise there will be no changes.
