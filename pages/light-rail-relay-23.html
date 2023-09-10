@@ -13,22 +13,22 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
     <meta charset="UTF-8">
     <title>Light Rail Relay 2023</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Relay along the Link Line 1 happening September 30th, 2023.">
+    <meta name="description" content="Marathon relay along the Link Line 1 happening September 30th, 2023.">
     <meta name="theme-color" content="#000000">
     <meta property="og:image" content="{{ site.baseurl }}/img/lrr23/lrr-og-banner.png">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ site.baseurl }}/light-rail-relay-23/">
     <meta property="og:title" content="Light Rail Relay 2023">
-    <meta property="og:description" content="Relay along the Link Line 1 happening September 30th, 2023.">
-    <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@3.2.0/dist/maplibre-gl.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@3.2.0/dist/maplibre-gl.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js" integrity="sha512-3dZ9wIrMMij8rOH7X3kLfXAzwtcHpuYpEgQg1OA4QAob1e81H8ntUQmQm3pBudqIoySO5j0tHN4ENzA6+n2r4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta property="og:description" content="Marathon relay along the Link Line 1 happening September 30th, 2023.">
+    <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@3.3.1/dist/maplibre-gl.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@3.3.1/dist/maplibre-gl.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.bundle.min.js" integrity="sha512-ToL6UYWePxjhDQKNioSi4AyJ5KkRxY+F1+Fi7Jgh0Hp5Kk2/s8FD7zusJDdonfe5B00Qw+B8taXxF6CFLnqNCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
     <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_bootstrap5.min.css" rel="stylesheet">
     <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
     <!--script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js" ></script>
     <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-t4GWSVZO1eC8BM339Xd7Uphw5s17a86tIZIj8qRxhnKub6WoyhnrxeCIMeAqBPgdZGlCcG2PrZjMc+Wr78+5Xg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" integrity="sha512-Z/def5z5u2aR89OuzYcxmDJ0Bnd5V1cKqBEbvLOiUNWdg9PQeXVvXLI90SE4QOHGlfLqUnDNVAYyZi8UwUTmWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
 </head>
@@ -49,6 +49,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
 
     :root {
         --theme-primary-color: #5fac56;
+        --theme-primary-color-subdued: #51804d;
         --theme-primary-color-bright: #6cc462;
         --bs-link-hover-color: #6cc462;
         --dot-size: clamp(0.125rem, 0.1125rem + .26666667vw, .5333333rem);
@@ -64,7 +65,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
     }
 
     ::selection {
-        background: #70cc66;
+        background: var(--theme-primary-color-subdued);
     }
 
     #title ::selection {
@@ -89,7 +90,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
     .anchor-link {
         padding: 0 .175rem;
         font-weight: 400;
-        color: #6abf4a;
+        color: var(--theme-primary-color-bright);
         text-decoration: none;
         opacity: 0;
         transition: color 0.15s ease-in-out,opacity 0.15s ease-in-out;
@@ -138,16 +139,6 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         margin-bottom: 4rem;
     }
 
-    .one-bg {
-        background-color: var(--theme-primary-color);
-    }
-
-    .hero-button {
-        font-weight: bold;
-        font-size: 1rem;
-
-    }
-
     .btn {
         border-radius: 0;
     }
@@ -161,6 +152,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         --bs-btn-active-border-color: var(--theme-primary-color);
         --bs-btn-active-color: #eee;
         --bs-btn-border-color: var(--theme-primary-color-bright);
+        --bs-btn-focus-shadow-rgb: 255, 255, 255
     }
 
     .maplibregl-map {
@@ -189,13 +181,22 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         margin-bottom: .5rem;
     }
 
-    .exchange-name-popup .maplibregl-popup-content
+    .maplibregl-popup-content
      {
-        background-color: rgba(255, 255, 255, 0.8);
+        background-color: rgba(255, 255, 255, 0.6);
+        -webkit-backdrop-filter: blur(4px);
+        backdrop-filter: blur(4px);
+    }
+
+    .exchange-name-popup a {
+        color: var(--bs-body-color);
+        text-decoration-color: var(--theme-primary-color);
+        text-decoration-thickness: 2px;
+        font-weight: 600;
     }
 
     .exchange-name-popup .maplibregl-popup-tip {
-        border-right-color: rgba(255, 255, 255, 0.8);
+        border-right-color: rgba(255, 255, 255, 0.6);
     }
     .leg-popup .maplibregl-popup-tip {
         display: none;
@@ -207,6 +208,14 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
 
     .mapboxgl-ctrl-attrib.mapboxgl-compact, .maplibregl-ctrl-attrib.maplibregl-compact {
         background-color: rgba(255, 255, 255, 0.6);
+        -webkit-backdrop-filter: blur(4px);
+        backdrop-filter: blur(4px);
+    }
+
+    .maplibregl-map:focus:focus-visible,
+    .maplibregl-ctrl-group button:focus:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 0.25rem var(--theme-primary-color-subdued);
     }
 
     footer {
@@ -234,7 +243,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         width: 8rem;
         margin: 4rem auto;
         display: block;
-        border: 1px solid #ccc;
+        border: 1px solid var(--bs-secondary-color);
     }
 
     header {
@@ -301,30 +310,16 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         padding-left: 1rem;
     }
 
-    .accordion-item:first-of-type,
-    .accordion-flush .accordion-item:first-of-type .accordion-button {
-        border-radius: 1rem 1rem 0 0;
+    .accordion {
+        --bs-accordion-btn-focus-border-color: var(--theme-primary-color-subdued);
+        --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem var(--theme-primary-color-subdued);
+        --bs-accordion-inner-border-radius: 1rem;
+        --bs-accordion-bg: #111;
+        --bs-accordion-active-color: var(--bs-emphasis-color);
+        --bs-accordion-active-bg: #333;
     }
-    .accordion-item:last-of-type {
-        border-radius: 0 0 1rem 1rem;
-    }
-
-    .accordion, .accordion-button {
-        background-color: transparent;
-        color: white;
-
-    }
-
     .accordion-item {
-        background-color: #111;
-        color: white;
         border-bottom: 1px solid #666;
-    }
-
-    .accordion-button:not(.collapsed) {
-        background-color: #333;
-        color: white;
-        box-shadow: none;
     }
 
     .accordion-button::after {
@@ -387,8 +382,13 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
     .first-leg {
         text-decoration: underline;
     }
-
-
+    #leg-details-table h6, #leg-details-table .leg-number {
+        color: var(--bs-secondary-color);
+    }
+    #leg-details-table h5 a {
+        color: var(--bs-body-color);
+        text-decoration-color: var(--theme-primary-color);
+    }
     .imprint {
         text-align: center;
         margin-bottom: 1.5rem;
@@ -412,7 +412,6 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
 <section id="title">
     <div class="black-bg pt-4 pb-2">
 
-
         <header class="platform-sign dot-matrix-background px-2 px-sm-0">
 
             <div class="container-xxl px-0">
@@ -432,15 +431,16 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
             </div>
         </header>
         <div class="subheader mx-auto px-2 px-sm-0">
-            <p>September 30th. A relay along the Link 1 Line by <a href="{{ site.baseurl }}/" class="fst-italic text-decoration-none">Race Condition Running</a>.</p>
+            <p>Marathon relay along Seattle's Link Light Rail by <a href="{{ site.baseurl }}/" class="fst-italic text-decoration-none">Race Condition Running</a>. <br/>08:30 September 30th</p>
+
             <div class="button-container">
-                <a href="{{ page.registration_link }}" class="btn btn-outline btn-outline-primary hero-button">Sign Up</a>
-                <a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary hero-button">Add Team</a>
+                <a href="{{ page.registration_link }}" class="btn btn-outline btn-outline-primary btn-lg me-2" data-bs-toggle="tooltip" data-bs-title="by 9-27" data-bs-placement="bottom">Sign Up
+                </a>
+                <a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-25" data-bs-placement="bottom">Add Team
+  </span></a>
                 <!--a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing" class="btn hero-button">Follow Along</a></div-->
                 <!--div class="button-container"><a href="#epilogue" class="btn hero-button">Read Epilogue</a-->
                 </div>
-
-
             </div>
         </div>
     </section>
@@ -453,14 +453,35 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
 
     <section>
         <div class="container pb-4 mb-4">
-            <h2 id="route">Route <a href="#route" class="anchor-link" aria-label="Link to this section. Route"></a></h2>
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-baseline">
+                <h2 id="route">Route <a href="#route" class="anchor-link" aria-label="Link to this section. Route"></a></h2>
+                <a href="#" class="btn btn-outline-primary mb-3 m-sm-0 " id="download-route-gpx-btn" hidden>Download Route GPX</a>
+            </div>
             <h5>18 legs - 28.10 mi ↑2200ft ↓2300ft</h5>
             <p>The relay will start at Angle Lake station and follow the entire operational line to Northgate, with
-                exchanges and selfies at each station on the way. The route passes through Sea-Tac and Tukwila before traversing the length of Seattle.</p>
-            <a href="#" class="btn btn-outline-primary" id="download-route-gpx-btn" hidden>Download Route GPX</a>
+                visits to each station on the way. The route passes through Sea-Tac, Tukwila, and Bryn-Mawr Skyway before traversing the length of Seattle.</p>
+
+
+            <div id="leg-details-accordion" class="accordion accordion-flush">
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="leg-details-heading">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#leg-details" aria-expanded="true" aria-controls="leg-details">See all leg details
+                        </button>
+                    </h3>
+                    <div id="leg-details" class="accordion-collapse collapse" aria-labelledby="leg-details-heading"
+                         data-bs-parent="#leg-details-accordion">
+
+                        <div class="accordion-body">
+                            <div id="leg-details-table"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </section>
-
 
     <section id="schedule-section" style="display: none">
         <div class="container-xxl">
@@ -524,18 +545,79 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                             <p>Anyone who would like to form a team is welcome. There are three team categories for results purposes: <b>Competitive</b> for teams of four, <b>Ultra</b> for teams of one, and <b>Open</b> for all other formats. All teams will:</p>
                             <ul>
                             <li>Ensure all members are registered.</li>
-                            <li>Have a runner present at the Angle Lake Station platform at 09:30 on the morning of the event to receive their baton.</li>
+                            <li>Have a runner present at the Angle Lake Station platform at 08:30 on the morning of the event to receive their baton.</li>
                             <li>Carry their baton through all 19 stations.</li>
-                            <li>Document station visits with baton selfies.</li>
-                            <li>Gather and submit selfies after the event.</li>
+                            <li>Document station visits with photos.</li>
+                            <li>Gather and submit station photos after the event.</li>
                         </ul>
 
-                            <p>Teams are responsible for their own logistics during the event. We recommend following the route, but competitive teams are free to cut some corners if they wish.</p>
+                            <p>Teams are responsible for their own logistics during the event.</p>
 
                             <p>If you're interested in forming a team, please complete the <a href="{{ page.team_registration_link}}">team signup</a>. There is no cost to register. If there are more teams than we can handle, we may ask any clubs fielding multiple teams to consolidate. Once your team is confirmed, you and your runners will be able to use the main <a href="{{ page.registration_link }}">sign-up form</a>.</p>
                         </div>
                     </div>
                 </div>
+
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faq-headingNine">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#faqNine" aria-expanded="true" aria-controls="faqNine">
+                            How does timing work?
+                        </button>
+                    </h3>
+                    <div id="faqNine" class="accordion-collapse collapse" aria-labelledby="faq-headingNine"
+                         data-bs-parent="#faq-accordion">
+                        <div class="accordion-body">
+                            If you want an <i>official</i> time, your team captain will need to submit a set of 19 station photos with time metadata. We'll verify the photos and post the results. The photos you share will not be posted.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faq-headingTwelve">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#faqTwelve" aria-expanded="true" aria-controls="faqTwelve">
+                            Can we walk?
+                        </button>
+                    </h3>
+                    <div id="faqTwelve" class="accordion-collapse collapse" aria-labelledby="faq-headingTwelve"
+                         data-bs-parent="#faq-accordion">
+                        <div class="accordion-body">
+                            Yes, your team can walk for any or all of the event. There will be about <a href="https://www.timeanddate.com/sun/usa/seattle?month=9">12 hours of usable daylight</a> making it manageable to complete the route at a modest walking pace. Please mark your estimated time appropriately when registering as walking teams will be given an earlier start.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faq-headingFive">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#faqFive" aria-expanded="true" aria-controls="faqFive">What counts as a station photo?
+                        </button>
+                    </h3>
+                    <div id="faqFive" class="accordion-collapse collapse" aria-labelledby="faq-headingFive"
+                         data-bs-parent="#faq-accordion">
+
+                        <div class="accordion-body">
+                            Your baton must be in the photo. It must be possible to tell that the photo was taken from within 100m of the station platform as the crow flies. You don't need to take the photo on the platform or even from within the fare zone! Consider using the <a href="https://www.soundtransit.org/sites/default/files/2016_start-on-link-map.pdf">station art</a> or signage.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faq-headingEleven">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#faqEleven" aria-expanded="true" aria-controls="faqEleven">
+                            Do we have to follow the route?
+                        </button>
+                    </h3>
+                    <div id="faqEleven" class="accordion-collapse collapse" aria-labelledby="faq-headingEleven"
+                         data-bs-parent="#faq-accordion">
+                        <div class="accordion-body">
+                            We strongly recommend you follow the given route. We've run it before and assembled <a href="#route">notes on what to expect</a>. That said, the course is not monitored, and we will only be checking station photos. You can run alternative routes at your own peril.
+                        </div>
+                    </div>
+                </div>
+
                 <div class="accordion-item">
                     <h3 class="accordion-header" id="faq-headingThree">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -545,22 +627,11 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                     <div id="faqThree" class="accordion-collapse collapse" aria-labelledby="faq-headingThree"
                          data-bs-parent="#faq-accordion">
 
-                        <div class="accordion-body">Competitive format teams must have exactly four runners and each runner must run at least one leg. If your goal is to go fast, you probably want to break the distance as evenly as possible, but you'll have to weigh whether to cycle runners more frequently (risking botched exchanges) against running for longer blocks. Open format teams have no constraints. The RCR team treats the event like a big long-run, with multiple runners on each leg. See our previous schedules from <a href="{{ site.baseurl }}/light-rail-relay-21#schedule">2021</a> and <a href="{{ site.baseurl }}/light-rail-relay-22#schedule">2022</a> to get the idea. In any case, we'll collect your runners' preferences and send them to you along with a recommended schedule.</div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h3 class="accordion-header" id="faq-headingFive">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#faqFive" aria-expanded="true" aria-controls="faqFive">What counts as a station selfie?
-                        </button>
-                    </h3>
-                    <div id="faqFive" class="accordion-collapse collapse" aria-labelledby="faq-headingFive"
-                         data-bs-parent="#faq-accordion">
-
                         <div class="accordion-body">
-                            Your baton and all team members participating in the exchange (continuing, beginning or ending their run at the station) must be included in the photo. It must be possible to positively identify that the photo was taken from within 100m of the station platform as the crow flies. You don't need to take the photo on the platform or even from within the fare zone! The easiest way to manage exchanges is to meet on the surface level at the exact points marked on the route then take a photo with the nearest station art or signage.
-                        </div>
+                            <h5>Competitive Teams</h5>
+                            <p>You must have exactly four runners each running at least one leg. So you may exchange as few as three times or as many times as there are stations. If your goal is to go fast, you probably want to break the distance evenly, but you'll have to weigh whether to cycle runners more frequently (risking botched exchanges) against running for longer blocks.</p>
+                            <h5>Open Teams</h5>
+                            <p>There are no constraints. The RCR team treats the event like a big long-run, with multiple runners on each leg. See our previous schedules from <a href="{{ site.baseurl }}/light-rail-relay-21#schedule">2021</a> and <a href="{{ site.baseurl }}/light-rail-relay-22#schedule">2022</a> to get the idea. In any case, we'll collect your runners' preferences and send them to you along with a recommended schedule.</p></div>
                     </div>
                 </div>
 
@@ -575,7 +646,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                          data-bs-parent="#faq-accordion">
 
                         <div class="accordion-body">
-                            Running the Light Rail Relay involves the same kinds of danger that you would encounter on any run in Seattle. Although unlikely, there is risk of harm from vehicle traffic, falling, or medical complications. The course is open and you are responsible for your own safety. During registration, you will be asked to sign a liability waiver acknowledging these risks. That being said, the organizers have run the route multiple times without incident. Click around the route map to see our notes.
+                            Running the Light Rail Relay involves the same kinds of danger that you would encounter on any run in Seattle. Although unlikely, there is risk of harm from vehicle traffic, falling, weather, or medical complications. The course is open and you are responsible for your own safety. During registration, you will be asked to sign a liability waiver acknowledging these risks. That being said, the organizers have run the route multiple times without incident. Click around the route map to see our notes.
                         </div>
                     </div>
                 </div>
@@ -597,8 +668,24 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                             <h5>Ultra teams</h5>
                             <p>The route is only slightly longer than a marathon, making it easy to run unsupported. Otherwise, there are lots of shops along the way for water and food.</p>
                             <h5>All teams</h5>
-                            <p>Exchanges: The easiest way to manage exchanges is to meet on the surface level at the exact points marked on the route then take a photo with the nearest station art or signage. </p>
-                            <p>Getting around: Exchanges are conveniently accessible via light rail and other transit services. See <a href="https://seattletransitblog.com/seattle-for-visitors/">Seattle Transit Blog's page</a> for a refresher on how to get around using transit, and check the <a href="https://support.myorca.com/hc/en-us/articles/10743519362317-Visitor-s-Guide-to-Using-Public-Transit-in-the-Seattle-area">ORCA site</a> for recommendations on how to purchase fares. UW students can ride for free using their Husky IDs.</p>
+                            <p>Exchanges: The easiest way to manage exchanges is to meet on the surface level at the exact points marked on the route then take a photo with the nearest <a href="https://www.soundtransit.org/sites/default/files/2016_start-on-link-map.pdf">station art</a> or signage.</p>
+                            <p>Getting around: Stations are conveniently accessible via light rail and other transit services. See <a href="https://seattletransitblog.com/seattle-for-visitors/">Seattle Transit Blog's page</a> for a refresher on how to get around using transit, and check the <a href="https://support.myorca.com/hc/en-us/articles/10743519362317-Visitor-s-Guide-to-Using-Public-Transit-in-the-Seattle-area">ORCA site</a> for recommendations on how to purchase fares. UW students can ride for free using their Husky IDs.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faq-headingTen">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#faqTen" aria-expanded="true" aria-controls="faqTen">
+                            I have a different question.
+                        </button>
+                    </h3>
+                    <div id="faqTen" class="accordion-collapse collapse" aria-labelledby="faq-headingTen"
+                         data-bs-parent="#faq-accordion">
+                        <div class="accordion-body">
+                            <a href="mailto:nick.s.walker@icloud.com">Ask over email.</a>
                         </div>
                     </div>
                 </div>
@@ -680,7 +767,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                      data-bs-parent="#faq-rcr-accordion">
 
                     <div class="accordion-body">
-                        <p>Depends on how long and where you want to run. The RCR team typically takes about 6.5 hours to complete the event (running from 09:30 to 16:00). If you have a hard time constraint, please include it in your registration comments.</p>
+                        <p>Depends on how long and where you want to run. The RCR team typically takes about 6.5 hours to complete the event (running from 08:30 to 15:00). If you have a hard time constraint, please include it in your registration comments.</p>
                     </div>
                 </div>
             </div>
@@ -769,7 +856,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
 </footer>
 <script type="module">
     import { isMapboxURL, transformMapboxUrl } from "https://cdn.jsdelivr.net/npm/maplibregl-mapbox-request-transformer@0.0.2/src/index.min.js"
-    import { relayToGPX, download, createCountdown, formatLegDescription, processRelayGeoJSON, createScheduleTable} from "../js/common.js";
+    import { relayToGPX, download, createCountdown, formatLegDescription, processRelayGeoJSON, createScheduleTable, createLegDetailsTable} from "../js/common.js";
 
     const mapboxKey = 'pk.eyJ1Ijoibmlja3N3YWxrZXIiLCJhIjoiY2t0ZjgyenE4MDR1YjJ1cno0N3hxYzI4YSJ9.ivPdsoEtV9TaLGbOOfFXKA'
     const transformRequest = (url, resourceType) => {
@@ -836,6 +923,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                     exchangeNames[exchange.properties.id] = exchange.properties.name
                 }
                 let legsData = legs.features
+                createLegDetailsTable(document.getElementById("leg-details-table"), legsData, exchanges.features)
                 const relayBounds = legsData.reduce((bounds, leg) => leg.geometry.coordinates.reduce((bounds, coord) => {
                     return bounds.extend(coord);
                 }, bounds), new maplibregl.LngLatBounds(legsData[0].geometry.coordinates[0], legsData[0].geometry.coordinates[0]));
@@ -934,31 +1022,56 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
 
                 let currentExchangePopup = null;
                 let currentHoveredExchange = null;
+                let exchangePinned = false;
                 // When a click event occurs on a feature in the places layer, open a popup at the
                 // location of the feature, with description HTML from its properties.
+
+                function addExchangePopup(feature) {
+                    return new maplibregl.Popup({offset: [16, 0], className: "exchange-name-popup", focusAfterOpen: false, closeButton: false, anchor: 'left'})
+                        .setLngLat(feature.geometry.coordinates)
+                        .setHTML(`<h5 class="m-0"><a href="${feature.properties.stationInfo}" title="Official station page" target="_new">${feature.properties.name} 🔗</a></h5>`)
+                        .setMaxWidth("350px")
+                        .addTo(map);
+                }
+
+                map.on('click', 'exchange-circle', e => {
+                    const exchange = e.features[0]
+                    e.originalEvent.stopPropagation()
+
+                    currentExchangePopup = addExchangePopup(exchange)
+                    if (currentHoveredExchange) {
+                        map.setFeatureState(
+                            {source: 'exchanges', id: currentHoveredExchange},
+                            {hover: false}
+                        );
+                    }
+                    map.setFeatureState(
+                        {source: 'exchanges', id: exchange.id},
+                        {hover: true}
+                    );
+                    exchangePinned = true
+                    currentHoveredExchange = exchange.id
+                })
                 map.on('mousemove', 'exchange-circle', (e) => {
+                    if (exchangePinned && currentExchangePopup && currentExchangePopup.isOpen()) {
+                        return
+                    }
                     if (e.features.length > 0) {
                         let feature = e.features[0]
-                        if (currentExchangePopup) {
+                        if (currentExchangePopup && currentExchangePopup.isOpen()) {
                             if (currentHoveredExchange === feature.properties.id) {
                                 return
                             }
                             currentExchangePopup.remove()
                         }
 
-
-                        const description = feature.properties.name;
                         currentHoveredExchange = feature.properties.id;
-                        let markerHeight = 16, markerRadius = 8, linearOffset = 4;
-                        currentExchangePopup = new maplibregl.Popup({offset: [16, 0], className: "exchange-name-popup", closeButton: false, anchor: 'left'})
-                            .setLngLat(feature.geometry.coordinates)
-                            .setHTML(description)
-                            .setMaxWidth("350px")
-                            .addTo(map);
+                        currentExchangePopup = addExchangePopup(feature)
                     } else if (currentExchangePopup) {
                         currentExchangePopup.remove()
                         currentExchangePopup = null
                         currentHoveredExchange = null
+                        exchangePinned = false;
                     }
                 });
 
@@ -967,11 +1080,9 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                 });
 
                 // Change it back to a pointer when it leaves.
-                map.on('mouseleave', 'exchange-circle', () => {
+                map.on('mouseleave', 'exchange-circle', (e) => {
                     map.getCanvas().style.cursor = '';
-                    currentExchangePopup.remove()
-                    currentExchangePopup = null
-                    currentHoveredExchange = null
+                    e.preventDefault()
                 });
 
                 let currentActiveLeg = null
@@ -982,7 +1093,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                     const bounds = coordinates.reduce((bounds, coord) => {
                         return bounds.extend(coord);
                     }, new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
-                    currentLegPopup = new maplibregl.Popup({anchor: "bottom-left", offset:[16, 0], className: "leg-popup"})
+                    currentLegPopup = new maplibregl.Popup({anchor: "bottom-left", offset:[16, 0], className: "leg-popup", focusAfterOpen: true})
                         .setLngLat([bounds.getEast(), bounds.getCenter().lat])
                         .setMaxWidth("300px")
                         .setHTML(formatLegDescription(exchangeNames[leg.properties.start_exchange], exchangeNames[leg.properties.end_exchange], leg.properties))
@@ -1026,7 +1137,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         }
     )
 
-    let startTime = new Date("Sept 30, 2023 9:30:00")
+    let startTime = new Date("Sept 30, 2023 8:30:00")
     fetch('{{ site.baseurl }}/maps/lrr23-schedule.json')
         .then(res => res.json())
         .then(schedule => {
@@ -1034,6 +1145,8 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         })
 
     createCountdown(startTime.getTime(), "countdown-ended")
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 </script>
 
 </body>

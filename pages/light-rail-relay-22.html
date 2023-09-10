@@ -43,6 +43,7 @@ redirect_from:
 
     :root {
         --theme-primary-color: #5fac56;
+        --theme-primary-color-subdued: #99cc99;
         --theme-primary-color-bright: #6cc462;
         --bs-btn-hover-bg: var(--theme-primary-color-bright);
         --bs-link-hover-color: #6cc462;
@@ -58,7 +59,7 @@ redirect_from:
     }
 
     ::selection {
-        background: #70cc66;
+        background: var(--theme-primary-color-subdued);
     }
 
     a {
@@ -85,7 +86,7 @@ redirect_from:
     .anchor-link {
         padding: 0 .175rem;
         font-weight: 400;
-        color: #6abf4a;
+        color: var(--theme-primary-color-bright);
         text-decoration: none;
         opacity: 0;
         transition: color 0.15s ease-in-out,opacity 0.15s ease-in-out;
@@ -159,24 +160,23 @@ redirect_from:
         background-color: black;
         color: white
     }
-    .hero-button {
-        background-color: var(--theme-primary-color);
+    .btn-hero {
         font-weight: bold;
         font-size: 1.5rem;
-        color: white;
     }
 
     .btn {
         border-radius: 0;
     }
 
-    .btn-outline-primary {
-        border-color: transparent !important;
-        background-color: var(--theme-primary-color);
-        color: white;
+    .btn-primary {
+        --bs-btn-bg: var(--theme-primary-color);
         --bs-btn-hover-bg: var(--theme-primary-color-bright);
         --bs-btn-hover-border-color: transparent;
-        --bs-btn-active-bg: var(--theme-primary-color-bright);
+        --bs-btn-active-bg: var(--theme-primary-color);
+        --bs-btn-active-border-color: var(--theme-primary-color);
+        --bs-btn-active-color: #eee;
+        --bs-btn-border-color: var(--theme-primary-color-bright);
     }
 
     .leaflet-popup-content {
@@ -340,28 +340,10 @@ redirect_from:
     }
 
     .accordion {
+        --bs-accordion-btn-focus-border-color: var(--theme-primary-color-subdued);
+        --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem var(--theme-primary-color-subdued);
         --bs-accordion-active-color: var(--bs-body-color);
         --bs-accordion-active-bg: #eee;
-    }
-
-    .gallery ul {
-        display: flex;
-        list-style: none;
-        flex-wrap: wrap;
-    }
-
-    .gallery.respect-dimensions ul {
-        flex-wrap: nowrap;
-        height: 40vh;
-    }
-
-    .gallery.respect-dimensions li {
-
-    }
-
-    .gallery.respect-dimensions img {
-        width: 100%;
-        object-fit: contain;
     }
 
     .masonry {
@@ -395,42 +377,17 @@ redirect_from:
         }
     }
 
-    figure > .image-grid {
-        margin-bottom: .25rem;
-    }
-    .image-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: repeat(auto-fit, minmax(210px, auto));
-        justify-items: center;
-        overflow: hidden;
-        grid-gap: .25rem;
-
-    }
-
     .image-grid img {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
 
-    .two-up-one-down :nth-child(3) {
-        grid-column: span 2;
-    }
-
-    .one-left-two-right {
-        grid-template-columns: 4fr 5fr;
-    }
-
-    .one-left-two-right :nth-child(1) {
-        grid-row: span 2;
-    }
-
     hr {
         width: 8rem;
         margin: 4rem auto;
         display: block;
-        border: 1px solid #ccc;
+        border: 1px solid var(--bs-secondary-color);
     }
 </style>
 <body>
@@ -449,8 +406,8 @@ redirect_from:
                 <p class="lead">We're running a relay along the Link 1 Line. You're invited.</p>
                 <!--div class="button-container"><a href="https://forms.gle/QWPAZ2EjVERVeKtk8" class="btn hero-button">Sign
                     Up</a></div-->
-                <!--div class="button-container"><a href="https://docs.google.com/spreadsheets/d/1rd9Si3BcPgqt3fWxoHnuUB0rnN00XLtziMaHSPpQt14/edit#gid=0" class="btn hero-button">Follow Along</a></div-->
-                <div class="button-container"><a href="#epilogue" class="btn hero-button">Read Epilogue</a></div>
+                <!--div class="button-container"><a href="https://docs.google.com/spreadsheets/d/1rd9Si3BcPgqt3fWxoHnuUB0rnN00XLtziMaHSPpQt14/edit#gid=0" class="btn btn-primary btn-lg">Follow Along</a></div-->
+                <div class="button-container"><a href="#epilogue" class="btn btn-primary btn-lg btn-hero">Read Epilogue</a></div>
             </div>
             </div>
         </header>
@@ -469,7 +426,7 @@ redirect_from:
         <h2 id="route">Route <a href="#route" class="anchor-link" aria-label="Link to this section. Route"></a></h2>
         <p>The relay will start at Angle Lake station and follow the entire operational line to Northgate, with
             exchanges and selfies at each station on the way. More than one runner will be assigned to each leg.</p>
-        <a href="#" class="btn btn-outline-primary" id="download-route-gpx-btn" hidden>Download Route GPX</a>
+        <a href="#" class="btn btn-primary" id="download-route-gpx-btn" hidden>Download Route GPX</a>
     </div>
 </section>
 
