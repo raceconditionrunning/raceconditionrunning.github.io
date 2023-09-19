@@ -29,6 +29,8 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
     <!--script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js" ></script>
     <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" integrity="sha512-Z/def5z5u2aR89OuzYcxmDJ0Bnd5V1cKqBEbvLOiUNWdg9PQeXVvXLI90SE4QOHGlfLqUnDNVAYyZi8UwUTmWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css" integrity="sha512-qveKnGrvOChbSzAdtSs8p69eoLegyh+1hwOMbmpCViIwj7rn4oJjdmMvWOuyQlTOZgTlZA0N2PXA7iA8/2TUYA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js" integrity="sha512-UOJe4paV6hYWBnS0c9GnIRH8PLm2nFK22uhfAvsTIqd3uwnWsVri1OPn5fJYdLtGY3wB11LGHJ4yPU1WFJeBYQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
 </head>
@@ -313,7 +315,6 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
     .accordion {
         --bs-accordion-btn-focus-border-color: var(--theme-primary-color-subdued);
         --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem var(--theme-primary-color-subdued);
-        --bs-accordion-inner-border-radius: 1rem;
         --bs-accordion-bg: #111;
         --bs-accordion-active-color: var(--bs-emphasis-color);
         --bs-accordion-active-bg: #333;
@@ -389,6 +390,43 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         color: var(--bs-body-color);
         text-decoration-color: var(--theme-primary-color);
     }
+
+    #leg-calculator {
+        border: 1px solid #111;
+    }
+
+    .noUi-connect {
+        background-color: var(--theme-primary-color);
+    }
+    .noUi-value {
+        display: none; /* No tick labels */
+    }
+    .noUi-target {
+        background: #333;
+        border-radius: 0;
+        border: 1px solid var(--bs-dark-border-subtle);
+        box-shadow: none;
+    }
+
+    .noUi-handle {
+        box-shadow: none;
+    }
+
+    .noUi-marker-large {
+        background-color: #555;
+    }
+    .noUi-tooltip {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 1rem;
+        padding: 3px 0 0 0;
+    }
+
+    .noUi-horizontal .noUi-tooltip {
+        bottom: 130%;
+    }
+
+
     .imprint {
         text-align: center;
         margin-bottom: 1.5rem;
@@ -462,6 +500,15 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                 visits to each station on the way. The route passes through Sea-Tac, Tukwila, and Bryn-Mawr Skyway before traversing the length of Seattle.</p>
 
 
+            <div id="leg-calculator" class="mb-3 p-2 p-lg-4" style="display: none">
+                <h6 class="text-secondary">Segment Calculator</h6>
+                <div id="leg-calculator-description"></div>
+                <div class="mx-3">
+                <div class="leg-range-input mt-5 mb-5" id="leg-calculator-slider"></div>
+                </div>
+            </div>
+
+
             <div id="leg-details-accordion" class="accordion accordion-flush">
                 <div class="accordion-item">
                     <h3 class="accordion-header" id="leg-details-heading">
@@ -483,18 +530,6 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         </div>
     </section>
 
-    <section id="schedule-section" style="display: none">
-        <div class="container-xxl">
-            <h2 id="schedule">Schedule <a href="#schedule" class="anchor-link" aria-label="Link to this section. Schedule"></a></h2>
-            <div class="table-responsive mb-4" id="schedule-table">
-
-            </div>
-
-            <p>Leg leaders are marked in <span class="leg-leader">bold</span>. <span class="first-leg">Underlined</span> name indicates first leg. Times nominal. Follow the
-                <a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing">live
-                    schedule</a> for up-to-date estimates.</p>
-        </div>
-    </section>
 
     <section>
         <div class="container">
@@ -542,7 +577,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                          data-bs-parent="#faq-accordion">
 
                         <div class="accordion-body">
-                            <p>Anyone who would like to form a team is welcome. There are three team categories for results purposes: <b>Competitive</b> for teams of four, <b>Ultra</b> for teams of one, and <b>Open</b> for all other formats. All teams will:</p>
+                            <p>Anyone who would like to form a team is welcome. There are three categories for results purposes: <b>Competitive</b> for teams of four, <b>Ultra</b> for teams of one, and <b>Open</b> for all other formats. All teams will:</p>
                             <ul>
                             <li>Ensure all members are registered.</li>
                             <li>Have a runner present at the Angle Lake Station platform at 08:30 on the morning of the event to receive their baton.</li>
@@ -551,7 +586,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                             <li>Gather and submit station photos after the event.</li>
                         </ul>
 
-                            <p>Teams are responsible for their own logistics during the event.</p>
+                            <p>Teams are responsible for their own logistics and support during the event.</p>
 
                             <p>If you're interested in forming a team, please complete the <a href="{{ page.team_registration_link}}">team signup</a>. There is no cost to register. If there are more teams than we can handle, we may ask any clubs fielding multiple teams to consolidate. Once your team is confirmed, you and your runners will be able to use the main <a href="{{ page.registration_link }}">sign-up form</a>.</p>
                         </div>
@@ -866,9 +901,33 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         return {url}
     }
 
+    let routeData = fetch("{{ site.baseurl }}/maps/lrr22.geojson").then(res => res.json())
+    let railData = fetch("{{ site.baseurl }}/maps/link-light-rail.geojson").then(res => res.json())
+    let processedRouteData = routeData.then((relay) => {
+        let [legs, exchanges] = processRelayGeoJSON(relay)
+        let exchangeNames = new Array(exchanges.length);
+        for (let exchange of exchanges.features) {
+            exchangeNames[exchange.properties.id] = exchange.properties.name
+        }
+        return [legs, exchanges, exchangeNames]
+    })
+
+
+    processedRouteData.then(([legs, exchanges, exchangeNames]) => {
+        let legsData = legs.features
+        createLegDetailsTable(document.getElementById("leg-details-table"), legsData, exchanges.features)
+        const downloadRouteButton = document.getElementById("download-route-gpx-btn")
+        downloadRouteButton.addEventListener("click", event => {
+            let gpxString = relayToGPX("Race Condition Running Light Rail Relay 2023", "Light Rail Relay 2023", legs.features, exchanges.features, 2023)
+            download(gpxString, "application/gpx+xml", `light-rail-relay-2023.gpx`)
+            event.preventDefault()
+        })
+        downloadRouteButton.hidden = false
+    })
+
     fetch("{{ site.baseurl }}/maps/lrr23-map-style.json").then( res => res.json()).then(
         style => {
-            var map = new maplibregl.Map({
+            let map = new maplibregl.Map({
                 container: 'map-container', // container id
                 attributionControl: false,
                 style: style,
@@ -910,31 +969,15 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                         resolve();
                     })
                 }),
-                Promise.all([
-                    fetch("{{ site.baseurl }}/maps/link-light-rail.geojson"),
-                    fetch("{{ site.baseurl }}/maps/lrr22.geojson"),
-                ])
-                    .then(responses => Promise.all(responses.map((res => res.json()))))
-            ]).then(([_, [railLines, relay]]) => {
-
-                let [legs, exchanges] = processRelayGeoJSON(relay)
-                let exchangeNames = new Array(exchanges.length);
-                for (let exchange of exchanges.features) {
-                    exchangeNames[exchange.properties.id] = exchange.properties.name
-                }
+                railData,
+                processedRouteData
+            ]).then(([_, railLines, [legs, exchanges, exchangeNames]]) => {
                 let legsData = legs.features
                 createLegDetailsTable(document.getElementById("leg-details-table"), legsData, exchanges.features)
                 const relayBounds = legsData.reduce((bounds, leg) => leg.geometry.coordinates.reduce((bounds, coord) => {
                     return bounds.extend(coord);
                 }, bounds), new maplibregl.LngLatBounds(legsData[0].geometry.coordinates[0], legsData[0].geometry.coordinates[0]));
-                const downloadRouteButton = document.getElementById("download-route-gpx-btn")
-                downloadRouteButton.addEventListener("click", event => {
 
-                    let gpxString = relayToGPX("Race Condition Running Light Rail Relay 2023", "Light Rail Relay 2023", legs.features, exchanges.features, 2023)
-                    download(gpxString, "application/gpx+xml", `light-rail-relay-2023.gpx`)
-                    event.preventDefault()
-                })
-                downloadRouteButton.hidden = false
                 map.fitBounds(relayBounds, {
                     padding: 32
                 });
@@ -957,7 +1000,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                 map.addSource('route', {
                     'type': 'geojson',
                     'data': railLines
-                });
+                })
 
                 map.addLayer({
                     'id': 'route',
@@ -1138,13 +1181,105 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
     )
 
     let startTime = new Date("Sept 30, 2023 8:30:00")
-    fetch('{{ site.baseurl }}/maps/lrr23-schedule.json')
+    /*fetch('{{ site.baseurl }}/maps/lrr23-schedule.json')
         .then(res => res.json())
         .then(schedule => {
             createScheduleTable("#schedule-table", schedule, startTime)
-        })
+        })*/
 
     createCountdown(startTime.getTime(), "countdown-ended")
+
+    processedRouteData.then( ([legs, exchanges, exchangeNames]) => {
+        document.getElementById("leg-calculator").style.display = ""
+        let valuesSlider = document.getElementById('leg-calculator-slider');
+        let cumulativeDistances = [0]
+        let cumulativeAscents = [0]
+        let cumulativeDescents = [0]
+        for (let i = 1; i < legs.features.length + 1; i++) {
+            let leg = legs.features[i - 1]
+            cumulativeDistances.push(cumulativeDistances[i - 1] + leg.properties.distance_mi)
+            cumulativeAscents.push(cumulativeAscents[i - 1] + leg.properties.ascent_ft)
+            cumulativeDescents.push(cumulativeDescents[i - 1] + leg.properties.descent_ft)
+        }
+
+        function bisectLeft(arr, value, lo=0, hi=arr.length) {
+            while (lo < hi) {
+                const mid = (lo + hi) >> 1;
+                if (arr[mid] < value) {
+                    lo = mid + 1;
+                } else {
+                    hi = mid;
+                }
+            }
+            return lo;
+        }
+
+        let formatToStationNumber = {
+            to: function(value) {
+                return bisectLeft(cumulativeDistances, value);
+            },
+            from: function (value) {
+                return cumulativeDistances[Math.round(value)];
+            }
+        };
+
+        let steppedRange = {}
+        for (let i = 0; i < cumulativeDistances.length - 1; i++) {
+            let percentage = cumulativeDistances[i] / cumulativeDistances[cumulativeDistances.length - 1]
+            steppedRange[`${percentage * 100}%`] = cumulativeDistances[i]
+        }
+        steppedRange["min"] = 0
+        steppedRange["max"] = cumulativeDistances[cumulativeDistances.length - 1]
+        let slider = noUiSlider.create(valuesSlider, {
+            start: ["4", "12"],
+            range: steppedRange,
+            margin: .5,
+            tooltips: true,
+            snap: true,
+            connect: true,
+            format: formatToStationNumber,
+            pips: {
+                mode: 'range',
+                density: 50,
+                format: formatToStationNumber
+            }
+        });
+
+
+        let leftValue = 4
+        let rightValue = 12
+        // The display values can be used to control the slider
+        slider.set(['4', '12']);
+        slider.on('update', function (values, handle, unencoded) {
+            let oldLeft = leftValue
+            let oldRight = rightValue
+            if (handle === 0) {
+                leftValue = values[handle]
+            } else {
+                rightValue = values[handle]
+            }
+            if (leftValue === rightValue) {
+                if (handle === 0) {
+                    leftValue = oldLeft
+                    slider.set([leftValue, rightValue])
+                } else {
+                    rightValue = oldRight
+                    slider.set([leftValue, rightValue])
+                }
+                return
+            }
+            let distance = cumulativeDistances[rightValue] - cumulativeDistances[leftValue]
+            let ascent = cumulativeAscents[rightValue] - cumulativeAscents[leftValue]
+            let descent = cumulativeDescents[rightValue] - cumulativeDescents[leftValue]
+            let legName = `${exchangeNames[leftValue]} to ${exchangeNames[rightValue]}`
+            // "values" has the "to" function from "format" applied
+            // "unencoded" contains the raw numerical slider values
+            let legDesc = `<div class="d-flex flex-column flex-lg-row justify-content-between align-items-baseline"><h5>${legName}</h5><h6>${distance.toFixed(2)}mi ↑${ascent.toFixed(0)}ft ↓${descent.toFixed(0)}ft</h6></div>`
+            document.getElementById("leg-calculator-description").innerHTML = legDesc
+        });
+    })
+
+    // Tooltips for sign-up deadlines
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 </script>
