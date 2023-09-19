@@ -123,13 +123,14 @@ def main():
     first_run = min([datetime.strptime(r['date'], '%Y-%m-%d').date() for r in sched])
     start = min(previous_tuesday(datetime.today().date()),
                 previous_tuesday(first_run))
-    summer_start_date = f"{first_run.year}-W24"
+    # Roughly memorial day to labor day
+    summer_start_date = f"{first_run.year}-W22"
     summer_start_date = datetime.strptime(summer_start_date + '-1', "%Y-W%W-%w")
-    summer_end_date = f"{first_run.year}-W38"
+    summer_end_date = f"{first_run.year}-W36"
     summer_end_date = datetime.strptime(summer_end_date + '-1', "%Y-W%W-%w")
-    next_summer_start_date = f"{first_run.year + 1}-W24"
+    next_summer_start_date = f"{first_run.year + 1}-W22"
     next_summer_start_date = datetime.strptime(next_summer_start_date + '-1', "%Y-W%W-%w")
-    next_summer_end_date = f"{first_run.year + 1}-W38"
+    next_summer_end_date = f"{first_run.year + 1}-W36"
     next_summer_end_date = datetime.strptime(next_summer_end_date + '-1', "%Y-W%W-%w")
     block_dates = [summer_start_date, summer_end_date, next_summer_start_date, next_summer_end_date]
     block_is_summer = [True, False, True, False]
