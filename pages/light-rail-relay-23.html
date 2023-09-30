@@ -472,10 +472,10 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
             <p>Marathon relay along Seattle's Link Light Rail by <a href="{{ site.baseurl }}/" class="fst-italic text-decoration-none">Race Condition Running</a>. <br/>08:30 September 30th</p>
 
             <div class="button-container">
-                <a href="{{ page.registration_link }}" class="btn btn-outline btn-outline-primary btn-lg me-2" data-bs-toggle="tooltip" data-bs-title="by 9-27" data-bs-placement="bottom">Sign Up
-                </a>
-                <a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-25" data-bs-placement="bottom">Add Team
-  </span></a>
+                <!--a href="{{ page.registration_link }}" class="btn btn-outline btn-outline-primary btn-lg me-2" data-bs-toggle="tooltip" data-bs-title="by 9-27" data-bs-placement="bottom">Sign Up
+                </a-->
+                <!--a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-25" data-bs-placement="bottom">Add Team
+  </span></a-->
                 <!--a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing" class="btn hero-button">Follow Along</a></div-->
                 <!--div class="button-container"><a href="#epilogue" class="btn hero-button">Read Epilogue</a-->
                 </div>
@@ -901,7 +901,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         return {url}
     }
 
-    let routeData = fetch("{{ site.baseurl }}/maps/lrr22.geojson").then(res => res.json())
+    let routeData = fetch("{{ site.baseurl }}/maps/lrr23.geojson").then(res => res.json())
     let railData = fetch("{{ site.baseurl }}/maps/link-light-rail.geojson").then(res => res.json())
     let processedRouteData = routeData.then((relay) => {
         let [legs, exchanges] = processRelayGeoJSON(relay)

@@ -303,18 +303,17 @@ export function createLegDetailsTable(container, legsGeojson, exchangesGeoJson) 
     let data = []
     let legDescriptions = ""
 
-    function formatLegDescription(startExchange, endExchange, leg,  includeLegNumber=false, linkStations=false){
-        let legNumber = ""
-        if (includeLegNumber) legNumber = `<span class="leg-number">${leg.id}:</span> `
+    function formatLegDescription(startExchange, endExchange, leg){
+        let legNumber = `<span class="leg-number">${leg.id}:</span> `
         let legName = `${legNumber}<a href="${startExchange.stationInfo}" target="_new">${startExchange.name}</a> to <a href="${endExchange.stationInfo}" target="_new">${endExchange.name}</a>`
 
-        return `<div class="d-flex flex-column flex-lg-row justify-content-between align-items-baseline"><h5>${legName}</h5><h6>${leg.distance_mi.toFixed(2)}mi ↑${leg.ascent_ft.toFixed(0)}ft ↓${leg.descent_ft.toFixed(0)}ft</h6></div><p class="mb-0">${leg.notes}</p>`
+        return `<div class="d-flex flex-column flex-lg-row justify-content-between align-items-baseline"><h5>${legName}</h5><h6>${leg.distance_mi.toFixed(2)}mi ↑${leg.ascent_ft.toFixed(0)}ft ↓${leg.descent_ft.toFixed(0)}ft</h6></div><i>Landmark: ${startExchange.landmark}</i><p class="mb-0">${leg.notes}</p>`
     }
     for (let leg of legsGeojson) {
         let legData = leg.properties
         legData.id = legData.start_exchange + 1
         data.push(legData)
-        legDescriptions += `<div class="mb-4">${formatLegDescription(exchangesGeoJson[legData.start_exchange].properties, exchangesGeoJson[legData.end_exchange].properties, legData, true)}</div>`
+        legDescriptions += `<div class="mb-4">${formatLegDescription(exchangesGeoJson[legData.start_exchange].properties, exchangesGeoJson[legData.end_exchange].properties, legData)}</div>`
     }
     container.innerHTML = legDescriptions
 
