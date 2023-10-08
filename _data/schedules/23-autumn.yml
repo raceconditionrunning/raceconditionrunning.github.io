@@ -23,6 +23,30 @@
         map: https://www.washington.edu/alumni/events/alaska-airlines-dawg-dash-2023/
         dist: 6.2
 
+- date: "2023-10-15"
+  plan:
+    - time: "9:00"
+      route_id: caphill-volunteer-westlake
+    - time: "9:45"
+      route_id: ob-westlake-sculpture-park
+
+- date: "2023-10-23"
+  plan:
+    - time: "9:00"
+      route_id: ob-northgate-interurban
+    - time: "10:15"
+      route_id: northgate-resevoir-roosevelt
+
+- date: "2023-11-11"
+  plan:
+    - time: "9:00"
+      route_id: cap-hill-station-i90-ob
+
+- date: "2023-11-18"
+  plan:
+    - time: "9:00"
+      route_id: lake-union-loop
+
 - date: "2023-11-26"
   plan:
     - time: "6:00"
