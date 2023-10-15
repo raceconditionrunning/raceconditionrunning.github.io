@@ -472,4 +472,28 @@
   dist: 7.0
   map: "https://onthegomap.com/s/k5486orc"
 
+- id: cc-genessee-lwb-seward-loop
+  name: "Columbia City Station, Genessee Park, Seward Loop"
+  dist: 8.0
+  map: https://onthegomap.com/s/gvhj6t17
+
+- id: cc-cheasty-rainer-cc-brunch
+  name: "Columbia City Station, Cheasty Trail, Rainier Ave"
+  dist: 3.1
+  map: https://onthegomap.com/s/6fn9ku4o
+
+- id: ob-cc-genesee-lwb
+  name: "OB: Columbia City Station, Genessee Park, LWB"
+  dist: 6.5
+  map: https://onthegomap.com/s/porql59l
+
+- id: cc-sealth-brunch
+  name: "Columbia City Station, Chief Sealth Trail, CC Center"
+  dist: 3.1
+  map: https://onthegomap.com/s/k39l0cjs
+
+- id: sodo-duwamish-trail-1st-loop
+  name: "SODO Station, Duwamish Trail, 1st Ave"
+  dist: 7.9
+  map: https://onthegomap.com/s/93l1akgc
 

@@ -33,6 +33,18 @@
 - date: "2023-10-21"
   plan:
     - time: "9:00"
+      route_id: ob-cc-genesee-lwb
+    - time: "10:15"
+      route_id: cc-sealth-brunch
+
+- date: "2023-10-28"
+  plan:
+    - time: "9:00"
+      route_id: sodo-duwamish-trail-1st-loop
+
+- date: "2023-11-04"
+  plan:
+    - time: "9:00"
       route_id: ob-northgate-interurban
     - time: "10:15"
       route_id: northgate-resevoir-roosevelt
