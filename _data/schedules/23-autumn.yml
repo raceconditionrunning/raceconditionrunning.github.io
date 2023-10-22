@@ -66,3 +66,14 @@
         name: Seattle Half Marathon
         map: https://www.seattlemarathon.org/
         dist: 13.1
+
+- date: "2023-12-02"
+  plan:
+    - time: "9:00"
+      route_id: gas-works-locks-salmon-bay
+
+- date: "2023-12-09"
+  plan:
+    - time: "9:00"
+      route_id: uw-jays-cafe-p2p
+
