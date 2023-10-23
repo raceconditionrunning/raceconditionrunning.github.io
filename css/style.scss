@@ -9,6 +9,9 @@ body {
 h1 {
   padding-top: .5rem
 }
+h2 {
+  padding-top: 1rem
+}
 
 h2, table {
   padding-bottom: 1rem;
@@ -157,7 +160,8 @@ nav {
 }
 
 #image-slider {
-  background-color: #f6f6f6
+  // background conflicts with dark theme
+  //background-color: #f6f6f6
 }
 
 #image-slider .splide__track{
