@@ -2,22 +2,192 @@
 <link href=" https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
 
 <div id="image-slider" class="splide">
-  <div class="splide__track">
-    <ul class="splide__list">
-    {% for photo_url in site.data.photo-urls %}
-    <li class="splide__slide">
-      <img data-splide-lazy="{{ photo_url }}" src="#"/>
-    </li>
-    {% endfor %}
-    </ul>
+    <div class="splide__track">
+        <ul class="splide__list">
+        </ul>
+    </div>
 </div>
 
 <script>
-  let numPhotos = {{ site.data.photo-urls | size }}
-  function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-  new Splide( '#image-slider', {'type': 'fade', 'autoplay': true, 'rewind': true, 'lazyLoad': 'nearby', 'pagination': false, 'start': getRandomInt(0, numPhotos)} ).mount();
+    const QUOTED_HTTPS_URL_REGEX = /(?<=")https:\/\/[^"]+(?=")/;
+    const MINIMUM_URL_LENGTH = 15
+
+    async function getFileSize(url) {
+        let response = await fetch(url, {
+            method: 'HEAD'
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch: ${response.statusText}`);
+        }
+
+        const fileSize = +response.headers.get('Content-Length');
+        if (!fileSize) {
+            throw new Error('Failed to get Content-Length');
+        }
+        return fileSize
+    }
+
+    function extractMatches(block, regex) {
+        let matches = []
+        let lastMatchedByte = 0
+        let match
+        let firstMatchedByte
+        while ((match = regex.exec(block.slice(lastMatchedByte))) !== null) {
+            matches.push(match[0]);
+            if (firstMatchedByte === undefined) {
+                firstMatchedByte = match.index
+            }
+            lastMatchedByte += match.index + match[0].length;
+        }
+        return [matches, firstMatchedByte, lastMatchedByte]
+    }
+
+    async function getURLsInByteRange(url, fileSize, startByte, endByte) {
+        const originalStartByte = startByte
+        let firstUsedByte, lastUsedByte
+
+
+        // Fetch a block of data
+        let response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Range': `bytes=${startByte}-${endByte}`
+            }
+        });
+
+        let block
+        try {
+            block = await response.text();
+        } catch (error) {
+            // FireFox makes gzipped range requests against GitHub's servers. Just get the whole file.
+            // https://stackoverflow.com/questions/55914486/issue-making-range-requests-in-some-browsers
+            console.error(error)
+            block = await (await fetch(url, {
+                method: 'GET'
+            })).text();
+            let urls = JSON.parse(block)
+            // We'll manually randomize here...
+            let toMove = urls.splice(0, getRandomInt(0, urls.length))
+            return [[...urls, ...toMove], null, null]
+        }
+        let [newMatches, firstMatchedByte, lastMatchedByte] = extractMatches(block, QUOTED_HTTPS_URL_REGEX)
+        if (firstMatchedByte !== undefined) {
+            firstUsedByte = originalStartByte + firstMatchedByte
+            lastUsedByte = originalStartByte + lastMatchedByte
+        }
+
+        return [newMatches, firstUsedByte, lastUsedByte]
+    }
+
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function shiftQueryWindow(i, j, wrapIndex, maxIndex, increment) {
+        // If the end of the window is pretty much at the wrap point, quit
+        if ((i < wrapIndex) && j + MINIMUM_URL_LENGTH > wrapIndex || (i === null && j === null)) {
+            // No more bytes to go
+            return [null, null]
+        } else if (j + MINIMUM_URL_LENGTH > maxIndex) {
+            // If we're pretty much at the max of the file, wrap around!
+            return [0, Math.min(increment, maxIndex, wrapIndex)]
+        } else if (i < wrapIndex) {
+            // We've wrapped and are approaching the max from the left now
+            return [Math.min(j, wrapIndex), Math.min(j + increment, wrapIndex)]
+        } else {
+            return [Math.min(j, maxIndex), Math.min(j + increment, maxIndex)]
+        }
+    }
+
+    let wrapIndex
+    let byteCursorStart
+    let byteCursorEnd
+    let slider
+    let allUrls = []
+    const CHUNK_SIZE = 1024 * 20 // 20kb
+    const JSON_URL = '{{ site.baseurl }}/photo-urls.json'
+    getFileSize(JSON_URL).then(filesize => {
+        slider = new Splide('#image-slider', {
+            'type': 'fade',
+            'autoplay': true,
+            'rewind': true,
+            'lazyLoad': 'nearby',
+            'pagination': false,
+            'start': 0
+        }).mount();
+
+        async function loadMoreUrls(byteStart, byteEnd) {
+            return getURLsInByteRange(JSON_URL, filesize, byteStart, byteEnd)
+                .then(([urls, firstUsedByte, endByte]) => {
+                    allUrls = allUrls.concat(urls)
+                    return [firstUsedByte, endByte]
+                })
+        }
+
+        async function seekFirstURLs() {
+            let firstUsedByte, endByte
+            let i = 0
+            do {
+                // If small enough, get the whole file
+                if (filesize < CHUNK_SIZE) {
+                    firstUsedByte = 0
+                } else {
+                    // Pick a random point in the file to start yanking bytes from
+                    firstUsedByte = getRandomInt(0, filesize - CHUNK_SIZE)
+                }
+                [firstUsedByte, endByte] = await loadMoreUrls(firstUsedByte, firstUsedByte + CHUNK_SIZE)
+                if (filesize < CHUNK_SIZE) {
+                    // We got everything, tell the outside not to try anymore
+                    [firstUsedByte, endByte] = [null, null]
+                }
+                i += 1
+                if (i > 9) {
+                    throw new Error("Couldn't get any URLs from file")
+                }
+            } while (firstUsedByte === undefined)
+
+            return [firstUsedByte, endByte]
+        }
+
+        return seekFirstURLs().then(([firstUsedByte, lastUsedByte]) => {
+            allUrls.slice(0, 10).forEach(url => slider.add(`<li class="splide__slide"><img data-splide-lazy="${url}" src="#"/></li>`, slider.length))
+            wrapIndex = firstUsedByte;
+            [byteCursorStart, byteCursorEnd] = shiftQueryWindow(firstUsedByte, lastUsedByte, wrapIndex, filesize, CHUNK_SIZE)
+
+            slider.on("moved", (newIndex, _, __) => {
+                //console.log(newIndex, allUrls.length)
+                if (newIndex >= slider.length - 3 && allUrls.length > newIndex - 3) {
+                    // Only ever try to load 10 images into the DOM at a time, in case we happen to have a ton of URLs
+                    allUrls.slice(slider.length, Math.min(slider.length + 10, allUrls.length - 1))
+                        .forEach(url => slider.add(`<li class="splide__slide"><img data-splide-lazy="${url}" src="#"/></li>`, slider.length))
+                }
+                // We need to try to load a few frames early otherwise the slider
+                // will just wrap around while we are still getting data.
+                if (newIndex >= allUrls.length - 3 && byteCursorStart !== null) {
+                    //console.log("loading more, currently have ", allUrls.length, byteCursorStart, byteCursorEnd)
+                    loadMoreUrls(byteCursorStart, byteCursorEnd).then(([firstUsedByte, lastUsedByte]) => {
+                        if (firstUsedByte === undefined && lastUsedByte === undefined) {
+                            // We assume that there's URL within CHUNK_SIZE bytes. If we didn't see one, we must
+                            // be in a short window of delimiter bytes at the end or at the wrap point
+                            if (byteCursorStart < wrapIndex) {
+                                [byteCursorStart, byteCursorEnd] = [null, null]
+                            } else {
+                                [byteCursorStart, byteCursorEnd] = [0, Math.min(CHUNK_SIZE, filesize, wrapIndex)]
+                            }
+                        } else {
+                            [byteCursorStart, byteCursorEnd] = shiftQueryWindow(firstUsedByte, lastUsedByte, wrapIndex, filesize, CHUNK_SIZE)
+                        }
+                        //console.log("after trying, have", allUrls.length, byteCursorStart, byteCursorEnd)
+                    })
+                }
+            })
+        })
+    }).catch(error => {
+        console.error(error)
+        slider.root.style.display = "none"
+    })
+
 </script>
