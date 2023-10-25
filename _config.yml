@@ -5,6 +5,7 @@ permalink: /:title/
 plugins:
   - jekyll-redirect-from
   - jekyll-sitemap
+  - jekyll-tidy
 
 markdown: kramdown
 kramdown:
@@ -14,6 +15,12 @@ kramdown:
   hard_wrap: False
   syntax_highlighter: rouge
 
+jekyll_tidy:
+  exclude:
+    - '**/*.xml'
+    - '**/*.scss'
+    - '**/*.js'
+
 exclude:
   - Makefile
   - "README.md"
@@ -21,6 +28,7 @@ exclude:
   - Gemfile.lock
   - posters
   - requirements.txt
+  - venv
 
 sass:
   style: :compressed
