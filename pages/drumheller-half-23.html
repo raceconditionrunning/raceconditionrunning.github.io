@@ -6,7 +6,7 @@ redirect_from:
 - /dhm23/
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <title>Drumheller Half Marathon 2023</title>
@@ -18,42 +18,48 @@ redirect_from:
     <meta property="og:title" content="Drumheller Half Marathon 2023">
     <meta property="og:description" content="Experience the fountain and the mountain. May 20th, 2023.">
     <link href="{{ site.baseurl }}/img/dhm23/dhm-favicon.png" rel="icon" type="image/png"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-t4GWSVZO1eC8BM339Xd7Uphw5s17a86tIZIj8qRxhnKub6WoyhnrxeCIMeAqBPgdZGlCcG2PrZjMc+Wr78+5Xg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Yrsa:ital,wght@0,300;0,700;1,300&family=Prompt:wght@700&display=swap"
           rel="stylesheet">
 
-    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_bootstrap5.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js" integrity="sha512-3dZ9wIrMMij8rOH7X3kLfXAzwtcHpuYpEgQg1OA4QAob1e81H8ntUQmQm3pBudqIoySO5j0tHN4ENzA6+n2r4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator.min.css" integrity="sha512-HdUIebGeOK7s+At/fOnnbX8vsz6Cl1KTeiRlBiQABTMSqw7kZRCxGiUnuF9lr+1xz5y8pL7jkCR+NNtVVkEqKg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator_bootstrap5.min.css" integrity="sha512-904y6HHQyQS2fAyIQ869rH3AAkxZeFuxo9vheji5zw+IPEyioMWN4Bt/VFhzO5edPZ9m1lwkpYgXcYcm1vzaFw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js" integrity="sha512-X/YkDZyjTf4wyc2Vy16YGCPHwAY8rZJY+POgokZjQB2mhIRFJCckEGc6YyX9eNsPfn0PzThEuNs+uaomE5CO6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"
             integrity="sha512-M7nHCiNUOwFt6Us3r8alutZLm9qMt4s9951uo8jqO4UwJ1hziseL6O3ndFyigx6+LREfZqnhHxYjKRJ8ZQ69DQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js" integrity="sha512-JRlcvSZAXT8+5SQQAvklXGJuxXTouyq8oIMaYERZQasB8SBDHZaUbeASsJWpk0UUrf89DP3/aefPPrlMR1h1yQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js" integrity="sha512-kfs3Dt9u9YcOiIt4rNcPUzdyNNO9sVGQPiZsub7ywg6lRW5KuK1m145ImrFHe3LMWXHndoKo2YRXWy8rnOcSKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script type="importmap">
+        {
+          "imports": {
+            "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
+            "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
+            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/js/tabulator_esm.min.js"
+          }
+        }
+    </script>
 </head>
 <style>
-    .laps-graph {
-        width: 100%
-    }
-
     body {
-        color: #eee;
         background-color: #010101;
-        font-family: 'Yrsa', serif;
         margin: 0;
         font-size: 24px;
         line-height: 1.5;
+        --bs-body-color: #eee;
+        --bs-link-color-rgb: 220, 220, 220;
+        --bs-link-hover-color-rgb: 200, 200, 200;
+        --bs-body-font-family: 'Yrsa', serif;
+        --sans-font-family: "Avenir Next", "Prompt", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     }
 
     ::selection {
-        background: #ccc;
-    }
-
-    a {
-        color: #ddd;
-        --bs-link-hover-color: #bbb;
+        background: #666;
     }
 
     hr {
@@ -128,39 +134,27 @@ redirect_from:
         font-family: 'Yrsa', serif;
     }
 
-    .accordion-item:first-of-type,
-    .accordion-flush .accordion-item:first-of-type .accordion-button {
-        border-radius: 1rem 1rem 0 0;
-    }
-    .accordion-item:last-of-type {
-        border-radius: 0 0 1rem 1rem;
-    }
-
-    .accordion, .accordion-button {
-        background-color: transparent;
-        color: white;
-
-    }
-
-    .accordion-item {
-        background-color: #111;
-        color: white;
-        border-bottom: 1px solid #666;
-    }
-
-    .accordion-button:not(.collapsed) {
-        background-color: #333;
-        color: white;
-        box-shadow: none;
-    }
-
-    .accordion-button:not(.collapsed)::after {
+    .accordion-button::after {
         filter: saturate(0%);
     }
 
-    dd {
-        margin-left: 0;
-        margin-bottom: 1rem
+    .accordion {
+        --bs-accordion-btn-focus-border-color: #bbb;
+        --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem #bbb;
+        --bs-accordion-border-radius: 1rem;
+        --bs-accordion-inner-border-radius: 1rem;
+        --bs-accordion-bg: #111;
+        --bs-accordion-color: var(--bs-body-color);
+        --bs-accordion-active-color: var(--bs-emphasis-color);
+        --bs-accordion-active-bg: #333;
+        --bs-accordion-border-color: transparent;
+    }
+
+    .accordion-item {
+        border-bottom: 1px solid #666;
+    }
+    .accordion-item:last-of-type {
+        border-bottom: none;
     }
 
     header {
@@ -244,7 +238,7 @@ redirect_from:
     }
 
     h1, h2, h3, .hero-button {
-        font-family: "Avenir Next", "Prompt", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-family: var(--sans-font-family);
         font-weight: 700;
     }
 
@@ -288,8 +282,6 @@ redirect_from:
 
     #history, #overview {
         font-weight: 100;
-
-        font-family: 'Yrsa', serif;
     }
 
     .blockquote {
@@ -327,6 +319,15 @@ redirect_from:
         width: 100%;
     }
 
+    .full-width {
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+    }
+
     .cert-wrapper {
         display: flex;
         justify-content: center;
@@ -334,7 +335,7 @@ redirect_from:
 
     .usatf-certificate {
         font-size: 1rem;
-        font-family: "Avenir Next", "Prompt", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-family: var(--sans-font-family);
         border: 2px solid #aaa;
         border-radius: 1rem;
         display: inline-flex;
@@ -376,7 +377,6 @@ redirect_from:
 
     .table {
         background: transparent;
-        color: white;
         width: auto;
         min-width: 200px;
         font-size: 21px;
@@ -399,10 +399,13 @@ redirect_from:
         padding: 1rem;
     }
 
+    .laps-graph {
+        width: 100%
+    }
+
     .laps-graph rect {
         transition: .15s;
     }
-
 
     .laps-graph .tick line {
         color: white;
@@ -472,7 +475,7 @@ redirect_from:
     }
 
     .laps-graph .finish-flag text {
-        font-family: 'Avenir Next', Prompt, 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+        font-family: var(--sans-font-family);
         font-weight: bold;
         font-size: 16px;
     }
@@ -597,7 +600,7 @@ redirect_from:
         <div class="call-wrapper gap-2">
             <!--a class="btn btn-lg hero-button " href="https://forms.gle/tk9xDDHgaXMzLMDC8">Sign Up</a-->
             <a class="btn btn-lg hero-button" href="#results">Results</a>
-            <a class="btn btn-lg hero-button" href="https://forms.gle/qDgVHA3Kw1HVFDrN8">Order Shirt</a>
+            <!--a class="btn btn-lg hero-button" href="https://forms.gle/qDgVHA3Kw1HVFDrN8">Order Shirt</a-->
             <!--a class="btn btn-lg hero-button" href="#epilogue">Read Epilogue</a-->
         </div>
 
@@ -644,7 +647,7 @@ redirect_from:
 <section>
     <div class="container">
         <h2 class="mb-4" id="faq">FAQ <a href="#faq" class="anchor-link" aria-label="Link to this section. FAQ"></a></h2>
-        <div id="faq-accordion" class="accordion accordion-flush">
+        <div id="faq-accordion" class="accordion">
             <div class="accordion-item">
                 <h3 class="accordion-header" id="faq-headingOne">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -858,12 +861,59 @@ redirect_from:
 
 </section>
 
-<!--<section id="epilogue">
-    <div class="container">
-        <h2>Epilogue</h2>
-    </div>
+<section id="epilogue">
 
-</section>-->
+    <figure>
+        <img src="{{ site.baseurl }}/img/dhm23/fountain.avif" class="w-100 rounded mb-4" />
+
+    </figure>
+    <div class="container">
+        <h2 class="mb-4">Epilogue <a href="#epilogue" class="anchor-link" aria-label="Link to this section. Epilogue"></a></h2>
+
+        <p>The campus was already glowing as we gathered at the start line. None of the weekday thrum, and&mdash;with cherry blossoms long gone&mdash;nary a tourist. Just the sun bearing down, and 32 runners ready to round the fountain.</p>
+
+        <p>11 would go on to complete the half marathon. Congratulations to Ellis (1:45:58) and Margaret (2:03:06) for setting new course records, and to Mitch who set a new lap record of 26.00s. This was the first year we provisioned for an official course and timing, so you can take those times to the bank. Many elected to run shorter distances (a few unknowingly), so together we completed 2263 laps around Drumheller Fountain. Thank you to everyone who ran and stocked the aid station.</p>
+
+        <p>We've continued to iron out some of the difficulties of the format. The increased field size required us to run in a single direction at a time, an improvement in every regard except that it made it easier for groups to run four abreast and block the path. Zach equipped us with tally counters this year, but counting laps still proved difficult in practice. So, challenges remain.</p>
+
+        <p>Drumheller is a singular race. It's an indoor track half marathon, held outside at our doorstep, with Mount Rainier and the University of Washington's historic Rainier Vista as its backdrop. Few halves even run in Seattle proper these days, but no event in the world completes the distance on a shorter loop. It's a captivating idea that will only become stronger with each running.</p>
+
+        <p><i>Nick Walker</i></p>
+    </div>
+    <figure id="gallery" class="d-flex flex-column gap-4">
+        <a href="{{ site.baseurl }}/img/dhm23/3.avif">
+            <img src="{{ site.baseurl }}/img/dhm23/3.avif"
+                 class="w-100 shadow-1-strong rounded"/>
+        </a>
+
+        <div class="d-flex flex-column flex-sm-row gap-4">
+            <div class="col d-flex flex-column gap-4">
+                <a href="{{ site.baseurl }}/img/dhm23/4.webp">
+                    <img src="{{ site.baseurl }}/img/dhm23/4.webp"
+                         class="w-100 shadow-1-strong rounded"/>
+                </a>
+                <a href="{{ site.baseurl }}/img/dhm23/2.avif">
+                    <img src="{{ site.baseurl }}/img/dhm23/2.avif"
+                        class="w-100 shadow-1-strong rounded"/>
+                </a>
+            </div>
+
+            <div class="col d-flex flex-column gap-4">
+                <a href="{{ site.baseurl }}/img/dhm23/1.avif">
+                    <img src="{{ site.baseurl }}/img/dhm23/1.avif"
+                         class="w-100 shadow-1-strong rounded">
+                </a>
+
+                <a href="{{ site.baseurl }}/img/dhm23/5.webp">
+                    <img src="{{ site.baseurl }}/img/dhm23/5.webp"
+                     class="w-100 shadow-1-strong rounded"/>
+                </a>
+            </div>
+
+        </div>
+    </figure>
+
+</section>
 
 <hr/>
 
@@ -908,8 +958,10 @@ redirect_from:
 </template>
 
 <script type="module" >
-
-    import {formatDuration, formatPace} from "../js/common.js";
+    import {Tabulator, ColumnCalcsModule, GroupRowsModule, FormatModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule} from 'tabulator-tables';
+    Tabulator.registerModule([ColumnCalcsModule, FormatModule, GroupRowsModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule]);
+    import {formatDuration, formatPace, prepareImagesForPhotoswipe} from "../js/common.js";
+    import PhotoSwipeLightbox from 'photoswipe-lightbox';
 
     function lapPaceChart(data, lapTarget=Number.MAX_VALUE, onBarClick) {
         /**
@@ -1460,6 +1512,21 @@ redirect_from:
             officialTable.on("rowClick", rowClicked)
             unofficialTable.on("rowClick", rowClicked)
         })
+
+    document.addEventListener('DOMContentLoaded', e => {
+        prepareImagesForPhotoswipe(document.querySelectorAll("#gallery a")).then(() => {
+            const lightbox = new PhotoSwipeLightbox({
+                gallery: '#gallery',
+                children: 'a',
+                showHideAnimationType: 'zoom',
+                showAnimationDuration: 200,
+                hideAnimationDuration: 200,
+                pswpModule: () =>  import("photoswipe")
+
+            });
+            lightbox.init();
+        });
+    })
 
 
 </script>
