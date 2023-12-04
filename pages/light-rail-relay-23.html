@@ -22,31 +22,45 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
     <meta property="og:description" content="Marathon relay along the Link Line 1 happening September 30th, 2023.">
     <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@3.3.1/dist/maplibre-gl.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@3.3.1/dist/maplibre-gl.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.bundle.min.js" integrity="sha512-ToL6UYWePxjhDQKNioSi4AyJ5KkRxY+F1+Fi7Jgh0Hp5Kk2/s8FD7zusJDdonfe5B00Qw+B8taXxF6CFLnqNCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_bootstrap5.min.css" rel="stylesheet">
-    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
-    <!--script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js" ></script>
-    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" integrity="sha512-Z/def5z5u2aR89OuzYcxmDJ0Bnd5V1cKqBEbvLOiUNWdg9PQeXVvXLI90SE4QOHGlfLqUnDNVAYyZi8UwUTmWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css" integrity="sha512-qveKnGrvOChbSzAdtSs8p69eoLegyh+1hwOMbmpCViIwj7rn4oJjdmMvWOuyQlTOZgTlZA0N2PXA7iA8/2TUYA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js" integrity="sha512-UOJe4paV6hYWBnS0c9GnIRH8PLm2nFK22uhfAvsTIqd3uwnWsVri1OPn5fJYdLtGY3wB11LGHJ4yPU1WFJeBYQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator.min.css" integrity="sha512-HdUIebGeOK7s+At/fOnnbX8vsz6Cl1KTeiRlBiQABTMSqw7kZRCxGiUnuF9lr+1xz5y8pL7jkCR+NNtVVkEqKg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator_bootstrap5.min.css" integrity="sha512-904y6HHQyQS2fAyIQ869rH3AAkxZeFuxo9vheji5zw+IPEyioMWN4Bt/VFhzO5edPZ9m1lwkpYgXcYcm1vzaFw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js" integrity="sha512-JRlcvSZAXT8+5SQQAvklXGJuxXTouyq8oIMaYERZQasB8SBDHZaUbeASsJWpk0UUrf89DP3/aefPPrlMR1h1yQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js" integrity="sha512-kfs3Dt9u9YcOiIt4rNcPUzdyNNO9sVGQPiZsub7ywg6lRW5KuK1m145ImrFHe3LMWXHndoKo2YRXWy8rnOcSKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script type="importmap">
+        {
+          "imports": {
+            "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
+            "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
+            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/js/tabulator_esm.min.js",
+            "@popperjs/core": "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/popper.min.js",
+            "bootstrap": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.esm.min.js"
+
+          }
+        }
+    </script>
 
 </head>
 <style>
     @font-face {
         font-family: "Seattle Transit Dot Matrix 15";
         src: local("seattle_transit_dot_matrix_15"),
-        url("https://files.nickwalker.us/seattle_transit_dot_matrix_15.woff2") format("woff2");
-        /* Hosted externally until finalized
-        url("{{ base_url }}/fonts/seattle_transit_dot_matrix_15.woff2") format("woff2");*/
+        url("{{ base_url }}/fonts/seattle_transit_dot_matrix_15.woff2") format("woff2");
     }
     @font-face {
         font-family: "Seattle Transit Dot Matrix 7";
         src: local("seattle_transit_dot_matrix_7"),
-        url("https://files.nickwalker.us/seattle_transit_dot_matrix_7.woff2") format("woff2");
-        /*url("{{ base_url }}/fonts/seattle_transit_dot_matrix_7.woff2") format("woff2")*/;
+        url("{{ base_url }}/fonts/seattle_transit_dot_matrix_7.woff2") format("woff2");
     }
 
     :root {
@@ -107,8 +121,16 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         opacity: 1;
     }
 
+    .imprint {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-style: italic;
+        font-weight: 300;
+    }
+
     .imprint a {
         text-decoration: none;
+        color: #666;
     }
 
     .imprint img {
@@ -116,23 +138,6 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         opacity: .5;
         filter: invert();
     }
-
-    #map-container {
-        height: 100%;
-    }
-    #map {
-        height: 70vh;
-    }
-
-    dt {
-        font-weight: bold;
-    }
-
-    dd {
-        margin-left: 0;
-        margin-bottom: 1rem
-    }
-
     header {
         margin-bottom: 1rem;
     }
@@ -140,6 +145,47 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
     section {
         margin-bottom: 4rem;
     }
+
+    footer {
+        margin: 6rem 0 6rem 0;
+    }
+
+    .container {
+        max-width: 700px;
+    }
+
+    figure {
+        max-width: 1200px;
+        margin: 0 auto 2rem auto;
+    }
+
+    figure a img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .full-width {
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+    }
+
+    hr {
+        width: 8rem;
+        margin: 4rem auto;
+        display: block;
+        border: 1px solid var(--bs-secondary-color);
+    }
+
+    header {
+        margin: 0 auto;
+
+    }
+
 
     .btn {
         border-radius: 0;
@@ -155,6 +201,15 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         --bs-btn-active-color: #eee;
         --bs-btn-border-color: var(--theme-primary-color-bright);
         --bs-btn-focus-shadow-rgb: 255, 255, 255
+    }
+
+    /* MAP ********************/
+
+    #map-container {
+        height: 100%;
+    }
+    #map {
+        height: 70vh;
     }
 
     .maplibregl-map {
@@ -220,13 +275,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         box-shadow: 0 0 0 0.25rem var(--theme-primary-color-subdued);
     }
 
-    footer {
-        margin: 6rem 0 6rem 0;
-    }
-
-    .container {
-        max-width: 700px;
-    }
+    /* BRANDING **************/
 
     #finish-row td {
         font-weight: bold;
@@ -234,23 +283,6 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
 
     #countdown .container {
         max-width: none;
-    }
-
-    figure {
-        max-width: 1200px;
-        margin: 0 auto 2rem auto;
-    }
-
-    hr {
-        width: 8rem;
-        margin: 4rem auto;
-        display: block;
-        border: 1px solid var(--bs-secondary-color);
-    }
-
-    header {
-        margin: 0 auto;
-
     }
 
     .platform-sign {
@@ -274,7 +306,6 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         background-position: -.4px .4px;
     }
 
-
     .dot-matrix {
         text-shadow:   0 0 10px rgba(255,220,75,.3), 0 0 20px rgba(255,220,75,.6);
         color: orange;
@@ -290,7 +321,6 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         text-shadow:   0 0 10px rgba(95,172,86,.3), 0 0 20px rgba(95,172,86,.6);
         color: var(--theme-primary-color);
     }
-
 
     .dot-matrix.mb-1 {
         margin-bottom: var(--dot-size);
@@ -308,6 +338,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         line-height: calc(1 + 1/7);
     }
 
+    /* ACCORDION **************/
     .accordion-item ul {
         padding-left: 1rem;
     }
@@ -326,6 +357,8 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
     .accordion-button::after {
         filter: saturate(0%);
     }
+
+    /* TABLES **************/
 
     .tabulator,
     .tabulator .tabulator-header .tabulator-col,
@@ -391,6 +424,8 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         text-decoration-color: var(--theme-primary-color);
     }
 
+    /* CALCULATOR **************/
+
     #leg-calculator {
         border: 1px solid #111;
     }
@@ -426,22 +461,41 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         bottom: 130%;
     }
 
-
-    .imprint {
-        text-align: center;
-        margin-bottom: 1.5rem;
-        font-style: italic;
-        font-weight: 300;
+    /* GALLERY **************************/
+    .masonry {
+        background-color: rgba(0,0,0,.05);
     }
 
-    .imprint a {
-        text-decoration: none;
-        color: #666;
+    /* clear fix */
+    .masonry:after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+    .masonry > a {
+        float: left;
     }
 
-    .imprint img {
-        width: 100px;
-        opacity: .5;
+    .masonry img {
+        display: block;
+        max-width: 100%;
+    }
+
+    .masonry .grid-sizer,
+    .masonry a {
+        width: 50%;
+    }
+
+    @media screen and (width > 720px) {
+        .masonry .grid-sizer,
+        .masonry a {
+            width: 33.33%;
+        }
+    }
+
+    .pswp img {
+        max-width: none;
+        object-fit: contain;
     }
 
 </style>
@@ -891,7 +945,8 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
 </footer>
 <script type="module">
     import { isMapboxURL, transformMapboxUrl } from "https://cdn.jsdelivr.net/npm/maplibregl-mapbox-request-transformer@0.0.2/src/index.min.js"
-    import { relayToGPX, download, createCountdown, formatLegDescription, processRelayGeoJSON, createScheduleTable, createLegDetailsTable} from "../js/common.js";
+    import { relayToGPX, download, createCountdown, formatLegDescription, processRelayGeoJSON, createScheduleTable, createLegDetailsTable, prepareImagesForPhotoswipe} from "../js/common.js";
+    import PhotoSwipeLightbox from 'photoswipe-lightbox';
 
     const mapboxKey = 'pk.eyJ1Ijoibmlja3N3YWxrZXIiLCJhIjoiY2t0ZjgyenE4MDR1YjJ1cno0N3hxYzI4YSJ9.ivPdsoEtV9TaLGbOOfFXKA'
     const transformRequest = (url, resourceType) => {
@@ -1248,7 +1303,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
 
         let leftValue = 4
         let rightValue = 12
-        // The display values can be used to control the slider
+
         slider.set(['4', '12']);
         slider.on('update', function (values, handle, unencoded) {
             let oldLeft = leftValue
@@ -1281,7 +1336,48 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
 
     // Tooltips for sign-up deadlines
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    import {Tooltip} from 'bootstrap'
+
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
+
+    document.addEventListener('DOMContentLoaded', e => {
+        let container = document.querySelector(".masonry")
+        let msnry = new Masonry(container, {
+            itemSelector: 'a',
+            columnWidth: '.grid-sizer',
+            percentPosition: true
+        });
+        // layout Masonry after each image loads
+        imagesLoaded(container, () => {
+            msnry.layout()
+        });
+    })
+
+    prepareImagesForPhotoswipe(document.querySelectorAll("#gallery a")).then(() => {
+        const lightbox = new PhotoSwipeLightbox({
+            gallery: '#gallery',
+            children: 'a',
+            showHideAnimationType: 'zoom',
+            showAnimationDuration: 200,
+            hideAnimationDuration: 200,
+            pswpModule: () =>  import("photoswipe")
+
+        });
+        lightbox.init();
+    });
+
+    prepareImagesForPhotoswipe(document.querySelectorAll("#story-gallery a")).then(() => {
+        const lightbox = new PhotoSwipeLightbox({
+            gallery: '#story-gallery',
+            children: 'a',
+            showHideAnimationType: 'zoom',
+            showAnimationDuration: 200,
+            hideAnimationDuration: 200,
+            pswpModule: () =>  import("photoswipe")
+
+        });
+        lightbox.init();
+    });
 </script>
 
 </body>

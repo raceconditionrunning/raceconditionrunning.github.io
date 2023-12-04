@@ -29,13 +29,27 @@ redirect_from:
           href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.js"
             charset="utf-8"></script>
-    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_bootstrap5.min.css" rel="stylesheet">
-    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-t4GWSVZO1eC8BM339Xd7Uphw5s17a86tIZIj8qRxhnKub6WoyhnrxeCIMeAqBPgdZGlCcG2PrZjMc+Wr78+5Xg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js" ></script>
-    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js" integrity="sha512-X/YkDZyjTf4wyc2Vy16YGCPHwAY8rZJY+POgokZjQB2mhIRFJCckEGc6YyX9eNsPfn0PzThEuNs+uaomE5CO6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator.min.css" integrity="sha512-HdUIebGeOK7s+At/fOnnbX8vsz6Cl1KTeiRlBiQABTMSqw7kZRCxGiUnuF9lr+1xz5y8pL7jkCR+NNtVVkEqKg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator_bootstrap5.min.css" integrity="sha512-904y6HHQyQS2fAyIQ869rH3AAkxZeFuxo9vheji5zw+IPEyioMWN4Bt/VFhzO5edPZ9m1lwkpYgXcYcm1vzaFw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js" integrity="sha512-JRlcvSZAXT8+5SQQAvklXGJuxXTouyq8oIMaYERZQasB8SBDHZaUbeASsJWpk0UUrf89DP3/aefPPrlMR1h1yQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js" integrity="sha512-kfs3Dt9u9YcOiIt4rNcPUzdyNNO9sVGQPiZsub7ywg6lRW5KuK1m145ImrFHe3LMWXHndoKo2YRXWy8rnOcSKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script type="importmap">
+        {
+          "imports": {
+            "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
+            "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
+            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/js/tabulator_esm.min.js"
+          }
+        }
+    </script>
 
 </head>
 <style>
@@ -508,7 +522,7 @@ redirect_from:
             hardware and art supply stores and everything was in order.</p>
 
     </div>
-    <figure>
+    <figure id="station-gallery">
     <div class="row mb-2 gx-2">
         <a href="{{ site.baseurl }}/img/lrr21/udistrict1.webp" class="col-6">
             <img src="{{ site.baseurl }}/img/lrr21/udistrict1.webp"/>
@@ -561,133 +575,17 @@ redirect_from:
         <p><i>Nick Walker</i></p>
     </div>
 
-    <div class="w-100">
+
+    <div id="gallery" class="w-100">
         <div class="masonry">
             <div class="grid-sizer"></div>
-            <a href="{{ site.baseurl }}/img/lrr21/0.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/0.webp"/>
-            </a>
 
-            <a href="{{ site.baseurl }}/img/lrr21/1.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/1.webp"/>
+            {% assign image_names = "0|1|2|3|4|5|5_2|6|7|7_2|8|9|10|11|12|12_2|13|14|14_2|15|15_2|15_3|16|16_2|16_3|17|17_2|17_3|18|18_2|18_3" | split: "|" %}
+            {% for name in image_names %}
+            <a href="{{ site.baseurl }}/img/lrr21/{{name}}.webp">
+                <img src="{{ site.baseurl }}/img/lrr21/{{name}}.webp"/>
             </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/2.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/2.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/3.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/3.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/4.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/4.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/5.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/5.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/5_2.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/5_2.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/6.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/6.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/7.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/7.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/7_2.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/7_2.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/8.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/8.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/9.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/9.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/10.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/10.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/11.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/11.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/12.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/12.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/12_2.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/12_2.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/13.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/13.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/14.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/14.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/14_2.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/14_2.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/15.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/15.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/15_2.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/15_2.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/15_3.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/15_3.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/16.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/16.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/16_2.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/16_2.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/16_3.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/16_3.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/17.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/17.webp"/>
-            </a>
-
-
-            <a href="{{ site.baseurl }}/img/lrr21/17_2.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/17_2.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/17_3.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/17_3.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/18.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/18.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/18_2.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/18_2.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr21/18_3.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/18_3.webp"/>
-            </a>
+            {% endfor %}
 
         </div>
     </div>
@@ -698,7 +596,8 @@ redirect_from:
 </footer>
 
 <script type="module">
-    import {createCountdown, formatLegDescription, processRelayGeoJSON, createScheduleTable} from "../js/common.js";
+    import {createCountdown, formatLegDescription, processRelayGeoJSON, createScheduleTable, prepareImagesForPhotoswipe} from "../js/common.js";
+    import PhotoSwipeLightbox from 'photoswipe-lightbox';
 
     Promise.all([
         fetch("{{ site.baseurl }}/maps/link-light-rail.geojson"),
@@ -835,6 +734,29 @@ redirect_from:
         // layout Masonry after each image loads
         imagesLoaded(container,  function () {
             msnry.layout()
+        });
+
+        prepareImagesForPhotoswipe(document.querySelectorAll("#gallery a")).then(() => {
+            const lightbox = new PhotoSwipeLightbox({
+                gallery: '#gallery',
+                children: 'a',
+                showHideAnimationType: 'zoom',
+                showAnimationDuration: 200,
+                hideAnimationDuration: 200,
+                pswpModule: () =>  import("photoswipe")
+            });
+            lightbox.init();
+        });
+        prepareImagesForPhotoswipe(document.querySelectorAll("#station-gallery a")).then(() => {
+            const lightbox = new PhotoSwipeLightbox({
+                gallery: '#station-gallery',
+                children: 'a',
+                showHideAnimationType: 'zoom',
+                showAnimationDuration: 200,
+                hideAnimationDuration: 200,
+                pswpModule: () =>  import("photoswipe")
+            });
+            lightbox.init();
         });
     })
 </script>

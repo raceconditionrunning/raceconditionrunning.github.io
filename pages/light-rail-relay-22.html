@@ -29,18 +29,29 @@ redirect_from:
           href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.js"
             charset="utf-8"></script>
-    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_bootstrap5.min.css" rel="stylesheet">
-    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
 
-    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js" ></script>
-    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js" integrity="sha512-3dZ9wIrMMij8rOH7X3kLfXAzwtcHpuYpEgQg1OA4QAob1e81H8ntUQmQm3pBudqIoySO5j0tHN4ENzA6+n2r4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-t4GWSVZO1eC8BM339Xd7Uphw5s17a86tIZIj8qRxhnKub6WoyhnrxeCIMeAqBPgdZGlCcG2PrZjMc+Wr78+5Xg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator.min.css" integrity="sha512-HdUIebGeOK7s+At/fOnnbX8vsz6Cl1KTeiRlBiQABTMSqw7kZRCxGiUnuF9lr+1xz5y8pL7jkCR+NNtVVkEqKg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator_bootstrap5.min.css" integrity="sha512-904y6HHQyQS2fAyIQ869rH3AAkxZeFuxo9vheji5zw+IPEyioMWN4Bt/VFhzO5edPZ9m1lwkpYgXcYcm1vzaFw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js" integrity="sha512-JRlcvSZAXT8+5SQQAvklXGJuxXTouyq8oIMaYERZQasB8SBDHZaUbeASsJWpk0UUrf89DP3/aefPPrlMR1h1yQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js" integrity="sha512-kfs3Dt9u9YcOiIt4rNcPUzdyNNO9sVGQPiZsub7ywg6lRW5KuK1m145ImrFHe3LMWXHndoKo2YRXWy8rnOcSKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script type="importmap">
+        {
+          "imports": {
+            "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
+            "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
+            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/js/tabulator_esm.min.js"
+          }
+        }
+    </script>
+
 </head>
 <style>
-
     :root {
         --theme-primary-color: #5fac56;
         --theme-primary-color-subdued: #99cc99;
@@ -346,6 +357,9 @@ redirect_from:
         --bs-accordion-active-bg: #eee;
     }
 
+    /*
+     * GALLERY
+     */
     .masonry {
         background-color: rgba(0,0,0,.05);
     }
@@ -377,11 +391,11 @@ redirect_from:
         }
     }
 
-    .image-grid img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+    .pswp img {
+        max-width: none;
+        object-fit: contain;
     }
+
 
     hr {
         width: 8rem;
@@ -676,92 +690,17 @@ redirect_from:
         <p><i>Nick Walker</i></p>
     </div>
 
-    <div class="w-100">
+    <div id="gallery" class="w-100">
         <div class=" masonry">
             <div class="grid-sizer"></div>
-
-            <a href="{{ site.baseurl }}/img/lrr22/0.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/0.webp"/>
+            {% assign image_names = "0|1|2|3|4|5|5_1|6|7|8|9|10|11|12|13|14|15|16|17|18" | split: "|" %}
+            {% for name in image_names %}
+            <a href="{{ site.baseurl }}/img/lrr22/{{name}}.webp">
+                <img src="{{ site.baseurl }}/img/lrr22/{{name}}.webp"/>
             </a>
+            {% endfor %}
 
-            <a href="{{ site.baseurl }}/img/lrr22/1.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/1.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr22/2.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/2.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr22/3.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/3.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr22/4.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/4.webp"/>
-            </a>
-
-
-            <a href="{{ site.baseurl }}/img/lrr22/5.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/5.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr22/5_1.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/5_1.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr22/6.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/6.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr22/7.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/7.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr22/8.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/8.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr22/9.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/9.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr22/10.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/10.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr22/11.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/11.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr22/12.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/12.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr22/13.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/13.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr22/14.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/14.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr22/15.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/15.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr22/16.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/16.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr22/17.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/17.webp"/>
-            </a>
-
-            <a href="{{ site.baseurl }}/img/lrr22/18.webp">
-                <img src="{{ site.baseurl }}/img/lrr22/18.webp"/>
-            </a>
-
-    </div>
+        </div>
     </div>
 </section>
 
@@ -770,7 +709,8 @@ redirect_from:
 </footer>
 
 <script type="module">
-    import {relayToGPX, createCountdown, download, formatLegDescription, processRelayGeoJSON, createScheduleTable} from "../js/common.js";
+    import {relayToGPX, createCountdown, download, formatLegDescription, processRelayGeoJSON, createScheduleTable, prepareImagesForPhotoswipe} from "../js/common.js";
+    import PhotoSwipeLightbox from 'photoswipe-lightbox';
 
     Promise.all([
         fetch("{{ site.baseurl }}/maps/link-light-rail.geojson"),
@@ -915,6 +855,22 @@ redirect_from:
             msnry.layout()
         });
     })
+
+
+    prepareImagesForPhotoswipe(document.querySelectorAll("#gallery a")).then(() => {
+        const lightbox = new PhotoSwipeLightbox({
+            gallery: '#gallery',
+            children: 'a',
+            showHideAnimationType: 'zoom',
+            showAnimationDuration: 200,
+            hideAnimationDuration: 200,
+            pswpModule: () =>  import("photoswipe")
+
+        });
+        lightbox.init();
+    });
+
+
 </script>
 
 </body>

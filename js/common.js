@@ -1,4 +1,6 @@
+import {Tabulator, ColumnCalcsModule, GroupRowsModule, FormatModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule} from 'tabulator-tables';
 
+Tabulator.registerModule([ColumnCalcsModule, FormatModule, GroupRowsModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule]);
 export function formatPace(seconds, unit = " /mi") {
     let date = new Date(0);
     date.setSeconds(seconds);
@@ -319,3 +321,20 @@ export function createLegDetailsTable(container, legsGeojson, exchangesGeoJson) 
 
 }
 
+export async function prepareImagesForPhotoswipe(galleryElements) {
+    const promisesList = [];
+    galleryElements.forEach((element) => {
+        const promise = new Promise(function (resolve) {
+            let image = new Image();
+            image.src = element.getAttribute('href');
+            image.onload = () => {
+                element.dataset.pswpWidth = image.width;
+                element.dataset.pswpHeight = image.height;
+                resolve(); // Resolve the promise only if the image has been loaded
+            }
+            image.onerror = () => { resolve(); };
+        });
+        promisesList.push(promise);
+    });
+    await Promise.all(promisesList);
+}
