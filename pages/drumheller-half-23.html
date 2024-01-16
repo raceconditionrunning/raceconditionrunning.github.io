@@ -44,11 +44,14 @@ redirect_from:
     </script>
 </head>
 <style>
-    body {
-        background-color: #010101;
-        margin: 0;
-        font-size: 24px;
+    :root {
+        font-size: 21px;
         line-height: 1.5;
+    }
+
+    body {
+        margin: 0;
+        --bs-body-bg: #010101;
         --bs-body-color: #eee;
         --bs-link-color-rgb: 220, 220, 220;
         --bs-link-hover-color-rgb: 200, 200, 200;
@@ -128,8 +131,7 @@ redirect_from:
     }
 
     .accordion-header button {
-        font-size: 24px;
-        font-family: 'Yrsa', serif;
+        font-family: var(--bs-body-font-family);
     }
 
     .accordion-button::after {
@@ -139,8 +141,8 @@ redirect_from:
     .accordion {
         --bs-accordion-btn-focus-border-color: #bbb;
         --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem #bbb;
-        --bs-accordion-border-radius: 1rem;
-        --bs-accordion-inner-border-radius: 1rem;
+        --bs-accordion-border-radius: .75rem;
+        --bs-accordion-inner-border-radius: .75rem;
         --bs-accordion-bg: #111;
         --bs-accordion-color: var(--bs-body-color);
         --bs-accordion-active-color: var(--bs-emphasis-color);
@@ -165,7 +167,7 @@ redirect_from:
     }
 
     #hero {
-        padding: 2rem 0 calc(min(2rem + 20vw, 14rem)) 0;
+        padding: 2rem 0 calc(min(2rem + 20vw, 8rem)) 0;
         margin-bottom: 0;
         position: relative;
         overflow-x: clip;
@@ -246,6 +248,7 @@ redirect_from:
     h1, h2, h3, .hero-button {
         font-family: var(--sans-font-family);
         font-weight: 700;
+        font-size: 1.2rem;
     }
 
     h3 {
@@ -265,13 +268,14 @@ redirect_from:
         content: "#";
     }
 
-    .anchor-link:focus, .anchor-link:hover, :hover > .anchor-link, :target > .anchor-link {
+    .anchor-link:focus, .anchor-link:hover, :hover > .anchor-link, :target .anchor-link {
         text-decoration: none;
         opacity: 1;
     }
 
     .hero-button {
         font-weight: 600;
+        font-size: 1rem;
     }
 
     #overview {
@@ -292,7 +296,7 @@ redirect_from:
 
     .blockquote {
         font-style: italic;
-        font-size: 1.5rem;
+        font-size: 1rem;
     }
 
     .blockquote-footer {
@@ -340,16 +344,16 @@ redirect_from:
     }
 
     .usatf-certificate {
-        font-size: 1rem;
+        font-size: .75rem;
         font-family: var(--sans-font-family);
         border: 2px solid #aaa;
-        border-radius: 1rem;
+        border-radius: .75rem;
         display: inline-flex;
-        gap: 1rem;
+        gap: .75rem;
         flex-direction: row;
         justify-content: center;
         margin-bottom: 0;
-        padding: 1rem 1rem;
+        padding: .75rem .75rem;
         text-decoration: none;
         color: #ddd;
         transition: .3s;
@@ -365,7 +369,7 @@ redirect_from:
     }
 
     .usatf-certificate img {
-        height: 6rem;
+        height: 4rem;
         opacity: .8;
         transition: .3s;
     }
@@ -377,7 +381,7 @@ redirect_from:
     .usatf-certificate,
     .usatf-certificate h2,
     .usatf-certificate p {
-        font-size: 1rem;
+        font-size: .75rem;
         margin-bottom: 0;
     }
 
@@ -385,8 +389,8 @@ redirect_from:
         background: transparent;
         width: auto;
         min-width: 200px;
-        font-size: 21px;
         line-height: 36px;
+        --bs-table-bg: var(--bs-dark-bg-subtle);
     }
 
     .table th {
@@ -487,7 +491,7 @@ redirect_from:
     }
 
     .tabulator {
-        font-size: 24px;
+        font-size: 1rem;
     }
 
     .tabulator,
@@ -604,10 +608,10 @@ redirect_from:
             <a href="https://udistrictstreetfair.org" class="d-inline-block">U-District Street Fair</a>.
         </p>
         <div class="call-wrapper gap-2">
-            <!--a class="btn btn-lg hero-button " href="https://forms.gle/tk9xDDHgaXMzLMDC8">Sign Up</a-->
-            <a class="btn btn-lg hero-button" href="#results">Results</a>
-            <!--a class="btn btn-lg hero-button" href="https://forms.gle/qDgVHA3Kw1HVFDrN8">Order Shirt</a-->
-            <!--a class="btn btn-lg hero-button" href="#epilogue">Read Epilogue</a-->
+            <!--a class="btn hero-button " href="https://forms.gle/tk9xDDHgaXMzLMDC8">Sign Up</a-->
+            <a class="btn hero-button" href="#results">Results</a>
+            <!--a class="btn hero-button" href="https://forms.gle/qDgVHA3Kw1HVFDrN8">Order Shirt</a-->
+            <!--a class="btn hero-button" href="#epilogue">Read Epilogue</a-->
         </div>
         <div class="alert alert-dark mt-3" role="alert" style="">
             This event took place in 2023. Looking for <a href="{{ site.baseurl }}/dhm">a more recent Drumheller Half</a>?
