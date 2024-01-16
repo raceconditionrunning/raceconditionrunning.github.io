@@ -1,8 +1,6 @@
 ---
 permalink: drumheller-half-23/
 redirect_from:
-- /dhm/
-- /drumheller-half/
 - /dhm23/
 ---
 <!DOCTYPE html>
@@ -21,7 +19,7 @@ redirect_from:
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Yrsa:ital,wght@0,300;0,700;1,300&family=Prompt:wght@700&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Yrsa:ital,wght@0,300..700;1,300..700&family=Prompt:wght@700&display=swap"
           rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator.min.css" integrity="sha512-HdUIebGeOK7s+At/fOnnbX8vsz6Cl1KTeiRlBiQABTMSqw7kZRCxGiUnuF9lr+1xz5y8pL7jkCR+NNtVVkEqKg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -203,6 +201,7 @@ redirect_from:
         position: relative;
         max-width: 100%;
         pointer-events: none;
+        user-select: none;
     }
 
     #underlay-cw, #underlay-ccw {
@@ -231,6 +230,13 @@ redirect_from:
 
     .rotating.ccw {
         animation: fade-in 10s ease, rotating 600s reverse linear infinite;
+    }
+
+    @media (prefers-reduced-motion) {
+        /* styles to apply if a user's device settings are set to reduced motion */
+        .rotating,.rotating.ccw, #hero .imprint, #hero .date {
+            animation: none;
+        }
     }
 
     section {
@@ -603,8 +609,11 @@ redirect_from:
             <!--a class="btn btn-lg hero-button" href="https://forms.gle/qDgVHA3Kw1HVFDrN8">Order Shirt</a-->
             <!--a class="btn btn-lg hero-button" href="#epilogue">Read Epilogue</a-->
         </div>
-
+        <div class="alert alert-dark mt-3" role="alert" style="">
+            This event took place in 2023. Looking for <a href="{{ site.baseurl }}/dhm">a more recent Drumheller Half</a>?
+        </div>
     </div>
+
 </section>
 
 <section>
@@ -880,7 +889,7 @@ redirect_from:
 
         <p><i>Nick Walker</i></p>
     </div>
-    <figure id="gallery" class="d-flex flex-column gap-4">
+    <figure id="gallery" class="d-flex flex-column gap-4 auto-lightbox">
         <a href="{{ site.baseurl }}/img/dhm23/3.avif">
             <img src="{{ site.baseurl }}/img/dhm23/3.avif"
                  class="w-100 shadow-1-strong rounded"/>
@@ -1514,7 +1523,7 @@ redirect_from:
         })
 
     document.addEventListener('DOMContentLoaded', e => {
-        prepareImagesForPhotoswipe(document.querySelectorAll("#gallery a")).then(() => {
+        prepareImagesForPhotoswipe(document.querySelectorAll(".auto-lightbox a")).then(() => {
             const lightbox = new PhotoSwipeLightbox({
                 gallery: '#gallery',
                 children: 'a',
