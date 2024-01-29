@@ -506,3 +506,8 @@
   name: "Northgate, Carkeek, Roosevelt"
   dist: 8.2
   map: https://onthegomap.com/s/i52u05p8
+
+- id: locks-discovery-salmon-bay-loop
+  name: "Locks, Discovery Park, Salmon Bay Loop"
+  dist: 8.1
+  map: https://onthegomap.com/s/uop4tt1d

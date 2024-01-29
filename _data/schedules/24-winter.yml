@@ -11,6 +11,16 @@
 - date: "2024-02-03"
   plan:
     - time: "9:00"
+      route_id: locks-discovery-salmon-bay-loop
+
+- date: "2024-02-10"
+  plan:
+    - time: "9:00"
       route_id: northgate-carkeek-roosevelt
 
-
+- date: "2024-02-17"
+  plan:
+    - time: "9:00"
+      route_id: caphill-volunteer-westlake
+    - time: "9:45"
+      route_id: ob-westlake-sculpture-park
