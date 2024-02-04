@@ -296,20 +296,23 @@ redirect_from:
     .orbit {
         opacity: 0;
         animation: fade-in 1s ease forwards, orbit 60s linear infinite;
-        animation-delay: 0.5s;
         transform-style: preserve-3d;
     }
 
+    .orbit.one {
+        animation-delay: .5s, 0s;
+    }
+
     .orbit.two {
-        animation-delay: 2.3s;
+        animation-delay: 2.3s, 0s;
     }
 
     .orbit.three {
-        animation-delay: 2.5s;
+        animation-delay: 2.5s, 0s;
     }
 
     .orbit.four {
-        animation-delay: 2.7s;
+        animation-delay: 2.7s, 0s;
     }
 
     .rotation-offset {
@@ -530,10 +533,10 @@ redirect_from:
         <img src="{{ site.baseurl }}/img/dm24/basin.svg" alt="" class="toy-overlay">
         <div class="interactive toy-overlay clickable-circle"></div>
         <div class="ring">
-            <div class="dot one orbit"><div class="rotation-offset"><span></span></div></div>
-            <div class="dot two orbit"><div class="rotation-offset"><span></span></div></div>
-            <div class="dot three orbit"><div class="rotation-offset"><span></span></div></div>
-            <div class="dot four orbit"><div class="rotation-offset"><span></span></div></div>
+            <div class="dot one orbit"><div class="rotation-offset"><span class="pulse" data-n="0"></span></div></div>
+            <div class="dot two orbit"><div class="rotation-offset"><span class="pulse" data-n="1"></span></div></div>
+            <div class="dot three orbit"><div class="rotation-offset"><span class="pulse" data-n="2"></span></div></div>
+            <div class="dot four orbit"><div class="rotation-offset"><span class="pulse" data-n="3"></span></div></div>
         </div>
         <div id="underlay-gradient"></div>
     </div>

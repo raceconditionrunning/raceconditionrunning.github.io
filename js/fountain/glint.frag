@@ -3,7 +3,7 @@
 precision highp float;
 uniform sampler2D data;
 uniform vec2 resolution;
-
+uniform float radius; //pixels
 out vec4 outColor;
 
 void main() {
@@ -15,7 +15,7 @@ void main() {
     outColor = vec4(1) * pow(max(0.0, dot(normal, normalize(vec3(-3, 20, 3)))), 1.0);
     outColor = 1.0 - outColor;
     // Circular fountain boundary
-    if (length(uv - vec2(0.5,0.5)) > 0.485) {
+    if (length(uv - vec2(0.5,0.5)) > radius / resolution.x) {
         //outColor = vec4(uv, 0.0,0.0);
         outColor = vec4(0.0);
         return;

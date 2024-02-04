@@ -1,4 +1,4 @@
-class Sprite {
+class AudioSprite {
     constructor(settingsObj) {
         this.src = settingsObj.src;
         this.samples = settingsObj.sprite;
@@ -47,6 +47,7 @@ export let FountainToy = rootUrl => p => {
     let glintShader
     let baseWaterShader
     let simRes = 1024
+    let radiusPercentage = .4775
     let jetsTexture
     let sounds
     let startStamp
@@ -60,7 +61,7 @@ export let FountainToy = rootUrl => p => {
         glintShader = p.loadShader(`${rootUrl}/js/fountain/ripple.vert`, `${rootUrl}/js/fountain/glint.frag`);
         //baseWaterShader = p.loadShader(`${rootUrl}/js/fountain/ripple.vert`, `${rootUrl}/js/fountain/flowNoise.frag`);
 
-        sounds = new Sprite({
+        sounds = new AudioSprite({
             src: [`${rootUrl}/img/dm24/la-fille-aux-cheveux-de-lin.mp3`],
             sprite: {
                 note1: [0, 2400],
@@ -99,7 +100,7 @@ export let FountainToy = rootUrl => p => {
             return
         }
         // Only allow mouse presses inside the circle
-        if ((p.mouseX - .5 * width) ** 2 + (p.mouseY - .5 * height) ** 2 > (.5 * width) ** 2) {
+        if ((p.mouseX - radiusPercentage * width) ** 2 + (p.mouseY - radiusPercentage * height) ** 2 > (radiusPercentage * width) ** 2) {
             return;
         }
         if (currentNote === 5) {
@@ -131,13 +132,25 @@ export let FountainToy = rootUrl => p => {
                     currentNote = 0
                 })
             } else {
-                document.getAnimations().forEach((anim) => {
-                    if (!anim.effect.target.classList.contains('orbit')) {
-                        return
+                const delays = [0, 1800, 2000, 2200]
+                for (let pulsing of document.getElementsByClassName("pulse")) {
+                    if (pulsing.getAnimations().length > 0) {
+                        continue
                     }
-                    anim.cancel();
-                    anim.play();
-                });
+                    // Get index in the parent of this element
+                    const index = parseInt(pulsing.attributes.getNamedItem("data-n").value)
+                    const startTarget = (delays[index] + 200) / 3500.
+                    pulsing.animate([
+                        {opacity: 1, offset: startTarget - 200 / 3500.},
+                        {opacity: .1, offset: startTarget},
+                        {opacity: .1, offset: .90},
+                        {opacity: 1, offset: 1}
+                    ], {
+                        duration: 3000,
+                        iterations: 1
+                    })
+                }
+
                 currentNote = 0
             }
             deltaBuffer = []
@@ -170,6 +183,7 @@ export let FountainToy = rootUrl => p => {
         rippleShader.setUniform("time", Date.now() / 1000.0 - startStamp);
         rippleShader.setUniform("dampening", dampening);
         rippleShader.setUniform("resolution", [simRes, simRes]);
+        rippleShader.setUniform("radius", simRes * radiusPercentage);
         rippleShader.setUniform("mouse", [p.mouseX / width, 1.0 - (p.mouseY / height), p.mouseIsPressed && p.mouseButton === p.LEFT])
         p.rect(0, 0, simRes, -simRes);
         activeBuffer.end()
@@ -180,6 +194,7 @@ export let FountainToy = rootUrl => p => {
         p.shader(glintShader)
         glintShader.setUniform("data", activeBuffer);
         glintShader.setUniform("resolution", [simRes, simRes]);
+        glintShader.setUniform("radius", simRes * radiusPercentage)
         p.rect(0, 0, simRes, -simRes)
         outBuffer.end()
 

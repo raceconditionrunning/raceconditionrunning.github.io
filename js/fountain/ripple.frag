@@ -3,6 +3,7 @@
 precision highp float;
 uniform sampler2D previous;
 uniform sampler2D jets;
+uniform float radius;
 uniform float dampening;
 uniform vec2 resolution;
 uniform vec3 mouse;
@@ -173,7 +174,7 @@ void main() {
     float right = texture(previous, uv + vec2(1.0 / resolution.x, 0)).r;
 
     // Circular fountain boundary
-    if (length(uv - vec2(0.5,0.5)) > 0.49) {
+    if (length(uv - vec2(0.5,0.5)) > radius / resolution.x) {
         //outColor = vec4(uv, 0.0,0.0);
         outColor = vec4(0.0);
         return;
