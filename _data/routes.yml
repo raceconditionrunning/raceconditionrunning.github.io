@@ -526,3 +526,9 @@
   name: "CSE, LWB, Columbia City"
   dist: 8.8
   map: https://onthegomap.com/s/k3pikua1
+
+- id: cse-520-wetherill-ob
+  name: "OB: CSE, 520, Wetherill Preserve"
+  dist: 9.8
+  map: https://onthegomap.com/s/jssjhikb
+

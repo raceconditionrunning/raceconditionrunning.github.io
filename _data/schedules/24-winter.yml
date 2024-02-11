@@ -28,15 +28,15 @@
 - date: "2024-02-24"
   plan:
     - time: "9:00"
-      route_id: sodo-luna-pier-ob
+      route_id: cse-lwb-cc
 
 - date: "2024-03-02"
   plan:
     - time: "9:00"
-      route_id: cse-lwb-cc
+      route_id: sodo-luna-pier-ob
 
 - date: "2024-03-09"
   plan:
     - time: "9:00"
-      route_id: cap-hill-i90-ob
+      route_id: cse-520-wetherill-ob
 
