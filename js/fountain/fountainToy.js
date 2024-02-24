@@ -79,12 +79,20 @@ export let FountainToy = rootUrl => p => {
         width = p._userNode.offsetWidth;
         height = p._userNode.offsetHeight;
         canvas = p.createCanvas(width, height, p.WEBGL);
+        // Check available webgl feautures if something isn't working
+        //const ctx = canvas.elt.getContext("webgl2")
+        //console.log(ctx.getSupportedExtensions())
+
+        // https://stackoverflow.com/questions/28827511/webgl-ios-render-to-floating-point-texture
+
         // We ping-pong these to run sim forward from previous state
-        bufferA = p.createFramebuffer({format: p.FLOAT, width: simRes, height: simRes})
-        bufferB = p.createFramebuffer({format: p.FLOAT, width: simRes, height: simRes})
+        bufferA = p.createFramebuffer({format: p.HALF_FLOAT, width: simRes, height: simRes, density: 1, depth: false})
+        bufferB = p.createFramebuffer({format: p.HALF_FLOAT, width: simRes, height: simRes, density: 1, depth: false})
         activeBuffer = bufferA
         inactiveBuffer = bufferB
-        outBuffer = p.createFramebuffer({format: p.FLOAT, width: simRes, height: simRes})
+        // Table of supported texture types: https://webgl2fundamentals.org/webgl/lessons/webgl-data-textures.html
+        // Mobile targets usually can't render float textures. This buffer's shader needs to process to RGBA
+        outBuffer = p.createFramebuffer({format: p.UNSIGNED_BYTE, width: simRes, height: simRes, density: 1, depth: false})
         p.imageMode(p.CENTER)
         //testImage = p.loadImage("/img/rcc-logo.png")
         p.noStroke();
@@ -150,8 +158,6 @@ export let FountainToy = rootUrl => p => {
                         iterations: 1
                     })
                 }
-
-                currentNote = 0
             }
             deltaBuffer = []
         }
@@ -184,6 +190,8 @@ export let FountainToy = rootUrl => p => {
         rippleShader.setUniform("dampening", dampening);
         rippleShader.setUniform("resolution", [simRes, simRes]);
         rippleShader.setUniform("radius", simRes * radiusPercentage);
+        // Match ripple radius to the apparent size of the fountain. Makes ripples on mobile feel right
+        rippleShader.setUniform("interactionRadius", p.lerp( 0.012, .005, p.constrain((p.windowWidth - 800) / 400, 0.0, 1.0)));
         rippleShader.setUniform("mouse", [p.mouseX / width, 1.0 - (p.mouseY / height), p.mouseIsPressed && p.mouseButton === p.LEFT])
         p.rect(0, 0, simRes, -simRes);
         activeBuffer.end()

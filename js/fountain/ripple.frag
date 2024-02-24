@@ -1,10 +1,11 @@
 #version 300 es
 
-precision highp float;
+precision mediump float;
 uniform sampler2D previous;
 uniform sampler2D jets;
 uniform float radius;
 uniform float dampening;
+uniform float interactionRadius;
 uniform vec2 resolution;
 uniform vec3 mouse;
 uniform float time;
@@ -215,7 +216,7 @@ void main() {
     // Make ripples while mouse is down
     if (mouse.z > 0.0) {
         // Use smoothstep to interpolate the pressure, just for pixels 0.0-0.005 away from click
-        pressure += 1.0 - smoothstep(0.0, 0.005, distance(uv, mouse.xy));
+        pressure += 1.0 - smoothstep(0.0, interactionRadius, distance(uv, mouse.xy));
     }
 
     //x = pressure. y = pressure velocity. Z and W = X and Y gradient

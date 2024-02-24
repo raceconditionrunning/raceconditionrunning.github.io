@@ -1,6 +1,6 @@
 #version 300 es
 
-precision highp float;
+precision mediump float;
 uniform sampler2D data;
 uniform vec2 resolution;
 uniform float radius; //pixels
@@ -17,7 +17,7 @@ void main() {
     // Circular fountain boundary
     if (length(uv - vec2(0.5,0.5)) > radius / resolution.x) {
         //outColor = vec4(uv, 0.0,0.0);
-        outColor = vec4(0.0);
+        outColor = vec4(0);
         return;
     }
     //outColor = vec4(0.0,0.0,uv);
