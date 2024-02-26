@@ -532,3 +532,24 @@
   dist: 9.8
   map: https://onthegomap.com/s/jssjhikb
 
+- id: westlake-sculpture-interbay-queen-anne
+  name: "Westlake, Sculpture Park, Interbay, Queen Anne Loop"
+  dist: 10.2
+  map: https://onthegomap.com/s/pmmqj3t5
+
+- id: sodo-alki-beach-ob
+  name: "OB: SODO, Alki Beach"
+  dist: 12.0
+  map: https://onthegomap.com/s/8seoc603
+
+- id: northgate-echo-lake-ob
+  name: "OB: Northgate, Interurban Trail, Echo Lake"
+  dist: 12.4
+  map: https://onthegomap.com/s/mqvelf8h
+
+- id: roosevelt-green-lake-rose-gardens
+  name: "Roosevelt, Green Lake, Rose Gardens"
+  dist: 6.4
+  map: https://onthegomap.com/s/4oft807m
+
+

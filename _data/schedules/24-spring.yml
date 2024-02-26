@@ -1,0 +1,31 @@
+- date: "2024-03-30"
+  plan:
+    - time: "9:00"
+      route_id: westlake-sculpture-interbay-queen-anne
+
+- date: "2024-04-06"
+  plan:
+    - time: "9:00"
+      route_id: northgate-resevoir-roosevelt
+    - time: "9:45"
+      route_id: roosevelt-green-lake-rose-gardens
+
+- date: "2024-04-13"
+  plan:
+    - time: "9:00"
+      route_id: sodo-alki-beach-ob
+
+- date: "2024-04-20"
+  plan:
+    - time: "9:00"
+      route_id: northgate-echo-lake-ob
+
+- date: "2024-04-27"
+  plan:
+    - time: "9:00"
+      route_id: TBD
+
+
+
+
+
