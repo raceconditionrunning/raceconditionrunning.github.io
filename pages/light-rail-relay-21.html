@@ -38,7 +38,6 @@ redirect_from:
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js" integrity="sha512-JRlcvSZAXT8+5SQQAvklXGJuxXTouyq8oIMaYERZQasB8SBDHZaUbeASsJWpk0UUrf89DP3/aefPPrlMR1h1yQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js" integrity="sha512-kfs3Dt9u9YcOiIt4rNcPUzdyNNO9sVGQPiZsub7ywg6lRW5KuK1m145ImrFHe3LMWXHndoKo2YRXWy8rnOcSKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script type="importmap">
@@ -528,40 +527,40 @@ redirect_from:
     <figure id="station-gallery" class="gap-2">
     <div class="row mb-2 mx-0 g-0 gap-2">
         <a href="{{ site.baseurl }}/img/lrr21/udistrict1.webp" class="col">
-            <img src="{{ site.baseurl }}/img/lrr21/udistrict1.webp"/>
+            <img loading="lazy" src="{{ site.baseurl }}/img/lrr21/udistrict1.webp"/>
         </a>
 
         <a href="{{ site.baseurl }}/img/lrr21/udistrict2.webp" class="col">
-            <img src="{{ site.baseurl }}/img/lrr21/udistrict2.webp"/>
+            <img loading="lazy" src="{{ site.baseurl }}/img/lrr21/udistrict2.webp"/>
         </a>
     </div>
     <div class="row mb-2 mx-0 g-0 gap-2">
         <a href="{{ site.baseurl }}/img/lrr21/udistrict3.webp">
-            <img src="{{ site.baseurl }}/img/lrr21/udistrict3.webp"/>
+            <img loading="lazy" src="{{ site.baseurl }}/img/lrr21/udistrict3.webp"/>
         </a>
     </div>
 
     <div class="row mb-2 mx-0 g-0 gap-2">
         <a href="{{ site.baseurl }}/img/lrr21/roosevelt2.webp" class="col-4">
-            <img src="{{ site.baseurl }}/img/lrr21/roosevelt2.webp"/>
+            <img loading="lazy" src="{{ site.baseurl }}/img/lrr21/roosevelt2.webp"/>
         </a>
         <div class="row col g-0 gap-2">
             <a href="{{ site.baseurl }}/img/lrr21/roosevelt1.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/roosevelt1.webp"/>
+                <img loading="lazy" src="{{ site.baseurl }}/img/lrr21/roosevelt1.webp"/>
             </a>
             <a href="{{ site.baseurl }}/img/lrr21/roosevelt3.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/roosevelt3.webp"/>
+                <img loading="lazy" src="{{ site.baseurl }}/img/lrr21/roosevelt3.webp"/>
             </a>
         </div>
     </div>
 
     <div class="row mb-2 mx-0 g-0 gap-2">
         <a href="{{ site.baseurl }}/img/lrr21/northgate1.webp" class="col">
-            <img src="{{ site.baseurl }}/img/lrr21/northgate1.webp"/>
+            <img loading="lazy" src="{{ site.baseurl }}/img/lrr21/northgate1.webp"/>
         </a>
 
         <a href="{{ site.baseurl }}/img/lrr21/northgate2.webp" class="col">
-            <img src="{{ site.baseurl }}/img/lrr21/northgate2.webp"/>
+            <img loading="lazy" src="{{ site.baseurl }}/img/lrr21/northgate2.webp"/>
         </a>
     </div>
     </figure>
@@ -586,7 +585,7 @@ redirect_from:
             {% assign image_names = "0|1|2|3|4|5|5_2|6|7|7_2|8|9|10|11|12|12_2|13|14|14_2|15|15_2|15_3|16|16_2|16_3|17|17_2|17_3|18|18_2|18_3" | split: "|" %}
             {% for name in image_names %}
             <a href="{{ site.baseurl }}/img/lrr21/{{name}}.webp">
-                <img src="{{ site.baseurl }}/img/lrr21/{{name}}.webp"/>
+                <img loading="lazy" src="{{ site.baseurl }}/img/lrr21/{{name}}.webp"/>
             </a>
             {% endfor %}
 
@@ -734,10 +733,7 @@ redirect_from:
             columnWidth: '.grid-sizer',
             percentPosition: true
         });
-        // layout Masonry after each image loads
-        imagesLoaded(container,  function () {
-            msnry.layout()
-        });
+
 
         prepareImagesForPhotoswipe(document.querySelectorAll("#gallery a")).then(() => {
             const lightbox = new PhotoSwipeLightbox({
@@ -749,6 +745,7 @@ redirect_from:
                 pswpModule: () =>  import("photoswipe")
             });
             lightbox.init();
+            msnry.layout()
         });
         prepareImagesForPhotoswipe(document.querySelectorAll("#station-gallery a")).then(() => {
             const lightbox = new PhotoSwipeLightbox({

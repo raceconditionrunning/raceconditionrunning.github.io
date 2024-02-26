@@ -322,17 +322,24 @@ export function createLegDetailsTable(container, legsGeojson, exchangesGeoJson) 
 }
 
 export async function prepareImagesForPhotoswipe(galleryElements) {
+    // PhotoSwipe (lightbox) expects the width and height of each image to be set in the DOM. This function
+    // waits for each image to load, then sets the dimensions.
     const promisesList = [];
     galleryElements.forEach((element) => {
+        const thumbImage = element.querySelector('img')
         const promise = new Promise(function (resolve) {
-            let image = new Image();
-            image.src = element.getAttribute('href');
-            image.onload = () => {
-                element.dataset.pswpWidth = image.width;
-                element.dataset.pswpHeight = image.height;
+            // We're assuming that the thumbnail image is in fact the full-size image
+            // If that's not true and you want to force load the full image:
+            //let image = new Image();
+            //image.src = element.getAttribute('href');
+            thumbImage.onload = () => {
+                // This promise only completes when lazy load is triggered by user interaction (or no lazy attribute
+                // is used.
+                element.dataset.pswpWidth = thumbImage.width;
+                element.dataset.pswpHeight = thumbImage.height;
                 resolve(); // Resolve the promise only if the image has been loaded
             }
-            image.onerror = () => { resolve(); };
+            thumbImage.onerror = () => { resolve(); };
         });
         promisesList.push(promise);
     });

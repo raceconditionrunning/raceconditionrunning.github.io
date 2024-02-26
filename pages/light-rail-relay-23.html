@@ -34,7 +34,6 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator_bootstrap5.min.css" integrity="sha512-904y6HHQyQS2fAyIQ869rH3AAkxZeFuxo9vheji5zw+IPEyioMWN4Bt/VFhzO5edPZ9m1lwkpYgXcYcm1vzaFw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js" integrity="sha512-JRlcvSZAXT8+5SQQAvklXGJuxXTouyq8oIMaYERZQasB8SBDHZaUbeASsJWpk0UUrf89DP3/aefPPrlMR1h1yQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js" integrity="sha512-kfs3Dt9u9YcOiIt4rNcPUzdyNNO9sVGQPiZsub7ywg6lRW5KuK1m145ImrFHe3LMWXHndoKo2YRXWy8rnOcSKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script type="importmap">
@@ -968,23 +967,23 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
     <figure id="story-gallery">
         <div class="row mb-2 g-0 gap-2">
             <a href="{{ site.baseurl }}/img/lrr23/story1.avif" class="col">
-                <img src="{{ site.baseurl }}/img/lrr23/story1.avif"/>
+                <img loading="lazy" src="{{ site.baseurl }}/img/lrr23/story1.avif"/>
             </a>
 
 
             <a href="{{ site.baseurl }}/img/lrr23/story2.avif" class="col">
-                <img src="{{ site.baseurl }}/img/lrr23/story2.avif"/>
+                <img loading="lazy" src="{{ site.baseurl }}/img/lrr23/story2.avif"/>
             </a>
         </div>
 
         <div class="row mb-2 g-0 gap-2">
             <a href="{{ site.baseurl }}/img/lrr23/story3.avif" class="col">
-                <img src="{{ site.baseurl }}/img/lrr23/story3.avif"/>
+                <img loading="lazy" src="{{ site.baseurl }}/img/lrr23/story3.avif"/>
             </a>
 
 
             <a href="{{ site.baseurl }}/img/lrr23/story4.avif" class="col">
-                <img src="{{ site.baseurl }}/img/lrr23/story4.avif"/>
+                <img loading="lazy" src="{{ site.baseurl }}/img/lrr23/story4.avif"/>
             </a>
         </div>
 
@@ -1006,7 +1005,7 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
             {% assign image_names = "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18" | split: "|" %}
             {% for name in image_names %}
             <a href="{{ site.baseurl }}/img/lrr23/{{name}}.webp">
-                <img src="{{ site.baseurl }}/img/lrr23/{{name}}.webp"/>
+                <img loading="lazy" src="{{ site.baseurl }}/img/lrr23/{{name}}.webp"/>
             </a>
             {% endfor %}
 
@@ -1415,43 +1414,41 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
 
     document.addEventListener('DOMContentLoaded', e => {
-        let container = document.querySelector(".masonry")
-        let msnry = new Masonry(container, {
-            itemSelector: 'a',
-            columnWidth: '.grid-sizer',
-            percentPosition: true
-        });
-        // layout Masonry after each image loads
-        imagesLoaded(container, () => {
+        prepareImagesForPhotoswipe(document.querySelectorAll("#gallery a")).then(() => {
+            const lightbox = new PhotoSwipeLightbox({
+                gallery: '#gallery',
+                children: 'a',
+                showHideAnimationType: 'zoom',
+                showAnimationDuration: 200,
+                hideAnimationDuration: 200,
+                pswpModule: () =>  import("photoswipe")
+
+            });
+            lightbox.init();
+
+            let container = document.querySelector(".masonry")
+            let msnry = new Masonry(container, {
+                itemSelector: 'a',
+                columnWidth: '.grid-sizer',
+                percentPosition: true
+            });
             msnry.layout()
+        });
+
+        prepareImagesForPhotoswipe(document.querySelectorAll("#story-gallery a")).then(() => {
+            const lightbox = new PhotoSwipeLightbox({
+                gallery: '#story-gallery',
+                children: 'a',
+                showHideAnimationType: 'zoom',
+                showAnimationDuration: 200,
+                hideAnimationDuration: 200,
+                pswpModule: () =>  import("photoswipe")
+
+            });
+            lightbox.init();
         });
     })
 
-    prepareImagesForPhotoswipe(document.querySelectorAll("#gallery a")).then(() => {
-        const lightbox = new PhotoSwipeLightbox({
-            gallery: '#gallery',
-            children: 'a',
-            showHideAnimationType: 'zoom',
-            showAnimationDuration: 200,
-            hideAnimationDuration: 200,
-            pswpModule: () =>  import("photoswipe")
-
-        });
-        lightbox.init();
-    });
-
-    prepareImagesForPhotoswipe(document.querySelectorAll("#story-gallery a")).then(() => {
-        const lightbox = new PhotoSwipeLightbox({
-            gallery: '#story-gallery',
-            children: 'a',
-            showHideAnimationType: 'zoom',
-            showAnimationDuration: 200,
-            hideAnimationDuration: 200,
-            pswpModule: () =>  import("photoswipe")
-
-        });
-        lightbox.init();
-    });
 </script>
 
 </body>
