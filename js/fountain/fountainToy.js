@@ -53,6 +53,7 @@ export let FountainToy = rootUrl => p => {
     let startStamp
     let currentNote = 0
     let lastNoteTime = 0
+    let musicPlaying = false
     let deltaBuffer = []
     let canvas
 
@@ -111,10 +112,6 @@ export let FountainToy = rootUrl => p => {
         if ((p.mouseX - radiusPercentage * width) ** 2 + (p.mouseY - radiusPercentage * height) ** 2 > (radiusPercentage * width) ** 2) {
             return;
         }
-        if (currentNote === 5) {
-            // Music is playing
-            return;
-        }
 
         const delta = Date.now() - lastNoteTime
         if (delta > 10000) {
@@ -130,14 +127,14 @@ export let FountainToy = rootUrl => p => {
         currentNote += 1
 
 
-        if (currentNote === 4) {
+        if (currentNote === 4 && !musicPlaying) {
             // Decide whether to complete the piece
             const playingTime = deltaBuffer.reduce((a, b) => a + b, 0)
             if (1800 < playingTime && playingTime < 4000 && deltaBuffer[0] / (deltaBuffer[1] + deltaBuffer[2]) > 2.0 && (deltaBuffer[1] / deltaBuffer[2]) < 1.2) {
-                currentNote += 1
+                musicPlaying = true
                 let lastNote = sounds.play('note5', .700)
                 lastNote.addEventListener('ended', () => {
-                    currentNote = 0
+                    musicPlaying = false
                 })
             } else {
                 const delays = [0, 1800, 2000, 2200]
@@ -161,6 +158,7 @@ export let FountainToy = rootUrl => p => {
             }
             deltaBuffer = []
         }
+        currentNote = currentNote % 4
 
     }
     p.touchStarted = () => {
