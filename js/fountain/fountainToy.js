@@ -45,7 +45,6 @@ export let FountainToy = rootUrl => p => {
     let dampening = 0.99;
     let rippleShader
     let glintShader
-    let baseWaterShader
     let simRes = 1024
     let radiusPercentage = .4775
     let jetsTexture
@@ -56,6 +55,9 @@ export let FountainToy = rootUrl => p => {
     let musicPlaying = false
     let deltaBuffer = []
     let canvas
+
+    let lastMouseVel = null
+    let lastWaterContactVec = null
 
     p.preload = function () {
         rippleShader = p.loadShader(`${rootUrl}/js/fountain/ripple.vert`, `${rootUrl}/js/fountain/ripple.frag`);
@@ -99,7 +101,6 @@ export let FountainToy = rootUrl => p => {
         p.noStroke();
     }
 
-    let startX, startY
     p.mousePressed = () => {
         // Modify the shader to pass out internal values and you can debug by
         // logging them out here
@@ -161,10 +162,7 @@ export let FountainToy = rootUrl => p => {
         currentNote = currentNote % 4
 
     }
-    p.touchStarted = () => {
-        startX = p.mouseX;
-        startY = p.mouseY;
-    }
+
     p.touchEnded = () => {
     }
     p.touchMoved = () => {
@@ -178,6 +176,19 @@ export let FountainToy = rootUrl => p => {
     }
 
     p.draw = function () {
+        if (p.mouseIsPressed && p.mouseButton === p.LEFT) {
+            // Clicking and dragging should feel like dragging a finger through water, but simulation
+            // is too slow to keep up with the mouse. We slow down the water contact point movement by interpolating
+            // between the last water contact and the current mouse position
+            const currentMouseVec = new p.createVector(p.mouseX, p.mouseY)
+            const diff = lastWaterContactVec ? lastWaterContactVec.copy().sub(currentMouseVec) : new p.createVector(0, 0)
+            const newDiff = diff.limit(lastMouseVel * .8 + .2 * diff.limit(p.lerp(6,8, (p.frameRate() - 60) / 60)).mag())
+            lastMouseVel = newDiff.mag()
+            lastWaterContactVec = lastWaterContactVec ? lastWaterContactVec.sub(newDiff): currentMouseVec
+        } else {
+            lastMouseVel = 0
+            lastWaterContactVec = null
+        }
         [activeBuffer, inactiveBuffer] = [inactiveBuffer, activeBuffer]
         activeBuffer.begin()
         p.clear()
@@ -190,7 +201,11 @@ export let FountainToy = rootUrl => p => {
         rippleShader.setUniform("radius", simRes * radiusPercentage);
         // Match ripple radius to the apparent size of the fountain. Makes ripples on mobile feel right
         rippleShader.setUniform("interactionRadius", p.lerp( 0.012, .005, p.constrain((p.windowWidth - 800) / 400, 0.0, 1.0)));
-        rippleShader.setUniform("mouse", [p.mouseX / width, 1.0 - (p.mouseY / height), p.mouseIsPressed && p.mouseButton === p.LEFT])
+        if (lastWaterContactVec) {
+            rippleShader.setUniform("mouse", [lastWaterContactVec.x / width, 1.0 - (lastWaterContactVec.y / height), true])
+        } else {
+            rippleShader.setUniform("mouse", [0, 0, false])
+        }
         p.rect(0, 0, simRes, -simRes);
         activeBuffer.end()
 
