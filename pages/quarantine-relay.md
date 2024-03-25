@@ -83,7 +83,7 @@ Final details:
 <li> Weather: perfect! It drizzled a bit in the morning but the sun came out during most of the day.</li>
 <li> 
   Giant collage of handoff selfies? Check.
-  <img src="{{ site.baseurl }}/img/quarantine-relay-collage-small.png" style="max-width: 100%">
+    <masonry-image-gallery style="width:100%" base-url="{{ site.baseurl }}/img/quarantinerelay/" image-names="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21" file-extension=".webp"></masonry-image-gallery>
 </li>
 <li>
   Huge map with even more selfies? Also check.
@@ -162,3 +162,10 @@ experts agree, would do again.
 
 **R3:** Strong accept. I am an expert in this domain and will champion this
         relay by running the entire route by myself next time.
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<script type="module">
+    import { MasonryImageGallery } from "{{ site.baseurl }}/js/MasonryImageGallery.js";
+</script>
