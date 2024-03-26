@@ -234,6 +234,11 @@ redirect_from:
         width: var(--size);
     }
 
+    .diagram #orbit-offset-calc {
+        width: var(--orbit-offset);
+        height: 0;
+    }
+
     .diagram .toy-overlay {
         width: 100%;
         height: 100%;
@@ -281,6 +286,11 @@ redirect_from:
         width: var(--dot-width);
         border-radius: 50%;
         background-color: black;
+        transition: background-color 0.5s cubic-bezier(1,1,1,1);
+    }
+    .dot.lonely span {
+        background-color: var(--branding-color);
+        transition: background-color 0.5s cubic-bezier(1,1,1,1);
     }
 
     .wavy-button {
@@ -531,6 +541,8 @@ redirect_from:
     <div class="display-text">The <a href="{{ site.baseurl }}/" class="text-decoration-none">Race Condition Running</a> <h1>Drumheller&nbsp;Marathon</h1> will run June&nbsp;1st,&nbsp;2024.</div>
 
     <div class="diagram" id="hero-toy">
+        <!-- Disgusting hack to get value of calc variable in js -->
+        <div id="orbit-offset-calc"></div>
         <img src="{{ site.baseurl }}/img/dm24/jets-grad.svg" alt="" class="jets"/>
         <img src="{{ site.baseurl }}/img/dm24/basin.svg" alt="" class="toy-overlay">
         <div class="interactive toy-overlay clickable-circle"></div>
@@ -871,6 +883,48 @@ redirect_from:
         initialize()
         setupLightboxes()
     }
+</script>
+
+<script type="text/javascript">
+    setInterval(function() {
+        var ring = document.getElementsByClassName("ring")[0];
+        var dots = ring.querySelectorAll(".dot");
+
+        var offset = parseFloat(getComputedStyle(
+            document.getElementById("orbit-offset-calc"))
+            .getPropertyValue("width"));
+
+        // XXX: this might not be exactly right, this should be the radius to the center of the dots
+        var radius = parseFloat(ring.getBoundingClientRect().width) / 2.0 + offset;
+
+        var limit = 2 * radius * Math.sin(Math.PI / dots.length);
+
+        function dotIsLonely(dot) {
+            let rect = dot.getElementsByClassName("pulse")[0].getBoundingClientRect();
+
+            for (let other of dots) {
+                if (other === dot) {
+                    continue;
+                }
+                let otherRect = other.getElementsByClassName("pulse")[0].getBoundingClientRect();
+                let distance = Math.sqrt(
+                    (rect.left - otherRect.left)**2 +
+                    (rect.top - otherRect.top)**2);
+                if (distance <= limit) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        for (let dot of dots) {
+            if (dotIsLonely(dot)) {
+                dot.classList.add("lonely");
+            } else {
+                dot.classList.remove("lonely");
+            }
+        }
+    }, 200);
 </script>
 
 </body>
