@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Race Condition Running</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-t4GWSVZO1eC8BM339Xd7Uphw5s17a86tIZIj8qRxhnKub6WoyhnrxeCIMeAqBPgdZGlCcG2PrZjMc+Wr78+5Xg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel='stylesheet' type='text/css' href='{{ site.baseurl }}/css/style.css'>
 
   <!-- favicon -->
@@ -26,6 +26,21 @@
   <meta name="theme-color" content="#ffffff">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-site-verification" content="WrPqIrZlSl3HcFgqvyw3hRpeYOgaxXfyjEXTtctEJhY" />
+
+  <script type="importmap">
+    {
+      "imports": {
+        "maplibre-gl": "https://cdn.jsdelivr.net/npm/maplibre-gl@4.1.1/dist/maplibre-gl.min.js",
+        "masonry-layout": "https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js",
+        "noUiSlider": "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.mjs",
+        "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
+        "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
+        "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.1.0/js/tabulator_esm.min.js",
+        "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js",
+        "bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.esm.min.js"
+      }
+    }
+  </script>
 </head>
 <body>
 
@@ -51,7 +66,7 @@
                   <li><a class="dropdown-item" href="{{ site.baseurl }}/light-rail-relay-22/">Light Rail Relay '22</a></li>
                   <li><a class="dropdown-item" href="{{ site.baseurl }}/drumheller-half-22/">Drumheller Half '22</a></li>
                   <li><a class="dropdown-item " href="{{ site.baseurl }}/light-rail-relay-21/">Light Rail Relay '21</a></li>
-                  <li><a class="dropdown-item {% if page.url == "/quarantine-relay/" %} active{% endif %}" href="/quarantine-relay/">Quarantine Relay</a></li>
+                  <li><a class="dropdown-item {% if page.url == "{{ site.baseurl }}/quarantine-relay/" %} active{% endif %}" href="{{ site.baseurl }}/quarantine-relay/">Quarantine Relay</a></li>
               </ul>
             </li>
         </ul>
@@ -73,6 +88,6 @@
   ga('send', 'pageview');
 </script>
 {% endif %}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha256-lSABj6XYH05NydBq+1dvkMu6uiCc/MbLYOFGRkf3iQs=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>

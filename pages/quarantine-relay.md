@@ -149,7 +149,7 @@ With p < 0.5 and no chance of Type II Error, the relay was Type I fun. 10/10
 experts agree, would do again.
 
 
-![Conclusion Graph](/img/quarantine-relay-zachgraph.png){: style="max-width: 100%; margin: auto; display: block" }
+![Conclusion Graph]({{ site.baseurl }}/img/quarantine-relay-zachgraph.png){: style="max-width: 100%; margin: auto; display: block" }
 
 ---
 
