@@ -6,19 +6,19 @@
 - date: "2024-04-06"
   plan:
     - time: "9:00"
-      route_id: northgate-resevoir-roosevelt
-    - time: "9:45"
-      route_id: roosevelt-green-lake-rose-gardens
+      route_id: sodo-alki-beach-ob
 
 - date: "2024-04-13"
   plan:
     - time: "9:00"
-      route_id: sodo-alki-beach-ob
+      route_id: northgate-resevoir-roosevelt
+    - time: "9:45"
+      route_id: roosevelt-green-lake-rose-gardens
 
 - date: "2024-04-20"
   plan:
     - time: "9:00"
-      route_id: northgate-echo-lake-ob
+      route_id: beacon-i90-luther-burbank-ob
 
 - date: "2024-04-27"
   plan:
@@ -26,6 +26,21 @@
       route:
         name: Eastlink Starter Line
         dist: 6.6
+
+- date: "2024-05-04"
+  plan:
+    - time: "9:00"
+      route_id: northgate-echo-lake-ob
+
+- date: "2024-05-18"
+  plan:
+    - time: "9:00"
+      route_id: westlake-sculpture-smith-cove-ob
+
+- date: "2024-05-25"
+  plan:
+    - time: "9:00"
+      route_id: lake-union-loop
 
 - date: "2024-06-01"
   plan:

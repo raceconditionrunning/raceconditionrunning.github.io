@@ -552,4 +552,12 @@
   dist: 6.4
   map: https://onthegomap.com/s/4oft807m
 
+- id: westlake-sculpture-smith-cove-ob
+  name: "OB: Westlake, Sculpture Park, Smith Cove"
+  dist: 9.26
+  map: https://onthegomap.com/s/rm6intki
 
+- id: beacon-i90-luther-burbank-ob
+  name: "OB: Beacon, I90, Luther Burbank"
+  dist: 13.1
+  map: https://onthegomap.com/s/4kn8h5of
