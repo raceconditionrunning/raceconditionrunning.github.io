@@ -50,7 +50,7 @@ export let FountainToy = rootUrl => p => {
     let jetsTexture
     let sounds
     let startStamp
-    let currentNote = 0
+    let noteIndex = 0
     let lastNoteTime = 0
     let musicPlaying = false
     let deltaBuffer = []
@@ -117,18 +117,26 @@ export let FountainToy = rootUrl => p => {
         const delta = Date.now() - lastNoteTime
         if (delta > 10000) {
             // probably scrolled away and came back. Always "begin" on interaction
-            currentNote = 0
+            noteIndex = 0
         }
-        sounds.play(`note${currentNote + 1}`)
-        if (currentNote > 0) {
-
+        let noteToPlay = noteIndex
+        if (noteIndex > 3) {
+            // Up the scale
+            sounds.play(`note${-noteIndex + 6 + 1}`)
+        } else {
+            // Down
+            sounds.play(`note${noteToPlay + 1}`)
+        }
+        // Only check on up
+        if (0 < noteIndex && noteIndex < 4) {
             deltaBuffer.push(delta)
+        } else {
+            deltaBuffer = []
         }
         lastNoteTime = Date.now()
-        currentNote += 1
+        noteIndex += 1
 
-
-        if (currentNote === 4 && !musicPlaying) {
+        if (noteIndex === 4 && !musicPlaying) {
             // Decide whether to complete the piece
             const playingTime = deltaBuffer.reduce((a, b) => a + b, 0)
             if (1800 < playingTime && playingTime < 4000 && deltaBuffer[0] / (deltaBuffer[1] + deltaBuffer[2]) > 2.0 && (deltaBuffer[1] / deltaBuffer[2]) < 1.2) {
@@ -159,7 +167,7 @@ export let FountainToy = rootUrl => p => {
             }
             deltaBuffer = []
         }
-        currentNote = currentNote % 4
+        noteIndex = noteIndex % 6
 
     }
 
