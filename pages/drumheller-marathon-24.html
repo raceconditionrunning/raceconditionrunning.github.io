@@ -576,16 +576,10 @@ redirect_from:
     <div id="faq" class="container">
         <h2>FAQ <a href="#faq" class="anchor-link" aria-label="Link to this section. FAQ"></a></h2>
 
-        <div id="faq-accordion" class="accordion">
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingFive">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqFive" aria-expanded="false" aria-controls="faqFive">Do I have to run the whole thing?
-                    </button>
-                </h3>
-                <div id="faqFive" class="accordion-collapse collapse" aria-labelledby="faq-headingFive"
-                     data-bs-parent="#faq-accordion">
-                    <div class="accordion-body">
+        <accordion-group id="faq-accordion">
+            <accordion-item>
+                <accordion-header>Do I have to run the whole thing?</accordion-header>
+                <accordion-body>
                         No. Anyone running or walking fewer than 110 laps is welcome to join the half marathon. Here are some lap counts for common distances. Add a lap if not starting at the official start line.
                         <table class="table table-sm ms-2 mt-2 mb-4">
                             <thead><tr><th scope="col">Distance</th><th scope="col">Laps</th></tr></thead>
@@ -597,83 +591,49 @@ redirect_from:
                         </table>
 
                         <p>Excepting pacers, <i>full marathon</i> participants must intend to complete the full distance.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqTwo" aria-expanded="false" aria-controls="faqTwo">How fast do I need to run?
-                    </button>
-                </h3>
-                <div id="faqTwo" class="accordion-collapse collapse" aria-labelledby="faq-headingTwo"
-                     data-bs-parent="#faq-accordion">
-                    <div class="accordion-body">The cutoff times and corresponding average paces are:
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>How fast do I need to run?</accordion-header>
+                <accordion-body>The cutoff times and corresponding average paces are:
                     <table class="table table-sm ms-2 mt-2 mb-4">
                         <thead><tr><th>Distance</th><th>Time</th><th>Pace/mi</th> <th>Pace/km</th></tr></thead>
                         <tbody>
                         <tr><td>Marathon</td> <td>4:30:00</td> <td>10:18</td> <td>6:24</td></tr>
                         <tr><td>Half Marathon</td> <td>2:30:00</td> <td>11:27</td> <td>7:07</td></tr>
                         </tbody>
-                    </table></div>
-                </div>
-            </div>
+                    </table>
+                </accordion-body>
+            </accordion-item>
 
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqThree" aria-expanded="false" aria-controls="faqThree">How do we keep track of distance?
-                    </button>
-                </h3>
-                <div id="faqThree" class="accordion-collapse collapse" aria-labelledby="faq-headingThree"
-                     data-bs-parent="#faq-accordion">
-                    <div class="accordion-body">Use a running watch to mark laps if you're wearing one, though you should check that it is capable of handling 100+ laps. GPS will clip the curve, so don't rely on it for more than a couple
+            <accordion-item>
+                <accordion-header>How do we keep track of distance?</accordion-header>
+                <accordion-body>Use a running watch to mark laps if you're wearing one, though you should check that it is capable of handling 100+ laps. GPS will clip the curve, so don't rely on it for more than a couple
                         laps at a
                         time.
                         We'll have <a href="https://en.wikipedia.org/wiki/Tally_counter">tally counters</a> available if
                         you
                         prefer an analog counting aide. Counting without assistance is not recommended.
-                    </div>
-                </div>
-            </div>
+                </accordion-body>
+            </accordion-item>
 
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingFour">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqFour" aria-expanded="false" aria-controls="faqFour">Which direction do we run?
-                    </button>
-                </h3>
-                <div id="faqFour" class="accordion-collapse collapse" aria-labelledby="faq-headingFour"
-                     data-bs-parent="#faq-accordion">
-                    <div class="accordion-body">
+            <accordion-item>
+                <accordion-header>Which direction do we run?</accordion-header>
+                <accordion-body>
                         The race will begin counterclockwise and alternate directions every 20 minutes to help balance the strain across your legs. Having the field run a single direction at a time will help us manage course congestion. Change directions only at the end of a lap and only by rounding the finish line marker.
-                    </div>
-                </div>
-            </div>
+                </accordion-body>
+            </accordion-item>
 
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingSeven">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqSeven" aria-expanded="false" aria-controls="faqSeven">How is the event being timed?
-                    </button>
-                </h3>
-                <div id="faqSeven" class="accordion-collapse collapse" aria-labelledby="faq-headingSeven"
-                     data-bs-parent="#faq-accordion">
-                    <div class="accordion-body">
+            <accordion-item>
+                <accordion-header>How is the event being timed?</accordion-header>
+                <accordion-body>
                         Video will be recorded and lap times will be marked. It is critical that you run at least the required number of laps to ensure we can provide you an official time.
-                    </div>
-                </div>
-            </div>
+                </accordion-body>
+            </accordion-item>
 
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingEight">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqEight" aria-expanded="false" aria-controls="faqEight">Why do I have to apply for the marathon?
-                    </button>
-                </h3>
-                <div id="faqEight" class="accordion-collapse collapse" aria-labelledby="faq-headingEight"
-                     data-bs-parent="#faq-accordion">
-                    <div class="accordion-body">
+            <accordion-item>
+                <accordion-header>Why do I have to apply for the marathon?</accordion-header>
+                <accordion-body>
                         We can't guarantee spots until we know the overall makeup of the field. Here are some of the things we're taking into account:
                         <ol>
                             <li>We will only host the marathon distance if there are at least 3 registered participants who will start the race. <b>As of March 1st, the minimum field size is met.</b></li>
@@ -682,113 +642,63 @@ redirect_from:
                             <li>We will not accept more runners than can have a good experience on our small course. If we need to be selective, we will judge based on evidence of preparedness in the form of prior race results and of commitment in the form of reasonable plans.</li>
                         </ol>
                         Our goal is to confirm all applications by April 6th. We may close applications before then if the field fills.
-                    </div>
-                </div>
-            </div>
+                </accordion-body>
+            </accordion-item>
 
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingEleven">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqEleven" aria-expanded="false" aria-controls="faqEleven">Is it okay if I've never run a full marathon before?
-                    </button>
-                </h3>
-                <div id="faqEleven" class="accordion-collapse collapse" aria-labelledby="faq-headingEleven"
-                     data-bs-parent="#faq-accordion">
-                    <div class="accordion-body">
+            <accordion-item>
+                <accordion-header>Is it okay if I've never run a full marathon before?</accordion-header>
+                <accordion-body>
                         Maybe. The answer will depend on your background, so please discuss with the organizers first if you would like to plan on Drumheller being your first marathon. As a rule of thumb, if you have not yet successfully completed a half marathon, you will have a better time doing that instead.
-                    </div>
-                </div>
-            </div>
 
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingNine">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqNine" aria-expanded="false" aria-controls="faqNine">Are pacers allowed?
-                    </button>
-                </h3>
-                <div id="faqNine" class="accordion-collapse collapse" aria-labelledby="faq-headingNine"
-                     data-bs-parent="#faq-accordion">
-                    <div class="accordion-body">
+                </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>Are pacers allowed?</accordion-header>
+                <accordion-body>
                         Yes. Runners intending to use pacers must submit a pacing plan with their application. Pacers can register after approval. Unlike most road races, we expect to be able to support rotating/non-starting pacers, however official times will only be given to participants who run the complete course.
-                    </div>
-                </div>
-            </div>
+                    </accordion-body>
+            </accordion-item>
 
 
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingTen">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqTen" aria-expanded="false" aria-controls="faqTen">Can I take breaks?
-                    </button>
-                </h3>
-                <div id="faqTen" class="accordion-collapse collapse" aria-labelledby="faq-headingTen"
-                     data-bs-parent="#faq-accordion">
-                    <div class="accordion-body">
+            <accordion-item>
+                <accordion-header>Can I take breaks?</accordion-header>
+                <accordion-body>
                         Yes. In addition to the aid station there are benches surrounding the course. You must continue running the lap in the same direction as when you stopped or the lap will not count. To remove this possibility, we recommend you start and stop only on at the lap finish line so you can begin the next lap in either direction.
-                    </div>
-                </div>
-            </div>
+                    </accordion-body>
+            </accordion-item>
 
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingSix">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqSix" aria-expanded="false" aria-controls="faqSix">Is this a Boston Qualifying race?
-                    </button>
-                </h3>
-                <div id="faqSix" class="accordion-collapse collapse" aria-labelledby="faq-headingSix"
-                     data-bs-parent="#faq-accordion">
-                    <div class="accordion-body">
+            <accordion-item>
+                <accordion-header>Is this a Boston Qualifying race?</accordion-header>
+                <accordion-body>
                         Yes, the full marathon will meet the B.A.A. criteria for a qualifying race (see <a href="https://www.baa.org/sites/default/files/2021-08/Boston_Marathon_Rules_and_Policies_08_2021.pdf">Rules and Policies</a> pp.5-6 &sect;2.2.1).
-                    </div>
-                </div>
-            </div>
+                    </accordion-body>
+            </accordion-item>
 
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingThirteen">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqThirteen" aria-expanded="false" aria-controls="faqThirteen">Isn't running a continuous curve going to slow me down?
-                    </button>
-                </h3>
-                <div id="faqThirteen" class="accordion-collapse collapse" aria-labelledby="faq-headingThirteen"
-                     data-bs-parent="#faq-accordion">
-                    <div class="accordion-body">
+            <accordion-item>
+                <accordion-header>Isn't running a continuous curve going to slow me down?</accordion-header>
+                <accordion-body>
                         Yes, but not substantially. You will need to supply an additional centripetal force due to the curve, but the effect of this is <a
                             href="https://blog.stryd.com/2020/01/09/how-much-time-do-you-lose-due-to-curves-and-turns/">likely less than 1% when running at world record marathon pace on a 30m radius</a>. Because the force increases in the square of velocity, the effect is negligible for recreational runners. There are individual differences in running technique and physiology that may make the effect more or less pronounced for you. Consider practicing on the course or a track.
-                    </div>
-                </div>
-            </div>
+                    </accordion-body>
+            </accordion-item>
 
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingFourteen">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqFourteen" aria-expanded="false" aria-controls="faqFourteen">Will running a continuous curve for dozens of laps injure me?
-                    </button>
-                </h3>
-                <div id="faqFourteen" class="accordion-collapse collapse" aria-labelledby="faq-headingFourteen"
-                     data-bs-parent="#faq-accordion">
-                    <div class="accordion-body">
+            <accordion-item>
+                <accordion-header>Will running a continuous curve for dozens of laps injure me?</accordion-header>
+                <accordion-body>
                         <p>Unlikely. Many athletes train and race on smaller radius tracks without issue during indoor track season. There <i>is</i> <a href="https://doi.org/10.1097/00042752-200010000-00004">evidence</a> that consistently running the same direction on small indoor tracks over time leads to strength asymmetries which likely cause injuries. Alternating directions introduces rest and is probably sufficient to avoid acute issues for most runners.</p>
 
                         <p>You may also take comfort from knowing that <a href="https://www.outsideonline.com/running/inside-bizarre-world-indoor-marathons/">indoor track marathons have been held for years without event</a>.</p>
-                    </div>
-                </div>
-            </div>
+                    </accordion-body>
+            </accordion-item>
 
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="faq-headingTwelve">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#faqTwelve" aria-expanded="true" aria-controls="faqTwelve">What if I'm
-                        late?
-                    </button>
-                </h3>
-                <div id="faqTwelve" class="accordion-collapse collapse" aria-labelledby="faq-headingTwelve"
-                     data-bs-parent="#faq-accordion">
+            <accordion-item>
+                <accordion-header>What if I'm late?</accordion-header>
+                <accordion-body>Run from the start line and join us! You must enter the course from "behind" the finish line in the direction that the field is running at the time you join. So, if we're running counterclockwise, start your first loop by crossing over the finish line from the east, and otherwise from the west. Note that this event is <a href="https://www.runnersworld.com/training/a20793329/chip-time-vs-gun-time/">gun time</a> only.
 
-                    <div class="accordion-body">Run from the start line and join us! You must enter the course from "behind" the finish line in the direction that the field is running at the time you join. So, if we're running counterclockwise, start your first loop by crossing over the finish line from the east, and otherwise from the west. Note that this event is <a href="https://www.runnersworld.com/training/a20793329/chip-time-vs-gun-time/">gun time</a> only.
-                    </div>
-                </div>
-            </div>
-        </div>
+                </accordion-body>
+            </accordion-item>
+        </accordion-group>
     </div>
 </section>
 
@@ -839,6 +749,7 @@ redirect_from:
     import {prepareImagesForPhotoswipe} from "{{site.baseurl}}/js/common.js";
     import PhotoSwipeLightbox from 'photoswipe-lightbox';
     import PhotoSwipeDynamicCaption from 'photoswipe-dynamic-caption';
+    import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
     function initialize() {
         new p5(FountainToy("{{site.baseurl}}"), document.querySelector("#hero-toy .interactive"));
     }
