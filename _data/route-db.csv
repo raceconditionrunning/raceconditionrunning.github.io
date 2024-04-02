@@ -1,19 +1,19 @@
-id,name,dist,elev,start,end,type,map
-locks-discovery-salmon-bay-loop,"Locks, Discovery Park, Salmon Bay Loop",8.1,890,Locks,Locks,Loop,https://onthegomap.com/s/uop4tt1d
-sodo-luna-pier-ob,"OB: SODO, Luna Pier",9.2,320,SODO,SODO,OB,https://onthegomap.com/s/cm9vrvku
-northgate-carkeek-roosevelt,"Northgate, Carkeek, Roosevelt",8.2,750,Northgate,Roosevelt,P2P,https://onthegomap.com/s/i52u05p8
-cap-hill-i90-ob,"OB: Cap Hill, I90 Bridge",10.7,1220,CapHill,CapHill,OB,https://onthegomap.com/s/6qcstgh2
-cse-lwb-cc,"CSE, LWB, Columbia City",8.8,650,CSE,ColCity,P2P,https://onthegomap.com/s/k3pikua1
-cse-520-wetherill-ob,"OB: CSE, 520, Wetherill Preserve",9.8,710,CSE,CSE,OB,https://onthegomap.com/s/jssjhikb
-cap-hill-volunteer-park-westlake,"Cap Hill, Volunteer Park, Westlake",4.0,279,CapHill,Westlake,P2P,https://onthegomap.com/s/b9i31iru
-westlake-sculpture-park-ob,"OB: Westlake, Sculpture Park",5.1,253,Westlake,Westlake,OB,https://onthegomap.com/s/nfe3jmv0
-gas-works-kotkins-pier-salmon-bay,"Gas Works, Kotkins Pier, Salmon Bay Loop",10.2,320,GasWorks,GasWorks,Loop,https://onthegomap.com/s/oufhpc2l
-cse-jays-cafe,CSE to Jay's Cafe,11.2,410,CSE,JaysCafe,P2P,https://onthegomap.com/s/9au7h17i
-westlake-sculpture-interbay-queen-anne,"Westlake, Sculpture Park, Interbay, Queen Anne Loop",10.2,840,Westlake,Westlake,Loop,https://onthegomap.com/s/pmmqj3t5
-sodo-alki-beach-ob,"OB: SODO, Alki Beach",12.0,370,SODO,SODO,OB,https://onthegomap.com/s/8seoc603
-northgate-echo-lake-ob,"OB: Northgate, Interurban Trail, Echo Lake",12.4,580,Northgate,Northgate,OB,https://onthegomap.com/s/mqvelf8h
-roosevelt-green-lake-rose-gardens,"Roosevelt, Green Lake, Rose Gardens",6.4,400,Roosevelt,Roosevelt,Loop,https://onthegomap.com/s/4oft807m
-northgate-resevoirs-roosevelt,"Northgate, Resevoirs, Green Lake",4.1,600,Northgate,Roosevelt,P2P,https://onthegomap.com/s/2tmbpess
-gas-works-lake-union-loop,"Gas Works, Lake Union Loop",6.3,303,GasWorks,GasWorks,Loop,https://onthegomap.com/s/oepno6ud
-westlake-sculpture-smith-cove-ob,"OB: Westlake, Sculpture Park, Smith Cove",9.3,410,Westlake,Westlake,OB,https://onthegomap.com/s/rm6intki
-beacon-i90-luther-burbank-ob,"OB: Beacon, I90, Luther Burbank",13.1,1470,Beacon,Beacon,OB,https://onthegomap.com/s/4kn8h5of
+id,name,start,dist,elev,end,type,map
+beacon-i90-luther-burbank-ob,"OB: Beacon, I90, Luther Burbank",Beacon,13.1,1470,Beacon,OB,https://onthegomap.com/s/4kn8h5of
+cse-jays-cafe,CSE to Jay's Cafe,CSE,11.2,410,JaysCafe,P2P,https://onthegomap.com/s/9au7h17i
+cse-lwb-cc,"CSE, LWB, Columbia City",CSE,8.8,650,ColCity,P2P,https://onthegomap.com/s/k3pikua1
+cse-520-wetherill-ob,"OB: CSE, 520, Wetherill Preserve",CSE,9.8,710,CSE,OB,https://onthegomap.com/s/jssjhikb
+cap-hill-i90-ob,"OB: Cap Hill, I90 Bridge",CapHill,10.7,1220,CapHill,OB,https://onthegomap.com/s/6qcstgh2
+cap-hill-volunteer-park-westlake,"Cap Hill, Volunteer Park, Westlake",CapHill,4.0,279,Westlake,P2P,https://onthegomap.com/s/b9i31iru
+gas-works-kotkins-pier-salmon-bay,"Gas Works, Kotkins Pier, Salmon Bay Loop",GasWorks,10.2,320,GasWorks,Loop,https://onthegomap.com/s/oufhpc2l
+gas-works-lake-union-loop,"Gas Works, Lake Union Loop",GasWorks,6.3,303,GasWorks,Loop,https://onthegomap.com/s/oepno6ud
+locks-discovery-salmon-bay-loop,"Locks, Discovery Park, Salmon Bay Loop",Locks,8.1,890,Locks,Loop,https://onthegomap.com/s/uop4tt1d
+northgate-echo-lake-ob,"OB: Northgate, Interurban Trail, Echo Lake",Northgate,12.4,580,Northgate,OB,https://onthegomap.com/s/mqvelf8h
+northgate-resevoirs-roosevelt,"Northgate, Resevoirs, Green Lake",Northgate,4.1,600,Roosevelt,P2P,https://onthegomap.com/s/2tmbpess
+northgate-carkeek-roosevelt,"Northgate, Carkeek, Roosevelt",Northgate,8.2,750,Roosevelt,P2P,https://onthegomap.com/s/i52u05p8
+roosevelt-green-lake-rose-gardens,"Roosevelt, Green Lake, Rose Gardens",Roosevelt,6.4,400,Roosevelt,Loop,https://onthegomap.com/s/4oft807m
+sodo-alki-beach-ob,"OB: SODO, Alki Beach",SODO,12.0,370,SODO,OB,https://onthegomap.com/s/8seoc603
+sodo-luna-pier-ob,"OB: SODO, Luna Pier",SODO,9.2,320,SODO,OB,https://onthegomap.com/s/cm9vrvku
+westlake-sculpture-interbay-queen-anne,"Westlake, Sculpture Park, Interbay, Queen Anne Loop",Westlake,10.2,840,Westlake,Loop,https://onthegomap.com/s/pmmqj3t5
+westlake-sculpture-park-ob,"OB: Westlake, Sculpture Park",Westlake,5.1,253,Westlake,OB,https://onthegomap.com/s/nfe3jmv0
+westlake-sculpture-smith-cove-ob,"OB: Westlake, Sculpture Park, Smith Cove",Westlake,9.3,410,Westlake,OB,https://onthegomap.com/s/rm6intki
