@@ -62,7 +62,7 @@ def check_route(route):
     gpx_path = os.path.join(gpx_dir, route['id']) + '.gpx'
     if not os.path.isfile(gpx_path):
         warn_rc(route, f"no GPX file at '{gpx_path}'")
-        
+
 # MAIN
 
 # read routes
