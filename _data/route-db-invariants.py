@@ -33,35 +33,35 @@ def warn_rc(route, msg):
     warn(f"route {route['id']}: {msg}")
 
 def check_route(route):
-    # all fields are set
+    # all fields set
     for field in FIELDS:
-        if field not in route: # TODO need to see if blank!
-            warn_rc(route, f"no field {field}")
+        if field not in route or route[field].strip() == '':
+            warn_rc(route, f"missing '{field}' field")
 
-    # type is valid
+    # valid type
     if route['type'] not in TYPES:
-        warn_rc(route, f"invalid type {route['type']}")
+        warn_rc(route, f"invalid type '{route['type']}'")
 
-    # start and end locations are valid
+    # valid start and end locations
     if route['start'] not in LOCS:
-        warn_rc(route, f"invalid start {route['start']}")
+        warn_rc(route, f"invalid start '{route['start']}'")
     if route['end'] not in LOCS:
-        warn_rc(route, f"invalid end {route['end']}")
+        warn_rc(route, f"invalid end '{route['end']}'")
 
-    # dist and elev are numbers
+    # valid dist and elev
     try:
-        float(route['dist'])
-    except ValueError:
-        warn_rc(route, f"invalid dist {route['dist']}")
+        assert 0 < float(route['dist'])
+    except:
+        warn_rc(route, f"invalid dist '{route['dist']}'")
     try:
-        float(route['elev'])
-    except ValueError:
-        warn_rc(route, f"invalid elev {route['elev']}")
+        assert 0 < float(route['elev'])
+    except:
+        warn_rc(route, f"invalid elev '{route['elev']}'")
 
     # every route has a gpx
     gpx_path = os.path.join(gpx_dir, route['id']) + '.gpx'
     if not os.path.isfile(gpx_path):
-        warn_rc(route, f"no GPX file at {gpx_path}")
+        warn_rc(route, f"no GPX file at '{gpx_path}'")
         
 # MAIN
 
