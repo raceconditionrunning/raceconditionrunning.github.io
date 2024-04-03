@@ -3,33 +3,90 @@ import os
 
 FIELDS = ['id', 'name', 'dist', 'elev', 'start', 'end', 'type', 'map']
 TYPES = ['Loop', 'P2P', 'OB']
+LOCS = [
+    'Beacon',
+    'CapHill',
+    'ColCity',
+    'CSE',
+    'GasWorks',
+    'JaysCafe',
+    'Locks',
+    'MtBaker',
+    'Northgate',
+    'Roosevelt',
+    'SODO',
+    'Westlake'
+]
 
 # route-db.csv lives in the same directory as this script
 data_dir = os.path.dirname(os.path.realpath(__file__))
 csv_path = os.path.join(data_dir, 'route-db.csv')
 gpx_dir = os.path.join(data_dir, 'gpx')
 
+warnings = False
+def warn(msg):
+    global warnings
+    warnings = True
+    print(f"WARNING! {msg}")
+
+def warn_rc(route, msg):
+    warn(f"route {route['id']}: {msg}")
+
+def check_route(route):
+    # all fields are set
+    for field in FIELDS:
+        if field not in route: # TODO need to see if blank!
+            warn_rc(route, f"no field {field}")
+
+    # type is valid
+    if route['type'] not in TYPES:
+        warn_rc(route, f"invalid type {route['type']}")
+
+    # start and end locations are valid
+    if route['start'] not in LOCS:
+        warn_rc(route, f"invalid start {route['start']}")
+    if route['end'] not in LOCS:
+        warn_rc(route, f"invalid end {route['end']}")
+
+    # dist and elev are numbers
+    try:
+        float(route['dist'])
+    except ValueError:
+        warn_rc(route, f"invalid dist {route['dist']}")
+    try:
+        float(route['elev'])
+    except ValueError:
+        warn_rc(route, f"invalid elev {route['elev']}")
+
+    # every route has a gpx
+    gpx_path = os.path.join(gpx_dir, route['id']) + '.gpx'
+    if not os.path.isfile(gpx_path):
+        warn_rc(route, f"no GPX file at {gpx_path}")
+        
+# MAIN
+
 # read routes
 with open(csv_path, 'r') as f:
     reader = csv.DictReader(f)
     routes = list(reader)
 
-# ensure all fields set for all routes
+# ensure all route ids unique
+ids = set()
 for route in routes:
-    for field in FIELDS:
-        if field not in route:
-            print(f"WARNING: route {route['id']} has no field {field}")
-    if route['type'] not in TYPES:
-        print(f"WARNING: route {route['id']} has invalid type {route['type']}")
+    if route['id'] in ids:
+        warn(f"route {route['id']} is not unique")
+    ids.add(route['id'])
 
-# ensure every route has a gpx
+# check every route
 for route in routes:
-    gpx_path = os.path.join(gpx_dir, route['id']) + '.gpx'
-    if not os.path.isfile(gpx_path):
-        print(f"WARNING: route {route['id']} has no GPX file at {gpx_path}")
+    check_route(route)
 
-# sort routes
-routes.sort(key=lambda x: (x['start'], x['dist'], x['end'], x['type'], x['id']))
+# bail if any warnings
+if warnings:
+    exit(1)
+
+# sort routes by start and increasing distance
+routes.sort(key=lambda x: (x['start'], float(x['dist']), x['end'], x['type'], x['id']))
 
 # write sorted routes back
 with open(csv_path, 'w') as f:
