@@ -67,7 +67,7 @@ def check_route(route):
 
 # read routes
 with open(csv_path, 'r') as f:
-    reader = csv.DictReader(f)
+    reader = csv.DictReader(f, dialect='unix')
     routes = list(reader)
 
 # ensure all route ids unique
@@ -90,7 +90,7 @@ routes.sort(key=lambda x: (x['start'], float(x['dist']), x['end'], x['type'], x[
 
 # write sorted routes back
 with open(csv_path, 'w') as f:
-    writer = csv.DictWriter(f, fieldnames=reader.fieldnames)
+    writer = csv.DictWriter(f, fieldnames=reader.fieldnames, dialect='unix')
     writer.writeheader()
     for route in routes:
         writer.writerow(route)

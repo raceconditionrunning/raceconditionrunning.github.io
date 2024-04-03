@@ -1,32 +1,32 @@
-id,name,start,dist,elev,end,type,map
-beacon-i90-trail-cap-hill,"Beacon Hill, I90 Trail, Cap Hill",Beacon,4.8,530,CapHill,P2P,https://onthegomap.com/s/8jo5uqcm
-beacon-i90-bridge-cap-hill,"Beacon Hill, I90 Bridge, Cap Hill",Beacon,10.1,1190,CapHill,P2P,https://onthegomap.com/s/kps8bd3u
-beacon-i90-luther-burbank-ob,"OB: Beacon, I90, Luther Burbank",Beacon,13.1,1470,Beacon,OB,https://onthegomap.com/s/4kn8h5of
-cse-lwb-cc,"CSE, LWB, Columbia City",CSE,8.8,650,ColCity,P2P,https://onthegomap.com/s/k3pikua1
-cse-520-wetherill-ob,"OB: CSE, 520, Wetherill Preserve",CSE,9.8,710,CSE,OB,https://onthegomap.com/s/jssjhikb
-cse-jays-cafe,CSE to Jay's Cafe,CSE,11.2,410,JaysCafe,P2P,https://onthegomap.com/s/9au7h17i
-cap-hill-volunteer-park-westlake,"Cap Hill, Volunteer Park, Westlake",CapHill,4.0,279,Westlake,P2P,https://onthegomap.com/s/b9i31iru
-cap-hill-i90-ob,"OB: Cap Hill, I90 Bridge",CapHill,10.7,1220,CapHill,OB,https://onthegomap.com/s/6qcstgh2
-cc-chief-sealth-cc-center,"Columbia City, Chief Sealth, CC Center Loop",ColCity,3.0,342,ColCity,Loop,https://onthegomap.com/s/4g3uoh3d
-cc-genessee-lwb-north-ob,"OB: Columbia City, Genessee Park, LWB North",ColCity,5.7,283,ColCity,OB,https://onthegomap.com/s/cnnrmgo2
-cc-genessee-lwb-south-ob,"OB: Columbia City, Genessee Park, LWB South",ColCity,6.8,327,ColCity,OB,https://onthegomap.com/s/gm7lr79r
-cc-genessee-lwb-seward-loop-ob,"OB: Columbia City, Genessee Park, Seward Loop",ColCity,9.2,440,ColCity,OB,https://onthegomap.com/s/9shfec5e
-gas-works-lake-union-loop,"Gas Works, Lake Union Loop",GasWorks,6.3,303,GasWorks,Loop,https://onthegomap.com/s/oepno6ud
-gas-works-locks-salmon-bay,"Gas Works, Locks, Salmon Bay Loop",GasWorks,8.0,250,GasWorks,Loop,https://onthegomap.com/s/4fpqkgfr
-gas-works-kotkins-pier-salmon-bay,"Gas Works, Kotkins Pier, Salmon Bay Loop",GasWorks,10.2,320,GasWorks,Loop,https://onthegomap.com/s/oufhpc2l
-locks-discovery-salmon-bay-loop,"Locks, Discovery Park, Salmon Bay Loop",Locks,8.1,890,Locks,Loop,https://onthegomap.com/s/uop4tt1d
-mb-lwb-cc,"Mount Bake, LWB, Columbia City",MtBaker,3.3,261,ColCity,P2P,https://onthegomap.com/s/3i1cco56
-northgate-resevoirs-roosevelt,"Northgate, Resevoirs, Green Lake",Northgate,4.1,600,Roosevelt,P2P,https://onthegomap.com/s/2tmbpess
-northgate-carkeek-ob,"OB: Northgate, Carkeek",Northgate,6.4,720,Northgate,OB,https://onthegomap.com/s/k15n5ruq
-northgate-bitter-lake-ob,"OB: Northgate, Interurban Trail, Bitter Lake",Northgate,7.0,520,Northgate,OB,https://onthegomap.com/s/t5v1dtdu
-northgate-carkeek-roosevelt,"Northgate, Carkeek, Roosevelt",Northgate,8.2,750,Roosevelt,P2P,https://onthegomap.com/s/i52u05p8
-northgate-echo-lake-ob,"OB: Northgate, Interurban Trail, Echo Lake",Northgate,12.4,580,Northgate,OB,https://onthegomap.com/s/mqvelf8h
-roosevelt-greenlake-loop,"Roosevelt, Green Lake Loop",Roosevelt,4.3,152,Roosevelt,Loop,https://onthegomap.com/s/dl3ne2h5
-roosevelt-green-lake-rose-gardens,"Roosevelt, Green Lake, Rose Gardens",Roosevelt,6.4,400,Roosevelt,Loop,https://onthegomap.com/s/4oft807m
-sodo-duwamish-trail-1st-ave,"SODO, Duwamish Trail, 1st Ave",SODO,7.9,172,SODO,Loop,https://onthegomap.com/s/9olfocio
-sodo-jack-block-ob,"OB: SODO, Jack Block Park",SODO,8.3,410,SODO,OB,https://onthegomap.com/s/1k1cibr8
-sodo-luna-pier-ob,"OB: SODO, Luna Pier",SODO,9.2,320,SODO,OB,https://onthegomap.com/s/cm9vrvku
-sodo-alki-beach-ob,"OB: SODO, Alki Beach",SODO,12.0,370,SODO,OB,https://onthegomap.com/s/8seoc603
-westlake-sculpture-park-ob,"OB: Westlake, Sculpture Park",Westlake,5.1,253,Westlake,OB,https://onthegomap.com/s/nfe3jmv0
-westlake-sculpture-smith-cove-ob,"OB: Westlake, Sculpture Park, Smith Cove",Westlake,9.3,410,Westlake,OB,https://onthegomap.com/s/rm6intki
-westlake-sculpture-interbay-queen-anne,"Westlake, Sculpture Park, Interbay, Queen Anne Loop",Westlake,10.2,840,Westlake,Loop,https://onthegomap.com/s/pmmqj3t5
+"id","name","start","dist","elev","end","type","map"
+"beacon-i90-trail-cap-hill","Beacon Hill, I90 Trail, Cap Hill","Beacon","4.8","530","CapHill","P2P","https://onthegomap.com/s/8jo5uqcm"
+"beacon-i90-bridge-cap-hill","Beacon Hill, I90 Bridge, Cap Hill","Beacon","10.1","1190","CapHill","P2P","https://onthegomap.com/s/kps8bd3u"
+"beacon-i90-luther-burbank-ob","OB: Beacon, I90, Luther Burbank","Beacon","13.1","1470","Beacon","OB","https://onthegomap.com/s/4kn8h5of"
+"cse-lwb-cc","CSE, LWB, Columbia City","CSE","8.8","650","ColCity","P2P","https://onthegomap.com/s/k3pikua1"
+"cse-520-wetherill-ob","OB: CSE, 520, Wetherill Preserve","CSE","9.8","710","CSE","OB","https://onthegomap.com/s/jssjhikb"
+"cse-jays-cafe","CSE to Jay's Cafe","CSE","11.2","410","JaysCafe","P2P","https://onthegomap.com/s/9au7h17i"
+"cap-hill-volunteer-park-westlake","Cap Hill, Volunteer Park, Westlake","CapHill","4.0","279","Westlake","P2P","https://onthegomap.com/s/b9i31iru"
+"cap-hill-i90-ob","OB: Cap Hill, I90 Bridge","CapHill","10.7","1220","CapHill","OB","https://onthegomap.com/s/6qcstgh2"
+"cc-chief-sealth-cc-center","Columbia City, Chief Sealth, CC Center Loop","ColCity","3.0","342","ColCity","Loop","https://onthegomap.com/s/4g3uoh3d"
+"cc-genessee-lwb-north-ob","OB: Columbia City, Genessee Park, LWB North","ColCity","5.7","283","ColCity","OB","https://onthegomap.com/s/cnnrmgo2"
+"cc-genessee-lwb-south-ob","OB: Columbia City, Genessee Park, LWB South","ColCity","6.8","327","ColCity","OB","https://onthegomap.com/s/gm7lr79r"
+"cc-genessee-lwb-seward-loop-ob","OB: Columbia City, Genessee Park, Seward Loop","ColCity","9.2","440","ColCity","OB","https://onthegomap.com/s/9shfec5e"
+"gas-works-lake-union-loop","Gas Works, Lake Union Loop","GasWorks","6.3","303","GasWorks","Loop","https://onthegomap.com/s/oepno6ud"
+"gas-works-locks-salmon-bay","Gas Works, Locks, Salmon Bay Loop","GasWorks","8.0","250","GasWorks","Loop","https://onthegomap.com/s/4fpqkgfr"
+"gas-works-kotkins-pier-salmon-bay","Gas Works, Kotkins Pier, Salmon Bay Loop","GasWorks","10.2","320","GasWorks","Loop","https://onthegomap.com/s/oufhpc2l"
+"locks-discovery-salmon-bay-loop","Locks, Discovery Park, Salmon Bay Loop","Locks","8.1","890","Locks","Loop","https://onthegomap.com/s/uop4tt1d"
+"mb-lwb-cc","Mount Bake, LWB, Columbia City","MtBaker","3.3","261","ColCity","P2P","https://onthegomap.com/s/3i1cco56"
+"northgate-resevoirs-roosevelt","Northgate, Resevoirs, Green Lake","Northgate","4.1","600","Roosevelt","P2P","https://onthegomap.com/s/2tmbpess"
+"northgate-carkeek-ob","OB: Northgate, Carkeek","Northgate","6.4","720","Northgate","OB","https://onthegomap.com/s/k15n5ruq"
+"northgate-bitter-lake-ob","OB: Northgate, Interurban Trail, Bitter Lake","Northgate","7.0","520","Northgate","OB","https://onthegomap.com/s/t5v1dtdu"
+"northgate-carkeek-roosevelt","Northgate, Carkeek, Roosevelt","Northgate","8.2","750","Roosevelt","P2P","https://onthegomap.com/s/i52u05p8"
+"northgate-echo-lake-ob","OB: Northgate, Interurban Trail, Echo Lake","Northgate","12.4","580","Northgate","OB","https://onthegomap.com/s/mqvelf8h"
+"roosevelt-greenlake-loop","Roosevelt, Green Lake Loop","Roosevelt","4.3","152","Roosevelt","Loop","https://onthegomap.com/s/dl3ne2h5"
+"roosevelt-green-lake-rose-gardens","Roosevelt, Green Lake, Rose Gardens","Roosevelt","6.4","400","Roosevelt","Loop","https://onthegomap.com/s/4oft807m"
+"sodo-duwamish-trail-1st-ave","SODO, Duwamish Trail, 1st Ave","SODO","7.9","172","SODO","Loop","https://onthegomap.com/s/9olfocio"
+"sodo-jack-block-ob","OB: SODO, Jack Block Park","SODO","8.3","410","SODO","OB","https://onthegomap.com/s/1k1cibr8"
+"sodo-luna-pier-ob","OB: SODO, Luna Pier","SODO","9.2","320","SODO","OB","https://onthegomap.com/s/cm9vrvku"
+"sodo-alki-beach-ob","OB: SODO, Alki Beach","SODO","12.0","370","SODO","OB","https://onthegomap.com/s/8seoc603"
+"westlake-sculpture-park-ob","OB: Westlake, Sculpture Park","Westlake","5.1","253","Westlake","OB","https://onthegomap.com/s/nfe3jmv0"
+"westlake-sculpture-smith-cove-ob","OB: Westlake, Sculpture Park, Smith Cove","Westlake","9.3","410","Westlake","OB","https://onthegomap.com/s/rm6intki"
+"westlake-sculpture-interbay-queen-anne","Westlake, Sculpture Park, Interbay, Queen Anne Loop","Westlake","10.2","840","Westlake","Loop","https://onthegomap.com/s/pmmqj3t5"
