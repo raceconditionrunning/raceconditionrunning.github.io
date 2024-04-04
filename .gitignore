@@ -6,6 +6,7 @@ vendor/
 
 # auto-built iCal file
 rcc.ics
+rcc_weekends.ics
 
 # misc files
 .DS_Store

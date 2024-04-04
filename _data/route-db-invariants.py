@@ -21,7 +21,7 @@ LOCS = [
 # route-db.csv lives in the same directory as this script
 data_dir = os.path.dirname(os.path.realpath(__file__))
 csv_path = os.path.join(data_dir, 'route-db.csv')
-yaml_path = os.path.join(data_dir, 'route-db.yaml')
+yaml_path = os.path.join(data_dir, 'route-db.yml')
 gpx_dir = os.path.join(data_dir, 'gpx')
 
 warnings = False
