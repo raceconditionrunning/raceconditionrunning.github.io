@@ -4,7 +4,7 @@ import PhotoSwipeLightbox from "photoswipe-lightbox";
 
 export class MasonryImageGallery extends HTMLElement {
     constructor() {
-        super(); // Always call super first in the constructor
+        super();
         this.attachShadow({mode: 'open'});
     }
 
@@ -13,7 +13,6 @@ export class MasonryImageGallery extends HTMLElement {
     }
 
     render() {
-        // Here you'll add the HTML structure and initialize masonry and lightbox
         const imagePath = this.getAttribute('base-url');
         const fileExtension = this.getAttribute('file-extension');
         const imageNames = (this.getAttribute('image-names')).split('|');

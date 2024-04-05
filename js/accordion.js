@@ -31,6 +31,9 @@ export class AccordionGroup extends HTMLElement {
         while (this.firstChild) {
             wrapper.appendChild(this.firstChild);
         }
+        if (!this.id) {
+            console.error('Accordion group must have an ID');
+        }
 
         this.appendChild(wrapper);
         this.appendChild(style);
