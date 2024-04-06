@@ -33,7 +33,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
     <script type="importmap">
         {
           "imports": {
-            "maplibre-gl": "https://cdn.jsdelivr.net/npm/maplibre-gl@4.1.1/dist/maplibre-gl.min.js",
+            "maplibre-gl": "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.1.2/maplibre-gl.min.js",
             "masonry-layout": "https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js",
             "noUiSlider": "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.mjs",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
@@ -200,7 +200,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
 
     /* MAP ********************/
 
-    #map-container {
+    #relay-map {
         height: 100%;
     }
     #map {
@@ -534,7 +534,10 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
 
 
     <section id="map">
-        <div id="map-container" tabindex="0"></div>
+        <relay-map id="relay-map"
+                   center="[-122.32747365635417,47.60640473782326]"
+                   max-bounds="[[-122.90236980551624, 47.23422996598591], [-121.60263821424818, 47.83106353346886]]"
+                   style-href="{{ site.baseurl }}/maps/lrr23-map-style.json"></relay-map>
 
     </section>
 
@@ -549,13 +552,13 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                 visits to each station on the way. The route passes through Sea-Tac, Tukwila, and Bryn-Mawr Skyway before traversing the length of Seattle.</p>
 
 
-            <div id="leg-calculator" class="mb-3 p-2 p-lg-4" style="display: none">
+            <leg-calculator id="leg-calculator" class="mb-3 p-2 p-lg-4" style="display: none">
                 <h6 class="text-secondary">Segment Calculator</h6>
                 <div id="leg-calculator-description"></div>
                 <div class="mx-3">
                 <div class="leg-range-input mt-5 mb-5" id="leg-calculator-slider"></div>
                 </div>
-            </div>
+            </leg-calculator>
 
 
             <accordion-group id="leg-details-accordion" class="accordion accordion-flush">
@@ -812,22 +815,15 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
     <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg" alt="A happy piece of toast running"/></a></p>
 </footer>
 <script type="module">
-    import { isMapboxURL, transformMapboxUrl } from "https://cdn.jsdelivr.net/npm/maplibregl-mapbox-request-transformer@0.0.2/src/index.min.js"
-    import { relayToGPX, download, createCountdown, formatLegDescription, processRelayGeoJSON, prepareImagesForPhotoswipe} from "../js/common.js";
+
+    import { relayToGPX, download, createCountdown, processRelayGeoJSON, prepareImagesForPhotoswipe} from "../js/common.js";
     import { createLegDetailsTable} from "{{ site.baseurl }}/js/tables.js";
     import "maplibre-gl";
     import PhotoSwipeLightbox from 'photoswipe-lightbox';
     import { MasonryImageGallery} from "{{ site.baseurl }}/js/MasonryImageGallery.js";
-    import noUiSlider from 'noUiSlider';
     import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
-
-    const mapboxKey = 'pk.eyJ1Ijoibmlja3N3YWxrZXIiLCJhIjoiY2t0ZjgyenE4MDR1YjJ1cno0N3hxYzI4YSJ9.ivPdsoEtV9TaLGbOOfFXKA'
-    const transformRequest = (url, resourceType) => {
-        if (isMapboxURL(url)) {
-            return transformMapboxUrl(url, resourceType, mapboxKey)
-        }
-        return {url}
-    }
+    import {RelayMap} from '{{ site.baseurl }}/js/RelayMap.js';
+    import {LegCalculator} from '{{ site.baseurl }}/js/LegCalculator.js';
 
     let routeData = fetch("{{ site.baseurl }}/maps/lrr23.geojson").then(res => res.json())
     let railData = fetch("{{ site.baseurl }}/maps/link-light-rail.geojson").then(res => res.json())
@@ -853,260 +849,13 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
         downloadRouteButton.hidden = false
     })
 
-    fetch("{{ site.baseurl }}/maps/lrr23-map-style.json").then( res => res.json()).then(
-        style => {
-            let map = new maplibregl.Map({
-                container: 'map-container', // container id
-                attributionControl: false,
-                style: style,
-                center: [-122.32747365635417,47.60640473782326],
-                zoom: 9,
-                minZoom: 9,
-                maxBounds: [[-122.90236980551624, 47.23422996598591], [-121.60263821424818, 47.83106353346886]],
-                transformRequest: transformRequest
-            });
-            // Don't break basic page scrolling until the map is focused
-            map.scrollZoom.disable()
-            let container = document.getElementById("map-container")
-            // container needs to have tabindex=0 to be focusable
-            map.on("click", () => container.focus())
-            map.on("pitchstart", () => container.focus())
-            map.on("drag", () => container.focus())
-            container.addEventListener('focus', () => map.scrollZoom.enable());
-            container.addEventListener('blur', () => map.scrollZoom.disable());
-            let nav = new maplibregl.NavigationControl();
-            map.addControl(nav, 'top-left');
-            map.addControl(new maplibregl.FullscreenControl({container: document.querySelector('map-container')}), 'top-left');
-            map.addControl(new maplibregl.GeolocateControl({
-                positionOptions: {
-                    enableHighAccuracy: true
-                },
-                trackUserLocation: true
-            }), 'top-left');
-            let scale = new maplibregl.ScaleControl({
-                maxWidth: 80,
-                unit: 'imperial'
-            });
-            map.addControl(scale);
-            map.addControl(new maplibregl.AttributionControl({
-                compact: true
-            }));
-            Promise.all([
-                new Promise((resolve, reject) => {
-                    map.on('load', () => {
-                        resolve();
-                    })
-                }),
-                railData,
-                processedRouteData
-            ]).then(([_, railLines, [legs, exchanges, exchangeNames]]) => {
-                let legsData = legs.features
-                createLegDetailsTable(document.getElementById("leg-details-table"), legsData, exchanges.features)
-                const relayBounds = legsData.reduce((bounds, leg) => leg.geometry.coordinates.reduce((bounds, coord) => {
-                    return bounds.extend(coord);
-                }, bounds), new maplibregl.LngLatBounds(legsData[0].geometry.coordinates[0], legsData[0].geometry.coordinates[0]));
+    Promise.all([
+        railData,
+        processedRouteData
+    ]).then(([railLines, [legs, exchanges, exchangeNames]]) => {
+        document.querySelector("#relay-map").updateWithData(legs, exchanges, exchangeNames, railLines)
+    })
 
-                map.fitBounds(relayBounds, {
-                    padding: 32
-                });
-                function hideAttribution() {
-                    let attribution = document.querySelector(".maplibregl-compact-show")
-                    if (attribution) {
-                        attribution.classList.remove("maplibregl-compact-show")
-                        attribution.classList.remove("mapboxgl-compact-show")
-                    }
-                }
-                window.addEventListener("resize", function() {
-                    if (window.innerWidth < 768) {
-                        hideAttribution()
-                    }
-                })
-                if (window.innerWidth < 768) {
-                    hideAttribution()
-                }
-
-                map.addSource('route', {
-                    'type': 'geojson',
-                    'data': railLines
-                })
-
-                map.addLayer({
-                    'id': 'route',
-                    'type': 'line',
-                    'source': 'route',
-                    'layout': {
-                        'line-join': 'round',
-                        'line-cap': 'round'
-                    },
-                    'paint': {
-                        'line-color': '#777',
-                        'line-width': 1
-                    }
-                });
-                map.addSource('legs', {
-                    'type': 'geojson',
-                    'generateId': true,
-                    'data': legs
-                });
-
-                map.addLayer({
-                    'id': 'legs',
-                    'type': 'line',
-                    'source': 'legs',
-                    'layout': {
-                        'line-join': 'round',
-                        'line-cap': 'round'
-                    },
-                    'paint': {
-                        'line-color': ['case', ['boolean', ['feature-state', 'selected'], false], '#468040', '#6cc462'],
-                        'line-width': 8
-                    }
-                });
-                map.addSource('exchanges', {
-                    'type': 'geojson',
-                    'generateId': true,
-                    'data': exchanges
-                });
-
-                map.addLayer({
-                    'id': 'exchange-circle',
-                    'type': 'circle',
-                    'source': 'exchanges',
-                    minzoom: 9,
-                    'paint': {
-                        'circle-radius': 16,
-                        'circle-color': '#fff'
-                    }
-                });
-
-                map.addLayer({
-                    id: 'exchange-id',
-                    type: 'symbol',
-                    source: 'exchanges',
-                    minzoom: 9,
-                    layout: {
-                        'text-field': '{id}',
-                        'text-font': ['Open Sans Semibold'],
-                        'text-size': 16
-                    }
-                });
-
-                let currentExchangePopup = null;
-                let currentHoveredExchange = null;
-                let exchangePinned = false;
-                // When a click event occurs on a feature in the places layer, open a popup at the
-                // location of the feature, with description HTML from its properties.
-
-                function addExchangePopup(feature) {
-                    return new maplibregl.Popup({offset: [16, 0], className: "exchange-name-popup", focusAfterOpen: false, closeButton: false, anchor: 'left'})
-                        .setLngLat(feature.geometry.coordinates)
-                        .setHTML(`<h5 class="m-0"><a href="${feature.properties.stationInfo}" title="Official station page" target="_new">${feature.properties.name} 🔗</a></h5>`)
-                        .setMaxWidth("350px")
-                        .addTo(map);
-                }
-
-                map.on('click', 'exchange-circle', e => {
-                    const exchange = e.features[0]
-                    e.originalEvent.stopPropagation()
-
-                    currentExchangePopup = addExchangePopup(exchange)
-                    if (currentHoveredExchange) {
-                        map.setFeatureState(
-                            {source: 'exchanges', id: currentHoveredExchange},
-                            {hover: false}
-                        );
-                    }
-                    map.setFeatureState(
-                        {source: 'exchanges', id: exchange.id},
-                        {hover: true}
-                    );
-                    exchangePinned = true
-                    currentHoveredExchange = exchange.id
-                })
-                map.on('mousemove', 'exchange-circle', (e) => {
-                    if (exchangePinned && currentExchangePopup && currentExchangePopup.isOpen()) {
-                        return
-                    }
-                    if (e.features.length > 0) {
-                        let feature = e.features[0]
-                        if (currentExchangePopup && currentExchangePopup.isOpen()) {
-                            if (currentHoveredExchange === feature.properties.id) {
-                                return
-                            }
-                            currentExchangePopup.remove()
-                        }
-
-                        currentHoveredExchange = feature.properties.id;
-                        currentExchangePopup = addExchangePopup(feature)
-                    } else if (currentExchangePopup) {
-                        currentExchangePopup.remove()
-                        currentExchangePopup = null
-                        currentHoveredExchange = null
-                        exchangePinned = false;
-                    }
-                });
-
-                map.on("mouseenter", "exchange-circle", (e) => {
-                    map.getCanvas().style.cursor = 'pointer';
-                });
-
-                // Change it back to a pointer when it leaves.
-                map.on('mouseleave', 'exchange-circle', (e) => {
-                    map.getCanvas().style.cursor = '';
-                    e.preventDefault()
-                });
-
-                let currentActiveLeg = null
-                let currentLegPopup = null
-                map.on('click', 'legs', (e) => {
-                    const coordinates = e.features[0].geometry.coordinates;
-                    const leg = e.features[0]
-                    const bounds = coordinates.reduce((bounds, coord) => {
-                        return bounds.extend(coord);
-                    }, new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
-                    currentLegPopup = new maplibregl.Popup({anchor: "bottom-left", offset:[16, 0], className: "leg-popup", focusAfterOpen: true})
-                        .setLngLat([bounds.getEast(), bounds.getCenter().lat])
-                        .setMaxWidth("300px")
-                        .setHTML(formatLegDescription(exchangeNames[leg.properties.start_exchange], exchangeNames[leg.properties.end_exchange], leg.properties))
-                        .on("close", () => {
-                            map.setFeatureState(
-                                {source: 'legs', id: leg.id},
-                                {selected: false}
-                            );
-                            currentActiveLeg = null
-                            container.focus()
-                        })
-                        .addTo(map);
-                    map.fitBounds(bounds, {
-                        padding: 32
-                    });
-                    if (currentActiveLeg) {
-                        map.setFeatureState(
-                            {source: 'legs', id: currentActiveLeg.id},
-                            {selected: false}
-                        );
-                    }
-                    map.setFeatureState(
-                        {source: 'legs', id: leg.id},
-                        {selected: true}
-                    );
-                    currentActiveLeg = leg
-                })
-
-                // Change the cursor to a pointer when the mouse is over the places layer.
-                map.on('mouseenter', 'legs', () => {
-                    map.getCanvas().style.cursor = 'pointer';
-
-                });
-
-                // Change it back to a pointer when it leaves.
-                map.on('mouseleave', 'legs', () => {
-                    map.getCanvas().style.cursor = '';
-                });
-            });
-
-        }
-    )
 
     let startTime = new Date("Sept 30, 2023 8:30:00")
     /*fetch('{{ site.baseurl }}/maps/lrr23-schedule.json')
@@ -1118,93 +867,7 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
     createCountdown(startTime.getTime(), "countdown-ended")
 
     processedRouteData.then( ([legs, exchanges, exchangeNames]) => {
-        document.getElementById("leg-calculator").style.display = ""
-        let valuesSlider = document.getElementById('leg-calculator-slider');
-        let cumulativeDistances = [0]
-        let cumulativeAscents = [0]
-        let cumulativeDescents = [0]
-        for (let i = 1; i < legs.features.length + 1; i++) {
-            let leg = legs.features[i - 1]
-            cumulativeDistances.push(cumulativeDistances[i - 1] + leg.properties.distance_mi)
-            cumulativeAscents.push(cumulativeAscents[i - 1] + leg.properties.ascent_ft)
-            cumulativeDescents.push(cumulativeDescents[i - 1] + leg.properties.descent_ft)
-        }
-
-        function bisectLeft(arr, value, lo=0, hi=arr.length) {
-            while (lo < hi) {
-                const mid = (lo + hi) >> 1;
-                if (arr[mid] < value) {
-                    lo = mid + 1;
-                } else {
-                    hi = mid;
-                }
-            }
-            return lo;
-        }
-
-        let formatToStationNumber = {
-            to: function(value) {
-                return bisectLeft(cumulativeDistances, value);
-            },
-            from: function (value) {
-                return cumulativeDistances[Math.round(value)];
-            }
-        };
-
-        let steppedRange = {}
-        for (let i = 0; i < cumulativeDistances.length - 1; i++) {
-            let percentage = cumulativeDistances[i] / cumulativeDistances[cumulativeDistances.length - 1]
-            steppedRange[`${percentage * 100}%`] = cumulativeDistances[i]
-        }
-        steppedRange["min"] = 0
-        steppedRange["max"] = cumulativeDistances[cumulativeDistances.length - 1]
-        let slider = noUiSlider.create(valuesSlider, {
-            start: ["4", "12"],
-            range: steppedRange,
-            margin: .5,
-            tooltips: true,
-            snap: true,
-            connect: true,
-            format: formatToStationNumber,
-            pips: {
-                mode: 'range',
-                density: 50,
-                format: formatToStationNumber
-            }
-        });
-
-
-        let leftValue = 4
-        let rightValue = 12
-
-        slider.set(['4', '12']);
-        slider.on('update', function (values, handle, unencoded) {
-            let oldLeft = leftValue
-            let oldRight = rightValue
-            if (handle === 0) {
-                leftValue = values[handle]
-            } else {
-                rightValue = values[handle]
-            }
-            if (leftValue === rightValue) {
-                if (handle === 0) {
-                    leftValue = oldLeft
-                    slider.set([leftValue, rightValue])
-                } else {
-                    rightValue = oldRight
-                    slider.set([leftValue, rightValue])
-                }
-                return
-            }
-            let distance = cumulativeDistances[rightValue] - cumulativeDistances[leftValue]
-            let ascent = cumulativeAscents[rightValue] - cumulativeAscents[leftValue]
-            let descent = cumulativeDescents[rightValue] - cumulativeDescents[leftValue]
-            let legName = `${exchangeNames[leftValue]} to ${exchangeNames[rightValue]}`
-            // "values" has the "to" function from "format" applied
-            // "unencoded" contains the raw numerical slider values
-            let legDesc = `<div class="d-flex flex-column flex-lg-row justify-content-between align-items-baseline"><h5>${legName}</h5><h6>${distance.toFixed(2)}mi ↑${ascent.toFixed(0)}ft ↓${descent.toFixed(0)}ft</h6></div>`
-            document.getElementById("leg-calculator-description").innerHTML = legDesc
-        });
+        document.getElementById("leg-calculator").setLegs(legs, exchangeNames)
     })
 
     // Tooltips for sign-up deadlines
