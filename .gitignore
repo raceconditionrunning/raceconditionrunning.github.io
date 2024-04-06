@@ -1,8 +1,6 @@
 # jekyll stuff
 _site/
 .jekyll-cache/
-.bundle/
-vendor/
 
 # auto-built iCal file
 rcc.ics
@@ -18,3 +16,4 @@ rcc_weekends.ics
 .bundle/
 vendor/
 .vendor/
+.gems/
