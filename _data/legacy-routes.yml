@@ -126,11 +126,6 @@
   map: "http://www.gmap-pedometer.com/?r=7218018"
   cseroute: True
 
-- id: lake-union-loop
-  name: "Lake Union Loop"
-  dist: 6.26
-  map: "http://www.gmap-pedometer.com/?r=6862845"
-
 - id: ob-gas-works-green-lake-loop
   name: "OB: Gas Works - Green Lake Loop"
   dist: 6.95
