@@ -19,7 +19,7 @@
 - date: '2014-9-21'
   plan:
     - time: '9:30'
-      route_id: lake-union-loop
+      route_id: gas-works-lake-union-loop
 - date: '2014-9-28'
   plan:
     - time: '9:30'
@@ -84,7 +84,7 @@
 - date: '2014-12-07'
   plan:
     - time: '9:00'
-      route_id: lake-union-loop
+      route_id: gas-works-lake-union-loop
 - date: '2014-12-14'
   plan:
     - time: '9:00'

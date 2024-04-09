@@ -9,7 +9,7 @@
 - date: "2016-04-24"
   plan:
     - time: "9:00"
-      route_id: lake-union-loop
+      route_id: gas-works-lake-union-loop
     - time: "10:00"
       route:
         name: "OB: Gasworks - Burke"

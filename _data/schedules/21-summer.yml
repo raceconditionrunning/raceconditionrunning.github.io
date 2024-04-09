@@ -14,7 +14,7 @@
 - date: '2021-06-26'
   plan:
     - time: "7:00"
-      route_id: lake-union-loop
+      route_id: gas-works-lake-union-loop
 - date: '2021-07-01'
   plan:
     - time: "8:00"
@@ -46,7 +46,7 @@
 - date: '2021-07-30'
   plan:
     - time: "8:30"
-      route_id: lake-union-loop
+      route_id: gas-works-lake-union-loop
       notes: "CSE start"
 - date: '2021-08-07'
   plan:

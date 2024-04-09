@@ -7,7 +7,7 @@
 - date: '2017-01-14'
   plan:
     - time: '9:00'
-      route_id: lake-union-loop
+      route_id: gas-works-lake-union-loop
     - time: '10:00'
       route:
         name: "OB: Gasworks - Wallingford - Stoneway Loop"
@@ -16,13 +16,13 @@
 - date: '2017-01-21'
   plan:
     - time: '9:00'
-      route_id: lake-union-loop
+      route_id: gas-works-lake-union-loop
     - time: '10:00'
-      route_id: lake-union-loop
+      route_id: gas-works-lake-union-loop
 - date: '2017-01-28'
   plan:
     - time: '9:00'
-      route_id: lake-union-loop
+      route_id: gas-works-lake-union-loop
     - time: '10:00'
       route:
         name: "Extra miles"

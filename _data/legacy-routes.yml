@@ -13,11 +13,6 @@
   dist: 2.40
   map: "http://www.gmap-pedometer.com/?r=6862844"
 
-- id: green-lake-loop
-  name: "Green Lake Loop"
-  dist: 2.79
-  map: "https://onthegomap.com/?m=r&u=mi&w%5B%5D=Routes+may+not+be+suitable+for+public+use.&c%5B%5D=Route+data+%C2%A92021+On+The+Go+Map%2C+OpenStreetMap+Contributors&d=4494&f=f42a6ffd40&n=1&dm=1&context=share&r2=YpWZ9djqgNC0m18g3OM4I280O0G9EBUj1ER8V6l11VBRX1r1Nn15P3r12RIX2y1v4St3OX38X28RGJo2x1m2z2a1l1k2b2g1P83KBCHe1t1EPk1l38J6j1CZ40N2d10t17VDNf3f3LDH3D2N5j1VBBFF~1j2F9NAV4d11R5VBh1JPBJ5P97737Z4~63D8l35p139BVHr11H2DSZ22L2R3R7THb1JVf1n1h1f1n1Z1X1Fx2Vh3Nd17X4N~2Vp7t4z1RN7L1p1Ad1If1Uv1q1x4g5n3Y4~1_1LGd1Uz1Ub2Ol1AT2f14H8HKNq11E7a13y14Sc1Y6Am1Su3s1_6Go1y2s6w4c8g2k3i1s1k3w3w1o1e1e1Ue1e2s3Sm1i1c2i2i264o1Y1SEc3Um2Qg1Kk1W1e1a1c1g1g1u1e1c2Ma26S0U9c32k18W1EQKQUOa1Gg1Ee2AM2W12o12"
-
 - id: portage-bay-loop
   name: "Portage Bay Loop"
   dist: 3.23

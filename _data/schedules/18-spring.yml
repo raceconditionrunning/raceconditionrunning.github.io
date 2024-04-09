@@ -49,7 +49,7 @@
 - date: '2018-05-26'
   plan:
     - time: '8:50'
-      route_id: lake-union-loop
+      route_id: gas-works-lake-union-loop
     - time: '10:10'
       route_id: gas-works-fremont-cut-loop
 - date: '2018-06-02'

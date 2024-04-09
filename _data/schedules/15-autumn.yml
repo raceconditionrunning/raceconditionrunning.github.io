@@ -42,7 +42,7 @@
 - date: '2015-10-25'
   plan:
     - time: '9:30'
-      route_id: lake-union-loop
+      route_id: gas-works-lake-union-loop
     - time: '10:45'
       route:
         name: "OB: Gasworks - Burke West"
@@ -61,7 +61,7 @@
 - date: '2015-11-15'
   plan:
     - time: '10:00'
-      route_id: lake-union-loop
+      route_id: gas-works-lake-union-loop
       notes: "CCW"
     - time: '11:00'
       route_id: gas-works-salmon-bay
