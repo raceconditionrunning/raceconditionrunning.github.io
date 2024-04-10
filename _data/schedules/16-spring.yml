@@ -35,7 +35,7 @@
 - date: "2016-05-15"
   plan:
     - time: "8:50"
-      route_id: ob-locks-golden-gardens
+      route_id: locks-golden-gardens-ob
     - time: "10:00"
       route:
         name: "OB: Locks - Discovery Park"

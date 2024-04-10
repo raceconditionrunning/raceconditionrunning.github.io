@@ -80,16 +80,6 @@
   dist: 8.82
   map: "http://www.gmap-pedometer.com/?r=7218070"
 
-- id: ob-locks-golden-gardens
-  name: "OB: Locks - Golden Gardens"
-  dist: 4.53
-  map: "http://www.gmap-pedometer.com/?r=6957881"
-
-- id: ob-locks-discovery-park
-  name: "OB: Locks - Discovery Park"
-  dist: 6.21
-  map: "http://www.gmap-pedometer.com/?r=7344701"
-
 - id: ob-discovery-golden-gardens
   name: "OB: Discovery - Golden Gardens"
   dist: 7.43

@@ -18,7 +18,7 @@
 - date: '2018-10-06'
   plan:
     - time: '8:50'
-      route_id: ob-locks-golden-gardens
+      route_id: locks-golden-gardens-ob
     - time: '9:45'
       route_id: locks-ballard-bridge-loop
 - date: '2018-10-14'

@@ -36,7 +36,7 @@
         dist: 3.10
         map: "http://onlineraceresults.com/event/view_event.php?event_id=16658"
     - time: '9:30'
-      route_id: ob-locks-discovery-park
+      route_id: locks-discovery-loop
     - time: '10:30'
       route_id: locks-ballard-bridge-loop
 - date: '2015-10-25'

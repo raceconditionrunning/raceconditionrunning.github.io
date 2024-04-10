@@ -35,7 +35,7 @@
         map: "https://www.gmap-pedometer.com/gp/bookmark/view/id/7020652?fbclid=IwAR3189t-t1YH0IKkL8JEA2G_y8ie2KRUAZQCAp5TAxsdQUEh0YwSagLM8Os"
         dist: 11.09
     - time: '9:30'
-      route_id: ob-locks-discovery-park
+      route_id: locks-discovery-loop
 - date: '2017-02-19'
   plan:
     - time: '9:00'
@@ -52,4 +52,4 @@
         dist: 19.04
 
     - time: '10:10'
-      route_id: ob-locks-golden-gardens
+      route_id: locks-golden-gardens-ob
