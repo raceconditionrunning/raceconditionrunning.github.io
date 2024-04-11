@@ -67,7 +67,7 @@
 - date: '2015-06-07'
   plan:
     - time: '10:00'
-      route_id: ob-gas-works-green-lake-loop
+      route_id: gas-works-around-green-lake
 - date: '2015-06-13'
   plan:
     - time: '7:00'
