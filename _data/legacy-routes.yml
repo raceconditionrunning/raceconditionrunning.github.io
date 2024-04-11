@@ -3,11 +3,6 @@
   dist: 6.30
   map: "https://www.gmap-pedometer.com/?r=7176070"
 
-- id: gas-works-salmon-bay
-  name: "Gas Works - Locks Loop"
-  dist: 8.03
-  map: "https://www.gmap-pedometer.com/?r=7176073"
-
 - id: seward-loop
   name: "Seward Park Loop"
   dist: 2.40

@@ -8,7 +8,7 @@
 - date: '2015-02-01'
   plan:
     - time: '9:30'
-      route_id: gas-works-salmon-bay
+      route_id: gas-works-locks-salmon-bay
 - date: '2015-02-08'
   plan:
     - time: '9:30'
@@ -20,7 +20,7 @@
 - date: '2015-02-22'
   plan:
     - time: '9:30'
-      route_id: gas-works-salmon-bay
+      route_id: gas-works-locks-salmon-bay
 - date: '2015-03-01'
   plan:
     - time: '9:30'
