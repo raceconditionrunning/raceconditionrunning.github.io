@@ -11,9 +11,7 @@
 - date: "2024-04-13"
   plan:
     - time: "9:00"
-      route_id: northgate-resevoir-roosevelt
-    - time: "9:45"
-      route_id: roosevelt-green-lake-rose-gardens
+      route_id: cap-hill-i90-trail-lwb-arborlaken-loop
 
 - date: "2024-04-20"
   plan:
