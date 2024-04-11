@@ -307,11 +307,6 @@
   dist: 10.7
   map: "https://onthegomap.com/s/oev39cnv"
 
-- id: uw-jays-cafe-p2p
-  name: "UW to Jay's Cafe P2P"
-  dist: 11.2
-  map: "https://onthegomap.com/s/au9nl0gj"
-
 - id: cap-hill-ship-canal-salmon-bay-burke-uw
   name: "Cap Hill around Salmon Bay to UW"
   dist: 9.1
