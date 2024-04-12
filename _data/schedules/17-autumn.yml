@@ -9,7 +9,7 @@
     - time: '8:50'
       route_id: ob-cse-foster-island
     - time: '9:40'
-      route_id: portage-bay-loop
+      route_id: cse-portage-bay-loop
 - date: '2017-10-07'
   plan:
     - time: '8:50'

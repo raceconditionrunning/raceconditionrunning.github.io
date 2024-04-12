@@ -8,12 +8,6 @@
   dist: 2.40
   map: "http://www.gmap-pedometer.com/?r=6862844"
 
-- id: portage-bay-loop
-  name: "Portage Bay Loop"
-  dist: 3.23
-  map: "http://www.gmap-pedometer.com/?r=6849824"
-  cseroute: True
-
 - id: locks-ballard-bridge-loop
   name: "Locks - Ballard Bridge Loop"
   dist: 3.45

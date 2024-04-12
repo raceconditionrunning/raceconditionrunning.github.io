@@ -19,7 +19,7 @@
     - time: "9:15"
       route_id: ob-cse-arboretum
     - time: "10:00"
-      route_id: portage-bay-loop
+      route_id: cse-portage-bay-loop
 - date: "2016-05-08"
   plan:
     - time: "9:15"
