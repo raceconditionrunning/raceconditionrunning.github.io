@@ -8,11 +8,6 @@
   dist: 2.40
   map: "http://www.gmap-pedometer.com/?r=6862844"
 
-- id: locks-ballard-bridge-loop
-  name: "Locks - Ballard Bridge Loop"
-  dist: 3.45
-  map: "http://www.gmap-pedometer.com/?r=6849842"
-
 - id: ob-madison-interlaken
   name: "OB: Madison - Interlaken Park"
   dist: 3.85
