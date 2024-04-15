@@ -6,6 +6,7 @@ FIELDS = ['id', 'name', 'start', 'dist', 'elev', 'end', 'type', 'map']
 TYPES = ['Loop', 'P2P', 'OB']
 LOCS = [
     'Beacon',
+    'Bellevue',
     'CSE',
     'CapHill',
     'ColCity',
