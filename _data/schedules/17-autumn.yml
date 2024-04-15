@@ -21,7 +21,7 @@
     - time: '8:50'
       route_id: pacpav-kinnear-kerry-queen-anne-loop
     - time: '9:50'
-      route_id: ob-sculpture-park
+      route_id: sculpture-park-interbay-ob
 - date: '2017-10-21'
   plan:
     - time: '8:50'
