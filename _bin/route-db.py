@@ -15,6 +15,7 @@ LOCS = [
     'Locks',
     'MtBaker',
     'Northgate',
+    'PacPav',
     'Roosevelt',
     'SODO',
     'Westlake'

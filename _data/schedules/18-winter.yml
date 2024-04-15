@@ -32,7 +32,7 @@
 - date: '2018-02-10'
   plan:
     - time: '8:50'
-      route_id: lower-queen-anne-loop
+      route_id: pacpav-kinnear-kerry-queen-anne-loop
     - time: '10:00'
       route_id: ob-sculpture-park
 - date: '2018-02-18'

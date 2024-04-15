@@ -8,6 +8,7 @@ rcc_weekends.ics
 
 # misc files
 .DS_Store
+ztatlock-notes
 
 # python virtual environment
 .venv

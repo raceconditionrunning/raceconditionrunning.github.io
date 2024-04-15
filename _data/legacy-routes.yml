@@ -74,11 +74,6 @@
   dist: 7.34
   map: "https://www.gmap-pedometer.com/?r=7176422"
 
-- id: lower-queen-anne-loop
-  name: "Lower Queen Anne Loop"
-  dist: 5.12
-  map: "http://www.gmap-pedometer.com/?r=6957890"
-
 - id: gas-works-fremont-cut-loop
   name: "Gas Works - Fremont Cut Loop"
   dist: 5.52
