@@ -17,6 +17,7 @@ LOCS = [
     'MtBaker',
     'Northgate',
     'PacPav',
+    'RedTech',
     'Roosevelt',
     'SODO',
     'Westlake'
