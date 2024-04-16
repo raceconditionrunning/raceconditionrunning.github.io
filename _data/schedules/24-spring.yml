@@ -20,10 +20,8 @@
 
 - date: "2024-04-27"
   plan:
-    - time: "8:30"
-      route:
-        name: Eastlink Starter Line
-        dist: 6.6
+    - time: "9:00"
+      route_id: mercer-slough-2-line
 
 - date: "2024-05-04"
   plan:
