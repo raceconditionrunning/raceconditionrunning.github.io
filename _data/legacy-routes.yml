@@ -18,18 +18,6 @@
   dist: 4.00
   map: "http://www.gmap-pedometer.com/?r=6706949"
 
-- id: ob-gas-works-cse
-  name: "OB: Gas Works - CSE"
-  dist: 4.05
-  map: "https://onthegomap.com/?m=r&u=mi&w%5B%5D=Routes+may+not+be+suitable+for+public+use.&c%5B%5D=Route+data+%C2%A92021+On+The+Go+Map%2C+OpenStreetMap+Contributors&d=6520&f=a955448d25&n=1&dm=1&context=share&r2=cWwY9rkrgNG20_18u1C34GCW1COIQW3_1i2e1k3a2u3e2m7m4G220648644244EIQY4i5Y4u5MSe4o4w4q4g2q2W3w3Ig1Mk1a1e3264K2C0i1Go2Im22C4Ii1e7Mg3Ou3Aq1Cc28e22w11q11g29e2n1_6Jy2161C7W1t1o73G3CRi3Bg1Jw2r1y5163K3C1Ab1g2NW1FA7GNm1045E9M04Lc2f1o2BC149G9K345ABOBMRw1Tw1X1e2Fc19Qf5aAz1y3Lm1Pc2Lw23KDe27i20g202Ao28c1Ok2Qy1Uo1MW1u1e2m1m1k1Y1s1Sc3W10201276P0529476LCd14D4F4D45IR6NOb3Pg33KHS363E3G3EBe15M381A065Q18b3Vr1Rj1X1TTHHt1d2LVTn1Px1Nj27b19n20h28h2Ed24JMv2Qb2Ml1_1x3g5ZAAPGb1Y1d2Uv1Sv1CLCN6943AJAF23CBg1n2Mb203AL6D03Ol18FG9OVc1f2294B4J25s1x5Kv2Cf1Sh34B4Fu1n78V2B25Kx2o1z6Ad22f22p11v17d2Bb29p1Nt3Lf3b1X65b13H1BX1X50h11B3J15Z1d3Lj1Hf1~2v3f2p2v4p4d4n4LRX4t5X4h5HP3D1333755310F1l5f3~1b1b7h4h2d1~2z1HPBNBV3FB47t10z1B0"
-  cseroute: True
-
-- id: ob-cse-gas-works
-  name: "OB: CSE - Gas Works"
-  dist: 4.05
-  map: "https://www.gmap-pedometer.com/?r=6431115"
-  cseroute: True
-
 - id: ob-cse-foster-island
   name: "OB: CSE - Foster Island"
   dist: 4.14

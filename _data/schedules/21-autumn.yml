@@ -37,7 +37,7 @@
     - time: "8:30"
       route_id: gas-works-fremont-cut-loop
     - time: "9:50"
-      route_id: ob-gas-works-cse
+      route_id: cse-gas-works-ob
 
 - date: "2021-10-23"
   plan:

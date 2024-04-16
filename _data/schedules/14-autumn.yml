@@ -8,7 +8,7 @@
 - date: '2014-9-07'
   plan:
     - time: '10:00'
-      route_id: ob-cse-gas-works
+      route_id: cse-gas-works-ob
 - date: '2014-9-13'
   plan:
     - time: '10:00'
