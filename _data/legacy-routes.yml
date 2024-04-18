@@ -125,12 +125,6 @@
   dist: 2.46
   map: "http://www.gmap-pedometer.com/?r=7177173"
 
-- id: cse-greenlake-union
-  name: "CSE - Greenlake - Lake Union Loop"
-  dist: 12.47
-  map: "https://gmap-pedometer.com/?r=7169234"
-  cseroute: True
-
 - id: gas-works-queen-anne-loop
   name: "Gas Works - Queen Anne Loop"
   dist: 9.36
