@@ -44,8 +44,8 @@
 - date: "2023-05-13"
   plan:
     - time: "9:00"
-      route_id: roosevelt-one-greenlake-loop
-    - time: "9:45"
+      route_id: green-lake-loop
+    - time: "9:30"
       route_id: green-lake-loop
 
 - date: "2023-05-20"

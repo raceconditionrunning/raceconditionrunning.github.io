@@ -1,7 +1,7 @@
 - date: '2018-01-06'
   plan:
     - time: '8:50'
-      route_id: greenlake-cse
+      route_id: green-lake-ravenna-burke-stone-loop
     - time: '10:35'
       route_id: green-lake-loop
 - date: '2018-01-13'
