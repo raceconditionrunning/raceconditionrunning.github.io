@@ -68,11 +68,6 @@
   map: "http://www.gmap-pedometer.com/?r=7218018"
   cseroute: True
 
-- id: ob-green-lake-loop-gasworks
-  name: "OB: Green Lake Loop - Gas Works"
-  dist: 9.84
-  map: "http://www.gmap-pedometer.com/?r=7317466"
-
 - id: ob-magnolia-blvd-bridge
   name: "OB: Magnolia Blvd - Magnolia Bridge"
   dist: 7.13

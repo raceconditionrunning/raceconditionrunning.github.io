@@ -42,12 +42,16 @@
       route_id: pacpav-kinnear-kerry-queen-anne-loop
     - time: '9:50'
       route_id: sculpture-park-interbay-ob
+
 - date: '2018-11-10'
   plan:
     - time: '8:50'
-      route_id: ob-green-lake-loop-gasworks
+      route_id: green-lake-loop
+    - time: '9:20'
+      route_id: green-lake-gas-works-ob
     - time: '10:45'
       route_id: green-lake-loop
+
 - date: '2018-11-17'
   plan:
     - time: '8:50'
