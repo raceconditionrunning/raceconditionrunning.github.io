@@ -57,11 +57,6 @@
   dist: 6.00
   map: "http://www.gmap-pedometer.com/?r=6957722"
 
-- id: ob-green-lake-ravenna
-  name: "OB: Green Lake - Ravenna Park"
-  dist: 6.12
-  map: "http://www.gmap-pedometer.com/?r=6862850"
-
 - id: ob-cse-ravenna-park
   name: "OB: CSE - Ravenna Park"
   dist: 4.12
