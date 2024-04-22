@@ -73,11 +73,6 @@
   dist: 9.84
   map: "http://www.gmap-pedometer.com/?r=7317466"
 
-- id: ob-gas-works-green-lake
-  name: "OB: Gas Works - Green Lake"
-  dist: 6.00
-  map: "https://www.gmap-pedometer.com/?r=7176445"
-
 - id: ob-magnolia-blvd-bridge
   name: "OB: Magnolia Blvd - Magnolia Bridge"
   dist: 7.13

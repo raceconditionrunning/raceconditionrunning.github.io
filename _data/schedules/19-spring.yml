@@ -11,7 +11,7 @@
     - time: '8:50'
       route_id: gas-works-queen-anne-loop
     - time: '10:40'
-      route_id: ob-gas-works-green-lake
+      route_id: gas-works-green-lake-ob
 - date: '2019-04-20'
   plan:
     - time: '8:50'

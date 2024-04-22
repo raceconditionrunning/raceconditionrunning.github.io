@@ -59,7 +59,7 @@
     - time: '8:50'
       route_id: gas-works-lake-union-loop
     - time: '10:10'
-      route_id: ob-gas-works-green-lake
+      route_id: gas-works-green-lake-ob
 - date: '2018-03-18'
   plan:
     - time: '9:00'
@@ -82,4 +82,4 @@
     - time: '8:50'
       route_id: gas-works-queen-anne-loop
     - time: '10:40'
-      route_id: ob-gas-works-green-lake
+      route_id: gas-works-green-lake-ob
