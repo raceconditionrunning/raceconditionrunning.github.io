@@ -29,7 +29,7 @@
     - time: '8:50'
       route_id: ob-cse-magnuson-park
     - time: '10:50'
-      route_id: ob-cse-foster-island
+      route_id: cse-foster-arboretum-montlake-loop
 - date: '2019-02-16'
   cancelled: "Snow"
   plan:
