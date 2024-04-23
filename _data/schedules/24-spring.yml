@@ -28,6 +28,11 @@
     - time: "9:00"
       route_id: id-marginal-alki-sodo
 
+- date: "2024-05-11"
+  plan:
+    - time: "9:00"
+      route_id: roosevelt-carkeek-golden-gardens-roses
+
 - date: "2024-05-18"
   plan:
     - time: "9:00"
