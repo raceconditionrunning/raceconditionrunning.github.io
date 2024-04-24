@@ -9,7 +9,7 @@
     - time: '8:50'
       route_id: ob-cse-520
     - time: '10:30'
-      route_id: ob-cse-arboretum
+      route_id: cse-foster-arboretum-ob
 - date: '2019-01-26'
   plan:
     - time: '8:50'

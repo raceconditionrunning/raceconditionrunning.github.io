@@ -18,12 +18,6 @@
   dist: 4.00
   map: "http://www.gmap-pedometer.com/?r=6706949"
 
-- id: ob-cse-arboretum
-  name: "OB: CSE - Arboretum"
-  dist: 4.04
-  map: "http://www.gmap-pedometer.com/?r=7177223"
-  cseroute: True
-
 - id: ob-cse-volunteer
   name: "OB: CSE - Volunteer Park"
   dist: 5.19
