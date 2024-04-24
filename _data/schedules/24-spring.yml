@@ -26,7 +26,7 @@
 - date: "2024-05-04"
   plan:
     - time: "9:00"
-      route_id: id-marginal-alki-sodo
+      route_id: cid-marginal-alki-sodo
 
 - date: "2024-05-11"
   plan:

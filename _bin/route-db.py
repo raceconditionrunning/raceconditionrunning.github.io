@@ -12,7 +12,7 @@ LOCS = [
     'ColCity',
     'GasWorks',
     'GreenLake',
-    'ID',
+    'CID',
     'JaysCafe',
     'Locks',
     'MerSlough',
