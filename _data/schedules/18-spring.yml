@@ -39,9 +39,9 @@
 - date: '2018-05-12'
   plan:
     - time: '8:50'
-      route_id: cse-bryant-loop
+      route_id: cse-nature-hawthorne-bryant-loop
     - time: '10:10'
-      route_id: ob-cse-volunteer
+      route_id: cse-24th-volunteer-ob
 - date: '2018-05-19'
   plan:
     - time: '8:50'
