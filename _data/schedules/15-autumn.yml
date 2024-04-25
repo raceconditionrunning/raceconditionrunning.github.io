@@ -22,7 +22,7 @@
 - date: '2015-10-11'
   plan:
     - time: '9:30'
-      route_id: ob-cse-ravenna-park
+      route_id: cse-ravenna-loop
     - time: '10:15'
       route:
         name: "OB: CSE - Portage Bay Loop"

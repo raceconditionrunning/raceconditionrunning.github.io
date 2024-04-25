@@ -33,12 +33,6 @@
   dist: 6.00
   map: "http://www.gmap-pedometer.com/?r=6957722"
 
-- id: ob-cse-ravenna-park
-  name: "OB: CSE - Ravenna Park"
-  dist: 4.12
-  map: "http://www.gmap-pedometer.com/?r=7218018"
-  cseroute: True
-
 - id: ob-magnolia-blvd-bridge
   name: "OB: Magnolia Blvd - Magnolia Bridge"
   dist: 7.13
