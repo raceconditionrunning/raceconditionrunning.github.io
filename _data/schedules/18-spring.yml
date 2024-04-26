@@ -26,7 +26,7 @@
 - date: '2018-04-28'
   plan:
     - time: '8:50'
-      route_id: ob-cse-burke
+      route_id: cse-magnussen-ob
     - time: '10:20'
       route_id: cse-ravenna-loop-ob
 - date: '2018-05-06'
