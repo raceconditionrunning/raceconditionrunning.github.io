@@ -84,12 +84,6 @@
   map: "http://www.gmap-pedometer.com/?r=7202894"
   cseroute: True
 
-- id: cse-arboretum-foster-loop
-  name: "CSE - Arboretum - Foster Island Loop"
-  dist: 7.35
-  map: "https://www.gmap-pedometer.com/?r=7214448"
-  cseroute: True
-
 - id: ob-overlake-lake-hill
   name: "OB: Overlake - Lake Hills Park"
   dist: 11.25
