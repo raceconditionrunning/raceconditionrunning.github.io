@@ -148,12 +148,6 @@
   map : "https://www.gmap-pedometer.com/?r=7378977"
   cseroute: True
 
-- id: cse-cap-hill-parks-loop
-  name: "CSE - Cap Hill Parks Loop"
-  dist: 8.20
-  map: "https://www.gmap-pedometer.com/?r=7377059"
-  cseroute: True
-
 - id: cse-520-kirkland-marymoor
   name: "PP: CSE to Kirkland to Marymoor"
   dist: 18.00
