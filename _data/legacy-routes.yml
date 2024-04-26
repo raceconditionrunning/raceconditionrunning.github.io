@@ -63,12 +63,6 @@
   dist: 13.82
   map: "http://www.gmap-pedometer.com/?r=7177215"
 
-- id: ob-cse-seward
-  name: "OB: CSE - Sailing Club"
-  dist: 15.01
-  map: "http://www.gmap-pedometer.com/?r=7177219"
-  cseroute: True
-
 - id: magnuson-park-loop
   name: "Magnuson Park Loop"
   dist: 2.46
