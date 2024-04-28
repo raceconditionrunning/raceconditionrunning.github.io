@@ -19,7 +19,7 @@ redirect_from:
     <meta property="og:url" content="{{ site.url }}/drumheller-marathon-24/">
     <meta property="og:title" content="Drumheller Marathon 2024">
     <meta property="og:description" content="Experience the fountain and the mountain. June 1st, 2024.">
-    <link href="{{ site.baseurl }}/img/dhm23/dhm-favicon.png" rel="icon" type="image/png"/>
+    <link href="{{ site.baseurl }}/img/dm24/favicon.png" rel="icon" type="image/png"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,6 +53,7 @@ redirect_from:
     :root {
         --branding-color: #3CB6BF;
         --branding-color-light: #aedce6;
+        --branding-color-complement: #BD81C6;
         --branding-secondary-color: #B5AFA3;
         --branding-secondary-color-light: #D1CABD;
         --noise: url("{{ site.baseurl }}/img/dm24/noise.png");
@@ -139,6 +140,12 @@ redirect_from:
 
     h3 {
         font-weight: 500;
+    }
+
+    .inline-icon {
+        height: 1em;
+        vertical-align: middle;
+        margin-left: -.2em;
     }
 
     .anchor-link {
@@ -386,8 +393,15 @@ redirect_from:
         font-style: italic;
     }
 
-    #course-map {
+    .map-item > img {
         border-radius: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    #course-map {
+        max-height: 120vh;
+        display: block;
+        margin: 0 auto;
         margin-bottom: 1rem;
     }
 
@@ -454,24 +468,32 @@ redirect_from:
     }
 
     .usatf-certificate {
-        font-size: 1rem;
+        font-size: .5rem;
         font-family: var(--sans-font-family);
-        border: 2px solid #aaa;
+        border: 2px solid #999;
         border-radius: 1rem;
         display: inline-flex;
         gap: 1rem;
         flex-direction: row;
         justify-content: center;
         margin-bottom: 0;
-        padding: 1rem 1rem;
+        padding: .75rem .75rem;
         text-decoration: none;
-        color: #ddd;
+        color: #666;
         transition: .3s;
     }
 
     .usatf-certificate:hover {
-        color: white;
-        border: 2px solid #ccc;
+        color: black;
+        border: 2px solid #333;
+    }
+
+    .usatf-certificate.full:hover {
+        border: 2px solid var(--branding-color);
+    }
+
+    .usatf-certificate.half:hover {
+        border: 2px solid var(--branding-color-complement);
     }
 
     .usatf-certificate:hover img {
@@ -479,8 +501,8 @@ redirect_from:
     }
 
     .usatf-certificate img {
-        height: 6rem;
-        opacity: .8;
+        height: 5rem;
+        opacity: .6;
         transition: .3s;
     }
 
@@ -491,7 +513,7 @@ redirect_from:
     .usatf-certificate,
     .usatf-certificate h2,
     .usatf-certificate p {
-        font-size: 1rem;
+        font-size: .75rem;
         margin-bottom: 0;
     }
 
@@ -550,11 +572,11 @@ redirect_from:
         </div>
         <div class="col-auto">
             <a class="wavy-button" href="https://forms.gle/BhJpHUGZSfjRMNds5">Apply for Full</a>
-            <div>T.B.A.</div>
+            <div>5:30AM</div>
         </div>
         <div class="col-auto">
             <a class="wavy-button" href="https://forms.gle/BhJpHUGZSfjRMNds5">Register for Half</a>
-            <div>7:50AM</div>
+            <div>8:00AM</div>
         </div>
 
         <!--<a class="btn btn-lg hero-button" href="https://forms.gle/qDgVHA3Kw1HVFDrN8">Order Shirt</a>-->
@@ -568,8 +590,44 @@ redirect_from:
 <section id="course">
     <div class="container">
         <h2>Course <a href="#course" class="anchor-link" aria-label="Link to this section. Course"></a></h2>
-        <p>The course consists of a short segment down the upper vista followed by 221 or 110 laps around Drumheller Fountain for the marathon and half marathon respectively. The two events will begin at different times and use different start lines. Runners planning to complete fewer laps are welcome to join the half marathon start.</p>
-    </div>
+        <p>The course consists of a short segment down the upper vista followed by laps around Drumheller Fountain and the <a href="https://facilities.uw.edu/blog/posts/2016/04/05/drumheller-duckling-debut">duck ramp <img src="{{ site.baseurl }}/img/dm24/duck-icon.svg" class="inline-icon"/></a>. The marathon is 219 laps and the half is 109 laps. The two events will begin at different times and use different start lines. Those planning to complete fewer laps are welcome to join the half marathon start.</p>
+
+        <p>The
+            direction will flip every hour, and runners must change directions only by rounding the marker placed
+            at the edge of the finish line. Failure to follow these instructions will prevent us from giving you an
+            official finish time.</p>
+        <p>While campus foot traffic is reduced on weekends, expect to navigate around fountain-admirers, passers-by and
+            cyclists.</p>
+            <div class="map-item">
+                <img id="course-map" src="{{ site.baseurl }}/img/dm24/dm-course-map-alt.svg"
+                     alt="A map of the course showing the full start line 129.17m north of the fountain and the half start line 65.97m north of the fountain, followed by 219 or 109 laps of the 192.37m fountain loop.">
+                <div class="d-flex justify-content-center gap-2 gap-md-4 flex-column flex-md-row">
+                    <div class="cert-wrapper">
+                        <a class="usatf-certificate full" href="https://certifiedroadraces.com/certificate/?type=m&id=3255">
+                            <img src="{{ site.baseurl }}/img/dm24/usatf-certified-course-black.svg" alt=""/>
+                            <div class="details">
+                                <h2>USATF Certificate</h2>
+                                <span>WA24018RMB</span>
+                                <p><b>Effective</b>: 4/17/24<br/>
+                                    <b>Through</b>: 12/31/34</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="cert-wrapper">
+                        <a class="usatf-certificate half" href="https://certifiedroadraces.com/certificate/?type=m&id=3253">
+                            <img src="{{ site.baseurl }}/img/dm24/usatf-certified-course-black.svg" alt=""/>
+                            <div class="details">
+                                <h2>USATF Certificate</h2>
+                                <span>WA24016RMB</span>
+                                <p><b>Effective</b>: 4/17/24<br/>
+                                    <b>Through</b>: 12/31/34</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 </section>
 
 <section>
@@ -580,13 +638,13 @@ redirect_from:
             <accordion-item>
                 <accordion-header>Do I have to run the whole thing?</accordion-header>
                 <accordion-body>
-                        No. Anyone running or walking fewer than 110 laps is welcome to join the half marathon. Here are some lap counts for common distances. Add a lap if not starting at the official start line.
+                        No. Anyone running or walking fewer than 109 laps is welcome to join the half marathon. Here are some lap counts for common distances. Add a lap if not starting at the official start line.
                         <table class="table table-sm ms-2 mt-2 mb-4">
                             <thead><tr><th scope="col">Distance</th><th scope="col">Laps</th></tr></thead>
                             <tbody>
                             <tr><td>5k</td> <td>26</td></tr>
                             <tr><td>10k</td> <td>52</td></tr>
-                            <tr><td>10mi</td><td>84</td></tr>
+                            <tr><td>10mi</td><td>83</td></tr>
                             </tbody>
                         </table>
 
@@ -597,12 +655,26 @@ redirect_from:
                 <accordion-header>How fast do I need to run?</accordion-header>
                 <accordion-body>The cutoff times and corresponding average paces are:
                     <table class="table table-sm ms-2 mt-2 mb-4">
-                        <thead><tr><th>Distance</th><th>Time</th><th>Pace/mi</th> <th>Pace/km</th></tr></thead>
+                        <thead><tr><th>Distance</th><th>Time</th><th>min/mi</th> <th>min/km</th></tr></thead>
                         <tbody>
                         <tr><td>Marathon</td> <td>4:30:00</td> <td>10:18</td> <td>6:24</td></tr>
                         <tr><td>Half Marathon</td> <td>2:30:00</td> <td>11:27</td> <td>7:07</td></tr>
                         </tbody>
                     </table>
+                </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>What's the weather like?</accordion-header>
+                <accordion-body>
+
+                    <blockquote class="blockquote">On June 1, the temperature in Seattle typically ranges from 53°F to 66°F and is rarely below 48°F or above 76°F.
+                        [...]
+                        The coolest time of the day is from 1:00 AM to 8:00 AM, with the coldest at 5:30 AM, at which time the temperature is below 55°F three days out of four, and below 58°F nine days out of ten.
+                        [...]
+                        The cloudiest time of day is around 6:30 AM, at which time the chance of overcast or mostly cloudy conditions is 58%.
+                    </blockquote>
+                    <p class="blockquote-footer"><a href="https://weatherspark.com/d/913/6/1/Average-Weather-on-June-1-in-Seattle-Washington-United-States#Figures-Temperature">June 1 Weather in Seattle, Weather Spark</a></p>
                 </accordion-body>
             </accordion-item>
 
@@ -620,7 +692,7 @@ redirect_from:
             <accordion-item>
                 <accordion-header>Which direction do we run?</accordion-header>
                 <accordion-body>
-                        The race will begin counterclockwise and alternate directions every 20 minutes to help balance the strain across your legs. Having the field run a single direction at a time will help us manage course congestion. Change directions only at the end of a lap and only by rounding the finish line marker.
+                        The race will begin counterclockwise and alternate directions every hour to help balance the strain across your legs. Having the field run a single direction at a time will help us manage course congestion. Change directions only at the end of a lap and only by rounding the finish line marker.
                 </accordion-body>
             </accordion-item>
 
@@ -666,6 +738,14 @@ redirect_from:
                 <accordion-body>
                         Yes. In addition to the aid station there are benches surrounding the course. You must continue running the lap in the same direction as when you stopped or the lap will not count. To remove this possibility, we recommend you start and stop only on at the lap finish line so you can begin the next lap in either direction.
                     </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>Why is the marathon start time so early?</accordion-header>
+                <accordion-body>
+
+                    The half marathon field is larger and includes a broader range of paces, so we are scheduling to minimize the overlap between the two events. We plan under the assumption that the day will be warm with clear skies (the odds of this are something like 30%). We cannot start the half marathon much later than 8:00AM as we want those runners (many running their first half) to wrap up before the heat and sun pick up around 10:30AM. We may shift the start times if the forecast for the day is favorable. Note that the <a href="https://www.soundtransit.org/sites/default/files/documents/schedule-link-1-line.pdf">first trains start arriving</a> to University of Washington Link station around 5:00AM on Saturdays.
+                </accordion-body>
             </accordion-item>
 
             <accordion-item>
