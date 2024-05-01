@@ -48,505 +48,508 @@ redirect_from:
         }
     </script>
 
-</head>
-<style>
-    :root {
-        --branding-color: #3CB6BF;
-        --branding-color-light: #aedce6;
-        --branding-color-complement: #BD81C6;
-        --branding-secondary-color: #B5AFA3;
-        --branding-secondary-color-light: #D1CABD;
-        --noise: url("{{ site.baseurl }}/img/dm24/noise.png");
-        font-size: 21px;
-        line-height: 1.5;
+    <style>
+        :root {
+            --branding-color: #3CB6BF;
+            --branding-color-light: #aedce6;
+            --branding-color-complement: #BD81C6;
+            --branding-secondary-color: #B5AFA3;
+            --branding-secondary-color-light: #D1CABD;
+            --noise: url("{{ site.baseurl }}/img/dm24/noise.png");
+            font-size: 21px;
+            line-height: 1.5;
 
-    }
-    body {
-        margin: 0;
-        --bs-body-color: #111;
-        --bs-link-color-rgb: 20, 20, 20;
-        --bs-link-hover-color-rgb: 60, 60, 60;
-        --bs-body-bg: #EFEFEF;
-        --bs-body-font-family: 'Yrsa', serif;
-        --bs-body-font-weight: 400;
-        font-optical-sizing: auto;
-        --sans-font-family: "Avenir Next", "Prompt", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    }
+        }
+        body {
+            margin: 0;
+            --bs-body-color: #111;
+            --bs-link-color-rgb: 20, 20, 20;
+            --bs-link-hover-color-rgb: 60, 60, 60;
+            --bs-body-bg: #EFEFEF;
+            --bs-body-font-family: 'Yrsa', serif;
+            --bs-body-font-weight: 400;
+            font-optical-sizing: auto;
+            --sans-font-family: "Avenir Next", "Prompt", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        }
 
-    ::selection {
-        background: var(--branding-color-light);
-    }
+        ::selection {
+            background: var(--branding-color-light);
+        }
 
-    hr {
-        width: 6rem;
-        margin: 4rem auto;
-        display: block;
-        border: 1px solid #DDD;
-    }
+        hr {
+            width: 6rem;
+            margin: 4rem auto;
+            display: block;
+            border: 1px solid #DDD;
+        }
 
-    ul {
-        /* Don't jam bullet at edge of screen on mobile */
-        padding-left: 1rem
-    }
-
-    @media screen and (min-width: 700px) {
         ul {
-            padding-left: 0;
+            /* Don't jam bullet at edge of screen on mobile */
+            padding-left: 1rem
         }
-    }
 
-    figure {
-        max-width: 1200px;
-        margin: 0 auto 2rem auto;
-    }
+        @media screen and (min-width: 700px) {
+            ul {
+                padding-left: 0;
+            }
+        }
 
-    figure img {
-        width: 100%;
-    }
+        figure {
+            max-width: 1200px;
+            margin: 0 auto 2rem auto;
+        }
 
-    .full-width {
-        width: 100vw;
-        position: relative;
-        left: 50%;
-        right: 50%;
-        margin-left: -50vw;
-        margin-right: -50vw;
-    }
+        figure img {
+            width: 100%;
+        }
 
-    .container {
-        max-width: 700px;
-        margin: 0 auto;
-        padding: 0 1rem
-    }
+        .full-width {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
 
-    header {
-        margin-bottom: 2rem;
-    }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 1rem
+        }
 
-    header h1 {
-        margin: 0;
-        overflow: hidden;
-    }
+        header {
+            margin-bottom: 2rem;
+        }
 
-    section {
-        margin-bottom: 4rem;
-    }
+        header h1 {
+            margin: 0;
+            overflow: hidden;
+        }
 
-    h1, h2, h3 {
-        font-family: var(--sans-font-family);
-        font-weight: 700;
-        font-size: 1.2rem;
-    }
+        section {
+            margin-bottom: 4rem;
+        }
 
-    h3 {
-        font-weight: 500;
-    }
+        h1, h2, h3 {
+            font-family: var(--sans-font-family);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
 
-    .inline-icon {
-        height: 1em;
-        vertical-align: middle;
-        margin-left: -.2em;
-    }
+        h3 {
+            font-weight: 500;
+        }
 
-    .anchor-link {
-        padding: 0 .175rem;
-        font-weight: 400;
-        color: var(--branding-secondary-color);
-        text-decoration: none;
-        opacity: 0;
-        transition: color 0.15s ease-in-out,opacity 0.15s ease-in-out;
-    }
+        .inline-icon {
+            height: 1em;
+            vertical-align: middle;
+            margin-left: -.2em;
+        }
 
-    .anchor-link::after {
-        content: "#";
-    }
-
-    .anchor-link:focus, .anchor-link:hover, :hover > .anchor-link, :target .anchor-link {
-        text-decoration: none;
-        opacity: 1;
-    }
-
-    /* HERO */
-
-    #hero .display-text, #hero #overview {
-        opacity: 0;
-        animation: fade-in 1s ease forwards;
-        animation-delay: 3.4s;
-    }
-
-    @keyframes fade-in {
-        from {
+        .anchor-link {
+            padding: 0 .175rem;
+            font-weight: 400;
+            color: var(--branding-secondary-color);
+            text-decoration: none;
             opacity: 0;
+            transition: color 0.15s ease-in-out,opacity 0.15s ease-in-out;
         }
-        to {
+
+        .anchor-link::after {
+            content: "#";
+        }
+
+        .anchor-link:focus, .anchor-link:hover, :hover > .anchor-link, :target .anchor-link {
+            text-decoration: none;
             opacity: 1;
         }
-    }
 
-    @keyframes orbit {
-        0% {}
-        50% {transform: rotate(180deg);}
-        100% {transform: rotate(360deg);}
-    }
+        /* HERO */
 
-    @media (prefers-reduced-motion) {
-        /* styles to apply if a user's device settings are set to reduced motion */
-        #hero .imprint, #hero .date {
-            animation: none;
+        #hero .display-text, #hero #overview {
+            opacity: 0;
+            animation: fade-in 1s ease forwards;
+            animation-delay: 3.4s;
         }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes orbit {
+            0% {}
+            50% {transform: rotate(180deg);}
+            100% {transform: rotate(360deg);}
+        }
+
+        @media (prefers-reduced-motion) {
+            /* styles to apply if a user's device settings are set to reduced motion */
+            #hero .imprint, #hero .date {
+                animation: none;
+            }
+            .orbit {
+                animation: none;
+            }
+        }
+
+
+        #hero {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: clamp(.75rem,min(5vh, 10vw),3rem) 1rem;
+            overflow-x: clip; /* Allow underlay gradient to spill out */
+        }
+
+        #hero h1 {
+            font-weight: 600;
+            font-size: clamp(.75rem,min(8vh, 8vw),20rem);
+            line-height: .9;
+            font-family: var(--bs-body-font-family);
+        }
+
+        .display-text {
+            font-size: clamp(.75rem,min(5vh, 5vw),10rem);
+            line-height: 1;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        /* Interactive fountain */
+
+        #hero-toy {
+            display: block;
+            margin: clamp(1.33rem, 4vh, 2rem) auto;
+        }
+
+        /* Suppress loading text shown when p5.js is used with a preload */
+        #p5_loading {
+            display: none;
+        }
+        .diagram {
+            position: relative;
+            --size: clamp(300px, min(80vw,65vh), 800px);
+            --dot-width: clamp(5px, var(--size) * 0.01, 8px);
+            --orbit-offset: calc(var(--dot-width) * 3);
+            display: inline-block;
+            width: var(--size);
+        }
+
+        .diagram .toy-overlay {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 1;
+            left: 0;
+        }
+
+        .jets {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: calc(var(--size) * .6);
+            height: calc(var(--size) * .6);
+            margin-left: calc(-.3 * var(--size));
+            margin-top: calc(-.3 * var(--size));
+            z-index: 2;
+            pointer-events: none;
+        }
+        .clickable-circle {
+            clip-path: circle(47.5%);
+            cursor: pointer;
+        }
+
+        .ring {
+            position: relative;
+            left: 50%;
+            margin-left: calc(-.5 * var(--size));
+            height: calc(var(--size));
+            width: calc(var(--size));
+        }
+
+        .dot {
+            position: absolute;
+            height: calc(var(--size) + 2 * var(--orbit-offset));
+            width: var(--dot-width);
+            top: calc(-.5 * var(--dot-width) - var(--orbit-offset));
+            left: 50%;
+            margin-left: calc(-.5 * var(--dot-width));
+
+        }
+        .dot span {
+            display: block;
+            height: var(--dot-width);
+            width: var(--dot-width);
+            border-radius: 50%;
+            background-color: black;
+        }
+
+        .wavy-button {
+            text-decoration-thickness: .5px;
+            text-decoration-style: wavy;
+            text-decoration-color: var(--branding-color);
+            font-style: italic;
+            text-underline-offset: 2px;
+        }
+
         .orbit {
-            animation: none;
+            opacity: 0;
+            animation: fade-in 1s ease forwards, orbit 60s linear infinite;
+            transform-style: preserve-3d;
         }
-    }
+
+        .orbit.one {
+            animation: fade-in 1s ease forwards, orbit 53s linear infinite;
+            animation-delay: .5s, 0s;
+        }
+
+        .orbit.two {
+            animation: fade-in 1s ease forwards, orbit 67s linear infinite;
+            animation-delay: 2.3s, 0s;
+        }
+
+        .orbit.three {
+            animation: fade-in 1s ease forwards, orbit 61s linear infinite;
+            animation-delay: 2.5s, 0s;
+        }
+
+        .orbit.four {
+            animation: fade-in 1s ease forwards, orbit 59s linear infinite;
+            animation-delay: 2.7s, 0s;
+        }
+
+        .rotation-offset {
+            width: 100%;
+            height: 100%;
+        }
+
+        .orbit.two > .rotation-offset {
+            transform: rotate(150deg);
+        }
+
+        .orbit.three > .rotation-offset {
+            transform: rotate(200deg);
+        }
+
+        .orbit.four > .rotation-offset {
+            transform: rotate(265deg);
+        }
+
+        #underlay-gradient {
+            position: absolute;
+            width: 180%;
+            height: 180%;
+            left: -40%;
+            top: -40%;
+            z-index: -1;
+            background:
+                    radial-gradient(#d5d5d5 30%, transparent 70%);
+            mask: var(--noise), radial-gradient(black 20%, transparent 60%);
+        }
+
+        /* Section specific */
 
 
-    #hero {
-        max-width: 80rem;
-        margin: 0 auto;
-        padding: clamp(.75rem,min(5vh, 10vw),3rem) 1rem;
-        overflow-x: clip; /* Allow underlay gradient to spill out */
-    }
+        .imprint {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
 
-    #hero h1 {
-        font-weight: 600;
-        font-size: clamp(.75rem,min(8vh, 8vw),20rem);
-        line-height: .9;
-        font-family: var(--bs-body-font-family);
-    }
+        .imprint a {
+            text-decoration: none;
+            color: #333;
+            transition: .3s;
+        }
 
-    .display-text {
-        font-size: clamp(.75rem,min(5vh, 5vw),10rem);
-        line-height: 1;
-        font-style: italic;
-        font-weight: 300;
-    }
+        .imprint a:hover {
+            color: #bbb;
+        }
 
-    /* Interactive fountain */
+        .imprint img {
+            width: 100px;
+            opacity: .5;
+            transition: .3s;
+        }
 
-    #hero-toy {
-        display: block;
-        margin: clamp(1.33rem, 4vh, 2rem) auto;
-    }
+        .imprint:hover img {
+            opacity: .8;
+        }
 
-    /* Suppress loading text shown when p5.js is used with a preload */
-    #p5_loading {
-        display: none;
-    }
-    .diagram {
-        position: relative;
-        --size: clamp(300px, min(80vw,65vh), 800px);
-        --dot-width: clamp(5px, var(--size) * 0.01, 8px);
-        --orbit-offset: calc(var(--dot-width) * 3);
-        display: inline-block;
-        width: var(--size);
-    }
+        #overview {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            margin-bottom: 4rem;
+        }
 
-    .diagram .toy-overlay {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        z-index: 1;
-        left: 0;
-    }
+        .lede {
+            font-style: italic;
+        }
 
-    .jets {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: calc(var(--size) * .6);
-        height: calc(var(--size) * .6);
-        margin-left: calc(-.3 * var(--size));
-        margin-top: calc(-.3 * var(--size));
-        z-index: 2;
-        pointer-events: none;
-    }
-    .clickable-circle {
-        clip-path: circle(47.5%);
-        cursor: pointer;
-    }
+        #course-map {
+            border-radius: 1rem;
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 1rem;
+            max-height: 120vh;
+            /* Max height works fine in FF, but Safari will
+       draw a full width white background box. Setting contain gets rid of the visible box, but the element
+       box remains too big and the border radius won't render...
+     */
 
-    .ring {
-        position: relative;
-        left: 50%;
-        margin-left: calc(-.5 * var(--size));
-        height: calc(var(--size));
-        width: calc(var(--size));
-    }
+            /*object-fit: contain;*/
+        }
 
-    .dot {
-        position: absolute;
-        height: calc(var(--size) + 2 * var(--orbit-offset));
-        width: var(--dot-width);
-        top: calc(-.5 * var(--dot-width) - var(--orbit-offset));
-        left: 50%;
-        margin-left: calc(-.5 * var(--dot-width));
+        .accordion {
+            --bs-accordion-btn-focus-border-color: #bbb;
+            --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem var(--branding-secondary-color);
+            --bs-accordion-border-radius: .5rem;
+            --bs-accordion-inner-border-radius: .5rem;
+            --bs-accordion-body-padding-x: 1rem;
+            --bs-accordion-body-padding-y: .75rem;
+            --bs-accordion-btn-padding-x: 1rem;
+            --bs-accordion-btn-padding-y: .75rem;
+            --bs-accordion-bg: var(--bs-body-bg);
+            --bs-accordion-color: var(--bs-body-color);
+            --bs-accordion-active-color: var(--bs-emphasis-color);
+            --bs-accordion-active-bg: var(--branding-secondary-color-light);
+            --bs-accordion-btn-icon-width: 1rem;
+            --bs-accordion-border-color: #ccc;
+        }
 
-    }
-    .dot span {
-        display: block;
-        height: var(--dot-width);
-        width: var(--dot-width);
-        border-radius: 50%;
-        background-color: black;
-    }
+        .accordion-header button {
+            font-size: 21px;
+            font-family: var(--bs-body-font-family);
+            font-weight: 600;
+        }
 
-    .wavy-button {
-        text-decoration-thickness: .5px;
-        text-decoration-style: wavy;
-        text-decoration-color: var(--branding-color);
-        font-style: italic;
-        text-underline-offset: 2px;
-    }
-
-    .orbit {
-        opacity: 0;
-        animation: fade-in 1s ease forwards, orbit 60s linear infinite;
-        transform-style: preserve-3d;
-    }
-
-    .orbit.one {
-        animation: fade-in 1s ease forwards, orbit 53s linear infinite;
-        animation-delay: .5s, 0s;
-    }
-
-    .orbit.two {
-        animation: fade-in 1s ease forwards, orbit 67s linear infinite;
-        animation-delay: 2.3s, 0s;
-    }
-
-    .orbit.three {
-        animation: fade-in 1s ease forwards, orbit 61s linear infinite;
-        animation-delay: 2.5s, 0s;
-    }
-
-    .orbit.four {
-        animation: fade-in 1s ease forwards, orbit 59s linear infinite;
-        animation-delay: 2.7s, 0s;
-    }
-
-    .rotation-offset {
-        width: 100%;
-        height: 100%;
-    }
-
-    .orbit.two > .rotation-offset {
-        transform: rotate(150deg);
-    }
-
-    .orbit.three > .rotation-offset {
-        transform: rotate(200deg);
-    }
-
-    .orbit.four > .rotation-offset {
-        transform: rotate(265deg);
-    }
-
-    #underlay-gradient {
-        position: absolute;
-        width: 180%;
-        height: 180%;
-        left: -40%;
-        top: -40%;
-        z-index: -1;
-        background:
-                radial-gradient(#d5d5d5 30%, transparent 70%);
-        mask: var(--noise), radial-gradient(black 20%, transparent 60%);
-    }
-
-    /* Section specific */
+        .accordion-button::after {
+            filter: saturate(0%);
+        }
 
 
-    .imprint {
-        text-align: center;
-        margin-bottom: 1.5rem;
-        font-weight: 300;
-    }
+        .blockquote {
+            font-style: italic;
+            font-size: 1rem;
+        }
 
-    .imprint a {
-        text-decoration: none;
-        color: #333;
-        transition: .3s;
-    }
+        .blockquote-footer {
+            color: #888;
+        }
 
-    .imprint a:hover {
-        color: #bbb;
-    }
+        footer {
+            margin: 6rem 0 6rem 0;
+        }
 
-    .imprint img {
-        width: 100px;
-        opacity: .5;
-        transition: .3s;
-    }
+        #epilogue {
+            margin-top: 4rem;
+            padding-top: 4rem;
+        }
 
-    .imprint:hover img {
-        opacity: .8;
-    }
+        #epilogue .container {
+            margin-bottom: 2rem;
+        }
 
-    #overview {
-        max-width: 500px;
-        margin: 0 auto;
-        text-align: center;
-        margin-bottom: 4rem;
-    }
-
-    .lede {
-        font-style: italic;
-    }
-
-    .map-item > img {
-        border-radius: 1rem;
-        margin-bottom: 1rem;
-    }
-
-    #course-map {
-        max-height: 120vh;
-        display: block;
-        margin: 0 auto;
-        margin-bottom: 1rem;
-    }
-
-    .accordion {
-        --bs-accordion-btn-focus-border-color: #bbb;
-        --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem var(--branding-secondary-color);
-        --bs-accordion-border-radius: .5rem;
-        --bs-accordion-inner-border-radius: .5rem;
-        --bs-accordion-body-padding-x: 1rem;
-        --bs-accordion-body-padding-y: .75rem;
-        --bs-accordion-btn-padding-x: 1rem;
-        --bs-accordion-btn-padding-y: .75rem;
-        --bs-accordion-bg: var(--bs-body-bg);
-        --bs-accordion-color: var(--bs-body-color);
-        --bs-accordion-active-color: var(--bs-emphasis-color);
-        --bs-accordion-active-bg: var(--branding-secondary-color-light);
-        --bs-accordion-btn-icon-width: 1rem;
-        --bs-accordion-border-color: #ccc;
-    }
-
-    .accordion-header button {
-        font-size: 21px;
-        font-family: var(--bs-body-font-family);
-        font-weight: 600;
-    }
-
-    .accordion-button::after {
-        filter: saturate(0%);
-    }
+        #epilogue h1 {
+            margin-bottom: 2rem;
+        }
 
 
-    .blockquote {
-        font-style: italic;
-        font-size: 1rem;
-    }
+        /* Certs */
 
-    .blockquote-footer {
-        color: #888;
-    }
+        .cert-wrapper {
+            display: flex;
+            justify-content: center;
+        }
 
-    footer {
-        margin: 6rem 0 6rem 0;
-    }
+        .usatf-certificate {
+            font-size: .5rem;
+            font-family: var(--sans-font-family);
+            border: 2px solid #999;
+            border-radius: 1rem;
+            display: inline-flex;
+            gap: 1rem;
+            flex-direction: row;
+            justify-content: center;
+            margin-bottom: 0;
+            padding: .75rem .75rem;
+            text-decoration: none;
+            color: #666;
+            transition: .3s;
+        }
 
-    #epilogue {
-        margin-top: 4rem;
-        padding-top: 4rem;
-    }
+        .usatf-certificate:hover {
+            color: black;
+            border: 2px solid #333;
+        }
 
-    #epilogue .container {
-        margin-bottom: 2rem;
-    }
+        .usatf-certificate.full:hover {
+            border: 2px solid var(--branding-color);
+        }
 
-    #epilogue h1 {
-        margin-bottom: 2rem;
-    }
+        .usatf-certificate.half:hover {
+            border: 2px solid var(--branding-color-complement);
+        }
 
+        .usatf-certificate:hover img {
+            opacity: 1;
+        }
 
-    /* Certs */
+        .usatf-certificate img {
+            height: 5rem;
+            opacity: .6;
+            transition: .3s;
+        }
 
-    .cert-wrapper {
-        display: flex;
-        justify-content: center;
-    }
+        .usatf-certificate .details {
+            align-self: center;
+        }
 
-    .usatf-certificate {
-        font-size: .5rem;
-        font-family: var(--sans-font-family);
-        border: 2px solid #999;
-        border-radius: 1rem;
-        display: inline-flex;
-        gap: 1rem;
-        flex-direction: row;
-        justify-content: center;
-        margin-bottom: 0;
-        padding: .75rem .75rem;
-        text-decoration: none;
-        color: #666;
-        transition: .3s;
-    }
+        .usatf-certificate,
+        .usatf-certificate h2,
+        .usatf-certificate p {
+            font-size: .75rem;
+            margin-bottom: 0;
+        }
 
-    .usatf-certificate:hover {
-        color: black;
-        border: 2px solid #333;
-    }
+        /* Results */
 
-    .usatf-certificate.full:hover {
-        border: 2px solid var(--branding-color);
-    }
+        .table {
+            background: transparent;
+            width: auto;
+            min-width: 200px;
+            font-size: 21px;
+            line-height: 36px;
+        }
 
-    .usatf-certificate.half:hover {
-        border: 2px solid var(--branding-color-complement);
-    }
+        .table th {
 
-    .usatf-certificate:hover img {
-        opacity: 1;
-    }
+        }
 
-    .usatf-certificate img {
-        height: 5rem;
-        opacity: .6;
-        transition: .3s;
-    }
+        .table tr td {
+            border-bottom-width: 0;
+        }
 
-    .usatf-certificate .details {
-        align-self: center;
-    }
+        .table thead {
+            border-bottom-width: 1px;
+        }
 
-    .usatf-certificate,
-    .usatf-certificate h2,
-    .usatf-certificate p {
-        font-size: .75rem;
-        margin-bottom: 0;
-    }
+        .result-detail {
+            padding: 1rem;
+        }
 
-    /* Results */
+        .pswp-caption-content, .pswp__dynamic-caption {
+            font-weight: 300;
+        }
+    </style>
+</head>
 
-    .table {
-        background: transparent;
-        width: auto;
-        min-width: 200px;
-        font-size: 21px;
-        line-height: 36px;
-    }
-
-    .table th {
-
-    }
-
-    .table tr td {
-        border-bottom-width: 0;
-    }
-
-    .table thead {
-        border-bottom-width: 1px;
-    }
-
-    .result-detail {
-        padding: 1rem;
-    }
-
-    .pswp-caption-content, .pswp__dynamic-caption {
-        font-weight: 300;
-    }
-</style>
 <body>
 
 <header id="hero" class="text-center">
@@ -600,7 +603,8 @@ redirect_from:
             cyclists.</p>
             <div class="map-item">
                 <img id="course-map" src="{{ site.baseurl }}/img/dm24/dm-course-map-alt.svg"
-                     alt="A map of the course showing the full start line 129.17m north of the fountain and the half start line 65.97m north of the fountain, followed by 219 or 109 laps of the 192.37m fountain loop.">
+                         alt="A map of the course showing the full start line 129.17m north of the fountain and the half start line 65.97m north of the fountain, followed by 219 or 109 laps of the 192.37m fountain loop.">
+
                 <div class="d-flex justify-content-center gap-2 gap-md-4 flex-column flex-md-row">
                     <div class="cert-wrapper">
                         <a class="usatf-certificate full" href="https://certifiedroadraces.com/certificate/?type=m&id=3255">
@@ -822,6 +826,12 @@ redirect_from:
 
 <footer>
     <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg" alt="A happy piece of toast who is running"/></a></p>
+
+    <ul class="list-unstyled d-flex justify-content-center gap-3 opacity-50 font-weight-light">
+        <li><a href="{{ site.baseurl }}/dm24">2024</a></li>
+        <li><a href="{{ site.baseurl }}/dhm23">2023</a></li>
+        <li><a href="{{ site.baseurl }}/dhm22">2022</a></li>
+    </ul>
 </footer>
 
 <script type="module">

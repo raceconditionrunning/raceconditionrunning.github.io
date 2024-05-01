@@ -21,254 +21,251 @@ redirect_from:
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Yrsa:ital,wght@0,300..700;1,300..700&family=Prompt:wght@700&display=swap"
           rel="stylesheet">
+    <style>
+        :root {
+            font-size: 21px;
+            line-height: 1.5;
+            --bs-body-font-family: 'Yrsa', serif;
+            --sans-font-family: "Avenir Next", "Prompt", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        }
+        body {
+            margin: 0;
+        }
 
-</head>
-<style>
-    :root {
-        font-size: 21px;
-        line-height: 1.5;
-        --bs-body-font-family: 'Yrsa', serif;
-        --sans-font-family: "Avenir Next", "Prompt", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    }
-    body {
-        margin: 0;
-    }
-
-    a {
-        color: #333333;
-        --bs-link-hover-color: #555;
-    }
+        a {
+            color: #333333;
+            --bs-link-hover-color: #555;
+        }
 
 
-    hr {
-        width: 4rem;
-        margin: 3rem auto;
-        display: block;
-        border: 1px solid #DDD;
-    }
+        hr {
+            width: 4rem;
+            margin: 3rem auto;
+            display: block;
+            border: 1px solid #DDD;
+        }
 
-    ul {
-        /* Don't jam bullet at edge of screen on mobile */
-        padding-left: .5rem
-    }
-
-    @media screen and (min-width: 700px) {
         ul {
-            padding-left: 0;
+            /* Don't jam bullet at edge of screen on mobile */
+            padding-left: .5rem
         }
-    }
 
-    .imprint {
-        text-align: center;
-        margin-bottom: 1rem;
-        font-weight: 300;
-    }
+        @media screen and (min-width: 700px) {
+            ul {
+                padding-left: 0;
+            }
+        }
 
-    .imprint a {
-        text-decoration: none;
-        color: #aaa;
-    }
+        .imprint {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
 
-    .imprint img {
-        width: 100px;
-        opacity: .5;
-    }
+        .imprint a {
+            text-decoration: none;
+            color: #aaa;
+        }
 
-    .container {
-        max-width: 700px;
-        margin: 0 auto;
-        padding: 0 .5rem
-    }
+        .imprint img {
+            width: 100px;
+            opacity: .5;
+        }
 
-    .call-wrapper {
-        display: flex;
-        justify-content: center;
-    }
-    .btn {
-        border-radius: 0;
-    }
-    .hero-button {
-        --bs-btn-hover-bg: #555;
-        background-color: #333;
-        --bs-btn-hover-color: white;
-        --bs-btn-hover-border-color: transparent;
-        color: white;
-        text-decoration: none;
-    }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 .5rem
+        }
 
-    dt {
-        font-weight: bold;
-    }
+        .call-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+        .btn {
+            border-radius: 0;
+        }
+        .hero-button {
+            --bs-btn-hover-bg: #555;
+            background-color: #333;
+            --bs-btn-hover-color: white;
+            --bs-btn-hover-border-color: transparent;
+            color: white;
+            text-decoration: none;
+        }
 
-    dd {
-        margin-left: 0;
-        margin-bottom: .5rem
-    }
+        dt {
+            font-weight: bold;
+        }
+
+        dd {
+            margin-left: 0;
+            margin-bottom: .5rem
+        }
 
 
-    header h1 {
-        margin: 0;
-        overflow: hidden;
-    }
+        header h1 {
+            margin: 0;
+            overflow: hidden;
+        }
 
-    #hero {
-        padding: 1.5rem 0 1rem 0;
-        margin-bottom: 1rem;
-    }
+        #hero {
+            padding: 1.5rem 0 1rem 0;
+            margin-bottom: 1rem;
+        }
 
-    #hero .date {
-        font-weight: 100;
-        font-size: 24px;
-        text-align: center;
-    }
+        #hero .date {
+            font-weight: 100;
+            font-size: 24px;
+            text-align: center;
+        }
 
-    #hero .imprint, #hero .date {
-        opacity: 0;
-        animation: fade-in 1s ease forwards;
-        animation-delay: 17s;
-    }
-
-    @keyframes fade-in {
-        from {
+        #hero .imprint, #hero .date {
             opacity: 0;
+            animation: fade-in 1s ease forwards;
+            animation-delay: 17s;
         }
-        to {
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        #logo {
+            position: relative;
+            max-width: 100%;
+            background: radial-gradient(closest-side, rgba(255, 255, 255, .4), rgba(255, 255, 255, 0));
+            pointer-events: none;
+        }
+
+        #logo img {
+            max-width: 100%;
+        }
+
+        #underlay {
+            position: absolute;
+            top: 0;
+            left: 0
+        }
+
+        @keyframes rotating {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(-360deg);
+            }
+        }
+
+        .gradient-swipe {
+            animation: sunrise 30s linear forwards;
+        }
+
+        @keyframes sunrise {
+            0% {
+                background-color: rgba(9, 25, 37, 0.6)
+            }
+            20% {
+                background-color: rgba(15, 41, 59, 0.6)
+            }
+            30% {
+                background-color: rgba(108, 36, 110, 0.4);
+            }
+            40% {
+                background-color: rgba(190, 98, 94, 0.4);
+            }
+            48% {
+                background-color: rgba(190, 145, 94, 0.4);
+            }
+            56% {
+                background-color: rgba(7, 98, 154, 0.4);
+            }
+            70% {
+                background-color: rgba(7, 98, 154, 0.4);
+            }
+            80% {
+                background-color: white;
+            }
+            100% {
+                background-color: white;
+            }
+        }
+
+        .rotating {
+            animation: rotating 600s linear infinite, pulse 60s ease-in-out alternate-reverse;
+
+        }
+
+        section {
+            margin-bottom: 2rem;
+        }
+
+
+        h1, h2, h3, .hero-button {
+            font-family: var(--sans-font-family);
+            font-weight: 700;
+            font-size: 1.2rem;
+
+        }
+
+        .anchor-link {
+            padding: 0 .175rem;
+            font-weight: 400;
+            color: rgba(0,0,0,0.5);
+            text-decoration: none;
+            opacity: 0;
+            transition: color 0.15s ease-in-out,opacity 0.15s ease-in-out;
+        }
+
+        .anchor-link::after {
+            content: "#";
+        }
+
+        .anchor-link:focus, .anchor-link:hover, :hover > .anchor-link, :target > .anchor-link {
+            text-decoration: none;
             opacity: 1;
         }
-    }
 
-    #logo {
-        position: relative;
-        max-width: 100%;
-        background: radial-gradient(closest-side, rgba(255, 255, 255, .4), rgba(255, 255, 255, 0));
-        pointer-events: none;
-    }
-
-    #logo img {
-        max-width: 100%;
-    }
-
-    #underlay {
-        position: absolute;
-        top: 0;
-        left: 0
-    }
-
-    @keyframes rotating {
-        from {
-            transform: rotate(0deg);
+        .hero-button {
+            font-weight: 600;
         }
-        to {
-            transform: rotate(-360deg);
+
+        #overview {
+            max-width: 500px;
+            margin: 0 auto;
+            margin-bottom: 4rem;
         }
-    }
 
-    .gradient-swipe {
-        animation: sunrise 30s linear forwards;
-    }
-
-    @keyframes sunrise {
-        0% {
-            background-color: rgba(9, 25, 37, 0.6)
+        #history, #overview {
+            font-weight: 100;
+            font-family: 'Yrsa', serif;
         }
-        20% {
-            background-color: rgba(15, 41, 59, 0.6)
+
+        .blockquote {
+            font-style: italic;
+            font-size: 1rem;
         }
-        30% {
-            background-color: rgba(108, 36, 110, 0.4);
+
+        footer {
+            margin: 4rem 0 4rem 0;
         }
-        40% {
-            background-color: rgba(190, 98, 94, 0.4);
+
+
+        figure {
+            max-width: 1200px;
+            margin: 0 auto 1rem auto;
         }
-        48% {
-            background-color: rgba(190, 145, 94, 0.4);
+
+        figure img {
+            width: 100%;
         }
-        56% {
-            background-color: rgba(7, 98, 154, 0.4);
-        }
-        70% {
-            background-color: rgba(7, 98, 154, 0.4);
-        }
-        80% {
-            background-color: white;
-        }
-        100% {
-            background-color: white;
-        }
-    }
+    </style>
+</head>
 
-    .rotating {
-        animation: rotating 600s linear infinite, pulse 60s ease-in-out alternate-reverse;
-
-    }
-
-    section {
-        margin-bottom: 2rem;
-    }
-
-
-    h1, h2, h3, .hero-button {
-        font-family: var(--sans-font-family);
-        font-weight: 700;
-        font-size: 1.2rem;
-
-    }
-
-    .anchor-link {
-        padding: 0 .175rem;
-        font-weight: 400;
-        color: rgba(0,0,0,0.5);
-        text-decoration: none;
-        opacity: 0;
-        transition: color 0.15s ease-in-out,opacity 0.15s ease-in-out;
-    }
-
-    .anchor-link::after {
-        content: "#";
-    }
-
-    .anchor-link:focus, .anchor-link:hover, :hover > .anchor-link, :target > .anchor-link {
-        text-decoration: none;
-        opacity: 1;
-    }
-
-    .hero-button {
-        font-weight: 600;
-    }
-
-    #overview {
-        max-width: 500px;
-        margin: 0 auto;
-        margin-bottom: 4rem;
-    }
-
-    #history, #overview {
-        font-weight: 100;
-        font-family: 'Yrsa', serif;
-    }
-
-    .blockquote {
-        font-style: italic;
-        font-size: 1rem;
-    }
-
-    footer {
-        margin: 4rem 0 4rem 0;
-    }
-
-
-    figure {
-        max-width: 1200px;
-        margin: 0 auto 1rem auto;
-    }
-
-    figure img {
-        width: 100%;
-    }
-
-
-
-</style>
 <body>
 
 <section id="hero" class="gradient-swipe">
@@ -380,6 +377,12 @@ redirect_from:
 
 <footer>
     <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg" alt="A happy piece of toast who is running"/></a></p>
+
+    <ul class="list-unstyled d-flex justify-content-center gap-3 opacity-50 font-weight-light">
+        <li><a href="{{ site.baseurl }}/dm24">2024</a></li>
+        <li><a href="{{ site.baseurl }}/dhm23">2023</a></li>
+        <li><a href="{{ site.baseurl }}/dhm22">2022</a></li>
+    </ul>
 </footer>
 
 
