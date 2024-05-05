@@ -78,12 +78,6 @@
   dist: 10.06
   map: "http://www.gmap-pedometer.com/?r=7189884"
 
-- id: cse-laurelhurst-loop
-  name: "CSE - Laurelhurst Loop"
-  dist: 6.52
-  map: "http://www.gmap-pedometer.com/?r=7202894"
-  cseroute: True
-
 - id: ob-overlake-lake-hill
   name: "OB: Overlake - Lake Hills Park"
   dist: 11.25
