@@ -59,7 +59,7 @@
 - date: "2021-11-13"
   plan:
     - time: "8:30"
-      route_id: arb-union
+      route_id: cse-arb-mercer-westlake-burke-loop
       notes: CCW
 
 - date: "2021-11-20"
