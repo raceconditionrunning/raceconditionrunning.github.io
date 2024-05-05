@@ -93,11 +93,6 @@
   dist: 9.63
   map: "https://www.gmap-pedometer.com/?r=7298432"
 
-- id: cse-seward
-  name: "PP: CSE to Seward"
-  dist: 12.77
-  map: "http://www.gmap-pedometer.com/?r=7329974"
-
 - id: west-seattle-loop-18
   name: "West Seattle Loop 18"
   dist: 18.4
