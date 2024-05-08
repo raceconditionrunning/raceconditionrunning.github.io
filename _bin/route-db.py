@@ -22,7 +22,8 @@ LOCS = [
     'RedTech',
     'Roosevelt',
     'SODO',
-    'Westlake'
+    'Westlake',
+    'WoodCafe'
 ]
 
 warnings = False
