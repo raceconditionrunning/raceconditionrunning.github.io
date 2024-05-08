@@ -108,12 +108,6 @@
   dist: 13.1
   map: "https://onthegomap.com/s/v8qu7a5s"
 
-- id: cse-locks-queen-anne-loop
-  name : "CSE Locks - Queen Anne Loop"
-  dist : 16.93
-  map : "https://www.gmap-pedometer.com/?r=7378977"
-  cseroute: True
-
 - id: cse-520-kirkland-marymoor
   name: "PP: CSE to Kirkland to Marymoor"
   dist: 18.00
