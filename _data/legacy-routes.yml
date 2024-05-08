@@ -108,11 +108,6 @@
   dist: 13.1
   map: "https://onthegomap.com/s/v8qu7a5s"
 
-- id: cse-520-kirkland-marymoor
-  name: "PP: CSE to Kirkland to Marymoor"
-  dist: 18.00
-  map: "https://www.gmap-pedometer.com/?r=7382424"
-
 - id: cap-hill-station-i90-ob
   name: "Capitol Hill Station - I90 Bridge OB"
   dist: 10.7
