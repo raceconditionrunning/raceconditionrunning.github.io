@@ -28,21 +28,21 @@ redirect_from:
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator.min.css" integrity="sha512-HdUIebGeOK7s+At/fOnnbX8vsz6Cl1KTeiRlBiQABTMSqw7kZRCxGiUnuF9lr+1xz5y8pL7jkCR+NNtVVkEqKg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator_bootstrap5.min.css" integrity="sha512-904y6HHQyQS2fAyIQ869rH3AAkxZeFuxo9vheji5zw+IPEyioMWN4Bt/VFhzO5edPZ9m1lwkpYgXcYcm1vzaFw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js" integrity="sha512-X/YkDZyjTf4wyc2Vy16YGCPHwAY8rZJY+POgokZjQB2mhIRFJCckEGc6YyX9eNsPfn0PzThEuNs+uaomE5CO6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"
             integrity="sha512-M7nHCiNUOwFt6Us3r8alutZLm9qMt4s9951uo8jqO4UwJ1hziseL6O3ndFyigx6+LREfZqnhHxYjKRJ8ZQ69DQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js" integrity="sha512-JRlcvSZAXT8+5SQQAvklXGJuxXTouyq8oIMaYERZQasB8SBDHZaUbeASsJWpk0UUrf89DP3/aefPPrlMR1h1yQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.min.js" integrity="sha512-eu9vkh+EbAsW3fMmPTj/DP5W3UegIdu0Z/OABMocvoofx43MYBkcQ9hRIVxZndV1vcCYQwBg+U1PkWl04TD0Jg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe-dynamic-caption-plugin/1.2.7/photoswipe-dynamic-caption-plugin.min.css" integrity="sha512-x20LXbTUxAMuniBAuSyDGScWaoCxvZJ8m0tbJCRtpPkvPgsb2kStG9ZhDQKHj5mDWaKFOP7TadAZ4KVAyFJwNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script type="importmap">
         {
           "imports": {
+            "bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.esm.min.js",
+            "p5": "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/p5.min.js",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
             "photoswipe-dynamic-caption": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe-dynamic-caption-plugin/1.2.7/photoswipe-dynamic-caption-plugin.esm.min.js",
+            "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js",
             "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/js/tabulator_esm.min.js"
           }
         }
@@ -89,7 +89,7 @@ redirect_from:
         }
 
         @media screen and (min-width: 700px) {
-            ul {
+            ul:not(.no-hanging) {
                 padding-left: 0;
             }
         }
@@ -138,7 +138,14 @@ redirect_from:
         }
 
         h3 {
-            font-weight: 500;
+            font-family: var(--bs-body-font-family);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        a.disabled {
+            color: gray;
+            pointer-events: none;
         }
 
         .inline-icon {
@@ -295,6 +302,10 @@ redirect_from:
             text-decoration-color: var(--branding-color);
             font-style: italic;
             text-underline-offset: 2px;
+        }
+
+        .wavy-button.disabled {
+            text-decoration-color: var(--branding-color-light);
         }
 
         .orbit {
@@ -574,11 +585,11 @@ redirect_from:
             </div>
         </div>
         <div class="col-auto">
-            <a class="wavy-button" href="https://forms.gle/BhJpHUGZSfjRMNds5">Apply for Full</a>
+            <a class="wavy-button disabled" href="https://forms.gle/BhJpHUGZSfjRMNds5" data-bs-toggle="tooltip" data-bs-title="Closed 5-1" data-bs-placement="bottom">Apply for Full</a>
             <div>5:30AM</div>
         </div>
         <div class="col-auto">
-            <a class="wavy-button" href="https://forms.gle/BhJpHUGZSfjRMNds5">Register for Half</a>
+            <a class="wavy-button" href="https://forms.gle/BhJpHUGZSfjRMNds5" data-bs-toggle="tooltip" data-bs-title="by 5-29" data-bs-placement="bottom">Register for Half</a>
             <div>8:00AM</div>
         </div>
 
@@ -593,14 +604,25 @@ redirect_from:
 <section id="course">
     <div class="container">
         <h2>Course <a href="#course" class="anchor-link" aria-label="Link to this section. Course"></a></h2>
-        <p>The course consists of a short segment down the upper vista followed by laps around Drumheller Fountain and the <a href="https://facilities.uw.edu/blog/posts/2016/04/05/drumheller-duckling-debut">duck ramp <img src="{{ site.baseurl }}/img/dm24/duck-icon.svg" class="inline-icon"/></a>. The marathon is 219 laps and the half is 109 laps. The two events will begin at different times and use different start lines. Those planning to complete fewer laps are welcome to join the half marathon start.</p>
+        <p>The course consists of a short segment down the upper vista followed by laps around Drumheller Fountain and the <a href="https://facilities.uw.edu/blog/posts/2016/04/05/drumheller-duckling-debut">duck ramp <img src="{{ site.baseurl }}/img/dm24/duck-icon.svg" class="inline-icon"/></a>.  The marathon comprises 219 laps and the half marathon consists of 109 laps. Both events will start at different times and locations. Participants aiming for fewer laps should start with the half marathon.</p>
 
         <p>The
-            direction will flip every hour, and runners must change directions only by rounding the marker placed
+            direction will flip every hour, and you must change directions only by rounding the marker placed
             at the edge of the finish line. Failure to follow these instructions will prevent us from giving you an
             official finish time.</p>
-        <p>While campus foot traffic is reduced on weekends, expect to navigate around fountain-admirers, passers-by and
-            cyclists.</p>
+
+        <p>While campus activity is reduced on weekends, expect to navigate around fountain-admirers, passers-by and
+            cyclists. The course is not closed.</p>
+
+        <h3>Etiquette</h3>
+
+        <ul class="no-hanging">
+            <li>Run along the curb (the inner lane)</li>
+            <li>Do not run more than two wide</li>
+            <li>Pass on the outside unless the other runner yields</li>
+            <li>Walk or stop outside the loop only</li>
+        </ul>
+
             <div class="map-item">
                 <img id="course-map" src="{{ site.baseurl }}/img/dm24/dm-course-map-alt.svg"
                          alt="A map of the course showing the full start line 129.17m north of the fountain and the half start line 65.97m north of the fountain, followed by 219 or 109 laps of the 192.37m fountain loop.">
@@ -632,6 +654,14 @@ redirect_from:
             </div>
         </div>
 
+</section>
+
+<section>
+    <div id="travel" class="container">
+        <h2>Travel <a href="#travel" class="anchor-link" aria-label="Link to this section. Travel"></a></h2>
+        <p>The course is served by the <a href="https://www.soundtransit.org/ride-with-us/stops-stations/university-washington-station?route_tab=arrivals">University of Washington light rail station</a>. <a href="https://www.soundtransit.org/ride-with-us/1-line-service-disruption">Minor service disruptions</a> will be in effect on June 1st. <a href="https://seattletransitmap.com/app/">Many bus routes</a> stop at UW station or U District station.</p>
+        <p>Central Plaza Garage (CPG) beneath Red Square is the closest parking. See the <a href="https://transportation.uw.edu/park/visitor/self-serve">University's page</a> for rates and instructions.</p>
+    </div>
 </section>
 
 <section>
@@ -679,6 +709,12 @@ redirect_from:
                         The cloudiest time of day is around 6:30 AM, at which time the chance of overcast or mostly cloudy conditions is 58%.
                     </blockquote>
                     <p class="blockquote-footer"><a href="https://weatherspark.com/d/913/6/1/Average-Weather-on-June-1-in-Seattle-Washington-United-States#Figures-Temperature">June 1 Weather in Seattle, Weather Spark</a></p>
+                </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>Is there gear check?</accordion-header>
+                <accordion-body>You can stash a bag near the aid station. You'll have line of sight the whole race but we won't have anyone attending to them.
                 </accordion-body>
             </accordion-item>
 
@@ -839,9 +875,16 @@ redirect_from:
     import {prepareImagesForPhotoswipe} from "{{site.baseurl}}/js/common.js";
     import PhotoSwipeLightbox from 'photoswipe-lightbox';
     import PhotoSwipeDynamicCaption from 'photoswipe-dynamic-caption';
+    import {Tooltip} from 'bootstrap'
+    import {} from 'p5'
+
     import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
     function initialize() {
         new p5(FountainToy("{{site.baseurl}}"), document.querySelector("#hero-toy .interactive"));
+
+        // Tooltips for sign-up deadlines
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
     }
 
     function setupLightboxes() {
