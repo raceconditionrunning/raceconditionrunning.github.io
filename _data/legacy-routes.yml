@@ -153,11 +153,6 @@
   dist: 7.2
   map: "https://onthegomap.com/s/i7mlk4f4"
 
-- id: westlake-sodo-industrial-p2p
-  name: "Westlake Station, SODO, Industrial P2P"
-  dist: 4.0
-  map: "https://onthegomap.com/s/m8pat8st"
-
 - id: westlake-sculpture-elliot-ob
   name: "Westlake Station, Sculpture Park, Elliot Bay OB"
   dist: 10.2
@@ -177,11 +172,6 @@
   name: "Westlake Station, Queen Anne Loop"
   dist: 7.75
   map: "https://onthegomap.com/s/nlfgct9h"
-
-- id: westlake-alibertos
-  name: "Westlake Station, SODO Station P2P"
-  dist: 4.7
-  map: "https://onthegomap.com/s/sghgkk1c"
 
 - id: roosevelt-big-carkeek-loop
   name: "Roosevelt Station, Big Carkeek Loop"

@@ -39,7 +39,7 @@
     - time: "9:00"
       route_id: westlake-queen-anne-loop
     - time: "10:15"
-      route_id: westlake-alibertos
+      route_id: westlake-waterfront-cranes-sodo
 
 - date: "2023-05-13"
   plan:
