@@ -103,11 +103,6 @@
   dist: 15.20
   map: "https://www.gmap-pedometer.com/?r=7375666"
 
-- id: sodo-west-seattle-hook-half
-  name: "RCR West Seattle Half"
-  dist: 13.1
-  map: "https://onthegomap.com/s/v8qu7a5s"
-
 - id: cap-hill-station-i90-ob
   name: "Capitol Hill Station - I90 Bridge OB"
   dist: 10.7
