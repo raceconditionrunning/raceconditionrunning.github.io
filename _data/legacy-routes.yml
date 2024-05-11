@@ -118,16 +118,6 @@
   dist: 9.1
   map: "https://onthegomap.com/s/pcm6o694"
 
-- id: south-industrial-loop-4th-airport
-  name: "SODO Station, 4th Ave + Airport Way Industrial Loop"
-  dist: 4.5
-  map: "https://onthegomap.com/s/n084r9na"
-
-- id: sodo-i90-view
-  name: "SODO Station, Mountains to Sound, I90 View OB"
-  dist: 6.0
-  map: "https://onthegomap.com/s/vdfutgu0"
-
 - id: northgate-shoreline-beach
   name: "Northgate Station, Shoreline Beach OB"
   dist: 12.2
