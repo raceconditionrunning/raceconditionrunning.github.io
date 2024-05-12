@@ -168,11 +168,6 @@
   dist: 9.1
   map: "https://onthegomap.com/s/l1ps9lsi"
 
-- id: uw-lake-union-loop
-  name: "UW Lake Union Loop"
-  dist: 8.1
-  map: "https://onthegomap.com/s/kp513k8r"
-
 - id: uw-portage-bay-agua-verde
   name: "UW, Portage Bay, Agua Verde"
   dist: 3.3
