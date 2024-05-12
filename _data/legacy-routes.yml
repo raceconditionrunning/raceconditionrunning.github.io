@@ -123,11 +123,6 @@
   dist: 12.2
   map: "https://onthegomap.com/s/9f25pcsk"
 
-- id: uw-to-sodo-station-lwb
-  name: "P2P: UW to SODO Station via LWB"
-  dist: 9.6
-  map: "https://onthegomap.com/s/4rgmm89h"
-
 - id: uw-to-pancake-corral
   name: "UW to Chase Pancake Corral, Beaches"
   dist: 10.3
