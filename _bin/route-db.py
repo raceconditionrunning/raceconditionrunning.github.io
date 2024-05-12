@@ -7,6 +7,7 @@ TYPES = ['Loop', 'P2P', 'OB']
 LOCS = [
     'Beacon',
     'Bellevue',
+    'BellDtwn',
     'CapHill',
     'CID',
     'ColCity',

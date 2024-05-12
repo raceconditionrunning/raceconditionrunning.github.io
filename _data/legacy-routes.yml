@@ -153,11 +153,6 @@
   dist: 11.4
   map: "https://onthegomap.com/s/de8kdgkq"
 
-- id: uw-bellevue-tc
-  name: "UW to Bellevue TC P2P"
-  dist: 9.1
-  map: "https://onthegomap.com/s/l1ps9lsi"
-
 - id: ob-arboretum-lwb-colman
   name: "OB: Arboretum, LWB, Colman"
   dist: 6.9
