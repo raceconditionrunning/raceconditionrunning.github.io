@@ -93,11 +93,6 @@
   dist: 9.63
   map: "https://www.gmap-pedometer.com/?r=7298432"
 
-- id: west-seattle-loop-15
-  name: "West Seattle Loop 15"
-  dist: 15.20
-  map: "https://www.gmap-pedometer.com/?r=7375666"
-
 - id: cap-hill-station-i90-ob
   name: "Capitol Hill Station - I90 Bridge OB"
   dist: 10.7
