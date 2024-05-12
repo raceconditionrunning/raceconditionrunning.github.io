@@ -113,11 +113,6 @@
   dist: 8.5
   map: "https://onthegomap.com/s/okme0g3a"
 
-- id: westlake-sculpture-elliot-ob
-  name: "Westlake Station, Sculpture Park, Elliot Bay OB"
-  dist: 10.2
-  map: "https://onthegomap.com/s/sj71l2mu"
-
 - id: beacon-chief-sealth-ob
   name: "Beacon Hill Station, Chief Sealth OB"
   dist: 7.6
