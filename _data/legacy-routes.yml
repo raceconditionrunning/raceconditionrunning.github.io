@@ -118,11 +118,6 @@
   dist: 12.2
   map: "https://onthegomap.com/s/9f25pcsk"
 
-- id: uw-to-pancake-corral
-  name: "UW to Chase Pancake Corral, Beaches"
-  dist: 10.3
-  map: "https://onthegomap.com/s/6pvff027"
-
 - id: roosevelt-magnuson-loop
   name: "Roosevelt Station, Magnuson Loop"
   dist: 8.5

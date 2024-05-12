@@ -22,6 +22,7 @@ LOCS = [
     'PacPav',
     'RedTech',
     'Roosevelt',
+    'SoBell',
     'SODO',
     'Westlake',
     'WoodCafe'
