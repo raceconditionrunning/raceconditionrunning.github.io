@@ -28,7 +28,7 @@
     - time: "9:00"
       route_id: caphill-volunteer-westlake
     - time: "9:45"
-      route_id: ob-westlake-sculpture-park
+      route_id: westlake-sculpture-park-ob
 
 - date: "2023-10-21"
   plan:

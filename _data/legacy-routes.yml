@@ -133,11 +133,6 @@
   dist: 6.9
   map: "https://onthegomap.com/s/0viljrvr"
 
-- id: ob-westlake-sculpture-park
-  name: "OB: Westlake Station, Sculpture Park"
-  dist: 5.1
-  map: "https://onthegomap.com/s/100kb28d"
-
 - id: caphill-volunteer-westlake
   name: "Cap Hill Station, Volunteer Park, Westlake Station"
   dist: 4.1
