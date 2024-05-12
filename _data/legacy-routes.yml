@@ -93,11 +93,6 @@
   dist: 9.63
   map: "https://www.gmap-pedometer.com/?r=7298432"
 
-- id: west-seattle-loop-18
-  name: "West Seattle Loop 18"
-  dist: 18.4
-  map: "https://www.gmap-pedometer.com/?r=7375664"
-
 - id: west-seattle-loop-15
   name: "West Seattle Loop 15"
   dist: 15.20
