@@ -113,11 +113,6 @@
   dist: 8.5
   map: "https://onthegomap.com/s/okme0g3a"
 
-- id: westlake-sculpture-queen-anne
-  name: "Westlake Station, Sculpture Park, Queen Anne Loop"
-  dist: 7.2
-  map: "https://onthegomap.com/s/i7mlk4f4"
-
 - id: westlake-sculpture-elliot-ob
   name: "Westlake Station, Sculpture Park, Elliot Bay OB"
   dist: 10.2
