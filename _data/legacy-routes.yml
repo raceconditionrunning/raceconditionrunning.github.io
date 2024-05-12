@@ -133,11 +133,6 @@
   dist: 6.9
   map: "https://onthegomap.com/s/0viljrvr"
 
-- id: caphill-volunteer-westlake
-  name: "Cap Hill Station, Volunteer Park, Westlake Station"
-  dist: 4.1
-  map: "https://onthegomap.com/s/ste3hrss"
-
 - id: northgate-resevoir-roosevelt
   name: "Northgate, Resevoir, Roosevelt"
   dist: 4.0
