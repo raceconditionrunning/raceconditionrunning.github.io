@@ -32,7 +32,7 @@
     - time: "9:00"
       route_id: cse-lake-union-loop
     - time: "10:15"
-      route_id: uw-portage-bay-agua-verde
+      route_id: cse-portage-bay-loop
 
 - date: "2023-05-06"
   plan:
