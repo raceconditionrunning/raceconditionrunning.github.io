@@ -128,11 +128,6 @@
   dist: 6.9
   map: "https://onthegomap.com/s/0viljrvr"
 
-- id: northgate-resevoir-roosevelt
-  name: "Northgate, Resevoir, Roosevelt"
-  dist: 4.0
-  map: "https://onthegomap.com/s/rfcnls5a"
-
 - id: ob-northgate-interurban
   name: "OB: Northgate Station, Interurban Trail"
   dist: 7.0

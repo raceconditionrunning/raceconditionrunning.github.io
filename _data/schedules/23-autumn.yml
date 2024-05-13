@@ -47,7 +47,7 @@
     - time: "9:00"
       route_id: ob-northgate-interurban
     - time: "10:15"
-      route_id: northgate-resevoir-roosevelt
+      route_id: northgate-resevoirs-roosevelt
 
 - date: "2023-11-11"
   plan:
