@@ -128,11 +128,6 @@
   dist: 6.9
   map: "https://onthegomap.com/s/0viljrvr"
 
-- id: ob-northgate-interurban
-  name: "OB: Northgate Station, Interurban Trail"
-  dist: 7.0
-  map: "https://onthegomap.com/s/k5486orc"
-
 - id: cc-genessee-lwb-seward-loop
   name: "Columbia City Station, Genessee Park, Seward Loop"
   dist: 8.0

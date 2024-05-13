@@ -45,7 +45,7 @@
 - date: "2023-11-04"
   plan:
     - time: "9:00"
-      route_id: ob-northgate-interurban
+      route_id: northgate-bitter-lake-ob
     - time: "10:15"
       route_id: northgate-resevoirs-roosevelt
 
