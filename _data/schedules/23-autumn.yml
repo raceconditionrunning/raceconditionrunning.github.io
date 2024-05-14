@@ -33,7 +33,7 @@
 - date: "2023-10-21"
   plan:
     - time: "9:00"
-      route_id: ob-cc-genesee-lwb
+      route_id: cc-genessee-lwb-south-ob
     - time: "10:15"
       route_id: cc-sealth-brunch
 
