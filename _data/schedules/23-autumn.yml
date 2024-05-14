@@ -35,7 +35,7 @@
     - time: "9:00"
       route_id: cc-genessee-lwb-south-ob
     - time: "10:15"
-      route_id: cc-sealth-brunch
+      route_id: cc-chief-sealth-cc-center
 
 - date: "2023-10-28"
   plan:
