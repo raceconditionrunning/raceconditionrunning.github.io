@@ -128,11 +128,6 @@
   dist: 6.9
   map: "https://onthegomap.com/s/0viljrvr"
 
-- id: cc-genessee-lwb-seward-loop
-  name: "Columbia City Station, Genessee Park, Seward Loop"
-  dist: 8.0
-  map: https://onthegomap.com/s/gvhj6t17
-
 - id: cc-cheasty-rainer-cc-brunch
   name: "Columbia City Station, Cheasty Trail, Rainier Ave"
   dist: 3.1
