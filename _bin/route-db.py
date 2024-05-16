@@ -118,7 +118,7 @@ def main():
         exit(1)
 
     # sort routes by start and increasing distance
-    routes.sort(key=lambda x: (x['start'], float(x['dist']), x['end'], x['type'], x['id']))
+    routes.sort(key=lambda x: (x['start'].lower(), float(x['dist']), x['end'], x['type'], x['id']))
 
     # write sorted routes back
     with open(csv_path, 'w') as f:
