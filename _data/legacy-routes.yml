@@ -3,11 +3,6 @@
   dist: 6.30
   map: "https://www.gmap-pedometer.com/?r=7176070"
 
-- id: seward-loop
-  name: "Seward Park Loop"
-  dist: 2.40
-  map: "http://www.gmap-pedometer.com/?r=6862844"
-
 - id: ob-madison-interlaken
   name: "OB: Madison - Interlaken Park"
   dist: 3.85

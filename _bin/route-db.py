@@ -2,7 +2,7 @@ import csv
 import os
 import sys
 
-FIELDS = ['id', 'name', 'start', 'dist', 'elev', 'end', 'type', 'map']
+FIELDS = ['id', 'name', 'start', 'dist', 'elev', 'end', 'type', 'map', 'deprecated']
 TYPES = ['Loop', 'P2P', 'OB']
 LOCS = [
     'Beacon',
@@ -22,6 +22,7 @@ LOCS = [
     'PacPav',
     'RedTech',
     'Roosevelt',
+    'Seward',
     'SoBell',
     'SODO',
     'Westlake',
@@ -40,8 +41,10 @@ def warn_rc(route, msg):
 def check_route(route, gpx_dir):
     # all fields set
     for field in FIELDS:
-        if field not in route or route[field].strip() == '':
+        if field not in route:
             warn_rc(route, f"missing '{field}' field")
+        elif field != 'deprecated' and route[field].strip() == '':
+            warn_rc(route, f"blank '{field}' field")
 
     # valid type
     if route['type'] not in TYPES:
@@ -62,6 +65,10 @@ def check_route(route, gpx_dir):
         assert 0 < float(route['elev'])
     except:
         warn_rc(route, f"invalid elev '{route['elev']}'")
+
+    # valid deprecation
+    if route['deprecated'] not in ['', 'T']:
+        warn_rc(route, f"invalid deprecated status '{route['deprecated']}'")
 
     # every route has a gpx
     gpx_path = os.path.join(gpx_dir, route['id']) + '.gpx'
