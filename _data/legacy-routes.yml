@@ -78,11 +78,6 @@
   dist: 11.25
   map: "https://www.gmap-pedometer.com/?r=7218048"
 
-- id: lake-washington-loop
-  name: "Lake Washington Loop"
-  dist: 19.01
-  map: "https://www.gmap-pedometer.com/?r=7218074"
-
 - id: ob-colman-seward
   name: "OB: Colman Park - Seward Park"
   dist: 9.63
