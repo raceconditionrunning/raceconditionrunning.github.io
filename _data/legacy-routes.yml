@@ -83,11 +83,6 @@
   dist: 9.63
   map: "https://www.gmap-pedometer.com/?r=7298432"
 
-- id: cap-hill-station-i90-ob
-  name: "Capitol Hill Station - I90 Bridge OB"
-  dist: 10.7
-  map: "https://onthegomap.com/s/a02ohof6"
-
 - id: beacon-lwb-seward-columbia
   name: "Beacon Hill Station - LWB - Seward Park - Columbia City"
   dist: 10.7
