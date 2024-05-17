@@ -58,11 +58,6 @@
   dist: 13.82
   map: "http://www.gmap-pedometer.com/?r=7177215"
 
-- id: magnuson-park-loop
-  name: "Magnuson Park Loop"
-  dist: 2.46
-  map: "http://www.gmap-pedometer.com/?r=7177173"
-
 - id: ob-madrona-madison-park
   name: "OB: Madrona - Madison Park"
   dist: 4.14
