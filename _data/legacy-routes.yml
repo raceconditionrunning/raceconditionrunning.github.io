@@ -78,11 +78,6 @@
   dist: 9.63
   map: "https://www.gmap-pedometer.com/?r=7298432"
 
-- id: beacon-chief-sealth-ob
-  name: "Beacon Hill Station, Chief Sealth OB"
-  dist: 7.6
-  map: "https://onthegomap.com/s/393e6oir"
-
 - id: ob-arboretum-lwb-colman
   name: "OB: Arboretum, LWB, Colman"
   dist: 6.9
