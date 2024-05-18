@@ -83,11 +83,6 @@
   dist: 7.6
   map: "https://onthegomap.com/s/393e6oir"
 
-- id: beacon-mt-sound-ob
-  name: "Beacon Hill Station, Mt to Sound OB"
-  dist: 4.2
-  map: "https://onthegomap.com/s/1fd0jvte"
-
 - id: ob-arboretum-lwb-colman
   name: "OB: Arboretum, LWB, Colman"
   dist: 6.9

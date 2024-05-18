@@ -8,7 +8,7 @@
     - time: "9:00"
       route_id: beacon-chief-sealth-ob
     - time: "10:15"
-      route_id: beacon-mt-sound-ob
+      route_id: beacon-mt-sound-i90-trail-judkins-ob
 
 - date: "2023-04-08"
   plan:
