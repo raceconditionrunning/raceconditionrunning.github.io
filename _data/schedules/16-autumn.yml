@@ -48,7 +48,7 @@
 - date: '2016-11-12'
   plan:
     - time: '8:50'
-      route_id: pp-discovery-alki
+      route_id: south-discovery-magnolia-elliott-bay-alki
       cancelled: "Illness and deadlines"
 - date: '2016-11-19'
   plan:

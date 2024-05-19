@@ -25,6 +25,7 @@ LOCS = [
     'Roosevelt',
     'Seward',
     'SoBell',
+    'SoDisco',
     'SODO',
     'Westlake',
     'WoodCafe'
