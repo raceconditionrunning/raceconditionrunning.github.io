@@ -1,11 +1,11 @@
 - date: '2015-09-06'
   plan:
     - time: '10:00'
-      route_id: discovery-park-loop
+      route_id: locks-discovery-loop
 - date: '2015-09-20'
   plan:
     - time: '9:00'
-      route_id: discovery-park-loop
+      route_id: locks-discovery-loop
 - date: '2015-09-27'
   plan:
     - time: '9:00'

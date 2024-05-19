@@ -8,11 +8,6 @@
   dist: 3.85
   map: "http://www.gmap-pedometer.com/?r=6957914"
 
-- id: discovery-park-loop
-  name: "Discovery Park Loop"
-  dist: 4.00
-  map: "http://www.gmap-pedometer.com/?r=6706949"
-
 - id: ob-discovery-golden-gardens
   name: "OB: Discovery - Golden Gardens"
   dist: 7.43

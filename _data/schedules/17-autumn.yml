@@ -76,5 +76,5 @@
     - time: '8:50'
       route_id: ob-magnolia-blvd-bridge
     - time: '10:10'
-      route_id: discovery-park-loop
+      route_id: locks-discovery-loop
 
