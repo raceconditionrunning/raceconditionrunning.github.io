@@ -61,7 +61,7 @@
 - date: '2018-06-09'
   plan:
     - time: '8:50'
-      route_id: ob-discovery-golden-gardens
+      route_id: locks-golden-gardens-ob
     - time: '10:20'
       route_id: discovery-magnolia-loop
 - date: '2018-06-16'
