@@ -51,7 +51,7 @@
           dist: 13.10
           map: "http://lakesammamishhalf.com/"
     - time: '8:50'
-      route_id: salmon-bay-fremont
+      route_id: locks-fremont-bridge-loop
     - time: '10:10'
       route_id: locks-golden-gardens-ob
 - date: '2019-03-09'

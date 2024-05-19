@@ -1,8 +1,3 @@
-- id: salmon-bay-fremont
-  name: "Salmon Bay - Fremont Loop"
-  dist: 6.30
-  map: "https://www.gmap-pedometer.com/?r=7176070"
-
 - id: ob-madison-interlaken
   name: "OB: Madison - Interlaken Park"
   dist: 3.85

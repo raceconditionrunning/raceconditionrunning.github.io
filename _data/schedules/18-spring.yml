@@ -71,7 +71,7 @@
 - date: '2018-06-23'
   plan:
     - time: '8:50'
-      route_id: salmon-bay-fremont
+      route_id: locks-fremont-bridge-loop
     - time: '10:10'
       route_id: locks-golden-gardens-ob
 - date: '2018-06-30'
