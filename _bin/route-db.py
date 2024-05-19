@@ -5,6 +5,7 @@ import sys
 FIELDS = ['id', 'name', 'start', 'dist', 'elev', 'end', 'type', 'map', 'deprecated']
 TYPES = ['Loop', 'P2P', 'OB']
 LOCS = [
+    'Alki',
     'Beacon',
     'BellDtwn',
     'CapHill',
@@ -51,6 +52,14 @@ def check_route(route, gpx_dir):
     # valid type
     if route['type'] not in TYPES:
         warn_rc(route, f"invalid type '{route['type']}'")
+
+    # sanity start and end wrt to type
+    if route['type'] in ['Loop', 'OB']:
+        if route['start'] != route['end']:
+            warn_rc(route, f"start and end must match for {route['type']} type")
+    if route['type'] == 'P2P':
+        if route['start'] == route['end']:
+            warn_rc(route, f"start and end must differ for P2P type")
 
     # valid start and end locations
     if route['start'] not in LOCS:

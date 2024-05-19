@@ -28,11 +28,6 @@
   dist: 3.07
   map: "http://www.gmap-pedometer.com/?r=7218014"
 
-- id: pp-discovery-alki
-  name: "PP: Discovery Park to Alki Beach"
-  dist: 13.54
-  map: "http://www.gmap-pedometer.com/?r=6875370"
-
 - id: ob-madison-seward
   name: "OB: Madison - Seward Park"
   dist: 13.82
