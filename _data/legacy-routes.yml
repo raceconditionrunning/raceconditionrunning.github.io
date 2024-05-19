@@ -13,11 +13,6 @@
   dist: 6.00
   map: "http://www.gmap-pedometer.com/?r=6957722"
 
-- id: ob-magnolia-blvd-bridge
-  name: "OB: Magnolia Blvd - Magnolia Bridge"
-  dist: 7.13
-  map: "http://www.gmap-pedometer.com/?r=7001208"
-
 - id: ob-madison-mt-baker-beach
   name: "OB: Madison - Mt. Baker Beach"
   dist: 7.19
