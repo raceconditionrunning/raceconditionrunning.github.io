@@ -63,7 +63,7 @@
     - time: '8:50'
       route_id: locks-golden-gardens-ob
     - time: '10:20'
-      route_id: discovery-magnolia-loop
+      route_id: locks-discovery-magnolia-interbay-loop
 - date: '2018-06-16'
   plan:
     - time: '8:50'
