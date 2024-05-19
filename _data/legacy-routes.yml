@@ -38,11 +38,6 @@
   dist: 10.06
   map: "http://www.gmap-pedometer.com/?r=7189884"
 
-- id: ob-overlake-lake-hill
-  name: "OB: Overlake - Lake Hills Park"
-  dist: 11.25
-  map: "https://www.gmap-pedometer.com/?r=7218048"
-
 - id: ob-colman-seward
   name: "OB: Colman Park - Seward Park"
   dist: 9.63
