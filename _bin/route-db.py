@@ -19,6 +19,7 @@ LOCS = [
     'Magnuson',
     'Marymoor',
     'MerSlough',
+    'Miller',
     'MtBaker',
     'Northgate',
     'PacPav',

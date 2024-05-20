@@ -20,7 +20,7 @@
 - date: '2018-04-21'
   plan:
     - time: '8:50'
-      route_id: ob-miller-park-mercer-island
+      route_id: miller-judkins-i90-bridge-ob
     - time: '10:40'
       route_id: ob-miller-park-interlaken
 - date: '2018-04-28'
