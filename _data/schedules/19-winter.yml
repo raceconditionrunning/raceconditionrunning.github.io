@@ -15,7 +15,7 @@
     - time: '8:50'
       route_id: ob-washington-park-sailing-club
     - time: '10:50'
-      route_id: ob-madison-interlaken
+      route_id: wash-park-interlaken-ob
 - date: '2019-02-02'
   plan:
     - time: '7:30'

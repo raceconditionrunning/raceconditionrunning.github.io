@@ -29,6 +29,7 @@ LOCS = [
     'SoBell',
     'SoDisco',
     'SODO',
+    'WashPark',
     'Westlake',
     'WoodCafe'
 ]

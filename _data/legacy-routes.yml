@@ -1,8 +1,3 @@
-- id: ob-madison-interlaken
-  name: "OB: Madison - Interlaken Park"
-  dist: 3.85
-  map: "http://www.gmap-pedometer.com/?r=6957914"
-
 - id: ob-madrona-park-sailing-club
   name: "OB: Madrona Park - Sailing Club"
   dist: 6.00

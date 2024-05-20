@@ -38,7 +38,7 @@
     - time: '8:50'
       route_id: ob-madison-mt-baker-beach
     - time: '10:10'
-      route_id: ob-madison-interlaken
+      route_id: wash-park-interlaken-ob
 - date: '2017-11-04'
   plan:
     - time: '8:50'
