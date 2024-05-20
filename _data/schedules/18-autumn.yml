@@ -73,7 +73,7 @@
 - date: '2018-12-08'
   plan:
     - time: '8:30'
-      route_id: ob-madison-mt-baker-beach
+      route_id: wash-park-lwb-mt-baker-beach-ob
     - time: '9:50'
       route_id: wash-park-interlaken-ob
 - date: '2018-12-14'

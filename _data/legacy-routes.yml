@@ -3,11 +3,6 @@
   dist: 6.00
   map: "http://www.gmap-pedometer.com/?r=6957722"
 
-- id: ob-madison-mt-baker-beach
-  name: "OB: Madison - Mt. Baker Beach"
-  dist: 7.19
-  map: "http://www.gmap-pedometer.com/?r=6957912"
-
 - id: ob-madison-seward
   name: "OB: Madison - Seward Park"
   dist: 13.82

@@ -36,7 +36,7 @@
 - date: '2017-10-28'
   plan:
     - time: '8:50'
-      route_id: ob-madison-mt-baker-beach
+      route_id: wash-park-lwb-mt-baker-beach-ob
     - time: '10:10'
       route_id: wash-park-interlaken-ob
 - date: '2017-11-04'
