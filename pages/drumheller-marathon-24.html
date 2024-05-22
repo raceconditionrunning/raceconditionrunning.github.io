@@ -23,7 +23,7 @@ redirect_from:
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Yrsa:ital,wght@0,300..700;1,300..700&family=Prompt:wght@700&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Yrsa:ital,wght@0,300..700;1,300..700&family=Prompt:wght@400;700&display=swap"
           rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator.min.css" integrity="sha512-HdUIebGeOK7s+At/fOnnbX8vsz6Cl1KTeiRlBiQABTMSqw7kZRCxGiUnuF9lr+1xz5y8pL7jkCR+NNtVVkEqKg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -59,6 +59,7 @@ redirect_from:
             --branding-color: #3CB6BF;
             --branding-color-light: #aedce6;
             --branding-color-complement: #BD81C6;
+            --branding-color-complement-light: #dface6;
             --branding-secondary-color: #B5AFA3;
             --branding-secondary-color-light: #D1CABD;
             --noise: url("{{ site.baseurl }}/img/dm24/noise.png");
@@ -89,7 +90,7 @@ redirect_from:
             border: 1px solid #DDD;
         }
 
-        ul {
+        ul, ol {
             /* Don't jam bullet at edge of screen on mobile */
             padding-left: 1rem
         }
@@ -310,6 +311,10 @@ redirect_from:
             text-underline-offset: 2px;
         }
 
+        .wavy-button.complement-color {
+            text-decoration-color: var(--branding-color-complement);
+        }
+
         .wavy-button.disabled {
             text-decoration-color: var(--branding-color-light);
         }
@@ -486,10 +491,10 @@ redirect_from:
         }
 
         .usatf-certificate {
-            font-size: .5rem;
+            font-size: .66rem;
             font-family: var(--sans-font-family);
             border: 2px solid #999;
-            border-radius: 1rem;
+            border-radius: .75rem;
             display: inline-flex;
             gap: 1rem;
             flex-direction: row;
@@ -519,7 +524,7 @@ redirect_from:
         }
 
         .usatf-certificate img {
-            height: 5rem;
+            height: 4rem;
             opacity: .6;
             transition: .3s;
         }
@@ -528,10 +533,9 @@ redirect_from:
             align-self: center;
         }
 
-        .usatf-certificate,
         .usatf-certificate h2,
         .usatf-certificate p {
-            font-size: .75rem;
+            font-size: inherit;
             margin-bottom: 0;
         }
 
@@ -743,7 +747,7 @@ redirect_from:
             <div>5:30AM</div>
         </div>
         <div class="col-auto">
-            <a class="wavy-button" href="https://forms.gle/BhJpHUGZSfjRMNds5" data-bs-toggle="tooltip" data-bs-title="by 5-29" data-bs-placement="bottom">Register for Half</a>
+            <a class="wavy-button complement-color" href="https://forms.gle/BhJpHUGZSfjRMNds5" data-bs-toggle="tooltip" data-bs-title="by 5-29" data-bs-placement="bottom">Register for Half</a>
             <div>8:00AM</div>
         </div>
 
@@ -762,8 +766,7 @@ redirect_from:
 
         <p>The
             direction will flip every hour, and you must change directions only by rounding the marker placed
-            at the edge of the finish line. Failure to follow these instructions will prevent us from giving you an
-            official finish time.</p>
+            at the edge of the finish line. We cannot provide you an official time unless you follow these instructions and complete the necessary number of laps.</p>
 
         <p>While campus activity is reduced on weekends, expect to navigate around fountain-admirers, passers-by and
             cyclists. The course is not closed.</p>
@@ -771,10 +774,10 @@ redirect_from:
         <h3>Etiquette</h3>
 
         <ul class="no-hanging">
-            <li>Run along the curb (the inner lane)</li>
+            <li>Run in the inner lane along the curb</li>
             <li>Do not run more than two wide</li>
             <li>Pass on the outside unless the other runner yields</li>
-            <li>Walk or stop outside the loop only</li>
+            <li>Walk or stop along the outside of the loop only</li>
         </ul>
 
             <div class="map-item">
@@ -908,7 +911,7 @@ redirect_from:
             <accordion-item>
                 <accordion-header>Do I have to run the whole thing?</accordion-header>
                 <accordion-body>
-                        No. Anyone running or walking fewer than 109 laps is welcome to join the half marathon. Here are some lap counts for common distances. Add a lap if not starting at the official start line.
+                        <p>No. Anyone running or walking fewer than 109 laps is welcome to join the half marathon. Here are some lap counts for common distances. Add a lap if not starting at the official start line.</p>
                         <table class="table table-sm ms-2 mt-2 mb-4">
                             <thead><tr><th scope="col">Distance</th><th scope="col">Laps</th></tr></thead>
                             <tbody>
@@ -923,7 +926,7 @@ redirect_from:
             </accordion-item>
             <accordion-item>
                 <accordion-header>How fast do I need to run?</accordion-header>
-                <accordion-body>The cutoff times and corresponding average paces are:
+                <accordion-body><p>The cutoff times and corresponding average paces are:</p>
                     <table class="table table-sm ms-2 mt-2 mb-4">
                         <thead><tr><th>Distance</th><th>Time</th><th>min/mi</th> <th>min/km</th></tr></thead>
                         <tbody>
@@ -950,53 +953,57 @@ redirect_from:
 
             <accordion-item>
                 <accordion-header>Is there gear check?</accordion-header>
-                <accordion-body>You can stash a bag near the aid station. You'll have line of sight the whole race but we won't have anyone attending to them.
+                <accordion-body><p>You can stash a bag near the aid station. You'll have line of sight the whole race, but they won't be attended.</p>
                 </accordion-body>
             </accordion-item>
 
             <accordion-item>
                 <accordion-header>How do we keep track of distance?</accordion-header>
-                <accordion-body>Use a running watch to mark laps if you're wearing one, though you should check that it is capable of handling 100+ laps. GPS will clip the curve, so don't rely on it for more than a couple
+                <accordion-body><p>Use a running watch to mark laps if you're wearing one, though you should check that it is capable of handling 100+ laps. GPS will clip the curve, so don't rely on it for more than a couple
                         laps at a
                         time.
                         We'll have <a href="https://en.wikipedia.org/wiki/Tally_counter">tally counters</a> available if
                         you
-                        prefer an analog counting aide. Counting without assistance is not recommended.
+                        prefer an analog counting aide.</p>
+
+
+                    <p>Counting without assistance is not recommended.</p>
                 </accordion-body>
             </accordion-item>
 
             <accordion-item>
                 <accordion-header>Which direction do we run?</accordion-header>
                 <accordion-body>
-                        The race will begin counterclockwise and alternate directions every hour to help balance the strain across your legs. Having the field run a single direction at a time will help us manage course congestion. Change directions only at the end of a lap and only by rounding the finish line marker.
+                        <p>The race will begin counterclockwise and alternate directions every hour to help balance the strain across your legs. Having the field run a single direction at a time will help us manage course congestion. Change directions only at the end of a lap and only by rounding the finish line marker.</p>
                 </accordion-body>
             </accordion-item>
 
             <accordion-item>
                 <accordion-header>How is the event being timed?</accordion-header>
                 <accordion-body>
-                        Video will be recorded and lap times will be marked. It is critical that you run at least the required number of laps to ensure we can provide you an official time.
+                    <p>Official times will be determined using a recorded video. It is critical that you run at least the required number of laps to ensure we can provide you an official time.</p>
+                    <p>Finalizing the results can take weeks. Please use the live tracking system so that you can receive an unofficial time immediately, and to make it easier for us to mark times.</p>
                 </accordion-body>
             </accordion-item>
 
             <accordion-item>
                 <accordion-header>Why do I have to apply for the marathon?</accordion-header>
                 <accordion-body>
-                        We can't guarantee spots until we know the overall makeup of the field. Here are some of the things we're taking into account:
+                        <p>We can't guarantee spots until we know the overall makeup of the field. Here are some of the things we're taking into account:</p>
                         <ol>
                             <li>We will only host the marathon distance if there are at least 3 registered participants who will start the race. <b>As of March 1st, the minimum field size is met.</b></li>
                             <li>If target times are highly disparate, we will need to test paces and plans on our compact course. If we cannot support all runners' plans, we will discuss compromises.</li>
                             <li>We will connect any participants targeting similar goals so that they can coordinate pacing plans. The more people that want to run similar paces, the more people that can participate.</li>
                             <li>We will not accept more runners than can have a good experience on our small course. If we need to be selective, we will judge based on evidence of preparedness in the form of prior race results and of commitment in the form of reasonable plans.</li>
                         </ol>
-                        Our goal is to confirm all applications by April 6th. We may close applications before then if the field fills.
+                        <p>Our goal is to confirm all applications by April 6th. We may close applications before then if the field fills.</p>
                 </accordion-body>
             </accordion-item>
 
             <accordion-item>
                 <accordion-header>Is it okay if I've never run a full marathon before?</accordion-header>
                 <accordion-body>
-                        Maybe. The answer will depend on your background, so please discuss with the organizers first if you would like to plan on Drumheller being your first marathon. As a rule of thumb, if you have not yet successfully completed a half marathon, you will have a better time doing that instead.
+                        <p>Maybe. The answer will depend on your background, so please discuss with the organizers first if you would like to plan on Drumheller being your first marathon. As a rule of thumb, if you have not yet successfully completed a half marathon, you will have a better time doing that instead.</p>
 
                 </accordion-body>
             </accordion-item>
@@ -1004,7 +1011,7 @@ redirect_from:
             <accordion-item>
                 <accordion-header>Are pacers allowed?</accordion-header>
                 <accordion-body>
-                        Yes. Runners intending to use pacers must submit a pacing plan with their application. Pacers can register after approval. Unlike most road races, we expect to be able to support rotating/non-starting pacers, however official times will only be given to participants who run the complete course.
+                        <p>Yes. Runners intending to use pacers must submit a pacing plan with their application. Pacers can register after approval. Unlike most road races, we expect to be able to support rotating/non-starting pacers, however official times will only be given to participants who run the complete course.</p>
                     </accordion-body>
             </accordion-item>
 
@@ -1012,30 +1019,29 @@ redirect_from:
             <accordion-item>
                 <accordion-header>Can I take breaks?</accordion-header>
                 <accordion-body>
-                        Yes. In addition to the aid station there are benches surrounding the course. You must continue running the lap in the same direction as when you stopped or the lap will not count. To remove this possibility, we recommend you start and stop only on at the lap finish line so you can begin the next lap in either direction.
+                        <p>Yes. In addition to the aid station there are benches surrounding the course. You must continue running the lap in the same direction as when you stopped or the lap will not count. To remove this possibility, we recommend you start and stop only on at the lap finish line so you can begin the next lap in either direction.</p>
                     </accordion-body>
             </accordion-item>
 
             <accordion-item>
                 <accordion-header>Why is the marathon start time so early?</accordion-header>
                 <accordion-body>
-
-                    The half marathon field is larger and includes a broader range of paces, so we are scheduling to minimize the overlap between the two events. We plan under the assumption that the day will be warm with clear skies (the odds of this are something like 30%). We cannot start the half marathon much later than 8:00AM as we want those runners (many running their first half) to wrap up before the heat and sun pick up around 10:30AM. We may shift the start times if the forecast for the day is favorable. Note that the <a href="https://www.soundtransit.org/sites/default/files/documents/schedule-link-1-line.pdf">first trains start arriving</a> to University of Washington Link station around 5:00AM on Saturdays.
+                    <p>The half marathon field is larger and includes a broader range of paces, so we are scheduling to minimize the overlap between the two events. We plan under the assumption that the day will be warm with clear skies (the odds of this are something like 30%). We cannot start the half marathon much later than 8:00AM as we want those runners (many running their first half) to wrap up before the heat and sun pick up around 10:30AM. We may shift the start times if the forecast for the day is favorable. Note that the <a href="https://www.soundtransit.org/sites/default/files/documents/schedule-link-1-line.pdf">first trains start arriving</a> to University of Washington Link station around 5:00AM on Saturdays.</p>
                 </accordion-body>
             </accordion-item>
 
             <accordion-item>
                 <accordion-header>Is this a Boston Qualifying race?</accordion-header>
                 <accordion-body>
-                        Yes, the full marathon will meet the B.A.A. criteria for a qualifying race (see <a href="https://www.baa.org/sites/default/files/2021-08/Boston_Marathon_Rules_and_Policies_08_2021.pdf">Rules and Policies</a> pp.5-6 &sect;2.2.1).
+                        <p>Yes, the full marathon will meet the B.A.A. criteria for a qualifying race (see <a href="https://www.baa.org/sites/default/files/2021-08/Boston_Marathon_Rules_and_Policies_08_2021.pdf">Rules and Policies</a> pp.5-6 &sect;2.2.1).</p>
                     </accordion-body>
             </accordion-item>
 
             <accordion-item>
                 <accordion-header>Isn't running a continuous curve going to slow me down?</accordion-header>
                 <accordion-body>
-                        Yes, but not substantially. You will need to supply an additional centripetal force due to the curve, but the effect of this is <a
-                            href="https://blog.stryd.com/2020/01/09/how-much-time-do-you-lose-due-to-curves-and-turns/">likely less than 1% when running at world record marathon pace on a 30m radius</a>. Because the force increases in the square of velocity, the effect is negligible for recreational runners. There are individual differences in running technique and physiology that may make the effect more or less pronounced for you. Consider practicing on the course or a track.
+                        <p>Yes, but not substantially. You will need to supply an additional centripetal force due to the curve, but the effect of this is <a
+                            href="https://blog.stryd.com/2020/01/09/how-much-time-do-you-lose-due-to-curves-and-turns/">likely less than 1% when running at world record marathon pace on a 30m radius</a>. Because the force increases in the square of velocity, the effect is negligible for recreational runners. There are individual differences in running technique and physiology that may make the effect more or less pronounced for you. Consider practicing on the course or a track.</p>
                     </accordion-body>
             </accordion-item>
 
@@ -1050,7 +1056,7 @@ redirect_from:
 
             <accordion-item>
                 <accordion-header>What if I'm late?</accordion-header>
-                <accordion-body>Run from the start line and join us! You must enter the course from "behind" the finish line in the direction that the field is running at the time you join. So, if we're running counterclockwise, start your first loop by crossing over the finish line from the east, and otherwise from the west. Note that this event is <a href="https://www.runnersworld.com/training/a20793329/chip-time-vs-gun-time/">gun time</a> only.
+                <accordion-body><p>Run from the start line and join us! You must enter the course from "behind" the finish line in the direction that the field is running at the time you join. So, if we're running counterclockwise, start your first loop by crossing over the finish line from the east, and otherwise from the west. Note that this event is <a href="https://www.runnersworld.com/training/a20793329/chip-time-vs-gun-time/">gun time</a> only.</p>
 
                 </accordion-body>
             </accordion-item>
