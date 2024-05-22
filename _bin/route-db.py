@@ -11,6 +11,7 @@ LOCS = [
     'CapHill',
     'CID',
     'ColCity',
+    'ColmanPark',
     'CSE',
     'GasWorks',
     'GreenLake',
