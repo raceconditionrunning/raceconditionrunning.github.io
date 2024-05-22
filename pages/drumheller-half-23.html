@@ -19,7 +19,7 @@ redirect_from:
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Yrsa:ital,wght@0,300..700;1,300..700&family=Prompt:wght@700&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Yrsa:ital,wght@0,300..700;1,300..700&family=Prompt:wght@400;700&display=swap"
           rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.1.0/css/tabulator.min.css" integrity="sha512-lYViaxM+7FHlHtQbmis/zPPWu+U+7AedEpiI1Jge4bhou50w1PxIokRz26zX4D3Jb9bEnaN9+mwDnjMKwFxqsg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -983,12 +983,11 @@ redirect_from:
 
                         , headerSort: false
                     },
-                    {title: "Meters", field: "distanceElapsed", responsive: 4, width: 200, headerSort: false, formatter: cell => cell.getValue().toFixed(1)},
+                    {title: "Meters", field: "distanceElapsed", responsive: 4, headerSort: false, formatter: cell => cell.getValue().toFixed(1)},
                     {
                         title: "Direction",
                         field: "direction",
                         responsive: 5,
-                        width: 200,
                         headerSort: false,
                         bottomCalc: (values, data, calcParams) => {
                             if (values.length === 0) {
