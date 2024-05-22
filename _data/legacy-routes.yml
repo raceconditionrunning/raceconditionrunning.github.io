@@ -3,11 +3,6 @@
   dist: 6.00
   map: "http://www.gmap-pedometer.com/?r=6957722"
 
-- id: ob-madison-seward
-  name: "OB: Madison - Seward Park"
-  dist: 13.82
-  map: "http://www.gmap-pedometer.com/?r=7177215"
-
 - id: ob-madrona-madison-park
   name: "OB: Madrona - Madison Park"
   dist: 4.14
