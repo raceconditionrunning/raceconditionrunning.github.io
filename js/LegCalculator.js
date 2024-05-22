@@ -7,7 +7,7 @@ export class LegCalculator extends HTMLElement {
   }
 
   setLegs(legs, exchangeNames) {
-      this.style.display = ""
+      this.style.display = "block"
       let valuesSlider = document.getElementById('leg-calculator-slider');
       let cumulativeDistances = [0]
       let cumulativeAscents = [0]
