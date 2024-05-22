@@ -31,13 +31,19 @@ redirect_from:
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"
             integrity="sha512-M7nHCiNUOwFt6Us3r8alutZLm9qMt4s9951uo8jqO4UwJ1hziseL6O3ndFyigx6+LREfZqnhHxYjKRJ8ZQ69DQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe-dynamic-caption-plugin/1.2.7/photoswipe-dynamic-caption-plugin.min.css" integrity="sha512-x20LXbTUxAMuniBAuSyDGScWaoCxvZJ8m0tbJCRtpPkvPgsb2kStG9ZhDQKHj5mDWaKFOP7TadAZ4KVAyFJwNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     <script type="importmap">
         {
           "imports": {
             "bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.esm.min.js",
+            "d3": "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm",
+            "lit": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
+            "lit-html": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
+            "lit-element": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
+            "maplibre-gl": "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.3.2/maplibre-gl.min.js",
             "p5": "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/p5.min.js",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
@@ -558,6 +564,154 @@ redirect_from:
         .pswp-caption-content, .pswp__dynamic-caption {
             font-weight: 300;
         }
+
+        track-map {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: min(max(50vh, 300px), 400px);
+        }
+
+        .tabulator {
+            font-size: 1rem;
+        }
+
+        .tabulator,
+        .tabulator .tabulator-header .tabulator-col,
+        .tabulator .tabulator-header,
+        .tabulator .tabulator-tableholder .tabulator-table,
+        .tabulator .tabulator-footer {
+            background-color: transparent;
+        }
+
+        .tabulator-row.tabulator-group {
+            background-color: rgba(255, 255, 255, 0.075) !important;
+        }
+
+        .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs {
+            background-color: transparent !important;
+        }
+
+        .tabulator-row, .tabulator-row.tabulator-row-even {
+            background-color: transparent;
+        }
+
+        .tabulator-row.details-opened.tabulator-selectable,
+        .tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
+            transition: .2s;
+        }
+
+        .tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+            background-color: rgba(255, 255, 255, .3);
+        }
+
+        .tabulator-row.tabulator-selectable:hover {
+            background-color: rgba(255, 255, 255, .3);
+        }
+
+        .tabulator-row.details-opened.tabulator-selectable,
+        .tabulator-row.details-opened.tabulator-selectable:hover {
+            background-color: #111;
+        }
+
+        .tabulator .tabulator-header {
+            border-top: none;
+        }
+
+        .laps-table {
+            padding: 1rem;
+        }
+
+        .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-bottom {
+            border-top: 2px solid #999;
+        }
+
+        .laps-table.tabulator .tabulator-header {
+            border-bottom: 1px dashed #999;
+        }
+
+        .laps-table .tabulator-row {
+            border-bottom: 1px dashed #999;
+        }
+
+        .laps-table .tabulator-row .tabulator-cell {
+            padding: 4px;
+        }
+        .laps-table.tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-bottom {
+            border-top: 1px dashed #999;
+            border-bottom: none;
+        }
+
+        .tabulator-row.tabulator-group {
+            border-top: 1px dashed #999;
+            border-right: none;
+        }
+
+        .tabulator-row.tabulator-group:first-of-type {
+            /* Hide the "official laps" header */
+            display: none;
+        }
+
+        .laps-table .tabulator-footer {
+            border-top: 1px dashed #999;
+            border-bottom: none;
+        }
+
+        .tabulator-tableholder, .tabulator-table {
+            max-width: 100%;
+        }
+
+        .bib {
+            font-weight: 600;
+            background-color: black;
+            color: white;
+            font-family: var(--sans-font-family);
+            border-radius: .25rem;
+            display: inline-block;
+            padding: 0 .25rem;
+            font-size: .75rem;
+        }
+        .bib.full, .full.form-check-input:checked {
+            background-color: var(--branding-color);
+        }
+        .bib.half, .half.form-check-input:checked {
+            background-color: var(--branding-color-complement);
+        }
+
+        .full.form-check-input:checked {
+            background-color: var(--branding-color);
+            border-color: var(--branding-color)
+        }
+        .half.form-check-input:checked {
+            background-color: var(--branding-color-complement);
+            border-color: var(--branding-color-complement)
+        }
+
+        .full.form-check-input:focus {
+            border-color: var(--branding-color);
+            box-shadow: 0 0 0 .25rem var(--branding-color-light);
+        }
+
+        .half.form-check-input:focus {
+            border-color: var(--branding-color-complement);
+            box-shadow: 0 0 0 .25rem var(--branding-color-complement-light);
+        }
+
+        .form-control:focus {
+            border-color: var(--branding-color);
+            outline: 0;
+            box-shadow: 0 0 0 .25rem var(--branding-color-light);
+        }
+
+        .input-group-text {
+            background-color: var(--bs-gray-400);
+        }
+        .beta-badge {
+            font-size: .66rem;
+            vertical-align: top;
+            font-weight: 400;
+            border-radius: .25rem;
+        }
     </style>
 </head>
 
@@ -661,6 +815,88 @@ redirect_from:
         <h2>Travel <a href="#travel" class="anchor-link" aria-label="Link to this section. Travel"></a></h2>
         <p>The course is served by the <a href="https://www.soundtransit.org/ride-with-us/stops-stations/university-washington-station?route_tab=arrivals">University of Washington light rail station</a>. <a href="https://www.soundtransit.org/ride-with-us/1-line-service-disruption">Minor service disruptions</a> will be in effect on June 1st. <a href="https://seattletransitmap.com/app/">Many bus routes</a> stop at UW station or U District station.</p>
         <p>Central Plaza Garage (CPG) beneath Red Square is the closest parking. See the <a href="https://transportation.uw.edu/park/visitor/self-serve">University's page</a> for rates and instructions.</p>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <h2 id="race-day">Race Day <a href="#race-day" class="anchor-link" aria-label="Link to this section. Race Day"></a></h2>
+        <ul>
+            <li>Bring a water bottle</li>
+            <li>Dress for sun and heat</li>
+            <li>Be at the start line 10 minutes early for course instructions and a photo</li>
+        </ul>
+    </div>
+</section>
+
+<section id="live-tracking">
+    <div class="container">
+        <h2 class="mb-3"><connection-dot></connection-dot> Live Tracking <span class="badge text-bg-secondary beta-badge">Beta</span> <a href="#live-tracking" class="anchor-link" aria-label="Link to this section. Live Tracking"></a></h2>
+        <div id="live-map">
+            <table-filter-manager>
+            </table-filter-manager>
+            <track-map data-center="[-122.307806, 47.653860]" data-start-angle="1.7" data-bounds="[[[-122.307824, 47.654168], [-122.307876, 47.654166], [-122.307928, 47.654161], [-122.307978, 47.654152],
+  [-122.308027, 47.65414], [-122.308075, 47.654125], [-122.30812, 47.654107], [-122.308162, 47.654086],
+  [-122.3082, 47.654063], [-122.308235, 47.654036], [-122.308266, 47.654008], [-122.308293, 47.653978],
+  [-122.308316, 47.653946], [-122.308333, 47.653913], [-122.308346, 47.653879], [-122.308354, 47.653844],
+  [-122.308356, 47.653809], [-122.308354, 47.653774], [-122.308346, 47.653739], [-122.308333, 47.653705],
+  [-122.308316, 47.653672], [-122.308293, 47.65364], [-122.308266, 47.65361], [-122.308235, 47.653581],
+  [-122.3082, 47.653555], [-122.308162, 47.653532], [-122.30812, 47.653511], [-122.308075, 47.653493],
+  [-122.308027, 47.653478], [-122.307978, 47.653466], [-122.307928, 47.653457], [-122.307876, 47.653452],
+  [-122.307824, 47.65345], [-122.307772, 47.653452], [-122.30772, 47.653457], [-122.307669, 47.653466],
+  [-122.30762, 47.653478], [-122.307573, 47.653493], [-122.307528, 47.653511], [-122.307486, 47.653532],
+  [-122.307447, 47.653555], [-122.307412, 47.653581], [-122.307381, 47.65361], [-122.307354, 47.65364],
+  [-122.307332, 47.653672], [-122.307314, 47.653705], [-122.307301, 47.653739], [-122.307294, 47.653774],
+  [-122.307291, 47.653809], [-122.307294, 47.653844], [-122.307301, 47.653879], [-122.307314, 47.653913],
+  [-122.307332, 47.653946], [-122.307354, 47.653978], [-122.307381, 47.654008], [-122.307412, 47.654036],
+  [-122.307447, 47.654063], [-122.307486, 47.654086], [-122.307528, 47.654107], [-122.307573, 47.654125],
+  [-122.30762, 47.65414], [-122.307669, 47.654152], [-122.30772, 47.654161], [-122.307772, 47.654166],
+  [-122.307824, 47.654168]]]"></track-map>
+            <div id="lap-table"></div>
+            <lap-table></lap-table>
+            <p class="small fst-italic text-muted">Tracking data are not official results</p>
+        </div>
+
+        <accordion-group id="leg-details-accordion">
+            <accordion-item>
+                <accordion-header>About live tracking</accordion-header>
+                <accordion-body>
+                    <div id="leg-details-table">
+                        <p>The <a href="https://owntracks.org/">OwnTracks</a>-powered live tracking system uses your phone to report location data to a server. This page processes that data to display an estimated lap count.</p>
+
+                        <p class="alert alert-warning">
+                            <b>Caveat emptor:</b> Test with your device before the race. Do not depend on live tracking counts.
+                        </p>
+                        <h3>Setup</h3>
+                        <ol class="no-hanging">
+                            <li>Install the client app for <a href="https://itunes.apple.com/us/app/mqttitude/id692424691?mt=8">iOS</a> or <a href="https://play.google.com/store/apps/details?id=org.owntracks.android">Android</a>. The app requires all the location permissions it prompts for, including the ability to run in the background. It will silently fail if they aren’t granted.</li>
+                            <li>Scan the QR code or import the config file you were emailed.</li>
+                            <li>Go to the fountain, open the app on your phone, and ensure the UI says “Move” (over the map on iOS, behind a play button on Android)</li>
+                            <li>Run around the fountain</li>
+                            <li>Kill the app or uninstall it when you are done testing or racing</li>
+                        </ol>
+                        <h3>Usage</h3>
+                        <ul class="no-hanging">
+                            <li>Only data from today is displayed</li>
+                            <li>Lap counts are fractional and ignore direction and start/end location</li>
+                            <li>Your location displays as a marker while you're on the course</li>
+                            <!--li>Click on a row in the table to display history and estimated lap information</li-->
+                            <li>Rows show a warning icon ⚠️ if they contain frequent GPS errors greater than 20m. Check your configuration, and keep your phone in an external pocket.</li>
+                        </ul>
+
+                        <h3>Privacy</h3>
+                        <ul class="no-hanging">
+                            <li>The client app reports GPS, WiFi/cellular, and battery percentage information</li>
+                            <li>Only information collected from within the course region will be stored</li>
+                            <li>Information is available publicly and identifiably until the day after the event</li>
+                            <li>We may retain information indefinitely to help improve the system in the future</li>
+                            <li>We may release de-identified versions of your data in the future</li>
+                        </ul>
+
+                    </div>
+                </accordion-body>
+            </accordion-item>
+        </accordion-group>
     </div>
 </section>
 
@@ -872,6 +1108,10 @@ redirect_from:
 
 <script type="module">
     import {FountainToy} from "{{ site.baseurl }}/js/fountain/fountainToy.js";
+    import {TrackMap} from "{{ site.baseurl }}/js/dm24/TrackMap.js";
+    import {TableFilterManager} from "{{ site.baseurl }}/js/dm24/TableFilterManager.js";
+    import {LapTable} from "{{ site.baseurl }}/js/dm24/LapTable.js";
+    import {LiveTrackingClient} from "{{ site.baseurl }}/js/dm24/LiveTrackingClient.js";
     import {prepareImagesForPhotoswipe} from "{{site.baseurl}}/js/common.js";
     import PhotoSwipeLightbox from 'photoswipe-lightbox';
     import PhotoSwipeDynamicCaption from 'photoswipe-dynamic-caption';
@@ -879,13 +1119,486 @@ redirect_from:
     import {} from 'p5'
 
     import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
+    import {Tabulator, ColumnCalcsModule, GroupRowsModule, FormatModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule, ReactiveDataModule, FilterModule} from 'tabulator-tables';
+
+    Tabulator.registerModule([ColumnCalcsModule, FormatModule, GroupRowsModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule, ReactiveDataModule, FilterModule]);
+
+    const startDistances = {"full": 129.17, "half": 65.97};
+    const goalLaps = {"full": 219, "half": 109};
+    const loopDistance = 192.37;
+
+    function formatTimeSince(seconds) {
+        const remainingSeconds = seconds % 60;
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+        if (days > 0) {
+            return `${days}d ${hours % 24}h ago`;
+        } else if (hours > 0) {
+            return `${hours}h ago`;
+        } else if (minutes > 0){
+            return `${minutes}m ago`;
+        } else if (seconds < 10) {
+            return 'now'
+        } else {
+            return `${seconds}s ago`;
+        }
+    }
+
+    function bibToEvent(bib) {
+        // Bib's are two hex digits
+        return parseInt(bib, 16) >= parseInt("F0", 16) ? 'full' : 'half';
+    }
+
+    function calculateWindingNumberAndAngularVelocity(track, center, startAngle=0.0) {
+        // Use `startAngle` to make the lap start be at angle 0.0
+        let totalAngle = 0.0;
+        const angularVelocities = [];
+        // Winding number is the (real-valued) number of times the curve winds around the center, where positive is counterclockwise
+        const relWindingNumbers = [];
+        // Absolute winding number is the number of times the curve winds around the center, where the sign is ignored
+        const absWindingNumbers = [];
+        const [centerX, centerY] = center;
+
+        for (let i = 0; i < track.length - 1; i++) {
+            const [x1, y1, t1] = track[i];
+            const [x2, y2, t2] = track[i + 1];
+
+            // vectors pointing from the center to the points
+            const vec1 = [x1 - centerX, y1 - centerY];
+            const vec2 = [x2 - centerX, y2 - centerY];
+
+            const timeElapsed = t2 - t1;
+            console.assert(timeElapsed >= 0, `Negative time elapsed between points ${i} and ${i + 1}`)
+            // Angle between vec1 and vec2
+            const angle = Math.atan2(vec2[1], vec2[0]) - Math.atan2(vec1[1], vec1[0]);
+
+            // Correct for crossing the -PI to PI boundary
+            const correctedAngle = angle >= Math.PI ? angle - 2 * Math.PI : (angle <= -Math.PI ? angle + 2 * Math.PI : angle);
+
+            totalAngle += correctedAngle;
+
+            if (timeElapsed === 0) {
+                // No time should mean that the points are the same
+                console.assert(correctedAngle === 0, `Angle ${correctedAngle} is non-zero for zero time elapsed`)
+                angularVelocities.push(0); // Avoid division by zero, assuming stationary if no time has passed
+
+            } else {
+                // Calculate angular velocity as angle change per unit of time
+                const angularVelocity = correctedAngle / timeElapsed;
+                angularVelocities.push(angularVelocity);
+            }
+            relWindingNumbers.push((totalAngle - startAngle) / (2 * Math.PI));
+            if (absWindingNumbers.length > 0) {
+                absWindingNumbers.push(absWindingNumbers[absWindingNumbers.length - 1] + Math.abs(correctedAngle / (2 * Math.PI)));
+            } else {
+                absWindingNumbers.push(Math.abs(correctedAngle / (2 * Math.PI)));
+            }
+        }
+
+        // Winding number is total angle divided by 2*PI
+        const windingNumber = totalAngle / (2 * Math.PI);
+        return { windingNumber, angularVelocities, windingNumbers: relWindingNumbers, absWindingNumbers };
+    }
+
+    function findLapSegments(track) {
+        let {windingNumber, angularVelocities, windingNumbers, absWindingNumbers} = calculateWindingNumberAndAngularVelocity(track, trackMap.center, trackMap.startAngle);
+        // A lap: starts and ends at the same angle on the track, and has a winding number of +/-1
+        // Let's segment the abs winding number into chunks incrementing by 1
+        let lapIndices = [0];
+        let complete = [];
+        let direction = [];
+        let windingTarget = 1;
+        for (let i = 1; i < absWindingNumbers.length; i++) {
+            const absWindingNumber = absWindingNumbers[i];
+            const lapWinding = windingNumbers[i] - windingNumbers[lapIndices[lapIndices.length - 1]];
+            const lapAbsWinding = absWindingNumber - absWindingNumbers[lapIndices[lapIndices.length - 1]];
+            if (windingTarget - lapAbsWinding < 0) {
+                // We've returned to the start angle
+                lapIndices.push(i);
+                // Check if the winding number of this chunk is up/down by 1
+                const isComplete = windingTarget - Math.abs(lapWinding) < 0;
+                complete.push(isComplete);
+                direction.push(lapWinding < 0);
+            }
+        }
+
+        return [lapIndices, complete, direction];
+    }
+
+    let expandRow = function (row) {
+        let detailsContainer = row.getElement()?.querySelector("lap-table")
+        if (!detailsContainer.classList.contains("initialized")) {
+            // Tabulator and Vega won't render correctly unless the parent element is visible
+            const data = row.getData()
+            // FIXME: This needs to be reactive to track changes
+            if (!data.track) {
+                return
+            }
+            const [lapIndices, complete, lapClockwise] = findLapSegments(data.track)
+            const lapTrack = lapIndices.map((start, i) => {
+                const end = i + 1 < lapIndices.length ? lapIndices[i + 1] : data.track.length - 1
+                return data.track.slice(start, end)
+            })
+            const lapTime = lapTrack.map((lap) => lap[lap.length - 1][2] - lap[0][2])
+            // First lap is long
+            const lapLength = Array(lapTrack.length).fill(loopDistance)
+            lapLength[0] = startDistances[bibToEvent(data.bib)] + loopDistance
+            const detailData = {
+                lapLength,
+                lapTrack,
+                complete,
+                lapClockwise,
+                lapTime
+            }
+            detailsContainer.addResultsDetails(detailData, goalLaps[bibToEvent(data.bib)]).then(() => {
+                row.getTable().redraw()
+            })
+            detailsContainer.classList.add("initialized")
+        } else {
+            row.getTable().redraw()
+        }
+    }
+
+    function addLapTableFormatter(row,e) {
+        // The formatter gets called every refresh it seems...
+        let rowElement = row.getElement()
+        rowElement.bib = `#result-${row.getData().bib}`
+        if (rowElement.querySelector("lap-table")) {
+            return
+        }
+        let detailFragment = new LapTable()
+        //create and style holder elements
+        const id = row.getData().bib
+        detailFragment.setAttribute('id', "result-detail-" + id + "");
+        detailFragment.setAttribute("hidden", "hidden")
+        rowElement.appendChild(detailFragment);
+    }
+
+    function beginRegularRefreshing() {
+        return setInterval(() => {
+            const now = new Date()
+            // Render out "last seen X ago" strings
+            table.getRows().forEach((row) => {
+                let data = row.getData()
+                const userRow = tableData.find((row) => row.username === data.username)
+                if (!data.track || data.track.length === 0) {
+                    return
+                }
+                let lastSample = data.lastUpdated
+                if (data.track.length > 0) {
+                    // Assume the last sample is the most recent
+                    lastSample = new Date(data.track[data.track.length - 1][2] * 1000)
+                }
+                userRow.freshness = (now - lastSample) / 1000
+
+            })
+        }, 1250);
+    }
+    let refreshInterval = null
+
+    let tableData = [
+    ]
+    function addUser(data) {
+        const username = data.username
+        let startFreshness = Date.now() / 1000 - data.tst
+        const lastUpdated = new Date(data.tst * 1000)
+        // For the initial fetch we'll take the last point timestamp as our "last update" timestamp
+        tableData.push({username: username, name: data.name, bib: data.tid, laps: null, freshness: startFreshness, track: null, lastUpdated: lastUpdated, trackRequested:false, accuracy: data.acc});
+        /*if (user.face) {
+            trackMap.updateMarker(user.tid, 'imageData', user.face)
+        }*/
+
+    }
+
+    let table = new Tabulator("#lap-table", {
+        reactiveData:true,
+        data:tableData,
+        selectable:false,
+        layout:"fitDataFill",
+        placeholder: "No laps today",
+        columns:[
+            {title:"Bib", field:"bib", formatter: (cell) => {
+                let data = cell.getRow().getData()
+                return `<div class='bib ${bibToEvent(data.bib)}'>${data.bib}</div>`
+            }},
+            {title:"Name", field:"name", formatter: (cell) => {
+                let data = cell.getRow().getData()
+                    return data["name"] ? data["name"] : data["username"]
+
+                }},
+
+            {title:"Laps", field:"laps",  formatter: cell => {
+                if (cell.getValue()) {
+                    return cell.getValue().toFixed(2)
+                } else {
+                    return ""
+                }
+
+                }},
+            {title:"Last Seen", field: "freshness",  formatter: (cell) => {
+                let data = cell.getRow().getData()
+                let freshness = data["freshness"]
+                    const accuracyWarning = data["accuracy"] > 23 ? ` <span class="text-warning">⚠️</span>` : ""
+                if (freshness === -1) {
+                    return ""
+                } else {
+                    return formatTimeSince(Math.ceil(freshness)) + accuracyWarning
+                }
+            }},
+            {title: "trackRequested", field: "trackRequested", visible: false},
+        ],
+        rowFormatter: addLapTableFormatter
+    });
+
+    function excludeTest(data, filterParams) {
+        return data.bib[0] !== "E"
+    }
+    function excludeFull(data, filterParams) {
+        return bibToEvent(data.bib) !== 'full'
+    }
+    function excludeHalf(data, filterParams) {
+        return bibToEvent(data.bib) !== 'half'
+    }
+
+    function aliveToday(data, filterParams) {
+        return data.lastUpdated > thisMorning
+    }
+    const filterManager = document.querySelector("table-filter-manager")
+    filterManager.table = table
+    filterManager.filters = {excludeTest, excludeFull, excludeHalf}
+
+
+    table.on("dataChanged", function(data){
+        // Think of the map as a reactive view of this table. Every time the data changes, we need to update the map
+        // Tabulator doesn't correctly clear the placeholder on its own
+        if (table.rowManager.getDisplayRows().length) {
+            table.rowManager._clearPlaceholder();
+        }
+
+        table.getRows().forEach((row) => {
+            const data = row.getData()
+            trackMap.updateMarker(data.bib, 'backgroundColor', bibToEvent(data.bib) === 'full' ? 'var(--branding-color)' : 'var(--branding-color-complement)' );
+            trackMap.updateMarker(data.bib, 'point', data.track ? data.track[data.track.length - 1] : null)
+            trackMap.updateMarker(data.bib, 'freshness', data.freshness);
+            trackMap.updateMarker(data.bib, 'visible', table.rowManager.getVisibleRows().find((row) => row.getData().bib === data.bib))
+            trackMap.updateMarker(data.bib, 'highlighted', data.highlighted)
+        })
+
+        trackMap.refreshMarkersSource()
+        table.getRows().filter((row) => !row.getData().highlighted).forEach((row) => {row.getElement()?.querySelector("lap-table")?.setAttribute("hidden", "hidden");
+            row.getElement().classList.remove("details-opened")
+        })
+        // Handle highlighted row
+        const highlighted = table.getRows().filter((row) => row.getData().highlighted)
+        highlighted.forEach((row) => {
+            row.getElement()?.querySelector("lap-table")?.toggleAttribute("hidden");
+            expandRow(row);
+            row.getElement().classList.add("details-opened")
+            if (row.getData().track) {
+                trackMap.updateTrack(row.getData().track)
+            }
+        })
+        if (!highlighted || highlighted.length === 0) {
+            trackMap.updateTrack([])
+        }
+
+    });
+    table.on("dataFiltered", function(filters, rows){
+        tableData.forEach((row) => {
+            trackMap.updateMarker(row.bib, 'visible', false)
+        })
+        rows.forEach((row) => {
+            const data = tableData.find((data) => data.bib === row.getData().bib)
+            // This row wasn't fetched earlier, so get it now
+            if (data.lastUpdated > thisMorning && !data.trackRequested) {
+                console.log("Requesting track for", data.username, "due to filterchange")
+                updateWithFullTrack(data.username)
+            }
+            trackMap.updateMarker(data.bib, 'visible', true)
+        })
+    });
+    table.on("rowClick", function(e, row) {
+        // Disabled pending more testing
+        return;
+        if (!(e.target.classList.contains("tabulator-row") || e.target.classList.contains("tabulator-cell"))) {
+            return
+        }
+        let data = row.getData()
+        if (!data.highlighted) {
+            table.getRows().forEach((row) => row.update({highlighted: false}))
+            row.update({highlighted: true})
+        } else {
+            table.getRows().forEach((row) => row.update({highlighted: false}))
+        }
+
+        let currentHash = window.location.hash
+        let newHash = `#result-${data.id}`
+        const details = row.getElement().querySelector("lap-table")
+        if (!details.attributes["hidden"]) {
+            history.replaceState(undefined, undefined, newHash)
+        } else if (currentHash === newHash) {
+            history.replaceState(undefined, undefined, " ")
+        }
+    });
+
+
+    const thisMorning = new Date();
+    thisMorning.setHours(0, 0, 0, 0);
+    let liveTracking = null
+    let trackMap = document.querySelector("track-map")
+    const liveBounds = [[
+        [
+            -122.306304,
+            47.653457
+        ],
+        [
+            -122.308144,
+            47.656089
+        ],
+        [
+            -122.310014,
+            47.655436
+        ],
+        [
+            -122.308154,
+            47.652844
+        ],
+        [
+            -122.306304,
+            47.653457
+        ]
+    ]]
+
+    const bounds = turf.polygon(JSON.parse(trackMap.getAttribute('data-bounds')));
+    trackMap.addLiveBounds(liveBounds);
+
+
+    function updateWithFullTrack(username) {
+        const data = tableData.find((data) => data.username === username)
+        data.trackRequested = true
+        return liveTracking.getLatestTrack(username, thisMorning).then((track) => {
+            const filteredTrack = turf.pointsWithinPolygon(turf.points(track), bounds).features.map((feature) => {
+                return feature.geometry.coordinates;
+            })
+            let freshness = -1
+            let laps = 0
+
+            if (filteredTrack.length > 2) {
+                const startTime = Date.now()
+                const {
+                    windingNumber,
+                    angularVelocities,
+                    windingNumbers,
+                    absWindingNumbers
+                } = calculateWindingNumberAndAngularVelocity(filteredTrack, trackMap.center, trackMap.startAngle);
+                const endTime = Date.now()
+                console.log(endTime - startTime)
+                // Epoch time
+                const latestStamp = track[track.length - 1][2];
+                const currentStamp = Date.now() / 1000;
+                freshness = currentStamp - latestStamp;
+                laps = absWindingNumbers[absWindingNumbers.length - 1]
+            } else {
+                console.warn("Filtered track is too short", filteredTrack)
+                console.warn("Original track", track.length)
+            }
+            data.track = filteredTrack
+            data.laps = laps
+            data.freshness = freshness
+            data.lastUpdated = new Date()
+
+            console.log("Updated", username)
+
+        });
+    }
     function initialize() {
         new p5(FountainToy("{{site.baseurl}}"), document.querySelector("#hero-toy .interactive"));
 
         // Tooltips for sign-up deadlines
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
+
+        const connectionDot = document.querySelector("connection-dot")
+        document.addEventListener("liveconnectionchange", (event) => {
+            connectionDot.setAttribute("state", event.detail.state)
+        });
+        liveTracking = new LiveTrackingClient("drumhellerlive.nickwalker.us");
+        document.addEventListener("livelocation", (event) => {
+            const payload = event.detail
+            let bib = payload.tid
+            let userRow = tableData.find((row) => row.bib === bib)
+            if (!userRow) {
+                console.warn("Received location update for unknown user, fetching full track", bib)
+                addUser(payload)
+                updateWithFullTrack(payload.username)
+                return
+            }
+            if (!payload.lon || !payload.lat || !payload.tst) {
+                console.log("Received incomplete location update for", bib, payload)
+                return
+            }
+            userRow.accuracy = payload.acc
+            let point = [payload.lon, payload.lat, payload.tst]
+            if (!userRow.trackRequested) {
+                // The base track hasn't even been requested. Drop this location event
+                return
+            }
+            if (!userRow.track) {
+                userRow.track = []
+            }
+            userRow.track.push(point)
+            userRow.lastUpdated = new Date()
+            if (userRow.track.length > 2) {
+                const {
+                    windingNumber,
+                    angularVelocities,
+                    windingNumbers,
+                    absWindingNumbers
+                } = calculateWindingNumberAndAngularVelocity(userRow.track.slice(-2), trackMap.center, trackMap.startAngle);
+                const increment = absWindingNumbers[absWindingNumbers.length - 1]
+                if (increment === undefined) {
+                    console.warn("Live update lap increment is undefined", userRow.track)
+                } else {
+                    userRow.laps += increment
+                }
+            }
+            const freshness = Date.now() / 1000 - payload.tst
+            userRow.freshness = freshness
+        });
+        liveTracking.getUsers().then((data) => {
+            data.map(user => addUser(user))
+            refreshInterval = beginRegularRefreshing()
+            table.addFilter(aliveToday);
+            liveTracking.enable()
+        }).then(() => {
+
+        });
+
     }
+    document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") {
+            Promise.all(table.rowManager.getVisibleRows().map((row) => {
+                    console.log("Requesting track for", row.getData().username, "due to visibility change")
+                    return updateWithFullTrack(row.getData().username)
+            })).then(() => {
+                console.log("All updated, starting regular refreshes")
+                refreshInterval = beginRegularRefreshing()
+                liveTracking.enable()
+            })
+            console.log("Page visible")
+
+        } else {
+            clearInterval(refreshInterval)
+            liveTracking.disable()
+            // Mark the tracks as stale so we re-request them when the page is visible again
+            tableData.forEach((row) => {
+                //console.log("Marking", row.username, "as stale")
+                row.trackRequested = false
+            })
+            console.log("Page hidden")
+        }
+    });
 
     function setupLightboxes() {
         prepareImagesForPhotoswipe(document.querySelectorAll(".auto-lightbox")).then(() => {
