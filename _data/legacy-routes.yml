@@ -8,11 +8,6 @@
   dist: 4.14
   map: "http://www.gmap-pedometer.com/?r=7177224"
 
-- id: ob-washington-park-sailing-club
-  name: "OB: Washington Park - Sailing Club"
-  dist: 10.06
-  map: "http://www.gmap-pedometer.com/?r=7189884"
-
 - id: ob-colman-seward
   name: "OB: Colman Park - Seward Park"
   dist: 9.63

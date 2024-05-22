@@ -70,7 +70,7 @@
       route:
         name: Light Rail Relay
     - time: "9:00"
-      route_id: ob-washington-park-sailing-club
+      route_id: wash-park-lwb-sailing-club-ob
 
 - date: "2019-10-26"
   plan:
