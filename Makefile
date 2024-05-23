@@ -2,7 +2,6 @@ DATA          = _data
 ROUTES        = $(DATA)/routes.yml
 ROUTE_DB_CSV  = $(DATA)/route-db.csv
 ROUTE_DB_YML  = $(DATA)/route-db.yml
-LEGACY_ROUTES = $(DATA)/legacy-routes.yml
 SCHEDULE      = $(DATA)/schedule.yml
 
 .PHONY: all build serve publish clean
@@ -12,12 +11,9 @@ all: build
 $(ROUTE_DB_YML): _bin/route-db.py $(ROUTE_DB_CSV)
 	python3 $< $(DATA)
 
-$(ROUTES): $(ROUTE_DB_YML) $(LEGACY_ROUTES)
-	cat $(ROUTE_DB_YML)     > $(ROUTES)
-	echo                   >> $(ROUTES)
-	echo "# LEGACY ROUTES" >> $(ROUTES)
-	echo                   >> $(ROUTES)
-	cat $(LEGACY_ROUTES)   >> $(ROUTES)
+$(ROUTES): $(ROUTE_DB_YML)
+	# TODO jekyll needs a .yml that has a different name than the .csv
+	cp $(ROUTE_DB_YML) $(ROUTES)
 
 rcc.ics: _bin/mkical.py $(SCHEDULE) $(ROUTES)
 	python3 $<
