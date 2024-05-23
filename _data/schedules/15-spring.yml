@@ -67,7 +67,7 @@
 - date: '2015-06-07'
   plan:
     - time: '10:00'
-      route_id: gas-works-around-green-lake
+      route_id: gas-works-around-green-lake-ob
 - date: '2015-06-13'
   plan:
     - time: '7:00'

@@ -23,7 +23,7 @@
 - date: '2014-9-28'
   plan:
     - time: '9:30'
-      route_id: gas-works-around-green-lake
+      route_id: gas-works-around-green-lake-ob
 - date: '2014-10-05'
   plan:
     - time: '9:20'
@@ -73,7 +73,7 @@
 - date: '2014-11-23'
   plan:
     - time: '9:00'
-      route_id: gas-works-locks-salmon-bay
+      route_id: gas-works-locks-salmon-bay-loop
 - date: '2014-11-30'
   plan:
     - time: '9:00'

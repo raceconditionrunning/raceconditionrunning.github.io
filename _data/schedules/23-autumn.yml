@@ -35,7 +35,7 @@
     - time: "9:00"
       route_id: cc-genessee-lwb-south-ob
     - time: "10:15"
-      route_id: cc-chief-sealth-cc-center
+      route_id: cc-chief-sealth-cc-center-loop
 
 - date: "2023-10-28"
   plan:
@@ -70,7 +70,7 @@
 - date: "2023-12-02"
   plan:
     - time: "9:00"
-      route_id: gas-works-locks-salmon-bay
+      route_id: gas-works-locks-salmon-bay-loop
 
 - date: "2023-12-09"
   plan:

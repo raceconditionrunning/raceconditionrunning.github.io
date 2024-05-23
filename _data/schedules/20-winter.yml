@@ -30,7 +30,7 @@
     - time: "8:50"
       route_id: miller-judkins-i90-bridge-ob
 
-- date: "2020-03-7"
+- date: "2020-03-07"
   plan:
     - time: "8:00"
       cancelled: "Pandemic"
@@ -39,9 +39,7 @@
         map: https://lakesammamishhalf.com/
         dist: 13.1
     - time: "8:50"
-      route_id:
-        name: "OB: Greenlake, Carkeek"
-        dist: 8.0
+      route_id: roosevelt-carkeek-phinney-ridge-loop
 
 - date: "2020-03-14"
   plan:
