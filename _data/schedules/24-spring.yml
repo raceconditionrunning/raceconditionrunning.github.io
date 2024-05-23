@@ -1,7 +1,7 @@
 - date: "2024-03-30"
   plan:
     - time: "9:00"
-      route_id: westlake-sculpture-interbay-queen-anne
+      route_id: westlake-sculpture-interbay-queen-anne-loop
 
 - date: "2024-04-06"
   plan:
@@ -31,7 +31,7 @@
 - date: "2024-05-11"
   plan:
     - time: "8:30"
-      route_id: roosevelt-carkeek-golden-gardens-roses
+      route_id: roosevelt-carkeek-golden-gardens-roses-loop
 
 - date: "2024-05-18"
   plan:
