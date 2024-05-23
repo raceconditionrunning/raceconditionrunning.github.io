@@ -99,9 +99,7 @@
 - date: "2019-11-23"
   plan:
     - time: "8:50"
-      route_id:
-        name: "PP: CSE, Columbia City"
-        dist: 8.0
+      route_id: cse-arb-lwb-cc
 
 - date: "2019-12-01"
   plan:
