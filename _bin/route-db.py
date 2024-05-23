@@ -82,7 +82,7 @@ def check_route(route, gpx_dir):
         warn_rc(route, f"invalid elev '{route['elev']}'")
 
     # valid deprecation
-    if route['deprecated'] not in ['', 'T']:
+    if route['deprecated'] not in ['', 'true']:
         warn_rc(route, f"invalid deprecated status '{route['deprecated']}'")
 
     # every route has a gpx
@@ -155,6 +155,8 @@ def main():
             f.write(f"  end: \"{route['end']}\"\n")
             f.write(f"  type: \"{route['type']}\"\n")
             f.write(f"  map: \"{route['map']}\"\n")
+            if route['deprecated']:
+                f.write(f"  deprecated: true\n")
             f.write('\n')
 
 if __name__ == '__main__':
