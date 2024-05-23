@@ -57,6 +57,18 @@ def check_route(route, gpx_dir):
     if route['type'] not in TYPES:
         warn_rc(route, f"invalid type '{route['type']}'")
 
+    # check id and name conventions for type
+    if route['type'] == 'Loop':
+        if not route['id'].endswith('-loop'):
+            warn_rc(route, f"Loop route ids should end with '-loop'")
+        if not route['name'].endswith(' Loop'):
+            warn_rc(route, f"Loop route name should end with ' Loop'")
+    if route['type'] == 'OB':
+        if not route['id'].endswith('-ob'):
+            warn_rc(route, f"OB route ids should end with '-ob'")
+        if not route['name'].startswith('OB: '):
+            warn_rc(route, f"OB route name should start with 'OB: '")
+
     # sanity start and end wrt to type
     if route['type'] in ['Loop', 'OB']:
         if route['start'] != route['end']:
