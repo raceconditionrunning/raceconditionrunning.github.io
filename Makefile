@@ -1,16 +1,19 @@
-ROUTES     = routes
-ROUTES_CSV = $(ROUTES)/db.csv
+ROUTES   = routes
+ROUTE_DB = $(ROUTES)/db.csv
 
 DATA       = _data
 ROUTES_YML = $(DATA)/routes.yml
 SCHEDULE   = $(DATA)/schedule.yml
 
-.PHONY: all build serve publish clean
+.PHONY: all check build serve publish clean
 
-all: build
+all: check build
 
-$(ROUTES_YML): _bin/route-db.py $(ROUTES_CSV)
-	python3 $< $(PWD)
+check:
+	python3 _bin/check-schedules.py
+
+$(ROUTES_YML): _bin/route-db.py $(ROUTE_DB)
+	python3 $<
 
 rcc.ics: _bin/mkical.py $(SCHEDULE) $(ROUTES_YML)
 	python3 $<

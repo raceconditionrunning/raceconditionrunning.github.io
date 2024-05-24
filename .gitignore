@@ -10,8 +10,9 @@ rcc_weekends.ics
 .DS_Store
 ztatlock-notes
 
-# python virtual environment
+# python virtual environment and caches
 .venv
+_bin/__pycache__
 
 # Bundler
 .bundle/
