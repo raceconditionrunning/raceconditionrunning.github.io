@@ -860,43 +860,50 @@ redirect_from:
             <p class="small fst-italic text-muted">Tracking data are not official results</p>
         </div>
 
-        <accordion-group id="leg-details-accordion">
+        <accordion-group id="live-tracking-accordion">
             <accordion-item>
-                <accordion-header>About live tracking</accordion-header>
+                <accordion-header>About</accordion-header>
                 <accordion-body>
-                    <div id="leg-details-table">
-                        <p>The <a href="https://owntracks.org/">OwnTracks</a>-powered live tracking system uses your phone to report location data to a server. This page processes that data to display an estimated lap count.</p>
+                    <p>The <a href="https://owntracks.org/">OwnTracks</a>-powered live tracking system uses your phone to report location data to a server. This page processes that data to display an estimated lap count.</p>
 
-                        <p class="alert alert-warning">
-                            <b>Caveat emptor:</b> Test with your device before the race. Do not depend on live tracking counts.
-                        </p>
-                        <h3>Setup</h3>
-                        <ol class="no-hanging">
-                            <li>Install the client app for <a href="https://itunes.apple.com/us/app/mqttitude/id692424691?mt=8">iOS</a> or <a href="https://play.google.com/store/apps/details?id=org.owntracks.android">Android</a>. The app requires all the location permissions it prompts for, including the ability to run in the background. It will silently fail if they aren’t granted.</li>
-                            <li>Scan the QR code or import the config file you were emailed.</li>
-                            <li>Go to the fountain, open the app on your phone, and ensure the UI says “Move” (over the map on iOS, behind a play button on Android)</li>
-                            <li>Run around the fountain</li>
-                            <li>Kill the app or uninstall it when you are done testing or racing</li>
-                        </ol>
-                        <h3>Usage</h3>
-                        <ul class="no-hanging">
-                            <li>Only data from today is displayed</li>
-                            <li>Lap counts are fractional and ignore direction and start/end location</li>
-                            <li>Your location displays as a marker while you're on the course</li>
-                            <!--li>Click on a row in the table to display history and estimated lap information</li-->
-                            <li>Rows show a warning icon ⚠️ if they contain frequent GPS errors greater than 20m. Check your configuration, and keep your phone in an external pocket.</li>
+                    <p class="alert alert-warning">
+                        <b>Caveat emptor:</b> Test with your device before the race. Do not depend on live tracking counts.
+                    </p>
+
+                    <h3>Usage</h3>
+                    <ul class="no-hanging">
+                        <li>This page displays only today's data</li>
+                        <li>Lap counts are fractional and ignore direction and start/end location</li>
+                        <li>Your location displays as a marker while you're on the course</li>
+                        <!--li>Click on a row in the table to display history and estimated lap information</li-->
+                        <li>Rows show a warning icon ⚠️ if they contain frequent GPS errors greater than 20m. Check your configuration, and keep your phone in an outer pocket if possible.</li>
+                    </ul>
+
+                    <h3>Privacy</h3>
+                    <ul class="no-hanging">
+                        <li>The client app reports GPS, WiFi/cellular, and battery percentage information</li>
+                        <li>Only information collected from within the course region will be stored</li>
+                        <li>Information is available publicly and identifiably until the day after the event</li>
+                        <li>We may retain information indefinitely to help improve the system in the future</li>
+                        <li>We may release de-identified versions of your data in the future</li>
+                    </ul>
+
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>Phone Setup</accordion-header>
+                <accordion-body>
+                    <ol class="no-hanging">
+                        <li>Install the client app for <a href="https://itunes.apple.com/us/app/mqttitude/id692424691?mt=8">iOS</a> or <a href="https://play.google.com/store/apps/details?id=org.owntracks.android">Android</a>. The app requires all the location permissions it prompts for, including the ability to run in the background. It will silently fail if they aren’t granted.
+                        <ul>
+                            <li>iOS: You can review the app's location permissions in Settings > Privacy & Security > Location Services</li>
                         </ul>
-
-                        <h3>Privacy</h3>
-                        <ul class="no-hanging">
-                            <li>The client app reports GPS, WiFi/cellular, and battery percentage information</li>
-                            <li>Only information collected from within the course region will be stored</li>
-                            <li>Information is available publicly and identifiably until the day after the event</li>
-                            <li>We may retain information indefinitely to help improve the system in the future</li>
-                            <li>We may release de-identified versions of your data in the future</li>
-                        </ul>
-
-                    </div>
+                        </li>
+                        <li>Scan the QR code you were emailed to configure the app.</li>
+                        <li>Go to the fountain, open the app on your phone, and ensure the UI says “Move” (over the map on iOS, behind a play button on Android)</li>
+                        <li>Run around the fountain, check that you appear on this page, and check that your lap number increases</li>
+                        <li>Kill the app or uninstall it when you are done testing or racing</li>
+                    </ol>
                 </accordion-body>
             </accordion-item>
         </accordion-group>
@@ -1487,7 +1494,7 @@ redirect_from:
             const filteredTrack = turf.pointsWithinPolygon(turf.points(track), bounds).features.map((feature) => {
                 return feature.geometry.coordinates;
             })
-            let freshness = -1
+            let freshness = data.freshness
             let laps = 0
 
             if (filteredTrack.length > 2) {
