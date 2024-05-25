@@ -143,6 +143,7 @@ def main():
             f.write(f"  end: \"{route['end']}\"\n")
             f.write(f"  type: \"{route['type']}\"\n")
             f.write(f"  map: \"{route['map']}\"\n")
+            f.write(f"  gpx: \"/routes/gpx/{route['id']}.gpx\"\n")
             if route['deprecated']:
                 f.write(f"  deprecated: true\n")
             f.write('\n')
