@@ -1,0 +1,13 @@
+- date: "2024-06-08"
+  plan:
+    - time: "8:30"
+      route_id: beacon-cheasty-lwb-genessee-cc
+    - time: "9:30"
+      route_id: cc-chief-sealth-new-holly-ob
+
+- date: "2024-06-15"
+  plan:
+    - time: "8:30"
+      route_id: locks-discovery-radar-magnolia-discovery-ob
+    - time: "9:50"
+      route_id: locks-golden-gardens-ob
