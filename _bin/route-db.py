@@ -2,8 +2,22 @@ import rcr
 import csv
 import os
 
-FIELDS = ['id', 'name', 'start', 'dist', 'elev', 'end', 'type', 'map', 'deprecated']
+FIELDS = [
+    'id',
+    'name',
+    'start',
+    'dist',
+    'up',
+    'down',
+    'end',
+    'type',
+    'map',
+    'deprecated'
+]
+
 TYPES = ['Loop', 'P2P', 'OB']
+
+# TODO factor out into a separate file
 LOCS = [
     'Alki',
     'Beacon',
@@ -50,7 +64,9 @@ def check_route(route):
     for field in FIELDS:
         if field not in route:
             warn_rc(route, f"missing '{field}' field")
-        elif field != 'deprecated' and route[field].strip() == '':
+        # TODO: eventually down should also be non-blank
+        #elif field != 'deprecated' and route[field].strip() == '':
+        elif field not in ['down', 'deprecated'] and route[field].strip() == '':
             warn_rc(route, f"blank '{field}' field")
 
     # valid type
@@ -83,17 +99,26 @@ def check_route(route):
     if route['end'] not in LOCS:
         warn_rc(route, f"invalid end '{route['end']}'")
 
-    # valid dist and elev
+    # valid dist, up, and down
     try:
         assert 0 < float(route['dist'])
     except:
-        warn_rc(route, f"invalid dist '{route['dist']}'")
+        warn_rc(route, f"invalid distance '{route['dist']}'")
     try:
-        assert 0 < float(route['elev'])
+        assert 0 < float(route['up'])
     except:
-        warn_rc(route, f"invalid elev '{route['elev']}'")
+        warn_rc(route, f"invalid elevation up '{route['up']}'")
+    # TODO: eventually down should also be non-blank
+    # try:
+    #     assert 0 <= float(route['down'])
+    # except:
+    #     warn_rc(route, f"invalid elevation down '{route['down']}'")
 
     # valid deprecation
+    if route['deprecated'].lower() in ['f', 'false']:
+        route['deprecated'] = ''
+    if route['deprecated'].lower() in ['t', 'true']:
+        route['deprecated'] = 'true'
     if route['deprecated'] not in ['', 'true']:
         warn_rc(route, f"invalid deprecated status '{route['deprecated']}'")
 
@@ -139,7 +164,8 @@ def main():
             f.write(f"  name: \"{route['name']}\"\n")
             f.write(f"  start: \"{route['start']}\"\n")
             f.write(f"  dist: {route['dist']}\n")
-            f.write(f"  elev: {route['elev']}\n")
+            f.write(f"  up: {route['up']}\n")
+            f.write(f"  down: {route['down']}\n")
             f.write(f"  end: \"{route['end']}\"\n")
             f.write(f"  type: \"{route['type']}\"\n")
             f.write(f"  map: \"{route['map']}\"\n")
