@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<gpx version="1.1" creator="https://onthegomap.com" xmlns="http://www.topografix.com/GPX/1/1">
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running">
   <metadata>
-    <name>8.92 mi route</name>
-    <link href="https://onthegomap.com">
-      <text>On The Go Map</text>
-    </link>
-    <time>2024-05-22T04:01:02.171Z</time>
-    <copyright author="On The Go Map, OpenStreetMap Contributors">
-      <year>2024</year>
-    </copyright>
+    <name>colman-park-lwb-seward-loop-ob</name>
+    <desc>OB: Colman Park, LWB, Seward Loop (8.9 mi)</desc>
+    <author>
+      <name>Race Condition Running</name>
+      <link href="https://raceconditionrunning.com">
+        <text>Race Condition Running</text>
+      </link>
+    </author>
   </metadata>
   <trk>
-    <name>8.92 mi route</name>
+    <name>colman-park-lwb-seward-loop-ob</name>
+    <desc>OB: Colman Park, LWB, Seward Loop (8.9 mi)</desc>
     <trkseg>
       <trkpt lat="47.5859" lon="-122.28665"/>
       <trkpt lat="47.58589" lon="-122.28665"/>

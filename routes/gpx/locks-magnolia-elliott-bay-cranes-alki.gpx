@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<gpx version="1.1" creator="https://onthegomap.com" xmlns="http://www.topografix.com/GPX/1/1">
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running">
   <metadata>
-    <name>15.15 mi route</name>
-    <link href="https://onthegomap.com">
-      <text>On The Go Map</text>
-    </link>
-    <time>2024-05-19T19:45:00.030Z</time>
-    <copyright author="On The Go Map, OpenStreetMap Contributors">
-      <year>2024</year>
-    </copyright>
+    <name>locks-magnolia-elliott-bay-cranes-alki</name>
+    <desc>Locks, Magnolia, Elliott Bay Trail, Cranes, Alki Beach (15.2 mi)</desc>
+    <author>
+      <name>Race Condition Running</name>
+      <link href="https://raceconditionrunning.com">
+        <text>Race Condition Running</text>
+      </link>
+    </author>
   </metadata>
   <trk>
-    <name>15.15 mi route</name>
+    <name>locks-magnolia-elliott-bay-cranes-alki</name>
+    <desc>Locks, Magnolia, Elliott Bay Trail, Cranes, Alki Beach (15.2 mi)</desc>
     <trkseg>
       <trkpt lat="47.66744" lon="-122.3962"/>
       <trkpt lat="47.6674" lon="-122.39621"/>

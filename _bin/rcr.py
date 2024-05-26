@@ -27,10 +27,18 @@ def load_route_db():
         reader = csv.DictReader(f, dialect='unix')
         return list(reader)
 
+def gpx_paths():
+  paths = []
+  for gpx in os.listdir(ROUTES_GPX):
+    if gpx.endswith('.gpx'):
+      path = os.path.join(ROUTES_GPX, gpx)
+      paths.append(path)
+  return sorted(paths)
+
 def schedule_paths():
   paths = []
-  for quarter in sorted(os.listdir(SCHEDULES)):
+  for quarter in os.listdir(SCHEDULES):
       if quarter.endswith('.yml'):
           path = os.path.join(SCHEDULES, quarter)
           paths.append(path)
-  return paths
+  return sorted(paths)

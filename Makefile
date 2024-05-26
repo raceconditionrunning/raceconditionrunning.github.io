@@ -5,15 +5,18 @@ DATA       = _data
 ROUTES_YML = $(DATA)/routes.yml
 SCHEDULE   = $(DATA)/schedule.yml
 
-.PHONY: all check build serve publish clean
+.PHONY: all check gis build serve publish clean
 
-all: check build
+all: check gis build
 
 check:
 	python3 _bin/check-schedules.py
 
 $(ROUTES_YML): _bin/route-db.py $(ROUTE_DB)
 	python3 $<
+
+gis: $(ROUTES_YML)
+	python3 _bin/route-gis.py
 
 rcc.ics: _bin/mkical.py $(SCHEDULE) $(ROUTES_YML)
 	python3 $<

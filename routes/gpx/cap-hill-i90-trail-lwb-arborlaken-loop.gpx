@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<gpx version="1.1" creator="https://onthegomap.com" xmlns="http://www.topografix.com/GPX/1/1">
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running">
   <metadata>
-    <name>10.86 mi route</name>
-    <link href="https://onthegomap.com">
-      <text>On The Go Map</text>
-    </link>
-    <time>2024-04-12T15:29:30.234Z</time>
-    <copyright author="On The Go Map, OpenStreetMap Contributors">
-      <year>2024</year>
-    </copyright>
+    <name>cap-hill-i90-trail-lwb-arborlaken-loop</name>
+    <desc>Cap Hill, I90 Trail, LWB, Arborlaken Loop (10.8 mi)</desc>
+    <author>
+      <name>Race Condition Running</name>
+      <link href="https://raceconditionrunning.com">
+        <text>Race Condition Running</text>
+      </link>
+    </author>
   </metadata>
   <trk>
-    <name>10.86 mi route</name>
+    <name>cap-hill-i90-trail-lwb-arborlaken-loop</name>
+    <desc>Cap Hill, I90 Trail, LWB, Arborlaken Loop (10.8 mi)</desc>
     <trkseg>
       <trkpt lat="47.6199" lon="-122.32088"/>
       <trkpt lat="47.61983" lon="-122.32088"/>
