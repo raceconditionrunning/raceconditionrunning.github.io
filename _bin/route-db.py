@@ -11,11 +11,13 @@ FIELDS = [
     'down',
     'end',
     'type',
+    'surface',
     'map',
     'deprecated'
 ]
 
 TYPES = ['Loop', 'P2P', 'OB']
+SURFACES = ['Road', 'Trail', 'Mixed']
 
 # TODO factor out into a separate file
 LOCS = [
@@ -64,14 +66,19 @@ def check_route(route):
     for field in FIELDS:
         if field not in route:
             warn_rc(route, f"missing '{field}' field")
-        # TODO: eventually down should also be non-blank
+        # TODO: eventually down and surface should also be non-blank
         #elif field != 'deprecated' and route[field].strip() == '':
-        elif field not in ['down', 'deprecated'] and route[field].strip() == '':
+        elif field not in ['down', 'surface', 'deprecated'] and route[field].strip() == '':
             warn_rc(route, f"blank '{field}' field")
 
     # valid type
     if route['type'] not in TYPES:
         warn_rc(route, f"invalid type '{route['type']}'")
+
+    # TODO eventually all routes should have a valid surface
+    # valid surface
+    # if route['surface'] not in SURFACES:
+    #     warn_rc(route, f"invalid surface '{route['surface']}'")
 
     # check id and name conventions for type
     if route['type'] == 'Loop':
