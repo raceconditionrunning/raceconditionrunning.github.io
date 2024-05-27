@@ -1,5 +1,6 @@
 ROUTES = routes
 ROUTE_DB = $(ROUTES)/db.csv
+ROUTES_JSON = $(ROUTES)/db.json
 ROUTES_GEOJSON = $(ROUTES)/geojson
 
 DATA = _data
@@ -13,12 +14,15 @@ all: check gis build
 check:
 	python3 _bin/check-schedules.py
 
+# also generates $(ROUTES_JSON)
 $(ROUTES_YML): _bin/route-db.py $(ROUTE_DB)
 	python3 $<
 
+# populates $(ROUTES_GEOJSON)
 gis: $(ROUTES_YML)
 	python3 _bin/route-gis.py
 
+# also generates rcc_weekends.ics
 rcc.ics: _bin/mkical.py $(SCHEDULE) $(ROUTES_YML)
 	python3 $<
 
@@ -29,7 +33,7 @@ serve: rcc.ics
 	watchy -w _config.yml -- bundle exec jekyll serve --watch --drafts --host=0.0.0.0
 
 clean:
-	rm -f $(ROUTES_YML)
+	rm -f $(ROUTES_YML) $(ROUTES_JSON)
 	rm -f $(ROUTES_GEOJSON)/*.geojson
 	rm -f rcc.ics rcc_weekends.ics
 	rm -rf _site/ .jekyll-cache/
