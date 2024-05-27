@@ -176,6 +176,7 @@ def main():
             f.write(f"  down: {route['down']}\n")
             f.write(f"  end: \"{route['end']}\"\n")
             f.write(f"  type: \"{route['type']}\"\n")
+            f.write(f"  surface: \"{route['surface']}\"\n")
             f.write(f"  map: \"{route['map']}\"\n")
             f.write(f"  gpx: \"/routes/gpx/{route['id']}.gpx\"\n")
             f.write(f"  geojson: \"/routes/geojson/{route['id']}.geojson\"\n")
