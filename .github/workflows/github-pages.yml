@@ -36,8 +36,11 @@ jobs:
       - name: Install calendar dependencies
         run: pip install -r requirements.txt
 
-      - name: Build routes
+      - name: Check and build routes from route db
         run: make _data/routes.yml
+
+      - name: Build GIS files
+        run: make gis
 
       - name: Build calendar
         run: make rcc.ics
