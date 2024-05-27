@@ -1,9 +1,10 @@
-ROUTES   = routes
+ROUTES = routes
 ROUTE_DB = $(ROUTES)/db.csv
+ROUTES_GEOJSON = $(ROUTES)/geojson
 
-DATA       = _data
+DATA = _data
 ROUTES_YML = $(DATA)/routes.yml
-SCHEDULE   = $(DATA)/schedule.yml
+SCHEDULE = $(DATA)/schedule.yml
 
 .PHONY: all check gis build serve publish clean
 
@@ -29,4 +30,6 @@ serve: rcc.ics
 
 clean:
 	rm -f $(ROUTES_YML)
-	rm -rf _site/ .jekyll-cache/ rcc.ics rcc_weekends.ics
+	rm -f $(ROUTES_GEOJSON)/*.geojson
+	rm -f rcc.ics rcc_weekends.ics
+	rm -rf _site/ .jekyll-cache/

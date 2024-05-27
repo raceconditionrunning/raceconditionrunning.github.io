@@ -4,10 +4,11 @@ import csv
 ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
 
 # key directories
-DATA       = os.path.join(ROOT, '_data')
-SCHEDULES  = os.path.join(ROOT, '_data', 'schedules')
-ROUTES     = os.path.join(ROOT, 'routes')
-ROUTES_GPX = os.path.join(ROOT, 'routes', 'gpx')
+DATA = os.path.join(ROOT, '_data')
+SCHEDULES = os.path.join(ROOT, '_data', 'schedules')
+ROUTES = os.path.join(ROOT, 'routes')
+ROUTES_GPX = os.path.join(ROUTES, 'gpx')
+ROUTES_GEOJSON = os.path.join(ROUTES, 'geojson')
 
 for path in [ROOT, DATA, ROUTES, ROUTES_GPX]:
   if not os.path.isdir(path):

@@ -142,7 +142,7 @@ def main():
         check_route(route)
 
     if warnings:
-        print("Exiting due to warnings - please fix and re-run.")
+        print("Exiting due to warnings. Please fix and re-run.")
         exit(1)
 
     # sort routes by start and increasing distance
@@ -170,9 +170,12 @@ def main():
             f.write(f"  type: \"{route['type']}\"\n")
             f.write(f"  map: \"{route['map']}\"\n")
             f.write(f"  gpx: \"/routes/gpx/{route['id']}.gpx\"\n")
+            f.write(f"  geojson: \"/routes/geojson/{route['id']}.geojson\"\n")
             if route['deprecated']:
                 f.write(f"  deprecated: true\n")
             f.write('\n')
+
+    # TODO write json version to routes/ for use in the app
 
 if __name__ == '__main__':
     main()
