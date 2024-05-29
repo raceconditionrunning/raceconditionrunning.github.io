@@ -142,9 +142,9 @@ def main():
 
     if is_summer:
         first_block_start_time = "16:40"
-        second_block_start_time = "17:30"
+        second_block_start_time = "17:25"
     else:
-        first_block_start_time = "17:30"
+        first_block_start_time = "17:25"
         second_block_start_time = "16:40"
 
 
