@@ -73,7 +73,9 @@ def route_geojson(lls, route):
             'down': route['down'],
             'end': route['end'],
             'type': route['type'],
+            'surface': route['surface'],
             'map': route['map'],
+            'deprecated': route['deprecated'] == 'true',
         },
         'geometry': {
             'type': 'LineString',
