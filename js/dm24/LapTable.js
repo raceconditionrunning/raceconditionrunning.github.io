@@ -29,24 +29,24 @@ export class LapTable extends HTMLElement {
         `;
     }
 
-    addResultsDetails(data, lapTarget) {
+    updateData(data, lapTarget) {
         let lapObjects = []
         let timeElapsed = 0
         let distanceElapsed = 0
-        let lapsRun = data.lapTime.length - 1
+        let lapsCompleted = 0
         for (let i = 0; i < data.lapTime.length; i++) {
             const lapDistance = data.lapLength[i]
             let pace = lapDistance / data.lapTime[i]
             timeElapsed += data.lapTime[i]
             distanceElapsed += lapDistance
             let direction = data.lapClockwise[i] ? "CCW" : "CW"
-            if (i === 0) {
-                // 0th lap is entrance from upper vista
-                direction = null
+            if (data.complete[i]) {
+                lapsCompleted++
             }
             lapObjects.push({
-                "n": i + 1,
-                "time": data.lapTime[i],
+                "index": i,
+                "lapNumber": data.complete[i] ? lapsCompleted : null,
+                "duration": data.lapTime[i],
                 "distance": lapDistance,
                 "distanceElapsed": distanceElapsed,
                 "timeElapsed": timeElapsed,
@@ -57,27 +57,30 @@ export class LapTable extends HTMLElement {
                 "direction": direction
             })
         }
+        this.table.replaceData(lapObjects)
+    }
 
+    initialize() {
         /*this.shadowRoot.querySelector(".laps-graph").appendChild(new LapPaceChart().draw(lapObjects, lapTarget, (barNumber)=> {
             view.scrollToRow(barNumber)
         }))*/
 
         let view
-        let lapsTable = new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             view = new Tabulator(this.querySelector(".laps-table"), {
-                data: lapObjects,
+                data: [],
                 selectable: false,
-                index: "n",
+                index: "index",
                 groupBy: "extra",
                 height: 300,
                 responsiveLayout: "collapse",
                 // Most recent lap on the top since that's what live trackers want to see
-                initialSort: [{column: "n", dir: "desc"}],
+                initialSort: [{column: "index", dir: "desc"}],
                 columns: [
-                    {title: "N", field: "n", sorter: "number", responsive: 0},
+                    {title: "N", field: "lapNumber", sorter: "number", responsive: 0},
                     {
-                        title: "Time",
-                        field: "time",
+                        title: "Duration",
+                        field: "duration",
                         formatter: cell => formatDuration(cell.getValue(), false, true),
                         bottomCalc: (values, data, calcParams) => {
                             if (values.length === 0) {
@@ -108,7 +111,6 @@ export class LapTable extends HTMLElement {
                                 return formatDuration(cell.getValue(), true, false)
                             }
                         }
-
                         , headerSort: false
                     },
                     {title: "Meters", field: "distanceElapsed", responsive: 4, headerSort: false, formatter: cell => cell.getValue().toFixed(1)},
@@ -140,9 +142,12 @@ export class LapTable extends HTMLElement {
 
             }));
             view.on("renderComplete", resolve)
-
+            view.on("rowClick", (e, row) => {
+              // Emit an event to the parent element
+                this.dispatchEvent(new CustomEvent('rowClick', {detail: row.getData()}))
+            })
+            this.table = view
         })
-        return Promise.all([lapsTable])
     }
 
 }

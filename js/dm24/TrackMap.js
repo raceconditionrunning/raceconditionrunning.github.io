@@ -23,7 +23,11 @@ export class TrackMap extends LitElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.map = null;
-        this.track = []
+        this.track = [[]]
+        this.highlightedLap = null
+        this.properties = {
+            highlightedLap: { type: Number }
+        };
         this._markerProperties = new DefaultDict(Object);
         this._userMarkers = {}
         this.render();
@@ -82,8 +86,22 @@ export class TrackMap extends LitElement {
             // If you do it manually, you'll overload the MapLibreGL worker with geojson updates and it'll error out.
             this.refreshMarkersSource()
             if (this.map.getSource("track")) {
-                this.trackFeature.geometry.coordinates = this.track
-                this.map.getSource("track").setData(this.trackFeature)
+
+                this.trackFeatures.features = this.track.map((track, index) => {
+                    return {
+                        type: 'Feature',
+                        properties: {
+                            index: index,
+                            color: this.highlightedLap === index ? 'red': '#888',
+                        },
+                        geometry: {
+                            type: 'LineString',
+                            coordinates: track
+                        }
+                    }
+                })
+
+                this.map.getSource("track").setData(this.trackFeatures)
             }
         }
     }
@@ -135,19 +153,22 @@ export class TrackMap extends LitElement {
                     }
                 });*/
 
-                this.trackFeature = {
-                    type: 'Feature',
-                    properties: {},
-                    geometry: {
-                        type: 'LineString',
-                        coordinates: []
-                    }
+                this.trackFeatures = {
+                    'type': 'FeatureCollection',
+                    'features': [{
+                        type: 'Feature',
+                        properties: {},
+                        geometry: {
+                            type: 'LineString',
+                            coordinates: []
+                        }
+                    }]
                 };
                 // Line metrics drop us to 1fps on Safari
                 this.map.addSource('track', {
                     type: 'geojson',
                     //lineMetrics: true,
-                    data: this.trackFeature
+                    'data': this.trackFeatures
                 });
                 this.map.addLayer({
                     id: 'track',
@@ -158,7 +179,7 @@ export class TrackMap extends LitElement {
                         'line-cap': 'round'
                     },
                     paint: {
-                        'line-color': '#888',
+                        'line-color': ['get', 'color'],
                         'line-width': 2,
                         /*'line-gradient': [
                             'interpolate',
@@ -360,12 +381,12 @@ export class TrackMap extends LitElement {
 
         this.map.addLayer({
             id: 'live-bounds',
-            type: 'fill',
+            type: 'line',
             source: 'live-bounds',
             layout: {},
             paint: {
-                'fill-color': '#000000',
-                'fill-opacity': 0.05
+                'line-color': '#000000',
+                'line-opacity': 0.1
             }
         });
     }

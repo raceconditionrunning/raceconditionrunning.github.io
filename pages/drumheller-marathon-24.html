@@ -748,7 +748,7 @@ redirect_from:
             <div>5:30AM</div>
         </div>
         <div class="col-auto">
-            <a class="wavy-button complement-color" href="https://forms.gle/BhJpHUGZSfjRMNds5" data-bs-toggle="tooltip" data-bs-title="by 5-29" data-bs-placement="bottom">Register for Half</a>
+            <a class="wavy-button complement-color disabled" href="https://forms.gle/BhJpHUGZSfjRMNds5" data-bs-toggle="tooltip" data-bs-title="Closed 5-29" data-bs-placement="bottom">Register for Half</a>
             <div>8:00AM</div>
         </div>
 
@@ -1258,51 +1258,61 @@ redirect_from:
     }
 
     let expandRow = function (row) {
-        let detailsContainer = row.getElement()?.querySelector("lap-table")
-        if (!detailsContainer.classList.contains("initialized")) {
-            // Tabulator and Vega won't render correctly unless the parent element is visible
-            const data = row.getData()
-            // FIXME: This needs to be reactive to track changes
-            if (!data.track) {
-                return
-            }
-            const [lapIndices, complete, lapClockwise] = findLapSegments(data.track)
-            const lapTrack = lapIndices.map((start, i) => {
-                const end = i + 1 < lapIndices.length ? lapIndices[i + 1] : data.track.length - 1
-                return data.track.slice(start, end)
-            })
-            const lapTime = lapTrack.map((lap) => lap[lap.length - 1][2] - lap[0][2])
-            // First lap is long
-            const lapLength = Array(lapTrack.length).fill(loopDistance)
-            lapLength[0] = startDistances[bibToEvent(data.bib)] + loopDistance
-            const detailData = {
-                lapLength,
-                lapTrack,
-                complete,
-                lapClockwise,
-                lapTime
-            }
-            detailsContainer.addResultsDetails(detailData, goalLaps[bibToEvent(data.bib)]).then(() => {
+        let lapsTable = row.getElement()?.querySelector("lap-table")
+
+        if (!lapsTable.classList.contains("initialized")) {
+            // Tabulator and D3 won't render correctly unless the parent element is visible
+            lapsTable.initialize().then(() => {
                 row.getTable().redraw()
             })
-            detailsContainer.classList.add("initialized")
+            lapsTable.classList.add("initialized")
         } else {
-            row.getTable().redraw()
+
         }
+        const data = row.getData()
+        // FIXME: This needs to be reactive to track changes
+        if (!data.track) {
+            return
+        }
+
+        const lapTrack = data.lapIndices.map((start, i) => {
+            const end = i + 1 < data.lapIndices.length ? data.lapIndices[i + 1] : data.track.length - 1
+            return data.track.slice(start, end)
+        })
+        const lapTime = lapTrack.map((lap) => lap[lap.length - 1][2] - lap[0][2])
+        const lapLength = Array(lapTrack.length).fill(loopDistance)
+        // First lap is long
+        lapLength[0] = startDistances[bibToEvent(data.bib)] + loopDistance
+        const detailData = {
+            lapLength,
+            lapTrack,
+            complete: data.complete,
+            lapClockwise: data.lapClockwise,
+            lapTime
+        }
+        lapsTable.updateData(detailData, goalLaps[bibToEvent(data.bib)])
     }
 
     function addLapTableFormatter(row,e) {
         // The formatter gets called every refresh it seems...
         let rowElement = row.getElement()
-        rowElement.bib = `#result-${row.getData().bib}`
+        rowElement.id = `#result-${row.getData().bib}`
         if (rowElement.querySelector("lap-table")) {
             return
         }
         let detailFragment = new LapTable()
+        detailFragment.addEventListener("rowClick", (e) => {
+            if (e.detail.index === row.getData().selectedLap) {
+                row.getData().selectedLap = null
+                trackMap.highlightedLap = null
+            } else {
+                row.getData().selectedLap = e.detail.index
+                trackMap.highlightedLap = e.detail.index
+            }
+        })
         //create and style holder elements
         const id = row.getData().bib
         detailFragment.setAttribute('id', "result-detail-" + id + "");
-        detailFragment.setAttribute("hidden", "hidden")
         rowElement.appendChild(detailFragment);
     }
 
@@ -1423,11 +1433,22 @@ redirect_from:
         // Handle highlighted row
         const highlighted = table.getRows().filter((row) => row.getData().highlighted)
         highlighted.forEach((row) => {
-            row.getElement()?.querySelector("lap-table")?.toggleAttribute("hidden");
+            let lapTable = row.getElement()?.querySelector("lap-table")
+            if (lapTable) {
+                lapTable.hidden = false
+            }
             expandRow(row);
             row.getElement().classList.add("details-opened")
-            if (row.getData().track) {
-                trackMap.updateTrack(row.getData().track)
+            // TODO: Use segmented line, highlight the selected lap
+            // https://maplibre.org/maplibre-gl-js/docs/examples/data-driven-lines/
+            const data = row.getData()
+
+            if (data.track) {
+                const segmentedTrack = data.lapIndices.map((start, i) => {
+                    const end = i + 1 < data.lapIndices.length ? data.lapIndices[i + 1] : data.track.length - 1
+                    return data.track.slice(start, end)
+                })
+                trackMap.updateTrack(segmentedTrack)
             }
         })
         if (!highlighted || highlighted.length === 0) {
@@ -1451,7 +1472,6 @@ redirect_from:
     });
     table.on("rowClick", function(e, row) {
         // Disabled pending more testing
-        return;
         if (!(e.target.classList.contains("tabulator-row") || e.target.classList.contains("tabulator-cell"))) {
             return
         }
@@ -1464,7 +1484,7 @@ redirect_from:
         }
 
         let currentHash = window.location.hash
-        let newHash = `#result-${data.id}`
+        let newHash = `#result-${data.bib}`
         const details = row.getElement().querySelector("lap-table")
         if (!details.attributes["hidden"]) {
             history.replaceState(undefined, undefined, newHash)
@@ -1474,8 +1494,18 @@ redirect_from:
     });
 
 
-    const thisMorning = new Date();
+    let thisMorning = new Date();
+
     thisMorning.setHours(0, 0, 0, 0);
+    const urlParams = new URLSearchParams(window.location.search);
+    // Date is in the format YYYY-MM-DD
+    const dateValue = urlParams.get('date');
+    if (dateValue !== null) {
+        const date = new Date(dateValue);
+        if (!isNaN(date.getTime())) {
+            thisMorning = date;
+        }
+    }
     let liveTracking = null
     let trackMap = document.querySelector("track-map")
     const liveBounds = [[
@@ -1514,7 +1544,7 @@ redirect_from:
             })
             let freshness = data.freshness
             let laps = 0
-
+            let [lapIndices, complete, lapClockwise] = [[], [], []]
             if (filteredTrack.length > 2) {
                 const startTime = Date.now()
                 const {
@@ -1530,11 +1560,20 @@ redirect_from:
                 const currentStamp = Date.now() / 1000;
                 freshness = currentStamp - latestStamp;
                 laps = absWindingNumbers[absWindingNumbers.length - 1]
+                const result = findLapSegments(filteredTrack)
+                lapIndices = result[0]
+                complete = result[1]
+                lapClockwise = result[2]
+
             } else {
                 console.warn("Filtered track is too short", filteredTrack)
                 console.warn("Original track", track.length)
             }
+
             data.track = filteredTrack
+            data.lapIndices = lapIndices
+            data.complete = complete
+            data.lapClockwise = lapClockwise
             data.laps = laps
             data.freshness = freshness
             data.lastUpdated = new Date()

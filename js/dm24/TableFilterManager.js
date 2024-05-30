@@ -94,7 +94,6 @@ export class TableFilterManager extends LitElement {
             this.half = halfValue === 'true';
         }
 
-
         const testValue = urlParams.get('test');
         if (testValue !== null) {
             this.test = testValue === 'true';
