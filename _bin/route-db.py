@@ -23,6 +23,7 @@ SURFACES = ['Road', 'Trail', 'Mixed']
 # TODO factor out into a separate file
 LOCS = [
     'Alki',
+    'Bainbridge',
     'Beacon',
     'BellDtwn',
     'CapHill',

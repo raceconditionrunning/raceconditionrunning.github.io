@@ -19,10 +19,7 @@
 - date: "2021-10-09"
   plan:
     - time: "10:25"
-      route:
-        name: "OB: Bainbridge Cross Island Trail"
-        map: https://www.hikingproject.com/trail/7047354/cross-island-trail
-        dist: 13
+      route_id: bainbridge-coast-to-coast-loop
 
 - date: "2021-10-10"
   plan:
