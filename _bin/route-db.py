@@ -1,6 +1,7 @@
 import rcr
 import csv
 import json
+import re
 import os
 
 FIELDS = [
@@ -20,6 +21,10 @@ FIELDS = [
 TYPES = ['Loop', 'P2P', 'OB']
 SURFACES = ['Road', 'Trail', 'Mixed']
 
+# loop id and name conventions
+LOOP_ID_RE = re.compile(r'-loop(-\d\d)?$')
+LOOP_NAME_RE = re.compile(r' Loop( \d\d)?$')
+
 # TODO factor out into a separate file
 LOCS = [
     'Alki',
@@ -30,6 +35,7 @@ LOCS = [
     'CID',
     'ColCity',
     'ColmanPark',
+    'Cougar',
     'CSE',
     'GasWorks',
     'GreenLake',
@@ -84,9 +90,9 @@ def check_route(route):
 
     # check id and name conventions for type
     if route['type'] == 'Loop':
-        if not route['id'].endswith('-loop'):
+        if not LOOP_ID_RE.search(route['id']):
             warn_rc(route, f"Loop route ids should end with '-loop'")
-        if not route['name'].endswith(' Loop'):
+        if not LOOP_NAME_RE.search(route['name']):
             warn_rc(route, f"Loop route name should end with ' Loop'")
     if route['type'] == 'OB':
         if not route['id'].endswith('-ob'):
