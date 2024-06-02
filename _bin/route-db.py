@@ -41,6 +41,7 @@ LOCS = [
     'GreenLake',
     'JaysCafe',
     'Locks',
+    'LordHill',
     'MadronaPark',
     'Magnuson',
     'Marymoor',
