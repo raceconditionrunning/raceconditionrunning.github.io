@@ -21,10 +21,10 @@
     - time: "9:50"
       route_id: locks-golden-gardens-ob
 
-# - date: "2024-06-22"
-#   plan:
-#     - time: "8:30"
-#       route_id: TBD
+- date: "2024-06-22"
+  plan:
+    - time: "8:30"
+      route_id: cougar-airshaft-wilderness-falls-loop
 
 # - date: "2024-06-29"
 #   plan:
@@ -41,10 +41,10 @@
 #     - time: "8:30"
 #       route_id: TBD
 
-# - date: "2024-07-20"
-#   plan:
-#     - time: "8:30"
-#       route_id: TBD
+- date: "2024-07-20"
+  plan:
+    - time: "8:30"
+      route_id: bainbridge-coast-to-coast-loop
 
 # - date: "2024-07-27"
 #   plan:
