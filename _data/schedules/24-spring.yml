@@ -43,11 +43,12 @@
     - time: "9:00"
       route_id: gas-works-lake-union-loop
 
-- date: "2024-06-01"
-  plan:
-    - time: "7:50"
-      route:
-        name: Drumheller Marathon 2024
-        map: /drumheller-marathon-24
-        dist: 13.1
-      highlight-image: /img/dm24/og-banner.jpg
+# TODO temporarily copied to summer to keep on front page
+# - date: "2024-06-01"
+#   plan:
+#     - time: "7:50"
+#       route:
+#         name: Drumheller Marathon 2024
+#         map: /drumheller-marathon-24
+#         dist: 13.1
+#       highlight-image: /img/dm24/og-banner.jpg

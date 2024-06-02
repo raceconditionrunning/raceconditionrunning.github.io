@@ -1,3 +1,12 @@
+- date: "2024-06-01"
+  plan:
+    - time: "7:50"
+      route:
+        name: Drumheller Marathon 2024
+        map: /drumheller-marathon-24
+        dist: 13.1
+      highlight-image: /img/dm24/og-banner.jpg
+
 - date: "2024-06-08"
   plan:
     - time: "8:30"
@@ -11,3 +20,43 @@
       route_id: locks-discovery-radar-magnolia-discovery-ob
     - time: "9:50"
       route_id: locks-golden-gardens-ob
+
+# - date: "2024-06-22"
+#   plan:
+#     - time: "8:30"
+#       route_id: TBD
+
+# - date: "2024-06-29"
+#   plan:
+#     - time: "8:30"
+#       route_id: TBD
+
+# - date: "2024-07-06"
+#   plan:
+#     - time: "8:30"
+#       route_id: TBD
+
+# - date: "2024-07-13"
+#   plan:
+#     - time: "8:30"
+#       route_id: TBD
+
+# - date: "2024-07-20"
+#   plan:
+#     - time: "8:30"
+#       route_id: TBD
+
+# - date: "2024-07-27"
+#   plan:
+#     - time: "8:30"
+#       route_id: TBD
+
+# - date: "2024-08-03"
+#   plan:
+#     - time: "8:30"
+#       route_id: TBD
+
+# - date: "2024-08-10"
+#   plan:
+#     - time: "8:30"
+#       route_id: TBD
