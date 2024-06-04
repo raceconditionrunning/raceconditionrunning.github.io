@@ -45,7 +45,6 @@ LOCS = [
     'MadronaPark',
     'Magnuson',
     'Marymoor',
-    'MerSlough',
     'Miller',
     'MtBaker',
     'Northgate',
