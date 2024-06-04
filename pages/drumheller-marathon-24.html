@@ -748,7 +748,7 @@ redirect_from:
             <div>5:30AM</div>
         </div>
         <div class="col-auto">
-            <a class="wavy-button complement-color" href="https://forms.gle/BhJpHUGZSfjRMNds5" data-bs-toggle="tooltip" data-bs-title="Closed 5-30" data-bs-placement="bottom">Register for Half</a>
+            <a class="wavy-button complement-color disabled" href="https://forms.gle/BhJpHUGZSfjRMNds5" data-bs-toggle="tooltip" data-bs-title="Closed 5-30" data-bs-placement="bottom">Register for Half</a>
             <div>8:00AM</div>
         </div>
 
@@ -846,7 +846,14 @@ redirect_from:
     </div>
 </section>
 
-<section id="live-tracking">
+<section>
+    <div class="container">
+        <h2 class="mb-3">Results <a href="#results" class="anchor-link" aria-label="Link to this section. Results"></a></h2>
+        <p><i>Results are pending. Thanks for your patience.</i></p>
+    </div>
+</section>
+
+<!--section id="live-tracking">
     <div class="container">
         <h2 class="mb-3"><connection-dot></connection-dot> Live Tracking <span class="badge text-bg-secondary beta-badge">Beta</span> <a href="#live-tracking" class="anchor-link" aria-label="Link to this section. Live Tracking"></a></h2>
         <div id="live-map">
@@ -889,7 +896,6 @@ redirect_from:
                         <li>This page displays only today's data</li>
                         <li>Lap counts are fractional and ignore direction and start/end location</li>
                         <li>Your location displays as a marker while you're on the course</li>
-                        <!--li>Click on a row in the table to display history and estimated lap information</li-->
                         <li>Rows show a warning icon ⚠️ if they contain frequent GPS errors greater than 20m. Check your configuration, and keep your phone in an outer pocket if possible.</li>
                     </ul>
 
@@ -912,10 +918,6 @@ redirect_from:
 
                             <p class="alert alert-info"><b>iOS:</b> You can review the app's location permissions in Settings > Privacy & Security > Location Services</p></li>
 
-
-
-
-
                         <li>Use your phone's camera app to scan the QR code you were emailed to configure the OwnTracks app.</li>
                         <li>Go to the course, open the app on your phone, and ensure the UI says “Move” (over the map on iOS, behind a play button on Android). All the app does is transmit data, so <i>it does not display your lap count</i>. You will only be able to see your information on this webpage.</li>
                         <li>Run around the fountain, check that you appear on this page, and check that your lap number increases <p class="alert alert-info">Every lap&mdash;and every partial lap&mdash;will be counted. To prevent lap-inflation, we recommend you only open up OwnTracks when you're on the start line.</p></li>
@@ -930,7 +932,7 @@ redirect_from:
             </accordion-item>
         </accordion-group>
     </div>
-</section>
+</section-->
 
 <section>
     <div id="faq" class="container">
@@ -1356,46 +1358,6 @@ redirect_from:
 
     }
 
-    let table = new Tabulator("#lap-table", {
-        reactiveData:true,
-        data:tableData,
-        selectable:false,
-        layout:"fitDataFill",
-        placeholder: "No laps today",
-        columns:[
-            {title:"Bib", field:"bib", formatter: (cell) => {
-                let data = cell.getRow().getData()
-                return `<div class='bib ${bibToEvent(data.bib)}'>${data.bib}</div>`
-            }},
-            {title:"Name", field:"name", formatter: (cell) => {
-                let data = cell.getRow().getData()
-                    return data["name"] ? data["name"] : data["username"]
-
-                }},
-
-            {title:"Laps", field:"laps",  formatter: cell => {
-                if (cell.getValue()) {
-                    return cell.getValue().toFixed(2)
-                } else {
-                    return ""
-                }
-
-                }},
-            {title:"Last Seen", field: "freshness",  formatter: (cell) => {
-                let data = cell.getRow().getData()
-                let freshness = data["freshness"]
-                    const accuracyWarning = data["accuracy"] > 23 ? ` <span class="text-warning">⚠️</span>` : ""
-                if (freshness === -1) {
-                    return ""
-                } else {
-                    return formatTimeSince(Math.ceil(freshness)) + accuracyWarning
-                }
-            }},
-            {title: "trackRequested", field: "trackRequested", visible: false},
-        ],
-        rowFormatter: addLapTableFormatter
-    });
-
     function excludeTest(data, filterParams) {
         return data.bib[0] !== "E"
     }
@@ -1409,134 +1371,7 @@ redirect_from:
     function aliveToday(data, filterParams) {
         return data.lastUpdated > thisMorning
     }
-    const filterManager = document.querySelector("table-filter-manager")
-    filterManager.table = table
-    filterManager.filters = {excludeTest, excludeFull, excludeHalf}
 
-
-    table.on("dataChanged", function(data){
-        // Think of the map as a reactive view of this table. Every time the data changes, we need to update the map
-        // Tabulator doesn't correctly clear the placeholder on its own
-        if (table.rowManager.getDisplayRows().length) {
-            table.rowManager._clearPlaceholder();
-        }
-
-        table.getRows().forEach((row) => {
-            const data = row.getData()
-            trackMap.updateMarker(data.bib, 'backgroundColor', bibToEvent(data.bib) === 'full' ? 'var(--branding-color)' : 'var(--branding-color-complement)' );
-            trackMap.updateMarker(data.bib, 'point', data.track ? data.track[data.track.length - 1] : null)
-            trackMap.updateMarker(data.bib, 'freshness', data.freshness);
-            trackMap.updateMarker(data.bib, 'visible', table.rowManager.getVisibleRows().find((row) => row.getData().bib === data.bib))
-            trackMap.updateMarker(data.bib, 'highlighted', data.highlighted)
-        })
-
-        trackMap.refreshMarkersSource()
-        table.getRows().filter((row) => !row.getData().highlighted).forEach((row) => {row.getElement()?.querySelector("lap-table")?.setAttribute("hidden", "hidden");
-            row.getElement().classList.remove("details-opened")
-        })
-        // Handle highlighted row
-        const highlighted = table.getRows().filter((row) => row.getData().highlighted)
-        highlighted.forEach((row) => {
-            let lapTable = row.getElement()?.querySelector("lap-table")
-            if (lapTable) {
-                lapTable.hidden = false
-            }
-            expandRow(row);
-            row.getElement().classList.add("details-opened")
-            // TODO: Use segmented line, highlight the selected lap
-            // https://maplibre.org/maplibre-gl-js/docs/examples/data-driven-lines/
-            const data = row.getData()
-
-            if (data.track) {
-                const segmentedTrack = data.lapIndices.map((start, i) => {
-                    const end = i + 1 < data.lapIndices.length ? data.lapIndices[i + 1] : data.track.length - 1
-                    return data.track.slice(start, end)
-                })
-                trackMap.updateTrack(segmentedTrack)
-            }
-        })
-        if (!highlighted || highlighted.length === 0) {
-            trackMap.updateTrack([])
-        }
-
-    });
-    table.on("dataFiltered", function(filters, rows){
-        tableData.forEach((row) => {
-            trackMap.updateMarker(row.bib, 'visible', false)
-        })
-        rows.forEach((row) => {
-            const data = tableData.find((data) => data.bib === row.getData().bib)
-            // This row wasn't fetched earlier, so get it now
-            if (data.lastUpdated > thisMorning && !data.trackRequested) {
-                console.log("Requesting track for", data.username, "due to filterchange")
-                updateWithFullTrack(data.username)
-            }
-            trackMap.updateMarker(data.bib, 'visible', true)
-        })
-    });
-    table.on("rowClick", function(e, row) {
-        // Disabled pending more testing
-        if (!(e.target.classList.contains("tabulator-row") || e.target.classList.contains("tabulator-cell"))) {
-            return
-        }
-        let data = row.getData()
-        if (!data.highlighted) {
-            table.getRows().forEach((row) => row.update({highlighted: false}))
-            row.update({highlighted: true})
-        } else {
-            table.getRows().forEach((row) => row.update({highlighted: false}))
-        }
-
-        let currentHash = window.location.hash
-        let newHash = `#result-${data.bib}`
-        const details = row.getElement().querySelector("lap-table")
-        if (!details.attributes["hidden"]) {
-            history.replaceState(undefined, undefined, newHash)
-        } else if (currentHash === newHash) {
-            history.replaceState(undefined, undefined, " ")
-        }
-    });
-
-
-    let thisMorning = new Date();
-
-    thisMorning.setHours(0, 0, 0, 0);
-    const urlParams = new URLSearchParams(window.location.search);
-    // Date is in the format YYYY-MM-DD
-    const dateValue = urlParams.get('date');
-    if (dateValue !== null) {
-        const date = new Date(dateValue);
-        if (!isNaN(date.getTime())) {
-            thisMorning = date;
-        }
-    }
-    let liveTracking = null
-    let trackMap = document.querySelector("track-map")
-    const liveBounds = [[
-        [
-            -122.306304,
-            47.653457
-        ],
-        [
-            -122.308144,
-            47.656089
-        ],
-        [
-            -122.310014,
-            47.655436
-        ],
-        [
-            -122.308154,
-            47.652844
-        ],
-        [
-            -122.306304,
-            47.653457
-        ]
-    ]]
-
-    const bounds = turf.polygon(JSON.parse(trackMap.getAttribute('data-bounds')));
-    trackMap.addLiveBounds(liveBounds);
 
 
     function updateWithFullTrack(username) {
@@ -1594,6 +1429,179 @@ redirect_from:
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
 
         const connectionDot = document.querySelector("connection-dot")
+        if (!connectionDot) {
+            console.error("Skipping live tracking")
+            return
+        }
+        let table = new Tabulator("#lap-table", {
+            reactiveData:true,
+            data:tableData,
+            selectable:false,
+            layout:"fitDataFill",
+            placeholder: "No laps today",
+            columns:[
+                {title:"Bib", field:"bib", formatter: (cell) => {
+                        let data = cell.getRow().getData()
+                        return `<div class='bib ${bibToEvent(data.bib)}'>${data.bib}</div>`
+                    }},
+                {title:"Name", field:"name", formatter: (cell) => {
+                        let data = cell.getRow().getData()
+                        return data["name"] ? data["name"] : data["username"]
+
+                    }},
+
+                {title:"Laps", field:"laps",  formatter: cell => {
+                        if (cell.getValue()) {
+                            return cell.getValue().toFixed(2)
+                        } else {
+                            return ""
+                        }
+
+                    }},
+                {title:"Last Seen", field: "freshness",  formatter: (cell) => {
+                        let data = cell.getRow().getData()
+                        let freshness = data["freshness"]
+                        const accuracyWarning = data["accuracy"] > 23 ? ` <span class="text-warning">⚠️</span>` : ""
+                        if (freshness === -1) {
+                            return ""
+                        } else {
+                            return formatTimeSince(Math.ceil(freshness)) + accuracyWarning
+                        }
+                    }},
+                {title: "trackRequested", field: "trackRequested", visible: false},
+            ],
+            rowFormatter: addLapTableFormatter
+        });
+
+        const filterManager = document.querySelector("table-filter-manager")
+        filterManager.table = table
+        filterManager.filters = {excludeTest, excludeFull, excludeHalf}
+
+
+        table.on("dataChanged", function(data){
+            // Think of the map as a reactive view of this table. Every time the data changes, we need to update the map
+            // Tabulator doesn't correctly clear the placeholder on its own
+            if (table.rowManager.getDisplayRows().length) {
+                table.rowManager._clearPlaceholder();
+            }
+
+            table.getRows().forEach((row) => {
+                const data = row.getData()
+                trackMap.updateMarker(data.bib, 'backgroundColor', bibToEvent(data.bib) === 'full' ? 'var(--branding-color)' : 'var(--branding-color-complement)' );
+                trackMap.updateMarker(data.bib, 'point', data.track ? data.track[data.track.length - 1] : null)
+                trackMap.updateMarker(data.bib, 'freshness', data.freshness);
+                trackMap.updateMarker(data.bib, 'visible', table.rowManager.getVisibleRows().find((row) => row.getData().bib === data.bib))
+                trackMap.updateMarker(data.bib, 'highlighted', data.highlighted)
+            })
+
+            trackMap.refreshMarkersSource()
+            table.getRows().filter((row) => !row.getData().highlighted).forEach((row) => {row.getElement()?.querySelector("lap-table")?.setAttribute("hidden", "hidden");
+                row.getElement().classList.remove("details-opened")
+            })
+            // Handle highlighted row
+            const highlighted = table.getRows().filter((row) => row.getData().highlighted)
+            highlighted.forEach((row) => {
+                let lapTable = row.getElement()?.querySelector("lap-table")
+                if (lapTable) {
+                    lapTable.hidden = false
+                }
+                expandRow(row);
+                row.getElement().classList.add("details-opened")
+                // TODO: Use segmented line, highlight the selected lap
+                // https://maplibre.org/maplibre-gl-js/docs/examples/data-driven-lines/
+                const data = row.getData()
+
+                if (data.track) {
+                    const segmentedTrack = data.lapIndices.map((start, i) => {
+                        const end = i + 1 < data.lapIndices.length ? data.lapIndices[i + 1] : data.track.length - 1
+                        return data.track.slice(start, end)
+                    })
+                    trackMap.updateTrack(segmentedTrack)
+                }
+            })
+            if (!highlighted || highlighted.length === 0) {
+                trackMap.updateTrack([])
+            }
+
+        });
+        table.on("dataFiltered", function(filters, rows){
+            tableData.forEach((row) => {
+                trackMap.updateMarker(row.bib, 'visible', false)
+            })
+            rows.forEach((row) => {
+                const data = tableData.find((data) => data.bib === row.getData().bib)
+                // This row wasn't fetched earlier, so get it now
+                if (data.lastUpdated > thisMorning && !data.trackRequested) {
+                    console.log("Requesting track for", data.username, "due to filterchange")
+                    updateWithFullTrack(data.username)
+                }
+                trackMap.updateMarker(data.bib, 'visible', true)
+            })
+        });
+        table.on("rowClick", function(e, row) {
+            // Disabled pending more testing
+            if (!(e.target.classList.contains("tabulator-row") || e.target.classList.contains("tabulator-cell"))) {
+                return
+            }
+            let data = row.getData()
+            if (!data.highlighted) {
+                table.getRows().forEach((row) => row.update({highlighted: false}))
+                row.update({highlighted: true})
+            } else {
+                table.getRows().forEach((row) => row.update({highlighted: false}))
+            }
+
+            let currentHash = window.location.hash
+            let newHash = `#result-${data.bib}`
+            const details = row.getElement().querySelector("lap-table")
+            if (!details.attributes["hidden"]) {
+                history.replaceState(undefined, undefined, newHash)
+            } else if (currentHash === newHash) {
+                history.replaceState(undefined, undefined, " ")
+            }
+        });
+
+
+        let thisMorning = new Date();
+
+        thisMorning.setHours(0, 0, 0, 0);
+        const urlParams = new URLSearchParams(window.location.search);
+        // Date is in the format YYYY-MM-DD
+        const dateValue = urlParams.get('date');
+        if (dateValue !== null) {
+            const date = new Date(dateValue);
+            if (!isNaN(date.getTime())) {
+                thisMorning = date;
+            }
+        }
+        let liveTracking = null
+        let trackMap = document.querySelector("track-map")
+        const liveBounds = [[
+            [
+                -122.306304,
+                47.653457
+            ],
+            [
+                -122.308144,
+                47.656089
+            ],
+            [
+                -122.310014,
+                47.655436
+            ],
+            [
+                -122.308154,
+                47.652844
+            ],
+            [
+                -122.306304,
+                47.653457
+            ]
+        ]]
+
+        const bounds = turf.polygon(JSON.parse(trackMap.getAttribute('data-bounds')));
+        trackMap.addLiveBounds(liveBounds);
+
         document.addEventListener("liveconnectionchange", (event) => {
             connectionDot.setAttribute("state", event.detail.state)
         });
@@ -1649,30 +1657,31 @@ redirect_from:
 
         });
 
-    }
-    document.addEventListener("visibilitychange", () => {
-        if (document.visibilityState === "visible") {
-            Promise.all(table.rowManager.getVisibleRows().map((row) => {
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "visible") {
+                Promise.all(table.rowManager.getVisibleRows().map((row) => {
                     console.log("Requesting track for", row.getData().username, "due to visibility change")
                     return updateWithFullTrack(row.getData().username)
-            })).then(() => {
-                console.log("All updated, starting regular refreshes")
-                refreshInterval = beginRegularRefreshing()
-                liveTracking.enable()
-            })
-            console.log("Page visible")
+                })).then(() => {
+                    console.log("All updated, starting regular refreshes")
+                    refreshInterval = beginRegularRefreshing()
+                    liveTracking.enable()
+                })
+                console.log("Page visible")
 
-        } else {
-            clearInterval(refreshInterval)
-            liveTracking.disable()
-            // Mark the tracks as stale so we re-request them when the page is visible again
-            tableData.forEach((row) => {
-                //console.log("Marking", row.username, "as stale")
-                row.trackRequested = false
-            })
-            console.log("Page hidden")
-        }
-    });
+            } else {
+                clearInterval(refreshInterval)
+                liveTracking.disable()
+                // Mark the tracks as stale so we re-request them when the page is visible again
+                tableData.forEach((row) => {
+                    //console.log("Marking", row.username, "as stale")
+                    row.trackRequested = false
+                })
+                console.log("Page hidden")
+            }
+        });
+    }
 
     function setupLightboxes() {
         prepareImagesForPhotoswipe(document.querySelectorAll(".auto-lightbox")).then(() => {
