@@ -9,6 +9,7 @@ SCHEDULES = os.path.join(ROOT, '_data', 'schedules')
 ROUTES = os.path.join(ROOT, 'routes')
 ROUTES_GPX = os.path.join(ROUTES, 'gpx')
 ROUTES_GEOJSON = os.path.join(ROUTES, 'geojson')
+LOCS = os.path.join(ROOT, 'locs')
 
 for path in [ROOT, DATA, ROUTES, ROUTES_GPX]:
   if not os.path.isdir(path):
@@ -17,8 +18,9 @@ for path in [ROOT, DATA, ROUTES, ROUTES_GPX]:
 
 # key files
 ROUTE_DB = os.path.join(ROOT, 'routes', 'db.csv')
+LOC_DB = os.path.join(ROOT, 'locs', 'db.csv')
 
-for path in [ROUTE_DB]:
+for path in [ROUTE_DB, LOC_DB]:
   if not os.path.isfile(path):
     print(f"Error: no such file '{path}'")
     exit(1)
@@ -27,6 +29,11 @@ def load_route_db():
     with open(ROUTE_DB, 'r') as f:
         reader = csv.DictReader(f, dialect='unix')
         return list(reader)
+
+def load_loc_db():
+   with open(LOC_DB, 'r') as f:
+       reader = csv.DictReader(f, dialect='unix')
+       return list(reader)
 
 def gpx_paths():
   paths = []

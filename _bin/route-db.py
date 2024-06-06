@@ -21,44 +21,12 @@ FIELDS = [
 TYPES = ['Loop', 'P2P', 'OB']
 SURFACES = ['Road', 'Trail', 'Mixed']
 
+# TODO make a similar loc-db.py script to check and normalize that table too
+LOCS = [loc['id'] for loc in rcr.load_loc_db()]
+
 # loop id and name conventions
 LOOP_ID_RE = re.compile(r'-loop(-\d\d)?$')
 LOOP_NAME_RE = re.compile(r' Loop( \d\d)?$')
-
-# TODO factor out into a separate file
-LOCS = [
-    'Alki',
-    'Bainbridge',
-    'Beacon',
-    'BellDtwn',
-    'CapHill',
-    'CID',
-    'ColCity',
-    'ColmanPark',
-    'Cougar',
-    'CSE',
-    'GasWorks',
-    'GreenLake',
-    'JaysCafe',
-    'Locks',
-    'LordHill',
-    'MadronaPark',
-    'Magnuson',
-    'Marymoor',
-    'Miller',
-    'MtBaker',
-    'Northgate',
-    'PacPav',
-    'RedTech',
-    'Roosevelt',
-    'Seward',
-    'SoBell',
-    'SoDisco',
-    'SODO',
-    'WashPark',
-    'Westlake',
-    'WoodCafe'
-]
 
 warnings = False
 def warn(msg):
