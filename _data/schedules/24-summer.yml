@@ -17,29 +17,33 @@
 - date: "2024-06-15"
   plan:
     - time: "8:30"
-      route_id: locks-discovery-radar-magnolia-discovery-ob
-    - time: "9:50"
-      route_id: locks-golden-gardens-ob
+      route_id: cougar-airshaft-wilderness-falls-loop
 
 - date: "2024-06-22"
   plan:
     - time: "8:30"
-      route_id: cougar-airshaft-wilderness-falls-loop
+      route_id: sodo-mts-sound-i90-trail-ob
+    - time: "9:30"
+      route_id: sodo-duwamish-trail-1st-loop
 
 # - date: "2024-06-29"
 #   plan:
 #     - time: "8:30"
 #       route_id: TBD
 
-# - date: "2024-07-06"
-#   plan:
-#     - time: "8:30"
-#       route_id: TBD
+- date: "2024-07-06"
+  plan:
+    - time: "8:30"
+      route_id: northgate-cemeteries-interurban-boeing-creek-ob
+    - time: "10:30"
+      route_id: northgate-resevoirs-roosevelt
 
-# - date: "2024-07-13"
-#   plan:
-#     - time: "8:30"
-#       route_id: TBD
+- date: "2024-07-13"
+  plan:
+    - time: "8:30"
+      route_id: locks-discovery-radar-magnolia-discovery-ob
+    - time: "9:50"
+      route_id: locks-fremont-bridge-loop
 
 - date: "2024-07-20"
   plan:

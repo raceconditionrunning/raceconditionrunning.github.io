@@ -2,7 +2,7 @@
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running">
   <metadata>
     <name>northgate-resevoirs-roosevelt</name>
-    <desc>Northgate, Resevoirs, Green Lake (4.1 mi)</desc>
+    <desc>Northgate, Resevoirs, Roosevelt (4.1 mi)</desc>
     <author>
       <name>Race Condition Running</name>
       <link href="https://raceconditionrunning.com">
@@ -12,7 +12,7 @@
   </metadata>
   <trk>
     <name>northgate-resevoirs-roosevelt</name>
-    <desc>Northgate, Resevoirs, Green Lake (4.1 mi)</desc>
+    <desc>Northgate, Resevoirs, Roosevelt (4.1 mi)</desc>
     <trkseg>
       <trkpt lat="47.70135" lon="-122.32794"/>
       <trkpt lat="47.70135" lon="-122.32785"/>
