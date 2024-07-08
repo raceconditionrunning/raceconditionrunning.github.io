@@ -52,20 +52,22 @@
     - time: "8:30"
       route_id: bainbridge-coast-to-coast-loop
 
-# - date: "2024-07-27"
-#   plan:
-#     - time: "8:30"
-#       route_id: TBD
+- date: "2024-07-27"
+  plan:
+    - time: "8:30"
+      route_id: cse-arb-lwb-seward-loop-cc
 
-# - date: "2024-08-03"
-#   plan:
-#     - time: "8:30"
-#       route_id: TBD
+- date: "2024-08-03"
+  plan:
+    - time: "8:30"
+      route_id: cap-hill-volunteer-park-westlake
+    - time: "9:10"
+      route_id: westlake-sculpture-marina-ob
 
-# - date: "2024-08-10"
-#   plan:
-#     - time: "8:30"
-#       route_id: TBD
+- date: "2024-08-10"
+  plan:
+    - time: "8:00"
+      route_id: beacon-i90-luther-burbank-ob
 
 # - date: "2024-08-17"
 #   plan:
