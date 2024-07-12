@@ -46,6 +46,11 @@ export function formatDuration(seconds, includeHours = true, includeMilliseconds
     return result
 }
 
+export function durationToSeconds(duration) {
+    const [hours, minutes, seconds] = duration.split(":").map((x) => parseInt(x))
+    return hours * 3600 + minutes * 60 + seconds
+}
+
 export function formatLegDescription(startStation, endStation, leg, includeLegNumber=false, linkStations=false){
     let legNumber = ""
     if (includeLegNumber) legNumber = `<span class="leg-number">${leg.id}:</span> `

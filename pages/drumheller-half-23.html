@@ -31,10 +31,11 @@ redirect_from:
     <script type="importmap">
         {
           "imports": {
+            "bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.esm.min.js",
             "d3": "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
-            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.1.0/js/tabulator_esm.min.js"
+            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.6.0/js/tabulator_esm.min.js"
           }
         }
     </script>
@@ -404,82 +405,82 @@ redirect_from:
             padding: 1rem;
         }
 
-        .laps-graph {
+        lap-pace-chart {
             width: 100%
         }
 
-        .laps-graph rect {
+        lap-pace-chart rect {
             transition: .15s;
         }
 
-        .laps-graph .tick line {
+        lap-pace-chart .tick line {
             color: white;
             opacity: .5;
         }
 
-        .laps-graph .minor {
+        lap-pace-chart .minor {
             opacity: .4;
             color: white
         }
 
-        .laps-graph .horizontal-grid {
+        lap-pace-chart .horizontal-grid {
             color: white;
             opacity: .5;
         }
 
-        .laps-graph .data-bar {
+        lap-pace-chart .data-bar {
             fill: #777;
             opacity: .9;
             stroke: #aaa;
             stroke-width: .5px;
         }
 
-        .laps-graph .data-bar.extra {
+        lap-pace-chart .data-bar.extra {
             fill: #555
         }
 
-        .laps-graph .data-bar.highlighted {
+        lap-pace-chart .data-bar.highlighted {
             fill: #999;
         }
 
-        .laps-graph #flaglines line {
+        lap-pace-chart #flaglines line {
             stroke: #ccc;
             stroke-width: 1px
         }
 
-        .laps-graph .finish-flag[data-lap-target='110'] line {
-            stroke: rgb(0,177,220);
+        lap-pace-chart .finish-flag[data-lap-target='110'] line {
+            stroke: #BD81C6;
         }
 
-        .laps-graph .finish-flag[data-lap-target='110'] polygon {
-            fill: rgb(0,177,220);
+        lap-pace-chart .finish-flag[data-lap-target='110'] polygon {
+            fill: #BD81C6;
         }
 
-        .laps-graph .finish-flag[data-lap-target='84'] line {
-            stroke: #65b900;
+        lap-pace-chart .finish-flag[data-goal="10mi"] line {
+            stroke: #dc0000;
         }
 
-        .laps-graph .finish-flag[data-lap-target='84'] polygon {
-            fill: #65b900;
+        lap-pace-chart .finish-flag[data-goal="10mi"] polygon {
+            fill: #dc0000;
         }
 
-        .laps-graph .finish-flag[data-lap-target='52'] line {
-            stroke: #DC00D1;
-        }
-
-        .laps-graph .finish-flag[data-lap-target='52'] polygon {
-            fill: #DC00D1;
-        }
-
-        .laps-graph .finish-flag[data-lap-target='26'] line {
+        lap-pace-chart .finish-flag[data-goal="10k"] line {
             stroke: #dc8400;
         }
 
-        .laps-graph .finish-flag[data-lap-target='26'] polygon {
+        lap-pace-chart .finish-flag[data-goal="10k"] polygon {
             fill: #dc8400;
         }
 
-        .laps-graph .finish-flag text {
+        lap-pace-chart .finish-flag[data-goal="5k"] line {
+            stroke: #65b900;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="5k"] polygon {
+            fill: #65b900;
+        }
+
+        lap-pace-chart .finish-flag text {
             font-family: var(--sans-font-family);
             font-weight: bold;
             font-size: 16px;
@@ -780,10 +781,10 @@ redirect_from:
 <section>
     <div class="container-xxl">
         <h2 class="mb-4" id="results">Results <a href="#results" class="anchor-link" aria-label="Link to this section. Results"></a></h2>
-        <h3>Official</h3>
+        <h3 class="d-inline">Official</h3><span class="count"></span>
         <div id="results-table-official" class="mb-5"></div>
         <hr/>
-        <h3>Unofficial</h3>
+        <h3 class="d-inline">Unofficial</h3><span class="count"></span>
         <div id="results-table-unofficial" class="mb-5"></div>
     </div>
 
@@ -892,270 +893,111 @@ redirect_from:
 </template>
 
 <script type="module" >
-    import {Tabulator, ColumnCalcsModule, GroupRowsModule, FormatModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule} from 'tabulator-tables';
-    Tabulator.registerModule([ColumnCalcsModule, FormatModule, GroupRowsModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule]);
-    import {formatDuration, formatPace, prepareImagesForPhotoswipe} from "{{ site.baseurl }}/js/common.js";
+    import {durationToSeconds, prepareImagesForPhotoswipe} from "{{ site.baseurl }}/js/common.js";
     import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
-    import {LapPaceChart} from "{{ site.baseurl }}/js/LapPaceChart.js";
+    import {LapTable} from "{{ site.baseurl }}/js/LapTable.js"; // Won't render without this import
+    import {ResultsTable} from "{{ site.baseurl }}/js/ResultsTable.js";
     import PhotoSwipeLightbox from 'photoswipe-lightbox';
     import * as d3 from 'd3';
 
+    let officialResults = []
+    let unofficialResults = []
 
-    function addResultsDetails(data, paceGraphContainer, lapsGraphContainer, tableContainer) {
-        let lapObjects = []
-        let timeElapsed = 0
-        let distanceElapsed = 0
-        let directionIndex = 0
-        let lapsRun = data.lapTimes.length - 1
-        let goals = [26, 52, 84, 110]
-        let lapTarget = goals[Math.max(d3.bisectRight(goals, lapsRun) - 1, 0)]
-        for (let i = 0; i < data.lapTimes.length; i++) {
-            const lapDistance = i > 0 ? 190.70 : 120.50
-            let pace = lapDistance / data.lapTimes[i]
-            let lapStartTime = timeElapsed
-            timeElapsed += data.lapTimes[i]
-            distanceElapsed += lapDistance
-            if (lapStartTime > directionChanges[directionIndex]) {
-                directionIndex += 1
-            }
-            let direction = directionIndex % 2 === 0 ? "CCW" : "CW"
-            if (i === 0) {
-                // 0th lap is entrance from upper vista
-                direction = null
-            }
-            lapObjects.push({
-                "n": i,
-                "time": data.lapTimes[i],
-                "distance": lapDistance,
-                "distanceElapsed": distanceElapsed,
-                "timeElapsed": timeElapsed,
-                "pace": pace,
-                "paceMi": 1609.34 / pace,
-                "paceKm": 1000 / pace,
-                "extra": i > lapTarget,
-                "direction": direction
-            })
-        }
-
-        lapsGraphContainer.appendChild(new LapPaceChart().draw(lapObjects, lapTarget, (barNumber)=> {
-            view.scrollToRow(barNumber)
-        }))
-
-        let view
-        let lapsTable = new Promise((resolve, reject) => {
-            view = new Tabulator(tableContainer, {
-                data: lapObjects,
-                selectable: false,
-                index: "n",
-                groupBy: "extra",
-                height: 300,
-                responsiveLayout: "collapse",
-                initialSort: [{column: "n", dir: "asc"}],
-                columns: [
-                    {title: "N", field: "n", sorter: "number", responsive: 0},
-                    {
-                        title: "Time",
-                        field: "time",
-                        formatter: cell => formatDuration(cell.getValue(), false, true),
-                        bottomCalc: (values, data, calcParams) => {
-                            if (values.length === 0) {
-                                return ""
-                            }
-                            let averagePace = values.reduce((a, b) => a + b, 0) / values.length
-                            return formatDuration(averagePace, false, true)
-                        }
-                    },
-                    {
-                        title: "Pace /mi",
-                        field: "paceMi",
-                        formatter: (cell) => formatDuration(cell.getValue(), false, false, true),
-                        bottomCalc: (values, data, calcParams) => {
-                            if (values.length === 0) {
-                                return ""
-                            }
-                            let averagePace = values.reduce((a, b) => a + b, 0) / values.length
-                            return formatPace(averagePace, "")
-                        }
-                    },
-                    {
-                        title: "Elapsed", field: "timeElapsed", formatter: (cell) =>
-                            `<a href='https://youtu.be/lmwxMUa7bvI?t=${Math.floor(cell.getValue())}'>${formatDuration(cell.getValue(), true, false)}</a>`
-
-                        , headerSort: false
-                    },
-                    {title: "Meters", field: "distanceElapsed", responsive: 4, headerSort: false, formatter: cell => cell.getValue().toFixed(1)},
-                    {
-                        title: "Direction",
-                        field: "direction",
-                        responsive: 5,
-                        headerSort: false,
-                        bottomCalc: (values, data, calcParams) => {
-                            if (values.length === 0) {
-                                return []
-                            }
-                            let counts = values.filter(a => a).reduce((a, b) => b === "CCW" ? [a[0] + 1, a[1]] : [a[0], a[1] + 1], [0, 0])
-                            return counts
-                        },
-                        bottomCalcFormatter: (cell, data, params) => {
-                            let counts = cell.getValue()
-                            return `${counts[0]}<span class='direction-symbol mx-1'>↺</span> ${counts[1]}<span class='direction-symbol mx-1'>↻</span>`
-                        }
-                    }
-                ]
-            })
-            view.on("tableBuilt", () => view.setGroupHeader(function (value, count, data, group) {
-                if (value) {
-                    return "Extra Laps (" + count + ")";
-                } else {
-                    return ""
-                }
-
-            }));
-            view.on("renderComplete", resolve)
-
-        })
-        return Promise.all([lapsTable])
-    }
-
-    let rowFormatter = function (row, e) {
-        let rowElement = row.getElement()
-        rowElement.id = `#result-${row.getData().id}`
-        let detailFragment = detailTemplate.cloneNode(true)
-        //create and style holder elements
-        const id = row.getData().id
-        let containerElement = detailFragment.querySelector(".result-detail-holder")
-        containerElement.setAttribute('id', "result-detail-" + id + "");
-        containerElement.setAttribute("hidden", "hidden")
-        rowElement.appendChild(detailFragment);
-    }
-
-    let expandRow = function (row) {
-        row.getElement().classList.toggle("details-opened")
-        let detailsContainer = row.getElement()?.querySelector(".result-detail-holder")
-        if (!detailsContainer.classList.contains("initialized")) {
-            // Tabulator and Vega won't render correctly unless the parent element is visible
-            detailsContainer.toggleAttribute("hidden")
-            addResultsDetails(row.getData(), detailsContainer.querySelector(".pace-graph"), detailsContainer.querySelector(".laps-graph"), detailsContainer.querySelector(".laps-table")).then(() => {
-                row.getTable().redraw()
-            })
-            detailsContainer.classList.add("initialized")
-        } else {
-            detailsContainer.toggleAttribute("hidden")
-            row.getTable().redraw()
-        }
-    }
-
-    function scrollToResult(table) {
-        let hash = window.location.hash
-        if (hash) {
-            let id = parseInt(hash.match(/\d+(?=\D*$)/)[0])
-            let row = table.getRow(id); //return row component with index of 1
-
-            if (row) {
-                // Need to have table in view for it to fully load
-                table.element.scrollIntoView({
-                    behavior: 'smooth'
-                });
-                // HACK: wait a bit so scroll ends
-                setTimeout(() => table.scrollToRow(id, "center", false).then(() => expandRow(row)), 750)
-
-            }
-        }
-    }
-
-    function rowClicked(e, row) {
-        if (!(e.target.classList.contains("tabulator-row") || e.target.classList.contains("tabulator-cell"))) {
-            return
-        }
-        expandRow(row)
-        let currentHash = window.location.hash
-        let newHash = `#result-${row.getData().id}`
-        if (!row.getElement().querySelector(".result-detail-holder").attributes["hidden"]) {
-            history.replaceState(undefined, undefined, newHash)
-        } else if (currentHash === newHash) {
-            history.replaceState(undefined, undefined, " ")
-        }
-    }
-
-    let detailTemplate = document.getElementById("result-detail-template").content
-    let directionChanges = [60 * 20 + 26, 60 * 40 + 14, 59 * 60 + 48, 80 * 60, 100 * 60 + 12, 120 * 60 + 20, 140 * 60]
     fetch('{{ site.baseurl }}/results/dhm23.json')
         .then(res => res.json())
-        .then(dhm23Results => {
+        .then(resultsData => {
+            const results = resultsData.results
+            // Sort goals to be ascending by lap count
+            const goals = Object.fromEntries(Object.entries(resultsData.config.goals["half"]).sort((a, b) => a[1] - b[1]))
+            const lapDistance = resultsData.config.lapDistance
+            const startTime = resultsData.config.starts["half"].time
+            const startDistance = resultsData.config.starts["half"].startDistance
+            const directionChanges = resultsData.config.directionStarts.map((start) => durationToSeconds(start))
+            const directions = resultsData.config.directions
+            const lapsGoal = goals["13_1mi"]
+            for (let i = 0; i < results.length; i++) {
+                let entry = results[i]
+                let cumulativeWallclock =  durationToSeconds(startTime)
+                entry.event = "half"
 
-            let officialResults = []
-            let unofficialResults = []
-            for (let i = 0; i < dhm23Results.length; i++) {
-                let entry = dhm23Results[i]
-                let countedLaps = Math.min(entry.lapTimes.length, 111)
-                entry["finishTime"] = entry.lapTimes.slice(0, countedLaps).reduce((a, b) => a + b, 0)
-                entry["5kTime"] = countedLaps > 26 ? entry.lapTimes.slice(0, 27).reduce((a, b) => a + b, 0) : Infinity
-                entry["10kTime"] = countedLaps > 52 ? entry.lapTimes.slice(0, 53).reduce((a, b) => a + b, 0) : Infinity
-                entry["10miTime"] = countedLaps > 84 ? entry.lapTimes.slice(0, 85).reduce((a, b) => a + b, 0) : Infinity
-                entry["nLaps"] = entry.lapTimes.length
-                if (entry.lapTimes.length < 111) {
+                let finished = false
+                let entranceAdjustment = resultsData.config.firstLapIsEntrance ? 1: 0;
+
+                let lapsRun = entry.lapTimes.length - entranceAdjustment
+                if (lapsRun >= lapsGoal) {
+                    finished = true
+                }
+
+                if (finished) {
+                    entry["finishTime"] = entry.lapTimes.slice(0, lapsGoal + entranceAdjustment).reduce((a, b) => a + b, 0)
+                } else {
+                    entry["finishTime"] = Infinity
+                }
+                for (let goalName in goals) {
+                    let goal = goals[goalName]
+                    entry[goalName + "Time"] = lapsRun >= goal ? entry.lapTimes.slice(0, goal + entranceAdjustment).reduce((a, b) => a + b, 0) : Infinity
+                }
+                entry["nLaps"] = lapsRun
+
+                let lapObjects = []
+                let lapsCompleted = 0
+                let timeElapsed = 0
+                let distanceElapsed = 0
+                let directionIndex = -1
+
+                let lapTarget = Object.values(goals)[Math.max(d3.bisectRight(Object.values(goals), lapsRun) - 1, 0)]
+                entry["goalLaps"] = lapTarget
+                entry["goalName"] = Object.keys(goals).find(key => goals[key] === lapTarget)
+                for (let i = 0; i < entry.lapTimes.length; i++) {
+                    let lapStartTime = timeElapsed
+                    timeElapsed += entry.lapTimes[i]
+                    cumulativeWallclock += entry.lapTimes[i]
+                    while (cumulativeWallclock > directionChanges[directionIndex + 1]) {
+                        directionIndex += 1
+                    }
+                    let runnerLapDistance = lapDistance
+                    let direction = resultsData.config.directions[directionIndex]
+                    if (i === 0 && resultsData.config.firstLapIsEntrance) {
+                        // 0th lap is entrance from upper vista, not a real lap
+                        runnerLapDistance = startDistance
+                        direction = null
+                    } else {
+                        lapsCompleted += 1
+                    }
+                    distanceElapsed += runnerLapDistance
+                    lapObjects.push({
+                        "index": i,
+                        "lapNumber": resultsData.config.firstLapIsEntrance && i === 0 ? null : lapsCompleted,
+                        "duration": entry.lapTimes[i],
+                        "distance": runnerLapDistance,
+                        "distanceElapsed": distanceElapsed,
+                        "timeElapsed": timeElapsed,
+                        "extra": i > lapTarget,
+                        "direction": direction
+                    })
+
+                }
+
+                entry["lapDetails"] = lapObjects
+
+                if (lapsRun < goals["13_1mi"]) {
                     unofficialResults.push(entry)
                 } else {
                     officialResults.push(entry)
                 }
             }
 
-            let officialTable = new Tabulator("#results-table-official", {
-                data: officialResults,
-                layout: "fitDataFill",
-                nestedData: true,
-                responsiveLayout: true,
-                initialSort: [{column: "finishTime", dir: "asc"}],
-                columns: [
-                    {title: "Name", field: "name", resizable: false},
-                    {
-                        title: "Finish Time", field: "finishTime", sorter: "number", formatter: cell => formatDuration(cell.getValue(), true), resizable: false
-                    },
-                    {
-                        title: "5k Time", field: "5kTime", sorter: "number", responsive: 3, formatter: cell => formatDuration(cell.getValue(), true), resizable: false
-                    },
-                    {
-                        title: "10k Time", field: "10kTime", sorter: "number", responsive: 2, formatter: cell => formatDuration(cell.getValue(), true), resizable: false
-                    },
-                    {
-                        title: "10mi Time", field: "10miTime", sorter: "number", responsive: 1, formatter: cell => formatDuration(cell.getValue(), true), resizable: false
-                    }
-                ],
-                rowFormatter: rowFormatter
-            })
+            let table = new ResultsTable(officialResults)
+            let halfGoals = Object.fromEntries(Object.entries(goals).filter(([key, value]) => value < goals["13_1mi"]))
+            document.querySelector("#results-table-official").append(table)
+            document.querySelector(".count:has(+ #results-table-official)").textContent = ` (${officialResults.length})`
+            table.initialize(officialResults, halfGoals, {videoLink: resultsData.config.finishVideo})
 
+            table = new ResultsTable(unofficialResults)
 
-            let unofficialTable = new Tabulator("#results-table-unofficial", {
-                data: unofficialResults,
-                layout: "fitDataFill",
-                nestedData: true,
-                responsiveLayout: true,
-                initialSort: [{column: "nLaps", dir: "desc"}],
-                columns: [
-                    {title: "Name", field: "name", resizable: false},
-                    {
-                        title: "Laps", field: "nLaps", sorter: "number", formatter: (cell) => {
-                            return cell.getData().nLaps - 1
-                        }, resizable: false
-                    },
-                    {
-                        title: "5k Time", field: "5kTime", sorter: "number", responsive: 3, formatter: cell => formatDuration(cell.getValue(), true), resizable: false
-                    },
-                    {
-                        title: "10k Time", field: "10kTime", sorter: "number", responsive: 2, formatter: cell => formatDuration(cell.getValue(), true), resizable: false
-                    },
-                    {
-                        title: "10mi Time", field: "10miTime", sorter: "number", responsive: 1, formatter: cell => formatDuration(cell.getValue(), true), resizable: false
-                    }
-                ],
-                rowFormatter: rowFormatter
-            })
-
-            officialTable.on("tableBuilt", () => scrollToResult(officialTable))
-            unofficialTable.on("tableBuilt", () => scrollToResult(unofficialTable))
-
-            officialTable.on("rowClick", rowClicked)
-            unofficialTable.on("rowClick", rowClicked)
+            document.querySelector("#results-table-unofficial").append(table)
+            document.querySelector(".count:has(+ #results-table-unofficial)").textContent = ` (${unofficialResults.length})`
+            table.initialize(unofficialResults, halfGoals, {videoLink: resultsData.config.finishVideo})
         })
 
     document.addEventListener('DOMContentLoaded', e => {
