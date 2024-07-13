@@ -44,7 +44,7 @@
   plan:
     - time: "8:30"
       route_id: locks-fremont-bridge-loop
-    - time: "9:05"
+    - time: "9:35"
       route_id: locks-discovery-radar-magnolia-discovery-ob
 
 - date: "2024-07-20"
