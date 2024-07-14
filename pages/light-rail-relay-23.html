@@ -1,8 +1,6 @@
 ---
 permalink: light-rail-relay-23/
 redirect_from:
-- /lrr/
-- /light-rail-relay/
 - /lrr23/
 team_registration_link: https://forms.gle/rPGW6fWT4wytm7be7
 registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
@@ -33,7 +31,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
     <script type="importmap">
         {
           "imports": {
-            "maplibre-gl": "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.1.2/maplibre-gl.min.js",
+            "maplibre-gl": "https://unpkg.com/maplibre-gl@4.5.0/dist/maplibre-gl.js",
             "masonry-layout": "https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js",
             "noUiSlider": "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.mjs",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
@@ -543,6 +541,9 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
 
     <section>
         <div class="container pb-4 mb-4">
+            <div class="alert alert-secondary" role="alert">
+                This event took place in 2023. Looking for <a href="{{ site.baseurl }}/lrr">a more recent Light Rail Relay</a>?
+            </div>
             <div class="d-flex flex-column flex-sm-row justify-content-between align-items-baseline">
                 <h2 id="route">Route <a href="#route" class="anchor-link" aria-label="Link to this section. Route"></a></h2>
                 <a href="#" class="btn btn-outline-primary mb-3 m-sm-0 " id="download-route-gpx-btn" hidden>Download Route GPX</a>
@@ -581,7 +582,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                 <accordion-item>
                     <accordion-header>Why do this?</accordion-header>
                     <accordion-body>
-                            <p></p>It's a chance to experience different parts of the city, and there's no better way to appreciate what Link does for Seattle than to run the route. If you're the competitive type, you may like the idea <a href="https://www.youtube.com/watch?v=OMNFRFUM4IM">of</a> <a href="https://www.youtube.com/watch?v=TaMiV3Wus9c">racing</a> <a href="https://www.youtube.com/watch?v=3x3HDTY919g">trains</a>. Or maybe you're an ultra-runner keen on establishing Seattle's first great urban FKT. Check out <a href="{{ site.baseurl }}/light-rail-relay-22#epilogue">the photos from last year</a> if you still need convincing.</p>
+                            <p>It's a chance to experience different parts of the city, and there's no better way to appreciate what Link does for Seattle than to run the route. If you're the competitive type, you may like the idea <a href="https://www.youtube.com/watch?v=OMNFRFUM4IM">of</a> <a href="https://www.youtube.com/watch?v=TaMiV3Wus9c">racing</a> <a href="https://www.youtube.com/watch?v=3x3HDTY919g">trains</a>. Or maybe you're an ultra-runner keen on establishing Seattle's first great urban FKT. Check out <a href="{{ site.baseurl }}/light-rail-relay-22#epilogue">the photos from last year</a> if you still need convincing.</p>
                     </accordion-body>
                 </accordion-item>
                 <accordion-item>
@@ -813,9 +814,14 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
 
 <footer>
     <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg" alt="A happy piece of toast running"/></a></p>
+    <ul class="list-unstyled d-flex justify-content-center gap-3 opacity-50 font-weight-light">
+        <li><a href="{{ site.baseurl }}/lrr24">2024</a></li>
+        <li><a href="{{ site.baseurl }}/lrr23">2023</a></li>
+        <li><a href="{{ site.baseurl }}/lrr22">2022</a></li>
+        <li><a href="{{ site.baseurl }}/lrr21">2021</a></li>
+    </ul>
 </footer>
 <script type="module">
-
     import { relayToGPX, download, createCountdown, processRelayGeoJSON, prepareImagesForPhotoswipe} from "../js/common.js";
     import { createLegDetailsTable} from "{{ site.baseurl }}/js/tables.js";
     import "maplibre-gl";
@@ -853,7 +859,9 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
         railData,
         processedRouteData
     ]).then(([railLines, [legs, exchanges, exchangeNames]]) => {
-        document.querySelector("#relay-map").updateWithData(legs, exchanges, exchangeNames, railLines)
+        // Get colors from css vars
+        let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-primary-color')
+        document.querySelector("#relay-map").updateWithData(legs, exchanges, exchangeNames, railLines, false, [primaryColor])
     })
 
 
