@@ -1,6 +1,5 @@
 {
     "version": 8,
-    "name": "LRR2023",
     "metadata": {
         "mapbox:type": "default",
         "mapbox:origin": "monochrome-dark-v1",
@@ -209,7 +208,7 @@
     },
     "sprite": "mapbox://sprites/nickswalker/clkdp2wqn001o01r11g4uf9hq/21sbd67cc50u86lqx3derbmpp",
     "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
-    "projection": {"name": "globe"},
+    "projection": {"type": "globe"},
     "layers": [
         {
             "id": "land",
@@ -508,11 +507,6 @@
             "id": "3d-buildings",
             "source": "composite",
             "source-layer": "building",
-            "filter": [
-                "all",
-                ["!=", ["get", "type"], "building:part"],
-                ["==", ["get", "underground"], "false"],
-                ["==", ["get","extrude"], "true"]],
             "type": "fill-extrusion",
             "minzoom": 15,
             "paint": {
@@ -573,7 +567,7 @@
                     15,
                     0,
                     16,
-                    0
+                    1
                 ],
                 "fill-outline-color": "hsla(0, 0%, 0%, 0.8)"
             }
@@ -2945,7 +2939,7 @@
         }
     ],
     "created": "2023-07-22T07:34:39.168Z",
-    "modified": "2023-07-22T20:06:28.430Z",
+    "modified": "2023-07-22T20:55:26.448Z",
     "id": "clkdp2wqn001o01r11g4uf9hq",
     "owner": "nickswalker",
     "visibility": "public",

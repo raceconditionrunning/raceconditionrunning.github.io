@@ -10,13 +10,17 @@ const transformRequest = (url, resourceType) => {
 import { isMapboxURL, transformMapboxUrl } from "https://cdn.jsdelivr.net/npm/maplibregl-mapbox-request-transformer@0.0.2/src/index.min.js"
 export class RelayMap extends HTMLElement {
 
+    constructor() {
+        super();
+        this.mapInitialized = false;
+        this.mapReady = new Promise((resolve) => {
+            this._resolveMapReady = resolve;
+        });
+    }
     updateWithData(legs, exchanges, exchangeNames, railLines) {
-        let map = this.map
-        new Promise((resolve, reject) => {
-            this.map.on('load', () => {
-                resolve();
-            })
-        }).then(() => {
+
+        this.mapReady.then(() => {
+            let map = this.map
             let legsData = legs.features
 
             const relayBounds = legsData.reduce((bounds, leg) => leg.geometry.coordinates.reduce((bounds, coord) => {
@@ -237,6 +241,14 @@ export class RelayMap extends HTMLElement {
     }
 
     connectedCallback() {
+        this.innerHTML = `<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.5.0/dist/maplibre-gl.css">
+<style>
+relay-map {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+`
         // Make the map focusable
         this.tabIndex = 0
         let centerValue = this.attributes.getNamedItem("center").value
@@ -251,7 +263,7 @@ export class RelayMap extends HTMLElement {
                 zoom: 9,
                 minZoom: 9,
                 maxBounds: boundary,
-                transformRequest: transformRequest
+                transformRequest: transformRequest,
             });
             // Don't break basic page scrolling until the map is focused
             map.scrollZoom.disable()
@@ -260,6 +272,7 @@ export class RelayMap extends HTMLElement {
             map.on("click", () => container.focus())
             map.on("pitchstart", () => container.focus())
             map.on("drag", () => container.focus())
+            map.on("load", () => this._resolveMapReady())
             container.addEventListener('focus', () => map.scrollZoom.enable());
             container.addEventListener('blur', () => map.scrollZoom.disable());
             let nav = new maplibregl.NavigationControl();
