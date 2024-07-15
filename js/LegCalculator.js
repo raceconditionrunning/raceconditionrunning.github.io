@@ -4,6 +4,7 @@ export class LegCalculator extends HTMLElement {
   constructor() {
       super();
         this.style.display = "none"
+      this._exchangeMapping = []
   }
 
   setLegs(legs, exchangeNames) {
@@ -12,12 +13,15 @@ export class LegCalculator extends HTMLElement {
       let cumulativeDistances = [0]
       let cumulativeAscents = [0]
       let cumulativeDescents = [0]
-      for (let i = 1; i < legs.features.length + 1; i++) {
-          let leg = legs.features[i - 1]
+      this._exchangeMapping = []
+      for (let i = 1; i < legs.length + 1; i++) {
+          let leg = legs[i - 1]
           cumulativeDistances.push(cumulativeDistances[i - 1] + leg.properties.distance_mi)
           cumulativeAscents.push(cumulativeAscents[i - 1] + leg.properties.ascent_ft)
           cumulativeDescents.push(cumulativeDescents[i - 1] + leg.properties.descent_ft)
+            this._exchangeMapping.push(leg.properties.start_exchange)
       }
+      this._exchangeMapping.push(legs[legs.length - 1].properties.end_exchange)
 
       function bisectLeft(arr, value, lo=0, hi=arr.length) {
           while (lo < hi) {
@@ -67,7 +71,7 @@ export class LegCalculator extends HTMLElement {
       let rightValue = 12
       let container = this
       slider.set(['4', '12']);
-      slider.on('update', function (values, handle, unencoded) {
+      slider.on('update', (values, handle, unencoded)=> {
           let oldLeft = leftValue
           let oldRight = rightValue
           if (handle === 0) {
@@ -88,7 +92,11 @@ export class LegCalculator extends HTMLElement {
           let distance = cumulativeDistances[rightValue] - cumulativeDistances[leftValue]
           let ascent = cumulativeAscents[rightValue] - cumulativeAscents[leftValue]
           let descent = cumulativeDescents[rightValue] - cumulativeDescents[leftValue]
-          let legName = `${exchangeNames[leftValue]} to ${exchangeNames[rightValue]}`
+          let legName = ""
+          if (this._exchangeMapping.length > 0) {
+              legName = `${exchangeNames[this._exchangeMapping[leftValue]]} to ${exchangeNames[this._exchangeMapping[rightValue]]}`
+          }
+
           // "values" has the "to" function from "format" applied
           // "unencoded" contains the raw numerical slider values
           let legDesc = `<div class="d-flex flex-column flex-lg-row justify-content-between align-items-baseline"><h5>${legName}</h5><h6>${distance.toFixed(2)}mi ↑${ascent.toFixed(0)}ft ↓${descent.toFixed(0)}ft</h6></div>`

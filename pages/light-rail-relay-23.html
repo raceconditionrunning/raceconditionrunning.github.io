@@ -31,6 +31,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
     <script type="importmap">
         {
           "imports": {
+            "d3": "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm",
             "maplibre-gl": "https://unpkg.com/maplibre-gl@4.5.0/dist/maplibre-gl.js",
             "masonry-layout": "https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js",
             "noUiSlider": "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.mjs",
@@ -524,7 +525,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                 <!--a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-25" data-bs-placement="bottom">Add Team
   </span></a-->
                 <!--a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing" class="btn hero-button">Follow Along</a></div-->
-                <!--div class="button-container"><a href="#epilogue" class="btn hero-button">Read Epilogue</a-->
+                <a href="#epilogue" class="btn btn-outline btn-outline-primary btn-lg">Read Epilogue</a>
                 </div>
             </div>
         </div>
@@ -676,8 +677,10 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                 </accordion-item>
 
             </accordion-group>
-
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-baseline">
         <h4 id="faq-rcr">RCR Team <a href="#faq-rcr" class="anchor-link" aria-label="Link to this section. RCR FAQ"></a></h4>
+            <a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing" class="btn btn-outline-primary mb-3">View RCR Team Schedule</a>
+            </div>
 
         <p>RCR is participating in the <b>Open Category</b> with multiple runners assigned to each leg.</p>
             <accordion-group class="accordion accordion-flush" id="faq-rcr-items">
@@ -726,20 +729,20 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                     <accordion-header>I'm unsure about signing up because I don't know enough about where I'd be
                         running.</accordion-header>
                     <accordion-body>
-                        <p>The organizers have run the course and put together some notes about what to expect along each leg, so do click around the route map. For the RCR team, multiple people will be assigned to each leg and at least one experienced runner will be in the group at all times. Please note any concerns or constraints on the open-ended part of the sign-up form so we can accommodate you.</p>
+                        <p>The organizers have run the course and put together some notes about what to expect along each leg, so do click around the route map. For the RCR team, multiple people will be assigned to each leg and at least one experienced runner will be in the group at all times. Please note any concerns or constraints on the open-ended part of the sign-up <a href="{{page.registration_link}}">form</a> so we can accommodate you.</p>
                     </accordion-body>
                 </accordion-item>
                 <accordion-item>
                     <accordion-header>Can I still sign up?</accordion-header>
                     <accordion-body>
-                        <p>The form will stay open until the Sunday before the event. Once it closes, the schedule won't be changed to accommodate your preferences, but you can join for any legs that you are able to. Please message us in the event Slack channel, #light-rail-relay-23, so we know to expect you.</p>
+                        <p>The <a href="{{page.registration_link}}">form</a> will stay open until the Sunday before the event. Once it closes, the schedule won't be changed to accommodate your preferences, but you can join for any legs that you are able to. Please message us in the event Slack channel, #light-rail-relay-23, so we know to expect you.</p>
                     </accordion-body>
                 </accordion-item>
 
                 <accordion-item>
                     <accordion-header>I want to update my preferences.</accordion-header>
                     <accordion-body>
-                        <p>You can update your responses on the entry form until the weekend before the event. After that point, you can reduce or increase the number of legs that you run if it does not affect the pace schedule, otherwise there will be no changes.</p>
+                        <p>You can update your responses on the <a href="{{page.registration_link}}">entry form</a> until the weekend before the event. After that point, you can reduce or increase the number of legs that you run if it does not affect the pace schedule, otherwise there will be no changes.</p>
                     </accordion-body>
                 </accordion-item>
             </accordion-group>
@@ -835,7 +838,7 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
     let railData = fetch("{{ site.baseurl }}/maps/link-light-rail.geojson").then(res => res.json())
     let processedRouteData = routeData.then((relay) => {
         let [legs, exchanges] = processRelayGeoJSON(relay)
-        let exchangeNames = new Array(exchanges.length);
+        let exchangeNames = {};
         for (let exchange of exchanges.features) {
             exchangeNames[exchange.properties.id] = exchange.properties.name
         }
@@ -875,7 +878,7 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
     createCountdown(startTime.getTime(), "countdown-ended")
 
     processedRouteData.then( ([legs, exchanges, exchangeNames]) => {
-        document.getElementById("leg-calculator").setLegs(legs, exchangeNames)
+        document.getElementById("leg-calculator").setLegs(legs.features, exchangeNames)
     })
 
     // Tooltips for sign-up deadlines

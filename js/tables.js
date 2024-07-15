@@ -62,20 +62,31 @@ export function createScheduleTable(container, schedule, startTime) {
 }
 
 export function createLegDetailsTable(container, legsGeojson, exchangesGeoJson) {
-    let data = []
     let legDescriptions = ""
 
-    function formatLegDescription(startExchange, endExchange, leg){
-        let legNumber = `<span class="leg-number">${leg.id}:</span> `
-        let legName = `${legNumber}<a href="${startExchange.stationInfo}" target="_new">${startExchange.name}</a> to <a href="${endExchange.stationInfo}" target="_new">${endExchange.name}</a>`
+    function formatLegDescription(startExchange, endExchange, leg) {
+        let legNumber = `<span class="leg-number">${leg.id}:</span> `;
 
-        return `<div class="d-flex flex-column flex-lg-row justify-content-between align-items-baseline"><h5>${legName}</h5><h6>${leg.distance_mi.toFixed(2)}mi ↑${leg.ascent_ft.toFixed(0)}ft ↓${leg.descent_ft.toFixed(0)}ft</h6></div><i>Landmark: ${startExchange.landmark}</i><p class="mb-0">${leg.notes}</p>`
+        let startLink = startExchange.stationInfo
+            ? `<a href="${startExchange.stationInfo}" target="_new">${startExchange.name}</a>`
+            : startExchange.name;
+
+        let endLink = endExchange.stationInfo
+            ? `<a href="${endExchange.stationInfo}" target="_new">${endExchange.name}</a>`
+            : endExchange.name;
+
+        let legName = `${legNumber}${startLink} to ${endLink}`;
+
+        return `<div class="d-flex flex-column flex-lg-row justify-content-between align-items-baseline"><h5>${legName}</h5><h6>${leg.distance_mi.toFixed(2)}mi ↑${leg.ascent_ft.toFixed(0)}ft ↓${leg.descent_ft.toFixed(0)}ft</h6></div><i>Landmark: ${startExchange.landmark}</i><p class="mb-0">${leg.notes ?? ""}</p>`;
     }
+    // Copy the legsGeojson array so we can modify it
+    legsGeojson = JSON.parse(JSON.stringify(legsGeojson))
     for (let leg of legsGeojson) {
         let legData = leg.properties
-        legData.id = legData.start_exchange + 1
-        data.push(legData)
-        legDescriptions += `<div class="mb-4">${formatLegDescription(exchangesGeoJson[legData.start_exchange].properties, exchangesGeoJson[legData.end_exchange].properties, legData)}</div>`
+        legData.id += 1
+        let startExchange = exchangesGeoJson.filter(exchange => exchange.properties.id === legData.start_exchange)[0].properties
+        let endExchange = exchangesGeoJson.filter(exchange => exchange.properties.id === legData.end_exchange)[0].properties
+        legDescriptions += `<div class="mb-4">${formatLegDescription(startExchange, endExchange, legData)}</div>`
     }
     container.innerHTML = legDescriptions
 

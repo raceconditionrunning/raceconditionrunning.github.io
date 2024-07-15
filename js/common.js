@@ -220,28 +220,21 @@ export function processRelayGeoJSON(relay) {
         }
     }
 
-    let orderedLegs = legs.sort(function(a, b) {
-        let keyA = a.properties.start_exchange
-        let keyB = b.properties.start_exchange
-        if (keyA < keyB) return -1;
-        if (keyA > keyB) return 1;
-        return 0;
-    });
-    let orderedExchanges = exchanges.sort(function(a, b) {
-        let keyA = a.properties.id
-        let keyB = b.properties.id
-        if (keyA < keyB) return -1;
-        if (keyA > keyB) return 1;
-        return 0;
-    });
+    if (legs[0].properties.sequence !== undefined) {
+        legs.sort((a, b) => a.properties.sequence[0] - b.properties.sequence[0])
+    } else {
+        legs.sort((a, b) => a.properties.start_exchange - b.properties.start_exchange)
+
+    }
+    exchanges.sort((a, b) => a.properties.id - b.properties.id)
 
     legs = {
         type: "FeatureCollection",
-        features: orderedLegs
+        features: legs
     }
     exchanges = {
         type: "FeatureCollection",
-        features: orderedExchanges
+        features: exchanges
     }
 
     return [legs, exchanges]
