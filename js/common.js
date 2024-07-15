@@ -51,10 +51,12 @@ export function durationToSeconds(duration) {
     return hours * 3600 + minutes * 60 + seconds
 }
 
-export function formatLegDescription(startStation, endStation, leg, includeLegNumber=false, linkStations=false){
+export function formatLegDescription(startStation, endStation, leg, includeLegNumber=false, linkStations=false, coords=null){
     let legNumber = ""
     if (includeLegNumber) legNumber = `<span class="leg-number">${leg.id}:</span> `
-    return `<h5 class="mb-1">${legNumber}${startStation} to ${endStation}</h5><h6>${leg.distance_mi.toFixed(2)}mi ↑${leg.ascent_ft.toFixed(0)}ft ↓${leg.descent_ft.toFixed(0)}ft</h6><p class="mb-0">${leg.notes}</p>`
+    let profile = ""
+    if (coords) profile = "<elevation-profile></elevation-profile>"
+    return `<h5 class="mb-1">${legNumber}${startStation} to ${endStation}</h5><h6>${leg.distance_mi.toFixed(2)}mi ↑${leg.ascent_ft.toFixed(0)}ft ↓${leg.descent_ft.toFixed(0)}ft</h6>${profile}<p class="mb-0">${leg.notes}</p>`
 }
 
 export function download(content, mimeType, filename) {

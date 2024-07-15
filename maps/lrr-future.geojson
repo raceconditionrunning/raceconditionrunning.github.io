@@ -34,64 +34,8 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Lynnwood City Center",
-        "id": 23
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -122.29468033794082,
-          47.815788615403655
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Mountlake Terrace",
-        "id": 24
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -122.31466380969947,
-          47.78527200218322
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Shoreline North/185th",
-        "id": 25
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -122.32249218029067,
-          47.76469575767005
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Shoreline South/148th",
-        "id": 26
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -122.3250269782967,
-          47.7358730901585
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "name": "BelRed",
-        "id": 27,
+        "id": 242,
         "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/belred-station"
       },
       "geometry": {
@@ -106,7 +50,7 @@
       "type": "Feature",
       "properties": {
         "name": "Spring District",
-        "id": 28,
+        "id": 243,
         "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/spring-district-station"
       },
       "geometry": {
@@ -121,7 +65,7 @@
       "type": "Feature",
       "properties": {
         "name": "Bellevue Downtown",
-        "id": 29,
+        "id": 245,
         "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/bellevue-downtown-station"
       },
       "geometry": {
@@ -136,7 +80,7 @@
       "type": "Feature",
       "properties": {
         "name": "Wilburton",
-        "id": 30,
+        "id": 244,
         "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/wilburton-station"
       },
       "geometry": {
@@ -151,7 +95,7 @@
       "type": "Feature",
       "properties": {
         "name": "East Main",
-        "id": 31,
+        "id": 246,
         "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/east-main-station"
       },
       "geometry": {
@@ -167,7 +111,7 @@
       "type": "Feature",
       "properties": {
         "name": "South Bellevue",
-        "id": 32,
+        "id": 247,
         "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/south-bellevue-station"
       },
       "geometry": {
@@ -212,7 +156,7 @@
       "type": "Feature",
       "properties": {
         "name": "Kent/Des Moines",
-        "id": 35,
+        "id": 166,
         "stationInfo": "https://www.soundtransit.org/system-expansion/federal-way-link-extension",
         "open": 2026
       },
@@ -228,7 +172,7 @@
       "type": "Feature",
       "properties": {
         "name": "Star Lake",
-        "id": 36,
+        "id": 167,
         "stationInfo": "https://www.soundtransit.org/system-expansion/federal-way-link-extension",
         "open": 2026
       },
@@ -244,7 +188,7 @@
       "type": "Feature",
       "properties": {
         "name": "Federal Way Downtown",
-        "id": 37,
+        "id": 168,
         "stationInfo": "https://www.soundtransit.org/system-expansion/federal-way-link-extension",
         "open": 2026
       },
@@ -260,7 +204,7 @@
       "type": "Feature",
       "properties": {
         "name": "Overlake Village",
-        "id": 38,
+        "id": 241,
         "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/overlake-village-station"
       },
       "geometry": {
@@ -275,7 +219,7 @@
       "type": "Feature",
       "properties": {
         "name": "Marymoor Village",
-        "id": 39,
+        "id": 239,
         "stationInfo": "https://www.soundtransit.org/system-expansion/downtown-redmond-link-extension",
         "open": 2025
       },
@@ -291,7 +235,7 @@
       "type": "Feature",
       "properties": {
         "name": "NE 130th St",
-        "id": 40,
+        "id": 144,
         "stationInfo": "https://www.soundtransit.org/system-expansion/ne-130th-st-infill-station",
         "open": 2026},
       "geometry": {

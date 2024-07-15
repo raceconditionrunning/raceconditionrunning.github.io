@@ -1,4 +1,5 @@
 import {formatLegDescription} from "./common.js";
+import {ElevationProfile} from "./ElevationProfile.js";
 
 const mapboxKey = 'pk.eyJ1Ijoibmlja3N3YWxrZXIiLCJhIjoiY2t0ZjgyenE4MDR1YjJ1cno0N3hxYzI4YSJ9.ivPdsoEtV9TaLGbOOfFXKA'
 const transformRequest = (url, resourceType) => {
@@ -17,11 +18,46 @@ export class RelayMap extends HTMLElement {
             this._resolveMapReady = resolve;
         });
     }
-    updateWithData(legs, exchanges, exchangeNames, railLines) {
 
+    highlightLeg(legId) {
         this.mapReady.then(() => {
+            // Pass -1 to clear all highlights
+            if (legId >= 0) {
+                console.log("Highlighting", legId)
+                this.map.setFeatureState(
+                    {source: 'legs', id: legId},
+                    {selected: true}
+                );
+            }
+            this.map.queryRenderedFeatures({ layers: ['legs'] }).forEach((feature) => {
+                if (feature.id !== legId) {
+                    console.log("Clearing", feature.id)
+                    this.map.setFeatureState(
+                        { source: 'legs', id: feature.id },
+                        { selected: false }
+                    );
+                }
+            });
+            // Make sure the line gets redrawn
+            this.map.redraw()
+        })
+    }
+    updateWithData(legs, exchanges, exchangeNames, railLines, useStationCodes=false, lineColors={}) {
+
+        this.mapReady.then(async () => {
             let map = this.map
             let legsData = legs.features
+
+            if (useStationCodes) {
+                const line1StationCode = await map.loadImage("/img/lrr24/1_station_code.png");
+
+                map.addImage('1stationcode', line1StationCode.data, {
+                    stretchX: [[76, 77]],
+                    // This part of the image that can contain text ([x1, y1, x2, y2]):
+                    content: [76, 2, 96, 77],
+                    pixelRatio: 4
+                });
+            }
 
             const relayBounds = legsData.reduce((bounds, leg) => leg.geometry.coordinates.reduce((bounds, coord) => {
                 return bounds.extend(coord);
@@ -68,8 +104,32 @@ export class RelayMap extends HTMLElement {
             });
             map.addSource('legs', {
                 'type': 'geojson',
-                'generateId': true,
+                'promoteId': "id",
                 'data': legs
+            });
+            // For each leg, we find the midpoint and create a label
+            let labels = legsData.map((leg) => {
+                let coordinates = leg.geometry.coordinates
+                let midPoint = coordinates[Math.floor(coordinates.length / 2)]
+                return {
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        coordinates: midPoint
+                    },
+                    properties: {
+                        id: leg.properties.id,
+                        sequence: leg.properties.sequence
+                    }
+                }
+            })
+            map.addSource('leg-labels', {
+                'type': 'geojson',
+                'data': {
+                    type: 'FeatureCollection',
+                    features: labels
+                },
+                'promoteId': "id",
             });
 
             map.addLayer({
@@ -81,13 +141,20 @@ export class RelayMap extends HTMLElement {
                     'line-cap': 'round'
                 },
                 'paint': {
-                    'line-color': ['case', ['boolean', ['feature-state', 'selected'], false], '#468040', '#6cc462'],
-                    'line-width': 8
+                    'line-color': ['case', ['boolean', ['feature-state', 'selected'], false], ["interpolate-lab", ["linear"], 0.5, 0, "#000", 1, lineColors[0]], lineColors[0]],
+                    'line-width': {
+                        "stops": [
+                            [10, 3],
+                            [12, 4],
+                            [14, 5],
+                            [20, 6]
+                        ]
+                    }
                 }
             });
             map.addSource('exchanges', {
                 'type': 'geojson',
-                'generateId': true,
+                'promoteId': "id",
                 'data': exchanges
             });
 
@@ -95,95 +162,132 @@ export class RelayMap extends HTMLElement {
                 'id': 'exchange-circle',
                 'type': 'circle',
                 'source': 'exchanges',
-                minzoom: 9,
+                maxzoom: useStationCodes ? 12 : 24,
                 'paint': {
-                    'circle-radius': 16,
-                    'circle-color': '#fff'
+                    'circle-radius': {
+                        "stops": [
+                            [9, 3],
+                            [12, 8]
+                        ]
+                    },
+                    'circle-color': '#fff',
+                    'circle-stroke-color': '#000',
+                    'circle-stroke-width': {
+                        "stops": [
+                            [9, 1],
+                            [12, 2]
+                        ]
+                    },
                 }
             });
-
-            map.addLayer({
-                id: 'exchange-id',
-                type: 'symbol',
-                source: 'exchanges',
-                minzoom: 9,
-                layout: {
-                    'text-field': '{id}',
-                    'text-font': ['Open Sans Semibold'],
-                    'text-size': 16
-                }
-            });
-
-            let currentExchangePopup = null;
-            let currentHoveredExchange = null;
-            let exchangePinned = false;
-            // When a click event occurs on a feature in the places layer, open a popup at the
-            // location of the feature, with description HTML from its properties.
-
-            function addExchangePopup(feature) {
-                return new maplibregl.Popup({
-                    offset: [16, 0],
-                    className: "exchange-name-popup",
-                    focusAfterOpen: false,
-                    closeButton: false,
-                    anchor: 'left'
+            if (useStationCodes) {
+                map.addLayer({
+                    id: 'exchange-station-code',
+                    type: 'symbol',
+                    source: 'exchanges',
+                    minzoom: 12,
+                    layout: {
+                        'text-field': ['slice', ['to-string', ['get', 'id']], 1, 3],
+                        'text-font': ['Open Sans Semibold'],
+                        'text-size': 14,
+                        "text-padding": 0,
+                        "text-justify": "right",
+                        'icon-image': '1stationcode',
+                        'icon-text-fit': 'width',
+                        'icon-overlap': 'always',
+                        'text-overlap': 'always'
+                    }
+                });
+            } else {
+                map.addLayer({
+                    id: 'exchange-id',
+                    type: 'symbol',
+                    source: 'exchanges',
+                    minzoom: 9,
+                    layout: {
+                        'text-field': ['to-string', ['get', 'id']],
+                        'text-font': ['Open Sans Semibold'],
+                        'text-size': {
+                            "stops": [
+                                [8, 8],
+                                [12, 12],
+                                [14, 12]
+                            ]
+                        },
+                        "text-justify": "center",
+                        'text-anchor': 'center',
+                    }
                 })
-                    .setLngLat(feature.geometry.coordinates)
-                    .setHTML(`<h5 class="m-0"><a href="${feature.properties.stationInfo}" title="Official station page" target="_new">${feature.properties.name} 🔗</a></h5>`)
-                    .setMaxWidth("350px")
-                    .addTo(map);
             }
 
-            map.on('click', 'exchange-circle', e => {
-                const exchange = e.features[0]
-                e.originalEvent.stopPropagation()
-
-                currentExchangePopup = addExchangePopup(exchange)
-                if (currentHoveredExchange) {
-                    map.setFeatureState(
-                        {source: 'exchanges', id: currentHoveredExchange},
-                        {hover: false}
-                    );
-                }
-                map.setFeatureState(
-                    {source: 'exchanges', id: exchange.id},
-                    {hover: true}
-                );
-                exchangePinned = true
-                currentHoveredExchange = exchange.id
-            })
-            map.on('mousemove', 'exchange-circle', (e) => {
-                if (exchangePinned && currentExchangePopup && currentExchangePopup.isOpen()) {
-                    return
-                }
-                if (e.features.length > 0) {
-                    let feature = e.features[0]
-                    if (currentExchangePopup && currentExchangePopup.isOpen()) {
-                        if (currentHoveredExchange === feature.properties.id) {
-                            return
-                        }
-                        currentExchangePopup.remove()
-                    }
-
-                    currentHoveredExchange = feature.properties.id;
-                    currentExchangePopup = addExchangePopup(feature)
-                } else if (currentExchangePopup) {
-                    currentExchangePopup.remove()
-                    currentExchangePopup = null
-                    currentHoveredExchange = null
-                    exchangePinned = false;
+            map.addLayer({
+                id: 'exchange-name',
+                type: 'symbol',
+                source: 'exchanges',
+                minzoom: 12,
+                layout: {
+                    'text-field': [
+                        "step",
+                        ["zoom"],
+                        [
+                            "format",
+                            ["get", "name"],
+                            {"font-scale": 1.0}
+                        ],
+                        14,
+                        [
+                            "format",
+                            ["get", "name"],
+                            {"font-scale": 1.0},
+                            "\n",
+                            {},
+                            ["get", "landmark"],
+                            {"font-scale": 0.8, "text-font": ["literal", ["Open Sans Regular"]]}
+                        ]
+                    ],
+                    'text-font': ['Open Sans Semibold'],
+                    'text-size': 14,
+                    "text-justify": "left",
+                    'text-offset': [1.2, 0.0],
+                    'text-anchor': 'left',
+                },
+                paint: {
+                    'text-halo-color': 'rgba(0, 0, 0, 0.4)',
+                    'text-halo-width': 1,
+                    'text-halo-blur': 1,
+                    'text-color': '#FFF'
                 }
             });
 
-            map.on("mouseenter", "exchange-circle", (e) => {
-                map.getCanvas().style.cursor = 'pointer';
+
+            map.addLayer({
+                'id': 'leg-labels',
+                'type': 'symbol',
+                'source': 'leg-labels',
+                minzoom: 9,
+                'layout': {
+                    'text-field': ["to-string", ["+", ["at", 0 , ["get", "sequence"]], 1]],
+                    'text-font': ['Open Sans Bold'],
+                    'text-size': {
+                        "stops": [
+                            [9, 12],
+                            [12, 14]
+                        ]
+                    },
+                    "text-padding": 4,
+                    "text-justify": "center",
+                    /*'icon-image': 'blackbg',
+                    'icon-text-fit': 'both',
+                    'icon-overlap': 'always',
+                    'text-overlap': 'always'*/
+                },
+                paint: {
+                    'text-color': '#FFF',
+                    'text-halo-color': 'rgba(0, 0, 0, 0.6)',
+                    'text-halo-width': 2,
+                }
             });
 
-            // Change it back to a pointer when it leaves.
-            map.on('mouseleave', 'exchange-circle', (e) => {
-                map.getCanvas().style.cursor = '';
-                e.preventDefault()
-            });
 
             let currentActiveLeg = null
             let currentLegPopup = null
@@ -201,30 +305,22 @@ export class RelayMap extends HTMLElement {
                 })
                     .setLngLat([bounds.getEast(), bounds.getCenter().lat])
                     .setMaxWidth("300px")
-                    .setHTML(formatLegDescription(exchangeNames[leg.properties.start_exchange], exchangeNames[leg.properties.end_exchange], leg.properties))
+                    .setHTML(formatLegDescription(exchangeNames[leg.properties.start_exchange], exchangeNames[leg.properties.end_exchange], leg.properties, false, false, coordinates))
                     .on("close", () => {
-                        map.setFeatureState(
-                            {source: 'legs', id: leg.id},
-                            {selected: false}
-                        );
+                        this.highlightLeg(-1)
                         currentActiveLeg = null
                         this.focus()
                     })
                     .addTo(map);
+                let profile = currentLegPopup._content.querySelector("elevation-profile")
+                profile.style.width = "100%"
+                profile.style.height = "64px"
+                // Maplibre strips out elevation (and any further data) per point. Get data straight from legs
+                profile.elevationData = legs.features.filter(l => l.properties.id === leg.id)[0].geometry.coordinates
                 map.fitBounds(bounds, {
                     padding: 32
                 });
-                if (currentActiveLeg) {
-                    map.setFeatureState(
-                        {source: 'legs', id: currentActiveLeg.id},
-                        {selected: false}
-                    );
-                }
-                map.setFeatureState(
-                    {source: 'legs', id: leg.id},
-                    {selected: true}
-                );
-                currentActiveLeg = leg
+                this.highlightLeg(leg.id)
             })
 
             // Change the cursor to a pointer when the mouse is over the places layer.

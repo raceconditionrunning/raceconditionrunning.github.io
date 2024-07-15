@@ -1,0 +1,764 @@
+---
+permalink: light-rail-relay-24/
+redirect_from:
+- /lrr/
+- /light-rail-relay/
+- /lrr24/
+team_registration_link: https://forms.gle/9DLctNws7jWC3WyU6
+registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
+---
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>Light Rail Relay 2024</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Marathon relay along the Link Line 1 happening September 28th, 2024.">
+    <meta name="theme-color" content="#000000">
+    <meta property="og:image" content="{{ site.baseurl }}/img/lrr24/lrr-og-banner.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ site.baseurl }}/light-rail-relay-24/">
+    <meta property="og:title" content="Light Rail Relay 2024">
+    <meta property="og:description" content="Marathon relay along the Link Line 1 happening September 28th, 2024.">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css" integrity="sha512-qveKnGrvOChbSzAdtSs8p69eoLegyh+1hwOMbmpCViIwj7rn4oJjdmMvWOuyQlTOZgTlZA0N2PXA7iA8/2TUYA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator.min.css" integrity="sha512-HdUIebGeOK7s+At/fOnnbX8vsz6Cl1KTeiRlBiQABTMSqw7kZRCxGiUnuF9lr+1xz5y8pL7jkCR+NNtVVkEqKg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator_bootstrap5.min.css" integrity="sha512-904y6HHQyQS2fAyIQ869rH3AAkxZeFuxo9vheji5zw+IPEyioMWN4Bt/VFhzO5edPZ9m1lwkpYgXcYcm1vzaFw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script type="importmap">
+        {
+          "imports": {
+            "d3": "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm",
+            "maplibre-gl": "https://unpkg.com/maplibre-gl@4.5.0/dist/maplibre-gl.js",
+            "masonry-layout": "https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js",
+            "noUiSlider": "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.mjs",
+            "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
+            "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
+            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.1.0/js/tabulator_esm.min.js",
+            "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js",
+            "bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.esm.min.js"
+          }
+        }
+    </script>
+
+    <style>
+
+        :root {
+            --theme-primary-color: #3DAE2B;
+            --theme-primary-color-subdued: #4cad3d;
+            --theme-primary-color-bright: #43d932;
+            --two-line-color: #00B8F4;
+            --t-line-color: #FF8B00;
+            --bs-link-hover-color: #43d932;
+            --bs-body-bg: #010101;
+            //--bs-body-bg: #070e1a;
+            --bs-body-color: #fefefe;
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--bs-font-sans-serif);
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        ::selection {
+            background: var(--theme-primary-color-subdued);
+        }
+
+        #title ::selection {
+            background: #333;
+        }
+
+        a {
+            color: var(--theme-primary-color);
+        }
+
+        ul {
+            /* Don't jam bullet at edge of screen on mobile */
+            padding-left: 1rem
+        }
+
+        @media screen and (min-width: 700px) {
+            ul {
+                padding-left: 0;
+            }
+        }
+
+        .anchor-link {
+            padding: 0 .175rem;
+            font-weight: 400;
+            color: var(--theme-primary-color-bright);
+            text-decoration: none;
+            opacity: 0;
+            transition: color 0.15s ease-in-out,opacity 0.15s ease-in-out;
+        }
+
+        .anchor-link::after {
+            content: "#";
+        }
+
+        .anchor-link:focus, .anchor-link:hover, :hover > .anchor-link, :target > .anchor-link {
+            text-decoration: none;
+            opacity: 1;
+        }
+
+        .imprint a {
+            text-decoration: none;
+        }
+
+        .imprint img {
+            width: 100px;
+            opacity: .5;
+            filter: invert();
+        }
+
+        #map-container {
+            height: 100%;
+        }
+        #map {
+            height: 70vh;
+        }
+
+        dt {
+            font-weight: bold;
+        }
+
+        dd {
+            margin-left: 0;
+            margin-bottom: 1rem
+        }
+
+        header {
+            margin-bottom: 1rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        .btn {
+            border-radius: 0;
+        }
+
+        .btn-outline-primary {
+            --bs-btn-color: var(--theme-primary-color);
+            --bs-btn-hover-bg: var(--theme-primary-color);
+            --bs-btn-hover-color: var(--bs-body-color);
+            --bs-btn-hover-border-color: transparent;
+            --bs-btn-active-bg: var(--theme-primary-color);
+            --bs-btn-active-border-color: var(--theme-primary-color);
+            --bs-btn-active-color: #eee;
+            --bs-btn-border-color: var(--theme-primary-color);
+            --bs-btn-focus-shadow-rgb: 255, 255, 255
+        }
+
+        .maplibregl-map {
+            font-family: var(--bs-font-sans-serif);
+            font-size: 1rem;
+        }
+
+        .maplibregl-popup-content {
+            font-size: 1rem;
+            --bs-body-color: black;
+            color: black;
+        }
+
+        .maplibregl-popup-close-button {
+            color: black;
+        }
+
+        .maplibregl-popup-content h3 {
+            font-size: 1.25rem;
+            margin-top: 0;
+            margin-bottom: .25rem;
+        }
+        .maplibregl-popup-content h4 {
+            font-size: 1rem;
+            margin-top: 0;
+            margin-bottom: .5rem;
+        }
+
+        .maplibregl-popup-content
+        {
+            background-color: rgba(255, 255, 255, 0.6);
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
+        }
+
+        .exchange-name-popup a {
+            color: var(--bs-body-color);
+            text-decoration-color: var(--theme-primary-color);
+            text-decoration-thickness: 2px;
+            font-weight: 600;
+        }
+
+        .exchange-name-popup .maplibregl-popup-tip {
+            border-right-color: rgba(255, 255, 255, 0.6);
+        }
+        .leg-popup .maplibregl-popup-tip {
+            display: none;
+        }
+
+        .exchange-name-popup .maplibregl-popup-close-button {
+            display: none;
+        }
+
+        .mapboxgl-ctrl-attrib.mapboxgl-compact, .maplibregl-ctrl-attrib.maplibregl-compact {
+            background-color: rgba(255, 255, 255, 0.6);
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
+        }
+
+        .maplibregl-map:focus:focus-visible,
+        .maplibregl-ctrl-group button:focus:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 0.25rem var(--theme-primary-color-subdued);
+        }
+
+        footer {
+            margin: 6rem 0 6rem 0;
+        }
+
+        .container {
+            max-width: 700px;
+        }
+
+        #finish-row td {
+            font-weight: bold;
+        }
+
+        #countdown .container {
+            max-width: none;
+        }
+
+        figure {
+            max-width: 1200px;
+            margin: 0 auto 2rem auto;
+        }
+
+        hr {
+            width: 8rem;
+            margin: 4rem auto;
+            display: block;
+            border: 1px solid var(--bs-secondary-color);
+        }
+
+        header {
+            margin: 0 auto;
+
+        }
+
+        .one-bg {
+            background-color: var(--theme-primary-color);
+            background: linear-gradient(rgba(0,0,0,.1), transparent, rgba(0,0,0,.1)), var(--theme-primary-color);
+        }
+        header img {
+            flex: 1;
+            max-width: 100%;
+            max-height: 6.5rem;
+            margin: 0 auto;
+            padding: 1rem .5rem;
+            display: block;
+        }
+
+
+        .subheader p, .subheader p a {
+            color: grey;
+        }
+
+
+
+        .accordion-item ul {
+            padding-left: 1rem;
+        }
+
+        .accordion {
+            --bs-accordion-btn-focus-border-color: var(--theme-primary-color-subdued);
+            --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem var(--theme-primary-color-subdued);
+            --bs-accordion-bg: #111;
+            --bs-accordion-active-color: var(--bs-emphasis-color);
+            --bs-accordion-active-bg: #333;
+        }
+        .accordion-item {
+            border-bottom: 1px solid #666;
+        }
+
+        .accordion-button::after {
+            filter: saturate(0%);
+        }
+
+        .tabulator,
+        .tabulator .tabulator-header .tabulator-col,
+        .tabulator .tabulator-header,
+        .tabulator .tabulator-tableholder .tabulator-table,
+        .tabulator .tabulator-footer,
+        .tabulator .tabulator-footer .tabulator-calcs-holder,
+        .tabulator .tabulator-footer .tabulator-calcs-holder .tabulator-row{
+            background-color: transparent !important;
+        }
+
+        .tabulator {
+            color: var(--bs-body-color);
+        }
+
+        .tabulator-row.tabulator-group {
+            background-color: rgba(255, 255, 255, 0.075) !important;
+        }
+
+        .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs {
+            background-color: transparent !important;
+        }
+
+        .tabulator-row, .tabulator-row.tabulator-row-even {
+            background-color: transparent;
+        }
+
+        .tabulator-row,
+        .tabulator .tabulator-header {
+            border: none;
+        }
+
+        .tabulator-row .tabulator-responsive-collapse {
+            border-top: 0px;
+            padding-bottom: 1rem;
+            white-space: normal;
+        }
+        .tabulator-responsive-collapse strong {
+            font-weight: 500;
+        }
+
+        .tabulator .tabulator-footer {
+            border: none !important;
+        }
+
+        .tabulator .tabulator-footer .tabulator-calcs-holder {
+            border: none;
+            border-top: 1px solid #AAA;
+        }
+
+        .leg-leader {
+            font-weight: 700;
+        }
+
+        .first-leg {
+            text-decoration: underline;
+        }
+        #leg-details-table h6, #leg-details-table .leg-number {
+            color: var(--bs-secondary-color);
+        }
+        #leg-details-table h5 a {
+            color: var(--bs-body-color);
+            text-decoration-color: var(--theme-primary-color);
+        }
+
+        #leg-calculator {
+            border: 1px solid #111;
+        }
+
+        .noUi-connect {
+            background-color: var(--theme-primary-color);
+        }
+        .noUi-value {
+            display: none; /* No tick labels */
+        }
+        .noUi-target {
+            background: #333;
+            border-radius: 0;
+            border: 1px solid var(--bs-dark-border-subtle);
+            box-shadow: none;
+        }
+
+        .noUi-handle {
+            box-shadow: none;
+        }
+
+        .noUi-marker-large {
+            background-color: #555;
+        }
+        .noUi-tooltip {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 1rem;
+            padding: 3px 0 0 0;
+        }
+
+        .noUi-horizontal .noUi-tooltip {
+            bottom: 130%;
+        }
+
+
+        .imprint {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .imprint a {
+            text-decoration: none;
+            color: #666;
+        }
+
+        .imprint img {
+            width: 100px;
+            opacity: .5;
+        }
+
+        /*.gradient-background {
+            background: radial-gradient(circle at 20% -10%,var(--theme-primary-color),rgba(255,0,0,0) 30%),radial-gradient(circle at 93.3% 10%,var(--two-line-color),rgba(0,255,0,0) 30%),radial-gradient(circle at 6.7% 20%,var(--t-line-color),rgba(0,0,255,0) 30%) !important;
+        }*/
+
+    </style>
+</head>
+
+<body>
+
+<section id="title">
+    <div class="gradient-background pb-2">
+
+        <header class="d-flex flex-wrap align-items-center justify-content-center gap-3">
+            <div class="one-bg w-100 mb-2 mb-md-4 p-1 p-sm-3 p-md-4">
+                <img src="{{ site.baseurl }}/img/lrr24/logo.svg" alt="Light Rail Relay" class=""/>
+            </div>
+
+
+                <div class="container subheader d-flex flex-column align-items-start px-md-5">
+                    <div id="countdown" class=" ">
+                            Arriving <span id="static-count" style="">soon</span><span id="dynamic-count"
+                                                                              style="display:none">in
+                <span id="days"></span>d&nbsp;<span id="day-plural"></span><span id="hours"></span>h&nbsp;<span id="minutes"></span>min<span class="flashing">.</span></span>
+
+                    </div>
+                    <div id="countdown-ended" style="display: none" class="">
+
+                    </div>
+                    <p>Marathon relay along Seattle's Link Light Rail by <a href="{{ site.baseurl }}/" class="fst-italic text-decoration-none">Race Condition Running</a>. <br/>08:30 September 28th</p>
+                    <div class="button-container">
+
+                        <a href="{{ page.registration_link }}" class="btn btn-outline btn-outline-primary btn-lg me-2" data-bs-toggle="tooltip" data-bs-title="by 9-24" data-bs-placement="bottom">Sign Up
+                            </a>
+                        <a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-21" data-bs-placement="bottom">Add Team</a>
+                        
+                        <!--a href="#epilogue" class="btn btn-outline btn-outline-primary btn-lg">Read Epilogue</a-->
+
+
+
+                </div>
+            </div>
+
+        </header>
+
+        </div>
+    </section>
+
+
+<section id="map">
+    <relay-map id="relay-map"
+               center="[-122.32747365635417,47.60640473782326]"
+               max-bounds="[[-122.90236980551624, 47.23422996598591], [-121.60263821424818, 47.83106353346886]]"
+               style-href="{{ site.baseurl }}/maps/lrr23-map-style.json"></relay-map>
+
+</section>
+
+<section>
+    <div class="container pb-4 mb-4">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-baseline">
+            <h2 id="route">Route <a href="#route" class="anchor-link" aria-label="Link to this section. Route"></a></h2>
+            <a href="#" class="btn btn-outline-primary mb-3 m-sm-0 " id="download-route-gpx-btn" hidden>Download Route GPX</a>
+        </div>
+
+        <h5>22 legs - 38.45 mi ↑3000ft ↓3000ft</h5>
+        <p>The relay will start at Angle Lake station and follow the 1 Line to Lynnwood, with
+            visits to each operational station on the way. The route passes through a total of 6 cities.</p>
+
+
+        <leg-calculator id="leg-calculator" class="mb-3 p-2 p-lg-4" style="display: none">
+            <h6 class="text-secondary">Segment Calculator</h6>
+            <div id="leg-calculator-description"></div>
+            <div class="mx-3">
+                <div class="leg-range-input mt-5 mb-5" id="leg-calculator-slider"></div>
+            </div>
+        </leg-calculator>
+
+
+        <accordion-group id="leg-details-accordion" class="accordion accordion-flush">
+            <accordion-item>
+                <accordion-header>See all leg details</accordion-header>
+                <accordion-body>
+                    <div id="leg-details-table"></div>
+                </accordion-body>
+            </accordion-item>
+        </accordion-group>
+    </div>
+</section>
+
+
+<section>
+    <div class="container">
+        <h2 id="faq">FAQ <a href="#faq" class="anchor-link" aria-label="Link to this section. FAQ"></a></h2>
+
+        <accordion-group class="accordion-flush mb-4" id="faq-items">
+            <accordion-item>
+                <accordion-header>Why do this?</accordion-header>
+                <accordion-body>
+                    <p>It's a chance to experience different parts of the city, and there's no better way to appreciate what Link does for Seattle than to run the route. You may like the idea <a href="https://www.youtube.com/watch?v=OMNFRFUM4IM">of</a> <a href="https://www.youtube.com/watch?v=TaMiV3Wus9c">racing</a> <a href="https://www.youtube.com/watch?v=3x3HDTY919g">trains</a>. Or maybe you're an ultra-runner keen on establishing Seattle's first great urban FKT. Check out <a href="{{ site.baseurl }}/light-rail-relay-23#epilogue">the photos from last year</a> if you still need convincing.</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>Why doesn't this include the 2 Line?</accordion-header>
+                <accordion-body>
+                    <p>The 2 Line (and the <a href="https://en.wikipedia.org/wiki/T_Line_(Sound_Transit)">T Line</a>) don't yet connect to the 1 Line, so we'd need to start the event in multiple locations without an easy connection between. For now, we've decided to focus on the longest line</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>Who can participate?</accordion-header>
+                <accordion-body>
+                    <p>Anyone can form a team to complete the relay. See the instructions below for making a team.</p>
+                    <p>Members of the CSE community are welcome to run as part of the Race Condition Running team. See the <a href="#faq-rcr">section below</a> for details about the team.</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>How can I make a team?</accordion-header>
+                <accordion-body>
+                    <p>Decide which format you'd like to participate in. There are three categories of teams for results purposes: <b>Competitive</b> for teams of four, <b>Ultra</b> for teams of one, and <b>Open</b> for all other formats. All teams will:</p>
+                    <ul>
+                        <li>Register all of their members.</li>
+                        <li>Have a runner present at the Angle Lake Station platform at 08:30 on the morning of the event to receive their baton.</li>
+                        <li>Carry their baton through all 23 stations.</li>
+                        <li>Document station visits with photos.</li>
+                        <li>Gather and submit station photos after the event.</li>
+                    </ul>
+
+                    <p>Teams are responsible for their own logistics and support during the event.</p>
+
+                    <p>If you're interested in forming a team, please complete the <a href="{{ page.team_registration_link}}">team signup</a>. There is no cost to register, but register early as we have a limited number of batons. Once your team is confirmed, you and your runners will be able to use the main <a href="{{ page.registration_link }}">sign-up form</a>.</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>How does timing work?</accordion-header>
+                <accordion-body>
+                    <p>If you want an <i>official</i> time, your team captain will need to submit a set of 23 station photos with time metadata. We'll verify the photos and post the results. The photos you share will not be posted.</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>Can we walk?</accordion-header>
+                <accordion-body>
+                    <p>Yes, your team can walk for any or all of the event. There will be about <a href="https://www.timeanddate.com/sun/usa/seattle?month=9">12 hours of usable daylight</a>. Please mark your estimated time appropriately when registering as walking teams will be given an earlier start.</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>What counts as a station photo?</accordion-header>
+                <accordion-body>
+                    <p>Your baton must be in the photo. It must be possible to tell that the photo was taken from within 100m of the station platform as the crow flies. You don't need to take the photo on the platform or even from within the fare zone! Use the <a href="https://www.soundtransit.org/sites/default/files/2016_start-on-link-map.pdf">station art</a> or signage.</p> Zoom into the map to see our recommended exchange landmarks.
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>Do we have to follow the route?</accordion-header>
+                <accordion-body>
+                    <p>We strongly recommend you follow the given route. We've run it before and assembled <a href="#route">notes on what to expect</a>. That said, the course is not monitored, and we will only be checking station photos. You can run alternative routes at your own peril.</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>How do we assign legs?</accordion-header>
+                <accordion-body>
+                    <h5>Competitive Teams</h5>
+                    <p>You must have exactly four runners each running at least one leg. So you may exchange as few as three times or as many times as there are stations. If your goal is to go fast, you probably want to break the distance evenly, but you'll have to weigh whether to cycle runners more frequently (risking botched exchanges) against running for longer blocks.</p>
+                    <h5>Open Teams</h5>
+                    <p>There are no constraints. The RCR team treats the event like a big long-run, with multiple
+                        runners on each leg. See our previous schedules from <a
+                                href="{{ site.baseurl }}/light-rail-relay-21#schedule">2021</a> and <a
+                                href="{{ site.baseurl }}/light-rail-relay-22#schedule">2022</a> to get the idea. In
+                        any case, we'll collect your runners' preferences and send them to you along with a
+                        recommended schedule.</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>Is this safe?</accordion-header>
+                <accordion-body>
+                    <p>Running the Light Rail Relay involves the same kinds of danger that you would encounter on any run in Seattle. Although unlikely, there is risk of harm from vehicle traffic, falling, weather, or medical complications. The course is open and you are responsible for your own safety. During registration, you will be asked to sign a liability waiver acknowledging these risks. That being said, the organizers have run the route multiple times without incident. Click around the route map to see our notes.</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>How do we manage our team's logistics?</accordion-header>
+                <accordion-body>
+                    <h5>Competitive teams</h5>
+                    <p>A group chat is probably sufficient, depending on how you decide to divide up legs. Consider having the next runner bring something for the previous to eat and drink.</p>
+                    <h5>Open teams</h5>
+                    <p>Make a schedule and stick to it. We'll provide a recommended schedule based on your runners' preferences, but it's up to the team captain (person who added the team) to finalize and distribute assignments. We'll also provide a Google Sheets spreadsheet which you can use to manage live tracking during the event. You can see RCR's from <a href="https://docs.google.com/spreadsheets/d/1rd9Si3BcPgqt3fWxoHnuUB0rnN00XLtziMaHSPpQt14/edit#gid=0">2022</a> and <a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing">2023</a> as examples.</p>
+                    <h5>Ultra teams</h5>
+                    <p>The route is only a little longer than a 50k, making it easy to run unsupported. Otherwise, there are lots of shops along the way for water and food.</p>
+                    <h5>All teams</h5>
+                    <p>Exchanges: The easiest way to manage exchanges is to meet on the surface level at the exact points marked on the route then take a photo with the nearest <a href="https://www.soundtransit.org/sites/default/files/2016_start-on-link-map.pdf">station art</a> or signage. Zoom into the map to see our recommended exchange landmarks</p>
+                    <p>Getting around: conveniently, stations are accessible via light rail and bus. See <a href="https://seattletransitblog.com/seattle-for-visitors/">Seattle Transit Blog's page</a> for a refresher on how to get around using transit, and check the <a href="https://support.myorca.com/hc/en-us/articles/10743519362317-Visitor-s-Guide-to-Using-Public-Transit-in-the-Seattle-area">ORCA site</a> for recommendations on how to purchase fares. UW students can ride for free using their Husky IDs.</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>I have a different question.</accordion-header>
+                <accordion-body>
+                    <p><a href="mailto:nick.s.walker@icloud.com">Ask over email.</a></p>
+                </accordion-body>
+            </accordion-item>
+
+        </accordion-group>
+
+        <h4 id="faq-rcr">RCR Team <a href="#faq-rcr" class="anchor-link" aria-label="Link to this section. RCR FAQ"></a></h4>
+
+        <p>RCR is participating in the <b>Open Category</b> with multiple runners assigned to each leg.</p>
+        <accordion-group class="accordion accordion-flush" id="faq-rcr-items">
+            <accordion-item>
+                <accordion-header>Who can join the RCR team?</accordion-header>
+                <accordion-body>
+                    <p>Anyone in the CSE community is welcome to run as part of the Race Condition Running team. We interpret this broadly.</p>
+                </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>How far do I need to run?</accordion-header>
+                <accordion-body><p>You can choose how far, and we'll be able to satisfy essentially any distance preference from .5 to 40 miles.</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>How fast do I need to run?</accordion-header>
+                <accordion-body>
+                    <p>Also up to you. We'll plan based on your pace estimate, taking into account things like the elevation change and the street context as well. You may be scheduled to run more slowly than your preference to accommodate other runners.</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>How long is this going to take?</accordion-header>
+                <accordion-body>
+                    <p>Depends on how long and where you want to run. The RCR team expects to take about 8 hours to complete the event (running from 08:30 to 16:30). If you have a hard time constraint, please include it in your registration comments.</p>
+                </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>Will I be too slow?</accordion-header>
+                <accordion-body>
+                    <p>No. We typically plan the legs through the downtown core only modestly faster than walking pace, so we'll have no problem accommodating a broad range of abilities.</p>
+                </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>I'm unsure how fast or how far I can run.</accordion-header>
+                <accordion-body>
+                    <p>We recommend you join an <a href="{{ site.baseurl }}/">RCR weekday run</a> before the relay so that we can figure out
+                        what's appropriate. This is especially important if you're new to running or if you're returning after a
+                        long break.</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>I'm unsure about signing up because I don't know enough about where I'd be
+                    running.</accordion-header>
+                <accordion-body>
+                    <p>The organizers have run the course and put together some notes about what to expect along each leg, so do click around the route map. For the RCR team, multiple people will be assigned to each leg and at least one experienced runner will be in the group at all times. Please note any concerns or constraints on the open-ended part of the sign-up <a href="{{page.registration_link}}">form</a> so we can accommodate you.</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>Can I still sign up?</accordion-header>
+                <accordion-body>
+                    <p>The <a href="{{page.registration_link}}">form</a> will stay open until the Sunday before the event. Once it closes, the schedule won't be changed to accommodate your preferences, but you can join for any legs that you are able to. Please message us in the event Slack channel, #light-rail-relay-24, so we know to expect you.</p>
+                </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>I want to update my preferences.</accordion-header>
+                <accordion-body>
+                    <p>You can update your responses on the <a href="{{page.registration_link}}">form</a> until the weekend before the event. After that point, you can reduce or increase the number of legs that you run if it does not affect the pace schedule, otherwise there will be no changes.</p>
+                </accordion-body>
+            </accordion-item>
+        </accordion-group>
+    </div>
+
+</section>
+
+<footer>
+    <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg" alt="A happy piece of toast running"/></a></p>
+    <ul class="list-unstyled d-flex justify-content-center gap-3 opacity-50 font-weight-light">
+        <li><a href="{{ site.baseurl }}/lrr24">2024</a></li>
+        <li><a href="{{ site.baseurl }}/lrr23">2023</a></li>
+        <li><a href="{{ site.baseurl }}/lrr22">2022</a></li>
+        <li><a href="{{ site.baseurl }}/lrr21">2021</a></li>
+    </ul>
+</footer>
+<script type="module">
+    import { relayToGPX, download, createCountdown, processRelayGeoJSON, prepareImagesForPhotoswipe} from "../js/common.js";
+    import { createLegDetailsTable} from "{{ site.baseurl }}/js/tables.js";
+    import "maplibre-gl";
+    import PhotoSwipeLightbox from 'photoswipe-lightbox';
+    import { MasonryImageGallery} from "{{ site.baseurl }}/js/MasonryImageGallery.js";
+    import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
+    import {RelayMap} from '{{ site.baseurl }}/js/RelayMap.js';
+    import {LegCalculator} from '{{ site.baseurl }}/js/LegCalculator.js';
+
+    let routeData = fetch("{{ site.baseurl }}/maps/lrr24.geojson").then(res => res.json())
+    let railData = fetch("{{ site.baseurl }}/maps/link-light-rail.geojson").then(res => res.json())
+    let processedRouteData = routeData.then((relay) => {
+        let [legs, exchanges] = processRelayGeoJSON(relay)
+        let exchangeNames = {};
+        for (let exchange of exchanges.features) {
+            exchangeNames[exchange.properties.id] = exchange.properties.name
+        }
+        return [legs, exchanges, exchangeNames]
+    })
+
+
+    processedRouteData.then(([legs, exchanges, exchangeNames]) => {
+        let legsData = legs.features
+        createLegDetailsTable(document.getElementById("leg-details-table"), legsData, exchanges.features)
+        const downloadRouteButton = document.getElementById("download-route-gpx-btn")
+        downloadRouteButton.addEventListener("click", event => {
+            let gpxString = relayToGPX("Race Condition Running Light Rail Relay 2024", "Light Rail Relay 2024", legs.features, exchanges.features, 2024)
+            download(gpxString, "application/gpx+xml", `light-rail-relay-2024.gpx`)
+            event.preventDefault()
+        })
+        downloadRouteButton.hidden = false
+    })
+
+    Promise.all([
+        railData,
+        processedRouteData
+    ]).then(([railLines, [legs, exchanges, exchangeNames]]) => {
+        // Get colors from css vars
+        let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-primary-color')
+        document.querySelector("#relay-map").updateWithData(legs, exchanges, exchangeNames, railLines, true, [primaryColor])
+    })
+
+
+    let startTime = new Date("Sept 28, 2024 8:30:00")
+
+    createCountdown(startTime.getTime(), "countdown-ended")
+
+    processedRouteData.then( ([legs, exchanges, exchangeNames]) => {
+        document.getElementById("leg-calculator").setLegs(legs.features, exchangeNames)
+    })
+
+    // Tooltips for sign-up deadlines
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    import {Tooltip} from 'bootstrap'
+
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
+
+    document.addEventListener('DOMContentLoaded', e => {
+        prepareImagesForPhotoswipe(document.querySelectorAll("#story-gallery a")).then(() => {
+            const lightbox = new PhotoSwipeLightbox({
+                gallery: '#story-gallery',
+                children: 'a',
+                showHideAnimationType: 'zoom',
+                showAnimationDuration: 200,
+                hideAnimationDuration: 200,
+                pswpModule: () =>  import("photoswipe")
+
+            });
+            lightbox.init();
+        });
+    })
+</script>
+
+</body>
+</html>
