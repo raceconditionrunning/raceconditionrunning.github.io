@@ -8,6 +8,80 @@ const transformRequest = (url, resourceType) => {
     }
     return {url}
 }
+
+export const TRAIN_LABEL_STYLE = {
+    minzoom: 14,
+    'type': 'symbol',
+    'layout': {
+        'text-field': [
+            "step",
+            ["zoom"],
+            [
+                "format",
+                "To ",
+                {"font-scale": 1.0},
+                ["get", "headsign"],
+                {"font-scale": 1.0}
+            ],
+            12,
+            [
+                "format",
+                "To ",
+                {"font-scale": 1.0},
+                ["get", "headsign"],
+                {"font-scale": 1.0},
+                "\n",
+                {},
+                ["case", ["get", "realtime"], "", "Scheduled"],
+                {"font-scale": 1.0, "text-font": ["literal", ["Open Sans Italic"]]}
+            ]
+        ],
+        "text-anchor": "left",
+        "text-justify": "left",
+        "text-offset": {
+            "stops": [
+                [12, [1, 0]],
+                [16, [1.5, 0]],
+                [18, [2, 0]]
+                ]
+        },
+        "text-size": {
+            "stops": [
+                [10, 11],
+                [16, 12],
+                [18, 14]
+                ]
+        },
+        "icon-image": "train",
+        "icon-size": {
+            "stops": [
+                [12, .25],
+                [16, 0.5],
+                [18, 0.85]
+        ]
+        },
+    },
+    "paint": {
+        "text-color": "#FFF",
+        "text-opacity": .7,
+        "text-halo-color": "rgba(0, 0, 0, 0.6)"
+    }
+}
+
+export const TRAIN_ICON_STYLE = {
+    'type': 'circle',
+    'paint': {
+        'circle-radius': {
+            "stops": [
+                [12, 4],
+                [16, 12],
+                [18, 21]
+            ]
+        },
+        'circle-color': ["case", ["get", "realtime"], "#DDD", "#888"],
+    }
+}
+
 import { isMapboxURL, transformMapboxUrl } from "https://cdn.jsdelivr.net/npm/maplibregl-mapbox-request-transformer@0.0.2/src/index.min.js"
 export class RelayMap extends HTMLElement {
 
@@ -42,20 +116,70 @@ export class RelayMap extends HTMLElement {
             this.map.redraw()
         })
     }
-    updateWithData(legs, exchanges, exchangeNames, railLines, useStationCodes=false, lineColors={}) {
+
+    addPoints(name, collection, style={}) {
+        this.mapReady.then(() => {
+            console.log(collection.features)
+            // If the source already exists, we'll just update the data
+            if (this.map.getSource(name)) {
+                this.map.getSource(name).setData(collection)
+                return
+            }
+            this.map.addSource(name, {
+                'type': 'geojson',
+                'data': collection
+            });
+            this.map.addLayer({
+                'id': name,
+                'source': name,
+                ...style
+            });
+        })
+    }
+
+    addLines(name, collection, zIndex=0) {
+        this.mapReady.then(() => {
+            this.map.addSource(name, {
+                'type': 'geojson',
+                'data': collection
+            });
+            this.map.addLayer({
+                'id': name,
+                'type': 'line',
+                'source': name,
+                'layout': {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                'paint': {
+                    'line-color': '#777',
+                    'line-width': 1
+                }
+            });
+
+        })
+
+    }
+    addRelayLine(legs, exchanges, exchangeNames, useStationCodes=false, lineColors={}, imgBasePath="") {
 
         this.mapReady.then(async () => {
             let map = this.map
             let legsData = legs.features
 
             if (useStationCodes) {
-                const line1StationCode = await map.loadImage("/img/lrr24/1_station_code.png");
+                const line1StationCode = await map.loadImage(`${imgBasePath}1_station_code.png`);
 
                 map.addImage('1stationcode', line1StationCode.data, {
                     stretchX: [[76, 77]],
                     // This part of the image that can contain text ([x1, y1, x2, y2]):
                     content: [76, 2, 96, 77],
                     pixelRatio: 4
+                });
+                const train = await map.loadImage(`${imgBasePath}train_icon.png`);
+
+                map.addImage('train', train.data, {
+                    content: [0, 0, 1, 1],
+                    pixelRatio: 2
                 });
             }
 
@@ -84,29 +208,34 @@ export class RelayMap extends HTMLElement {
                 hideAttribution()
             }
 
-            map.addSource('route', {
-                'type': 'geojson',
-                'data': railLines
-            })
 
-            map.addLayer({
-                'id': 'route',
-                'type': 'line',
-                'source': 'route',
-                'layout': {
-                    'line-join': 'round',
-                    'line-cap': 'round'
-                },
-                'paint': {
-                    'line-color': '#777',
-                    'line-width': 1
-                }
-            });
             map.addSource('legs', {
                 'type': 'geojson',
                 'promoteId': "id",
                 'data': legs
             });
+
+            map.addLayer({
+                'id': 'legs',
+                'type': 'line',
+                'source': 'legs',
+                'layout': {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                'paint': {
+                    'line-color': ['case', ['boolean', ['feature-state', 'selected'], false], ["interpolate-lab", ["linear"], 0.5, 0, "#000", 1, lineColors[0]], lineColors[0]],
+                    'line-width': {
+                        "stops": [
+                            [10, 3],
+                            [12, 4],
+                            [14, 5],
+                            [20, 6]
+                        ]
+                    }
+                }
+            });
+
             // For each leg, we find the midpoint and create a label
             let labels = legsData.map((leg) => {
                 let coordinates = leg.geometry.coordinates
@@ -133,25 +262,30 @@ export class RelayMap extends HTMLElement {
             });
 
             map.addLayer({
-                'id': 'legs',
-                'type': 'line',
-                'source': 'legs',
+                'id': 'leg-labels',
+                'type': 'symbol',
+                'source': 'leg-labels',
+                minzoom: 9,
                 'layout': {
-                    'line-join': 'round',
-                    'line-cap': 'round'
-                },
-                'paint': {
-                    'line-color': ['case', ['boolean', ['feature-state', 'selected'], false], ["interpolate-lab", ["linear"], 0.5, 0, "#000", 1, lineColors[0]], lineColors[0]],
-                    'line-width': {
+                    'text-field': ["to-string", ["+", ["at", 0 , ["get", "sequence"]], 1]],
+                    'text-font': ['Open Sans Bold'],
+                    'text-size': {
                         "stops": [
-                            [10, 3],
-                            [12, 4],
-                            [14, 5],
-                            [20, 6]
+                            [10, 12],
+                            [16, 21]
                         ]
-                    }
+                    },
+                    "text-padding": 4,
+                    "text-justify": "center",
+                },
+                paint: {
+                    'text-color': '#FFF',
+                    'text-halo-color': 'rgba(0, 0, 0, 0.6)',
+                    'text-halo-width': 2,
                 }
             });
+
+
             map.addSource('exchanges', {
                 'type': 'geojson',
                 'promoteId': "id",
@@ -189,7 +323,18 @@ export class RelayMap extends HTMLElement {
                     layout: {
                         'text-field': ['slice', ['to-string', ['get', 'id']], 1, 3],
                         'text-font': ['Open Sans Semibold'],
-                        'text-size': 14,
+                        'text-size': {
+                            "stops": [
+                                [12, 12],
+                                [16, 18]
+                            ]
+                        },
+                        "icon-size": {
+                            "stops": [
+                                [12, 1],
+                                [16, 1.1]
+                            ]
+                        },
                         "text-padding": 0,
                         "text-justify": "right",
                         'icon-image': '1stationcode',
@@ -211,7 +356,6 @@ export class RelayMap extends HTMLElement {
                             "stops": [
                                 [8, 8],
                                 [12, 12],
-                                [14, 12]
                             ]
                         },
                         "text-justify": "center",
@@ -246,9 +390,18 @@ export class RelayMap extends HTMLElement {
                         ]
                     ],
                     'text-font': ['Open Sans Semibold'],
-                    'text-size': 14,
+                    'text-size': {
+                        "stops": [
+                            [12, 14],
+                            [16, 16],
+                            [20, 20]
+                        ]
+                    },
                     "text-justify": "left",
-                    'text-offset': [1.2, 0.0],
+                    'text-offset': {"stops": [
+                        [12, [1.2, 0]],
+                            [16, [1.4, 0]],
+                                [20, [1.6, 0]]]},
                     'text-anchor': 'left',
                 },
                 paint: {
@@ -260,33 +413,7 @@ export class RelayMap extends HTMLElement {
             });
 
 
-            map.addLayer({
-                'id': 'leg-labels',
-                'type': 'symbol',
-                'source': 'leg-labels',
-                minzoom: 9,
-                'layout': {
-                    'text-field': ["to-string", ["+", ["at", 0 , ["get", "sequence"]], 1]],
-                    'text-font': ['Open Sans Bold'],
-                    'text-size': {
-                        "stops": [
-                            [9, 12],
-                            [12, 14]
-                        ]
-                    },
-                    "text-padding": 4,
-                    "text-justify": "center",
-                    /*'icon-image': 'blackbg',
-                    'icon-text-fit': 'both',
-                    'icon-overlap': 'always',
-                    'text-overlap': 'always'*/
-                },
-                paint: {
-                    'text-color': '#FFF',
-                    'text-halo-color': 'rgba(0, 0, 0, 0.6)',
-                    'text-halo-width': 2,
-                }
-            });
+
 
 
             let currentActiveLeg = null
@@ -323,13 +450,10 @@ export class RelayMap extends HTMLElement {
                 this.highlightLeg(leg.id)
             })
 
-            // Change the cursor to a pointer when the mouse is over the places layer.
             map.on('mouseenter', 'legs', () => {
                 map.getCanvas().style.cursor = 'pointer';
 
             });
-
-            // Change it back to a pointer when it leaves.
             map.on('mouseleave', 'legs', () => {
                 map.getCanvas().style.cursor = '';
             });

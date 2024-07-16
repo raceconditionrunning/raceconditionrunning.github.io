@@ -864,7 +864,8 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
     ]).then(([railLines, [legs, exchanges, exchangeNames]]) => {
         // Get colors from css vars
         let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-primary-color')
-        document.querySelector("#relay-map").updateWithData(legs, exchanges, exchangeNames, railLines, false, [primaryColor])
+        document.querySelector("#relay-map").addLines("rail", railLines)
+        document.querySelector("#relay-map").addRelayLine(legs, exchanges, exchangeNames, false, [primaryColor], "{{ site.baseurl }}/img/lrr24/")
     })
 
 

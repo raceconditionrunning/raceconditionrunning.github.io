@@ -51,7 +51,7 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
 
         :root {
             --theme-primary-color: #3DAE2B;
-            --theme-primary-color-subdued: #4cad3d;
+            --theme-primary-color-subdued: #327328;
             --theme-primary-color-bright: #43d932;
             --two-line-color: #00B8F4;
             --t-line-color: #FF8B00;
@@ -693,11 +693,39 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
     import PhotoSwipeLightbox from 'photoswipe-lightbox';
     import { MasonryImageGallery} from "{{ site.baseurl }}/js/MasonryImageGallery.js";
     import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
-    import {RelayMap} from '{{ site.baseurl }}/js/RelayMap.js';
+    import {RelayMap, TRAIN_ICON_STYLE, TRAIN_LABEL_STYLE} from '{{ site.baseurl }}/js/RelayMap.js';
     import {LegCalculator} from '{{ site.baseurl }}/js/LegCalculator.js';
+    import {TransitVehicleTracker} from '{{ site.baseurl }}/js/TransitVehicleTracker.js';
+
+
+    const apiUrl = 'https://api.pugetsound.onebusaway.org/api/where/trips-for-route/40_100479.json?key=OBAKEY&includeStatus=true&includeSchedule=false';
+    const vehicleMonitor = new TransitVehicleTracker(apiUrl);
+    vehicleMonitor.startPolling();
+
+    document.addEventListener('vehicleDataUpdated', event => {
+        let vehiclesGeojson = event.detail.map(vehicle => {
+            return {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [vehicle.lon, vehicle.lat]
+                },
+                "properties": vehicle
+            }
+        });
+        vehiclesGeojson = {
+            "type": "FeatureCollection",
+            "features": vehiclesGeojson}
+
+        document.querySelector("#relay-map").addPoints("train_icons", vehiclesGeojson, TRAIN_ICON_STYLE)
+        document.querySelector("#relay-map").addPoints("train_labels", vehiclesGeojson, TRAIN_LABEL_STYLE)
+    });
 
     let routeData = fetch("{{ site.baseurl }}/maps/lrr24.geojson").then(res => res.json())
     let railData = fetch("{{ site.baseurl }}/maps/link-light-rail.geojson").then(res => res.json())
+    railData.then((railLines) => {
+        document.querySelector("#relay-map").addLines("railLines", railLines)
+    })
     let processedRouteData = routeData.then((relay) => {
         let [legs, exchanges] = processRelayGeoJSON(relay)
         let exchangeNames = {};
@@ -718,17 +746,10 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
             event.preventDefault()
         })
         downloadRouteButton.hidden = false
-    })
-
-    Promise.all([
-        railData,
-        processedRouteData
-    ]).then(([railLines, [legs, exchanges, exchangeNames]]) => {
         // Get colors from css vars
         let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-primary-color')
-        document.querySelector("#relay-map").updateWithData(legs, exchanges, exchangeNames, railLines, true, [primaryColor])
+        document.querySelector("#relay-map").addRelayLine(legs, exchanges, exchangeNames, true, [primaryColor], "{{ site.baseurl }}/img/lrr24/")
     })
-
 
     let startTime = new Date("Sept 28, 2024 8:30:00")
 
