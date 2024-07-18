@@ -243,6 +243,12 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
             margin: 0 auto 2rem auto;
         }
 
+        figure a img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+
         hr {
             width: 8rem;
             margin: 4rem auto;
@@ -588,15 +594,15 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
             <accordion-item>
                 <accordion-header>How do we manage our team's logistics?</accordion-header>
                 <accordion-body>
-                    <h5>Competitive teams</h5>
-                    <p>A group chat is probably sufficient, depending on how you decide to divide up legs. Consider having the next runner bring something for the previous to eat and drink.</p>
-                    <h5>Open teams</h5>
-                    <p>Make a schedule and stick to it. We'll provide a recommended schedule based on your runners' preferences, but it's up to the team captain (person who added the team) to finalize and distribute assignments. We'll also provide a Google Sheets spreadsheet which you can use to manage live tracking during the event. You can see RCR's from <a href="https://docs.google.com/spreadsheets/d/1rd9Si3BcPgqt3fWxoHnuUB0rnN00XLtziMaHSPpQt14/edit#gid=0">2022</a> and <a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing">2023</a> as examples.</p>
+                    <h5>Small teams (4-10 runners)</h5>
+                    <p>You're likely to only have one person running each leg, so it's easiest if the folks who aren't running leg simply ride the train together to the next handoff. The train is your Ragnar var.</p>
+                    <h5>Large teams (>10 runners)</h5>
+                    <p>Our experience as a team of 20+ with multiple runners assigned to each leg is that a shared schedule spreadsheet helps a lot. You can see RCR's from <a href="https://docs.google.com/spreadsheets/d/1rd9Si3BcPgqt3fWxoHnuUB0rnN00XLtziMaHSPpQt14/edit#gid=0">2022</a> and <a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing">2023</a> as examples. If you're planning to participate in this "club run" format, we'll provide a recommended schedule based on your runners' preferences, but it's up to the team captain (person who added the team) to finalize and distribute assignments.</p>
                     <h5>Ultra teams</h5>
-                    <p>The route is only a little longer than a 50k, making it easy to run unsupported. Otherwise, there are lots of shops along the way for water and food.</p>
+                    <p>The route is only a little longer than a 50k, making it easy to run unsupported. Otherwise, there are lots of shops along the way for water and food. M2M Mart in Capitol Hill is convenient.</p>
                     <h5>All teams</h5>
-                    <p>Exchanges: The easiest way to manage exchanges is to meet on the surface level at the exact points marked on the route then take a photo with the nearest <a href="https://www.soundtransit.org/sites/default/files/2016_start-on-link-map.pdf">station art</a> or signage. Zoom into the map to see our recommended exchange landmarks</p>
-                    <p>Getting around: conveniently, stations are accessible via light rail and bus. See <a href="https://seattletransitblog.com/seattle-for-visitors/">Seattle Transit Blog's page</a> for a refresher on how to get around using transit, and check the <a href="https://support.myorca.com/hc/en-us/articles/10743519362317-Visitor-s-Guide-to-Using-Public-Transit-in-the-Seattle-area">ORCA site</a> for recommendations on how to purchase fares. UW students can ride for free using their Husky IDs.</p>
+                    <p>Exchanges: The easiest way is to meet on the surface level at the exact points marked on the route. We've placed the markers next to <a href="https://www.soundtransit.org/sites/default/files/2016_start-on-link-map.pdf">station art</a>, signage or other landmarks. Zoom into the map to see our recommended exchange landmarks.</p>
+                    <p>Getting around: conveniently, exchanges are accessible via light rail and bus. See <a href="https://seattletransitblog.com/seattle-for-visitors/">Seattle Transit Blog's page</a> for a refresher on how to get around using transit, and check the <a href="https://support.myorca.com/hc/en-us/articles/10743519362317-Visitor-s-Guide-to-Using-Public-Transit-in-the-Seattle-area">ORCA site</a> for recommendations on how to purchase fares. UW students can ride for free using their Husky IDs.</p>
                 </accordion-body>
             </accordion-item>
             <accordion-item>
@@ -676,6 +682,34 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
     </div>
 
 </section>
+
+<section>
+    <figure id="teaser-gallery">
+        <div class="row mb-2 g-0 gap-2">
+            <a href="{{ site.baseurl }}/img/lrr23/story1.avif" class="col">
+                <img loading="lazy" src="{{ site.baseurl }}/img/lrr23/story1.avif"/>
+            </a>
+
+
+            <a href="{{ site.baseurl }}/img/lrr23/story2.avif" class="col">
+                <img loading="lazy" src="{{ site.baseurl }}/img/lrr23/story2.avif"/>
+            </a>
+        </div>
+
+        <div class="row mb-2 g-0 gap-2">
+            <a href="{{ site.baseurl }}/img/lrr23/story3.avif" class="col">
+                <img loading="lazy" src="{{ site.baseurl }}/img/lrr23/story3.avif"/>
+            </a>
+
+
+            <a href="{{ site.baseurl }}/img/lrr23/story4.avif" class="col">
+                <img loading="lazy" src="{{ site.baseurl }}/img/lrr23/story4.avif"/>
+            </a>
+        </div>
+
+    </figure>
+</section>
+
 
 <footer>
     <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg" alt="A happy piece of toast running"/></a></p>
@@ -768,7 +802,7 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
     document.addEventListener('DOMContentLoaded', e => {
         prepareImagesForPhotoswipe(document.querySelectorAll("#story-gallery a")).then(() => {
             const lightbox = new PhotoSwipeLightbox({
-                gallery: '#story-gallery',
+                gallery: '#teaser-gallery',
                 children: 'a',
                 showHideAnimationType: 'zoom',
                 showAnimationDuration: 200,
