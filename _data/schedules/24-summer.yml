@@ -49,8 +49,9 @@
 
 - date: "2024-07-20"
   plan:
-    - time: "8:30"
+    - time: "7:45"
       route_id: bainbridge-coast-to-coast-loop
+      notes: "Take the 7:55 ferry from the terminal https://maps.app.goo.gl/ZtprmndPHd2rGWrGA"
 
 - date: "2024-07-27"
   plan:
