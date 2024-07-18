@@ -1,36 +1,36 @@
-id,name,lat,long,transit,region
-Alki,Alki Beach,,,,
-Bainbridge,Bainbridge Ferry Terminal,,,,
-Beacon,Beacon Hill Station,,,,
-BellDtwn,Bellevue Downtown Station,,,,
-BlythPark,Blyth Park,,,,
-CapHill,Capitol Hill Station,,,,
-CID,Chinatown International District Station,,,,
-ColCity,Columbia City Station,,,,
-ColmanPark,Colman Park,,,,
-Cougar,Cougar Mountain Park,,,,
-CSE,UW CSE,,,,
-GasWorks,Gas Works Park,,,,
-GreenLake,Green Lake Community Center,,,,
-JaysCafe,Jay's Cafe,,,,
-JRidgeTrail,Johnson Ridge Trail,,,,
-Locks,Ballard Locks,,,,
-LordHill,Lord Hill Park,,,,
-MadronaPark,Madrona Park,,,,
-Magnuson,Magnusun Park,,,,
-Marymoor,Marymoor Park,,,,
-Miller,Miller Playfield,,,,
-MtBaker,Mount Baker Station,,,,
-Northgate,Northgate Station,,,,
-PacPav,Pacar Pavilion,,,,
-RedTech,Redmond Technology Center Station,,,,
-RedWater,Redmond Watershed Preserve,,,,
-Roosevelt,Roosevelt Station,,,,
-Seward,Seward Park,,,,
-SoBell,South Bellevue Station,,,,
-SoDisco,South Discovery Park,,,,
-SODO,SODO Station,,,,
-WashPark,Washington Park (South Arboretum),,,,
-Westlake,Westlake Station,,,,
-WoodCafe,Woodinville Cafe,,,,
+id,name,lat,lon,region,maps_url,meeting_point_desc,transit,reachability
+Alki,Alki Beach,47.5801187,-122.4158763,,,,Bus or Drive,2
+Bainbridge,Bainbridge Ferry Terminal,47.6025285,-122.3381589,,https://maps.app.goo.gl/RRLWmbmhDebw7AMq9,Inside ferry building,Ferry to Seattle stop,1
+Beacon,Beacon Hill Station,47.5792725,-122.3142812,,https://maps.app.goo.gl/PzogvMhTuyUsYRc87,"""Common Threads-Community Patterns"" poles sculpture",Light Rail to Beacon Hill stop,3
+BellDtwn,Bellevue Downtown Station,47.6150957,-122.1942621,,https://maps.app.goo.gl/H38DLL1dhhPAvets9,,Light Rail to Bellevue Downtown stop,2
+BlythPark,Blyth Park,47.7505304,-122.211542,,,,Bus or Drive,3
+CapHill,Capitol Hill Station,47.6196778,-122.320729,,https://maps.app.goo.gl/d9JjJchMbFj3Dngg9,"North Entrance, SE corner of E John St & Broadway E",Light Rail to Capitol Hill stop,1
+CID,Chinatown International District Station,47.5961435,-122.3253719,,https://maps.app.goo.gl/bXUrsZ5M1SpfSRrHA,,Light Rail to Int'l Dist/Chinatown stop,1
+ColCity,Columbia City Station,47.5597486,-122.2952164,,https://maps.app.goo.gl/3goc7v3rd1FEqSrP7,,Light Rail to Columbia City stop,1
+ColmanPark,Colman Park,47.5863252,-122.2929693,,,,Bus or Drive,1
+Cougar,Cougar Mountain Park,47.5306464,-122.1009792,,,,Bus or Drive,3
+CSE,UW CSE,47.6232155,-122.347724,,https://maps.app.goo.gl/4ih5UWgn8SpfrZo1A,,Bus or Drive,2
+GasWorks,Gas Works Park,47.6459839,-122.3359135,,https://maps.app.goo.gl/3NFyYHvPvtdW5ZhA6,"Parking lot, east side",Bus or Drive,2
+GreenLake,Green Lake Community Center,47.6196778,-122.320729,,https://maps.app.goo.gl/iQq4hdSYjUakMWQZ7,,Light Rail to Capitol Hill stop,1
+JaysCafe,Jay's Cafe,47.7569854,-122.242083,,,,Bus or Drive,3
+JRidgeTrail,Johnson Ridge Trail,47.7966051,-121.2652243,,,,Bus or Drive,3
+Locks,Ballard Locks,47.6674708,-122.3962056,,https://maps.app.goo.gl/YKQN6PwsuTsPgHej6,"Outside North Gate, diagonally across Lockspot Cafe",Bus or Drive,2
+LordHill,Lord Hill Park,47.8491374,-122.0516655,,,,Bus or Drive,3
 Lynwood,Lynwood Station,,,,
+MadronaPark,Madrona Park,47.6104128,-122.2849576,,,,Bus or Drive,2
+Magnuson,Magnuson Park,47.6797723,-122.256177,,,,Bus or Drive,3
+Marymoor,Marymoor Park,47.6626405,-122.10871,,,,Bus or Drive,3
+Miller,Miller Playfield,47.6210058,-122.3083135,,,,Bus or Drive,2
+MtBaker,Mount Baker Station,47.5765999,-122.2977231,,https://maps.app.goo.gl/zzMgnxYtKJVj6mds6,"""Sky Within"" sculpture at street level, under platform",Light Rail to Mount Baker stop,1
+Northgate,Northgate Station,47.7025575,-122.3283229,,https://maps.app.goo.gl/XD2CSQLaHzrQ5oX58,"At the elevated exit to John Lewis Memorial Bridge, one level down from platform, one level above ground",Light Rail to Northgate stop,2
+PacPav,Paccar Pavilion,47.6164028,-122.356678,,,,Bus or Drive,2
+RedTech,Redmond Technology Center Station,47.6444336,-122.1358824,,https://maps.app.goo.gl/dRRzfUcmvML1TzMr8,,Light Rail to Redmond Technology stop,2
+RedWater,Redmond Watershed Preserve,47.7065401,-122.0493104,,,,Bus or Drive,3
+Roosevelt,Roosevelt Station,47.675987,-122.3158799,,https://maps.app.goo.gl/hR1C3bR6t4echwML6,"Outside Main Entrance, NW Corner of NE 65th & 12th Ave NE",Light Rail to Roosevelt stop,1
+Seward,Seward Park,47.5496082,-122.2599323,,,,Bus or Drive,1
+SoBell,South Bellevue Station,47.5865506,-122.1923785,,https://maps.app.goo.gl/uKEqhcKWBedCYdJv6,,Light Rail to South Bellevue stop,2
+SoDisco,South Discovery Park,47.6537734,-122.4132117,,,,Bus or Drive,3
+SODO,SODO Station,47.5800441,-122.3273371,,https://maps.app.goo.gl/WXSgA2UBwWzwv7MRA,"""Made in USA"" arch sculpture, NE corner of S Lander & SODO busway",Light Rail to SODO stop,1
+WashPark,Washington Park (South Arboretum),47.6280587,-122.29417,,https://maps.app.goo.gl/YBRvLZLaKhNDAjok8,East End of Parking Lot,Bus or Drive,2
+Westlake,Westlake Station,47.6109627,-122.3382169,,https://maps.app.goo.gl/amdkLVihVvqJMW936,"C1 entrance, street level, North side of Pine b/t 3rd and 4th",Light Rail to Westlake stop,1
+WoodCafe,Woodinville Cafe,47.7550348,-122.1534919,,https://maps.app.goo.gl/VZSWE6Xah12iJ3is6,,Bus or Drive,3
