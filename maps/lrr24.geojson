@@ -625,6 +625,7 @@
     "type": "Feature",
     "properties": {
       "name": "Lynnwood City Center",
+      "landmark": "\"City Hummingbird\" sculpture",
       "id": 140,
       "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/lynnwood-city-center-station"
     },
@@ -640,6 +641,7 @@
     "type": "Feature",
     "properties": {
       "name": "Mountlake Terrace",
+      "landmark": "\"ReforeStation\" orange paneling under platform",
       "id": 141,
       "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/mountlake-terrace-station"
     },
@@ -655,13 +657,14 @@
     "type": "Feature",
     "properties": {
       "name": "Shoreline North/185th",
+      "landmark": "\"Octavia's Garden\" neon squiggly sculpture",
       "id": 142
     },
     "geometry": {
       "type": "Point",
       "coordinates": [
-        -122.322492,
-        47.764695
+        -122.323470,
+        47.763329
       ]
     }
   },
@@ -669,6 +672,7 @@
     "type": "Feature",
     "properties": {
       "name": "Shoreline South/148th",
+      "landmark": "\"FLOW\" cement water column sculpture",
       "id": 143
     },
     "geometry": {
