@@ -85,7 +85,37 @@ export class LapTable extends HTMLElement {
                     {title: "Meters", field: "distanceElapsed", responsive: 4, headerSort: false, formatter: cell => cell.getValue().toFixed(1)},
                     {title: "Miles", field: "distanceElapsed", responsive: 4, headerSort: false, formatter: cell => (cell.getValue() / 1609.34).toFixed(2)}
                 ]
-            }}
+            },
+            "time": {
+                "state": 0,
+                columns:[
+                    {
+                        title: "Elapsed", field: "timeElapsed", formatter: (cell) => {
+                            if (this.videoLink) {
+                                // Timestamp is wallclock time, convenient for indexing into video. If it's not provided,
+                                // assume all runners started at the same time and use timeElapsed instead.
+                                const cellTimestamp = cell.getData().timestamp ?? cell.getData().timeElapsed
+                                return `<a href='${this.videoLink}&t=${Math.floor(cellTimestamp - videoStartTime ?? 0)}'>${formatDuration(cell.getValue(), true, false)}</a>`
+                            } else {
+                                return formatDuration(cell.getValue(), true, false)
+                            }
+                        },
+                        swapTag: "time",
+                        headerSort: false
+                    },
+                    {
+                        title: "Time", field: "timestamp", formatter: (cell) => {
+                            if (this.videoLink) {
+                                return `<a href='${this.videoLink}${Math.floor(cell.getValue() - videoStartTime ?? 0)}'>${formatDuration(cell.getValue(), true, false)}</a>`
+                            } else {
+                                return formatDuration(cell.getValue(), true, false)
+                            }
+                        },
+                        swapTag: "time"
+                    }
+                ]
+            }
+        }
 
 
         return new Promise((resolve, reject) => {
@@ -95,7 +125,6 @@ export class LapTable extends HTMLElement {
                 index: "index",
                 groupBy: "extra",
                 height: 300,
-                responsiveLayout: "collapse",
                 columnCalcs: true,
                 initialSort: [{column: "lapNumber", dir: descending ? "desc": "asc"}],
                 columns: [
@@ -123,29 +152,7 @@ export class LapTable extends HTMLElement {
                         }
                     },
                     this.swappableColumns.pace.columns[0],
-
-                    {
-                        title: "Elapsed", field: "timeElapsed", formatter: (cell) => {
-                            if (this.videoLink) {
-                                // Timestamp is wallclock time, convenient for indexing into video. If it's not provided,
-                                // assume all runners started at the same time and use timeElapsed instead.
-                                const cellTimestamp = cell.getData().timestamp ?? cell.getData().timeElapsed
-                                return `<a href='${this.videoLink}&t=${Math.floor(cellTimestamp - videoStartTime ?? 0)}'>${formatDuration(cell.getValue(), true, false)}</a>`
-                            } else {
-                                return formatDuration(cell.getValue(), true, false)
-                            }
-                        }
-                        , headerSort: false
-                    },
-                    /*{
-                        title: "Time", field: "timestamp", formatter: (cell) => {
-                            if (this.videoLink) {
-                                return `<a href='${this.videoLink}${Math.floor(cell.getValue() - videoStartTime ?? 0)}'>${formatDuration(cell.getValue(), true, false)}</a>`
-                            } else {
-                                return formatDuration(cell.getValue(), true, false)
-                            }
-                        }
-                    },*/
+                    this.swappableColumns.time.columns[0],
                     this.swappableColumns.distanceElapsed.columns[0]
                 ]
             })
@@ -163,9 +170,9 @@ export class LapTable extends HTMLElement {
                 this.dispatchEvent(new CustomEvent('rowClick', {detail: row.getData()}))
             })
             view.on("headerClick", (e, column) => {
-                const field = column.getField()
-                if (field in this.swappableColumns) {
-                    const swappableColumn = this.swappableColumns[field]
+                const swapTag = column.getDefinition().swapTag ?? column.getField()
+                if (swapTag in this.swappableColumns) {
+                    const swappableColumn = this.swappableColumns[swapTag]
                     if (swappableColumn.columns.length === 1) {
                         return
                     }

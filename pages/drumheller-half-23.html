@@ -949,7 +949,6 @@ redirect_from:
                 entry["goalLaps"] = lapTarget
                 entry["goalName"] = Object.keys(goals).find(key => goals[key] === lapTarget)
                 for (let i = 0; i < entry.lapTimes.length; i++) {
-                    let lapStartTime = timeElapsed
                     timeElapsed += entry.lapTimes[i]
                     cumulativeWallclock += entry.lapTimes[i]
                     while (cumulativeWallclock > directionChanges[directionIndex + 1]) {
@@ -968,6 +967,7 @@ redirect_from:
                     lapObjects.push({
                         "index": i,
                         "lapNumber": resultsData.config.firstLapIsEntrance && i === 0 ? null : lapsCompleted,
+                        "timestamp": cumulativeWallclock,
                         "duration": entry.lapTimes[i],
                         "distance": runnerLapDistance,
                         "distanceElapsed": distanceElapsed,
