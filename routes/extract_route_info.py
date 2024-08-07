@@ -2,10 +2,13 @@ import pandas as pd
 import geojson
 import gpxpy
 import os
+import requests
 from shapely import distance
 from shapely.geometry import shape, Point
 
 ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
+
+GOOGLE_MAPS_API_KEY = "AIzaSyCJdAH_V4n12KoDyNBcsAV86hWl1_49Hs0"
 
 NEIGHBORHOOD_FILE = f"{ROOT}/locs/seattle_city_raw_data/Neighborhood_Map_Atlas_Neighborhoods.geojson"
 ROUTES_CSV_FILE = f"{ROOT}/routes/db.csv"
@@ -45,7 +48,7 @@ def near_enough(p1, p2, threshold=0.005): #0.005 ~= 0.3 miles or 6 minutes of wa
     return distance(p1, p2) < threshold
 
 ## add new columns if not existing in csv
-for col_name in ["neighborhoods", "coarse_neighborhoods", "start_neighborhood", "end_neighborhood", "transit"]:
+for col_name in ["neighborhoods", "coarse_neighborhoods", "start_neighborhood", "end_neighborhood"]: #, "transit"]:
     if col_name not in df:
         df[col_name] = ""
 
@@ -81,12 +84,12 @@ for index, row in df.iterrows():
     start = gpx.tracks[0].segments[0].points[0]
     start_point = Point(start.longitude, start.latitude)
 
-    for stop_name, stop_dict in STOPS.items():
-        if near_enough(start_point, Point(stop_dict['lon'], stop_dict['lat'])):
-            df.at[index, "transit"] = f"{stop_dict['system']} to {stop_name} stop"
-            break
+    # for stop_name, stop_dict in STOPS.items():
+    #     if near_enough(start_point, Point(stop_dict['lon'], stop_dict['lat'])):
+    #         df.at[index, "transit"] = f"{stop_dict['system']} to {stop_name} stop"
+    #         break
 
-
-df.to_csv(ROUTES_CSV_FILE + "_new")
+os.rename(ROUTES_CSV_FILE, ROUTES_CSV_FILE + "_old")
+df.to_csv(ROUTES_CSV_FILE, index=False)
 
  
