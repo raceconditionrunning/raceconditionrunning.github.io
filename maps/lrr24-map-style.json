@@ -12,7 +12,7 @@
       "type": "raster-dem"
     },
     "maptiler_planet": {
-      "url": "https://api.maptiler.com/tiles/v3/tiles.json?key=YvNrcU9QI9xFBf4H4cam",
+      "url": "pmtiles://https://files.nickwalker.us/seattle.pmtiles",
       "type": "vector"
     },
     "maptiler_attribution": {
@@ -1303,7 +1303,7 @@
       ],
       "layout": {"line-join": "round"},
       "paint": {
-        "line-color": "#e9ac77",
+        "line-color": "hsl(0, 0%, 10%)",
         "line-width": [
           "interpolate",
           ["exponential", 1.2],
@@ -1763,7 +1763,7 @@
       ],
       "layout": {"line-join": "round"},
       "paint": {
-        "line-color": "#fea",
+        "line-color": "hsl(0, 0%, 22%)",
         "line-width": [
           "interpolate",
           ["exponential", 1.2],
@@ -2097,7 +2097,7 @@
       "minzoom": 12,
       "filter": [
         "all",
-        ["has", "name"],
+        ["has", "name_en"],
         [
           "match",
           ["get", "class"],
@@ -2137,12 +2137,12 @@
           ]
         ],
         "text-max-angle": 30,
-        "text-font": ["Open Sans", "Arial Unicode MS Regular"],
+        "text-font": ["Roboto Regular"],
         "symbol-placement": "line",
         "text-padding": 5,
         "text-rotation-alignment": "map",
         "text-pitch-alignment": "viewport",
-        "text-field": ["coalesce", ["get", "name_en"], ["get", "name"]],
+        "text-field": ["coalesce", ["get", "name_en"]],
         "text-letter-spacing": 0.01
       },
       "paint": {
@@ -2178,7 +2178,7 @@
       "source-layer": "water_name",
       "filter": ["==", "$type", "LineString"],
       "layout": {
-        "text-field": "{name:latin}\n{name:nonlatin}",
+        "text-field": "{name_en}",
         "symbol-placement": "line",
         "text-rotation-alignment": "map",
         "symbol-spacing": 500,
@@ -2189,6 +2189,34 @@
         "text-color": "hsl(0,0%,35%)",
         "text-halo-width": 1,
         "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "poi_park",
+      "type": "symbol",
+      "source": "maptiler_planet",
+      "source-layer": "poi",
+      "filter": ["all", ["==", ["get", "class"], "park"]],
+      "layout": {
+        "icon-image": "{class}",
+        "text-anchor": "top",
+        "text-field": "{name_en}",
+        "text-font": ["Roboto Condensed Italic"],
+        "text-max-width": 9,
+        "text-size": 12,
+        "text-offset": [0, 0.8],
+        "visibility": "none"
+
+      },
+      "paint": {
+        "text-color": "#666",
+        "text-halo-color": "#000000",
+        "text-halo-width": 0.5,
+        "text-halo-blur": 0.5,
+        "icon-color": "hsl(0, 0%, 50%)",
+        "icon-halo-color": "#000",
+        "icon-halo-width": 0.5,
+        "icon-halo-blur": 0.5
       }
     },
     {
@@ -2208,22 +2236,26 @@
         "visibility": "none"
       },
       "paint": {
-        "text-color": "#4898ff",
+        "text-color": "#666",
+        "text-halo-color": "#000000",
+        "text-halo-width": 0.5,
         "text-halo-blur": 0.5,
-        "text-halo-color": "#ffffff",
-        "text-halo-width": 1
+        "icon-color": "hsl(0, 0%, 50%)",
+        "icon-halo-color": "#000",
+        "icon-halo-width": 0.5,
+        "icon-halo-blur": 0.5
       }
     },
     {
-      "id": "poi_z15",
+      "id": "poi_z17",
       "type": "symbol",
       "source": "maptiler_planet",
       "source-layer": "poi",
-      "minzoom": 15,
+      "minzoom": 17,
       "filter": [
         "all",
         ["==", "$type", "Point"],
-        [">=", "rank", 7],
+        [">=", "rank", 5],
         ["<", "rank", 20]
       ],
       "layout": {
@@ -2242,7 +2274,7 @@
             ["concat", ["var", "en"], "\n", ["var", "intl"]]
           ]
         ],
-        "text-font": ["Robonoto Condensed Italic"],
+        "text-font": ["Roboto Condensed Italic"],
         "text-max-width": 9,
         "text-offset": [0, 0.8],
         "text-line-height": 1.05,
@@ -2254,21 +2286,144 @@
       "paint": {
         "text-color": "hsl(0,0%,35%)",
         "text-halo-blur": 0.5,
-        "text-halo-color": "hsl(0,0%,05%)",
-        "text-halo-width": 1,
+        "text-halo-color": "hsl(0,0%,5%)",
+        "text-halo-width": 0.5,
         "icon-color": "hsl(0,0%,35%)"
       }
     },
     {
-      "id": "food_poi",
+      "id": "poi_food",
       "type": "symbol",
       "source": "maptiler_planet",
       "source-layer": "poi",
-      "minzoom": 16,
+      "minzoom": 15,
       "filter": [
         "all",
         ["in", ["geometry-type"], ["literal", ["Point", "MultiPoint"]]],
         ["match", ["get", "class"], ["grocery"], true, false],
+        [
+          "case",
+          [">=", ["zoom"], 17],
+          true,
+          [">=", ["zoom"], 15],
+          ["<", ["coalesce", ["get", "rank2"], 0], 20],
+          ["<", ["coalesce", ["get", "rank2"], 0], 5]
+        ]
+      ],
+      "layout": {
+        "icon-image": ["get", "class"],
+        "text-anchor": "top",
+        "text-field": [
+          "let",
+          "en",
+          ["coalesce", ["get", "name_en"], ""],
+          "intl",
+          ["coalesce", ["get", "name:nonlatin"], ""],
+          [
+            "case",
+            ["==", ["var", "en"], ["var", "intl"]],
+            ["var", "en"],
+            ["concat", ["var", "en"], "\n", ["var", "intl"]]
+          ]
+        ],
+        "text-font": ["Roboto Condensed Italic"],
+        "text-max-width": 9,
+        "text-offset": [0, 0.8],
+        "text-line-height": 1.05,
+        "text-padding": 2,
+        "text-size": 12,
+        "text-optional": true,
+        "icon-size": 1
+      },
+      "paint": {
+        "text-color": "#666",
+        "text-halo-color": "#000000",
+        "text-halo-width": 0.5,
+        "text-halo-blur": 0.5,
+        "icon-color": "hsl(0, 0%, 50%)",
+        "icon-halo-color": "#000",
+        "icon-halo-width": 0.5,
+        "icon-halo-blur": 0.5
+      }
+    },
+    {
+      "id": "runner_poi",
+      "type": "symbol",
+      "source": "maptiler_planet",
+      "source-layer": "poi",
+      "filter": [
+        "all",
+        ["in", ["geometry-type"], ["literal", ["Point", "MultiPoint"]]],
+        [
+          "match",
+          ["get", "subclass"],
+          ["toilets", "drinking_water"],
+          true,
+          false
+        ],
+        [
+          "case",
+          [">=", ["zoom"], 16],
+          true,
+          [">=", ["zoom"], 15],
+          ["<", ["coalesce", ["get", "rank2"], 0], 20],
+          ["<", ["coalesce", ["get", "rank2"], 0], 5]
+        ]
+      ],
+      "layout": {
+        "icon-image": "{subclass}",
+        "text-anchor": "top",
+        "text-field": "{name_en}",
+        "text-font": ["Roboto Condensed Italic"],
+        "text-max-width": 9,
+        "text-offset": [0, 0.8],
+        "text-line-height": 1.05,
+        "text-padding": 2,
+        "text-size": 12,
+        "text-optional": true,
+        "icon-size": 1.2
+      },
+      "paint": {
+        "text-color": "#666",
+        "text-halo-color": "#111",
+        "text-halo-width": 0.5,
+        "text-halo-blur": 0.5,
+        "icon-color": "#666",
+        "icon-halo-color": "#111",
+        "icon-halo-width": 0.5,
+        "icon-halo-blur": 0.5
+      }
+    },
+    {
+      "id": "poi_art",
+      "type": "symbol",
+      "source": "maptiler_planet",
+      "source-layer": "poi",
+      "minzoom": 15,
+      "filter": [
+        "all",
+        ["in", ["geometry-type"], ["literal", ["Point", "MultiPoint"]]],
+        [
+          "match",
+          ["get", "class"],
+          ["art_gallery"],
+          true,
+          false
+        ],
+        [
+          "match",
+          ["get", "subclass"],
+          ["artwork"],
+          true,
+          false
+        ],
+        [
+          "match",
+          ["get", "subclass"],
+          ["artwork"],
+          true,
+          false
+        ],
         [
           "case",
           [">=", ["zoom"], 17],
@@ -2294,65 +2449,7 @@
             ["concat", ["var", "en"], "\n", ["var", "intl"]]
           ]
         ],
-        "text-font": ["Robonoto Condensed Italic"],
-        "text-max-width": 9,
-        "text-offset": [0, 0.8],
-        "text-line-height": 1.05,
-        "text-padding": 2,
-        "text-size": 12,
-        "text-optional": true,
-        "icon-size": 1
-      },
-      "paint": {
-        "text-color": "#666",
-        "text-halo-color": "#000000",
-        "text-halo-width": 1,
-        "text-halo-blur": 0.5,
-        "icon-color": "hsl(0, 0%, 50%)",
-        "icon-halo-color": "hsl(0, 0%, 22%)"
-      }
-    },
-    {
-      "id": "runner_poi",
-      "type": "symbol",
-      "source": "maptiler_planet",
-      "source-layer": "poi",
-      "filter": [
-        "all",
-        ["in", ["geometry-type"], ["literal", ["Point", "MultiPoint"]]],
-        [
-          "match",
-          ["get", "class"],
-          ["drinking_water", "toilets", "bicycle_repair_station"],
-          true,
-          false
-        ],
-        [
-          "case",
-          [">=", ["zoom"], 16],
-          true,
-          [">=", ["zoom"], 15],
-          ["<", ["coalesce", ["get", "rank2"], 0], 20],
-          ["<", ["coalesce", ["get", "rank2"], 0], 5]
-        ]
-      ],
-      "layout": {
-        "icon-image": ["get", "class"],
-        "text-anchor": "top",
-        "text-field": [
-          "let",
-          "en",
-          ["coalesce", ["get", "name_en"], ""],
-          "intl",
-          ["coalesce", ["get", "name:nonlatin"], ""],
-          [
-            "case",
-            ["==", ["var", "en"], ["var", "intl"]],
-            ["var", "en"],
-            ["concat", ["var", "en"], "\n", ["var", "intl"]]
-          ]
-        ],
-        "text-font": ["Robonoto Condensed Italic"],
+        "text-font": ["Roboto Condensed Italic"],
         "text-max-width": 9,
         "text-offset": [0, 0.8],
         "text-line-height": 1.05,
@@ -2362,12 +2459,14 @@
         "icon-size": 1.2
       },
       "paint": {
-        "text-color": "#666",
-        "text-halo-color": "#000000",
-        "text-halo-width": 1,
+        "text-color": "hsl(0,0%,35%)",
+        "text-halo-color": "#111",
+        "text-halo-width": 0.5,
         "text-halo-blur": 0.5,
-        "icon-color": "hsl(0, 0%, 50%)",
-        "icon-halo-color": "hsl(0, 0%, 22%)"
+        "icon-color": "hsl(0,0%,35%)",
+        "icon-halo-color": "#111",
+        "icon-halo-width": 0.5,
+        "icon-halo-blur": 0.5
       }
     },
     {
@@ -2393,7 +2492,7 @@
           ["step", ["get", "sizerank"], 18, 13, 12]
         ],
         "icon-image": "",
-        "text-font": ["DIN Pro Italic", "Arial Unicode MS Regular"],
+        "text-font": ["Noto Sans Italic"],
         "text-offset": [0, 0],
         "text-anchor": [
           "step",
@@ -2402,7 +2501,7 @@
           17,
           ["step", ["get", "sizerank"], "center", 13, "top"]
         ],
-        "text-field": ["coalesce", ["get", "name_en"], ["get", "name"]]
+        "text-field": ["coalesce", ["get", "name_en"]]
       },
       "paint": {
         "text-halo-color": "hsl(0, 0%, 0%)",
@@ -2432,7 +2531,7 @@
       "layout": {
         "text-field": ["coalesce", ["get", "name_en"], ["get", "name"]],
         "text-transform": "uppercase",
-        "text-font": ["Open Sans", "Arial Unicode MS Regular"],
+        "text-font": ["Roboto Regular"],
         "text-letter-spacing": ["match", ["get", "type"], "suburb", 0.15, 0.05],
         "text-max-width": 7,
         "text-padding": 3,
@@ -2512,7 +2611,7 @@
         ],
         "symbol-sort-key": ["get", "symbolrank"],
         "icon-image": "",
-        "text-font": ["Open Sans", "Arial Unicode MS Regular"],
+        "text-font": ["Roboto Regular"],
         "text-anchor": ["step", ["zoom"], "center", 8, "center"],
         "text-field": ["coalesce", ["get", "name_en"], ["get", "name"]],
         "text-max-width": 7
@@ -2598,7 +2697,7 @@
         ],
         "symbol-sort-key": ["get", "symbolrank"],
         "icon-image": "",
-        "text-font": ["DIN Pro Medium", "Arial Unicode MS Regular"],
+        "text-font": ["Roboto Medium"],
         "text-anchor": ["step", ["zoom"], "center", 8, "center"],
         "text-field": ["coalesce", ["get", "name_en"], ["get", "name"]],
         "text-max-width": 7
@@ -2647,7 +2746,7 @@
           ["step", ["get", "symbolrank"], 21, 6, 16, 7, 14]
         ],
         "text-transform": "uppercase",
-        "text-font": ["DIN Pro Bold", "Arial Unicode MS Bold"],
+        "text-font": ["Noto Sans Bold"],
         "text-field": ["coalesce", ["get", "name_en"], ["get", "name"]],
         "text-letter-spacing": 0.15,
         "text-max-width": 6
@@ -2681,7 +2780,7 @@
         "text-field": ["coalesce", ["get", "name_en"], ["get", "name"]],
         "text-line-height": 1.1,
         "text-max-width": 6,
-        "text-font": ["DIN Pro Medium", "Arial Unicode MS Regular"],
+        "text-font": ["Roboto Medium"],
         "text-radial-offset": ["step", ["zoom"], 0.6, 8, 0],
         "text-size": [
           "interpolate",
@@ -2750,7 +2849,7 @@
       ],
       "layout": {
         "text-field": "{name_en}",
-        "text-font": ["Roboto Condense"],
+        "text-font": ["Roboto Regular"],
         "text-letter-spacing": 0.05,
         "text-max-width": 9,
         "text-size": {"base": 1.2, "stops": [[12, 10], [15, 14]]},
@@ -2767,7 +2866,7 @@
       "type": "symbol",
       "source": "maptiler_planet",
       "source-layer": "mountain_peak",
-      "layout": {"text-field": "{name}\n{ele_ft}ft", "text-size": 12},
+      "layout": {"text-field": "{name_en}\n{ele_ft}ft", "text-size": 12},
       "paint": {"text-color": "hsl(0,0%,40%)", "text-halo-color": "black", "text-halo-width": 1},
       "minzoom": 12
     }

@@ -1,7 +1,9 @@
 import {formatLegDescription} from "./common.js";
 import {ElevationProfile} from "./ElevationProfile.js";
+import { Protocol } from 'https://cdn.jsdelivr.net/npm/pmtiles@3.0.7/+esm';
 
 const mapboxKey = 'pk.eyJ1Ijoibmlja3N3YWxrZXIiLCJhIjoiY2t0ZjgyenE4MDR1YjJ1cno0N3hxYzI4YSJ9.ivPdsoEtV9TaLGbOOfFXKA'
+import pmtiles from 'https://cdn.jsdelivr.net/npm/pmtiles@3.0.7/+esm'
 const transformRequest = (url, resourceType) => {
     if (isMapboxURL(url)) {
         return transformMapboxUrl(url, resourceType, mapboxKey)
@@ -82,12 +84,45 @@ export const TRAIN_ICON_STYLE = {
     }
 }
 
+class HomeControl {
+    onAdd(map){
+        this.map = map;
+        this.container = document.createElement('div');
+        this.container.className = 'maplibregl-ctrl maplibregl-ctrl-group';
+        this.container.textContent = 'Home';
+
+        this.container.innerHTML =
+            '<div class="tools-box">' +
+            '<button>' +
+            '<span class="maplibregl-ctrl-icon" aria-hidden="true" title="Home"></span>' +
+            '</button>' +
+            '</div>';
+        this.container.querySelector("span").style.backgroundImage = "url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDEzNiAxMjkuNiI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5jbHMtMSB7CiAgICAgICAgZmlsbDogIzMzMzsKICAgICAgICBmaWxsLXJ1bGU6IGV2ZW5vZGQ7CiAgICAgICAgc3Ryb2tlLXdpZHRoOiAwcHg7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTcwLDIxLjlsNDMuNCw0Mi4xYzEuOSwxLjguNiw1LTIsNWgtMTB2NDAuOWgtMjMuOHYtMjZoLTE5LjN2MjZoLTIzLjh2LTQwLjloLTEwYy0yLjYsMC0zLjktMy4yLTItNWw0My40LTQyLjFjMS4xLTEuMSwyLjktMS4xLDQsMFoiLz4KPC9zdmc+)"
+        this.container.onclick = () => {
+            map.fitBounds(map.homeBounds, {
+                padding: 32
+            });
+        }
+        return this.container;
+    }
+    onRemove(){
+        this.container.parentNode.removeChild(this.container);
+        this.map = undefined;
+    }
+}
+
+
+
 import { isMapboxURL, transformMapboxUrl } from "https://cdn.jsdelivr.net/npm/maplibregl-mapbox-request-transformer@0.0.2/src/index.min.js"
 export class RelayMap extends HTMLElement {
 
     constructor() {
         super();
+
+        let protocol = new Protocol();
+        maplibregl.addProtocol("pmtiles",protocol.tile);
         this.mapInitialized = false;
+
         this.mapReady = new Promise((resolve) => {
             this._resolveMapReady = resolve;
         });
@@ -187,9 +222,12 @@ export class RelayMap extends HTMLElement {
                 return bounds.extend(coord);
             }, bounds), new maplibregl.LngLatBounds(legsData[0].geometry.coordinates[0], legsData[0].geometry.coordinates[0]));
 
+            map.homeBounds = relayBounds
+            if (map.getZoom() < 10) {
             map.fitBounds(relayBounds, {
                 padding: 32
             });
+            }
 
             let hideAttribution =()=> {
                 let attribution = this.querySelector(".maplibregl-compact-show")
@@ -412,10 +450,6 @@ export class RelayMap extends HTMLElement {
                 }
             });
 
-
-
-
-
             let currentActiveLeg = null
             let currentLegPopup = null
             map.on('click', 'legs', (e) => {
@@ -481,8 +515,9 @@ relay-map {
                 style: this.attributes.getNamedItem("style-href").value,
                 center: center,
                 zoom: 9,
-                minZoom: 9,
+                minZoom: 8,
                 maxBounds: boundary,
+                hash: true,
                 transformRequest: transformRequest,
             });
             // Don't break basic page scrolling until the map is focused
@@ -508,6 +543,8 @@ relay-map {
                 maxWidth: 80,
                 unit: 'imperial'
             });
+            map.addControl(new HomeControl(), 'top-left');
+
             map.addControl(scale);
             map.addControl(new maplibregl.AttributionControl({
                 compact: true

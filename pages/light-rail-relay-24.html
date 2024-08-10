@@ -13,7 +13,7 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
     <meta charset="UTF-8">
     <title>Light Rail Relay 2024</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Ultra relay along the Link Line 1 happening September 28th, 2024.">
+    <meta name="description" content="Ultra relay along the Link 1 Line happening September 28th, 2024.">
     <meta name="theme-color" content="#000000">
     <meta property="og:image" content="{{ site.baseurl }}/img/lrr24/og-banner.png">
     <meta property="og:type" content="website">
@@ -446,11 +446,12 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
 
                     </div>
                     <p>Ultra relay along Seattle's Link Light Rail by <a href="{{ site.baseurl }}/" class="fst-italic text-decoration-none">Race Condition Running</a>. <br/>08:30 September 28th</p>
-                    <div class="button-container">
+                    <div class="gap-3 d-flex flex-wrap">
 
-                        <a href="{{ page.registration_link }}" class="btn btn-outline btn-outline-primary btn-lg me-2" data-bs-toggle="tooltip" data-bs-title="by 9-24" data-bs-placement="bottom">Sign Up
+                        <a href="{{ page.registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-24" data-bs-placement="bottom">Join Team
                             </a>
                         <a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-21" data-bs-placement="bottom">Add Team</a>
+                        <a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-21" data-bs-placement="bottom">Enter Solo</a>
                         
                         <!--a href="#epilogue" class="btn btn-outline btn-outline-primary btn-lg">Read Epilogue</a-->
 
@@ -467,8 +468,8 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
 
 <section id="map">
     <relay-map id="relay-map"
-               center="[-122.32747365635417,47.60640473782326]"
-               max-bounds="[[-122.90236980551624, 47.23422996598591], [-121.60263821424818, 47.83106353346886]]"
+               center="[-122.32747,47.60640]"
+               max-bounds="[[-123.90236, 47.13422], [-121.60263, 47.95310]]"
                style-href="{{ site.baseurl }}/maps/lrr24-map-style.json"></relay-map>
 
 </section>
@@ -480,9 +481,8 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
             <a href="#" class="btn btn-outline-primary mb-3 m-sm-0 " id="download-route-gpx-btn" hidden>Download Route GPX</a>
         </div>
 
-        <h5>22 legs - 38.45 mi ↑3000ft ↓3000ft</h5>
-        <p>The relay will start at Angle Lake station and follow the 1 Line to Lynnwood, with
-            visits to each operational station on the way. The route passes through a total of 6 cities.</p>
+        <h5>22 legs - 38 mi ↑3000ft ↓3000ft</h5>
+        <p>The relay will start at Angle Lake station and follow the 1 Line to Lynnwood, visiting every station on the way. The route passes through a total of 6 cities.</p>
 
 
         <leg-calculator id="leg-calculator" class="mb-3 p-2 p-lg-4" style="display: none">
@@ -533,7 +533,7 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
             <accordion-item>
                 <accordion-header>How can I make a team?</accordion-header>
                 <accordion-body>
-                    <p>Decide which format you'd like to participate in. There are three categories of teams for results purposes: <b>Competitive</b> for teams of four, <b>Ultra</b> for teams of one, and <b>Open</b> for all other formats. All teams will:</p>
+                    <p>Decide which format you'd like to participate in. There are three categories of teams for results purposes: <b>Competitive</b> for teams of four, <b>Solo</b> for teams of one, and <b>Open</b> for all other formats. All teams will:</p>
                     <ul>
                         <li>Register all of their members.</li>
                         <li>Have a runner present at the Angle Lake Station platform at 08:30 on the morning of the event to receive their baton.</li>
@@ -595,13 +595,13 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
                 <accordion-header>How do we manage our team's logistics?</accordion-header>
                 <accordion-body>
                     <h5>Small teams (4-10 runners)</h5>
-                    <p>You're likely to only have one person running each leg, so it's easiest if the folks who aren't running leg simply ride the train together to the next handoff. The train is your Ragnar var.</p>
+                    <p>You're likely to only have one person running each leg, so it's easiest if the folks who aren't running ride the train together to the next handoff. The train is your <a href="https://runragnar.com/">Ragnar</a> van.</p>
                     <h5>Large teams (>10 runners)</h5>
-                    <p>Our experience as a team of 20+ with multiple runners assigned to each leg is that a shared schedule spreadsheet helps a lot. You can see RCR's from <a href="https://docs.google.com/spreadsheets/d/1rd9Si3BcPgqt3fWxoHnuUB0rnN00XLtziMaHSPpQt14/edit#gid=0">2022</a> and <a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing">2023</a> as examples. If you're planning to participate in this "club run" format, we'll provide a recommended schedule based on your runners' preferences, but it's up to the team captain (person who added the team) to finalize and distribute assignments.</p>
-                    <h5>Ultra teams</h5>
+                    <p>Our experience with a team of 20+ with multiple runners assigned to each leg is that a shared schedule spreadsheet helps a lot. You can see RCR's from <a href="https://docs.google.com/spreadsheets/d/1rd9Si3BcPgqt3fWxoHnuUB0rnN00XLtziMaHSPpQt14/edit#gid=0">2022</a> and <a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing">2023</a> as examples. If you're planning to participate in this "club run" format, we'll provide a recommended schedule based on your runners' preferences, but it's up to the team captain (person who added the team) to finalize and distribute assignments.</p>
+                    <h5>Solo teams</h5>
                     <p>The route is only a little longer than a 50k, making it easy to run unsupported. Otherwise, there are lots of shops along the way for water and food. M2M Mart in Capitol Hill is convenient.</p>
                     <h5>All teams</h5>
-                    <p>Exchanges: The easiest way is to meet on the surface level at the exact points marked on the route. We've placed the markers next to <a href="https://www.soundtransit.org/sites/default/files/2016_start-on-link-map.pdf">station art</a>, signage or other landmarks. Zoom into the map to see our recommended exchange landmarks.</p>
+                    <p>Exchanges: The easiest way is to meet at the exact points marked on the route. We've placed the markers next to <a href="https://www.soundtransit.org/sites/default/files/2016_start-on-link-map.pdf">station art</a>, signage or other landmarks. Zoom into the map to see our recommended exchange landmarks.</p>
                     <p>Getting around: conveniently, exchanges are accessible via light rail and bus. See <a href="https://seattletransitblog.com/seattle-for-visitors/">Seattle Transit Blog's page</a> for a refresher on how to get around using transit, and check the <a href="https://support.myorca.com/hc/en-us/articles/10743519362317-Visitor-s-Guide-to-Using-Public-Transit-in-the-Seattle-area">ORCA site</a> for recommendations on how to purchase fares. UW students can ride for free using their Husky IDs.</p>
                 </accordion-body>
             </accordion-item>
