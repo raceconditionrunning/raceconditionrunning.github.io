@@ -70,10 +70,13 @@
     - time: "8:00"
       route_id: beacon-i90-luther-burbank-ob
 
-# - date: "2024-08-17"
-#   plan:
-#     - time: "8:30"
-#       route_id: TBD
+- date: "2024-08-17"
+  plan:
+    - time: "8:30"
+      route:
+        name: "Westlake, Elliot Bay, Discovery, Ship Canal, South Lake Union Loop"
+        map: https://onthegomap.com/s/t5lt2fln
+        dist: 15.8
 
 - date: "2024-08-24"
   plan:
