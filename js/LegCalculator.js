@@ -102,6 +102,12 @@ export class LegCalculator extends HTMLElement {
           let legDesc = `<div class="d-flex flex-column flex-lg-row justify-content-between align-items-baseline"><h5>${legName}</h5><h6>${distance.toFixed(2)}mi ↑${ascent.toFixed(0)}ft ↓${descent.toFixed(0)}ft</h6></div>`
           container.querySelector("#leg-calculator-description").innerHTML = legDesc
       });
+
+      let profile = container.querySelector("elevation-profile")
+      if (profile) {
+          let allLegElevationData = legs.flatMap((leg) => leg.geometry.coordinates)
+          profile.elevationData = allLegElevationData
+      }
   }
   connectedCallback() {
 

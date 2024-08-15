@@ -368,6 +368,10 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
             border: 1px solid #111;
         }
 
+        #leg-calculator elevation-profile path {
+            fill: #333
+        }
+
         .noUi-connect {
             background-color: var(--theme-primary-color);
         }
@@ -481,9 +485,8 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
             <a href="#" class="btn btn-outline-primary mb-3 m-sm-0 " id="download-route-gpx-btn" hidden>Download Route GPX</a>
         </div>
 
-        <h5>22 legs - 38 mi ↑3000ft ↓3000ft</h5>
-        <p>The relay will start at Angle Lake station and follow the 1 Line to Lynnwood, visiting every station on the way. The route passes through a total of 6 cities.</p>
-
+        <h5>22 legs - 38 mi ↑3800ft ↓3800ft</h5>
+        <p>The relay will start at Angle Lake station and follow the 1 Line to Lynnwood, visiting every station on the way. The route passes through 6 cities across 2 counties.</p>
 
         <leg-calculator id="leg-calculator" class="mb-3 p-2 p-lg-4" style="display: none">
             <h6 class="text-secondary">Segment Calculator</h6>
@@ -491,6 +494,7 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
             <div class="mx-3">
                 <div class="leg-range-input mt-5 mb-5" id="leg-calculator-slider"></div>
             </div>
+            <elevation-profile class="mx-3"></elevation-profile>
         </leg-calculator>
 
 
