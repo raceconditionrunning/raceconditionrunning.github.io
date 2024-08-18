@@ -1,6 +1,8 @@
 export class TransitVehicleTracker {
-    constructor(apiUrl, pollingInterval = 15000) { // Default polling interval is 30 seconds
+    constructor(apiUrl, routeId, key, pollingInterval = 15000) { // Default polling interval is 30 seconds
         this.apiUrl = apiUrl;
+        this.routeId = routeId;
+        this.key = key
         this.pollingInterval = pollingInterval;
         this.timer = null;
         this.vehicles = [];
@@ -29,9 +31,9 @@ export class TransitVehicleTracker {
     }
 
     async poll() {
-        console.log("Polling for vehicle data...")
         try {
-            const response = await fetch(this.apiUrl);
+            const vehicleApiUrl = `${this.apiUrl}/where/trips-for-route/${this.routeId}.json?key=${this.key}&includeStatus=true&includeSchedule=false`;
+            const response = await fetch(vehicleApiUrl);
             const data = await response.json();
             this.extractVehicleData(data);
         } catch (error) {
@@ -65,5 +67,33 @@ export class TransitVehicleTracker {
     emitVehicleData(vehicles) {
         const event = new CustomEvent('vehicleDataUpdated', { detail: vehicles });
         document.dispatchEvent(event);
+    }
+
+    async getArrivalsForStop(stopId) {
+        const arrivalsUrl = `${this.apiUrl}/where/arrivals-and-departures-for-stop/${stopId}.json?key=${this.key}&minutesAfter=30&minutesBefore=0`;
+
+        try {
+            const response = await fetch(arrivalsUrl);
+            const data = await response.json();
+            console.log(data)
+            if (!data) {
+                return [];
+            }
+
+            const arrivals = data.data.entry.arrivalsAndDepartures.map(arrival => ({
+                tripId: arrival.tripId,
+                routeId: arrival.routeId,
+                scheduledArrivalTime: new Date(arrival.scheduledArrivalTime),
+                predictedArrivalTime: arrival.predictedArrivalTime ? new Date(arrival.predictedArrivalTime) : null,
+                stopId: arrival.stopId,
+                headsign: arrival.tripHeadsign
+            }));
+
+            return arrivals;
+
+        } catch (error) {
+            console.error('Error fetching arrivals for stop:', error);
+            return [];
+        }
     }
 }

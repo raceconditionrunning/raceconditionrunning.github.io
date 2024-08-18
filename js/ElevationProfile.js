@@ -62,7 +62,6 @@ export class ElevationProfile extends HTMLElement {
 
     svg.append('path')
     .datum(this.data)
-    .attr('fill', 'lightgray')
     .attr('d', area);
 
     const xAxis = d3.axisBottom(x).tickFormat((d, i) => i);

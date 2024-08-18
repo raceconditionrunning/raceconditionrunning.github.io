@@ -205,6 +205,10 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
         .leg-popup .maplibregl-popup-tip {
             display: none;
         }
+        .leg-popup elevation-profile {
+            fill: black;
+            opacity: .2;
+        }
 
         .exchange-name-popup .maplibregl-popup-close-button {
             display: none;
@@ -424,6 +428,59 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
         /*.gradient-background {
             background: radial-gradient(circle at 20% -10%,var(--theme-primary-color),rgba(255,0,0,0) 30%),radial-gradient(circle at 93.3% 10%,var(--two-line-color),rgba(0,255,0,0) 30%),radial-gradient(circle at 6.7% 20%,var(--t-line-color),rgba(0,0,255,0) 30%) !important;
         }*/
+
+        .arrivals-popup {
+            background-color: rgba(0, 0, 0, 0.6);
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
+
+            transition: opacity 0.4s ease-out;
+            opacity: 1;
+        }
+
+        .arrivals-popup.fade-out {
+            opacity: 0;
+        }
+        .arrivals-popup .maplibregl-popup-tip {
+            display: none;
+        }
+        .arrivals-popup .maplibregl-popup-content {
+            background: none;
+            color: white;
+            padding: 1rem;
+        }
+        .arrivals-popup .trip-destination {
+            font-weight: 600;
+        }
+        .arrivals-popup .maplibregl-popup-close-button {
+            color: #888;
+        }
+        .arrivals-popup .realtime-symbol {
+            /* Inline SVG of two radio waves going up and to the right */
+            background: url("data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20id%3D%22Layer_1%22%20data-name%3D%22Layer%201%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cdefs%3E%3Cstyle%3E%20%20%20%20%20%20.cls-1%20%7B%20%20%20%20%20%20%20%20fill%3A%20none%3B%20%20%20%20%20%20%20%20stroke%3A%20%23fff%3B%20%20%20%20%20%20%20%20stroke-width%3A%203px%3B%20%20%20%20%20%20%7D%20%20%20%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M3.6%2C5.6c7.9%2C0%2C14.2%2C6.4%2C14.2%2C14.2%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M3.6%2C11.5c4.6%2C0%2C8.3%2C3.7%2C8.3%2C8.3%22%2F%3E%3C%2Fsvg%3E") no-repeat;
+            display: inline-block;
+            width: .9rem;
+            height: .9rem;
+        }
+        .line-40_100479 {
+            background-color: var(--theme-primary-color);
+            width: .9rem;
+            height: .9rem;
+            font-size: .9rem;
+            border-radius: .5rem;
+            display: inline-block;
+
+        }
+        .line-40_100479::before {
+            content: "1";
+            /* Horizontally and vertically center the number */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+
 
     </style>
 </head>
@@ -731,13 +788,14 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
     import PhotoSwipeLightbox from 'photoswipe-lightbox';
     import { MasonryImageGallery} from "{{ site.baseurl }}/js/MasonryImageGallery.js";
     import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
-    import {RelayMap, TRAIN_ICON_STYLE, TRAIN_LABEL_STYLE} from '{{ site.baseurl }}/js/RelayMap.js';
+    import {RelayMap} from '{{ site.baseurl }}/js/RelayMap.js';
     import {LegCalculator} from '{{ site.baseurl }}/js/LegCalculator.js';
     import {TransitVehicleTracker} from '{{ site.baseurl }}/js/TransitVehicleTracker.js';
 
-
-    const apiUrl = 'https://api.pugetsound.onebusaway.org/api/where/trips-for-route/40_100479.json?key=OBAKEY&includeStatus=true&includeSchedule=false';
-    const vehicleMonitor = new TransitVehicleTracker(apiUrl);
+    const apiBaseUrl = "https://api.pugetsound.onebusaway.org/api"
+    const routeId = "40_100479"
+    const key = "OBAKEY"
+    const vehicleMonitor = new TransitVehicleTracker(apiBaseUrl, routeId, key);
     vehicleMonitor.startPolling();
 
     document.addEventListener('vehicleDataUpdated', event => {
@@ -786,6 +844,7 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
         // Get colors from css vars
         let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-primary-color')
         document.querySelector("#relay-map").addRelayLine(legs, exchanges, exchangeNames, true, [primaryColor], "{{ site.baseurl }}/img/lrr24/")
+        document.querySelector("#relay-map").registerLiveArrivalsSource(exchanges, vehicleMonitor.getArrivalsForStop.bind(vehicleMonitor))
     })
 
     let startTime = new Date("Sept 28, 2024 8:30:00")

@@ -242,7 +242,127 @@ export class RelayMap extends HTMLElement {
         })
     }
 
-                            connectedCallback() {
+    registerLiveArrivalsSource(exchanges, endpoint) {
+        this.mapReady.then(() => {
+            const map = this.map;
+            const popupStore = new Map(); // Stores the popups and intervals by exchange ID
+
+            const handleMapMoveEnd = async () => {
+                const zoom = map.getZoom();
+                const pitch = map.getPitch();
+                const bounds = map.getBounds();
+
+                // If conditions are not met, remove all popups and clear intervals
+                if (zoom < 17 || pitch > 50) {
+                    popupStore.forEach(({ popup, intervalId }) => {
+                        clearInterval(intervalId);
+                        fadeOutAndRemovePopup(popup);
+                    });
+                    popupStore.clear();
+                    return;
+                }
+
+                for (const exchange of exchanges.features) {
+                    const exchangeCoords = exchange.geometry.coordinates;
+                    const exchangeId = exchange.properties.id;
+
+                    // If the exchange is out of bounds, remove its popup and clear its interval
+                    if (!bounds.contains(exchangeCoords)) {
+                        if (popupStore.has(exchangeId)) {
+                            const { popup, intervalId } = popupStore.get(exchangeId);
+                            clearInterval(intervalId);
+                            fadeOutAndRemovePopup(popup);
+                            popupStore.delete(exchangeId);
+                        }
+                        continue;
+                    }
+
+                    // If the exchange is in bounds and doesn't already have a popup, create one
+                    if (!popupStore.has(exchangeId)) {
+                        const { stopCodeNorth, stopCodeSouth } = exchange.properties;
+
+                        const updateArrivals = async () => {
+                            const northboundArrivals = await endpoint(stopCodeNorth);
+                            const southboundArrivals = await endpoint(stopCodeSouth);
+
+                            const currentTime = new Date();
+
+                            function formatArrival(arrival) {
+                                const arrivalTime = arrival.predictedArrivalTime || arrival.scheduledArrivalTime;
+                                const isRealtime = arrival.predictedArrivalTime !== null;
+                                const minutesUntilArrival = Math.round((new Date(arrivalTime) - currentTime) / 60000);
+                                let duration = `${minutesUntilArrival} min`;
+                                if (minutesUntilArrival <= 0) {
+                                    duration = 'now';
+                                }
+                                let realtimeSymbol = '';
+                                if (isRealtime) {
+                                    realtimeSymbol = '<span class="realtime-symbol"></span>';
+                                }
+                                return {
+                                    time: new Date(arrivalTime),
+                                    realtime: isRealtime,
+                                    html: `<div><span class="trip-destination float-start"><span class="line-marker line-${arrival.routeId}"></span> ${arrival.headsign}</span>&nbsp;&nbsp;<span class="trip-eta float-end">${realtimeSymbol}${duration}</span></div>`
+                                };
+                            }
+
+                            // At most, show next two arrivals for each direction
+                            northboundArrivals.splice(2);
+                            southboundArrivals.splice(2);
+
+                            // Combine and sort arrivals by time
+                            const combinedArrivals = [
+                                ...northboundArrivals.map(arrival => formatArrival(arrival)),
+                                ...southboundArrivals.map(arrival => formatArrival(arrival))
+                            ].sort((a, b) => a.time - b.time);
+
+                            if (combinedArrivals.length === 0) {
+                                // If there are no arrivals, show a message
+                                combinedArrivals.push({
+                                    html: '<div>No upcoming arrivals</div>'
+                                });
+                            }
+
+                            // Create HTML content for the merged popup
+                            const combinedContent = combinedArrivals.map(arrival => arrival.html).join('');
+
+                            // Update the popup content
+                            popup.setHTML(`${combinedContent}`);
+                        };
+
+                        // Create and show a single popup anchored at the top left
+                        const popup = new maplibregl.Popup({ offset: [20, 40], anchor: 'top-left', className: 'arrivals-popup' })
+                            .setLngLat(exchangeCoords)
+                            .setHTML('Loading...')
+                            .addTo(map);
+
+                        // Store the popup in the state and start the update interval
+                        const intervalId = setInterval(updateArrivals, 20000); // Refresh every 20 seconds
+                        popupStore.set(exchangeId, { popup, intervalId });
+
+                        // Initial update call
+                        await updateArrivals();
+                    }
+                }
+            };
+
+            // Bind the handler to the map's moveend event
+            map.on('moveend', handleMapMoveEnd);
+
+            // Call the handler immediately to handle the initial load
+            handleMapMoveEnd();
+        });
+
+        function fadeOutAndRemovePopup(popup) {
+            const popupElement = popup._content.parentElement;
+            if (!popupElement) return;
+            popupElement.classList.add('fade-out');
+            setTimeout(() => popup.remove(), 500); // Wait for the fade-out transition to complete
+        }
+    }
+
+
+    connectedCallback() {
         this.innerHTML = `
 <style>
 relay-map {
