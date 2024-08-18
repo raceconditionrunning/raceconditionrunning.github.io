@@ -11,79 +11,6 @@ const transformRequest = (url, resourceType) => {
     return {url}
 }
 
-export const TRAIN_LABEL_STYLE = {
-    minzoom: 14,
-    'type': 'symbol',
-    'layout': {
-        'text-field': [
-            "step",
-            ["zoom"],
-            [
-                "format",
-                "To ",
-                {"font-scale": 1.0},
-                ["get", "headsign"],
-                {"font-scale": 1.0}
-            ],
-            12,
-            [
-                "format",
-                "To ",
-                {"font-scale": 1.0},
-                ["get", "headsign"],
-                {"font-scale": 1.0},
-                "\n",
-                {},
-                ["case", ["get", "realtime"], "", "Scheduled"],
-                {"font-scale": 1.0, "text-font": ["literal", ["Open Sans Italic"]]}
-            ]
-        ],
-        "text-anchor": "left",
-        "text-justify": "left",
-        "text-offset": {
-            "stops": [
-                [12, [1, 0]],
-                [16, [1.5, 0]],
-                [18, [2, 0]]
-                ]
-        },
-        "text-size": {
-            "stops": [
-                [10, 11],
-                [16, 12],
-                [18, 14]
-                ]
-        },
-        "icon-image": "train",
-        "icon-size": {
-            "stops": [
-                [12, .25],
-                [16, 0.5],
-                [18, 0.85]
-        ]
-        },
-    },
-    "paint": {
-        "text-color": "#FFF",
-        "text-opacity": .7,
-        "text-halo-color": "rgba(0, 0, 0, 0.6)"
-    }
-}
-
-export const TRAIN_ICON_STYLE = {
-    'type': 'circle',
-    'paint': {
-        'circle-radius': {
-            "stops": [
-                [12, 4],
-                [16, 12],
-                [18, 21]
-            ]
-        },
-        'circle-color': ["case", ["get", "realtime"], "#DDD", "#888"],
-    }
-}
-
 class HomeControl {
     onAdd(map){
         this.map = map;
@@ -154,7 +81,6 @@ export class RelayMap extends HTMLElement {
 
     addPoints(name, collection, style={}) {
         this.mapReady.then(() => {
-            console.log(collection.features)
             // If the source already exists, we'll just update the data
             if (this.map.getSource(name)) {
                 this.map.getSource(name).setData(collection)
@@ -171,27 +97,15 @@ export class RelayMap extends HTMLElement {
             });
         })
     }
-
-    addLines(name, collection, zIndex=0) {
+    addTrains(trains) {
         this.mapReady.then(() => {
-            this.map.addSource(name, {
-                'type': 'geojson',
-                'data': collection
-            });
-            this.map.addLayer({
-                'id': name,
-                'type': 'line',
-                'source': name,
-                'layout': {
-                    'line-join': 'round',
-                    'line-cap': 'round'
-                },
-                'paint': {
-                    'line-color': '#777',
-                    'line-width': 1
-                }
-            });
+            this.map.getSource("trains").setData(trains)
+        })
+    }
 
+    addLines(railLines, zIndex=0) {
+        this.mapReady.then(() => {
+            this.map.getSource("rail-lines").setData(railLines)
         })
 
     }
@@ -245,34 +159,11 @@ export class RelayMap extends HTMLElement {
             if (window.innerWidth < 768) {
                 hideAttribution()
             }
-
-
-            map.addSource('legs', {
-                'type': 'geojson',
-                'promoteId': "id",
-                'data': legs
-            });
-
-            map.addLayer({
-                'id': 'legs',
-                'type': 'line',
-                'source': 'legs',
-                'layout': {
-                    'line-join': 'round',
-                    'line-cap': 'round'
-                },
-                'paint': {
-                    'line-color': ['case', ['boolean', ['feature-state', 'selected'], false], ["interpolate-lab", ["linear"], 0.5, 0, "#000", 1, lineColors[0]], lineColors[0]],
-                    'line-width': {
-                        "stops": [
-                            [10, 3],
-                            [12, 4],
-                            [14, 5],
-                            [20, 6]
-                        ]
-                    }
-                }
-            });
+            // Add line color to each leg
+            legsData.forEach((leg) => {
+                leg.properties.lineColor = lineColors[0]
+            })
+            map.getSource('legs').setData(legs)
 
             // For each leg, we find the midpoint and create a label
             let labels = legsData.map((leg) => {
@@ -290,165 +181,22 @@ export class RelayMap extends HTMLElement {
                     }
                 }
             })
-            map.addSource('leg-labels', {
-                'type': 'geojson',
-                'data': {
-                    type: 'FeatureCollection',
-                    features: labels
-                },
-                'promoteId': "id",
-            });
 
-            map.addLayer({
-                'id': 'leg-labels',
-                'type': 'symbol',
-                'source': 'leg-labels',
-                minzoom: 9,
-                'layout': {
-                    'text-field': ["to-string", ["+", ["at", 0 , ["get", "sequence"]], 1]],
-                    'text-font': ['Open Sans Bold'],
-                    'text-size': {
-                        "stops": [
-                            [10, 12],
-                            [16, 21]
-                        ]
-                    },
-                    "text-padding": 4,
-                    "text-justify": "center",
-                },
-                paint: {
-                    'text-color': '#FFF',
-                    'text-halo-color': 'rgba(0, 0, 0, 0.6)',
-                    'text-halo-width': 2,
-                }
-            });
+            map.getSource('leg-labels').setData({
+                type: 'FeatureCollection',
+                features: labels
+            })
 
+            map.getSource('exchanges').setData(exchanges);
 
-            map.addSource('exchanges', {
-                'type': 'geojson',
-                'promoteId': "id",
-                'data': exchanges
-            });
-
-            map.addLayer({
-                'id': 'exchange-circle',
-                'type': 'circle',
-                'source': 'exchanges',
-                maxzoom: useStationCodes ? 12 : 24,
-                'paint': {
-                    'circle-radius': {
-                        "stops": [
-                            [9, 3],
-                            [12, 8]
-                        ]
-                    },
-                    'circle-color': '#fff',
-                    'circle-stroke-color': '#000',
-                    'circle-stroke-width': {
-                        "stops": [
-                            [9, 1],
-                            [12, 2]
-                        ]
-                    },
-                }
-            });
+            map.setLayerZoomRange("exchange-circle", 0, useStationCodes ? 12 : 24)
             if (useStationCodes) {
-                map.addLayer({
-                    id: 'exchange-station-code',
-                    type: 'symbol',
-                    source: 'exchanges',
-                    minzoom: 12,
-                    layout: {
-                        'text-field': ['slice', ['to-string', ['get', 'id']], 1, 3],
-                        'text-font': ['Open Sans Semibold'],
-                        'text-size': {
-                            "stops": [
-                                [12, 12],
-                                [16, 18]
-                            ]
-                        },
-                        "icon-size": {
-                            "stops": [
-                                [12, 1],
-                                [16, 1.1]
-                            ]
-                        },
-                        "text-padding": 0,
-                        "text-justify": "right",
-                        'icon-image': '1stationcode',
-                        'icon-text-fit': 'width',
-                        'icon-overlap': 'always',
-                        'text-overlap': 'always'
-                    }
-                });
+                map.setLayoutProperty("exchange-id", 'visibility', 'none');
             } else {
-                map.addLayer({
-                    id: 'exchange-id',
-                    type: 'symbol',
-                    source: 'exchanges',
-                    minzoom: 9,
-                    layout: {
-                        'text-field': ['to-string', ['get', 'id']],
-                        'text-font': ['Open Sans Semibold'],
-                        'text-size': {
-                            "stops": [
-                                [8, 8],
-                                [12, 12],
-                            ]
-                        },
-                        "text-justify": "center",
-                        'text-anchor': 'center',
-                    }
-                })
+                // Hide exchange station code
+                map.setLayoutProperty('exchange-station-code', 'visibility', 'none');
+                map.setLayoutProperty("exchange-id", 'visibility', 'visible');
             }
-
-            map.addLayer({
-                id: 'exchange-name',
-                type: 'symbol',
-                source: 'exchanges',
-                minzoom: 12,
-                layout: {
-                    'text-field': [
-                        "step",
-                        ["zoom"],
-                        [
-                            "format",
-                            ["get", "name"],
-                            {"font-scale": 1.0}
-                        ],
-                        14,
-                        [
-                            "format",
-                            ["get", "name"],
-                            {"font-scale": 1.0},
-                            "\n",
-                            {},
-                            ["get", "landmark"],
-                            {"font-scale": 0.8, "text-font": ["literal", ["Open Sans Regular"]]}
-                        ]
-                    ],
-                    'text-font': ['Open Sans Semibold'],
-                    'text-size': {
-                        "stops": [
-                            [12, 14],
-                            [16, 16],
-                            [20, 20]
-                        ]
-                    },
-                    "text-justify": "left",
-                    'text-offset': {"stops": [
-                        [12, [1.2, 0]],
-                            [16, [1.4, 0]],
-                                [20, [1.6, 0]]]},
-                    'text-anchor': 'left',
-                },
-                paint: {
-                    'text-halo-color': 'rgba(0, 0, 0, 0.4)',
-                    'text-halo-width': 1,
-                    'text-halo-blur': 1,
-                    'text-color': '#FFF'
-                }
-            });
 
             let currentActiveLeg = null
             let currentLegPopup = null
@@ -494,8 +242,8 @@ export class RelayMap extends HTMLElement {
         })
     }
 
-    connectedCallback() {
-        this.innerHTML = `<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.5.0/dist/maplibre-gl.css">
+                            connectedCallback() {
+        this.innerHTML = `
 <style>
 relay-map {
     display: block;

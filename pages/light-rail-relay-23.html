@@ -27,12 +27,12 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.1.0/css/tabulator_bootstrap5.min.css" integrity="sha512-RQwKIKNxv0qAMe/KITeoOKX8bIR5Rl9rxZZyNrheBGQE1bSCjyGKVXAwHVMlDuu2eWSK+8+/pt2772A0TtD+Uw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.5.2/dist/maplibre-gl.css">
     <script type="importmap">
         {
           "imports": {
             "d3": "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm",
-            "maplibre-gl": "https://unpkg.com/maplibre-gl@4.5.0/dist/maplibre-gl.js",
+            "maplibre-gl": "https://unpkg.com/maplibre-gl@4.5.2/dist/maplibre-gl.js",
             "masonry-layout": "https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js",
             "noUiSlider": "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.mjs",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
@@ -864,7 +864,7 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
     ]).then(([railLines, [legs, exchanges, exchangeNames]]) => {
         // Get colors from css vars
         let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-primary-color')
-        document.querySelector("#relay-map").addLines("rail", railLines)
+        document.querySelector("#relay-map").addLines(railLines)
         document.querySelector("#relay-map").addRelayLine(legs, exchanges, exchangeNames, false, [primaryColor], "{{ site.baseurl }}/img/lrr24/")
     })
 

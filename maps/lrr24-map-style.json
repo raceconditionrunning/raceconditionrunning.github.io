@@ -18,6 +18,29 @@
     "maptiler_attribution": {
       "attribution": "<a href=\"https://www.maptiler.com/copyright/\" target=\"_blank\">&copy; MapTiler</a> <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">&copy; OpenStreetMap contributors</a>",
       "type": "vector"
+    },
+    "legs": {
+      "type": "geojson",
+      "promoteId": "id",
+      "data": {}
+    },
+    "leg-labels": {
+      "type": "geojson",
+      "promoteId": "id",
+      "data": {}
+    },
+    "exchanges": {
+      "type": "geojson",
+      "promoteId": "id",
+      "data": {}
+      },
+      "trains": {
+        "type": "geojson",
+        "data": {}
+      },
+    "rail-lines" : {
+        "type": "geojson",
+        "data": {}
     }
   },
   "sprite": "https://api.maptiler.com/maps/7a6c1614-9502-4770-b503-f7551c1bdfe4/sprite",
@@ -320,6 +343,37 @@
           20,
           6
         ]
+      }
+    },
+    {
+      "id": "tunnel_lightrail",
+      "type": "line",
+      "source": "rail-lines",
+      "filter": [
+        "all",
+        ["==", ["get", "tunnel"], "yes"]
+      ],
+      "layout": {},
+      "paint": {
+        "line-color": "hsl(0, 0%, 50%)",
+        "line-width": [
+          "interpolate",
+          ["exponential", 1.4],
+          ["zoom"],
+          14,
+          0.4,
+          15,
+          0.75,
+          20,
+          2
+        ],
+        "line-dasharray": {
+          "stops": [
+            [8, [8, 2]],
+            [12, [4, 2]],
+            [20, [2, 2]]
+          ]
+        }
       }
     },
     {
@@ -1084,6 +1138,13 @@
           true,
           false
         ],
+        [
+          "match",
+          ["get", "subclass"],
+          ["light_rail"],
+          false,
+          true
+        ],
         ["match", ["get", "brunnel"], ["bridge", "tunnel"], false, true]
       ],
       "layout": {},
@@ -1117,11 +1178,70 @@
           true,
           false
         ],
+        [
+          "match",
+          ["get", "subclass"],
+          ["light_rail"],
+          false,
+          true
+        ],
         ["match", ["get", "brunnel"], ["bridge", "tunnel"], false, true]
       ],
       "layout": {},
       "paint": {
         "line-color": "hsl(0, 0%, 22%)",
+        "line-width": [
+          "interpolate",
+          ["exponential", 1.4],
+          ["zoom"],
+          14,
+          1,
+          15,
+          3,
+          20,
+          8
+        ],
+        "line-dasharray": [0.2, 4]
+      }
+    },
+    {
+      "id": "lightrail",
+      "type": "line",
+      "source": "rail-lines",
+      "filter": [
+        "all",
+        ["match", ["get", "bridge"], ["yes"], false, true],
+        ["match", ["get", "tunnel"], ["yes"], false, true]
+      ],
+      "layout": {},
+      "paint": {
+        "line-color": "hsl(0, 0%, 55%)",
+        "line-width": [
+          "interpolate",
+          ["exponential", 1.4],
+          ["zoom"],
+          14,
+          0.4,
+          15,
+          0.75,
+          20,
+          2
+        ]
+      }
+    },
+    {
+      "id": "lightrail_hatching",
+      "type": "line",
+      "source": "rail-lines",
+      "minzoom": 14,
+      "filter": [
+        "all",
+        ["match", ["get", "bridge"], ["yes"], false, true],
+        ["match", ["get", "tunnel"], ["yes"], false, true]
+      ],
+      "layout": {},
+      "paint": {
+        "line-color": "hsl(0, 0%, 55%)",
         "line-width": [
           "interpolate",
           ["exponential", 1.4],
@@ -1927,6 +2047,13 @@
           true,
           false
         ],
+        [
+          "match",
+          ["get", "subclass"],
+          ["light_rail"],
+          false,
+          true
+        ],
         ["==", ["get", "brunnel"], "bridge"]
       ],
       "layout": {},
@@ -1960,11 +2087,68 @@
           true,
           false
         ],
+        [
+          "match",
+          ["get", "subclass"],
+          ["light_rail"],
+          false,
+          true
+        ],
         ["==", ["get", "brunnel"], "bridge"]
       ],
       "layout": {},
       "paint": {
         "line-color": "hsl(0, 0%, 35%)",
+        "line-width": [
+          "interpolate",
+          ["exponential", 1.4],
+          ["zoom"],
+          14,
+          1,
+          15,
+          3,
+          20,
+          8
+        ],
+        "line-dasharray": [0.2, 4]
+      }
+    },
+    {
+      "id": "bridge_lightrail",
+      "type": "line",
+      "source": "rail-lines",
+      "filter": [
+        "all",
+        ["==", ["get", "bridge"], "yes"]
+      ],
+      "layout": {},
+      "paint": {
+        "line-color": "hsl(0, 0%, 55%)",
+        "line-width": [
+          "interpolate",
+          ["exponential", 1.4],
+          ["zoom"],
+          14,
+          0.4,
+          15,
+          0.75,
+          20,
+          2
+        ]
+      }
+    },
+    {
+      "id": "bridge_lightrail_hatching",
+      "type": "line",
+      "source": "rail-lines",
+      "minzoom": 14,
+      "filter": [
+        "all",
+        ["==", ["get", "bridge"], "yes"]
+      ],
+      "layout": {},
+      "paint": {
+        "line-color": "hsl(0, 0%, 55%)",
         "line-width": [
           "interpolate",
           ["exponential", 1.4],
@@ -2419,10 +2603,10 @@
         ],
         [
           "match",
-          ["get", "subclass"],
-          ["artwork"],
-          true,
-          false
+          ["get", "name_en"],
+          [""],
+          false,
+          true
         ],
         [
           "case",
@@ -2869,16 +3053,233 @@
       "layout": {"text-field": "{name_en}\n{ele_ft}ft", "text-size": 12},
       "paint": {"text-color": "hsl(0,0%,40%)", "text-halo-color": "black", "text-halo-width": 1},
       "minzoom": 12
+    },
+    {
+      "id": "legs",
+      "type": "line",
+      "source": "legs",
+      "layout": {
+        "line-join": "round",
+        "line-cap": "round"
+      },
+      "paint": {
+        "line-color": ["case", ["boolean", ["feature-state", "selected"], false], ["interpolate-lab", ["linear"], 0.5, 0, "#000", 1, ["get", "lineColor"]], ["get", "lineColor"]],
+        "line-width": {
+          "stops": [
+            [10, 3],
+            [12, 4],
+            [14, 5],
+            [20, 6]
+          ]
+        }
+      }
+    },
+    {
+      "id": "leg-labels",
+      "type": "symbol",
+      "source": "leg-labels",
+      "minzoom": 9,
+      "layout": {
+        "text-field": ["to-string", ["+", ["at", 0, ["get", "sequence"]], 1]],
+        "text-font": ["Open Sans Bold"],
+        "text-size": {
+          "stops": [
+            [10, 12],
+            [16, 21]
+          ]
+        },
+        "text-padding": 4,
+        "text-justify": "center"
+      },
+      "paint": {
+        "text-color": "#FFF",
+        "text-halo-color": "rgba(0, 0, 0, 0.6)",
+        "text-halo-width": 2
+      }
+    },
+    {
+        "id": "train-circle",
+      "source": "trains",
+      "type": "circle",
+      "paint": {
+        "circle-radius": {
+          "stops": [
+            [12, 4],
+            [16, 12],
+            [18, 21]
+          ]
+        },
+        "circle-color": ["case", ["get", "realtime"], "#DDD", "#888"]
+      }
+    },
+    {
+      "id": "train",
+      "type": "symbol",
+      "source": "trains",
+      "minzoom": 14,
+      "layout": {
+        "text-field": [
+          "step",
+          ["zoom"],
+          [
+            "format",
+            "To ",
+            {"font-scale": 1.0},
+            ["get", "headsign"],
+            {"font-scale": 1.0}
+          ],
+          12,
+          [
+            "format",
+            "To ",
+            {"font-scale": 1.0},
+            ["get", "headsign"],
+            {"font-scale": 1.0},
+            "\n",
+            {},
+            ["case", ["get", "realtime"], "", "Scheduled"],
+            {"font-scale": 1.0, "text-font": ["literal", ["Open Sans Italic"]]}
+          ]
+        ],
+        "text-anchor": "left",
+        "text-justify": "left",
+        "text-offset": {
+          "stops": [
+            [12, [1, 0]],
+            [16, [1.5, 0]],
+            [18, [2, 0]]
+          ]
+        },
+        "text-size": {
+          "stops": [
+            [10, 11],
+            [16, 12],
+            [18, 14]
+          ]
+        },
+        "icon-image": "train",
+        "icon-size": {
+          "stops": [
+            [12, 0.25],
+            [16, 0.5],
+            [18, 0.85]
+          ]
+        }
+      },
+      "paint": {
+        "text-color": "#FFF",
+        "text-opacity": 0.7,
+        "text-halo-color": "rgba(0, 0, 0, 0.6)"
+      }
+    },
+    {
+      "id": "exchange-circle",
+      "type": "circle",
+      "source": "exchanges",
+      "maxzoom": 12,
+      "paint": {
+        "circle-radius": {
+          "stops": [
+            [9, 3],
+            [12, 8]
+          ]
+        },
+        "circle-color": "#fff",
+        "circle-stroke-color": "#000",
+        "circle-stroke-width": {
+          "stops": [
+            [9, 1],
+            [12, 2]
+          ]
+        }
+      }
+    },
+    {
+      "id": "exchange-station-code",
+      "type": "symbol",
+      "source": "exchanges",
+      "minzoom": 12,
+      "layout": {
+        "text-field": ["slice", ["to-string", ["get", "id"]], 1, 3],
+        "text-font": ["Open Sans Semibold"],
+        "text-size": {
+          "stops": [
+            [12, 12],
+            [16, 18]
+          ]
+        },
+        "icon-size": {
+          "stops": [
+            [12, 1],
+            [16, 1.1]
+          ]
+        },
+        "text-padding": 0,
+        "text-justify": "right",
+        "icon-image": "1stationcode",
+        "icon-text-fit": "width",
+        "icon-overlap": "always",
+        "text-overlap": "always"
+      }
+    },
+    {
+      "id": "exchange-id",
+      "type": "symbol",
+      "source": "exchanges",
+      "minzoom": 9,
+      "layout": {
+        "text-field": ["to-string", ["get", "id"]],
+        "text-font": ["Open Sans Semibold"],
+        "text-size": {
+          "stops": [
+            [8, 8],
+            [12, 12]
+          ]
+        },
+        "text-justify": "center",
+        "text-anchor": "center"
+      }
+    },
+    {
+      "id": "exchange-name",
+      "type": "symbol",
+      "source": "exchanges",
+      "minzoom": 12,
+      "layout": {
+        "text-field": [
+          "step",
+          ["zoom"],
+          ["format", ["get", "name"], { "font-scale": 1.0 }],
+          14,
+          ["format", ["get", "name"], { "font-scale": 1.0 }, "\n", {}, ["get", "landmark"], { "font-scale": 0.8, "text-font": ["literal", ["Open Sans Regular"]] }]
+        ],
+        "text-font": ["Open Sans Semibold"],
+        "text-size": {
+          "stops": [
+            [12, 14],
+            [16, 16],
+            [20, 20]
+          ]
+        },
+        "text-justify": "left",
+        "text-offset": {
+          "stops": [
+            [12, [1.2, 0]],
+            [16, [1.4, 0]],
+            [20, [1.6, 0]]
+          ]
+        },
+        "text-anchor": "left"
+      },
+      "paint": {
+        "text-halo-color": "rgba(0, 0, 0, 0.4)",
+        "text-halo-width": 1,
+        "text-halo-blur": 1,
+        "text-color": "#FFF"
+      }
     }
   ],
-  "fog": {
-    "range": [-1, 10],
-    "color": "hsl(0, 0%, 0%)",
-    "high-color": "hsl(0, 0%, 0%)",
-    "space-color": "hsl(0, 0%, 0%)",
-    "horizon-blend": 0.1,
-    "star-intensity": 0
-  },
+
   "projection": {"type": "globe"},
   "created": "2023-07-22T07:34:39.168Z",
   "modified": "2023-07-22T20:55:26.448Z",

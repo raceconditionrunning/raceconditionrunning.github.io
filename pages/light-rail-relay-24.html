@@ -30,12 +30,12 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator_bootstrap5.min.css" integrity="sha512-904y6HHQyQS2fAyIQ869rH3AAkxZeFuxo9vheji5zw+IPEyioMWN4Bt/VFhzO5edPZ9m1lwkpYgXcYcm1vzaFw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.5.2/dist/maplibre-gl.css">
     <script type="importmap">
         {
           "imports": {
             "d3": "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm",
-            "maplibre-gl": "https://unpkg.com/maplibre-gl@4.5.0/dist/maplibre-gl.js",
+            "maplibre-gl": "https://unpkg.com/maplibre-gl@4.5.2/dist/maplibre-gl.js",
             "masonry-layout": "https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js",
             "noUiSlider": "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.mjs",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
@@ -755,14 +755,13 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
             "type": "FeatureCollection",
             "features": vehiclesGeojson}
 
-        document.querySelector("#relay-map").addPoints("train_icons", vehiclesGeojson, TRAIN_ICON_STYLE)
-        document.querySelector("#relay-map").addPoints("train_labels", vehiclesGeojson, TRAIN_LABEL_STYLE)
+        document.querySelector("#relay-map").addTrains(vehiclesGeojson)
     });
 
     let routeData = fetch("{{ site.baseurl }}/maps/lrr24.geojson").then(res => res.json())
     let railData = fetch("{{ site.baseurl }}/maps/link-light-rail.geojson").then(res => res.json())
     railData.then((railLines) => {
-        document.querySelector("#relay-map").addLines("railLines", railLines)
+        document.querySelector("#relay-map").addLines(railLines)
     })
     let processedRouteData = routeData.then((relay) => {
         let [legs, exchanges] = processRelayGeoJSON(relay)
