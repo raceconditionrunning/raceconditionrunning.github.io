@@ -84,7 +84,6 @@
       route_id: cid-i90-trail-south-bellvue
     - time: "9:55"
       route_id: sobell-follow-2-line-redtech
-      notes: "Running this leg in reverse from map/gpx."
 
 - date: "2024-09-07"
   plan:
