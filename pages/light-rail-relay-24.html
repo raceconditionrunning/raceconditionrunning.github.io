@@ -41,6 +41,7 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
             "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.1.0/js/tabulator_esm.min.js",
+            "@turf": "https://cdn.jsdelivr.net/npm/@turf/turf@7.1.0/+esm",
             "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js",
             "bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.esm.min.js"
           }
@@ -192,15 +193,39 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
             backdrop-filter: blur(4px);
         }
 
-        .exchange-name-popup a {
+        .distance-popup .maplibregl-popup-content {
             color: var(--bs-body-color);
-            text-decoration-color: var(--theme-primary-color);
-            text-decoration-thickness: 2px;
-            font-weight: 600;
+            font-weight: 500;
+            font-size: 1rem;
+            line-height: 1;
+            text-align: center;
+            letter-spacing: -.5px;
+        }
+        .distance-popup .leg-dist {
+            font-size: .75rem;
+            font-weight: 300;
+        }
+        .distance-popup .maplibregl-popup-content {
+            padding: .25rem;
         }
 
-        .exchange-name-popup .maplibregl-popup-tip {
+        .distance-popup.maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
+            border-top-color: rgba(255, 255, 255, 0.6);
+        }
+        .distance-popup.maplibregl-popup-anchor-bottom-left .maplibregl-popup-tip {
+            border-top-color: rgba(255, 255, 255, 0.6);
+        }
+        .distance-popup.maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip {
+            border-top-color: rgba(255, 255, 255, 0.6);
+        }
+        .distance-popup.maplibregl-popup-anchor-top-left .maplibregl-popup-tip {
+            border-bottom-color: rgba(255, 255, 255, 0.6);
+        }
+        .distance-popup.maplibregl-popup-anchor-right .maplibregl-popup-tip {
             border-right-color: rgba(255, 255, 255, 0.6);
+        }
+        .distance-popup.maplibregl-popup-anchor-left .maplibregl-popup-tip {
+            border-left-color: rgba(255, 255, 255, 0.6);
         }
         .leg-popup .maplibregl-popup-tip {
             display: none;
@@ -220,7 +245,7 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
             backdrop-filter: blur(4px);
         }
 
-        .maplibregl-map:focus:focus-visible,
+        relay-map:has(.maplibregl-canvas:focus:focus-visible),
         .maplibregl-ctrl-group button:focus:focus-visible {
             outline: none;
             box-shadow: 0 0 0 0.25rem var(--theme-primary-color-subdued);
@@ -507,7 +532,7 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
 
                     </div>
                     <p>Ultra relay along Seattle's Link Light Rail by <a href="{{ site.baseurl }}/" class="fst-italic text-decoration-none">Race Condition Running</a>. <br/>08:30 September 28th</p>
-                    <div class="gap-3 d-flex flex-wrap">
+                    <div class="gap-2 d-flex flex-wrap">
 
                         <a href="{{ page.registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-24" data-bs-placement="bottom">Join Team
                             </a>
@@ -575,7 +600,8 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
             <accordion-item>
                 <accordion-header>Why do this?</accordion-header>
                 <accordion-body>
-                    <p>It's a chance to experience different parts of the city, and there's no better way to appreciate what Link does for Seattle than to run the route. You may like the idea <a href="https://www.youtube.com/watch?v=OMNFRFUM4IM">of</a> <a href="https://www.youtube.com/watch?v=TaMiV3Wus9c">racing</a> <a href="https://www.youtube.com/watch?v=3x3HDTY919g">trains</a>. Or maybe you're an ultra-runner keen on establishing Seattle's first great urban FKT. Check out <a href="{{ site.baseurl }}/light-rail-relay-23#epilogue">the photos from last year</a> if you still need convincing.</p>
+                    <p>It's a chance to experience different parts of the city with your friends. You may like the idea <a href="https://www.youtube.com/watch?v=OMNFRFUM4IM">of</a> <a href="https://www.youtube.com/watch?v=TaMiV3Wus9c">racing</a> <a href="https://www.youtube.com/watch?v=3x3HDTY919g">trains</a>. Or maybe you're an ultra-runner keen on establishing Seattle's first great urban FKT. Check out <a href="{{ site.baseurl }}/light-rail-relay-23#epilogue">the photos from last year</a> if you still need convincing.</p>
+                    <p>Past runners have said the run gave them a new view of the city and a fresh appreciation for the Link.</p>
                 </accordion-body>
             </accordion-item>
             <accordion-item>
@@ -658,9 +684,22 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
                     <h5>Small teams (4-10 runners)</h5>
                     <p>You're likely to only have one person running each leg, so it's easiest if the folks who aren't running ride the train together to the next handoff. The train is your <a href="https://runragnar.com/">Ragnar</a> van.</p>
                     <h5>Large teams (>10 runners)</h5>
-                    <p>Our experience with a team of 20+ with multiple runners assigned to each leg is that a shared schedule spreadsheet helps a lot. You can see RCR's from <a href="https://docs.google.com/spreadsheets/d/1rd9Si3BcPgqt3fWxoHnuUB0rnN00XLtziMaHSPpQt14/edit#gid=0">2022</a> and <a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing">2023</a> as examples. If you're planning to participate in this "club run" format, we'll provide a recommended schedule based on your runners' preferences, but it's up to the team captain (person who added the team) to finalize and distribute assignments.</p>
+                    <p>Our experience with a team of 20+ and multiple runners assigned to each leg is that a shared schedule spreadsheet helps a lot. You can see RCR's from <a href="https://docs.google.com/spreadsheets/d/1rd9Si3BcPgqt3fWxoHnuUB0rnN00XLtziMaHSPpQt14/edit#gid=0">2022</a> and <a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing">2023</a> as examples. If you're planning to participate in this "club run" format, we'll provide a recommended schedule based on your runners' preferences, but it's up to the team captain (person who added the team) to finalize and distribute assignments.</p>
                     <h5>Solo teams</h5>
-                    <p>The route is only a little longer than a 50k, making it easy to run unsupported. Otherwise, there are lots of shops along the way for water and food. M2M Mart in Capitol Hill is convenient.</p>
+                    <p>It's possible to run the ~60k route unsupported. Otherwise, there are many shops along the way for supplies. Here are some that are within 100ft of the route:  </p>
+                    <ul>
+                    <li><b>Mile 0:</b> All Star Grocery, Chevron ExtraMile</li>
+                    <li><b>Mile 6.5:</b> 7-Eleven</li>
+                    <li><b>Mile 11.45:</b> Chevron ExtraMile</li>
+                    <li><b>Mile 14.6:</b> Hilltop Red Apple Market</li>
+                    <li><b>Mile 18.7:</b> Target</li>
+                    <li><b>Mile 20.7:</b> M2M Mart</li>
+                    <li><b>Mile 25.1:</b> Trader Joe's</li>
+                    <li><b>Mile 31.95:</b> 7-Eleven</li>
+                    <li><b>Mile 33.96</b> Arctic Mini-Mart</li>
+                    <li><b>Mile 37.15</b> 7-Eleven</li>
+                </ul>
+
                     <h5>All teams</h5>
                     <p>Exchanges: The easiest way is to meet at the exact points marked on the route. We've placed the markers next to <a href="https://www.soundtransit.org/sites/default/files/2016_start-on-link-map.pdf">station art</a>, signage or other landmarks. Zoom into the map to see our recommended exchange landmarks.</p>
                     <p>Getting around: conveniently, exchanges are accessible via light rail and bus. See <a href="https://seattletransitblog.com/seattle-for-visitors/">Seattle Transit Blog's page</a> for a refresher on how to get around using transit, and check the <a href="https://support.myorca.com/hc/en-us/articles/10743519362317-Visitor-s-Guide-to-Using-Public-Transit-in-the-Seattle-area">ORCA site</a> for recommendations on how to purchase fares. UW students can ride for free using their Husky IDs.</p>

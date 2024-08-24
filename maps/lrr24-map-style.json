@@ -61,39 +61,7 @@
       "paint": {
         "fill-antialias": false,
         "fill-color": "rgba(32, 34, 32, 1)",
-        "fill-opacity": {"stops": [[13, 0], [15, 1]]}
-      }
-    },
-    {
-      "id": "landcover",
-      "type": "fill",
-      "source": "maptiler_planet",
-      "source-layer": "landcover",
-      "maxzoom": 12,
-      "filter": [
-        "match",
-        ["get", "class"],
-        ["scrub", "grass"],
-        ["step", ["zoom"], true, 8, false],
-        true
-      ],
-      "layout": {"visibility": "none"},
-      "paint": {
-        "fill-color": "hsl(0, 0%, 2%)",
-        "fill-opacity": [
-          "interpolate",
-          ["exponential", 1.5],
-          ["zoom"],
-          9,
-          0.4,
-          10,
-          ["match", ["get", "class"], "crop", 0, 0.4],
-          11,
-          ["match", ["get", "class"], "crop", 0, 0.4],
-          12,
-          0
-        ],
-        "fill-antialias": false
+        "fill-opacity": {"stops": [[10, 0], [14, 1]]}
       }
     },
     {
@@ -170,7 +138,7 @@
       ],
       "paint": {
         "fill-color": "hsl(0, 0%, 23%)",
-        "fill-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0, 11, 1]
+        "fill-opacity": ["interpolate", ["linear"], ["zoom"], 11, 0, 12, 1]
       }
     },
     {
@@ -191,7 +159,7 @@
           18,
           ["match", ["get", "type"], "runway", 80, 20]
         ],
-        "line-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0, 11, 1]
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 11, 0, 12, 1]
       }
     },
     {
@@ -269,11 +237,12 @@
           "interpolate",
           ["exponential", 1.5],
           ["zoom"],
-          13,
+          11,
           0.5,
           20,
           20
-        ]
+        ],
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 11, 0, 12, 1]
       }
     },
     {
@@ -287,7 +256,10 @@
         ["geometry-type"],
         ["literal", ["Polygon", "MultiPolygon"]]
       ],
-      "paint": {"fill-color": "hsl(0, 0%, 13%)"}
+      "paint": {
+        "fill-color": "hsl(0, 0%, 13%)",
+        "fill-opacity": ["interpolate", ["linear"], ["zoom"], 11, 0, 12, 1]
+      }
     },
     {
       "id": "aeroway_runway",
@@ -314,7 +286,8 @@
           3,
           20,
           16
-        ]
+        ],
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 11, 0, 12, 1]
       }
     },
     {
@@ -342,7 +315,8 @@
           0.5,
           20,
           6
-        ]
+        ],
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 11, 0, 12, 1]
       }
     },
     {
@@ -369,9 +343,9 @@
         ],
         "line-dasharray": {
           "stops": [
-            [8, [8, 2]],
-            [12, [4, 2]],
-            [20, [2, 2]]
+            [10, [1000, 0]],
+            [14, [8, 4]],
+            [20, [4, 2]]
           ]
         }
       }
@@ -831,7 +805,8 @@
           ["literal", [2.5, 1]],
           15,
           ["literal", [2, 1]]
-        ]
+        ],
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 14, 0, 14.5, 1]
       }
     },
     {
@@ -877,7 +852,8 @@
           ],
           20,
           ["case", ["==", ["get", "subclass"], "cycleway"], 9, 3]
-        ]
+        ],
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 13, 0, 14, 1]
       }
     },
     {
@@ -914,18 +890,7 @@
       "filter": [
         "all",
         ["match", ["get", "class"], ["service", "track"], true, false],
-        ["match", ["get", "brunnel"], ["bridge", "tunnel"], false, true],
-        [
-          "any",
-          [">=", ["zoom"], 14],
-          [
-            "match",
-            ["get", "service"],
-            ["parking_aisle", "driveway"],
-            false,
-            true
-          ]
-        ]
+        ["match", ["get", "brunnel"], ["bridge", "tunnel"], false, true]
       ],
       "layout": {"line-join": "round", "line-cap": "round"},
       "paint": {
@@ -942,7 +907,8 @@
           20,
           9
         ],
-        "line-color": "hsl(0, 0%, 22%)"
+        "line-color": "hsl(0, 0%, 22%)",
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 13, 0, 14, 1]
       }
     },
     {
@@ -992,15 +958,16 @@
           "interpolate",
           ["exponential", 1.2],
           ["zoom"],
-          12,
+          11,
           0.5,
-          13,
+          12.5,
           0.75,
           14,
           2,
           20,
           16
-        ]
+        ],
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 11, 0, 12, 1]
       }
     },
     {
@@ -1026,6 +993,15 @@
           1,
           20,
           13
+        ],
+        "line-opacity": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          8, ["case", ["==", ["get", "class"], "tertiary"], 0, 1],
+          9, ["case", ["==", ["get", "class"], "tertiary"], 1, 1],
+          11, ["case", ["==", ["get", "class"], "tertiary"], 0, 1],
+          12, ["case", ["==", ["get", "class"], "tertiary"], 1, 1]
         ]
       }
     },
@@ -1160,7 +1136,8 @@
           0.75,
           20,
           2
-        ]
+        ],
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 14, 0, 15.5, 1]
       }
     },
     {
@@ -1201,7 +1178,8 @@
           20,
           8
         ],
-        "line-dasharray": [0.2, 4]
+        "line-dasharray": [0.2, 4],
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 14, 0, 15.5, 1]
       }
     },
     {
@@ -2286,13 +2264,15 @@
           "match",
           ["get", "class"],
           [
+            "path",
             "motorway",
             "trunk",
             "primary",
             "secondary",
             "tertiary",
             "street",
-            "street_limited"
+            "street_limited",
+            "minor"
           ],
           true,
           false
@@ -2307,7 +2287,7 @@
           [
             "match",
             ["get", "class"],
-            ["motorway", "trunk", "primary", "secondary", "tertiary"],
+            ["motorway", "trunk", "primary", "secondary", "tertiary", "minor", "path"],
             10,
             9
           ],
@@ -2443,7 +2423,6 @@
         ["<", "rank", 20]
       ],
       "layout": {
-        "icon-image": ["get", "class"],
         "text-anchor": "top",
         "text-field": [
           "let",
@@ -2476,7 +2455,7 @@
       }
     },
     {
-      "id": "poi_food",
+      "id": "poi_runner_supply",
       "type": "symbol",
       "source": "maptiler_planet",
       "source-layer": "poi",
@@ -2484,7 +2463,11 @@
       "filter": [
         "all",
         ["in", ["geometry-type"], ["literal", ["Point", "MultiPoint"]]],
-        ["match", ["get", "class"], ["grocery"], true, false],
+        ["any",
+          ["match", ["get", "class"], ["grocery"], true, false],
+          ["match", ["get", "subclass"], ["convenience"], true, false]
+        ],
+        ["!=", ["get", "subclass"], "deli"],
         [
           "case",
           [">=", ["zoom"], 17],
@@ -2569,11 +2552,11 @@
       },
       "paint": {
         "text-color": "#666",
-        "text-halo-color": "#111",
+        "text-halo-color": "#000000",
         "text-halo-width": 0.5,
         "text-halo-blur": 0.5,
-        "icon-color": "#666",
-        "icon-halo-color": "#111",
+        "icon-color": "hsl(0, 0%, 50%)",
+        "icon-halo-color": "#000",
         "icon-halo-width": 0.5,
         "icon-halo-blur": 0.5
       }
@@ -2903,99 +2886,12 @@
       }
     },
     {
-      "id": "state-label",
-      "type": "symbol",
-      "source": "maptiler_planet",
-      "source-layer": "place",
-      "minzoom": 3,
-      "maxzoom": 9,
-      "filter": [
-        "all",
-        [
-          "match",
-          ["get", "class"],
-          ["state", "disputed_state"],
-          ["match", ["get", "worldview"], ["all", "US"], true, false],
-          false
-        ]
-      ],
-      "layout": {
-        "text-size": [
-          "interpolate",
-          ["cubic-bezier", 0.85, 0.7, 0.65, 1],
-          ["zoom"],
-          4,
-          ["step", ["get", "symbolrank"], 9, 6, 8, 7, 7],
-          9,
-          ["step", ["get", "symbolrank"], 21, 6, 16, 7, 14]
-        ],
-        "text-transform": "uppercase",
-        "text-font": ["Noto Sans Bold"],
-        "text-field": ["coalesce", ["get", "name_en"], ["get", "name"]],
-        "text-letter-spacing": 0.15,
-        "text-max-width": 6
-      },
-      "paint": {
-        "text-color": "hsl(0, 0%, 64%)",
-        "text-halo-color": "hsl(0, 0%, 0%)",
-        "text-halo-width": 1,
-        "text-opacity": 0.5
-      }
-    },
-    {
-      "id": "country-label",
-      "type": "symbol",
-      "source": "maptiler_planet",
-      "source-layer": "place",
-      "minzoom": 1,
-      "maxzoom": 10,
-      "filter": [
-        "all",
-        [
-          "match",
-          ["get", "class"],
-          ["country", "disputed_country"],
-          ["match", ["get", "worldview"], ["all", "US"], true, false],
-          false
-        ]
-      ],
-      "layout": {
-        "icon-image": "",
-        "text-field": ["coalesce", ["get", "name_en"], ["get", "name"]],
-        "text-line-height": 1.1,
-        "text-max-width": 6,
-        "text-font": ["Roboto Medium"],
-        "text-radial-offset": ["step", ["zoom"], 0.6, 8, 0],
-        "text-size": [
-          "interpolate",
-          ["cubic-bezier", 0.2, 0, 0.7, 1],
-          ["zoom"],
-          1,
-          ["step", ["get", "symbolrank"], 11, 4, 9, 5, 8],
-          9,
-          ["step", ["get", "symbolrank"], 22, 4, 19, 5, 17]
-        ]
-      },
-      "paint": {
-        "icon-opacity": [
-          "step",
-          ["zoom"],
-          ["case", ["has", "text_anchor"], 1, 0],
-          7,
-          0
-        ],
-        "text-color": "hsl(0, 0%, 38%)",
-        "text-halo-color": "hsl(0, 0%, 0%)",
-        "text-halo-width": 1.25
-      }
-    },
-    {
       "id": "place_city",
       "type": "symbol",
       "source": "maptiler_planet",
       "source-layer": "place",
       "minzoom": 5,
-      "filter": ["all", ["==", "class", "city"]],
+      "filter": ["any", ["==", ["get","class"], "city"]],
       "layout": {
         "icon-image": {"base": 1, "stops": [[0, "dot_9"], [8, ""]]},
         "text-anchor": "bottom",
@@ -3003,7 +2899,7 @@
         "text-font": ["Roboto Medium"],
         "text-max-width": 8,
         "text-offset": [0, 0],
-        "text-size": {"base": 1.2, "stops": [[7, 12], [11, 24]]},
+        "text-size": {"base": 1.2, "stops": [[9, 12], [12, 24]]},
         "icon-allow-overlap": true,
         "icon-optional": false
       },
@@ -3028,6 +2924,7 @@
           "islet",
           "neighbourhood",
           "suburb",
+          "town",
           "quarter"
         ]
       ],
@@ -3036,7 +2933,13 @@
         "text-font": ["Roboto Regular"],
         "text-letter-spacing": 0.05,
         "text-max-width": 9,
-        "text-size": {"base": 1.2, "stops": [[12, 10], [15, 14]]},
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12, ["*", ["case", ["==", ["get", "class"], "town"], 1.6, 1.2], 8],
+          15, ["*", ["case", ["==", ["get", "class"], "town"], 1.6, 1.2], 12]
+        ],
         "text-transform": "uppercase"
       },
       "paint": {
@@ -3071,7 +2974,8 @@
             [14, 5],
             [20, 6]
           ]
-        }
+        },
+        "line-opacity": ["interpolate", ["linear"],["zoom"], 14, 1.0, 15, 0.6, 16, 0.45]
       }
     },
     {
@@ -3084,6 +2988,7 @@
         "text-font": ["Open Sans Bold"],
         "text-size": {
           "stops": [
+            [9, 10],
             [10, 12],
             [16, 21]
           ]
@@ -3138,7 +3043,8 @@
             "\n",
             {},
             ["case", ["get", "realtime"], "", "Scheduled"],
-            {"font-scale": 1.0, "text-font": ["literal", ["Open Sans Italic"]]}
+            {"font-scale": 1.0, "text-font": ["literal", ["Open Sans Italic"]]},
+            ["case", ["has", "id"], ["concat", " #", ["get", "id"]], ""]
           ]
         ],
         "text-anchor": "left",
@@ -3180,14 +3086,16 @@
       "paint": {
         "circle-radius": {
           "stops": [
+            [6, 1.5],
             [9, 3],
-            [12, 8]
+            [12, 6]
           ]
         },
         "circle-color": "#fff",
         "circle-stroke-color": "#000",
         "circle-stroke-width": {
           "stops": [
+            [6, 0.5],
             [9, 1],
             [12, 2]
           ]

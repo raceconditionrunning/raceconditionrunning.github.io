@@ -48,9 +48,10 @@ export class TransitVehicleTracker {
         const vehicles = trips.map(trip => {
             const status = trip.status;
             const tripHeadsign = tripMap.get(status.activeTripId);
-
+            let lastIdNumber = status.activeTripId.split('_')
+            lastIdNumber = lastIdNumber[lastIdNumber.length - 1]
             return {
-                id: status.activeTripId,
+                id: lastIdNumber,
                 lat: status.position.lat,
                 lon: status.position.lon,
                 bearing: status.orientation,
@@ -59,7 +60,6 @@ export class TransitVehicleTracker {
                 headsign: tripHeadsign
             };
         });
-
         this.vehicles = vehicles;
         this.emitVehicleData(vehicles);
     }

@@ -4,6 +4,8 @@ import { Protocol } from 'https://cdn.jsdelivr.net/npm/pmtiles@3.0.7/+esm';
 
 const mapboxKey = 'pk.eyJ1Ijoibmlja3N3YWxrZXIiLCJhIjoiY2t0ZjgyenE4MDR1YjJ1cno0N3hxYzI4YSJ9.ivPdsoEtV9TaLGbOOfFXKA'
 import pmtiles from 'https://cdn.jsdelivr.net/npm/pmtiles@3.0.7/+esm'
+
+import {distance, point, nearestPointOnLine, lineString} from '@turf';
 const transformRequest = (url, resourceType) => {
     if (isMapboxURL(url)) {
         return transformMapboxUrl(url, resourceType, mapboxKey)
@@ -107,7 +109,23 @@ export class RelayMap extends HTMLElement {
         this.mapReady.then(() => {
             this.map.getSource("rail-lines").setData(railLines)
         })
-
+    }
+    computeDistanceAlongLegs(queryPoint, legs) {
+        let totalDistance = 0
+        // Merge all legs into a single line
+        let line = lineString(legs.reduce((acc, leg) => acc.concat(leg.geometry.coordinates), []))
+        // Get nearest point on line
+        let nearest = nearestPointOnLine(line, queryPoint, {units: 'meters'})
+        // Calculate cumulative distance up to index
+        for (let i = 1; i < line.geometry.coordinates.length; i++) {
+            let segmentDist = distance(line.geometry.coordinates[i-1], line.geometry.coordinates[i], {units: 'meters'})
+            totalDistance += segmentDist
+            if (i === nearest.properties.index) {
+                totalDistance += distance(nearest.geometry.coordinates, line.geometry.coordinates[i], {units: 'meters'})
+                break
+            }
+        }
+        return [totalDistance, {lng: nearest.geometry.coordinates[0], lat: nearest.geometry.coordinates[1]}]
     }
     addRelayLine(legs, exchanges, exchangeNames, useStationCodes=false, lineColors={}, imgBasePath="") {
 
@@ -201,8 +219,8 @@ export class RelayMap extends HTMLElement {
             let currentActiveLeg = null
             let currentLegPopup = null
             map.on('click', 'legs', (e) => {
-                const coordinates = e.features[0].geometry.coordinates;
-                const leg = e.features[0]
+                let leg = legsData.slice().filter(l => l.properties.id === e.features[0].id)[0]
+                let coordinates = leg.geometry.coordinates
                 const bounds = coordinates.reduce((bounds, coord) => {
                     return bounds.extend(coord);
                 }, new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
@@ -210,7 +228,7 @@ export class RelayMap extends HTMLElement {
                     anchor: "bottom-left",
                     offset: [16, 0],
                     className: "leg-popup",
-                    focusAfterOpen: true
+                    focusAfterOpen: false
                 })
                     .setLngLat([bounds.getEast(), bounds.getCenter().lat])
                     .setMaxWidth("300px")
@@ -225,19 +243,44 @@ export class RelayMap extends HTMLElement {
                 profile.style.width = "100%"
                 profile.style.height = "64px"
                 // Maplibre strips out elevation (and any further data) per point. Get data straight from legs
-                profile.elevationData = legs.features.filter(l => l.properties.id === leg.id)[0].geometry.coordinates
+                profile.elevationData = leg.geometry.coordinates
                 map.fitBounds(bounds, {
                     padding: 32
                 });
                 this.highlightLeg(leg.id)
             })
+            // Create a popup, but don't add it to the map yet.
+            const distancePopup = new maplibregl.Popup({
+                closeButton: false,
+                closeOnClick: false,
+                focusAfterOpen: false,
+                className: 'distance-popup'
+            });
 
-            map.on('mouseenter', 'legs', () => {
+            map.on('mouseenter', 'legs', (e) => {
                 map.getCanvas().style.cursor = 'pointer';
+                const coordinates = [e.lngLat.lng, e.lngLat.lat];
+                let leg = legsData.slice().filter(l => l.properties.id === e.features[0].id)
+                const [distanceAlongLine, _] = this.computeDistanceAlongLegs(point(coordinates), legsData.slice())
+                const [distanceAlongLeg, nearestPoint] = this.computeDistanceAlongLegs(point(coordinates), leg)
 
+                distancePopup
+                    .setLngLat(nearestPoint)
+                    .setHTML(`${(distanceAlongLine / 1609.34).toFixed(2)}mi <br\><span class="leg-dist">${e.features[0].id + 1}: ${(distanceAlongLeg / 1609.34).toFixed(2)}mi</span>`)
+                    .addTo(map);
+            });
+            map.on('mousemove', 'legs', (e) => {
+                const coordinates = [e.lngLat.lng, e.lngLat.lat];
+                let leg = legsData.slice().filter(l => l.properties.id === e.features[0].id)
+                const [distanceAlongLine, _] = this.computeDistanceAlongLegs(point(coordinates), legsData)
+                const [distanceAlongLeg, nearestPoint] = this.computeDistanceAlongLegs(point(coordinates), leg)
+                distancePopup
+                    .setLngLat(nearestPoint)
+                    .setHTML(`${(distanceAlongLine / 1609.34).toFixed(2)}mi <br\><span class="leg-dist">${e.features[0].id + 1}: ${(distanceAlongLeg / 1609.34).toFixed(2)}mi</span>`)
             });
             map.on('mouseleave', 'legs', () => {
                 map.getCanvas().style.cursor = '';
+                distancePopup.remove()
             });
         })
     }
@@ -282,8 +325,8 @@ export class RelayMap extends HTMLElement {
                         const { stopCodeNorth, stopCodeSouth } = exchange.properties;
 
                         const updateArrivals = async () => {
-                            const northboundArrivals = await endpoint(stopCodeNorth);
-                            const southboundArrivals = await endpoint(stopCodeSouth);
+                            let northboundArrivals = await endpoint(stopCodeNorth);
+                            let southboundArrivals = await endpoint(stopCodeSouth);
 
                             const currentTime = new Date();
 
@@ -292,7 +335,7 @@ export class RelayMap extends HTMLElement {
                                 const isRealtime = arrival.predictedArrivalTime !== null;
                                 const minutesUntilArrival = Math.round((new Date(arrivalTime) - currentTime) / 60000);
                                 let duration = `${minutesUntilArrival} min`;
-                                if (minutesUntilArrival <= 0) {
+                                if (minutesUntilArrival === 0) {
                                     duration = 'now';
                                 }
                                 let realtimeSymbol = '';
@@ -302,9 +345,14 @@ export class RelayMap extends HTMLElement {
                                 return {
                                     time: new Date(arrivalTime),
                                     realtime: isRealtime,
+                                    minutesUntilArrival: minutesUntilArrival,
                                     html: `<div><span class="trip-destination float-start"><span class="line-marker line-${arrival.routeId}"></span> ${arrival.headsign}</span>&nbsp;&nbsp;<span class="trip-eta float-end">${realtimeSymbol}${duration}</span></div>`
                                 };
                             }
+                            // Filter out arrivals that have already passed
+                            northboundArrivals = northboundArrivals.filter(arrival => new Date(arrival.predictedArrivalTime || arrival.scheduledArrivalTime) > currentTime);
+                            southboundArrivals = southboundArrivals.filter(arrival => new Date(arrival.predictedArrivalTime || arrival.scheduledArrivalTime) > currentTime);
+
 
                             // At most, show next two arrivals for each direction
                             northboundArrivals.splice(2);
@@ -331,7 +379,7 @@ export class RelayMap extends HTMLElement {
                         };
 
                         // Create and show a single popup anchored at the top left
-                        const popup = new maplibregl.Popup({ offset: [20, 40], anchor: 'top-left', className: 'arrivals-popup' })
+                        const popup = new maplibregl.Popup({ offset: [20, 40], anchor: 'top-left', className: 'arrivals-popup', closeOnClick: false, focusAfterOpen: false})
                             .setLngLat(exchangeCoords)
                             .setHTML('Loading...')
                             .addTo(map);
@@ -346,7 +394,6 @@ export class RelayMap extends HTMLElement {
                 }
             };
 
-            // Bind the handler to the map's moveend event
             map.on('moveend', handleMapMoveEnd);
 
             // Call the handler immediately to handle the initial load
@@ -371,8 +418,6 @@ relay-map {
     height: 100%;
 }
 `
-        // Make the map focusable
-        this.tabIndex = 0
         let centerValue = this.attributes.getNamedItem("center").value
         let boundaryValue = this.attributes.getNamedItem("max-bounds").value
         this.style.display = "block"
@@ -381,23 +426,36 @@ relay-map {
                 container: this,
                 attributionControl: false,
                 style: this.attributes.getNamedItem("style-href").value,
-                center: center,
-                zoom: 9,
+                center: sessionStorage.getItem('mapCenter') ? JSON.parse(sessionStorage.getItem('mapCenter')) : center,
+                zoom: Number(sessionStorage.getItem('mapZoom')) || 9,
+                pitch: Number(sessionStorage.getItem('mapPitch')) || 0,
+                bearing: Number(sessionStorage.getItem('mapBearing')) || 0,
                 minZoom: 8,
                 maxBounds: boundary,
-                hash: true,
+                hash: false,
                 transformRequest: transformRequest,
             });
             // Don't break basic page scrolling until the map is focused
             map.scrollZoom.disable()
-            let container = map.getContainer();
-            // container needs to have tabindex=0 to be focusable
-            map.on("click", () => container.focus())
-            map.on("pitchstart", () => container.focus())
-            map.on("drag", () => container.focus())
+            let canvas = map.getCanvas()
+            map.on("click", () => canvas.focus())
+            map.on("pitchstart", () => canvas.focus())
+            map.on("drag", () => canvas.focus())
             map.on("load", () => this._resolveMapReady())
-            container.addEventListener('focus', () => map.scrollZoom.enable());
-            container.addEventListener('blur', () => map.scrollZoom.disable());
+            map.on('moveend', () => {
+                // Store the current center, zoom, pitch, and bearing in session storage
+                sessionStorage.setItem('mapCenter', JSON.stringify(map.getCenter()));
+                sessionStorage.setItem('mapZoom', JSON.stringify(map.getZoom()));
+                sessionStorage.setItem('mapPitch', JSON.stringify(map.getPitch()));
+                sessionStorage.setItem('mapBearing', JSON.stringify(map.getBearing()));
+            });
+            canvas.addEventListener('focus', () => map.scrollZoom.enable());
+            canvas.addEventListener('blur', () => {
+                // Check whether focus is within container
+                if (!this.contains(document.activeElement))
+                    map.scrollZoom.disable()
+                });
+
             let nav = new maplibregl.NavigationControl();
             map.addControl(nav, 'top-left');
             map.addControl(new maplibregl.FullscreenControl({container: map.getContainer()}), 'top-left');
