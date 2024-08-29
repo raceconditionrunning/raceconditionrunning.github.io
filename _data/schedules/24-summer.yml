@@ -85,6 +85,11 @@
     - time: "9:55"
       route_id: sobell-follow-2-line-redtech
 
+- date: "2024-08-31"
+  plan:
+    - time: "9:00"
+      route_id: lynwood-jogn-interurban-northgate
+
 - date: "2024-09-07"
   plan:
     - time: "8:30"
