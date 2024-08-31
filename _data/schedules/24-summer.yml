@@ -95,6 +95,13 @@
     - time: "8:30"
       route_id: cse-woodinville-cafe
 
+- date: "2024-09-14"
+  plan:
+    - time: "8:30"
+      route_id: cse-lwb-frog-pond-i90-trail-sodo
+    - time: "9:05"
+      route_id: sodo-duwamish-trail-1st-loop
+
 - date: "2024-09-28"
   plan:
     - time: "8:30"
