@@ -5,18 +5,16 @@
   "zoom": 10,
   "bearing": 0,
   "pitch": 0,
-  "terrain": {"source": "terrain_rgb", "exaggeration": 1},
+  "terrain": {"source": "terrain_rgb", "exaggeration": 2.0},
   "sources": {
     "terrain_rgb": {
-      "url": "https://api.maptiler.com/tiles/terrain-rgb-v2/tiles.json?key=YvNrcU9QI9xFBf4H4cam",
-      "type": "raster-dem"
+      "url": "pmtiles://https://files.nickwalker.us/seattle_dem.pmtiles",
+      "type": "raster-dem",
+      "tileSize": 512
     },
-    "maptiler_planet": {
+    "planet": {
       "url": "pmtiles://https://files.nickwalker.us/seattle.pmtiles",
-      "type": "vector"
-    },
-    "maptiler_attribution": {
-      "attribution": "<a href=\"https://www.maptiler.com/copyright/\" target=\"_blank\">&copy; MapTiler</a> <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">&copy; OpenStreetMap contributors</a>",
+      "attribution": "<a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">&copy; OpenStreetMap contributors</a>",
       "type": "vector"
     },
     "legs": {
@@ -55,7 +53,7 @@
     {
       "id": "landcover_green",
       "type": "fill",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "landcover",
       "filter": ["any", ["==", "class", "wood"], ["==", "class", "grass"]],
       "paint": {
@@ -82,7 +80,7 @@
     {
       "id": "waterway",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "waterway",
       "minzoom": 8,
       "layout": {
@@ -106,7 +104,7 @@
     {
       "id": "water",
       "type": "fill",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "water",
       "layout": {},
       "paint": {"fill-color": "hsl(0, 0%, 5%)"}
@@ -114,7 +112,7 @@
     {
       "id": "road_area_pattern",
       "type": "fill",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": ["all", ["==", "$type", "Polygon"]],
       "paint": {"fill-antialias": true, "fill-color": "hsl(0,0%,17%)"}
@@ -122,7 +120,7 @@
     {
       "id": "aeroway-polygon",
       "type": "fill",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "aeroway",
       "minzoom": 11,
       "filter": [
@@ -144,7 +142,7 @@
     {
       "id": "aeroway-line",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "aeroway",
       "minzoom": 9,
       "filter": ["==", ["geometry-type"], "LineString"],
@@ -165,7 +163,7 @@
     {
       "id": "3d-buildings",
       "type": "fill-extrusion",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "building",
       "minzoom": 15,
       "paint": {
@@ -202,7 +200,7 @@
     {
       "id": "building",
       "type": "fill",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "building",
       "minzoom": 15,
       "filter": [
@@ -220,7 +218,7 @@
     {
       "id": "pier_line",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -248,7 +246,7 @@
     {
       "id": "aeroway_fill",
       "type": "fill",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "aeroway",
       "minzoom": 11,
       "filter": [
@@ -264,7 +262,7 @@
     {
       "id": "aeroway_runway",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "aeroway",
       "minzoom": 11,
       "filter": [
@@ -293,7 +291,7 @@
     {
       "id": "aeroway_taxiway",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "aeroway",
       "minzoom": 11,
       "filter": [
@@ -353,7 +351,7 @@
     {
       "id": "tunnel_motorway_link_casing",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -390,7 +388,7 @@
     {
       "id": "tunnel_service_track_casing",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -437,7 +435,7 @@
     {
       "id": "tunnel_trunk_link_casing",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -481,7 +479,7 @@
     {
       "id": "tunnel_secondary_tertiary_casing",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -520,7 +518,7 @@
     {
       "id": "tunnel_primary_casing",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -557,7 +555,7 @@
     {
       "id": "tunnel_trunk_casing",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -597,7 +595,7 @@
     {
       "id": "tunnel_motorway_casing",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -638,7 +636,7 @@
     {
       "id": "road-path-trail",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "minzoom": 12,
       "filter": [
@@ -675,7 +673,7 @@
     {
       "id": "road-path-cycleway-piste",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "minzoom": 12,
       "filter": [
@@ -703,7 +701,7 @@
     {
       "id": "road_path_pedestrian_unpaved_cycleway",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "minzoom": 13,
       "filter": [
@@ -757,7 +755,7 @@
     {
       "id": "road_path_pedestrian_unpaved_footway",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "minzoom": 13,
       "filter": [
@@ -812,7 +810,7 @@
     {
       "id": "road_path_pedestrian_paved",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "minzoom": 13,
       "filter": [
@@ -859,7 +857,7 @@
     {
       "id": "road_motorway_link",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "minzoom": 12,
       "filter": [
@@ -885,11 +883,12 @@
     {
       "id": "road_service_track",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
         ["match", ["get", "class"], ["service", "track"], true, false],
+        ["match", ["get", "service"], ["parking_aisle", "driveway"], false, true],
         ["match", ["get", "brunnel"], ["bridge", "tunnel"], false, true]
       ],
       "layout": {"line-join": "round", "line-cap": "round"},
@@ -912,9 +911,39 @@
       }
     },
     {
+      "id": "road_service_parking",
+      "type": "line",
+      "source": "planet",
+      "source-layer": "transportation",
+      "filter": [
+        "all",
+        ["match", ["get", "class"], ["service", "track"], true, false],
+        ["match", ["get", "service"], ["parking_aisle", "driveway"], true, false],
+        ["match", ["get", "brunnel"], ["bridge", "tunnel"], true, true]
+      ],
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+        "line-width": [
+          "interpolate",
+          ["exponential", 1.2],
+          ["zoom"],
+          12,
+          0.5,
+          14,
+          1,
+          16,
+          2,
+          20,
+          9
+        ],
+        "line-color": "hsl(0, 0%, 20%)",
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 13, 0, 14, 1]
+      }
+    },
+    {
       "id": "road_trunk_link",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "minzoom": 13,
       "filter": [
@@ -944,7 +973,7 @@
     {
       "id": "road_minor_raceway",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -973,7 +1002,7 @@
     {
       "id": "road_secondary_tertiary",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -1008,7 +1037,7 @@
     {
       "id": "road_primary",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -1038,7 +1067,7 @@
     {
       "id": "road_trunk",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -1065,7 +1094,7 @@
     {
       "id": "road_motorway",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "minzoom": 5,
       "filter": [
@@ -1103,7 +1132,7 @@
     {
       "id": "road_rail",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -1143,7 +1172,7 @@
     {
       "id": "road_rail_hatching",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "minzoom": 14,
       "filter": [
@@ -1237,7 +1266,7 @@
     {
       "id": "bridge_construction",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "minzoom": 13,
       "filter": [
@@ -1307,7 +1336,7 @@
     {
       "id": "bridge_motorway_link_casing",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -1343,7 +1372,7 @@
     {
       "id": "bridge_service_track_casing",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -1391,7 +1420,7 @@
     {
       "id": "bridge_trunk_link_casing",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -1435,7 +1464,7 @@
     {
       "id": "bridge_path_pedestrian_casing",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "minzoom": 13,
       "filter": [
@@ -1477,7 +1506,7 @@
     {
       "id": "bridge_secondary_tertiary_casing",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -1516,7 +1545,7 @@
     {
       "id": "bridge_primary_casing",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -1553,7 +1582,7 @@
     {
       "id": "bridge_trunk_casing",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -1593,7 +1622,7 @@
     {
       "id": "bridge_motorway_casing",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -1633,7 +1662,7 @@
     {
       "id": "bridge_path_pedestrian_unpaved_cycleway",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "minzoom": 13,
       "filter": [
@@ -1687,7 +1716,7 @@
     {
       "id": "bridge_path_pedestrian_unpaved_footway",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "minzoom": 13,
       "filter": [
@@ -1741,7 +1770,7 @@
     {
       "id": "bridge_path_pedestrian_paved",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "minzoom": 13,
       "filter": [
@@ -1787,7 +1816,7 @@
     {
       "id": "bridge_motorway_link",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -1812,7 +1841,7 @@
     {
       "id": "bridge_service_track",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -1851,7 +1880,7 @@
     {
       "id": "bridge_trunk_link",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -1880,7 +1909,7 @@
     {
       "id": "bridge_minor_raceway",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -1906,7 +1935,7 @@
     {
       "id": "bridge_secondary_tertiary",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -1932,7 +1961,7 @@
     {
       "id": "bridge_primary",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -1960,7 +1989,7 @@
     {
       "id": "bridge_trunk",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -1987,7 +2016,7 @@
     {
       "id": "bridge_motorway",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -2014,7 +2043,7 @@
     {
       "id": "bridge_rail",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "filter": [
         "all",
@@ -2053,7 +2082,7 @@
     {
       "id": "bridge_rail_hatching",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation",
       "minzoom": 14,
       "filter": [
@@ -2144,7 +2173,7 @@
     {
       "id": "admin-1-boundary-bg",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "boundary",
       "minzoom": 7,
       "filter": [
@@ -2164,7 +2193,7 @@
     {
       "id": "admin-0-boundary-bg",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "boundary",
       "minzoom": 1,
       "filter": [
@@ -2183,7 +2212,7 @@
     {
       "id": "admin-1-boundary",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "boundary",
       "minzoom": 2,
       "filter": [
@@ -2209,7 +2238,7 @@
     {
       "id": "admin-0-boundary",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "boundary",
       "minzoom": 1,
       "filter": [
@@ -2229,7 +2258,7 @@
     {
       "id": "admin-0-boundary-disputed",
       "type": "line",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "boundary",
       "minzoom": 1,
       "filter": [
@@ -2254,7 +2283,7 @@
     {
       "id": "road-label-simple",
       "type": "symbol",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "transportation_name",
       "minzoom": 12,
       "filter": [
@@ -2318,7 +2347,7 @@
     {
       "id": "water_name_line",
       "type": "symbol",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "waterway",
       "filter": ["all", ["==", "$type", "LineString"]],
       "layout": {
@@ -2338,7 +2367,7 @@
     {
       "id": "water_name",
       "type": "symbol",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "water_name",
       "filter": ["==", "$type", "LineString"],
       "layout": {
@@ -2358,7 +2387,7 @@
     {
       "id": "poi_park",
       "type": "symbol",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "poi",
       "filter": ["all", ["==", ["get", "class"], "park"]],
       "layout": {
@@ -2386,7 +2415,7 @@
     {
       "id": "poi_transit",
       "type": "symbol",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "poi",
       "filter": ["all", ["in", "class", "bus", "rail", "airport"]],
       "layout": {
@@ -2413,7 +2442,7 @@
     {
       "id": "poi_z17",
       "type": "symbol",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "poi",
       "minzoom": 17,
       "filter": [
@@ -2457,7 +2486,7 @@
     {
       "id": "poi_runner_supply",
       "type": "symbol",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "poi",
       "minzoom": 15,
       "filter": [
@@ -2478,7 +2507,13 @@
         ]
       ],
       "layout": {
-        "icon-image": ["get", "class"],
+        "icon-image": [
+          "match",
+          ["get", "class"],
+          "grocery",
+          "grocery",
+          ["match", ["get", "subclass"], "convenience", "convenience", ["get", "class"]]
+        ],
         "text-anchor": "top",
         "text-field": [
           "let",
@@ -2516,7 +2551,7 @@
     {
       "id": "runner_poi",
       "type": "symbol",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "poi",
       "filter": [
         "all",
@@ -2538,7 +2573,13 @@
         ]
       ],
       "layout": {
-        "icon-image": "{subclass}",
+        "icon-image": [
+          "match",
+          ["get", "subclass"],
+          "drinking_water",
+          "water",
+          ["get", "subclass"]
+        ],
         "text-anchor": "top",
         "text-field": "{name_en}",
         "text-font": ["Roboto Condensed Italic"],
@@ -2555,7 +2596,12 @@
         "text-halo-color": "#000000",
         "text-halo-width": 0.5,
         "text-halo-blur": 0.5,
-        "icon-color": "hsl(0, 0%, 50%)",
+        "icon-color": [
+          "match",
+          ["get", "subclass"],
+          "drinking_water", "hsl(190, 80%, 60%)",
+          "hsl(0, 0%, 50%)"
+        ],
         "icon-halo-color": "#000",
         "icon-halo-width": 0.5,
         "icon-halo-blur": 0.5
@@ -2564,7 +2610,7 @@
     {
       "id": "poi_art",
       "type": "symbol",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "poi",
       "minzoom": 15,
       "filter": [
@@ -2639,7 +2685,7 @@
     {
       "id": "poi-label",
       "type": "symbol",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "poi",
       "minzoom": 6,
       "filter": [
@@ -2680,7 +2726,7 @@
     {
       "id": "settlement-subdivision-label",
       "type": "symbol",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "place",
       "minzoom": 10,
       "maxzoom": 15,
@@ -2722,7 +2768,7 @@
     {
       "id": "settlement-minor-label",
       "type": "symbol",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "place",
       "minzoom": 2,
       "maxzoom": 13,
@@ -2802,7 +2848,7 @@
     {
       "id": "settlement-major-label",
       "type": "symbol",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "place",
       "minzoom": 2,
       "maxzoom": 15,
@@ -2888,7 +2934,7 @@
     {
       "id": "place_city",
       "type": "symbol",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "place",
       "minzoom": 5,
       "filter": ["any", ["==", ["get","class"], "city"]],
@@ -2912,7 +2958,7 @@
     {
       "id": "place_other",
       "type": "symbol",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "place",
       "filter": [
         "all",
@@ -2951,11 +2997,25 @@
     {
       "id": "peaks",
       "type": "symbol",
-      "source": "maptiler_planet",
+      "source": "planet",
       "source-layer": "mountain_peak",
       "layout": {"text-field": "{name_en}\n{ele_ft}ft", "text-size": 12},
       "paint": {"text-color": "hsl(0,0%,40%)", "text-halo-color": "black", "text-halo-width": 1},
       "minzoom": 12
+    },
+    {
+      "id": "legs-hover-region",
+      "type": "line",
+      "source": "legs",
+      "layout": {
+        "line-join": "round",
+        "line-cap": "round"
+      },
+      "paint": {
+        "line-color": "#FF0000",
+        "line-width": 8,
+        "line-opacity": 0
+      }
     },
     {
       "id": "legs",

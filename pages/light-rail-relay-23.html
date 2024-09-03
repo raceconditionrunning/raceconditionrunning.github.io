@@ -240,26 +240,47 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         backdrop-filter: blur(4px);
     }
 
-    .exchange-name-popup a {
+    .distance-popup .maplibregl-popup-content {
         color: var(--bs-body-color);
-        text-decoration-color: var(--theme-primary-color);
-        text-decoration-thickness: 2px;
-        font-weight: 600;
+        font-weight: 500;
+        font-size: 1rem;
+        line-height: 1;
+        text-align: center;
+        letter-spacing: -.5px;
+    }
+    .distance-popup .leg-dist {
+        font-size: .75rem;
+        font-weight: 300;
+    }
+    .distance-popup .maplibregl-popup-content {
+        padding: .25rem;
     }
 
-    .exchange-name-popup .maplibregl-popup-tip {
+    .distance-popup.maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
+        border-top-color: rgba(255, 255, 255, 0.6);
+    }
+    .distance-popup.maplibregl-popup-anchor-bottom-left .maplibregl-popup-tip {
+        border-top-color: rgba(255, 255, 255, 0.6);
+    }
+    .distance-popup.maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip {
+        border-top-color: rgba(255, 255, 255, 0.6);
+    }
+    .distance-popup.maplibregl-popup-anchor-top-left .maplibregl-popup-tip {
+        border-bottom-color: rgba(255, 255, 255, 0.6);
+    }
+    .distance-popup.maplibregl-popup-anchor-right .maplibregl-popup-tip {
         border-right-color: rgba(255, 255, 255, 0.6);
     }
+    .distance-popup.maplibregl-popup-anchor-left .maplibregl-popup-tip {
+        border-left-color: rgba(255, 255, 255, 0.6);
+    }
+
     .leg-popup .maplibregl-popup-tip {
         display: none;
     }
     .leg-popup elevation-profile {
         fill: black;
         opacity: .2;
-    }
-
-    .exchange-name-popup .maplibregl-popup-close-button {
-        display: none;
     }
 
     .mapboxgl-ctrl-attrib.mapboxgl-compact, .maplibregl-ctrl-attrib.maplibregl-compact {

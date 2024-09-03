@@ -169,14 +169,6 @@ export class RelayMap extends HTMLElement {
                 }
             }
 
-            window.addEventListener("resize", function () {
-                if (window.innerWidth < 768) {
-                    hideAttribution()
-                }
-            })
-            if (window.innerWidth < 768) {
-                hideAttribution()
-            }
             // Add line color to each leg
             legsData.forEach((leg) => {
                 leg.properties.lineColor = lineColors[0]
@@ -257,7 +249,7 @@ export class RelayMap extends HTMLElement {
                 className: 'distance-popup'
             });
 
-            map.on('mouseenter', 'legs', (e) => {
+            const updateDistancePopup = (e) => {
                 map.getCanvas().style.cursor = 'pointer';
                 const coordinates = [e.lngLat.lng, e.lngLat.lat];
                 let leg = legsData.slice().filter(l => l.properties.id === e.features[0].id)
@@ -268,17 +260,10 @@ export class RelayMap extends HTMLElement {
                     .setLngLat(nearestPoint)
                     .setHTML(`${(distanceAlongLine / 1609.34).toFixed(2)}mi <br\><span class="leg-dist">${e.features[0].id + 1}: ${(distanceAlongLeg / 1609.34).toFixed(2)}mi</span>`)
                     .addTo(map);
-            });
-            map.on('mousemove', 'legs', (e) => {
-                const coordinates = [e.lngLat.lng, e.lngLat.lat];
-                let leg = legsData.slice().filter(l => l.properties.id === e.features[0].id)
-                const [distanceAlongLine, _] = this.computeDistanceAlongLegs(point(coordinates), legsData)
-                const [distanceAlongLeg, nearestPoint] = this.computeDistanceAlongLegs(point(coordinates), leg)
-                distancePopup
-                    .setLngLat(nearestPoint)
-                    .setHTML(`${(distanceAlongLine / 1609.34).toFixed(2)}mi <br\><span class="leg-dist">${e.features[0].id + 1}: ${(distanceAlongLeg / 1609.34).toFixed(2)}mi</span>`)
-            });
-            map.on('mouseleave', 'legs', () => {
+            }
+            map.on('mouseenter', 'legs-hover-region', updateDistancePopup);
+            map.on('mousemove', 'legs-hover-region', updateDistancePopup);
+            map.on('mouseleave', 'legs-hover-region', () => {
                 map.getCanvas().style.cursor = '';
                 distancePopup.remove()
             });
@@ -346,7 +331,7 @@ export class RelayMap extends HTMLElement {
                                     time: new Date(arrivalTime),
                                     realtime: isRealtime,
                                     minutesUntilArrival: minutesUntilArrival,
-                                    html: `<div><span class="trip-destination float-start"><span class="line-marker line-${arrival.routeId}"></span> ${arrival.headsign}</span>&nbsp;&nbsp;<span class="trip-eta float-end">${realtimeSymbol}${duration}</span></div>`
+                                    html: `<tr><td><span class="line-marker line-${arrival.routeId}"></span></td><td class="trip-destination"> ${arrival.headsign}</td><td class="trip-eta text-end" nowrap="true">${realtimeSymbol}${duration}</td></tr>`
                                 };
                             }
                             // Filter out arrivals that have already passed
@@ -373,9 +358,8 @@ export class RelayMap extends HTMLElement {
 
                             // Create HTML content for the merged popup
                             const combinedContent = combinedArrivals.map(arrival => arrival.html).join('');
-
-                            // Update the popup content
-                            popup.setHTML(`${combinedContent}`);
+                            // Update the popup content.
+                            popup.setHTML(`<table>${combinedContent}</table>`);
                         };
 
                         // Create and show a single popup anchored at the top left
@@ -424,7 +408,7 @@ relay-map {
         Promise.all([JSON.parse(centerValue), JSON.parse(boundaryValue)]).then(([center, boundary]) => {
             let map = new maplibregl.Map({
                 container: this,
-                attributionControl: false,
+                attributionControl: true,
                 style: this.attributes.getNamedItem("style-href").value,
                 center: sessionStorage.getItem('mapCenter') ? JSON.parse(sessionStorage.getItem('mapCenter')) : center,
                 zoom: Number(sessionStorage.getItem('mapZoom')) || 9,
@@ -438,6 +422,20 @@ relay-map {
             // Don't break basic page scrolling until the map is focused
             map.scrollZoom.disable()
             let canvas = map.getCanvas()
+
+            const mapDetailPopup = new maplibregl.Popup({
+                closeButton: true,
+                closeOnClick: true,
+                focusAfterOpen: false,
+            });
+
+            map.on('contextmenu', (e) => {
+                const coords = e.lngLat;
+                mapDetailPopup
+                    .setLngLat([coords.lng, coords.lat])
+                    .setHTML(`${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`)
+                    .addTo(map);
+            });
             map.on("click", () => canvas.focus())
             map.on("pitchstart", () => canvas.focus())
             map.on("drag", () => canvas.focus())
@@ -472,9 +470,6 @@ relay-map {
             map.addControl(new HomeControl(), 'top-left');
 
             map.addControl(scale);
-            map.addControl(new maplibregl.AttributionControl({
-                compact: true
-            }));
             this.map = map
         })
     }

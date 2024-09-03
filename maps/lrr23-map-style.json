@@ -2981,6 +2981,20 @@
             }
         },
         {
+            "id": "legs-hover-region",
+            "type": "line",
+            "source": "legs",
+            "layout": {
+                "line-join": "round",
+                "line-cap": "round"
+            },
+            "paint": {
+                "line-color": "#FF0000",
+                "line-width": 8,
+                "line-opacity": 0
+            }
+        },
+        {
             "id": "leg-labels",
             "type": "symbol",
             "source": "leg-labels",
