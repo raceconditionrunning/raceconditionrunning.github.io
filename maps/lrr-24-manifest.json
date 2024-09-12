@@ -3,6 +3,6 @@
   "short_name": "LRR24",
   "display": "standalone",
   "background_color": "#000000",
-  "theme_color": "#3DAE2B",
+  "theme_color": "#000000",
   "scope": "."
 }

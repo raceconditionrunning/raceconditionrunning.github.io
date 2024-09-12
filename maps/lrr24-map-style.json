@@ -59,7 +59,7 @@
       "paint": {
         "fill-antialias": false,
         "fill-color": "rgba(32, 34, 32, 1)",
-        "fill-opacity": {"stops": [[10, 0], [14, 1]]}
+        "fill-opacity": {"stops": [[9, 0.3], [14, 1]]}
       }
     },
     {
@@ -2945,7 +2945,7 @@
         "text-font": ["Roboto Medium"],
         "text-max-width": 8,
         "text-offset": [0, 0],
-        "text-size": {"base": 1.2, "stops": [[9, 12], [12, 24]]},
+        "text-size": {"base": 1.2, "stops": [[9, 14], [12, 24]]},
         "icon-allow-overlap": true,
         "icon-optional": false
       },
@@ -2983,7 +2983,7 @@
           "interpolate",
           ["linear"],
           ["zoom"],
-          12, ["*", ["case", ["==", ["get", "class"], "town"], 1.6, 1.2], 8],
+          12, ["*", ["case", ["==", ["get", "class"], "town"], 1.6, 1.2], 9],
           15, ["*", ["case", ["==", ["get", "class"], "town"], 1.6, 1.2], 12]
         ],
         "text-transform": "uppercase"
