@@ -2413,28 +2413,58 @@
       }
     },
     {
+      "id": "poi_transit_entrance",
+      "type": "symbol",
+      "source": "planet",
+      "source-layer": "poi",
+      "minzoom": 16,
+      "filter": ["all", ["in", "class","entrance"]],
+      "layout": {
+        "icon-image": "{class}",
+        "text-anchor": "left",
+        "text-field": ["coalesce", ["get", "ref"], ["get", "name_en"]],
+        "text-font": ["Roboto Condensed Italic"],
+        "text-max-width": 9,
+        "text-offset": [0.9, 0],
+        "text-size": 12
+      },
+      "paint": {
+        "text-color": "hsl(0,0%,35%)",
+        "text-halo-color": "#111",
+        "text-halo-width": 0.5,
+        "text-halo-blur": 0.5,
+        "icon-color": "hsl(0,0%,35%)",
+        "icon-halo-color": "#111",
+        "icon-halo-width": 0.5,
+        "icon-halo-blur": 0.5
+      }
+    },
+    {
       "id": "poi_transit",
       "type": "symbol",
       "source": "planet",
       "source-layer": "poi",
-      "filter": ["all", ["in", "class", "bus", "rail", "airport"]],
+      "minzoom": 16,
+      "filter": ["any",
+        ["in", "class", "bus", "rail", "airport"],
+        ["all", ["==", "class", "amenity"], ["==", "subclass", "ferry_terminal"]]],
       "layout": {
-        "icon-image": "{class}",
+        "icon-image": "{subclass}",
         "text-anchor": "left",
-        "text-field": "{name_en}",
+        "text-justify": "left",
+        "text-field": ["coalesce", ["get", "name_en"]],
         "text-font": ["Roboto Condensed Italic"],
         "text-max-width": 9,
         "text-offset": [0.9, 0],
-        "text-size": 12,
-        "visibility": "none"
+        "text-size": 12
       },
       "paint": {
-        "text-color": "#666",
-        "text-halo-color": "#000000",
+        "text-color": "hsl(0,0%,35%)",
+        "text-halo-color": "#111",
         "text-halo-width": 0.5,
         "text-halo-blur": 0.5,
-        "icon-color": "hsl(0, 0%, 50%)",
-        "icon-halo-color": "#000",
+        "icon-color": "hsl(0,0%,35%)",
+        "icon-halo-color": "#111",
         "icon-halo-width": 0.5,
         "icon-halo-blur": 0.5
       }
