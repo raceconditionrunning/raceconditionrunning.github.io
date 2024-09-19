@@ -115,5 +115,5 @@
       route:
         name: Light Rail Relay 2024
         map: /light-rail-relay-24
-        dist: 38.5
+        dist: 38
       highlight-image: /img/lrr24/og-banner.png

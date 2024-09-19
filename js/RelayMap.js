@@ -4,7 +4,8 @@ import { Protocol } from 'https://cdn.jsdelivr.net/npm/pmtiles@3.0.7/+esm';
 
 const mapboxKey = 'pk.eyJ1Ijoibmlja3N3YWxrZXIiLCJhIjoiY2t0ZjgyenE4MDR1YjJ1cno0N3hxYzI4YSJ9.ivPdsoEtV9TaLGbOOfFXKA'
 import pmtiles from 'https://cdn.jsdelivr.net/npm/pmtiles@3.0.7/+esm'
-
+// For future live elements:
+// https://maplibre.org/maplibre-gl-js/docs/examples/add-image-animated/
 import {distance, point, nearestPointOnLine, lineString} from '@turf';
 const transformRequest = (url, resourceType) => {
     if (isMapboxURL(url)) {
