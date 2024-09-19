@@ -95,16 +95,16 @@ export class ResultsTable extends HTMLElement {
                 sorter: "number",
                 formatter: cell => formatDuration(cell.getValue(), true),
                 resizable: false,
-                responsive: index
+                responsive: index + 2
             }
         })
         let summaryColumns = [
             {
-                title: "Laps", field: "nLaps", sorter: "number", resizable: false
+                title: "Laps", field: "nLaps", sorter: "number", resizable: false, index: 1
             }]
         if (useFinishTimes) {
             summaryColumns = [{
-                title: "Finish Time", field: "finishTime", sorter: "number", formatter: cell => formatDuration(cell.getValue(), true), resizable: false
+                title: "Finish Time", field: "finishTime", sorter: "number", formatter: cell => formatDuration(cell.getValue(), true), resizable: false, index: 0
             }, ...summaryColumns]
         }
 

@@ -17,7 +17,7 @@ export function formatDuration(seconds, includeHours = true, includeMilliseconds
     }
 
     let date = new Date(0);
-
+    const hours = Math.floor(seconds / 3600)
     let milliseconds = (seconds % 1.0) * 1000
     if (milliseconds > 0 && !includeMilliseconds) {
         // If we're not showing the milliseconds, have to round up
@@ -34,7 +34,11 @@ export function formatDuration(seconds, includeHours = true, includeMilliseconds
     let end = 19
 
     if (includeHours) {
-        start -= 2
+        if (hours >= 10) {
+            start -= 3
+        } else {
+            start -= 2
+        }
     }
     if (includeMilliseconds) {
         end += 2
