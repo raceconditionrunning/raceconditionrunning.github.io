@@ -102,6 +102,13 @@
     - time: "9:05"
       route_id: sodo-duwamish-trail-1st-loop
 
+- date: "2024-09-21"
+  plan:
+    - time: "8:30"
+      route_id: roosevelt-carkeek-phinney-ridge-loop
+    - time: "10:30"
+      route_id: roosevelt-green-lake-loop
+
 - date: "2024-09-28"
   plan:
     - time: "8:30"
