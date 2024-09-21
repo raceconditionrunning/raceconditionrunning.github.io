@@ -2385,10 +2385,107 @@
       }
     },
     {
+      "id": "poi_z17",
+      "type": "symbol",
+      "source": "planet",
+      "source-layer": "poi",
+      "minzoom": 17,
+      "filter": [
+        "all",
+        ["==", "$type", "Point"],
+        [">=", "rank", 5],
+        ["<=", "rank", 22]
+      ],
+      "layout": {
+        "text-anchor": "top",
+        "text-field": [
+          "let",
+          "en",
+          ["coalesce", ["get", "name_en"], ""],
+          "intl",
+          ["coalesce", ["get", "name:nonlatin"], ""],
+          [
+            "case",
+            ["==", ["var", "en"], ["var", "intl"]],
+            ["var", "en"],
+            ["concat", ["var", "en"], "\n", ["var", "intl"]]
+          ]
+        ],
+        "text-font": ["Roboto Condensed Italic"],
+        "text-max-width": 9,
+        "text-offset": [0, 0.8],
+        "text-line-height": 1.05,
+        "text-padding": 2,
+        "text-size": 12,
+        "text-optional": true,
+        "icon-size": 1,
+        "icon-image": "{subclass}"
+      },
+      "paint": {
+        "text-color": "hsl(0,0%,35%)",
+        "text-halo-color": "#111",
+        "text-halo-width": 0.5,
+        "text-halo-blur": 0.5,
+        "icon-color": "hsl(0,0%,35%)",
+        "icon-halo-color": "#111",
+        "icon-halo-width": 0.5,
+        "icon-halo-blur": 0.5
+      }
+    },
+    {
+      "id": "poi_z18",
+      "type": "symbol",
+      "source": "planet",
+      "source-layer": "poi",
+      "minzoom": 18,
+      "filter": [
+        "all",
+        ["==", "$type", "Point"],
+        [">=", "rank", 23],
+        ["<=", "rank", 25]
+      ],
+      "layout": {
+        "text-anchor": "top",
+        "text-field": [
+          "let",
+          "en",
+          ["coalesce", ["get", "name_en"], ""],
+          "intl",
+          ["coalesce", ["get", "name:nonlatin"], ""],
+          [
+            "case",
+            ["==", ["var", "en"], ["var", "intl"]],
+            ["var", "en"],
+            ["concat", ["var", "en"], "\n", ["var", "intl"]]
+          ]
+        ],
+        "text-font": ["Roboto Condensed Italic"],
+        "text-max-width": 9,
+        "text-offset": [0, 0.8],
+        "text-line-height": 1.05,
+        "text-padding": 2,
+        "text-size": 12,
+        "text-optional": true,
+        "icon-size": 1,
+        "icon-image": "{subclass}"
+      },
+      "paint": {
+        "text-color": "hsl(0,0%,35%)",
+        "text-halo-color": "#111",
+        "text-halo-width": 0.5,
+        "text-halo-blur": 0.5,
+        "icon-color": "hsl(0,0%,35%)",
+        "icon-halo-color": "#111",
+        "icon-halo-width": 0.5,
+        "icon-halo-blur": 0.5
+      }
+    },
+    {
       "id": "poi_park",
       "type": "symbol",
       "source": "planet",
       "source-layer": "poi",
+        "minzoom": 16,
       "filter": ["all", ["==", ["get", "class"], "park"]],
       "layout": {
         "icon-image": "{class}",
@@ -2396,18 +2493,16 @@
         "text-field": "{name_en}",
         "text-font": ["Roboto Condensed Italic"],
         "text-max-width": 9,
-        "text-size": 12,
-        "text-offset": [0, 0.8],
-        "visibility": "none"
-
+        "text-offset": [0.0, 0.8],
+        "text-size": 12
       },
       "paint": {
-        "text-color": "#666",
-        "text-halo-color": "#000000",
+        "text-color": "hsl(0,0%,35%)",
+        "text-halo-color": "#111",
         "text-halo-width": 0.5,
         "text-halo-blur": 0.5,
-        "icon-color": "hsl(0, 0%, 50%)",
-        "icon-halo-color": "#000",
+        "icon-color": "hsl(0,0%,35%)",
+        "icon-halo-color": "#111",
         "icon-halo-width": 0.5,
         "icon-halo-blur": 0.5
       }
@@ -2469,50 +2564,7 @@
         "icon-halo-blur": 0.5
       }
     },
-    {
-      "id": "poi_z17",
-      "type": "symbol",
-      "source": "planet",
-      "source-layer": "poi",
-      "minzoom": 17,
-      "filter": [
-        "all",
-        ["==", "$type", "Point"],
-        [">=", "rank", 5],
-        ["<", "rank", 20]
-      ],
-      "layout": {
-        "text-anchor": "top",
-        "text-field": [
-          "let",
-          "en",
-          ["coalesce", ["get", "name_en"], ""],
-          "intl",
-          ["coalesce", ["get", "name:nonlatin"], ""],
-          [
-            "case",
-            ["==", ["var", "en"], ["var", "intl"]],
-            ["var", "en"],
-            ["concat", ["var", "en"], "\n", ["var", "intl"]]
-          ]
-        ],
-        "text-font": ["Roboto Condensed Italic"],
-        "text-max-width": 9,
-        "text-offset": [0, 0.8],
-        "text-line-height": 1.05,
-        "text-padding": 2,
-        "text-size": 12,
-        "text-optional": true,
-        "icon-size": 1
-      },
-      "paint": {
-        "text-color": "hsl(0,0%,35%)",
-        "text-halo-blur": 0.5,
-        "text-halo-color": "hsl(0,0%,5%)",
-        "text-halo-width": 0.5,
-        "icon-color": "hsl(0,0%,35%)"
-      }
-    },
+
     {
       "id": "poi_runner_supply",
       "type": "symbol",
@@ -2573,65 +2625,6 @@
         "text-halo-width": 0.5,
         "text-halo-blur": 0.5,
         "icon-color": "hsl(0, 0%, 50%)",
-        "icon-halo-color": "#000",
-        "icon-halo-width": 0.5,
-        "icon-halo-blur": 0.5
-      }
-    },
-    {
-      "id": "runner_poi",
-      "type": "symbol",
-      "source": "planet",
-      "source-layer": "poi",
-      "filter": [
-        "all",
-        ["in", ["geometry-type"], ["literal", ["Point", "MultiPoint"]]],
-        [
-          "match",
-          ["get", "subclass"],
-          ["toilets", "drinking_water"],
-          true,
-          false
-        ],
-        [
-          "case",
-          [">=", ["zoom"], 16],
-          true,
-          [">=", ["zoom"], 15],
-          ["<", ["coalesce", ["get", "rank2"], 0], 20],
-          ["<", ["coalesce", ["get", "rank2"], 0], 5]
-        ]
-      ],
-      "layout": {
-        "icon-image": [
-          "match",
-          ["get", "subclass"],
-          "drinking_water",
-          "water",
-          ["get", "subclass"]
-        ],
-        "text-anchor": "top",
-        "text-field": "{name_en}",
-        "text-font": ["Roboto Condensed Italic"],
-        "text-max-width": 9,
-        "text-offset": [0, 0.8],
-        "text-line-height": 1.05,
-        "text-padding": 2,
-        "text-size": 12,
-        "text-optional": true,
-        "icon-size": 1.2
-      },
-      "paint": {
-        "text-color": "#666",
-        "text-halo-color": "#000000",
-        "text-halo-width": 0.5,
-        "text-halo-blur": 0.5,
-        "icon-color": [
-          "match",
-          ["get", "subclass"],
-          "drinking_water", "hsl(190, 80%, 60%)",
-          "hsl(0, 0%, 50%)"
-        ],
         "icon-halo-color": "#000",
         "icon-halo-width": 0.5,
         "icon-halo-blur": 0.5
@@ -2708,6 +2701,65 @@
         "text-halo-blur": 0.5,
         "icon-color": "hsl(0,0%,35%)",
         "icon-halo-color": "#111",
+        "icon-halo-width": 0.5,
+        "icon-halo-blur": 0.5
+      }
+    },
+    {
+      "id": "runner_poi",
+      "type": "symbol",
+      "source": "planet",
+      "source-layer": "poi",
+      "filter": [
+        "all",
+        ["in", ["geometry-type"], ["literal", ["Point", "MultiPoint"]]],
+        [
+          "match",
+          ["get", "subclass"],
+          ["toilets", "drinking_water"],
+          true,
+          false
+        ],
+        [
+          "case",
+          [">=", ["zoom"], 16],
+          true,
+          [">=", ["zoom"], 15],
+          ["<", ["coalesce", ["get", "rank2"], 0], 20],
+          ["<", ["coalesce", ["get", "rank2"], 0], 5]
+        ]
+      ],
+      "layout": {
+        "icon-image": [
+          "match",
+          ["get", "subclass"],
+          "drinking_water",
+          "water",
+          ["get", "subclass"]
+        ],
+        "text-anchor": "top",
+        "text-field": "{name_en}",
+        "text-font": ["Roboto Condensed Italic"],
+        "text-max-width": 9,
+        "text-offset": [0, 0.8],
+        "text-line-height": 1.05,
+        "text-padding": 2,
+        "text-size": 12,
+        "text-optional": true,
+        "icon-size": 1.2
+      },
+      "paint": {
+        "text-color": "#666",
+        "text-halo-color": "#000000",
+        "text-halo-width": 0.5,
+        "text-halo-blur": 0.5,
+        "icon-color": [
+          "match",
+          ["get", "subclass"],
+          "drinking_water", "hsl(190, 80%, 60%)",
+          "hsl(0, 0%, 50%)"
+        ],
+        "icon-halo-color": "#000",
         "icon-halo-width": 0.5,
         "icon-halo-blur": 0.5
       }
@@ -3180,7 +3232,6 @@
       "id": "exchange-circle",
       "type": "circle",
       "source": "exchanges",
-      "maxzoom": 12,
       "paint": {
         "circle-radius": {
           "stops": [
@@ -3190,6 +3241,18 @@
           ]
         },
         "circle-color": "#fff",
+        "circle-opacity": [
+          "case",
+          ["boolean", ["get", "future"], false],
+          0.1,
+          1.0
+        ],
+        "circle-stroke-opacity": [
+          "case",
+          ["boolean", ["get", "future"], false],
+          0.1,
+          1.0
+        ],
         "circle-stroke-color": "#000",
         "circle-stroke-width": {
           "stops": [
@@ -3205,6 +3268,7 @@
       "type": "symbol",
       "source": "exchanges",
       "minzoom": 12,
+      "filter": ["!=", "future", true],
       "layout": {
         "text-field": ["slice", ["to-string", ["get", "id"]], 1, 3],
         "text-font": ["Open Sans Semibold"],
@@ -3222,7 +3286,7 @@
         },
         "text-padding": 0,
         "text-justify": "right",
-        "icon-image": "1stationcode",
+        "icon-image": ["concat", ["slice", ["to-string", ["get", "id"]], 0, 1], "stationcode"],
         "icon-text-fit": "width",
         "icon-overlap": "always",
         "text-overlap": "always"
@@ -3250,6 +3314,7 @@
       "id": "exchange-name",
       "type": "symbol",
       "source": "exchanges",
+      "filter": ["!=", "future", true],
       "minzoom": 12,
       "layout": {
         "text-field": [
@@ -3282,6 +3347,78 @@
         "text-halo-width": 1,
         "text-halo-blur": 1,
         "text-color": "#FFF"
+      }
+    },
+    {
+      "id": "exchange-station-code-future",
+      "type": "symbol",
+      "source": "exchanges",
+      "minzoom": 15,
+      "filter": ["==", "future", true],
+      "layout": {
+        "text-field": ["slice", ["to-string", ["get", "id"]], 1, 3],
+        "text-font": ["Open Sans Semibold"],
+        "text-size": {
+          "stops": [
+            [12, 12],
+            [16, 18]
+          ]
+        },
+        "icon-size": {
+          "stops": [
+            [12, 1],
+            [16, 1.1]
+          ]
+        },
+        "text-padding": 0,
+        "text-justify": "right",
+        "icon-image": ["concat", ["slice", ["to-string", ["get", "id"]], 0, 1], "stationcode"],
+        "icon-text-fit": "width",
+        "icon-overlap": "always",
+        "text-overlap": "always"
+      },
+      "paint": {
+        "icon-opacity": 0.5
+      }
+    },
+    {
+      "id": "exchange-name-future",
+      "type": "symbol",
+      "source": "exchanges",
+      "filter": ["==", "future", true],
+      "minzoom": 15,
+      "layout": {
+        "text-field": [
+          "step",
+          ["zoom"],
+          ["format", ["get", "name"], { "font-scale": 1.0 }],
+          14,
+          ["format", ["get", "name"], { "font-scale": 1.0 }, "\n", {}, ["get", "open"], { "font-scale": 0.8, "text-font": ["literal", ["Open Sans Regular"]] }]
+        ],
+        "text-font": ["Open Sans Semibold"],
+        "text-size": {
+          "stops": [
+            [12, 14],
+            [16, 16],
+            [20, 20]
+          ]
+        },
+        "text-justify": "left",
+        "text-offset": {
+          "stops": [
+            [12, [1.2, 0]],
+            [16, [1.4, 0]],
+            [20, [1.6, 0]]
+          ]
+        },
+        "text-anchor": "left"
+      },
+      "paint": {
+        "text-halo-color": "rgba(0, 0, 0, 0.4)",
+        "text-halo-width": 1,
+        "text-halo-blur": 1,
+        "text-color": "#CCC",
+        "text-opacity": 0.6
       }
     }
   ],

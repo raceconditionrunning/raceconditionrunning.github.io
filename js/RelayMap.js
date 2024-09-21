@@ -135,19 +135,52 @@ export class RelayMap extends HTMLElement {
             let legsData = legs.features
 
             if (useStationCodes) {
-                const line1StationCode = await map.loadImage(`${imgBasePath}1_station_code.png`);
-
-                map.addImage('1stationcode', line1StationCode.data, {
-                    stretchX: [[76, 77]],
-                    // This part of the image that can contain text ([x1, y1, x2, y2]):
-                    content: [76, 2, 96, 77],
-                    pixelRatio: 4
+                map.loadImage(`${imgBasePath}1_station_code.png`).then((image) => {
+                    map.addImage('1stationcode', image.data, {
+                        stretchX: [[76, 77]],
+                        // This part of the image that can contain text ([x1, y1, x2, y2]):
+                        content: [76, 2, 96, 77],
+                        pixelRatio: 4
+                    });
                 });
-                const train = await map.loadImage(`${imgBasePath}train_icon.png`);
+                map.loadImage(`${imgBasePath}2_station_code.png`).then((image) => {
+                    map.addImage('2stationcode', image.data, {
+                        stretchX: [[76, 77]],
+                        // This part of the image that can contain text ([x1, y1, x2, y2]):
+                        content: [76, 2, 96, 77],
+                        pixelRatio: 4
+                    });
+                });
+                map.loadImage(`${imgBasePath}3_station_code.png`).then((image) => {
+                    map.addImage('3stationcode', image.data, {
+                        stretchX: [[76, 77]],
+                        // This part of the image that can contain text ([x1, y1, x2, y2]):
+                        content: [76, 2, 96, 77],
+                        pixelRatio: 4
+                    });
+                });
+                map.loadImage(`${imgBasePath}4_station_code.png`).then((image) => {
+                    map.addImage('4stationcode', image.data, {
+                        stretchX: [[76, 77]],
+                        // This part of the image that can contain text ([x1, y1, x2, y2]):
+                        content: [76, 2, 96, 77],
+                        pixelRatio: 4
+                    });
+                });
+                map.loadImage(`${imgBasePath}T_station_code.png`).then((image) => {
+                    map.addImage('Tstationcode', image.data, {
+                        stretchX: [[76, 77]],
+                        // This part of the image that can contain text ([x1, y1, x2, y2]):
+                        content: [76, 2, 96, 77],
+                        pixelRatio: 4
+                    });
+                });
+                map.loadImage(`${imgBasePath}train_icon.png`) .then((image) => {
 
-                map.addImage('train', train.data, {
-                    content: [0, 0, 1, 1],
-                    pixelRatio: 2
+                    map.addImage('train', image.data, {
+                        content: [0, 0, 1, 1],
+                        pixelRatio: 2
+                    });
                 });
             }
 
@@ -160,14 +193,6 @@ export class RelayMap extends HTMLElement {
             map.fitBounds(relayBounds, {
                 padding: 32
             });
-            }
-
-            let hideAttribution =()=> {
-                let attribution = this.querySelector(".maplibregl-compact-show")
-                if (attribution) {
-                    attribution.classList.remove("maplibregl-compact-show")
-                    attribution.classList.remove("mapboxgl-compact-show")
-                }
             }
 
             // Add line color to each leg
@@ -200,7 +225,6 @@ export class RelayMap extends HTMLElement {
 
             map.getSource('exchanges').setData(exchanges);
 
-            map.setLayerZoomRange("exchange-circle", 0, useStationCodes ? 12 : 24)
             if (useStationCodes) {
                 map.setLayoutProperty("exchange-id", 'visibility', 'none');
             } else {
@@ -309,7 +333,9 @@ export class RelayMap extends HTMLElement {
                     // If the exchange is in bounds and doesn't already have a popup, create one
                     if (!popupStore.has(exchangeId)) {
                         const { stopCodeNorth, stopCodeSouth } = exchange.properties;
-
+                        if (!stopCodeNorth || !stopCodeSouth) {
+                            continue;
+                        }
                         const updateArrivals = async () => {
                             let northboundArrivals = await endpoint(stopCodeNorth);
                             let southboundArrivals = await endpoint(stopCodeSouth);

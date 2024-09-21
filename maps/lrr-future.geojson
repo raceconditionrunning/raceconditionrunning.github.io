@@ -5,58 +5,97 @@
       "type": "Feature",
       "properties": {
         "name": "Redmond Downtown",
-        "id": 22,
+        "id": 265,
         "stationInfo": "https://www.soundtransit.org/system-expansion/downtown-redmond-link-extension",
         "open": 2025
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -122.12349843978882,
-          47.66904899999999
+          -122.12034,
+          47.67208
         ]
       }
     },
   {
     "type": "Feature",
     "properties": {
-      "name": "Redmond Technology Center",
-      "id": 19
+      "name": "Marymoor Village",
+      "id": 264,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/downtown-redmond-link-extension",
+      "open": 2025
+    },
+    "geometry": {
+      "coordinates": [
+        -122.107592,
+        47.668639
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Redmond Technology",
+      "id": 263,
+        "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/redmond-technology-station",
+        "stopCodeNorth": "40_E27-T2",
+        "stopCodeSouth": "40_E27-T1"
     },
     "geometry": {
       "type": "Point",
       "coordinates": [
-        -122.13277373007459,
-        47.644300888781274
+        -122.132773,
+        47.644300
       ]
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Overlake Village",
+      "id": 262,
+      "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/overlake-village-station",
+        "stopCodeNorth": "40_E25-T2",
+        "stopCodeSouth": "40_E25-T1"
+    },
+    "geometry": {
+      "coordinates": [
+        -122.138827,
+        47.635881
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "BelRed",
+      "id": 261,
+      "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/belred-station",
+        "stopCodeNorth": "40_E23-T2",
+        "stopCodeSouth": "40_E23-T1"
+    },
+    "geometry": {
+      "coordinates": [
+        -122.16579, 47.62446
+      ],
+      "type": "Point"
     }
   },
     {
       "type": "Feature",
       "properties": {
-        "name": "BelRed",
-        "id": 242,
-        "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/belred-station"
-      },
-      "geometry": {
-        "coordinates": [
-          -122.16571545907533,
-          47.624454037029835
-        ],
-        "type": "Point"
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "name": "Spring District",
-        "id": 243,
-        "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/spring-district-station"
+        "id": 260,
+        "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/spring-district-station",
+        "stopCodeNorth": "40_E21-T2",
+        "stopCodeSouth": "40_E21-T1"
       },
       "geometry": {
         "coordinates": [
-          -122.17850923526782,
-          47.62362894930439
+          -122.178509,
+          47.623628
         ],
         "type": "Point"
       }
@@ -65,13 +104,15 @@
     "type": "Feature",
     "properties": {
       "name": "Wilburton",
-      "id": 244,
-      "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/wilburton-station"
+      "id": 259,
+      "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/wilburton-station",
+      "stopCodeNorth": "40_E19-T2",
+        "stopCodeSouth": "40_E19-T1"
     },
     "geometry": {
       "coordinates": [
-        -122.1839184028884,
-        47.61804067781259
+        -122.183918,
+        47.618040
       ],
       "type": "Point"
     }
@@ -80,13 +121,15 @@
       "type": "Feature",
       "properties": {
         "name": "Bellevue Downtown",
-        "id": 245,
-        "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/bellevue-downtown-station"
+        "id": 258,
+        "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/bellevue-downtown-station",
+        "stopCodeNorth": "40_E15-T2",
+        "stopCodeSouth": "40_E15-T1"
       },
       "geometry": {
         "coordinates": [
-          -122.1926922221528,
-          47.6154274263225
+          -122.192692,
+          47.615427
         ],
         "type": "Point"
       }
@@ -95,13 +138,15 @@
       "type": "Feature",
       "properties": {
         "name": "East Main",
-        "id": 246,
-        "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/east-main-station"
+        "id": 257,
+        "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/east-main-station",
+        "stopCodeNorth": "40_E11-T2",
+        "stopCodeSouth": "40_E11-T1"
       },
       "geometry": {
         "coordinates": [
-          -122.19098143838512,
-          47.60864762701675
+          -122.1909814,
+          47.608647
         ],
         "type": "Point"
       },
@@ -111,13 +156,15 @@
       "type": "Feature",
       "properties": {
         "name": "South Bellevue",
-        "id": 247,
-        "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/south-bellevue-station"
+        "id": 256,
+        "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/south-bellevue-station",
+        "stopCodeNorth": "40_E09-T2",
+        "stopCodeSouth": "40_E09-T1"
       },
       "geometry": {
         "coordinates": [
-          -122.19048550967332,
-          47.58638784260722
+          -122.1904855,
+          47.586387
         ],
         "type": "Point"
       }
@@ -126,13 +173,13 @@
       "type": "Feature",
       "properties": {
         "name": "Mercer Island",
-        "id": 33,
+        "id": 255,
         "open": 2025
       },
       "geometry": {
         "coordinates": [
-          -122.23315770558779,
-          47.58817194785564
+          -122.2331577,
+          47.588171
         ],
         "type": "Point"
       }
@@ -141,13 +188,14 @@
       "type": "Feature",
       "properties": {
         "name": "Judkins Park Station",
-        "id": 34,
+        "id": 254,
+        "stationInfo": "https://www.soundtransit.org/system-expansion/east-link-extension",
         "open": 2025
       },
       "geometry": {
         "coordinates": [
-          -122.30234450972387,
-          47.590300797915035
+          -122.302344,
+          47.590300
         ],
         "type": "Point"
       }
@@ -162,8 +210,8 @@
       },
       "geometry": {
         "coordinates": [
-          -122.29482400157418,
-          47.38957845335372
+          -122.294824,
+          47.389578
         ],
         "type": "Point"
       }
@@ -178,8 +226,8 @@
       },
       "geometry": {
         "coordinates": [
-          -122.29852230384972,
-          47.35866614397932
+          -122.298522,
+          47.358666
         ],
         "type": "Point"
       }
@@ -194,39 +242,8 @@
       },
       "geometry": {
         "coordinates": [
-          -122.303901661379,
-          47.31686871490081
-        ],
-        "type": "Point"
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Overlake Village",
-        "id": 241,
-        "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/overlake-village-station"
-      },
-      "geometry": {
-        "coordinates": [
-          -122.13882764669688,
-          47.63588197667718
-        ],
-        "type": "Point"
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Marymoor Village",
-        "id": 239,
-        "stationInfo": "https://www.soundtransit.org/system-expansion/downtown-redmond-link-extension",
-        "open": 2025
-      },
-      "geometry": {
-        "coordinates": [
-          -122.1075920027634,
-          47.668639752156395
+          -122.303901,
+          47.316868
         ],
         "type": "Point"
       }
@@ -240,8 +257,8 @@
         "open": 2026},
       "geometry": {
         "coordinates": [
-          -122.32378244727889,
-          47.72364921925049
+          -122.323782,
+          47.723649
         ],
         "type": "Point"
       }
@@ -249,14 +266,15 @@
   {
     "type": "Feature",
     "properties": {
-      "name": "South Graham Street",
-      "id": 159,
-      "stationInfo": "https://www.soundtransit.org/system-expansion/graham-street-station",
-      "open": 2026},
+      "name": "Everett",
+      "id": 333,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/everett-link-extension",
+      "open": 2041
+    },
     "geometry": {
       "coordinates": [
-        -122.284722,
-        47.544304
+        -122.20171,
+        47.97823
       ],
       "type": "Point"
     }
@@ -264,10 +282,236 @@
   {
     "type": "Feature",
     "properties": {
-      "name": "Boeing Access Road Station",
+      "name": "SR 526/Evergreen",
+      "id": 334,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/everett-link-extension",
+      "open": 2041
+    },
+    "geometry": {
+      "coordinates": [
+        -122.22744,
+        47.92348
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "SW Everett Industrial Center",
+      "id": 335,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/everett-link-extension",
+      "open": 2037
+    },
+    "geometry": {
+      "coordinates": [
+        -122.26291,
+        47.92196
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "SR 99/Airport Rd",
+      "id": 336,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/everett-link-extension",
+      "open": ">2041"
+    },
+    "geometry": {
+      "coordinates": [
+        -122.25849,
+        47.89014
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Mariner",
+      "id": 337,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/everett-link-extension",
+      "open": 2037
+    },
+    "geometry": {
+      "coordinates": [
+        -122.24098, 47.87964
+      ],
+      "type": "Point"
+    }
+  },
+
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Ash Way",
+      "id": 338,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/everett-link-extension",
+      "open": 2037
+    },
+    "geometry": {
+      "coordinates": [
+        -122.25696,
+        47.85276
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "West Alderwood",
+      "id": 339,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/everett-link-extension",
+      "open": 2037
+    },
+    "geometry": {
+      "coordinates": [
+        -122.27130,
+        47.82801
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Ballard",
+      "id": 144,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/ballard-link-extension",
+      "open": 2039
+    },
+    "geometry": {
+      "coordinates": [
+        -122.37370,
+        47.66864
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Interbay",
+      "id": 145,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/ballard-link-extension",
+      "open": 2039
+    },
+    "geometry": {
+      "coordinates": [
+        -122.37873,
+        47.65099
+      ],
+      "type": "Point"
+    }
+  },
+
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Smith Cove",
+      "id": 146,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/ballard-link-extension",
+      "open": 2039
+    },
+    "geometry": {
+      "coordinates": [
+        -122.37586,
+        47.63206
+      ],
+      "type": "Point"
+    }
+  },
+
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Seattle Center",
+      "id": 147,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/ballard-link-extension",
+      "open": 2039
+    },
+    "geometry": {
+      "coordinates": [
+        -122.35485,
+        47.62328
+      ],
+      "type": "Point"
+    }
+  },
+
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "South Lake Union",
+      "id": 148,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/ballard-link-extension",
+      "open": 2039
+    },
+    "geometry": {
+      "coordinates": [
+        -122.34394,
+        47.62210
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Denny Station",
+      "id": 149,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/ballard-link-extension",
+      "open": 2039
+    },
+    "geometry": {
+      "coordinates": [
+        -122.33710,
+        47.61744
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Midtown",
+      "id": 152,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/ballard-link-extension",
+      "open": 2039
+    },
+    "geometry": {
+      "coordinates": [
+        -122.33127,
+        47.60587
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "South Graham Street",
+      "id": 159,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/graham-street-station",
+      "open": 2031},
+    "geometry": {
+      "coordinates": [
+        -122.28541,
+        47.54571
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Boeing Access Road",
       "id": 162,
       "stationInfo": "https://www.soundtransit.org/system-expansion/boeing-access-road-station",
-      "open": 2026},
+      "open": 2031},
     "geometry": {
       "coordinates": [
         -122.289744,
@@ -277,5 +521,474 @@
     }
   },
 
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Delridge",
+      "id": 356,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/west-seattle-link-extension",
+      "open": 2032},
+    "geometry": {
+      "coordinates": [
+        -122.36437,
+        47.56864
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Avalon",
+      "id": 357,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/west-seattle-link-extension",
+      "open": 2032},
+    "geometry": {
+      "coordinates": [
+        -122.37603,
+        47.56497
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Alaska Junction",
+      "id": 358,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/west-seattle-link-extension",
+      "open": 2032},
+    "geometry": {
+      "coordinates": [
+        -122.38421,
+        47.56109
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "South Federal Way",
+      "id": 169,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/tacoma-dome-link-extension",
+      "open": 2035},
+    "geometry": {
+      "coordinates": [
+        -122.31406,
+        47.28643
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Fife",
+      "id": 170,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/tacoma-dome-link-extension",
+      "open": 2035},
+    "geometry": {
+      "coordinates": [
+        -122.35126,
+        47.24384
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Portland",
+      "id": 171,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/tacoma-dome-link-extension",
+      "open": 2035},
+    "geometry": {
+      "coordinates": [
+        -122.40978,
+        47.24006
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Tacoma Dome",
+      "id": 172,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/tacoma-dome-link-extension",
+      "open": 2035},
+    "geometry": {
+      "coordinates": [
+        -122.42687,
+        47.23960
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Tacoma Dome",
+      "id": "T72",
+      "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/tacoma-dome-station",
+      "stopCodeNorth": "40_T01-T2",
+      "stopCodeSouth": "40_T01-T1"
+    },
+    "geometry": {
+      "coordinates": [
+        -122.42754,
+        47.23956
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "S 25th",
+      "id": "T73",
+      "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/s-25th-station",
+      "stopCodeNorth": "40_T03-T2",
+      "stopCodeSouth": "40_T03-T1"
+    },
+    "geometry": {
+      "coordinates": [
+        -122.43424,
+        47.23910
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Union Station",
+      "id": "T74",
+      "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/union-station",
+      "stopCodeNorth": "40_T05-T2",
+      "stopCodeSouth": "40_T05-T1"
+    },
+    "geometry": {
+      "coordinates": [
+        -122.43664,
+        47.24488
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Convention Center",
+      "id": "T75",
+      "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/convention-center-station",
+      "stopCodeNorth": "40_T07-T2",
+      "stopCodeSouth": "40_T07-T1"
+    },
+    "geometry": {
+      "coordinates": [-122.43857,
+        47.24951
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Theater District",
+      "id": "T76",
+      "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/theater-district-station",
+      "stopCodeNorth": "40_T23-T2",
+      "stopCodeSouth": "40_T23-T1"
+    },
+    "geometry": {
+      "coordinates": [-122.43930,
+        47.25288
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Old City Hall",
+      "id": "T77",
+      "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/old-city-hall-station",
+      "stopCodeNorth": "40_T13-T2",
+      "stopCodeSouth": "40_T13-T1"
+    },
+    "geometry": {
+      "coordinates": [
+        -122.44044,
+        47.25779
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "S 4th",
+      "id": "T78",
+      "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/s-4th-station",
+      "stopCodeNorth": "40_T15-T2",
+      "stopCodeSouth": "40_T15-T1"
+    },
+    "geometry": {
+      "coordinates": [-122.44264,
+        47.26121
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Stadium District",
+      "id": "T79",
+      "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/stadium-district-station",
+      "stopCodeNorth": "40_T17-T2",
+      "stopCodeSouth": "40_T17-T1"
+    },
+    "geometry": {
+      "coordinates": [
+        -122.44899,
+        47.26386
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Tacoma General",
+      "id": "T80",
+      "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/tacoma-general-station",
+      "stopCodeNorth": "40_T19-T2",
+      "stopCodeSouth": "40_T19-T1"
+    },
+    "geometry": {
+      "coordinates": [
+        -122.45357,
+        47.26010
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "6th Ave",
+      "id": "T81",
+      "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/6th-ave-station",
+      "stopCodeNorth": "40_T21-T2",
+      "stopCodeSouth": "40_T21-T1"
+    },
+    "geometry": {
+      "coordinates": [-122.45286,
+        47.25693
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Hilltop District",
+      "id": "T82",
+      "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/hilltop-district-station",
+      "stopCodeNorth": "40_T23-T2",
+      "stopCodeSouth": "40_T23-T1"
+    },
+    "geometry": {
+      "coordinates": [-122.45169,
+        47.25187
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "St Joseph",
+      "id": "T83",
+      "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/st-joseph-station",
+      "stopCodeNorth": "40_T25-T2",
+      "stopCodeSouth": "40_T25-T1"
+      },
+    "geometry": {
+      "coordinates": [
+        -122.45009,
+        47.24489
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Ainsworth",
+      "id": "T84",
+      "stationInfo": "https://www.soundtransit.org/system-expansion/tcc-tacoma-link-extension",
+      "open": 2041},
+    "geometry": {
+      "coordinates": [-122.45402,
+        47.24333
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Sprague",
+      "id": "T85",
+      "stationInfo": "https://www.soundtransit.org/system-expansion/tcc-tacoma-link-extension",
+      "open": 2041},
+    "geometry": {
+      "coordinates": [
+        -122.46544,
+        47.24268
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Union",
+      "id": "T86",
+      "stationInfo": "https://www.soundtransit.org/system-expansion/tcc-tacoma-link-extension",
+      "open": 2041},
+    "geometry": {
+      "coordinates": [-122.48239,
+        47.24275
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Stevens",
+      "id": "T87",
+      "stationInfo": "https://www.soundtransit.org/system-expansion/tcc-tacoma-link-extension",
+      "open": 2041},
+    "geometry": {
+      "coordinates": [-122.48955,
+        47.24280
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Pearl",
+      "id": "T88",
+      "stationInfo": "https://www.soundtransit.org/system-expansion/tcc-tacoma-link-extension",
+      "open": 2041},
+    "geometry": {
+      "coordinates": [
+        -122.51556,
+        47.24280
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Tacoma Community College",
+      "id": "T89",
+      "stationInfo": "https://www.soundtransit.org/system-expansion/tcc-tacoma-link-extension",
+      "open": 2041},
+    "geometry": {
+      "coordinates": [
+        -122.52577,
+        47.24271
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "South Kirkland",
+      "id": 460,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/south-kirkland-issaquah-link",
+      "open": 2044
+    },
+    "geometry": {
+      "coordinates": [
+        -122.19543,
+        47.64455
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Richards Road",
+      "id": 456,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/south-kirkland-issaquah-link",
+      "open": 2044},
+    "geometry": {
+      "coordinates": [
+        -122.16806,
+        47.58224
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Eastgate",
+      "id": 455,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/south-kirkland-issaquah-link",
+      "open": 2044
+    },
+    "geometry": {
+      "coordinates": [
+        -122.15155,
+        47.58008
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Lakemont",
+      "id": 454,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/south-kirkland-issaquah-link",
+      "open": ">2044"},
+    "geometry": {
+      "coordinates": [
+        -122.10007,
+        47.56650
+      ],
+      "type": "Point"
+    }
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "name": "Central Issaquah",
+      "id": 453,
+      "stationInfo": "https://www.soundtransit.org/system-expansion/south-kirkland-issaquah-link",
+      "open": 2044
+    },
+    "geometry": {
+      "coordinates": [
+        -122.05687,
+        47.54605
+      ],
+      "type": "Point"
+    }
+  }
   ]
 }

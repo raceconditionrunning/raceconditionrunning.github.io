@@ -3021,7 +3021,6 @@
             "id": "exchange-circle",
             "type": "circle",
             "source": "exchanges",
-            "maxzoom": 12,
             "paint": {
                 "circle-radius": {
                     "stops": [

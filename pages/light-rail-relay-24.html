@@ -504,7 +504,6 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
             font-size: .9rem;
             border-radius: .5rem;
             display: inline-block;
-
         }
         .line-40_100479::before {
             content: "1";
@@ -515,8 +514,41 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
             height: 100%;
             width: 100%;
         }
-
-
+        .line-40_2LINE {
+            background-color: rgb(0, 160, 223);
+            width: .9rem;
+            height: .9rem;
+            font-size: .9rem;
+            border-radius: .5rem;
+            display: inline-block;
+        }
+        .line-40_2LINE::before {
+            content: "2";
+            /* Horizontally and vertically center the number */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+        .line-40_TLINE {
+            background-color: rgb(243, 139, 0);
+            width: .9rem;
+            height: .9rem;
+            font-size: .8rem;
+            border-radius: .5rem;
+            display: inline-block;
+        }
+        .line-40_TLINE::before {
+            content: "T";
+            color: black;
+            /* Horizontally and vertically center the number */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -874,6 +906,7 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
     });
 
     let routeData = fetch("{{ site.baseurl }}/maps/lrr24.geojson").then(res => res.json())
+    let futureRouteData = fetch("{{ site.baseurl }}/maps/lrr-future.geojson").then(res => res.json())
     let railData = fetch("{{ site.baseurl }}/maps/link-light-rail.geojson").then(res => res.json())
     railData.then((railLines) => {
         document.querySelector("#relay-map").addLines(railLines)
@@ -886,9 +919,18 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
         }
         return [legs, exchanges, exchangeNames]
     })
+    let processedFutureData = futureRouteData.then((futureRelay) => {
+        let exchanges = futureRelay.features.filter(feature => feature.geometry.type === "Point")
+        let exchangeNames = {};
+        for (let exchange of exchanges) {
+            exchange.properties.future = true
+            exchangeNames[exchange.properties.id] = exchange.properties.name
+        }
+        return [exchanges, exchangeNames]
+    })
 
+    Promise.all([processedRouteData, processedFutureData]).then(([[legs, exchanges, exchangeNames], future],) => {
 
-    processedRouteData.then(([legs, exchanges, exchangeNames]) => {
         let legsData = legs.features
         createLegDetailsTable(document.getElementById("leg-details-table"), legsData, exchanges.features)
         const downloadRouteButton = document.getElementById("download-route-gpx-btn")
@@ -898,10 +940,13 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
             event.preventDefault()
         })
         downloadRouteButton.hidden = false
+        let allExchanges = Object.assign({}, exchanges)
+        allExchanges.features = [...exchanges.features, ...future[0]]
+        exchangeNames = {...exchangeNames, ...future[1]}
         // Get colors from css vars
         let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-primary-color')
-        document.querySelector("#relay-map").addRelayLine(legs, exchanges, exchangeNames, true, [primaryColor], "{{ site.baseurl }}/img/lrr24/")
-        document.querySelector("#relay-map").registerLiveArrivalsSource(exchanges, vehicleMonitor.getArrivalsForStop.bind(vehicleMonitor))
+        document.querySelector("#relay-map").addRelayLine(legs, allExchanges, exchangeNames, true, [primaryColor], "{{ site.baseurl }}/img/lrr24/")
+        document.querySelector("#relay-map").registerLiveArrivalsSource(allExchanges, vehicleMonitor.getArrivalsForStop.bind(vehicleMonitor))
     })
 
     let startTime = new Date("Sept 28, 2024 8:30:00")
