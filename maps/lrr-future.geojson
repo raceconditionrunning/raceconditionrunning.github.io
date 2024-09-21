@@ -632,8 +632,8 @@
       "name": "Tacoma Dome",
       "id": "T72",
       "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/tacoma-dome-station",
-      "stopCodeNorth": "40_T01-T2",
-      "stopCodeSouth": "40_T01-T1"
+      "stopCodeNorth": "40_T01",
+      "stopCodeSouth": "40_T01"
     },
     "geometry": {
       "coordinates": [

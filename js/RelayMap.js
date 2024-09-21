@@ -296,6 +296,102 @@ export class RelayMap extends HTMLElement {
     }
 
     registerLiveArrivalsSource(exchanges, endpoint) {
+        const updateArrivals = async (popup, stopCodeNorth, stopCodeSouth) => {
+            Promise.all([endpoint(stopCodeNorth), endpoint(stopCodeSouth)]).then(([northboundArrivals, southboundArrivals]) => {
+
+                const currentTime = new Date();
+
+                function formatArrival(arrival) {
+                    const arrivalTime = arrival.predictedArrivalTime || arrival.scheduledArrivalTime;
+                    const isRealtime = arrival.predictedArrivalTime !== null;
+                    const minutesUntilArrival = Math.round((new Date(arrivalTime) - currentTime) / 60000);
+                    let duration = `${minutesUntilArrival} min`;
+                    if (minutesUntilArrival === 0) {
+                        duration = 'now';
+                    }
+                    let realtimeSymbol = '';
+                    if (isRealtime) {
+                        realtimeSymbol = '<span class="realtime-symbol"></span>';
+                    }
+                    let tripId = ""
+                    if (arrival.tripId) {
+                        tripId = "#" + arrival.tripId.substring(arrival.tripId.length - 4)
+                    }
+                    return {
+                        ...arrival,
+                        time: new Date(arrivalTime),
+                        realtime: isRealtime,
+                        minutesUntilArrival: minutesUntilArrival,
+                        html: `<tr><td><span class="line-marker line-${arrival.routeId}"></span></td><td class="trip-destination"> ${arrival.headsign} <span class="trip-id">${tripId}</span></td><td class="trip-eta text-end" nowrap="true">${realtimeSymbol}${duration}</td></tr>`
+                    };
+                }
+                // Combine and sort arrivals by time
+                let combinedArrivals = [
+                    ...northboundArrivals,
+                    ...southboundArrivals
+                ]
+                // Remove duplicate trid IDs
+                const seenTripIds = new Set();
+                combinedArrivals = combinedArrivals.filter(arrival => {
+                    if (seenTripIds.has(arrival.tripId)) {
+                        return false;
+                    }
+                    seenTripIds.add(arrival.tripId);
+                    return true;
+                });
+
+                combinedArrivals = combinedArrivals.map(arrival => formatArrival(arrival)).sort((a, b) => a.time - b.time);
+                combinedArrivals = combinedArrivals.filter(arrival => new Date(arrival.predictedArrivalTime || arrival.scheduledArrivalTime) > currentTime);
+
+                // We have space to show 4 trips. We want to show 2 in each direction.
+                // If there are fewer than 2 in one direction, we'll show more in the other direction
+                const arrivals = []
+                let dir0Count = 0
+                let dir1Count = 0
+                for (let i = 0; i < combinedArrivals.length; i++) {
+                    const arrival = combinedArrivals[i]
+                    if (arrivals.length < 4) {
+                        arrivals.push(arrival)
+                        arrival.directionId === 0 ? dir0Count++ : dir1Count++;
+                    } else {
+                        // Try to balance the count
+                        if (dir0Count < 2 && arrival.directionId === 0) {
+                            // Find the last trip in direction 1
+                            for (let idx = arrivals.length - 1; idx >= 0; idx--) {
+                                if (arrivals[idx].directionId === 1) {
+                                    arrivals[idx] = arrival;
+                                    dir0Count++;
+                                    dir1Count--;
+                                    break;
+                                }
+                            }
+                        } else if (dir1Count < 2 && arrival.directionId === 1) {
+                            // Find the last trip in direction 0
+                            for (let idx = arrivals.length - 1; idx >= 0; idx--) {
+                                if (arrivals[idx].directionId === 0) {
+                                    arrivals[idx] = arrival;
+                                    dir1Count++;
+                                    dir0Count--;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (dir0Count === 2 && dir1Count === 2) break;
+                }
+
+
+                if (arrivals.length === 0) {
+                    arrivals.push({
+                        html: '<div>No upcoming arrivals</div>'
+                    });
+                }
+
+                // Create HTML content for the merged popup
+                const combinedContent = arrivals.map(arrival => arrival.html).join('');
+                popup.setHTML(`<table>${combinedContent}</table>`);
+            });
+        };
         this.mapReady.then(() => {
             const map = this.map;
             const popupStore = new Map(); // Stores the popups and intervals by exchange ID
@@ -314,94 +410,35 @@ export class RelayMap extends HTMLElement {
                     popupStore.clear();
                     return;
                 }
+                // Clear out-of-bounds popups
+                popupStore.forEach(({ popup, intervalId }) => {
+                    if (!bounds.contains(popup.getLngLat())) {
+                        clearInterval(intervalId);
+                        fadeOutAndRemovePopup(popup);
+                        popupStore.delete(popup);
+                    }
+                });
 
                 for (const exchange of exchanges.features) {
                     const exchangeCoords = exchange.geometry.coordinates;
                     const exchangeId = exchange.properties.id;
+                    const { stopCodeNorth, stopCodeSouth } = exchange.properties;
 
-                    // If the exchange is out of bounds, remove its popup and clear its interval
-                    if (!bounds.contains(exchangeCoords)) {
-                        if (popupStore.has(exchangeId)) {
-                            const { popup, intervalId } = popupStore.get(exchangeId);
-                            clearInterval(intervalId);
-                            fadeOutAndRemovePopup(popup);
-                            popupStore.delete(exchangeId);
-                        }
+                    if (popupStore.has(exchangeId) || !bounds.contains(exchangeCoords) || !(stopCodeNorth && stopCodeSouth)) {
                         continue;
                     }
 
-                    // If the exchange is in bounds and doesn't already have a popup, create one
-                    if (!popupStore.has(exchangeId)) {
-                        const { stopCodeNorth, stopCodeSouth } = exchange.properties;
-                        if (!stopCodeNorth || !stopCodeSouth) {
-                            continue;
-                        }
-                        const updateArrivals = async () => {
-                            let northboundArrivals = await endpoint(stopCodeNorth);
-                            let southboundArrivals = await endpoint(stopCodeSouth);
+                    // Create and show a single popup anchored at the top left
+                    const popup = new maplibregl.Popup({ offset: [20, 40], anchor: 'top-left', className: 'arrivals-popup', closeOnClick: false, focusAfterOpen: false, maxWidth: '260px'})
+                        .setLngLat(exchangeCoords)
+                        .setHTML('Loading...')
+                        .addTo(map);
 
-                            const currentTime = new Date();
-
-                            function formatArrival(arrival) {
-                                const arrivalTime = arrival.predictedArrivalTime || arrival.scheduledArrivalTime;
-                                const isRealtime = arrival.predictedArrivalTime !== null;
-                                const minutesUntilArrival = Math.round((new Date(arrivalTime) - currentTime) / 60000);
-                                let duration = `${minutesUntilArrival} min`;
-                                if (minutesUntilArrival === 0) {
-                                    duration = 'now';
-                                }
-                                let realtimeSymbol = '';
-                                if (isRealtime) {
-                                    realtimeSymbol = '<span class="realtime-symbol"></span>';
-                                }
-                                return {
-                                    time: new Date(arrivalTime),
-                                    realtime: isRealtime,
-                                    minutesUntilArrival: minutesUntilArrival,
-                                    html: `<tr><td><span class="line-marker line-${arrival.routeId}"></span></td><td class="trip-destination"> ${arrival.headsign}</td><td class="trip-eta text-end" nowrap="true">${realtimeSymbol}${duration}</td></tr>`
-                                };
-                            }
-                            // Filter out arrivals that have already passed
-                            northboundArrivals = northboundArrivals.filter(arrival => new Date(arrival.predictedArrivalTime || arrival.scheduledArrivalTime) > currentTime);
-                            southboundArrivals = southboundArrivals.filter(arrival => new Date(arrival.predictedArrivalTime || arrival.scheduledArrivalTime) > currentTime);
-
-
-                            // At most, show next two arrivals for each direction
-                            northboundArrivals.splice(2);
-                            southboundArrivals.splice(2);
-
-                            // Combine and sort arrivals by time
-                            const combinedArrivals = [
-                                ...northboundArrivals.map(arrival => formatArrival(arrival)),
-                                ...southboundArrivals.map(arrival => formatArrival(arrival))
-                            ].sort((a, b) => a.time - b.time);
-
-                            if (combinedArrivals.length === 0) {
-                                // If there are no arrivals, show a message
-                                combinedArrivals.push({
-                                    html: '<div>No upcoming arrivals</div>'
-                                });
-                            }
-
-                            // Create HTML content for the merged popup
-                            const combinedContent = combinedArrivals.map(arrival => arrival.html).join('');
-                            // Update the popup content.
-                            popup.setHTML(`<table>${combinedContent}</table>`);
-                        };
-
-                        // Create and show a single popup anchored at the top left
-                        const popup = new maplibregl.Popup({ offset: [20, 40], anchor: 'top-left', className: 'arrivals-popup', closeOnClick: false, focusAfterOpen: false})
-                            .setLngLat(exchangeCoords)
-                            .setHTML('Loading...')
-                            .addTo(map);
-
-                        // Store the popup in the state and start the update interval
-                        const intervalId = setInterval(updateArrivals, 20000); // Refresh every 20 seconds
-                        popupStore.set(exchangeId, { popup, intervalId });
-
-                        // Initial update call
-                        await updateArrivals();
-                    }
+                    // Initial update call
+                    await updateArrivals(popup, stopCodeNorth, stopCodeSouth);
+                    // Store the popup in the state and start the update interval
+                    const intervalId = setInterval(updateArrivals.bind(this, popup, stopCodeNorth, stopCodeSouth), 20000); // Refresh every 20 seconds
+                    popupStore.set(exchangeId, { popup, intervalId });
                 }
             };
 

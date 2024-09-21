@@ -80,14 +80,20 @@ export class TransitVehicleTracker {
                 return [];
             }
 
-            const arrivals = data.data.entry.arrivalsAndDepartures.map(arrival => ({
-                tripId: arrival.tripId,
-                routeId: arrival.routeId,
-                scheduledArrivalTime: new Date(arrival.scheduledArrivalTime),
-                predictedArrivalTime: arrival.predictedArrivalTime ? new Date(arrival.predictedArrivalTime) : null,
-                stopId: arrival.stopId,
-                headsign: arrival.tripHeadsign
-            }));
+            const trips = data.data.references.trips;
+
+            const arrivals = data.data.entry.arrivalsAndDepartures.map(arrival => {
+                const trip = trips.find(trip => trip.id === arrival.tripId);
+                return {
+                    tripId: arrival.tripId,
+                    routeId: arrival.routeId,
+                    scheduledArrivalTime: new Date(arrival.scheduledArrivalTime),
+                    predictedArrivalTime: arrival.predictedArrivalTime ? new Date(arrival.predictedArrivalTime) : null,
+                    stopId: arrival.stopId,
+                    headsign: arrival.tripHeadsign,
+                    directionId: trip ? Number(trip.directionId) : null
+                };
+            });
 
             return arrivals;
 
