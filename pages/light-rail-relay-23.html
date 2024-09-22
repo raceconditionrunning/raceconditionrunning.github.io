@@ -1,8 +1,6 @@
 ---
 permalink: light-rail-relay-23/
 redirect_from:
-- /lrr/
-- /light-rail-relay/
 - /lrr23/
 team_registration_link: https://forms.gle/rPGW6fWT4wytm7be7
 registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
@@ -29,16 +27,18 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.1.0/css/tabulator_bootstrap5.min.css" integrity="sha512-RQwKIKNxv0qAMe/KITeoOKX8bIR5Rl9rxZZyNrheBGQE1bSCjyGKVXAwHVMlDuu2eWSK+8+/pt2772A0TtD+Uw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.css">
     <script type="importmap">
         {
           "imports": {
-            "maplibre-gl": "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.1.2/maplibre-gl.min.js",
+            "d3": "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm",
+            "maplibre-gl": "https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.js",
             "masonry-layout": "https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js",
             "noUiSlider": "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.mjs",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
             "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.1.0/js/tabulator_esm.min.js",
+            "@turf": "https://cdn.jsdelivr.net/npm/@turf/turf@7.1.0/+esm",
             "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js",
             "bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.esm.min.js"
           }
@@ -240,28 +240,54 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         backdrop-filter: blur(4px);
     }
 
-    .exchange-name-popup a {
+    .distance-popup .maplibregl-popup-content {
         color: var(--bs-body-color);
-        text-decoration-color: var(--theme-primary-color);
-        text-decoration-thickness: 2px;
-        font-weight: 600;
+        font-weight: 500;
+        font-size: 1rem;
+        line-height: 1;
+        text-align: center;
+        letter-spacing: -.5px;
+    }
+    .distance-popup .leg-dist {
+        font-size: .75rem;
+        font-weight: 300;
+    }
+    .distance-popup .maplibregl-popup-content {
+        padding: .25rem;
     }
 
-    .exchange-name-popup .maplibregl-popup-tip {
+    .distance-popup.maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
+        border-top-color: rgba(255, 255, 255, 0.6);
+    }
+    .distance-popup.maplibregl-popup-anchor-bottom-left .maplibregl-popup-tip {
+        border-top-color: rgba(255, 255, 255, 0.6);
+    }
+    .distance-popup.maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip {
+        border-top-color: rgba(255, 255, 255, 0.6);
+    }
+    .distance-popup.maplibregl-popup-anchor-top-left .maplibregl-popup-tip {
+        border-bottom-color: rgba(255, 255, 255, 0.6);
+    }
+    .distance-popup.maplibregl-popup-anchor-right .maplibregl-popup-tip {
         border-right-color: rgba(255, 255, 255, 0.6);
     }
+    .distance-popup.maplibregl-popup-anchor-left .maplibregl-popup-tip {
+        border-left-color: rgba(255, 255, 255, 0.6);
+    }
+
     .leg-popup .maplibregl-popup-tip {
         display: none;
     }
-
-    .exchange-name-popup .maplibregl-popup-close-button {
-        display: none;
+    .leg-popup elevation-profile {
+        fill: black;
+        opacity: .2;
     }
 
-    .mapboxgl-ctrl-attrib.mapboxgl-compact, .maplibregl-ctrl-attrib.maplibregl-compact {
+    .maplibregl-ctrl-attrib.maplibregl-compact {
         background-color: rgba(255, 255, 255, 0.6);
         -webkit-backdrop-filter: blur(4px);
         backdrop-filter: blur(4px);
+        font-size: .75rem;
     }
 
     .maplibregl-map:focus:focus-visible,
@@ -526,7 +552,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                 <!--a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-25" data-bs-placement="bottom">Add Team
   </span></a-->
                 <!--a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing" class="btn hero-button">Follow Along</a></div-->
-                <!--div class="button-container"><a href="#epilogue" class="btn hero-button">Read Epilogue</a-->
+                <a href="#epilogue" class="btn btn-outline btn-outline-primary btn-lg">Read Epilogue</a>
                 </div>
             </div>
         </div>
@@ -543,6 +569,9 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
 
     <section>
         <div class="container pb-4 mb-4">
+            <div class="alert alert-secondary" role="alert">
+                This event took place in 2023. Looking for <a href="{{ site.baseurl }}/lrr">a more recent Light Rail Relay</a>?
+            </div>
             <div class="d-flex flex-column flex-sm-row justify-content-between align-items-baseline">
                 <h2 id="route">Route <a href="#route" class="anchor-link" aria-label="Link to this section. Route"></a></h2>
                 <a href="#" class="btn btn-outline-primary mb-3 m-sm-0 " id="download-route-gpx-btn" hidden>Download Route GPX</a>
@@ -581,7 +610,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                 <accordion-item>
                     <accordion-header>Why do this?</accordion-header>
                     <accordion-body>
-                            <p></p>It's a chance to experience different parts of the city, and there's no better way to appreciate what Link does for Seattle than to run the route. If you're the competitive type, you may like the idea <a href="https://www.youtube.com/watch?v=OMNFRFUM4IM">of</a> <a href="https://www.youtube.com/watch?v=TaMiV3Wus9c">racing</a> <a href="https://www.youtube.com/watch?v=3x3HDTY919g">trains</a>. Or maybe you're an ultra-runner keen on establishing Seattle's first great urban FKT. Check out <a href="{{ site.baseurl }}/light-rail-relay-22#epilogue">the photos from last year</a> if you still need convincing.</p>
+                            <p>It's a chance to experience different parts of the city, and there's no better way to appreciate what Link does for Seattle than to run the route. If you're the competitive type, you may like the idea <a href="https://www.youtube.com/watch?v=OMNFRFUM4IM">of</a> <a href="https://www.youtube.com/watch?v=TaMiV3Wus9c">racing</a> <a href="https://www.youtube.com/watch?v=3x3HDTY919g">trains</a>. Or maybe you're an ultra-runner keen on establishing Seattle's first great urban FKT. Check out <a href="{{ site.baseurl }}/light-rail-relay-22#epilogue">the photos from last year</a> if you still need convincing.</p>
                     </accordion-body>
                 </accordion-item>
                 <accordion-item>
@@ -670,13 +699,15 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                 <accordion-item>
                     <accordion-header>I have a different question.</accordion-header>
                     <accordion-body>
-                            <p><a href="mailto:nick.s.walker@icloud.com">Ask over email.</a></p>
+                            <p><a href="mailto:lrr@nickwalker.us">Ask over email.</a></p>
                     </accordion-body>
                 </accordion-item>
 
             </accordion-group>
-
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-baseline">
         <h4 id="faq-rcr">RCR Team <a href="#faq-rcr" class="anchor-link" aria-label="Link to this section. RCR FAQ"></a></h4>
+            <a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing" class="btn btn-outline-primary mb-3">View RCR Team Schedule</a>
+            </div>
 
         <p>RCR is participating in the <b>Open Category</b> with multiple runners assigned to each leg.</p>
             <accordion-group class="accordion accordion-flush" id="faq-rcr-items">
@@ -725,20 +756,20 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
                     <accordion-header>I'm unsure about signing up because I don't know enough about where I'd be
                         running.</accordion-header>
                     <accordion-body>
-                        <p>The organizers have run the course and put together some notes about what to expect along each leg, so do click around the route map. For the RCR team, multiple people will be assigned to each leg and at least one experienced runner will be in the group at all times. Please note any concerns or constraints on the open-ended part of the sign-up form so we can accommodate you.</p>
+                        <p>The organizers have run the course and put together some notes about what to expect along each leg, so do click around the route map. For the RCR team, multiple people will be assigned to each leg and at least one experienced runner will be in the group at all times. Please note any concerns or constraints on the open-ended part of the sign-up <a href="{{page.registration_link}}">form</a> so we can accommodate you.</p>
                     </accordion-body>
                 </accordion-item>
                 <accordion-item>
                     <accordion-header>Can I still sign up?</accordion-header>
                     <accordion-body>
-                        <p>The form will stay open until the Sunday before the event. Once it closes, the schedule won't be changed to accommodate your preferences, but you can join for any legs that you are able to. Please message us in the event Slack channel, #light-rail-relay-23, so we know to expect you.</p>
+                        <p>The <a href="{{page.registration_link}}">form</a> will stay open until the Sunday before the event. Once it closes, the schedule won't be changed to accommodate your preferences, but you can join for any legs that you are able to. Please message us in the event Slack channel, #light-rail-relay-23, so we know to expect you.</p>
                     </accordion-body>
                 </accordion-item>
 
                 <accordion-item>
                     <accordion-header>I want to update my preferences.</accordion-header>
                     <accordion-body>
-                        <p>You can update your responses on the entry form until the weekend before the event. After that point, you can reduce or increase the number of legs that you run if it does not affect the pace schedule, otherwise there will be no changes.</p>
+                        <p>You can update your responses on the <a href="{{page.registration_link}}">entry form</a> until the weekend before the event. After that point, you can reduce or increase the number of legs that you run if it does not affect the pace schedule, otherwise there will be no changes.</p>
                     </accordion-body>
                 </accordion-item>
             </accordion-group>
@@ -797,11 +828,11 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
     </figure>
     <div class="container">
 
-        <p>Light Rail Relay began with a simple motivation&mdash;to increase access to a Ragnar-like road relay experience for our club&mdash;but it's steadily absorbed other purposes. By scheduling happenstance, it's the first run we get to advertise to new students at the beginning of the academic year. The novelty and the low-barrier format work great for pulling in folks new to Seattle or new to running. For runners of all experience levels, permission to slow down is a chance to reevaluate whether running some large-seeming number of miles is as difficult as they think it is (something I felt acutely after completing the "ultra" this year and feeling...fine). As we do group runs from transit stops more often, LRR has also served as a mass orientation to transit in the city.</p>
+        <p>Light Rail Relay began with a simple motivation&mdash;to provide a <a href="https://en.wikipedia.org/wiki/Ragnar_Relay_Series">Ragnar</a>-like experience for our club&mdash;but it's slowly taken on other uses. The novelty and the format work great for pulling in folks new to Seattle or new to running, and just at the right time for our group to welcome new students at UW. For runners of all experience levels, permission to slow down is a chance to reevaluate whether distance running is as difficult as they think it is (something I felt acutely after completing the "ultra" this year and feeling...fine). As we do group runs from transit stops more often, LRR has also served as a mass orientation to transit in the city.</p>
 
-        <p>Inviting outside groups has been a chance to see what purpose the event might serve for others. Despite its origins, I was still surprised to see <a href="https://rbrunclub.wordpress.com">Rainier Beach Running Club</a> embrace the event as a classic team relay, train-caravanning while individual runners traded off the baton. And I was impressed that several Googlers earnestly took the chance to run with coworkers they hadn't met before. After talking with both teams, I think LRR can easily be a durable and sustainable attraction for groups of all sorts. We'll need to look further to build a worthy competitive field in the future however, as RBRC's dominant performance deserves company.</p>
+        <p>Inviting outside groups has been a chance to see what the event might do for others. Despite its origins, I was still surprised to see <a href="https://rbrunclub.wordpress.com">Rainier Beach Running Club</a> embrace the event as a classic team relay, train-caravanning while individual runners traded off the baton. And I was impressed that several Googlers earnestly took the chance to run with coworkers they hadn't met before. I'm convinced that LRR can be a durable attraction for groups of all sorts. We'll need to build a worthy competitive field in the future however, as RBRC's dominant performance deserves company.</p>
 
-        <p>Link is on the edge of <a href="https://www.soundtransit.org/system-expansion/lynnwood-link-extension">dramatic expansion</a>. The partial opening of the <a href="https://www.soundtransit.org/system-expansion/lynnwood-link-extension">2 Line next spring</a> is just the start of what will be 18 miles of new service to the East and more than 16 miles of new 1 Line service over the next three years. The magnitude and suburban character of the resulting routes could make for quite a different relay&mdash; or not, if we choose to simply ignore the highway segments. That's a puzzle for future relays.</p>
+        <p>Link is on the edge of <a href="https://www.soundtransit.org/system-expansion/lynnwood-link-extension">dramatic expansion</a>. The partial opening of the <a href="https://www.soundtransit.org/system-expansion/east-link-extension">2 Line next spring</a> is just the start of what will be 18 miles of new service to the East and more than 16 miles of new 1 Line service over the next three years. The extensions could make for quite a different relay&mdash; or not, if we choose to stick to the core. That's a puzzle for future relays.</p>
 
         <p><i>Nick Walker</i></p>
     </div>
@@ -813,9 +844,14 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
 
 <footer>
     <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg" alt="A happy piece of toast running"/></a></p>
+    <ul class="list-unstyled d-flex justify-content-center gap-3 opacity-50 font-weight-light">
+        <li><a href="{{ site.baseurl }}/lrr24">2024</a></li>
+        <li><a href="{{ site.baseurl }}/lrr23">2023</a></li>
+        <li><a href="{{ site.baseurl }}/lrr22">2022</a></li>
+        <li><a href="{{ site.baseurl }}/lrr21">2021</a></li>
+    </ul>
 </footer>
 <script type="module">
-
     import { relayToGPX, download, createCountdown, processRelayGeoJSON, prepareImagesForPhotoswipe} from "../js/common.js";
     import { createLegDetailsTable} from "{{ site.baseurl }}/js/tables.js";
     import "maplibre-gl";
@@ -829,7 +865,7 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
     let railData = fetch("{{ site.baseurl }}/maps/link-light-rail.geojson").then(res => res.json())
     let processedRouteData = routeData.then((relay) => {
         let [legs, exchanges] = processRelayGeoJSON(relay)
-        let exchangeNames = new Array(exchanges.length);
+        let exchangeNames = {};
         for (let exchange of exchanges.features) {
             exchangeNames[exchange.properties.id] = exchange.properties.name
         }
@@ -853,7 +889,10 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
         railData,
         processedRouteData
     ]).then(([railLines, [legs, exchanges, exchangeNames]]) => {
-        document.querySelector("#relay-map").updateWithData(legs, exchanges, exchangeNames, railLines)
+        // Get colors from css vars
+        let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-primary-color')
+        document.querySelector("#relay-map").addLines(railLines)
+        document.querySelector("#relay-map").addRelayLine(legs, exchanges, exchangeNames, false, [primaryColor], "{{ site.baseurl }}/img/lrr24/")
     })
 
 
@@ -867,7 +906,7 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
     createCountdown(startTime.getTime(), "countdown-ended")
 
     processedRouteData.then( ([legs, exchanges, exchangeNames]) => {
-        document.getElementById("leg-calculator").setLegs(legs, exchangeNames)
+        document.getElementById("leg-calculator").setLegs(legs.features, exchangeNames)
     })
 
     // Tooltips for sign-up deadlines

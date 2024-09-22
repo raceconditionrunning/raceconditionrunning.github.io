@@ -61,10 +61,24 @@ jobs:
         env:
           JEKYLL_ENV: production
 
+      - name: cache HTMLProofer
+        id: cache-htmlproofer
+        uses: actions/cache@v4
+        with:
+          path: tmp/.htmlproofer
+          key: ${{ runner.os }}-htmlproofer
+
       - name: Run tests
         continue-on-error: true
         run: |
-          bundle exec htmlproofer ./_site --only-4xx  --assume-extension .html --enforce-https=false --ignore-missing-alt=true --ignore-urls '/fonts.googleapis.com/,/fonts.gstatic.com/' --swap-urls 'https?\:\/\/raceconditionrunning\.com:,^${{ steps.pages.outputs.base_path }}:'
+          bundle exec htmlproofer ./_site \
+          --only-4xx \
+          --assume-extension .html \
+          --enforce-https=false \
+          --ignore-missing-alt=true \
+          --ignore-urls '/fonts.googleapis.com/,/fonts.gstatic.com/' \
+          --swap-urls 'https?\:\/\/raceconditionrunning\.com:,^${{ steps.pages.outputs.base_path }}:' \
+          --cache '{ "timeframe": { "external": "30d" } }'
 
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default

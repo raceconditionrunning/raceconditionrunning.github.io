@@ -20,7 +20,7 @@
     - time: "9:00"
       route:
         name: Dawg Dash 10K
-        map: https://www.washington.edu/alumni/events/alaska-airlines-dawg-dash-2023/
+        map: https://runsignup.com/Race/Results/154482#resultSetId-413024;perpage:100
         dist: 6.2
 
 - date: "2023-10-14"

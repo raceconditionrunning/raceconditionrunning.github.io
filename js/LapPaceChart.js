@@ -6,12 +6,13 @@ export class LapPaceChart extends HTMLElement {
         super();
     }
 
-    draw(data, lapTarget=Number.MAX_VALUE, onBarClick) {
+    draw(data, goalName=null, lapTarget=Number.MAX_VALUE, onBarClick) {
         /**
          * Make an SVG viz of a participants lap data. Design based on
          * Strava's lap analysis view
          */
-            // Declare the chart dimensions and margins.
+
+        // Declare the chart dimensions and margins.
         const width = 1000;
         const height = 400;
         const marginTop = 30;
@@ -19,6 +20,11 @@ export class LapPaceChart extends HTMLElement {
         const marginBottom = 30;
         const marginLeft = 60;
 
+        // Add paceMin to each lap
+        data = data.map((lap, i) => {
+            let paceMi = lap.duration * 1609.34 / lap.distance
+            return {...lap, paceMi, index: i}
+        })
         // Declare the x (horizontal position) scale.
         const x = d3.scaleLinear()
             .domain([0, d3.max(data, (d) => d.timeElapsed)]) // descending frequency
@@ -140,15 +146,11 @@ export class LapPaceChart extends HTMLElement {
             .attr("height", (pair) => y_inv(pair[1].paceMi) - y_inv(highYTick))
             .attr("width", (pair) => x(pair[1].timeElapsed) - x(pair[0].timeElapsed))
             .attr("class", "data-bar")
-            .attr("data-lap-num", pair => pair[0].n)
+            .classed("extra", pair => pair[1].extra)
+            .attr("data-lap-num", pair => pair[1].index)
             .on("click", event => {
                 onBarClick(parseInt(event.target.attributes["data-lap-num"].value))
             })
-
-        let barNodes = bars.nodes()
-        if (barNodes.length > 111) {
-            d3.selectAll(barNodes.slice(111, barNodes.length)).classed("extra", true)
-        }
 
         let xAxis = d3.axisBottom(x)
             .tickValues(allXTicks)
@@ -199,6 +201,7 @@ export class LapPaceChart extends HTMLElement {
             let flag = svg.append("g")
                 .classed("finish-flag", true)
                 .attr("data-lap-target", lapTarget)
+                .attr("data-goal", goalName)
 
             flag.append("line")
                 .attr("stroke-width", "1px")
@@ -263,7 +266,7 @@ export class LapPaceChart extends HTMLElement {
                 .join("text")
                 .call(text => text
                     .selectAll("tspan")
-                    .data(`Lap ${i} ${data[i].direction ? (data[i].direction === "CCW"? '↺': '↻') : ""}\n${(data[i].time).toFixed(2)}s\t${formatPace(data[i].paceMi)}\n${formatDuration(data[i].timeElapsed)}\t ${(data[i].distanceElapsed / 1609.34).toFixed(2)} mi`.split(/\n/))
+                    .data(`Lap ${i} ${data[i].direction ? (data[i].direction === "CCW"? '↺': '↻') : ""}\n${(data[i].duration).toFixed(2)}s\t${formatPace(data[i].paceMi)}\n${formatDuration(data[i].timeElapsed)}\t ${(data[i].distanceElapsed / 1609.34).toFixed(2)} mi`.split(/\n/))
                     .join("tspan")
                     .attr("x", 0)
                     .attr("y", (_, i) => `${i * 1.1}em`)

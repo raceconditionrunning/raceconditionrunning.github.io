@@ -35,6 +35,7 @@ redirect_from:
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe-dynamic-caption-plugin/1.2.7/photoswipe-dynamic-caption-plugin.min.css" integrity="sha512-x20LXbTUxAMuniBAuSyDGScWaoCxvZJ8m0tbJCRtpPkvPgsb2kStG9ZhDQKHj5mDWaKFOP7TadAZ4KVAyFJwNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- More recent versions of tabulator don't render nested: https://www.unpkg.com/tabulator-tables@6.2.4/dist/js/tabulator_esm.js -->
     <script type="importmap">
         {
           "imports": {
@@ -49,7 +50,7 @@ redirect_from:
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
             "photoswipe-dynamic-caption": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe-dynamic-caption-plugin/1.2.7/photoswipe-dynamic-caption-plugin.esm.min.js",
             "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js",
-            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/js/tabulator_esm.min.js"
+            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.6.0/js/tabulator_esm.min.js"
           }
         }
     </script>
@@ -589,7 +590,7 @@ redirect_from:
         }
 
         .tabulator-row.tabulator-group {
-            background-color: rgba(255, 255, 255, 0.075) !important;
+            //background-color: rgba(255, 255, 255, 0.075) !important;
         }
 
         .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs {
@@ -615,7 +616,7 @@ redirect_from:
 
         .tabulator-row.details-opened.tabulator-selectable,
         .tabulator-row.details-opened.tabulator-selectable:hover {
-            background-color: #111;
+            background-color: #E0E0E0;
         }
 
         .tabulator .tabulator-header {
@@ -630,6 +631,10 @@ redirect_from:
             border-top: 2px solid #999;
         }
 
+        .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-top {
+            border-bottom: 2px solid #999;
+        }
+
         .laps-table.tabulator .tabulator-header {
             border-bottom: 1px dashed #999;
         }
@@ -642,8 +647,12 @@ redirect_from:
             padding: 4px;
         }
         .laps-table.tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-bottom {
-            border-top: 1px dashed #999;
+            border-top: 1px solid #999;
             border-bottom: none;
+        }
+        .laps-table.tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-top {
+            border-bottom: 1px solid #999;
+            border-top: none;
         }
 
         .tabulator-row.tabulator-group {
@@ -715,6 +724,97 @@ redirect_from:
             vertical-align: top;
             font-weight: 400;
             border-radius: .25rem;
+        }
+
+        /* Results */
+
+        lap-pace-chart {
+            width: 100%
+        }
+
+        lap-pace-chart rect {
+            transition: .15s;
+        }
+
+        lap-pace-chart .tick line {
+            color: white;
+            opacity: .5;
+        }
+
+        lap-pace-chart .minor {
+            opacity: .4;
+            color: white
+        }
+
+        lap-pace-chart .horizontal-grid {
+            color: white;
+            opacity: .5;
+        }
+
+        lap-pace-chart .data-bar {
+            fill: #888;
+            opacity: .9;
+            stroke: #aaa;
+            stroke-width: .5px;
+        }
+
+        lap-pace-chart .data-bar.extra {
+            fill: #bbb
+        }
+
+        lap-pace-chart .data-bar.highlighted {
+            fill: #999;
+        }
+
+        lap-pace-chart #flaglines line {
+            stroke: #ccc;
+            stroke-width: 1px
+        }
+
+        lap-pace-chart .finish-flag[data-goal="26_2mi"] line {
+            stroke: var(--branding-color);
+        }
+
+        lap-pace-chart .finish-flag[data-goal="26_2mi"] polygon {
+            fill: var(--branding-color);
+        }
+
+        lap-pace-chart .finish-flag[data-goal="13_1mi"] line {
+            stroke: var(--branding-color-complement);
+        }
+
+        lap-pace-chart .finish-flag[data-goal="13_1mi"] polygon {
+            fill: var(--branding-color-complement);
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10mi"] line {
+            stroke: #dc0000;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10mi"] polygon {
+            fill: #dc0000;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10k"] line {
+            stroke: #dc8400;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10k"] polygon {
+            fill: #dc8400;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="5k"] line {
+            stroke: #65b900;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="5k"] polygon {
+            fill: #65b900;
+        }
+
+        lap-pace-chart .finish-flag text {
+            font-family: var(--sans-font-family);
+            font-weight: bold;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -847,92 +947,21 @@ redirect_from:
 </section>
 
 <section>
-    <div class="container">
-        <h2 class="mb-3">Results <a href="#results" class="anchor-link" aria-label="Link to this section. Results"></a></h2>
-        <p><i>Results are pending. Thanks for your patience.</i></p>
+    <div class="container-xxl">
+        <h2 class="mb-4" id="results">Results <a href="#results" class="anchor-link" aria-label="Link to this section. Results"></a></h2>
+
+
+        <h3 class="d-inline" >Marathon</h3><span class="count"></span>
+        <div id="results-marathon" class="mb-5"></div>
+
+        <h3 class="d-inline">Half Marathon</h3><span class="count"></span>
+        <div id="results-half-official" class="mb-3"></div>
+        <hr/>
+        <h3 class="d-inline">Unofficial</h3><span class="count"></span>
+        <div id="results-half-unofficial" class="mb-2"></div>
     </div>
+
 </section>
-
-<!--section id="live-tracking">
-    <div class="container">
-        <h2 class="mb-3"><connection-dot></connection-dot> Live Tracking <span class="badge text-bg-secondary beta-badge">Beta</span> <a href="#live-tracking" class="anchor-link" aria-label="Link to this section. Live Tracking"></a></h2>
-        <div id="live-map">
-            <table-filter-manager>
-            </table-filter-manager>
-            <track-map data-center="[-122.307806, 47.653860]" data-start-angle="1.7" data-bounds="[[[-122.307824, 47.654168], [-122.307876, 47.654166], [-122.307928, 47.654161], [-122.307978, 47.654152],
-  [-122.308027, 47.65414], [-122.308075, 47.654125], [-122.30812, 47.654107], [-122.308162, 47.654086],
-  [-122.3082, 47.654063], [-122.308235, 47.654036], [-122.308266, 47.654008], [-122.308293, 47.653978],
-  [-122.308316, 47.653946], [-122.308333, 47.653913], [-122.308346, 47.653879], [-122.308354, 47.653844],
-  [-122.308356, 47.653809], [-122.308354, 47.653774], [-122.308346, 47.653739], [-122.308333, 47.653705],
-  [-122.308316, 47.653672], [-122.308293, 47.65364], [-122.308266, 47.65361], [-122.308235, 47.653581],
-  [-122.3082, 47.653555], [-122.308162, 47.653532], [-122.30812, 47.653511], [-122.308075, 47.653493],
-  [-122.308027, 47.653478], [-122.307978, 47.653466], [-122.307928, 47.653457], [-122.307876, 47.653452],
-  [-122.307824, 47.65345], [-122.307772, 47.653452], [-122.30772, 47.653457], [-122.307669, 47.653466],
-  [-122.30762, 47.653478], [-122.307573, 47.653493], [-122.307528, 47.653511], [-122.307486, 47.653532],
-  [-122.307447, 47.653555], [-122.307412, 47.653581], [-122.307381, 47.65361], [-122.307354, 47.65364],
-  [-122.307332, 47.653672], [-122.307314, 47.653705], [-122.307301, 47.653739], [-122.307294, 47.653774],
-  [-122.307291, 47.653809], [-122.307294, 47.653844], [-122.307301, 47.653879], [-122.307314, 47.653913],
-  [-122.307332, 47.653946], [-122.307354, 47.653978], [-122.307381, 47.654008], [-122.307412, 47.654036],
-  [-122.307447, 47.654063], [-122.307486, 47.654086], [-122.307528, 47.654107], [-122.307573, 47.654125],
-  [-122.30762, 47.65414], [-122.307669, 47.654152], [-122.30772, 47.654161], [-122.307772, 47.654166],
-  [-122.307824, 47.654168]]]"></track-map>
-            <div id="lap-table"></div>
-            <lap-table></lap-table>
-            <p class="small fst-italic text-muted">Tracking data are not official results</p>
-        </div>
-
-        <accordion-group id="live-tracking-accordion">
-            <accordion-item>
-                <accordion-header>About</accordion-header>
-                <accordion-body>
-                    <p>The <a href="https://owntracks.org/">OwnTracks</a>-powered live tracking system uses your phone to report location data to a server. This page processes that data to display an estimated lap count.</p>
-
-                    <p class="alert alert-warning">
-                        <b>Caveat emptor:</b> Test with your device before the race. Do not depend on live tracking counts.
-                    </p>
-
-                    <h3>Usage</h3>
-                    <ul class="no-hanging">
-                        <li>This page displays only today's data</li>
-                        <li>Lap counts are fractional and ignore direction and start/end location</li>
-                        <li>Your location displays as a marker while you're on the course</li>
-                        <li>Rows show a warning icon ⚠️ if they contain frequent GPS errors greater than 20m. Check your configuration, and keep your phone in an outer pocket if possible.</li>
-                    </ul>
-
-                    <h3>Privacy</h3>
-                    <ul class="no-hanging">
-                        <li>The client app reports GPS, WiFi/cellular, and battery percentage information</li>
-                        <li>Only information collected from within the course region will be stored</li>
-                        <li>Information is available publicly and identifiably until the day after the event</li>
-                        <li>We may retain information indefinitely to help improve the system in the future</li>
-                        <li>We may release de-identified versions of your data in the future</li>
-                    </ul>
-
-                </accordion-body>
-            </accordion-item>
-            <accordion-item>
-                <accordion-header>Phone Setup</accordion-header>
-                <accordion-body>
-                    <ol class="no-hanging">
-                        <li>Install the client app for <a href="https://itunes.apple.com/us/app/mqttitude/id692424691?mt=8">iOS</a> or <a href="https://play.google.com/store/apps/details?id=org.owntracks.android">Android</a>. The app requires all the location permissions it prompts for, including the ability to run in the background. It will silently fail if they aren’t granted.
-
-                            <p class="alert alert-info"><b>iOS:</b> You can review the app's location permissions in Settings > Privacy & Security > Location Services</p></li>
-
-                        <li>Use your phone's camera app to scan the QR code you were emailed to configure the OwnTracks app.</li>
-                        <li>Go to the course, open the app on your phone, and ensure the UI says “Move” (over the map on iOS, behind a play button on Android). All the app does is transmit data, so <i>it does not display your lap count</i>. You will only be able to see your information on this webpage.</li>
-                        <li>Run around the fountain, check that you appear on this page, and check that your lap number increases <p class="alert alert-info">Every lap&mdash;and every partial lap&mdash;will be counted. To prevent lap-inflation, we recommend you only open up OwnTracks when you're on the start line.</p></li>
-
-                        <li>Kill the app or uninstall it when you are done testing or racing</li>
-                    </ol>
-
-                        <h3>Troubleshooting:</h3>
-                    <p>If your marker appears on the map then grays out, your phone may only be transmitting while the app is foregrounded. See the above note on iOS for providing background ("Always Allow") location access.</p>
-
-                </accordion-body>
-            </accordion-item>
-        </accordion-group>
-    </div>
-</section-->
 
 <section>
     <div id="faq" class="container">
@@ -1145,11 +1174,8 @@ redirect_from:
 
 <script type="module">
     import {FountainToy} from "{{ site.baseurl }}/js/fountain/fountainToy.js";
-    import {TrackMap} from "{{ site.baseurl }}/js/dm24/TrackMap.js";
-    import {TableFilterManager} from "{{ site.baseurl }}/js/dm24/TableFilterManager.js";
-    import {LapTable} from "{{ site.baseurl }}/js/dm24/LapTable.js";
-    import {LiveTrackingClient} from "{{ site.baseurl }}/js/dm24/LiveTrackingClient.js";
-    import {prepareImagesForPhotoswipe} from "{{site.baseurl}}/js/common.js";
+    import {ResultsTable} from "{{ site.baseurl }}/js/ResultsTable.js";
+    import {durationToSeconds, prepareImagesForPhotoswipe} from "{{ site.baseurl }}/js/common.js";
     import PhotoSwipeLightbox from 'photoswipe-lightbox';
     import PhotoSwipeDynamicCaption from 'photoswipe-dynamic-caption';
     import {Tooltip} from 'bootstrap'
@@ -1160,267 +1186,7 @@ redirect_from:
 
     Tabulator.registerModule([ColumnCalcsModule, FormatModule, GroupRowsModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule, ReactiveDataModule, FilterModule]);
 
-    const startDistances = {"full": 129.17, "half": 65.97};
-    const goalLaps = {"full": 219, "half": 109};
-    const loopDistance = 192.37;
 
-    function formatTimeSince(seconds) {
-        const remainingSeconds = seconds % 60;
-        const minutes = Math.floor(seconds / 60);
-        const hours = Math.floor(minutes / 60);
-        const days = Math.floor(hours / 24);
-        if (days > 0) {
-            return `${days}d ${hours % 24}h ago`;
-        } else if (hours > 0) {
-            return `${hours}h ago`;
-        } else if (minutes > 0){
-            return `${minutes}m ago`;
-        } else if (seconds < 10) {
-            return 'now'
-        } else {
-            return `${seconds}s ago`;
-        }
-    }
-
-    function bibToEvent(bib) {
-        // Bib's are two hex digits
-        return parseInt(bib, 16) >= parseInt("F0", 16) ? 'full' : 'half';
-    }
-
-    function calculateWindingNumberAndAngularVelocity(track, center, startAngle=0.0) {
-        // Use `startAngle` to make the lap start be at angle 0.0
-        let totalAngle = 0.0;
-        const angularVelocities = [];
-        // Winding number is the (real-valued) number of times the curve winds around the center, where positive is counterclockwise
-        const relWindingNumbers = [];
-        // Absolute winding number is the number of times the curve winds around the center, where the sign is ignored
-        const absWindingNumbers = [];
-        const [centerX, centerY] = center;
-
-        for (let i = 0; i < track.length - 1; i++) {
-            const [x1, y1, t1] = track[i];
-            const [x2, y2, t2] = track[i + 1];
-
-            // vectors pointing from the center to the points
-            const vec1 = [x1 - centerX, y1 - centerY];
-            const vec2 = [x2 - centerX, y2 - centerY];
-
-            const timeElapsed = t2 - t1;
-            console.assert(timeElapsed >= 0, `Negative time elapsed between points ${i} and ${i + 1}`)
-            // Angle between vec1 and vec2
-            const angle = Math.atan2(vec2[1], vec2[0]) - Math.atan2(vec1[1], vec1[0]);
-
-            // Correct for crossing the -PI to PI boundary
-            const correctedAngle = angle >= Math.PI ? angle - 2 * Math.PI : (angle <= -Math.PI ? angle + 2 * Math.PI : angle);
-
-            totalAngle += correctedAngle;
-
-            if (timeElapsed === 0) {
-                // No time should mean that the points are the same
-                console.assert(correctedAngle === 0, `Angle ${correctedAngle} is non-zero for zero time elapsed`)
-                angularVelocities.push(0); // Avoid division by zero, assuming stationary if no time has passed
-
-            } else {
-                // Calculate angular velocity as angle change per unit of time
-                const angularVelocity = correctedAngle / timeElapsed;
-                angularVelocities.push(angularVelocity);
-            }
-            relWindingNumbers.push((totalAngle - startAngle) / (2 * Math.PI));
-            if (absWindingNumbers.length > 0) {
-                absWindingNumbers.push(absWindingNumbers[absWindingNumbers.length - 1] + Math.abs(correctedAngle / (2 * Math.PI)));
-            } else {
-                absWindingNumbers.push(Math.abs(correctedAngle / (2 * Math.PI)));
-            }
-        }
-
-        // Winding number is total angle divided by 2*PI
-        const windingNumber = totalAngle / (2 * Math.PI);
-        return { windingNumber, angularVelocities, windingNumbers: relWindingNumbers, absWindingNumbers };
-    }
-
-    function findLapSegments(track) {
-        let {windingNumber, angularVelocities, windingNumbers, absWindingNumbers} = calculateWindingNumberAndAngularVelocity(track, trackMap.center, trackMap.startAngle);
-        // A lap: starts and ends at the same angle on the track, and has a winding number of +/-1
-        // Let's segment the abs winding number into chunks incrementing by 1
-        let lapIndices = [0];
-        let complete = [];
-        let direction = [];
-        let windingTarget = 1;
-        for (let i = 1; i < absWindingNumbers.length; i++) {
-            const absWindingNumber = absWindingNumbers[i];
-            const lapWinding = windingNumbers[i] - windingNumbers[lapIndices[lapIndices.length - 1]];
-            const lapAbsWinding = absWindingNumber - absWindingNumbers[lapIndices[lapIndices.length - 1]];
-            if (windingTarget - lapAbsWinding < 0) {
-                // We've returned to the start angle
-                lapIndices.push(i);
-                // Check if the winding number of this chunk is up/down by 1
-                const isComplete = windingTarget - Math.abs(lapWinding) < 0;
-                complete.push(isComplete);
-                direction.push(lapWinding < 0);
-            }
-        }
-
-        return [lapIndices, complete, direction];
-    }
-
-    let expandRow = function (row) {
-        let lapsTable = row.getElement()?.querySelector("lap-table")
-
-        if (!lapsTable.classList.contains("initialized")) {
-            // Tabulator and D3 won't render correctly unless the parent element is visible
-            lapsTable.initialize().then(() => {
-                row.getTable().redraw()
-            })
-            lapsTable.classList.add("initialized")
-        } else {
-
-        }
-        const data = row.getData()
-        // FIXME: This needs to be reactive to track changes
-        if (!data.track) {
-            return
-        }
-
-        const lapTrack = data.lapIndices.map((start, i) => {
-            const end = i + 1 < data.lapIndices.length ? data.lapIndices[i + 1] : data.track.length - 1
-            return data.track.slice(start, end)
-        })
-        const lapTime = lapTrack.map((lap) => lap[lap.length - 1][2] - lap[0][2])
-        const lapLength = Array(lapTrack.length).fill(loopDistance)
-        // First lap is long
-        lapLength[0] = startDistances[bibToEvent(data.bib)] + loopDistance
-        const detailData = {
-            lapLength,
-            lapTrack,
-            complete: data.complete,
-            lapClockwise: data.lapClockwise,
-            lapTime
-        }
-        lapsTable.updateData(detailData, goalLaps[bibToEvent(data.bib)])
-    }
-
-    function addLapTableFormatter(row,e) {
-        // The formatter gets called every refresh it seems...
-        let rowElement = row.getElement()
-        rowElement.id = `#result-${row.getData().bib}`
-        if (rowElement.querySelector("lap-table")) {
-            return
-        }
-        let detailFragment = new LapTable()
-        detailFragment.addEventListener("rowClick", (e) => {
-            if (e.detail.index === row.getData().selectedLap) {
-                row.getData().selectedLap = null
-                trackMap.highlightedLap = null
-            } else {
-                row.getData().selectedLap = e.detail.index
-                trackMap.highlightedLap = e.detail.index
-            }
-        })
-        //create and style holder elements
-        const id = row.getData().bib
-        detailFragment.setAttribute('id', "result-detail-" + id + "");
-        rowElement.appendChild(detailFragment);
-    }
-
-    function beginRegularRefreshing() {
-        return setInterval(() => {
-            const now = new Date()
-            // Render out "last seen X ago" strings
-            table.getRows().forEach((row) => {
-                let data = row.getData()
-                const userRow = tableData.find((row) => row.username === data.username)
-                if (!data.track || data.track.length === 0) {
-                    return
-                }
-                let lastSample = data.lastUpdated
-                if (data.track.length > 0) {
-                    // Assume the last sample is the most recent
-                    lastSample = new Date(data.track[data.track.length - 1][2] * 1000)
-                }
-                userRow.freshness = (now - lastSample) / 1000
-
-            })
-        }, 1250);
-    }
-    let refreshInterval = null
-
-    let tableData = [
-    ]
-    function addUser(data) {
-        const username = data.username
-        let startFreshness = Date.now() / 1000 - data.tst
-        const lastUpdated = new Date(data.tst * 1000)
-        // For the initial fetch we'll take the last point timestamp as our "last update" timestamp
-        tableData.push({username: username, name: data.name, bib: data.tid, laps: null, freshness: startFreshness, track: null, lastUpdated: lastUpdated, trackRequested:false, accuracy: data.acc});
-        /*if (user.face) {
-            trackMap.updateMarker(user.tid, 'imageData', user.face)
-        }*/
-
-    }
-
-    function excludeTest(data, filterParams) {
-        return data.bib[0] !== "E"
-    }
-    function excludeFull(data, filterParams) {
-        return bibToEvent(data.bib) !== 'full'
-    }
-    function excludeHalf(data, filterParams) {
-        return bibToEvent(data.bib) !== 'half'
-    }
-
-    function aliveToday(data, filterParams) {
-        return data.lastUpdated > thisMorning
-    }
-
-
-
-    function updateWithFullTrack(username) {
-        const data = tableData.find((data) => data.username === username)
-        data.trackRequested = true
-        return liveTracking.getLatestTrack(username, thisMorning).then((track) => {
-            const filteredTrack = turf.pointsWithinPolygon(turf.points(track), bounds).features.map((feature) => {
-                return feature.geometry.coordinates;
-            })
-            let freshness = data.freshness
-            let laps = 0
-            let [lapIndices, complete, lapClockwise] = [[], [], []]
-            if (filteredTrack.length > 2) {
-                const startTime = Date.now()
-                const {
-                    windingNumber,
-                    angularVelocities,
-                    windingNumbers,
-                    absWindingNumbers
-                } = calculateWindingNumberAndAngularVelocity(filteredTrack, trackMap.center, trackMap.startAngle);
-                const endTime = Date.now()
-                console.log(endTime - startTime)
-                // Epoch time
-                const latestStamp = track[track.length - 1][2];
-                const currentStamp = Date.now() / 1000;
-                freshness = currentStamp - latestStamp;
-                laps = absWindingNumbers[absWindingNumbers.length - 1]
-                const result = findLapSegments(filteredTrack)
-                lapIndices = result[0]
-                complete = result[1]
-                lapClockwise = result[2]
-
-            } else {
-                console.warn("Filtered track is too short", filteredTrack)
-                console.warn("Original track", track.length)
-            }
-
-            data.track = filteredTrack
-            data.lapIndices = lapIndices
-            data.complete = complete
-            data.lapClockwise = lapClockwise
-            data.laps = laps
-            data.freshness = freshness
-            data.lastUpdated = new Date()
-
-            console.log("Updated", username)
-
-        });
-    }
     function initialize() {
         new p5(FountainToy("{{site.baseurl}}"), document.querySelector("#hero-toy .interactive"));
 
@@ -1428,260 +1194,153 @@ redirect_from:
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
 
-        const connectionDot = document.querySelector("connection-dot")
-        if (!connectionDot) {
-            console.error("Skipping live tracking")
-            return
+
+        function secondsToWallclock(seconds) {
+            const hours = Math.floor(seconds / 3600)
+            const minutes = Math.floor((seconds % 3600) / 60)
+            const remainingSeconds = seconds % 60
+            return `${hours}:${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`
         }
-        let table = new Tabulator("#lap-table", {
-            reactiveData:true,
-            data:tableData,
-            selectable:false,
-            layout:"fitDataFill",
-            placeholder: "No laps today",
-            columns:[
-                {title:"Bib", field:"bib", formatter: (cell) => {
-                        let data = cell.getRow().getData()
-                        return `<div class='bib ${bibToEvent(data.bib)}'>${data.bib}</div>`
-                    }},
-                {title:"Name", field:"name", formatter: (cell) => {
-                        let data = cell.getRow().getData()
-                        return data["name"] ? data["name"] : data["username"]
 
-                    }},
-
-                {title:"Laps", field:"laps",  formatter: cell => {
-                        if (cell.getValue()) {
-                            return cell.getValue().toFixed(2)
-                        } else {
-                            return ""
+        fetch('{{ site.baseurl }}/results/dm24.json')
+                .then(res => res.json())
+                .then(resultsData => {
+                    const results = resultsData.results
+                    const goalLapsByEvent = resultsData.config.goals
+                    // Sort each event's goals to be ascending by lap count
+                    for (let event in goalLapsByEvent) {
+                        goalLapsByEvent[event] = Object.fromEntries(Object.entries(goalLapsByEvent[event]).sort((a, b) => a[1] - b[1]))
+                    }
+                    let videoStartTime = function () {
+                        // Video assumed to start at moment of earliest start
+                        let earliestStart = Infinity
+                        for (let startName in resultsData.config.starts) {
+                            let start = resultsData.config.starts[startName]
+                            let startSeconds = durationToSeconds(start.time)
+                            if (startSeconds < earliestStart) {
+                                earliestStart = startSeconds
+                            }
+                        }
+                        return earliestStart
+                    }()
+                    const lapDistance = resultsData.config.lapDistance
+                    const starts = resultsData.config.starts
+                    const directionChanges = resultsData.config.directionStarts.map((start) => durationToSeconds(start))
+                    let officialResults = []
+                    let unofficialResults = []
+                    let marathonResults = []
+                    for (let i = 0; i < results.length; i++) {
+                        let entry = results[i]
+                        let startDistance = Number("NaN")
+                        let startTime = Number("NaN")
+                        let cumulativeWallclock = Number("NaN")
+                        for (let startName in starts) {
+                            const start = starts[startName]
+                            if (start.bibs[0] <= entry.id && entry.id <= start.bibs[1]) {
+                                startDistance = start.startDistance
+                                startTime = start.time
+                                entry.startTime = startTime
+                                entry.event = startName.includes("half") ? "half" : "marathon"
+                                cumulativeWallclock = durationToSeconds(startTime)
+                                break
+                            }
                         }
 
-                    }},
-                {title:"Last Seen", field: "freshness",  formatter: (cell) => {
-                        let data = cell.getRow().getData()
-                        let freshness = data["freshness"]
-                        const accuracyWarning = data["accuracy"] > 23 ? ` <span class="text-warning">⚠️</span>` : ""
-                        if (freshness === -1) {
-                            return ""
-                        } else {
-                            return formatTimeSince(Math.ceil(freshness)) + accuracyWarning
+                        let finished = false
+                        let entranceAdjustment = resultsData.config.firstLapIsEntrance ? 1: 0;
+                        let lapsGoal = entry.event === "marathon" ? goalLapsByEvent["marathon"]["26_2mi"] : goalLapsByEvent["half"]["13_1mi"]
+                        let runnerGoals = goalLapsByEvent[entry.event]
+                        let lapsRun = entry.lapTimes.length - entranceAdjustment
+                        if (lapsRun >= lapsGoal) {
+                            finished = true
                         }
-                    }},
-                {title: "trackRequested", field: "trackRequested", visible: false},
-            ],
-            rowFormatter: addLapTableFormatter
-        });
 
-        const filterManager = document.querySelector("table-filter-manager")
-        filterManager.table = table
-        filterManager.filters = {excludeTest, excludeFull, excludeHalf}
+                        if (finished) {
+                            entry["finishTime"] = entry.lapTimes.slice(0, lapsGoal + entranceAdjustment).reduce((a, b) => a + b, 0)
+                        } else {
+                            entry["finishTime"] = Infinity
+                        }
+                        for (let goalName in runnerGoals) {
+                            let goal = runnerGoals[goalName]
+                            entry[goalName + "Time"] = lapsRun >= goal ? entry.lapTimes.slice(0, goal + entranceAdjustment).reduce((a, b) => a + b, 0) : Infinity
+                        }
+                        entry["nLaps"] = lapsRun
 
+                        let lapObjects = []
+                        let lapsCompleted = 0
+                        let timeElapsed = 0
+                        let distanceElapsed = 0
+                        let directionIndex = -1
 
-        table.on("dataChanged", function(data){
-            // Think of the map as a reactive view of this table. Every time the data changes, we need to update the map
-            // Tabulator doesn't correctly clear the placeholder on its own
-            if (table.rowManager.getDisplayRows().length) {
-                table.rowManager._clearPlaceholder();
-            }
+                        let lapTarget = Object.values(runnerGoals)[Math.max(d3.bisectRight(Object.values(runnerGoals), lapsRun) - 1, 0)]
+                        entry["goalLaps"] = lapTarget
+                        entry["goalName"] = Object.keys(runnerGoals).find(key => runnerGoals[key] === lapTarget)
+                        for (let i = 0; i < entry.lapTimes.length; i++) {
+                            let lapStartTime = timeElapsed
+                            timeElapsed += entry.lapTimes[i]
+                            cumulativeWallclock += entry.lapTimes[i]
+                            while (cumulativeWallclock > directionChanges[directionIndex + 1]) {
+                                directionIndex += 1
+                            }
+                            let runnerLapDistance = lapDistance
+                            let direction = resultsData.config.directions[directionIndex]
+                            if (i === 0 && resultsData.config.firstLapIsEntrance) {
+                                // 0th lap is entrance from upper vista, not a real lap
+                                runnerLapDistance = startDistance
+                                direction = null
+                            } else {
+                                lapsCompleted += 1
+                            }
+                            distanceElapsed += runnerLapDistance
+                            lapObjects.push({
+                                "index": i,
+                                "lapNumber": resultsData.config.firstLapIsEntrance && i === 0 ? null : lapsCompleted,
+                                "timestamp": cumulativeWallclock,
+                                "duration": entry.lapTimes[i],
+                                "distance": runnerLapDistance,
+                                "distanceElapsed": distanceElapsed,
+                                "timeElapsed": timeElapsed,
+                                "extra": i > lapTarget,
+                                "direction": direction
+                            })
 
-            table.getRows().forEach((row) => {
-                const data = row.getData()
-                trackMap.updateMarker(data.bib, 'backgroundColor', bibToEvent(data.bib) === 'full' ? 'var(--branding-color)' : 'var(--branding-color-complement)' );
-                trackMap.updateMarker(data.bib, 'point', data.track ? data.track[data.track.length - 1] : null)
-                trackMap.updateMarker(data.bib, 'freshness', data.freshness);
-                trackMap.updateMarker(data.bib, 'visible', table.rowManager.getVisibleRows().find((row) => row.getData().bib === data.bib))
-                trackMap.updateMarker(data.bib, 'highlighted', data.highlighted)
-            })
+                        }
 
-            trackMap.refreshMarkersSource()
-            table.getRows().filter((row) => !row.getData().highlighted).forEach((row) => {row.getElement()?.querySelector("lap-table")?.setAttribute("hidden", "hidden");
-                row.getElement().classList.remove("details-opened")
-            })
-            // Handle highlighted row
-            const highlighted = table.getRows().filter((row) => row.getData().highlighted)
-            highlighted.forEach((row) => {
-                let lapTable = row.getElement()?.querySelector("lap-table")
-                if (lapTable) {
-                    lapTable.hidden = false
-                }
-                expandRow(row);
-                row.getElement().classList.add("details-opened")
-                // TODO: Use segmented line, highlight the selected lap
-                // https://maplibre.org/maplibre-gl-js/docs/examples/data-driven-lines/
-                const data = row.getData()
+                        entry["lapDetails"] = lapObjects
+                        if (entry.event === "marathon") {
+                            marathonResults.push(entry)
+                        } else {
+                            if (entry.finishTime === Infinity) {
+                                unofficialResults.push(entry)
+                            } else {
+                                officialResults.push(entry)
+                            }
+                        }
+                    }
 
-                if (data.track) {
-                    const segmentedTrack = data.lapIndices.map((start, i) => {
-                        const end = i + 1 < data.lapIndices.length ? data.lapIndices[i + 1] : data.track.length - 1
-                        return data.track.slice(start, end)
-                    })
-                    trackMap.updateTrack(segmentedTrack)
-                }
-            })
-            if (!highlighted || highlighted.length === 0) {
-                trackMap.updateTrack([])
-            }
+                    let table = new ResultsTable(marathonResults)
 
-        });
-        table.on("dataFiltered", function(filters, rows){
-            tableData.forEach((row) => {
-                trackMap.updateMarker(row.bib, 'visible', false)
-            })
-            rows.forEach((row) => {
-                const data = tableData.find((data) => data.bib === row.getData().bib)
-                // This row wasn't fetched earlier, so get it now
-                if (data.lastUpdated > thisMorning && !data.trackRequested) {
-                    console.log("Requesting track for", data.username, "due to filterchange")
-                    updateWithFullTrack(data.username)
-                }
-                trackMap.updateMarker(data.bib, 'visible', true)
-            })
-        });
-        table.on("rowClick", function(e, row) {
-            // Disabled pending more testing
-            if (!(e.target.classList.contains("tabulator-row") || e.target.classList.contains("tabulator-cell"))) {
-                return
-            }
-            let data = row.getData()
-            if (!data.highlighted) {
-                table.getRows().forEach((row) => row.update({highlighted: false}))
-                row.update({highlighted: true})
-            } else {
-                table.getRows().forEach((row) => row.update({highlighted: false}))
-            }
+                    document.querySelector("#results-marathon").append(table)
+                    // Look for preceding .count span, populate with num results
+                    document.querySelector(".count:has(+ #results-marathon)").textContent = ` (${marathonResults.length})`
+                    let fullGoals = Object.fromEntries(Object.entries(goalLapsByEvent["marathon"]).filter(([key, value]) => value < goalLapsByEvent["marathon"]["26_2mi"]))
+                    table.initialize(marathonResults, fullGoals, {videoLink: resultsData.config.finishVideo, videoStartTime: videoStartTime})
 
-            let currentHash = window.location.hash
-            let newHash = `#result-${data.bib}`
-            const details = row.getElement().querySelector("lap-table")
-            if (!details.attributes["hidden"]) {
-                history.replaceState(undefined, undefined, newHash)
-            } else if (currentHash === newHash) {
-                history.replaceState(undefined, undefined, " ")
-            }
-        });
+                    table = new ResultsTable(officialResults)
 
+                    let halfGoals = Object.fromEntries(Object.entries(goalLapsByEvent["half"]).filter(([key, value]) => value < goalLapsByEvent["half"]["13_1mi"]))
+                    document.querySelector("#results-half-official").append(table)
+                    document.querySelector(".count:has(+ #results-half-official)").textContent = ` (${officialResults.length})`
+                    table.initialize(officialResults, halfGoals, {videoLink: resultsData.config.finishVideo, videoStartTime: videoStartTime})
 
-        let thisMorning = new Date();
+                    table = new ResultsTable(unofficialResults)
 
-        thisMorning.setHours(0, 0, 0, 0);
-        const urlParams = new URLSearchParams(window.location.search);
-        // Date is in the format YYYY-MM-DD
-        const dateValue = urlParams.get('date');
-        if (dateValue !== null) {
-            const date = new Date(dateValue);
-            if (!isNaN(date.getTime())) {
-                thisMorning = date;
-            }
-        }
-        let liveTracking = null
-        let trackMap = document.querySelector("track-map")
-        const liveBounds = [[
-            [
-                -122.306304,
-                47.653457
-            ],
-            [
-                -122.308144,
-                47.656089
-            ],
-            [
-                -122.310014,
-                47.655436
-            ],
-            [
-                -122.308154,
-                47.652844
-            ],
-            [
-                -122.306304,
-                47.653457
-            ]
-        ]]
-
-        const bounds = turf.polygon(JSON.parse(trackMap.getAttribute('data-bounds')));
-        trackMap.addLiveBounds(liveBounds);
-
-        document.addEventListener("liveconnectionchange", (event) => {
-            connectionDot.setAttribute("state", event.detail.state)
-        });
-        liveTracking = new LiveTrackingClient("drumhellerlive.nickwalker.us");
-        document.addEventListener("livelocation", (event) => {
-            const payload = event.detail
-            let bib = payload.tid
-            let userRow = tableData.find((row) => row.bib === bib)
-            if (!userRow) {
-                console.warn("Received location update for unknown user, fetching full track", bib)
-                addUser(payload)
-                updateWithFullTrack(payload.username)
-                return
-            }
-            if (!payload.lon || !payload.lat || !payload.tst) {
-                console.log("Received incomplete location update for", bib, payload)
-                return
-            }
-            userRow.accuracy = payload.acc
-            let point = [payload.lon, payload.lat, payload.tst]
-            if (!userRow.trackRequested) {
-                // The base track hasn't even been requested. Drop this location event
-                return
-            }
-            if (!userRow.track) {
-                userRow.track = []
-            }
-            userRow.track.push(point)
-            userRow.lastUpdated = new Date()
-            if (userRow.track.length > 2) {
-                const {
-                    windingNumber,
-                    angularVelocities,
-                    windingNumbers,
-                    absWindingNumbers
-                } = calculateWindingNumberAndAngularVelocity(userRow.track.slice(-2), trackMap.center, trackMap.startAngle);
-                const increment = absWindingNumbers[absWindingNumbers.length - 1]
-                if (increment === undefined) {
-                    console.warn("Live update lap increment is undefined", userRow.track)
-                } else {
-                    userRow.laps += increment
-                }
-            }
-            const freshness = Date.now() / 1000 - payload.tst
-            userRow.freshness = freshness
-        });
-        liveTracking.getUsers().then((data) => {
-            data.map(user => addUser(user))
-            refreshInterval = beginRegularRefreshing()
-            table.addFilter(aliveToday);
-            liveTracking.enable()
-        }).then(() => {
-
-        });
-
-
-        document.addEventListener("visibilitychange", () => {
-            if (document.visibilityState === "visible") {
-                Promise.all(table.rowManager.getVisibleRows().map((row) => {
-                    console.log("Requesting track for", row.getData().username, "due to visibility change")
-                    return updateWithFullTrack(row.getData().username)
-                })).then(() => {
-                    console.log("All updated, starting regular refreshes")
-                    refreshInterval = beginRegularRefreshing()
-                    liveTracking.enable()
+                    document.querySelector("#results-half-unofficial").append(table)
+                    document.querySelector(".count:has(+ #results-half-unofficial)").textContent = ` (${unofficialResults.length})`
+                    table.initialize(unofficialResults, halfGoals, {videoLink: resultsData.config.finishVideo, videoStartTime: videoStartTime})
                 })
-                console.log("Page visible")
-
-            } else {
-                clearInterval(refreshInterval)
-                liveTracking.disable()
-                // Mark the tracks as stale so we re-request them when the page is visible again
-                tableData.forEach((row) => {
-                    //console.log("Marking", row.username, "as stale")
-                    row.trackRequested = false
-                })
-                console.log("Page hidden")
-            }
-        });
     }
+
 
     function setupLightboxes() {
         prepareImagesForPhotoswipe(document.querySelectorAll(".auto-lightbox")).then(() => {

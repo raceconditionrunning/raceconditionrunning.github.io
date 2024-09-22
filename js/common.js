@@ -17,7 +17,7 @@ export function formatDuration(seconds, includeHours = true, includeMilliseconds
     }
 
     let date = new Date(0);
-
+    const hours = Math.floor(seconds / 3600)
     let milliseconds = (seconds % 1.0) * 1000
     if (milliseconds > 0 && !includeMilliseconds) {
         // If we're not showing the milliseconds, have to round up
@@ -34,7 +34,11 @@ export function formatDuration(seconds, includeHours = true, includeMilliseconds
     let end = 19
 
     if (includeHours) {
-        start -= 2
+        if (hours >= 10) {
+            start -= 3
+        } else {
+            start -= 2
+        }
     }
     if (includeMilliseconds) {
         end += 2
@@ -46,10 +50,17 @@ export function formatDuration(seconds, includeHours = true, includeMilliseconds
     return result
 }
 
-export function formatLegDescription(startStation, endStation, leg, includeLegNumber=false, linkStations=false){
+export function durationToSeconds(duration) {
+    const [hours, minutes, seconds] = duration.split(":").map((x) => parseInt(x))
+    return hours * 3600 + minutes * 60 + seconds
+}
+
+export function formatLegDescription(startStation, endStation, leg, includeLegNumber=false, linkStations=false, coords=null){
     let legNumber = ""
     if (includeLegNumber) legNumber = `<span class="leg-number">${leg.id}:</span> `
-    return `<h5 class="mb-1">${legNumber}${startStation} to ${endStation}</h5><h6>${leg.distance_mi.toFixed(2)}mi ↑${leg.ascent_ft.toFixed(0)}ft ↓${leg.descent_ft.toFixed(0)}ft</h6><p class="mb-0">${leg.notes}</p>`
+    let profile = ""
+    if (coords) profile = "<elevation-profile></elevation-profile>"
+    return `<h5 class="mb-1">${legNumber}${startStation} to ${endStation}</h5><h6>${leg.distance_mi.toFixed(2)}mi ↑${leg.ascent_ft.toFixed(0)}ft ↓${leg.descent_ft.toFixed(0)}ft</h6>${profile}<p class="mb-0">${leg.notes}</p>`
 }
 
 export function download(content, mimeType, filename) {
@@ -215,28 +226,21 @@ export function processRelayGeoJSON(relay) {
         }
     }
 
-    let orderedLegs = legs.sort(function(a, b) {
-        let keyA = a.properties.start_exchange
-        let keyB = b.properties.start_exchange
-        if (keyA < keyB) return -1;
-        if (keyA > keyB) return 1;
-        return 0;
-    });
-    let orderedExchanges = exchanges.sort(function(a, b) {
-        let keyA = a.properties.id
-        let keyB = b.properties.id
-        if (keyA < keyB) return -1;
-        if (keyA > keyB) return 1;
-        return 0;
-    });
+    if (legs[0].properties.sequence !== undefined) {
+        legs.sort((a, b) => a.properties.sequence[0] - b.properties.sequence[0])
+    } else {
+        legs.sort((a, b) => a.properties.start_exchange - b.properties.start_exchange)
+
+    }
+    exchanges.sort((a, b) => a.properties.id - b.properties.id)
 
     legs = {
         type: "FeatureCollection",
-        features: orderedLegs
+        features: legs
     }
     exchanges = {
         type: "FeatureCollection",
-        features: orderedExchanges
+        features: exchanges
     }
 
     return [legs, exchanges]

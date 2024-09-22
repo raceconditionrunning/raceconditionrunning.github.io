@@ -1,4 +1,46 @@
-[
+{
+  "config": {
+    "goals": {
+      "half": {
+      "13_1mi": 110,
+      "10mi": 84,
+      "10k": 52,
+        "5k": 26
+      }
+    },
+    "starts": {
+      "half": {
+        "time": "08:00:00;00",
+        "bibs": [
+          0,
+          160
+        ],
+        "startDistance": 120.50
+      }
+    },
+   "lapDistance": 190.70,
+    "directionStarts": [
+      "08:00:00",
+      "08:20:00",
+      "08:40:00",
+      "09:00:00",
+      "09:20:00",
+      "09:40:00",
+      "10:00:00"
+    ],
+    "directions": [
+      "CCW",
+      "CW",
+      "CCW",
+      "CW",
+      "CCW",
+      "CW",
+      "CCW"
+    ],
+    "firstLapIsEntrance": true,
+  "finishVideo": "https://youtu.be/lmwxMUa7bvI"
+  },
+  "results": [
   {
     "id": 0,
     "name": "Aishwarya Mandyam",
@@ -2487,3 +2529,4 @@
     ]
   }
 ]
+}
