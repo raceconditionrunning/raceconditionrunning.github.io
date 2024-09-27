@@ -1,3 +1,12 @@
+- date: "2024-09-28"
+  plan:
+    - time: "8:30"
+      route:
+        name: Light Rail Relay 2024
+        map: /light-rail-relay-24
+        dist: 38
+      highlight-image: /img/lrr24/og-banner.png
+
 - date: "2024-10-05"
   plan:
     - time: "8:30"
@@ -5,9 +14,13 @@
     - time: "10:00"
       route_id: cc-genessee-lwb-seward-loop
 
-# - date: "2024-10-12"
-  # plan:
-    # DAWG DASH
+- date: "2024-10-12"
+  plan:
+    - time: "9:00"
+      route:
+        name: Dawg Dash 10K
+        map: https://runsignup.com/Race/Results/154482#resultSetId-413024;perpage:100
+        dist: 6.2
 
 - date: "2024-10-19"
   plan:
@@ -23,9 +36,13 @@
     - time: "10:30"
       route_id: westlake-waterfront-cranes-sodo
 
-# - date: "2024-11-02"
-#   plan:
-#     Drumheller Half
+- date: "2024-11-02"
+  plan:
+    - time: "8:30"
+      route:
+        name: Drumheller Half Marathon
+        map: /drumheller-half-23
+        dist: 13.1
 
 - date: "2024-11-09"
   plan:
@@ -53,6 +70,14 @@
     - time: "9:30"
       route_id: mb-lwb-cc
 
+- date: "2024-12-01"
+  plan:
+    - time: "7:00"
+      route:
+        name: Seattle Marathon
+        map: https://www.seattlemarathon.org/
+        dist: 26.2
+  
 - date: "2024-12-07"
   plan:
     - time: "8:30"
