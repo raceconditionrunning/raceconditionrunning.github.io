@@ -19,7 +19,7 @@
     - time: "9:00"
       route:
         name: Dawg Dash 10K
-        map: https://runsignup.com/Race/Results/154482#resultSetId-413024;perpage:100
+        map: https://www.washington.edu/alumni/events/alaska-airlines-dawg-dash-2024/
         dist: 6.2
 
 - date: "2024-10-19"
