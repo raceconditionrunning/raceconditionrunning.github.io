@@ -14,7 +14,7 @@
     - time: "10:00"
       route_id: cc-genessee-lwb-seward-loop
 
-- date: "2024-10-12"
+- date: "2024-10-13"
   plan:
     - time: "9:00"
       route:
