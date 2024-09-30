@@ -6,6 +6,7 @@ redirect_from:
 - /lrr24/
 team_registration_link: https://forms.gle/9DLctNws7jWC3WyU6
 registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
+email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 ---
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
@@ -26,22 +27,21 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css" integrity="sha512-qveKnGrvOChbSzAdtSs8p69eoLegyh+1hwOMbmpCViIwj7rn4oJjdmMvWOuyQlTOZgTlZA0N2PXA7iA8/2TUYA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator.min.css" integrity="sha512-HdUIebGeOK7s+At/fOnnbX8vsz6Cl1KTeiRlBiQABTMSqw7kZRCxGiUnuF9lr+1xz5y8pL7jkCR+NNtVVkEqKg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator_bootstrap5.min.css" integrity="sha512-904y6HHQyQS2fAyIQ869rH3AAkxZeFuxo9vheji5zw+IPEyioMWN4Bt/VFhzO5edPZ9m1lwkpYgXcYcm1vzaFw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator.min.css" integrity="sha256-pG2AUZRMdFyuinl2tPudk9iU0gh2pFIcxPbwNc/vUuo=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator_bootstrap5.min.css" integrity="sha256-H1gQqBIR3L9enXuoNfFASj+QdGSEQIAloT7c4FXjNzc=" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" integrity="sha256-V2sIX92Uh6ZaGSFTKMHghsB85b9toJtmazgG09AI2uk=" crossorigin="anonymous">
     <script type="importmap">
         {
           "imports": {
             "d3": "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm",
-            "maplibre-gl": "https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.js",
+            "maplibre-gl": "https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js",
             "masonry-layout": "https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js",
             "noUiSlider": "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.mjs",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
-            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.1.0/js/tabulator_esm.min.js",
+            "tabulator-tables": "https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/js/tabulator_esm.js",
             "@turf": "https://cdn.jsdelivr.net/npm/@turf/turf@7.1.0/+esm",
             "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js",
             "bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.esm.min.js"
@@ -581,11 +581,12 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
                     <p>Ultra relay along Seattle's Link Light Rail by <a href="{{ site.baseurl }}/" class="fst-italic text-decoration-none">Race Condition Running</a>. <br/>08:30 September 28th</p>
                     <div class="gap-2 d-flex flex-wrap">
 
-                        <a href="{{ page.registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-26" data-bs-placement="bottom">Join Team
-                            </a>
-                        <a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-24" data-bs-placement="bottom">Add Team</a>
-                        <a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-24" data-bs-placement="bottom">Enter Solo</a>
-                        
+                        <!--a href="{{ page.registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-26" data-bs-placement="bottom">Join Team
+                            </a-->
+                        <!--a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-24" data-bs-placement="bottom">Add Team</a-->
+                        <!--a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-24" data-bs-placement="bottom">Enter Solo</a-->
+
+                        <a href="#results" class="btn btn-outline btn-outline-primary btn-lg">Results</a>
                         <!--a href="#epilogue" class="btn btn-outline btn-outline-primary btn-lg">Read Epilogue</a-->
 
 
@@ -609,6 +610,9 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
 
 <section>
     <div class="container pb-4 mb-4">
+        <div class="alert alert-secondary" role="alert">
+            Interested in running the next LRR? <a href="{{ page.email_list_link }}">Register for an email</a>.
+        </div>
         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-baseline">
             <h2 id="route">Route <a href="#route" class="anchor-link" aria-label="Link to this section. Route"></a></h2>
             <a href="#" class="btn btn-outline-primary mb-3 m-sm-0 " id="download-route-gpx-btn" hidden>Download Route GPX</a>
@@ -845,6 +849,23 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
         <p>Team captains are your main point of contact. Here are the emails they've been sent:</p>
         <accordion-group class="accordion accordion-flush" id="briefs">
             <accordion-item>
+                <accordion-header>Debrief - 9/28/24</accordion-header>
+                <accordion-body>
+                    <body>
+                    <p>LRR24 Captains,<br/>
+                    I got to chat with many of you and team and heard lots of positive feedback. If you have or hear other ideas or less-positive feedback, please share. The event will continue to evolve, especially as the Link system grows.</p>
+
+                    <p>Please do <a href="https://forms.gle/GBAd4JjGyNRvTWaBA">send station photos</a> (as many as you have) when you can. I will post a results table when I have enough. We don’t publish the photos, but I hope <em>you</em> share them someplace to celebrate your team’s accomplishment. If it’s easier, a list of links to public Strava activities covering the line should also work.</p>
+
+                    <p>If you want to be notified before the next LRR, you can opt in by leaving your email address at <a href="https://forms.gle/fb9ybhSnQV8dgDsr9">this form</a>. Registration email addresses are only used for communicating about registration (and not marketing).</p>
+
+                    <p>I will get you copies of any team portraits I got at the finish, but I’m generally slow to churn through photos. Sorry about that.</p>
+
+                    <p>Thanks for running!<br>—Nick</p>
+                    </body>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
                 <accordion-header>Brief #2 - 9/26/24</accordion-header>
                 <accordion-body>
                     <p>Hi LRR24 Captains,<br/>
@@ -867,18 +888,17 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
 
                     <b>Travel</b>
                     <ul>
-                        <li>Those taking the 1 Line to the start, I recommend catching this scheduled trip (#2018):
-                            <a href="https://pugetsound.onebusaway.org/where/trip?id=40_LLR_2024-09-14_Jun27_Fall2024_Saturday_100479_2018&serviceDate=1727506800000&stopId=40_N23-T2">Link to trip</a>
+                        <li>Those taking the 1 Line to the start, I recommend catching <a href="https://pugetsound.onebusaway.org/where/trip?id=40_LLR_2024-09-14_Jun27_Fall2024_Saturday_100479_2018&serviceDate=1727506800000&stopId=40_N23-T2">this scheduled trip (#2018)</a>:
+
                         </li>
-                        <li>There are several major road disruptions this weekend which may impact travel from outside Seattle proper.
-                            <a href="https://wsdot.wa.gov/about/news/2024/monster-weekend-closures-sr-520-northbound-i-405-southbound-sr-167-and-i-5-sept-27-30">Link to WSDOT advisory</a>
+                        <li>There are several <a href="https://wsdot.wa.gov/about/news/2024/monster-weekend-closures-sr-520-northbound-i-405-southbound-sr-167-and-i-5-sept-27-30">major road disruptions this weekend</a> which may impact travel from outside Seattle proper.</a>
                         </li>
                     </ul>
 
                     <b>Misc</b>
                     <ul>
-                        <li>Rob of team Velociraptors put together a quick turn-by-turn PDF which he has kindly shared in case it’s useful for other teams:
-                            <a href="https://drive.google.com/file/d/1QI75k9HQY7_FcDjc6YNt6nwzlsLZrbm-/view">Turn-by-turn PDF</a>
+                        <li>Rob of team Velociraptors put together a quick <a href="https://drive.google.com/file/d/1QI75k9HQY7_FcDjc6YNt6nwzlsLZrbm-/view">turn-by-turn PDF</a> which he has kindly shared in case it’s useful for other teams.
+
                             <ul>
                                 <li>Be like Rob; make sure your team has a navigation solution that works for them. If you’re running with your phone, you can always use the route map on the site. Location information shared with the map is only used to draw your dot on the map and does not leave your device.</li>
                             </ul>
@@ -961,22 +981,26 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
                 </ul>
 
                 <p>See you in a week,<br>Nick</p>
+            </accordion-body>
                 </accordion-item>
 
-            </accordion-body>
         </accordion-group>
     </div>
 </section>
 
 <section>
-    <div class="container">
+    <div class="container-xxl">
         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-baseline">
             <h2 id="results">Results <a href="#results" class="anchor-link" aria-label="Link to this section. Results"></a></h2>
             <a href="https://forms.gle/GBAd4JjGyNRvTWaBA" class="btn btn-outline-primary mb-3 m-sm-0">Upload Photos</a>
         </div>
 
-        <p>Results will be posted the day after the event. <i>Send station photos to your team captain to avoid delays!</i></p>
+        <div id="results-table"></div>
+        <p class="text-body-tertiary">Updated 9/30/24</p>
+        <div class="container">
 
+        <p><b>Blanks in your results?</b> These images were missing time information, maybe because they were sent through an application that metadata by default. You can read more about EXIF image metadata and test whether the "DateTimeOriginal" field is present on your image files on <a href="https://hturan.com/writing/exploring-exif">this page</a>. You're welcome to resubmit just the missing images.</p>
+            </div>
     </div>
 </section>
 
@@ -1026,6 +1050,7 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
     import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
     import {RelayMap} from '{{ site.baseurl }}/js/RelayMap.js';
     import {LegCalculator} from '{{ site.baseurl }}/js/LegCalculator.js';
+    import {RelayResultsTable} from "../js/RelayResultsTable.js";
     import {TransitVehicleTracker} from '{{ site.baseurl }}/js/TransitVehicleTracker.js';
 
     const apiBaseUrl = "https://api.pugetsound.onebusaway.org/api"
@@ -1109,6 +1134,17 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
     import {Tooltip} from 'bootstrap'
 
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
+
+    Promise.all([fetch('{{ site.baseurl }}/results/lrr24.json').then(res => res.json()), processedRouteData]).then(([results, [legs, exchanges, exchangeNames]]) => {
+        results.results.forEach((result, index) => {
+            result.index = index
+
+        })
+        const relayResultsTable = new RelayResultsTable(results.results)
+
+        relayResultsTable.initialize(results.results, exchangeNames)
+        document.getElementById("results-table").appendChild(relayResultsTable)
+    })
 
     document.addEventListener('DOMContentLoaded', e => {
         prepareImagesForPhotoswipe(document.querySelectorAll("#teaser-gallery a")).then(() => {
