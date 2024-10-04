@@ -10,9 +10,10 @@
 - date: "2024-10-05"
   plan:
     - time: "8:30"
-      route_id: cse-lwb-cc
-    - time: "10:00"
       route_id: cc-genessee-lwb-seward-loop
+    - time: "9:50"
+      route_id: cse-lwb-cc
+      notes: "Running this route in reverse!"
 
 - date: "2024-10-13"
   plan:
