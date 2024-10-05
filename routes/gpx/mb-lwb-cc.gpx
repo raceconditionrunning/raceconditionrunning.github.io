@@ -2,7 +2,7 @@
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running">
   <metadata>
     <name>mb-lwb-cc</name>
-    <desc>Mount Bake, LWB, Columbia City (3.3 mi)</desc>
+    <desc>Mount Baker, LWB, Columbia City (3.3 mi)</desc>
     <author>
       <name>Race Condition Running</name>
       <link href="https://raceconditionrunning.com">
@@ -12,7 +12,7 @@
   </metadata>
   <trk>
     <name>mb-lwb-cc</name>
-    <desc>Mount Bake, LWB, Columbia City (3.3 mi)</desc>
+    <desc>Mount Baker, LWB, Columbia City (3.3 mi)</desc>
     <trkseg>
       <trkpt lat="47.57592" lon="-122.29691"/>
       <trkpt lat="47.57585" lon="-122.29692"/>
