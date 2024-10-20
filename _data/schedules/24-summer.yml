@@ -109,11 +109,12 @@
     - time: "10:30"
       route_id: roosevelt-green-lake-loop
 
-- date: "2024-09-28"
-  plan:
-    - time: "8:30"
-      route:
-        name: Light Rail Relay 2024
-        map: /light-rail-relay-24
-        dist: 38
-      highlight-image: /img/lrr24/og-banner.png
+# Copied to 24-autumn
+# - date: "2024-09-28"
+#   plan:
+#     - time: "8:30"
+#       route:
+#         name: Light Rail Relay 2024
+#         map: /light-rail-relay-24
+#         dist: 38
+#       highlight-image: /img/lrr24/og-banner.png

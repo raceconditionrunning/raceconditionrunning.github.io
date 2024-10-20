@@ -8,7 +8,7 @@ from shapely.geometry import shape, Point
 
 ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
 
-GOOGLE_MAPS_API_KEY = "AIzaSyCJdAH_V4n12KoDyNBcsAV86hWl1_49Hs0"
+GOOGLE_MAPS_API_KEY = open("_api_keys/google_maps", "r").read().strip()
 
 NEIGHBORHOOD_FILE = f"{ROOT}/locs/seattle_city_raw_data/Neighborhood_Map_Atlas_Neighborhoods.geojson"
 ROUTES_CSV_FILE = f"{ROOT}/routes/db.csv"

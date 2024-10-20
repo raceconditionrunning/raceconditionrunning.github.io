@@ -6,6 +6,7 @@ redirect_from:
 - /lrr24/
 team_registration_link: https://forms.gle/9DLctNws7jWC3WyU6
 registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
+email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 ---
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
@@ -26,22 +27,21 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css" integrity="sha512-qveKnGrvOChbSzAdtSs8p69eoLegyh+1hwOMbmpCViIwj7rn4oJjdmMvWOuyQlTOZgTlZA0N2PXA7iA8/2TUYA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator.min.css" integrity="sha512-HdUIebGeOK7s+At/fOnnbX8vsz6Cl1KTeiRlBiQABTMSqw7kZRCxGiUnuF9lr+1xz5y8pL7jkCR+NNtVVkEqKg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator_bootstrap5.min.css" integrity="sha512-904y6HHQyQS2fAyIQ869rH3AAkxZeFuxo9vheji5zw+IPEyioMWN4Bt/VFhzO5edPZ9m1lwkpYgXcYcm1vzaFw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator.min.css" integrity="sha256-pG2AUZRMdFyuinl2tPudk9iU0gh2pFIcxPbwNc/vUuo=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator_bootstrap5.min.css" integrity="sha256-H1gQqBIR3L9enXuoNfFASj+QdGSEQIAloT7c4FXjNzc=" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" integrity="sha256-V2sIX92Uh6ZaGSFTKMHghsB85b9toJtmazgG09AI2uk=" crossorigin="anonymous">
     <script type="importmap">
         {
           "imports": {
             "d3": "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm",
-            "maplibre-gl": "https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.js",
+            "maplibre-gl": "https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js",
             "masonry-layout": "https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js",
             "noUiSlider": "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.mjs",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
-            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.1.0/js/tabulator_esm.min.js",
+            "tabulator-tables": "https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/js/tabulator_esm.js",
             "@turf": "https://cdn.jsdelivr.net/npm/@turf/turf@7.1.0/+esm",
             "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js",
             "bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.esm.min.js"
@@ -581,11 +581,12 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
                     <p>Ultra relay along Seattle's Link Light Rail by <a href="{{ site.baseurl }}/" class="fst-italic text-decoration-none">Race Condition Running</a>. <br/>08:30 September 28th</p>
                     <div class="gap-2 d-flex flex-wrap">
 
-                        <a href="{{ page.registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-26" data-bs-placement="bottom">Join Team
-                            </a>
-                        <a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-24" data-bs-placement="bottom">Add Team</a>
-                        <a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-24" data-bs-placement="bottom">Enter Solo</a>
-                        
+                        <!--a href="{{ page.registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-26" data-bs-placement="bottom">Join Team
+                            </a-->
+                        <!--a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-24" data-bs-placement="bottom">Add Team</a-->
+                        <!--a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-24" data-bs-placement="bottom">Enter Solo</a-->
+
+                        <a href="#results" class="btn btn-outline btn-outline-primary btn-lg">Results</a>
                         <!--a href="#epilogue" class="btn btn-outline btn-outline-primary btn-lg">Read Epilogue</a-->
 
 
@@ -609,6 +610,9 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
 
 <section>
     <div class="container pb-4 mb-4">
+        <div class="alert alert-secondary" role="alert">
+            Interested in running the next LRR? <a href="{{ page.email_list_link }}">Register for an email</a>.
+        </div>
         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-baseline">
             <h2 id="route">Route <a href="#route" class="anchor-link" aria-label="Link to this section. Route"></a></h2>
             <a href="#" class="btn btn-outline-primary mb-3 m-sm-0 " id="download-route-gpx-btn" hidden>Download Route GPX</a>
@@ -668,7 +672,7 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
                 <accordion-header>Who can participate?</accordion-header>
                 <accordion-body>
                     <p>Anyone can form a team to complete the relay. See the instructions below for making a team.</p>
-                    <p>Members of the CSE community are welcome to run as part of the Race Condition Running team. See the <a href="#faq-rcr">section below</a> for details about the team.</p>
+                    <p>Anyone in the CSE community is welcome to run as part of the Race Condition Running team. See the <a href="#faq-rcr">section below</a> for details about the team.</p>
                 </accordion-body>
             </accordion-item>
             <accordion-item>
@@ -703,13 +707,14 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
             <accordion-item>
                 <accordion-header>What counts as a station photo?</accordion-header>
                 <accordion-body>
-                    <p>Your baton must be in the photo. It must be possible to tell that the photo was taken from within 100m of the station platform as the crow flies. You don't need to take the photo on the platform or even from within the fare zone! Use the <a href="https://www.soundtransit.org/sites/default/files/2016_start-on-link-map.pdf">station art</a> or signage.</p> Zoom into the map to see our recommended exchange landmarks.
+                    <p>Your baton must be in the photo. It must be possible to tell that the photo was taken from within 100m of the station platform as the crow flies. You don't need to take the photo on the platform or even from within the fare zone! Use the <a href="https://www.soundtransit.org/sites/default/files/2016_start-on-link-map.pdf">station art</a> or signage. Zoom into the map to see our recommended exchange landmarks.</p>
+                    <p>We prefer photos contain at least those who started/ended/ran-through a station, so we have documentation for who ran what.</p>
                 </accordion-body>
             </accordion-item>
             <accordion-item>
                 <accordion-header>Do we have to follow the route?</accordion-header>
                 <accordion-body>
-                    <p>We strongly recommend you follow the given route. We've run it before and assembled <a href="#route">notes on what to expect</a>. That said, the course is not monitored, and we will only be checking station photos. You can run alternative routes at your own peril.</p>
+                    <p>We strongly recommend you follow the given route. We've run it before and assembled <a href="#route">notes on what to expect</a>. That said, the course is not monitored, and we will only be checking station photos. You can run alternative routes at your peril.</p>
                 </accordion-body>
             </accordion-item>
             <accordion-item>
@@ -746,14 +751,14 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
                         <li><b>Mile 6.5:</b> 7-Eleven</li>
                         <li><b>Mile 11.45:</b> Chevron ExtraMile</li>
                         <li><b>Mile 14.6:</b> Hilltop Red Apple Market</li>
-                        <li><b>Mile 18.7:</b> Target</li>
-                        <li><b>Mile 20.7:</b> M2M Mart</li>
-                        <li><b>Mile 25.1:</b> Trader Joe's</li>
-                        <li><b>Mile 31.95:</b> 7-Eleven</li>
-                        <li><b>Mile 33.96</b> Arctic Mini-Mart</li>
-                        <li><b>Mile 37.15</b> 7-Eleven</li>
+                        <li><b>Mile 19.35:</b> H Mart</li>
+                        <li><b>Mile 20.55:</b> M2M Mart</li>
+                        <li><b>Mile 25:</b> Trader Joe's</li>
+                        <li><b>Mile 31.8:</b> 7-Eleven</li>
+                        <li><b>Mile 33.8:</b> Arctic Mini-Mart</li>
+                        <li><b>Mile 37:</b> 7-Eleven</li>
                      </ul>
-                    <p>Seattle's <a href="https://www.theurbanist.org/2022/08/20/why-peeing-your-pants-in-seattle-is-not-a-personal-failure/">shameful lack of public restrooms</a> is an obstacle. Libraries are your safest bet. The Beacon Hill Branch is only a block off the course and will be open in time for most runners, as are the Central Library downtown on 4th Ave, and University Branch on Roosevelt. Stations from Northgate northward have restrooms. Some of the above stores <i>may</i> have restrooms available, and you can zoom into the map to see other restrooms from OpenStreetMap. Do not count on access to any restrooms on the UW campus on weekends.</p>
+                    <p>Seattle's <a href="https://www.theurbanist.org/2022/08/20/why-peeing-your-pants-in-seattle-is-not-a-personal-failure/">shameful lack of public restrooms</a> means libraries are your safest bet. The Beacon Hill Branch is only a block off the course and will be open in time for most runners, as are the Central Library downtown on 4th Ave, and University Branch on Roosevelt. Stations from Northgate northward have restrooms. Some of the above stores <i>may</i> have restrooms available, and you can zoom into the map to see other restrooms from OpenStreetMap. Do not count on access to any restrooms on the UW campus on weekends.</p>
 
                     <h5>All teams</h5>
                     <p>Exchanges: The easiest way is to meet at the exact points marked on the route. We've placed the markers next to <a href="https://www.soundtransit.org/sites/default/files/2016_start-on-link-map.pdf">station art</a>, signage or other landmarks. Zoom into the map to see our recommended exchange landmarks.</p>
@@ -840,13 +845,162 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
 
 <section>
     <div class="container">
+        <h2 id="relay-day">Relay Day</h2>
+        <p>Team captains are your main point of contact. Here are the emails they've been sent:</p>
+        <accordion-group class="accordion accordion-flush" id="briefs">
+            <accordion-item>
+                <accordion-header>Debrief - 9/28/24</accordion-header>
+                <accordion-body>
+                    <body>
+                    <p>LRR24 Captains,<br/>
+                    I got to chat with many of you and team and heard lots of positive feedback. If you have or hear other ideas or less-positive feedback, please share. The event will continue to evolve, especially as the Link system grows.</p>
+
+                    <p>Please do <a href="https://forms.gle/GBAd4JjGyNRvTWaBA">send station photos</a> (as many as you have) when you can. I will post a results table when I have enough. We don’t publish the photos, but I hope <em>you</em> share them someplace to celebrate your team’s accomplishment. If it’s easier, a list of links to public Strava activities covering the line should also work.</p>
+
+                    <p>If you want to be notified before the next LRR, you can opt in by leaving your email address at <a href="https://forms.gle/fb9ybhSnQV8dgDsr9">this form</a>. Registration email addresses are only used for communicating about registration (and not marketing).</p>
+
+                    <p>I will get you copies of any team portraits I got at the finish, but I’m generally slow to churn through photos. Sorry about that.</p>
+
+                    <p>Thanks for running!<br>—Nick</p>
+                    </body>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>Brief #2 - 9/26/24</accordion-header>
+                <accordion-body>
+                    <p>Hi LRR24 Captains,<br/>
+                    Hope you and team are set for Saturday. Weather is looking nice and mild.</p>
+                    <ul>
+                        <li>Team/Solo entry closed yesterday. With additions/withdrawals, we now total 12 teams and 2 solo runners, with about 120 participants total.
+                            <ul>
+                                <li>I hope you’ll get the chance to see other teams on the way, but it’s a big course!</li>
+                                <li>Come to Angle Lake early if you want to guarantee meeting people. Several caravanning teams will be there en masse.</li>
+                            </ul>
+                        </li>
+                        <li>Please have your team members (including you) fill out the waiver. You should have a link to a view of who has completed it.</li>
+                        <li>Teams that requested schedules:
+                            <ul>
+                                <li>I’ve put a “suggested schedule” in another tab of your sheet. It’s what you get if you try to respect all the preferences given, which often isn’t exactly what you want! Just a reference point.</li>
+                                <li>These schedules also include a small exchange time buffer and climbing-based pace adjustment. Nailing exchanges saves time (easier said than done).</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <b>Travel</b>
+                    <ul>
+                        <li>Those taking the 1 Line to the start, I recommend catching <a href="https://pugetsound.onebusaway.org/where/trip?id=40_LLR_2024-09-14_Jun27_Fall2024_Saturday_100479_2018&serviceDate=1727506800000&stopId=40_N23-T2">this scheduled trip (#2018)</a>:
+
+                        </li>
+                        <li>There are several <a href="https://wsdot.wa.gov/about/news/2024/monster-weekend-closures-sr-520-northbound-i-405-southbound-sr-167-and-i-5-sept-27-30">major road disruptions this weekend</a> which may impact travel from outside Seattle proper.</a>
+                        </li>
+                    </ul>
+
+                    <b>Misc</b>
+                    <ul>
+                        <li>Rob of team Velociraptors put together a quick <a href="https://drive.google.com/file/d/1QI75k9HQY7_FcDjc6YNt6nwzlsLZrbm-/view">turn-by-turn PDF</a> which he has kindly shared in case it’s useful for other teams.
+
+                            <ul>
+                                <li>Be like Rob; make sure your team has a navigation solution that works for them. If you’re running with your phone, you can always use the route map on the site. Location information shared with the map is only used to draw your dot on the map and does not leave your device.</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <p>Copies of these emails (sans my contact information) will be posted on the site. Any last minute updates will go out to you via email only.</p>
+                    <p>See you soon,<br>Nick</p>
+
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>Brief #1 - 9/21/24</accordion-header>
+            <accordion-body>
+                <p>Hello LRR24 Captains,<br/>
+                    I hope you’re looking forward to next weekend. Here’s your brief.</p>
+
+                <p>We expect 10 teams and 3 solo runners, with about 80 participants total. The median finish time estimate is 7 hours.<br>
+                    Team/solo entry will close Tuesday night (9-24), and the runner sign up form will close Thursday night (9-26). Let your friends know they only have a few days to decide 😉<br>
+                    Weather (as of 9-21): dry, starting in 50s, ending in 60s F</p>
+
+                <b>Before</b>
+                <ul>
+                    <li>Please have your runners sign up! There’s a waiver so they understand what they’re getting into, and it allows me to confirm team sizes for results.</li>
+                    <li>We’ll send recommended schedules to teams that asked for them Thursday morning.</li>
+                    <li>The route on the website was updated with minor street and exchange tweaks. No further changes expected. Grab a fresh GPX and update any materials you made for your team.</li>
+                    <li>Tell runners to review the route and notes.
+                        <ul>
+                            <li>It’s an open, unmarked course, and it <em>is</em> possible to get lost</li>
+                            <li>The route is detailed down to the level of sidewalks and crossings</li>
+                            <li>When in doubt, stick to the route. It avoids construction and pedestrian-hostile areas.</li>
+                        </ul>
+                    </li>
+                    <li>Warnings ⚠️:
+                        <ul>
+                            <li><strong>Leg 3:</strong> Runner must be prepared. Difficult to navigate, long, and hilly. Uses multiple narrow overpass bridges and has a couple sidewalk-less segments.</li>
+                            <li><strong>Leg 11/12, Pioneer Square exchange:</strong> The street can be rough, so this is the only exchange where we recommend meeting inside the station.</li>
+                            <li><strong>Leg 21:</strong> NE 188th St is a big hill with no sidewalks, and the turn+crossing on 15th Ave NE is unprotected. Use caution.</li>
+                            <li><strong>Leg 13 (Pike Place):</strong> Routed for sights. It’s also the halfway mark this year. Convenient spot if you want the team together for one photo.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <b>During</b>
+                <ul>
+                    <li>The start is at 08:30 from the Angle Lake station platform, right under the hanging “Cloud” sculpture (photo attached). I will be on the platform from 8:00 to distribute batons and answer questions. It’s usually chilly.</li>
+                    <li>Remember to take station photos (even when runners aren’t exchanging at a station!)</li>
+                    <li>The map has live and scheduled train data:
+                        <ul>
+                            <li>Zoom in to see which trip number you’re on. Useful if you’re sharing an ETA or riding together!</li>
+                            <li>Zoom into stations to see the arrivals board.</li>
+                        </ul>
+                    </li>
+                    <li>It’s unlikely, but:
+                        <ul>
+                            <li><strong>Major medical incidents:</strong> contact emergency services, then contact me (<i>phone number withheld</i>).</li>
+                            <li><strong>Missing runners:</strong> contact me (<i>phone number withheld</i>).</li>
+                        </ul>
+                    </li>
+                    <li>Solo runners:
+                        <ul>
+                            <li>See the notes on recommended pitstops under “How do we manage our team’s logistics?” in the FAQ. TLDR: plenty of shops along the way; libraries are the safest bathroom bet.</li>
+                        </ul>
+                    </li>
+                    <li>Fun:
+                        <ul>
+                            <li>There’s a street party in the U District: <a href="https://udistrictseattle.com/chowdown">U District Chowdown</a></li>
+                            <li>Olive Garden is a half mile from the end of the line in Lynnwood 🥖</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>After</h3>
+                <ul>
+                    <li>Here’s the upload link for photos (23 zipped): <a href="https://forms.gle/Z2nA3oH54EoYvYrH8">Photo upload link</a>
+                        <ul>
+                            <li>These are for timing, we don’t share them. Results will be posted Sunday evening or sooner.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p>See you in a week,<br>Nick</p>
+            </accordion-body>
+                </accordion-item>
+
+        </accordion-group>
+    </div>
+</section>
+
+<section>
+    <div class="container-xxl">
         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-baseline">
             <h2 id="results">Results <a href="#results" class="anchor-link" aria-label="Link to this section. Results"></a></h2>
             <a href="https://forms.gle/GBAd4JjGyNRvTWaBA" class="btn btn-outline-primary mb-3 m-sm-0">Upload Photos</a>
         </div>
 
-        <p>Results will be posted the day after the event. <i>Send station photos to your team captain to avoid delays!</i></p>
+        <div id="results-table"></div>
+        <p class="text-body-tertiary">Updated 9/30/24</p>
+        <div class="container">
 
+        <p><b>Blanks in your results?</b> These images were missing time information, maybe because they were sent through an application that metadata by default. You can read more about EXIF image metadata and test whether the "DateTimeOriginal" field is present on your image files on <a href="https://hturan.com/writing/exploring-exif">this page</a>. You're welcome to resubmit just the missing images.</p>
+            </div>
     </div>
 </section>
 
@@ -896,6 +1050,7 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
     import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
     import {RelayMap} from '{{ site.baseurl }}/js/RelayMap.js';
     import {LegCalculator} from '{{ site.baseurl }}/js/LegCalculator.js';
+    import {RelayResultsTable} from "../js/RelayResultsTable.js";
     import {TransitVehicleTracker} from '{{ site.baseurl }}/js/TransitVehicleTracker.js';
 
     const apiBaseUrl = "https://api.pugetsound.onebusaway.org/api"
@@ -979,6 +1134,17 @@ registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
     import {Tooltip} from 'bootstrap'
 
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
+
+    Promise.all([fetch('{{ site.baseurl }}/results/lrr24.json').then(res => res.json()), processedRouteData]).then(([results, [legs, exchanges, exchangeNames]]) => {
+        results.results.forEach((result, index) => {
+            result.index = index
+
+        })
+        const relayResultsTable = new RelayResultsTable(results.results)
+
+        relayResultsTable.initialize(results.results, exchangeNames)
+        document.getElementById("results-table").appendChild(relayResultsTable)
+    })
 
     document.addEventListener('DOMContentLoaded', e => {
         prepareImagesForPhotoswipe(document.querySelectorAll("#teaser-gallery a")).then(() => {
