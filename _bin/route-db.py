@@ -15,7 +15,11 @@ FIELDS = [
     'type',
     'surface',
     'map',
-    'deprecated'
+    'deprecated',
+    'neighborhoods',
+    'coarse_neighborhoods',
+    'start_neighborhood',
+    'end_neighborhood',
 ]
 
 TYPES = ['Loop', 'P2P', 'OB']
@@ -160,7 +164,7 @@ def main():
             f.write('\n')
 
     # write json version
-    json_path = os.path.join(rcr.ROUTES, 'db.json')
+    json_path = os.path.join(rcr.ROUTES_AND_LOCS, 'routes.json')
     with open(json_path, 'w') as f:
         json.dump(routes, f, indent=2)
 
