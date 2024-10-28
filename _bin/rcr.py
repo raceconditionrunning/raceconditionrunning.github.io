@@ -6,19 +6,18 @@ ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
 # key directories
 DATA = os.path.join(ROOT, '_data')
 SCHEDULES = os.path.join(ROOT, '_data', 'schedules')
-ROUTES = os.path.join(ROOT, 'routes')
-ROUTES_GPX = os.path.join(ROUTES, 'gpx')
-ROUTES_GEOJSON = os.path.join(ROUTES, 'geojson')
-LOCS = os.path.join(ROOT, 'locs')
+ROUTES_AND_LOCS = os.path.join(ROOT, 'routes_and_locs')
+ROUTES_GPX = os.path.join(ROUTES_AND_LOCS , 'gpx')
+ROUTES_GEOJSON = os.path.join(ROUTES_AND_LOCS, 'geojson')
 
-for path in [ROOT, DATA, ROUTES, ROUTES_GPX]:
+for path in [ROOT, DATA, ROUTES_AND_LOCS , ROUTES_GPX]:
   if not os.path.isdir(path):
     print(f"Error: no such directory '{path}'")
     exit(1)
 
 # key files
-ROUTE_DB = os.path.join(ROOT, 'routes', 'db.csv')
-LOC_DB = os.path.join(ROOT, 'locs', 'db.csv')
+ROUTE_DB = os.path.join(ROUTES_AND_LOCS, 'routes.csv')
+LOC_DB = os.path.join(ROUTES_AND_LOCS, 'locs.csv')
 
 for path in [ROUTE_DB, LOC_DB]:
   if not os.path.isfile(path):
