@@ -1,18 +1,14 @@
-import pandas as pd
-import os
+import csv
+from datetime import datetime, timedelta
+
 import requests
-from shapely import distance
-from shapely.geometry import shape, Point
-from statistics import mean
+import rcr
+import haversine
 
-ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
-ROUTES_LOCS_DIR = os.path.join(ROOT, "routes_and_locs")
-
-GOOGLE_MAPS_API_KEY = open("_api_keys/google_maps", "r").read().strip()
+ROUTES_LOCS_DIR = rcr.ROUTES
+GOOGLE_MAPS_API_KEY = os.path.join(ROOT, "routes_and_locs")
 
 NEIGHBORHOOD_FILE = f"{ROUTES_LOCS_DIR}/seattle_transit_data/Neighborhood_Map_Atlas_Neighborhoods.geojson"
-ROUTES_CSV_FILE = f"{ROUTES_LOCS_DIR}/routes.csv"
-LOCS_CSV_FILE = f"{ROUTES_LOCS_DIR}/locs.csv"
 
 TRANSPORT_FILES = {
     "Light Rail": f"{ROUTES_LOCS_DIR}/seattle_transit_data/light_rail.csv",
@@ -24,64 +20,68 @@ TRANSPORT_FILES = {
 MAX_REACHABILITY = 3
 
 
-df = pd.read_csv(LOCS_CSV_FILE)
-assert "id" in list(df), "db.csv does not contain location ids"
-
+locs = rcr.load_loc_db()
 CRITICAL_LOC_NAMES = ["CSE", "GreenLake", "Beacon"]
 CRITICAL_LOCS = []
-for index, row in df.iterrows():
-    if row['id'] in CRITICAL_LOC_NAMES:
-        CRITICAL_LOCS.append((row['lon'], row['lat']))
+for critical_loc in CRITICAL_LOC_NAMES:
+    for row in locs:
+        if row['id'] == critical_loc:
+            CRITICAL_LOCS.append((row['lon'], row['lat']))
 
 STOPS = {}
 for system_name, file_name in TRANSPORT_FILES.items():
-    system_df = pd.read_csv(TRANSPORT_FILES[system_name])
-    for index, row in system_df.iterrows():
-        STOPS[row['stop_name']] = {
-            'lon': row['stop_lon'],
-            'lat': row['stop_lat'],
-            'system': system_name,
-        }
+    with open(file_name, "r") as f:
+        system = csv.DictReader(f, dialect="unix")
+        for row in system:
+            STOPS[row['stop_name']] = {
+                'lon': float(row['stop_lon']),
+                'lat': float(row['stop_lat']),
+                'system': system_name,
+            }
 
+# determine if this stop is "close enough"
 def near_enough(p1, p2, threshold=0.005): #0.005 ~= 0.3 miles or 6 minutes of walking
-    return distance(p1, p2) < threshold
+    return haversine.haversine(p1, p2) < threshold
 
-## add new columns if not existing in csv
-for col_name in ["transit", "reachability"]:
-    if col_name not in df:
-        df[col_name] = ""
 
-for index, row in df.iterrows():
+for row in locs:
     id = row["id"]
-    loc_point = Point(row['lon'], row['lat'])
-
+    print(f"Processing {id}")
     # match to nearest stop
-    df.at[index, "transit"] = f"Bus or Drive"
+    transit_choice = f"Bus or Drive"
     for stop_name, stop_dict in STOPS.items():
-        if near_enough(loc_point, Point(stop_dict['lon'], stop_dict['lat'])):
-            # import pdb; pdb.set_trace()
-            df.at[index, "transit"] = f"{stop_dict['system']} to {stop_name} stop"
+        if near_enough((float(row["lat"]), float(row["lon"])), (stop_dict['lat'], stop_dict['lon'])):
+            transit_choice = f"{stop_dict['system']} to {stop_name} stop"
             break
-
-    dest = "%7C".join([f"{lat}%2C{lon}" for lon, lat in CRITICAL_LOCS])
-    orig = f"{row['lat']}%2C{row['lon']}"
-    request = f"https://maps.googleapis.com/maps/api/distancematrix/json?destinations={dest}&origins={orig}&mode=transit&key={GOOGLE_MAPS_API_KEY}"
-    response = requests.get(request)
+    row["transit"] = transit_choice
+    dest = "|".join([f"{lat},{lon}" for lon, lat in CRITICAL_LOCS])
+    orig = f"{row['lat']},{row['lon']}"
+    # Calculate the number of days to the next Saturday (weekday 5)
+    days_to_saturday = (5 - datetime.today().weekday() + 7) % 7
+    next_saturday = datetime.today() + timedelta(days=days_to_saturday)
+    next_saturday = next_saturday.replace(hour=8, minute=30, second=0, microsecond=0)
+    epoch_time_next_saturday = int(next_saturday.timestamp())
+    response = requests.get(f"https://maps.googleapis.com/maps/api/distancematrix/json",
+                            params=
+                            {"destinations": dest,
+                             "origins": orig,
+                             "mode": "transit",
+                             "key": GOOGLE_MAPS_API_KEY,
+                             "arrival_time": epoch_time_next_saturday})
     response_json = response.json()
-    # import pdb;pdb.set_trace()
+
     if response.status_code == 200 and response_json.get("status") == "OK":
         distance_dicts = [r.get("elements", {})[0].get("duration", {}) for r in response_json.get("rows", {})]
         distance_sec = [d["value"] for d in distance_dicts if "value" in d]
         distance_text = [d["text"] for d in distance_dicts if "text" in d]
         reachability = MAX_REACHABILITY
         if distance_sec:
-            avg_distance_mins = mean(distance_sec)/60
+            avg_distance_mins = sum(distance_sec) / len(distance_sec) /60
             max_distance_mins = max(distance_sec)/60
             reachability = min(reachability, 1 + int(max_distance_mins/(30)))
-        df.at[index, "reachability"] = reachability
+        row["reachability"] = reachability
 
-os.rename(LOCS_CSV_FILE, LOCS_CSV_FILE + "_old")
-df.to_csv(LOCS_CSV_FILE, index=False)
-
-
- 
+with open(rcr.LOC_DB, "w") as f:
+    writer = csv.DictWriter(f, locs[0].keys(), dialect='unix')
+    writer.writeheader()
+    writer.writerows(locs)
