@@ -1,4 +1,5 @@
+gpxpy==1.6.2
+haversine
 icalendar==5.0.7
 PyYAML==6.0.1
-gpxpy==1.6.2
 requests

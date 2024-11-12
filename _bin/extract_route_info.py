@@ -1,19 +1,38 @@
-import pandas as pd
-import geojson
 import gpxpy
-import os
-from shapely import distance
-from shapely.geometry import shape, Point
+import rcr
+import json
+import csv
 
-ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
-ROUTES_LOCS_DIR = os.path.join(ROOT, "routes_and_locs")
+def is_point_in_polygon(x, y, geometry):
+    inside = False
 
-GOOGLE_MAPS_API_KEY = open("_api_keys/google_maps", "r").read().strip()
+    for rings in geometry:
+        polygon = rings[0]
+        for i in range(1, len(polygon)):
+            if ((polygon[i - 1][1] > y) != (polygon[i][1] > y)) and \
+                    (x < (polygon[i][0] - polygon[i - 1][0]) * (y - polygon[i - 1][1]) / (polygon[i][1] - polygon[i - 1][1]) + polygon[i - 1][0]):
+                inside = not inside
+        if inside:
+            return True
+    return False
+
+def is_point_in_bbox(x, y, bbox):
+    return bbox[0] <= x <= bbox[1] and bbox[2] <= y <= bbox[3]
+
+def calculate_bounding_box(geometry):
+
+    # MultiPolygon: geometry is a list of polygons
+    min_x = min(point[0] for polygon in geometry for point in polygon[0])
+    max_x = max(point[0] for polygon in geometry for point in polygon[0])
+    min_y = min(point[1] for polygon in geometry for point in polygon[0])
+    max_y = max(point[1] for polygon in geometry for point in polygon[0])
+
+    return min_x, max_x, min_y, max_y
+
+
+ROUTES_LOCS_DIR = rcr.ROUTES
 
 NEIGHBORHOOD_FILE = f"{ROUTES_LOCS_DIR}/seattle_transit_data/Neighborhood_Map_Atlas_Neighborhoods.geojson"
-ROUTES_CSV_FILE = f"{ROUTES_LOCS_DIR}/routes.csv"
-LOCS_CSV_FILE = f"{ROUTES_LOCS_DIR}/locs.csv"
-
 TRANSPORT_FILES = {
     "Light Rail": f"{ROUTES_LOCS_DIR}/seattle_transit_data/light_rail.csv",
     "Ferry": f"{ROUTES_LOCS_DIR}/seattle_transit_data/ferry.csv",
@@ -22,37 +41,35 @@ TRANSPORT_FILES = {
 
 STOPS = {}
 for system_name, file_name in TRANSPORT_FILES.items():
-    system_df = pd.read_csv(TRANSPORT_FILES[system_name])
-    for index, row in system_df.iterrows():
-        STOPS[row['stop_name']] = {
-            'lat': row['stop_lat'],
-            'lon': row['stop_lon'],
-            'system': system_name,
-        }
+    with open(file_name) as f:
+        system = csv.DictReader(f, dialect='unix')
+        for row in system:
+            STOPS[row['stop_name']] = {
+                'lat': row['stop_lat'],
+                'lon': row['stop_lon'],
+                'system': system_name,
+            }
 
-df = pd.read_csv(ROUTES_CSV_FILE)
-assert "id" in list(df), "db.csv does not contain route ids"
+routes = rcr.load_route_db()
 
 NEIGHBORHOOD_POLYGONS = {}
 with open(NEIGHBORHOOD_FILE) as f:
-    gj = geojson.load(f)
+    gj = json.load(f)
 
 for n_obj in gj['features']:
     n_lname = n_obj["properties"]["L_HOOD"]
     n_sname = n_obj["properties"]["S_HOOD"]
-    n_shape = shape(n_obj["geometry"])
-    NEIGHBORHOOD_POLYGONS[(n_sname, n_lname)] = n_shape
+    n_shape = n_obj["geometry"]["coordinates"]
+    if n_obj["geometry"]["type"] == "Polygon":
+        # Convert to simple MultiPolygon
+        n_shape = [n_shape]
+    bbox = calculate_bounding_box(n_shape)
+    NEIGHBORHOOD_POLYGONS[(n_sname, n_lname)] = (n_shape, bbox)
 
-# determine if this stop is "close enough"
-def near_enough(p1, p2, threshold=0.005): #0.005 ~= 0.3 miles or 6 minutes of walking
-    return distance(p1, p2) < threshold
 
-## add new columns if not existing in csv
-for col_name in ["neighborhoods", "coarse_neighborhoods", "start_neighborhood", "end_neighborhood"]: #, "transit"]:
-    if col_name not in df:
-        df[col_name] = ""
 
-for index, row in df.iterrows():
+for row in routes:
+    print(f"Updating {row['id']}")
     id = row["id"]
     gpx_file = open(f"{ROUTES_LOCS_DIR}/gpx/{id}.gpx", 'r')
 
@@ -63,35 +80,25 @@ for index, row in df.iterrows():
     for track in gpx.tracks:
         for segment in track.segments:
             for point in segment.points:
-                p = Point(point.longitude, point.latitude)
-                for (n_name, n_coarse_name), n_shape in NEIGHBORHOOD_POLYGONS.items():
-                    # import pdb;pdb.set_trace()
-                    if n_shape.contains(p):
+                for (n_name, n_coarse_name), (n_shape, bbox) in NEIGHBORHOOD_POLYGONS.items():
+                    if is_point_in_bbox(point.longitude, point.latitude, bbox) and is_point_in_polygon(point.longitude, point.latitude, n_shape):
                         route_neighborhoods.append(n_name)
                         coarse_route_neighborhoods.append(n_coarse_name)
-    
+
     if len(route_neighborhoods) == 0:
         route_neighborhoods.append("non-Seattle")
         coarse_route_neighborhoods.append("non-Seattle")
 
-    df.at[index, "start_neighborhood"] = route_neighborhoods[0]
+    row["start_neighborhood"] = route_neighborhoods[0]
     if row['type'] in ["Loop", "OB"]:
-        df.at[index, "end_neighborhood"] = route_neighborhoods[0]
+        row["end_neighborhood"] = route_neighborhoods[0]
     elif row['type'] in ["P2P"]:
-        df.at[index, "end_neighborhood"] = route_neighborhoods[-1]
+        row["end_neighborhood"] = route_neighborhoods[-1]
     # hacky, to allow saving list as a csv column
-    df.at[index, "neighborhoods"] = ";".join(list(set(route_neighborhoods)))
-    df.at[index, "coarse_neighborhoods"] = ";".join(list(set(coarse_route_neighborhoods)))
+    row["neighborhoods"] = ";".join(sorted(set(route_neighborhoods)))
+    row["coarse_neighborhoods"] = ";".join(sorted(set(coarse_route_neighborhoods)))
 
-    start = gpx.tracks[0].segments[0].points[0]
-    start_point = Point(start.longitude, start.latitude)
-
-    # for stop_name, stop_dict in STOPS.items():
-    #     if near_enough(start_point, Point(stop_dict['lon'], stop_dict['lat'])):
-    #         df.at[index, "transit"] = f"{stop_dict['system']} to {stop_name} stop"
-    #         break
-
-os.rename(ROUTES_CSV_FILE, ROUTES_CSV_FILE + "_old")
-df.to_csv(ROUTES_CSV_FILE, index=False)
-
- 
+with open(rcr.ROUTE_DB, "w") as f:
+    writer = csv.DictWriter(f, routes[0].keys(), dialect='unix')
+    writer.writeheader()
+    writer.writerows(routes)
