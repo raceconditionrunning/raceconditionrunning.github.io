@@ -1,6 +1,6 @@
 ROUTES = routes
-ROUTE_DB = $(ROUTES)/db.csv
-ROUTES_JSON = $(ROUTES)/db.json
+ROUTE_DB = $(ROUTES)/routes.csv
+ROUTES_JSON = $(ROUTES)/routes.json
 ROUTES_GEOJSON = $(ROUTES)/geojson
 
 DATA = _data

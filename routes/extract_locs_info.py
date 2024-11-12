@@ -1,6 +1,4 @@
 import pandas as pd
-import geojson
-import gpxpy
 import os
 import requests
 from shapely import distance
@@ -8,17 +6,23 @@ from shapely.geometry import shape, Point
 from statistics import mean
 
 ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
+ROUTES_LOCS_DIR = os.path.join(ROOT, "routes_and_locs")
 
-GOOGLE_MAPS_API_KEY = ""
-#"AIzaSyCJdAH_V4n12Ko
-# DyNBcsAV86hWl1_49Hs0"
+GOOGLE_MAPS_API_KEY = open("_api_keys/google_maps", "r").read().strip()
+
+NEIGHBORHOOD_FILE = f"{ROUTES_LOCS_DIR}/seattle_transit_data/Neighborhood_Map_Atlas_Neighborhoods.geojson"
+ROUTES_CSV_FILE = f"{ROUTES_LOCS_DIR}/routes.csv"
+LOCS_CSV_FILE = f"{ROUTES_LOCS_DIR}/locs.csv"
 
 TRANSPORT_FILES = {
-    "Light Rail": f"{ROOT}/locs/seattle_city_raw_data/sound_transit_light_rail.csv",
-    "Ferry": f"{ROOT}/locs/seattle_city_raw_data/ferry.csv",
-    # "Bus": f"{ROOT}/locs/seattle_city_raw_data/bus.csv",
+    "Light Rail": f"{ROUTES_LOCS_DIR}/seattle_transit_data/light_rail.csv",
+    "Ferry": f"{ROUTES_LOCS_DIR}/seattle_transit_data/ferry.csv",
+    "Bus": f"{ROUTES_LOCS_DIR}/seattle_transit_data/bus.csv",
 }
-LOCS_CSV_FILE = f"{ROOT}/locs/db.csv"
+
+
+MAX_REACHABILITY = 3
+
 
 df = pd.read_csv(LOCS_CSV_FILE)
 assert "id" in list(df), "db.csv does not contain location ids"
@@ -38,8 +42,6 @@ for system_name, file_name in TRANSPORT_FILES.items():
             'lat': row['stop_lat'],
             'system': system_name,
         }
-
-MAX_REACHABILITY = 3
 
 def near_enough(p1, p2, threshold=0.005): #0.005 ~= 0.3 miles or 6 minutes of walking
     return distance(p1, p2) < threshold

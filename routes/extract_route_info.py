@@ -2,23 +2,23 @@ import pandas as pd
 import geojson
 import gpxpy
 import os
-import requests
 from shapely import distance
 from shapely.geometry import shape, Point
 
 ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
+ROUTES_LOCS_DIR = os.path.join(ROOT, "routes_and_locs")
 
-GOOGLE_MAPS_API_KEY = "AIzaSyCJdAH_V4n12KoDyNBcsAV86hWl1_49Hs0"
+GOOGLE_MAPS_API_KEY = open("_api_keys/google_maps", "r").read().strip()
 
-NEIGHBORHOOD_FILE = f"{ROOT}/locs/seattle_city_raw_data/Neighborhood_Map_Atlas_Neighborhoods.geojson"
-ROUTES_CSV_FILE = f"{ROOT}/routes/db.csv"
+NEIGHBORHOOD_FILE = f"{ROUTES_LOCS_DIR}/seattle_transit_data/Neighborhood_Map_Atlas_Neighborhoods.geojson"
+ROUTES_CSV_FILE = f"{ROUTES_LOCS_DIR}/routes.csv"
+LOCS_CSV_FILE = f"{ROUTES_LOCS_DIR}/locs.csv"
 
 TRANSPORT_FILES = {
-    "Light Rail": f"{ROOT}/locs/seattle_city_raw_data/sound_transit_light_rail.csv",
-    "Ferry": f"{ROOT}/locs/seattle_city_raw_data/ferry.csv",
-    "Bus": f"{ROOT}/locs/seattle_city_raw_data/bus.csv",
+    "Light Rail": f"{ROUTES_LOCS_DIR}/seattle_transit_data/light_rail.csv",
+    "Ferry": f"{ROUTES_LOCS_DIR}/seattle_transit_data/ferry.csv",
+    "Bus": f"{ROUTES_LOCS_DIR}/seattle_transit_data/bus.csv",
 }
-LOCS_CSV_FILE = f"{ROOT}/locs/db.csv"
 
 STOPS = {}
 for system_name, file_name in TRANSPORT_FILES.items():
@@ -54,7 +54,7 @@ for col_name in ["neighborhoods", "coarse_neighborhoods", "start_neighborhood", 
 
 for index, row in df.iterrows():
     id = row["id"]
-    gpx_file = open(f"{ROOT}/routes/gpx/{id}.gpx", 'r')
+    gpx_file = open(f"{ROUTES_LOCS_DIR}/gpx/{id}.gpx", 'r')
 
     gpx = gpxpy.parse(gpx_file)
 
@@ -72,6 +72,8 @@ for index, row in df.iterrows():
     
     if len(route_neighborhoods) == 0:
         route_neighborhoods.append("non-Seattle")
+        coarse_route_neighborhoods.append("non-Seattle")
+
     df.at[index, "start_neighborhood"] = route_neighborhoods[0]
     if row['type'] in ["Loop", "OB"]:
         df.at[index, "end_neighborhood"] = route_neighborhoods[0]
