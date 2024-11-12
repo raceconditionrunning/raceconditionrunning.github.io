@@ -4,9 +4,10 @@ from datetime import datetime, timedelta
 import requests
 import rcr
 import haversine
+import os
 
 ROUTES_LOCS_DIR = rcr.ROUTES
-GOOGLE_MAPS_API_KEY = os.path.join(ROOT, "routes_and_locs")
+GOOGLE_MAPS_API_KEY = open("_api_keys/google_maps", "r").read().strip()
 
 NEIGHBORHOOD_FILE = f"{ROUTES_LOCS_DIR}/seattle_transit_data/Neighborhood_Map_Atlas_Neighborhoods.geojson"
 
