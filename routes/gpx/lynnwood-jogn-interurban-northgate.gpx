@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running">
   <metadata>
-    <name>lynwood-jogn-interurban-northgate</name>
-    <desc>Lynwood, Jog North, Interurban Trail, Northgate (15 mi)</desc>
+    <name>lynnwood-jogn-interurban-northgate</name>
+    <desc>Lynnwood, Jog North, Interurban Trail, Northgate (15.0 mi)</desc>
     <author>
       <name>Race Condition Running</name>
       <link href="https://raceconditionrunning.com">
@@ -11,8 +11,8 @@
     </author>
   </metadata>
   <trk>
-    <name>lynwood-jogn-interurban-northgate</name>
-    <desc>Lynwood, Jog North, Interurban Trail, Northgate (15 mi)</desc>
+    <name>lynnwood-jogn-interurban-northgate</name>
+    <desc>Lynnwood, Jog North, Interurban Trail, Northgate (15.0 mi)</desc>
     <trkseg>
       <trkpt lat="47.81502" lon="-122.29334"/>
       <trkpt lat="47.81514" lon="-122.29329"/>

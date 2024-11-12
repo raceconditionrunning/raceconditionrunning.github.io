@@ -2,7 +2,7 @@
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running">
   <metadata>
     <name>blyth-park-tolt-pipeline-trail-full-ob</name>
-    <desc>OB: Blyth Park, Tolt Pipeline Trail Full (22 mi)</desc>
+    <desc>OB: Blyth Park, Tolt Pipeline Trail Full (22.0 mi)</desc>
     <author>
       <name>Race Condition Running</name>
       <link href="https://raceconditionrunning.com">
@@ -12,7 +12,7 @@
   </metadata>
   <trk>
     <name>blyth-park-tolt-pipeline-trail-full-ob</name>
-    <desc>OB: Blyth Park, Tolt Pipeline Trail Full (22 mi)</desc>
+    <desc>OB: Blyth Park, Tolt Pipeline Trail Full (22.0 mi)</desc>
     <trkseg>
       <trkpt lat="47.7504" lon="-122.20811"/>
       <trkpt lat="47.75008" lon="-122.2081"/>
