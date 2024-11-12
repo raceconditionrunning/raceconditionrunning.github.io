@@ -32,23 +32,7 @@ def calculate_bounding_box(geometry):
 
 ROUTES_LOCS_DIR = rcr.ROUTES
 
-NEIGHBORHOOD_FILE = f"{ROUTES_LOCS_DIR}/seattle_transit_data/Neighborhood_Map_Atlas_Neighborhoods.geojson"
-TRANSPORT_FILES = {
-    "Light Rail": f"{ROUTES_LOCS_DIR}/seattle_transit_data/light_rail.csv",
-    "Ferry": f"{ROUTES_LOCS_DIR}/seattle_transit_data/ferry.csv",
-    "Bus": f"{ROUTES_LOCS_DIR}/seattle_transit_data/bus.csv",
-}
-
-STOPS = {}
-for system_name, file_name in TRANSPORT_FILES.items():
-    with open(file_name) as f:
-        system = csv.DictReader(f, dialect='unix')
-        for row in system:
-            STOPS[row['stop_name']] = {
-                'lat': row['stop_lat'],
-                'lon': row['stop_lon'],
-                'system': system_name,
-            }
+NEIGHBORHOOD_FILE = f"{ROUTES_LOCS_DIR}/neighborhoods.geojson"
 
 routes = rcr.load_route_db()
 

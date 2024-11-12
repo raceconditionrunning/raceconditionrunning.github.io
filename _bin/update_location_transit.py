@@ -9,15 +9,6 @@ import os
 ROUTES_LOCS_DIR = rcr.ROUTES
 GOOGLE_MAPS_API_KEY = open("_api_keys/google_maps", "r").read().strip()
 
-NEIGHBORHOOD_FILE = f"{ROUTES_LOCS_DIR}/seattle_transit_data/Neighborhood_Map_Atlas_Neighborhoods.geojson"
-
-TRANSPORT_FILES = {
-    "Light Rail": f"{ROUTES_LOCS_DIR}/seattle_transit_data/light_rail.csv",
-    "Ferry": f"{ROUTES_LOCS_DIR}/seattle_transit_data/ferry.csv",
-    "Bus": f"{ROUTES_LOCS_DIR}/seattle_transit_data/bus.csv",
-}
-
-
 MAX_REACHABILITY = 3
 
 
@@ -29,16 +20,6 @@ for critical_loc in CRITICAL_LOC_NAMES:
         if row['id'] == critical_loc:
             CRITICAL_LOCS.append((row['lon'], row['lat']))
 
-STOPS = {}
-for system_name, file_name in TRANSPORT_FILES.items():
-    with open(file_name, "r") as f:
-        system = csv.DictReader(f, dialect="unix")
-        for row in system:
-            STOPS[row['stop_name']] = {
-                'lon': float(row['stop_lon']),
-                'lat': float(row['stop_lat']),
-                'system': system_name,
-            }
 
 # determine if this stop is "close enough"
 def near_enough(p1, p2, threshold=0.005): #0.005 ~= 0.3 miles or 6 minutes of walking
