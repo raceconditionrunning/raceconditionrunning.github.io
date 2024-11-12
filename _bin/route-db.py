@@ -164,7 +164,7 @@ def main():
             f.write('\n')
 
     # write json version
-    json_path = os.path.join(rcr.ROUTES_AND_LOCS, 'routes.json')
+    json_path = os.path.join(rcr.ROUTES, 'routes.json')
     with open(json_path, 'w') as f:
         json.dump(routes, f, indent=2)
 
