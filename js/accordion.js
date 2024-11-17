@@ -9,6 +9,9 @@
  *     </accordion-item>
  * </accordion-group>
  */
+import {Collapse} from 'bootstrap';
+
+
 export class AccordionGroup extends HTMLElement {
     constructor() {
         super();
@@ -25,7 +28,6 @@ export class AccordionGroup extends HTMLElement {
         accordion-item, accordion-header, accordion-body, accordion-group {
     display: block;
         }
-        .accordion-flush accordion-item:last-child {
         `;
 
         while (this.firstChild) {
@@ -35,8 +37,46 @@ export class AccordionGroup extends HTMLElement {
             console.error('Accordion group must have an ID');
         }
 
+        // Deep-link to open based on URL hash
+        this.addEventListener('show.bs.collapse',  (e) => {
+            // Check if the owning item has an ID
+            const header = e.target.parentElement
+            if (header.id) {
+                // Update the URL hash to reflect the current state, don't change history
+                history.replaceState(null, null, `#${header.id}`);
+            }
+        });
+
+        this.addEventListener('hide.bs.collapse',  (e) => {
+            const header = e.target.parentElement
+            if (header.id && window.location.hash === `#${header.id}`) {
+                // Clear hash, don't change history
+                history.replaceState(null, null, ' ');
+            }
+        });
+
+        const openBasedOnHash = () => {
+            const hash = window.location.hash;
+            if (!hash) {
+                return;
+            }
+            const target = this.querySelector(hash);
+            if (target && target instanceof AccordionItem) {
+                const myCollapse = target.getElementsByClassName('collapse')[0];
+                console.log(myCollapse);
+                const bsCollapse = new Collapse(myCollapse, {
+                    toggle: true
+                });
+            }
+        }
+
+        // Listen to hash changes and open the corresponding accordion item
+        window.addEventListener('hashchange', openBasedOnHash.bind(this));
+
         this.appendChild(wrapper);
         this.appendChild(style);
+        // Run once on page load, but after the accordion has been fully initialized
+        window.addEventListener("load", openBasedOnHash.bind(this));
     }
 }
 
