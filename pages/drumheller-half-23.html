@@ -22,10 +22,8 @@ redirect_from:
     <link href="https://fonts.googleapis.com/css2?family=Yrsa:ital,wght@0,300..700;1,300..700&family=Prompt:wght@400;700&display=swap"
           rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.1.0/css/tabulator.min.css" integrity="sha512-lYViaxM+7FHlHtQbmis/zPPWu+U+7AedEpiI1Jge4bhou50w1PxIokRz26zX4D3Jb9bEnaN9+mwDnjMKwFxqsg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.1.0/css/tabulator_bootstrap5.min.css" integrity="sha512-RQwKIKNxv0qAMe/KITeoOKX8bIR5Rl9rxZZyNrheBGQE1bSCjyGKVXAwHVMlDuu2eWSK+8+/pt2772A0TtD+Uw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js" integrity="sha512-X/YkDZyjTf4wyc2Vy16YGCPHwAY8rZJY+POgokZjQB2mhIRFJCckEGc6YyX9eNsPfn0PzThEuNs+uaomE5CO6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator.min.css" integrity="sha256-pG2AUZRMdFyuinl2tPudk9iU0gh2pFIcxPbwNc/vUuo=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator_bootstrap5.min.css" integrity="sha256-H1gQqBIR3L9enXuoNfFASj+QdGSEQIAloT7c4FXjNzc=" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script type="importmap">
@@ -33,9 +31,10 @@ redirect_from:
           "imports": {
             "bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.esm.min.js",
             "d3": "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm",
+            "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
-            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.6.0/js/tabulator_esm.min.js"
+            "tabulator-tables": "https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/+esm"
           }
         }
     </script>
@@ -809,7 +808,7 @@ redirect_from:
 
         <p><i>Nick Walker</i></p>
     </div>
-    <figure id="gallery" class="d-flex flex-column gap-4 auto-lightbox">
+    <figure id="gallery" class="d-flex flex-column gap-4 lightbox-gallery">
         <a href="{{ site.baseurl }}/img/dhm23/3.avif">
             <img loading="lazy" src="{{ site.baseurl }}/img/dhm23/3.avif"
                  class="w-100 shadow-1-strong rounded"/>
@@ -1001,9 +1000,9 @@ redirect_from:
         })
 
     document.addEventListener('DOMContentLoaded', e => {
-        prepareImagesForPhotoswipe(document.querySelectorAll(".auto-lightbox a")).then(() => {
+        prepareImagesForPhotoswipe(document.querySelectorAll(".lightbox-gallery a")).then(() => {
             const lightbox = new PhotoSwipeLightbox({
-                gallery: '#gallery',
+                gallery: '.lightbox-gallery',
                 children: 'a',
                 showHideAnimationType: 'zoom',
                 showAnimationDuration: 200,

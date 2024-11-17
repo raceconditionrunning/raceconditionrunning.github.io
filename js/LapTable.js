@@ -12,7 +12,6 @@ export class LapTable extends HTMLElement {
     }
 
     connectedCallback() {
-        this.render();
     }
 
     render() {
@@ -36,6 +35,7 @@ export class LapTable extends HTMLElement {
     }
 
     initialize(data, {videoLink = null, videoStartTime = null, descending = false}) {
+        this.render()
         if (videoLink) {
             this.videoLink = videoLink
         }
@@ -48,7 +48,7 @@ export class LapTable extends HTMLElement {
                     {
                         title: "min/mi",
                         field: "pace",
-                        headerSort: true,
+                        headerSort: false,
                         mutator: (value, data, type, params, component) => {
                             return  data.duration * 1609.34 / data.distance
                         },
@@ -62,7 +62,7 @@ export class LapTable extends HTMLElement {
                             let averagePace = totalDuration / totalDistance * 1609.34
                             return formatPace(averagePace, "")
                         }
-                    },/*
+                    },
                     {
                         title: "min/km",
                         field: "pace",
@@ -77,7 +77,7 @@ export class LapTable extends HTMLElement {
                             let averagePace = totalDuration / totalDistance * 1609.34
                             return formatPace(averagePace, "")
                         }
-                    }*/
+                    }
                 ]
             }, "distanceElapsed": {
                 "state": 0,
@@ -125,7 +125,7 @@ export class LapTable extends HTMLElement {
                 index: "index",
                 groupBy: "extra",
                 height: 300,
-                columnCalcs: true,
+                columnCalcs: "group",
                 initialSort: [{column: "lapNumber", dir: descending ? "desc": "asc"}],
                 columns: [
                     {title: "N", field: "lapNumber", sorter: "number", responsive: 0,
@@ -178,6 +178,7 @@ export class LapTable extends HTMLElement {
                     }
                     swappableColumn.state = (swappableColumn.state + 1) % swappableColumn.columns.length
                     column.updateDefinition( swappableColumn.columns[swappableColumn.state])
+                    column.getTable().recalc()
                 }
             });
             this.table = view

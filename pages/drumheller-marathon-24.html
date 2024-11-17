@@ -26,16 +26,13 @@ redirect_from:
     <link href="https://fonts.googleapis.com/css2?family=Yrsa:ital,wght@0,300..700;1,300..700&family=Prompt:wght@400;700&display=swap"
           rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator.min.css" integrity="sha512-HdUIebGeOK7s+At/fOnnbX8vsz6Cl1KTeiRlBiQABTMSqw7kZRCxGiUnuF9lr+1xz5y8pL7jkCR+NNtVVkEqKg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.5.2/css/tabulator_bootstrap5.min.css" integrity="sha512-904y6HHQyQS2fAyIQ869rH3AAkxZeFuxo9vheji5zw+IPEyioMWN4Bt/VFhzO5edPZ9m1lwkpYgXcYcm1vzaFw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"
-            integrity="sha512-M7nHCiNUOwFt6Us3r8alutZLm9qMt4s9951uo8jqO4UwJ1hziseL6O3ndFyigx6+LREfZqnhHxYjKRJ8ZQ69DQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator.min.css" integrity="sha256-pG2AUZRMdFyuinl2tPudk9iU0gh2pFIcxPbwNc/vUuo=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator_bootstrap5.min.css" integrity="sha256-H1gQqBIR3L9enXuoNfFASj+QdGSEQIAloT7c4FXjNzc=" crossorigin="anonymous">
 
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe-dynamic-caption-plugin/1.2.7/photoswipe-dynamic-caption-plugin.min.css" integrity="sha512-x20LXbTUxAMuniBAuSyDGScWaoCxvZJ8m0tbJCRtpPkvPgsb2kStG9ZhDQKHj5mDWaKFOP7TadAZ4KVAyFJwNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- More recent versions of tabulator don't render nested: https://www.unpkg.com/tabulator-tables@6.2.4/dist/js/tabulator_esm.js -->
+
     <script type="importmap">
         {
           "imports": {
@@ -50,7 +47,7 @@ redirect_from:
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
             "photoswipe-dynamic-caption": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe-dynamic-caption-plugin/1.2.7/photoswipe-dynamic-caption-plugin.esm.min.js",
             "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js",
-            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/5.6.0/js/tabulator_esm.min.js"
+            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.3.0/js/tabulator_esm.min.js"
           }
         }
     </script>
@@ -1127,8 +1124,8 @@ redirect_from:
 <hr/>
 
 <section id="history">
-    <figure class="gallery">
-        <a href="https://files.nickwalker.us/aype.avif" class="lightbox" data-pswp-width="3000" data-pswp-height="2389">
+    <figure class="gallery lightbox-gallery">
+        <a href="https://files.nickwalker.us/aype.avif" data-pswp-width="3000" data-pswp-height="2389">
             <!-- FIXME: Track in repo when image is done src="{{ site.baseurl }}/img/dm24/aype-thumb.webp"-->
             <img src="{{ site.baseurl }}/img/dm24/aype-thumb.webp"
                  alt="View of the Alaska-Yukon-Pacific Exposition, 1909"
@@ -1180,6 +1177,7 @@ redirect_from:
     import PhotoSwipeDynamicCaption from 'photoswipe-dynamic-caption';
     import {Tooltip} from 'bootstrap'
     import {} from 'p5'
+    import * as d3 from 'd3';
 
     import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
     import {Tabulator, ColumnCalcsModule, GroupRowsModule, FormatModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule, ReactiveDataModule, FilterModule} from 'tabulator-tables';
@@ -1193,14 +1191,6 @@ redirect_from:
         // Tooltips for sign-up deadlines
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
-
-
-        function secondsToWallclock(seconds) {
-            const hours = Math.floor(seconds / 3600)
-            const minutes = Math.floor((seconds % 3600) / 60)
-            const remainingSeconds = seconds % 60
-            return `${hours}:${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`
-        }
 
         fetch('{{ site.baseurl }}/results/dm24.json')
                 .then(res => res.json())
@@ -1343,9 +1333,9 @@ redirect_from:
 
 
     function setupLightboxes() {
-        prepareImagesForPhotoswipe(document.querySelectorAll(".auto-lightbox")).then(() => {
+        prepareImagesForPhotoswipe(document.querySelectorAll(".lightbox-gallery")).then(() => {
             const lightbox = new PhotoSwipeLightbox({
-                gallery: 'figure.gallery',
+                gallery: '.lightbox-gallery',
                 children: 'a',
                 showHideAnimationType: 'zoom',
                 showAnimationDuration: 200,

@@ -14,12 +14,11 @@ export class ResultsTable extends HTMLElement {
     }
 
     connectedCallback() {
-        this.render();
+
     }
 
     initialize(data, goals, options){
         this._data = data
-        this.render()
         let rowFormatter = (row, e) => {
             // This formatter may be called multiple times.
             let rowElement = row.getElement()
@@ -110,7 +109,9 @@ export class ResultsTable extends HTMLElement {
 
         let view
         return new Promise((resolve, reject) => {
-
+            this.innerHTML = `
+            <div class="results-table"></div>
+            `;
             view = new Tabulator(this.querySelector(".results-table"), {
                 reactiveData: true,
                 nestedFieldSeparator:false,
@@ -159,9 +160,7 @@ export class ResultsTable extends HTMLElement {
     }
 
     render() {
-        this.innerHTML = `
-        <div class="results-table"></div>
-        `;
+
     }
 
     scrollToResult() {

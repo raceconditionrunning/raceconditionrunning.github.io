@@ -13,9 +13,7 @@ export class RelayResultsTable extends HTMLElement {
 
     initialize(data, exchanges){
         this._data = data
-
         let exchangeColumns = []
-        // Iterate key value pairs of exchanges to create columns
         for (const [exchangeCode, name] of Object.entries(exchanges)) {
             exchangeColumns.push({title: name, field: `exchangeTimes.${exchangeCode}`, resizable: false, formatter: cell => formatDuration(cell.getValue(), true)})
         }

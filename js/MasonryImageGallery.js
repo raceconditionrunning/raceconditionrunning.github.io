@@ -18,7 +18,7 @@ export class MasonryImageGallery extends HTMLElement {
         const imageNames = (this.getAttribute('image-names')).split('|');
 
         const galleryHTML = "<div class='grid-sizer'></div>" + imageNames.map(name => `
-      <a href="${imagePath}${name}.webp">
+      <a href="${imagePath}${name}${fileExtension}">
         <img loading="lazy" src="${imagePath}${name}${fileExtension}"/>
       </a>
     `).join('');
