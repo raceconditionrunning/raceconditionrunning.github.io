@@ -8,12 +8,12 @@
   "terrain": {"source": "terrain_rgb", "exaggeration": 2.0},
   "sources": {
     "terrain_rgb": {
-      "url": "pmtiles://https://files.nickwalker.us/seattle_dem.pmtiles",
+      "url": "pmtiles://https://static.raceconditionrunning.com/seattle_dem.pmtiles",
       "type": "raster-dem",
       "tileSize": 512
     },
     "planet": {
-      "url": "pmtiles://https://files.nickwalker.us/seattle.pmtiles",
+      "url": "pmtiles://https://static.raceconditionrunning.com/seattle_24.pmtiles",
       "attribution": "<a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">&copy; OpenStreetMap contributors</a>",
       "type": "vector"
     },
