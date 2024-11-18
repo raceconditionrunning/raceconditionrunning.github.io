@@ -17,6 +17,6 @@
     - time: "6:30"
       route:
         name: Jack and Jill's Downhill (Half) Marathon
-        map: http://jackjillmarathon.com/the-half-marathon
+        map: https://web.archive.org/web/20220713060437/https://jackjillmarathon.com/the-half-marathon
         dist: 13.1
 
