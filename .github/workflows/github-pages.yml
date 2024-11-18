@@ -74,8 +74,8 @@ jobs:
           bundle exec htmlproofer ./_site \
           --only-4xx \
           --assume-extension .html \
-          --enforce-https=false \
-          --ignore-missing-alt=true \
+          --no-enforce-https \
+          --ignore-missing-alt \
           --ignore-urls '/fonts.googleapis.com/,/fonts.gstatic.com/' \
           --swap-urls 'https?\:\/\/raceconditionrunning\.com:,^${{ steps.pages.outputs.base_path }}:' \
           --cache '{ "timeframe": { "external": "30d" } }'
