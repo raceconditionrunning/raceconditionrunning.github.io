@@ -3,6 +3,7 @@ url: https://raceconditionrunning.com
 permalink: /:title/
 
 plugins:
+  - jekyll-datapage-generator
   - jekyll-redirect-from
   - jekyll-sitemap
   - jekyll-tidy
@@ -14,6 +15,13 @@ kramdown:
   input: GFM
   hard_wrap: False
   syntax_highlighter: rouge
+
+page_gen:
+  - data: 'routes'
+    template: 'route'
+    name: 'id'
+    title: 'name'
+    dir: 'routes'
 
 jekyll_tidy:
   exclude:

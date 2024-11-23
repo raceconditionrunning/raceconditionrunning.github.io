@@ -44,11 +44,13 @@
         {% endunless %}
         {% endif %}
         <td class="{{part-cancelled-class}}">
-            {% if route.map %}
-            <a target="_blank" href="{{ route.map }}">
-                {% endif %}
-                {{ route.name }}
-                {% if route.map %}</a>{% endif %}
+            {% if plan.route_id %}
+            <a href="{{site.baseurl}}/routes/{{ plan.route_id }}" title="{{ plan.route_id }}">{{route.name}}</a>
+            {% else if route.map %}
+            <a target="_blank" href="{{ route.map }}">{{route.name}}</a>
+            {% else %}
+            {{route.name}}
+            {% endif %}
             {% if route.dist %}&nbsp; (<span title="{{ route.dist | times: 1.609 | round: 1}}km">{{ route.dist | round: 1}})</span>{% endif %}
             {% if route.gpx %}
                 &nbsp; <a href="{{ route.gpx }}" class="gpx-link" title="Download GPX">&#8986;</a>

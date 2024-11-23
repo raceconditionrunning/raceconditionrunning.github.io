@@ -17,9 +17,12 @@ layout: default
     {% for route in sorted_routes %}
       <tr>
         <td>
-          <a target="_blank" href="{{ route.map }}" title="{{ route.id }}">
+          <a href="{{ route.id }}" title="{{ route.id }}">
             <span class="name">{{ route.name }}</span>
           </a>
+          {% if route.gpx %}
+          &nbsp; <a href="{{ route.gpx }}" class="gpx-link" title="Download GPX">&#8986;</a>
+          {% endif %}
         </td>
         {% comment %}
 

@@ -1,0 +1,64 @@
+---
+layout: default
+---
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" integrity="sha256-V2sIX92Uh6ZaGSFTKMHghsB85b9toJtmazgG09AI2uk=" crossorigin="anonymous">
+
+<div class="route">
+  <div class="d-flex flex-column flex-sm-row justify-content-between align-items-baseline">
+  <h3>{{ page.title }}</h3>
+    <div class="buttons">
+      <a class="btn btn-outline-primary" href="{{ page.gpx | relative_url }}">Download GPX</a> <a class="btn btn-outline-primary" href="{{page.map}}">OnTheGoMap</a>
+    </div>
+  </div>
+  <h5 class="mb-3">{{page.dist}}mi ↑{{page.up}}ft ↓{{page.down}}ft {% if page.deprecated %} <span class="text-secondary mx-2" title="We no longer schedule this route">Deprecated</span>{% endif%}</h5>
+
+
+  <div id="map" style="width: 100%; height: 500px;"></div>
+
+</div>
+
+
+<script type="module">
+    import 'maplibre-gl';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const map = new maplibregl.Map({
+          style: 'https://tiles.openfreemap.org/styles/liberty',
+          container: 'map',
+          zoom: 9.5,
+          center: [-122.3321, 47.6062], // Default center [lng, lat]
+      });
+      map.on('load', function () {
+        map.addSource('route', {
+            'type': 'geojson',
+            'data': '{{ page.geojson | relative_url }}'
+        });
+        map.addLayer({
+            'id': 'route',
+            'type': 'line',
+            'source': 'route',
+            'layout': {
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            'paint': {
+                'line-color': 'red',
+                'line-width': 4
+            }
+        });
+          let geolocate = new maplibregl.GeolocateControl({
+              positionOptions: {
+                  enableHighAccuracy: true
+              },
+              trackUserLocation: true
+          });
+
+          map.addControl(geolocate);
+          map.addControl(new maplibregl.FullscreenControl());
+      });
+
+    });
+
+</script>
+</body>
+</html>
