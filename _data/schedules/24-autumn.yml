@@ -60,9 +60,10 @@
 - date: "2024-11-23"
   plan:
     - time: "8:30"
-      route_id: cap-hill-i90-trail-beacon
-    - time: "9:15"
       route_id: beacon-jefferson-park-chief-sealth-new-holly-ob
+    - time: "9:15"
+      route_id: cap-hill-i90-trail-beacon
+      notes: "Running this route in reverse!"
 
 - date: "2024-11-30"
   plan:
