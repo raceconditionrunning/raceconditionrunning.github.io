@@ -9,13 +9,6 @@ body {
 h1 {
   padding-top: .5rem
 }
-h2 {
-  padding-top: 1rem
-}
-
-h2, table {
-  padding-bottom: 1rem;
-}
 
 a {
   text-decoration: none;
@@ -145,18 +138,7 @@ nav {
   img {
     max-width: 90%;
     max-height: 400px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
   }
-}
-
-#brunch-reviews-sidebar {
-  float: right;
-  padding: 10px;
-  margin: 5px;
-  border-style: inset;
-  border-width: 2px;
 }
 
 #image-slider {

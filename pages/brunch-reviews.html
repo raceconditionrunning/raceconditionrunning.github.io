@@ -1,0 +1,15 @@
+---
+layout: default
+permalink: brunch-reviews/
+---
+
+{% assign sorted_brunch_reviews = site.brunch-reviews | sort: 'date' | reverse %}
+{% assign latest_review = sorted_brunch_reviews | first %}
+
+{% include brunch_review_card.html reviews=sorted_brunch_reviews %}
+
+<div class="brunch-review">
+  <h2>{{ latest_review.restaurant }}</h2>
+  <h5 class="text-secondary">{{ latest_review.date | date_to_long_string }}</h5>
+  {{ latest_review.content }}
+</div>

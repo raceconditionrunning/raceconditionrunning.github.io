@@ -1,0 +1,16 @@
+<div class="card float-lg-end mb-3 mb-lg-0">
+
+  <div class="card-header ">
+    <div class="d-flex w-100 justify-content-between align-items-baseline g-5"><b class="me-5">Reviews</b><a class="btn btn-sm btn-outline-primary" target="_blank" href="{{site.baseurl}}/brunch-reviews/rss.xml">
+      RSS <img src="{{ site.baseurl }}/img/rss-icon.png" height="16px">
+    </a></div>
+  </div>
+  <div class="list-group list-group-flush">
+
+    {% for review in include.reviews %}
+    {% comment %} Special cased to highlight first entry on the reviews index page {% endcomment %}
+    <a class="list-group-item list-group-item-action {% if page.url == review.url or forloop.index == 1 and page.url == '/brunch-reviews/' %}active{%endif%}" href="{{site.baseurl}}{{ review.url }}">{{ review.restaurant }}</a>
+    {% endfor %}
+
+  </div>
+</div>

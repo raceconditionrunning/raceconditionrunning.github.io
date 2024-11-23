@@ -2,10 +2,13 @@
 layout: default
 ---
 
+{% assign sorted_brunch_reviews = site.brunch-reviews | sort: 'date' | reverse %}
+{% include brunch_review_card.html reviews=sorted_brunch_reviews %}
+
 <div class="brunch-review">
   <h2>{{ page.restaurant }}</h2>
 
-  {{ page.date | date_to_long_string }}
+  <h5 class="text-secondary">{{ page.date | date_to_long_string }}</h5>
 
   {{ content }}
 </div>
