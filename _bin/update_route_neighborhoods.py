@@ -32,7 +32,7 @@ def calculate_bounding_box(geometry):
 
 ROUTES_LOCS_DIR = rcr.ROUTES
 
-NEIGHBORHOOD_FILE = f"{ROUTES_LOCS_DIR}/neighborhoods.geojson"
+NEIGHBORHOOD_FILE = ROUTES_LOCS_DIR / "neighborhoods.geojson"
 
 routes = rcr.load_route_db()
 

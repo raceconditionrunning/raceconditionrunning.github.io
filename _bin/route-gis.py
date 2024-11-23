@@ -29,9 +29,6 @@ def gpx_latlons(path):
     raise GPXFormatError(f"Bogus number of tracks in:\n{path}")
 
 # TODO
-# <link href="https://raceconditionrunning.com/routes?id={route['id']}">
-#   <text>Race Condition Running: {route['name']}</text>
-# </link>
 # <keywords>{route['type']}, {route['start']}, {route['end']}</keywords> (also do surface type)
 def normalize_gpx(lls, path, route):
     hdr = f'''
@@ -40,6 +37,9 @@ def normalize_gpx(lls, path, route):
   <metadata>
     <name>{route['id']}</name>
     <desc>{route['name']} ({route['dist']} mi)</desc>
+    <link href="https://raceconditionrunning.com/routes/{route['id']}">
+      <text>Race Condition Running: {route['name']}</text>
+    </link>
     <author>
       <name>Race Condition Running</name>
       <link href="https://raceconditionrunning.com">
