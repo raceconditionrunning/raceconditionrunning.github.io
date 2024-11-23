@@ -15,7 +15,7 @@
     {% else %}
     {% assign cancelled-class = "" %}
     {% endif %}
-    <tbody class="run" data-date="{{ run.date }}" id="{{run.date | slugify}}">
+    <tbody class="run" data-date="{{ run.date }}">
     {% for plan in run.plan %}
     {% if plan.cancelled %}
     {% assign part-cancelled-class = "cancelled" %}
@@ -25,7 +25,7 @@
     <tr class="{{ cancelled-class }}">
         {% if forloop.first %}
         {% assign day_of_week = run.date | date: '%A' %}
-        <td class="date"><time datetime="{{ run.date }}" title="{{ day_of_week }}">{{ run.date | date: "%b %e" }} {% if day_of_week != "Saturday" %}<br/><span class="text-secondary">{{ day_of_week }}</span>{% endif%}</time></td>
+        <td class="date"><time datetime="{{ run.date }}" title="{{ day_of_week }}" id="{{run.date | slugify}}">{{ run.date | date: "%b %e" }}<a href="#{{run.date | slugify}}" class="anchor-link" aria-label="Link to this date. {{run.date | slugify}}"></a>{% if day_of_week != "Saturday" %}<br/><span class="text-secondary">{{ day_of_week }}</span>{% endif%}</time></td>
         {% else %}
         <td class="date"></td>
         {% endif %}

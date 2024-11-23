@@ -2,17 +2,51 @@
 permalink: routes/
 layout: default
 ---
-
-<p>CSE routes are routes that start and end at CSE.</p>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator.min.css" integrity="sha256-pG2AUZRMdFyuinl2tPudk9iU0gh2pFIcxPbwNc/vUuo=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator_bootstrap5.min.css" integrity="sha256-H1gQqBIR3L9enXuoNfFASj+QdGSEQIAloT7c4FXjNzc=" crossorigin="anonymous">
+<style>
+    /* Tabulator Bootstrap styles don't support the dark theme yet
+        https://github.com/olifolkerd/tabulator/pull/4548
+     */
+    .tabulator,
+    .tabulator .tabulator-header .tabulator-col,
+    .tabulator .tabulator-header,
+    .tabulator .tabulator-tableholder .tabulator-table,
+    .tabulator .tabulator-footer,
+    .tabulator .tabulator-footer .tabulator-calcs-holder,
+    .tabulator .tabulator-footer .tabulator-calcs-holder .tabulator-row,
+    .tabulator .tabulator-tableholder .tabulator-table .tabulator-row{
+        background-color: transparent !important;
+        color: inherit;
+    }
+    .tabulator.table .tabulator-tableholder {
+        color: var(--bs-body-color);
+    }
+    .tabulator.table:not(.thead-light) .tabulator-header, .tabulator.table:not(.thead-light) .tabulator-header .tabulator-col {
+        color: var(--bs-body-color);
+    }
+    .tabulator .tabulator-header .tabulator-col .tabulator-header-filter input {
+        background-color: transparent;
+        border-color: inherit;
+        color: var(--bs-body-color);
+    }
+    .tabulator-row,
+    .tabulator .tabulator-header {
+        border: none;
+    }
+</style>
 
 <div id="routes">
   <table class="table" id="route-list">
+    <thead>
     <tr>
       <th>Route Name</th>
       <th>Distance (mi)</th>
       <th>CSE Run?</th>
       <th>Dates Run</th>
     </tr>
+    </thead>
+    <tbody>
     {% assign sorted_routes = site.data.routes | sort: 'dist' %}
     {% for route in sorted_routes %}
       <tr>
@@ -49,5 +83,77 @@ layout: default
         </td>
       </tr>
     {% endfor %}
+    </tbody>
   </table>
+
+  <script type="module">
+      import {Tabulator, ColumnCalcsModule, EditModule, FormatModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule, ReactiveDataModule, FilterModule} from 'tabulator-tables';
+
+      Tabulator.registerModule([ColumnCalcsModule, EditModule, FormatModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule, ReactiveDataModule, FilterModule]);
+
+      document.addEventListener("DOMContentLoaded", () => {
+        let table = new Tabulator("#routes table", {
+            columns:
+                [{title: "Route Name", field: "name", headerFilter:"input", formatter: (cell, formatterParams, onRendered) => {
+                    let value = cell.getValue();
+                    let route = cell.getRow().getData();
+                    let link = document.createElement("a");
+                    link.href = route.id;
+                    link.title = route.id;
+                    link.innerHTML = value;
+                    return link;}},
+                 {title: "Distance (mi)", field: "dist", headerFilter: "input", sorter: "number"},
+                 {title: "Type", field: "type", headerFilter: "list", headerFilterParams: {
+                         valuesLookup:true,
+                         valuesLookupField:"type",
+                     }},
+                 {title: "Last Used", field: "dates_run",
+                     sorter: function(a, b) {
+                         // Custom sorter for array date items
+                         if (Array.isArray(a) && a.length > 0 && Array.isArray(b) && b.length > 0) {
+                             let lastA = a[a.length - 1];
+                             let lastB = b[b.length - 1];
+                             return lastA > lastB ? 1 : (lastA < lastB ? -1 : 0);
+                         } else if (Array.isArray(a) && a.length > 0) {
+                             return 1;
+                         } else if (Array.isArray(b) && b.length > 0) {
+                             return -1;
+                         } else {
+                             return 0;
+                         }
+                     },
+                     formatter: function (cell, formatterParams) {
+                         let items = cell.getValue();
+                         return Array.isArray(items) && items.length > 0 ? items[items.length - 1] : "";
+                     }}],
+            initialSort: [{column: "dist", dir: "asc"}],
+            class: "table table-sm",
+            selectableRows: false,
+            data: {{ site.data.routes | jsonify}}});
+        table.element.classList.add("table-sm");
+        table.on("columnsLoaded", () =>
+        {
+          table.element.querySelectorAll("input").forEach((input) => {
+            input.classList.add("form-control");
+          });
+            const sortOrder = JSON.parse(sessionStorage.getItem('tabulator-sort'));
+            if (sortOrder) {
+                table.setSort(sortOrder);
+            }
+
+            const filters = JSON.parse(sessionStorage.getItem('tabulator-filters'));
+            if (filters) {
+                table.setFilter(filters);
+            }
+        });
+        table.on('dataSorted', function(sorters) {
+            //sessionStorage.setItem('tabulator-sort', JSON.stringify(sorters));
+        });
+        table.on('dataFiltered', function(filters) {
+            //sessionStorage.setItem('tabulator-filters', JSON.stringify(filters));
+        });
+
+    });
+
+  </script>
 </div>

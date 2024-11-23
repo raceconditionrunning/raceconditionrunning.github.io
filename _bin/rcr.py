@@ -1,14 +1,17 @@
 import os
 import csv
+import pathlib
+from typing import List, Dict
+import yaml
 
-ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
+ROOT = pathlib.Path(os.path.realpath(os.path.join(os.path.dirname(__file__), '..')))
 
 # key directories
-DATA = os.path.join(ROOT, '_data')
-SCHEDULES = os.path.join(ROOT, '_data', 'schedules')
-ROUTES = os.path.join(ROOT, 'routes')
-ROUTES_GPX = os.path.join(ROUTES , 'gpx')
-ROUTES_GEOJSON = os.path.join(ROUTES, 'geojson')
+DATA = ROOT / '_data'
+SCHEDULES =  ROOT / '_data' / 'schedules'
+ROUTES = ROOT / 'routes'
+ROUTES_GPX =  ROUTES / 'gpx'
+ROUTES_GEOJSON =  ROUTES / 'geojson'
 
 for path in [ROOT, DATA, ROUTES , ROUTES_GPX]:
   if not os.path.isdir(path):
@@ -35,17 +38,22 @@ def load_loc_db():
        return list(reader)
 
 def gpx_paths():
-  paths = []
-  for gpx in os.listdir(ROUTES_GPX):
-    if gpx.endswith('.gpx'):
-      path = os.path.join(ROUTES_GPX, gpx)
-      paths.append(path)
+  paths = ROUTES_GPX.glob('*.gpx')
   return sorted(paths)
 
-def schedule_paths():
-  paths = []
-  for quarter in os.listdir(SCHEDULES):
-      if quarter.endswith('.yml'):
-          path = os.path.join(SCHEDULES, quarter)
-          paths.append(path)
-  return sorted(paths)
+def schedule_paths() -> List[pathlib.Path]:
+    season_order = {"winter": 1, "spring": 2, "summer": 3, "autumn": 4}
+    def sort_key(path: pathlib.Path):
+        year, season = path.stem.split("-")
+        return (int(year), season_order[season])
+
+    # Get all .yml files in the schedules directory in chronological order
+    paths = SCHEDULES.glob("*.yml")
+    return sorted(paths, key=sort_key)
+
+def load_schedules():
+    schedules = {}
+    for path in schedule_paths():
+        with open(path, 'r') as f:
+            schedules[path.stem] = yaml.safe_load(f)
+    return schedules

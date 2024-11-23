@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 import rcr
 import csv
 import json
@@ -15,6 +17,7 @@ FIELDS = [
     'type',
     'surface',
     'map',
+    'dates_run',
     'deprecated',
     'neighborhoods',
     'coarse_neighborhoods',
@@ -48,7 +51,7 @@ def check_route(route):
             warn_rc(route, f"missing '{field}' field")
         # TODO: eventually down and surface should also be non-blank
         #elif field != 'deprecated' and route[field].strip() == '':
-        elif field not in ['down', 'surface', 'deprecated'] and route[field].strip() == '':
+        elif field not in ['down', 'surface', 'deprecated', 'dates_run'] and route[field].strip() == '':
             warn_rc(route, f"blank '{field}' field")
 
     # valid type
@@ -116,6 +119,16 @@ def check_route(route):
 
 def main():
     routes = rcr.load_route_db()
+    schedules = rcr.load_schedules()
+
+    dates_routes_run = defaultdict(list)
+    for schedule in schedules.values():
+        for entry in schedule:
+            if not 'plan' in entry:
+                continue
+            for phase in entry['plan']:
+                if 'route_id' in phase:
+                    dates_routes_run[phase['route_id']].append(entry['date'])
 
     # ensure all route ids unique
     ids = set()
@@ -123,6 +136,9 @@ def main():
         if route['id'] in ids:
             warn(f"route {route['id']} is not unique")
         ids.add(route['id'])
+
+    for route in routes:
+        route['dates_run'] = dates_routes_run[route['id']]
 
     # check each route
     for route in routes:
@@ -157,6 +173,7 @@ def main():
             f.write(f"  type: \"{route['type']}\"\n")
             f.write(f"  surface: \"{route['surface']}\"\n")
             f.write(f"  map: \"{route['map']}\"\n")
+            f.write(f"  dates_run: {route['dates_run']}\n")
             f.write(f"  gpx: \"/routes/gpx/{route['id']}.gpx\"\n")
             f.write(f"  geojson: \"/routes/geojson/{route['id']}.geojson\"\n")
             if route['deprecated']:
