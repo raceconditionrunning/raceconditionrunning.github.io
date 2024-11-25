@@ -61,16 +61,16 @@
   plan:
     - time: "8:30"
       route_id: beacon-jefferson-park-chief-sealth-new-holly-ob
-    - time: "9:15"
+    - time: "10:00"
       route_id: cap-hill-i90-trail-beacon
       notes: "Running this route in reverse!"
 
 - date: "2024-11-30"
   plan:
     - time: "8:30"
-      route_id: cse-arb-lwb-mt-baker
-    - time: "9:30"
-      route_id: mb-lwb-cc
+      route_id: westlake-sculpture-park-kerry-park-loop
+    - time: "9:45"
+      route_id: westlake-sculpture-park-ob
 
 - date: "2024-12-01"
   plan:
@@ -79,11 +79,11 @@
         name: Seattle Marathon
         map: https://www.seattlemarathon.org/
         dist: 26.2
-  
+
 - date: "2024-12-07"
   plan:
     - time: "8:30"
       route_id: cap-hill-i90-trail-lwb-arborlaken-loop
     - time: "10:00"
       route_id: cap-hill-volunteer-park-westlake
- 
+
