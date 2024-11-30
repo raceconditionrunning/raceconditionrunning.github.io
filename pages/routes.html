@@ -34,15 +34,33 @@ layout: default
     .tabulator .tabulator-header {
         border: none;
     }
+    .tabulator-row.deprecated {
+        opacity: .35 !important;
+    }
 </style>
 
 <div id="routes">
+  <div id="filter-controls" class="row align-items-center mb-2 justify-content-center justify-content-sm-between d-none">
+
+    <div class="col-12 col-sm mb-1">
+      <div class="input-group">
+        <span class="input-group-text">Search</span>
+        <input class="form-control" id="filter-search" type="search">
+      </div>
+    </div>
+    <div class="col-auto">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input deprecated" type="checkbox" id="filter-deprecated">
+        <label class="form-check-label" for="filter-deprecated">Deprecated</label>
+      </div>
+    </div>
+
+  </div>
   <table class="table" id="route-list">
     <thead>
     <tr>
       <th>Route Name</th>
-      <th>Distance (mi)</th>
-      <th>CSE Run?</th>
+      <th>Miles</th>
       <th>Dates Run</th>
     </tr>
     </thead>
@@ -70,7 +88,6 @@ layout: default
         {% assign dist_integral = dist_split[0] %}
         {% assign dist_fractional = dist_split[1] | append: "00" | truncate: 2, "" %}
         <td><span class="dist" title="{{ route.dist | times: 1.609 | round: 1}}km">{{ dist_integral }}.{{ dist_fractional }}</span></td>
-        <td>{% if route.cseroute %}Yes{% endif %}</td>
         <td>
           <ul class="matched-runs comma-sep">
           {% for event in site.data.schedule %}
@@ -87,14 +104,14 @@ layout: default
   </table>
 
   <script type="module">
-      import {Tabulator, ColumnCalcsModule, EditModule, FormatModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule, ReactiveDataModule, FilterModule} from 'tabulator-tables';
+      import {Tabulator, ColumnCalcsModule, EditModule, FormatModule, InteractionModule, MutatorModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule, ReactiveDataModule, FilterModule} from 'tabulator-tables';
 
-      Tabulator.registerModule([ColumnCalcsModule, EditModule, FormatModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule, ReactiveDataModule, FilterModule]);
+      Tabulator.registerModule([ColumnCalcsModule, EditModule, FormatModule, InteractionModule, MutatorModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule, ReactiveDataModule, FilterModule]);
 
       document.addEventListener("DOMContentLoaded", () => {
         let table = new Tabulator("#routes table", {
             columns:
-                [{title: "Route Name", field: "name", headerFilter:"input", formatter: (cell, formatterParams, onRendered) => {
+                [{title: "Route Name", field: "name", formatter: (cell, formatterParams, onRendered) => {
                     let value = cell.getValue();
                     let route = cell.getRow().getData();
                     let link = document.createElement("a");
@@ -102,11 +119,15 @@ layout: default
                     link.title = route.id;
                     link.innerHTML = value;
                     return link;}},
-                 {title: "Distance (mi)", field: "dist", headerFilter: "input", sorter: "number"},
-                 {title: "Type", field: "type", headerFilter: "list", headerFilterParams: {
-                         valuesLookup:true,
-                         valuesLookupField:"type",
-                     }},
+                 {title: "Miles", field: "dist", sorter: "number"},
+                 //{title: "Type", field: "type"},
+                    {
+                        title: "Times Run",
+                        field: "times_run",
+                        mutator: function (value, data) {
+                            return Array.isArray(data.dates_run) ? data.dates_run.length : 0;
+                        }
+                    },
                  {title: "Last Used", field: "dates_run",
                      sorter: function(a, b) {
                          // Custom sorter for array date items
@@ -126,9 +147,17 @@ layout: default
                          let items = cell.getValue();
                          return Array.isArray(items) && items.length > 0 ? items[items.length - 1] : "";
                      }}],
+
             initialSort: [{column: "dist", dir: "asc"}],
+            initialFilter: [{field: "deprecated", type: "!=", value: true}],
             class: "table table-sm",
             selectableRows: false,
+            rowFormatter: function(row) {
+                let data = row.getData();
+                if (data.deprecated) {
+                    row.getElement().classList.add("deprecated");
+                }
+            },
             data: {{ site.data.routes | jsonify}}});
         table.element.classList.add("table-sm");
         table.on("columnsLoaded", () =>
@@ -153,6 +182,27 @@ layout: default
             //sessionStorage.setItem('tabulator-filters', JSON.stringify(filters));
         });
 
+        // Filters and search
+        document.getElementById("filter-controls").classList.remove("d-none");
+        let previousTimeout = null;
+        document.getElementById("filter-search").addEventListener("input", (event) => {
+            if (previousTimeout) {
+                clearTimeout(previousTimeout);
+            }
+            // Debounce 100ms
+            previousTimeout = setTimeout(() => {
+                table.setFilter("name", "like", event.target.value);
+            }, 100);
+
+        });
+        document.getElementById("filter-deprecated").addEventListener("change", (event) => {
+            if (event.target.checked) {
+                table.removeFilter("deprecated", "!=", true);
+            } else {
+                table.setFilter("deprecated", "!=", true);
+            }
+            table.redraw();
+        });
     });
 
   </script>
