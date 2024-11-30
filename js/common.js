@@ -72,31 +72,34 @@ export function download(content, mimeType, filename) {
     a.click() // Start downloading
 }
 
-export function relayToGPX(eventName, trackName, legs, exchanges, year=new Date().getFullYear()) {
-    let points = ""
+export function relayToGPX(trackName, legs, exchanges, options = {}) {
+    const { eventName, permalink, year = new Date().getFullYear() } = options;
+
+    let points = "";
     for (let leg of legs) {
-        let coords = leg.geometry.coordinates
+        let coords = leg.geometry.coordinates;
         for (let coord of coords) {
             if (coord.length === 3) {
-                points += `    <trkpt lat="${coord[1]}" lon="${coord[0]}"><ele>${coord[2]}</ele></trkpt>\n`
+                points += `    <trkpt lat="${coord[1]}" lon="${coord[0]}"><ele>${coord[2]}</ele></trkpt>\n`;
             } else {
-                points += `    <trkpt lat="${coord[1]}" lon="${coord[0]}"/>\n`
+                points += `    <trkpt lat="${coord[1]}" lon="${coord[0]}"/>\n`;
             }
-
         }
     }
-    let waypoints = ""
+
+    let waypoints = "";
     for (let exchange of exchanges) {
-        let coords = exchange.geometry.coordinates
-        waypoints += `    <wpt lat="${coords[1]}" lon="${coords[0]}"><name>${exchange.properties.name}</name></wpt>\n`
+        let coords = exchange.geometry.coordinates;
+        waypoints += `    <wpt lat="${coords[1]}" lon="${coords[0]}"><name>${exchange.properties.name}</name></wpt>\n`;
     }
+
     return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <gpx version="1.1" creator="https://raceconditionrunning.com" xmlns="http://www.topografix.com/GPX/1/1">
   <metadata>
     <name>${trackName}</name>
-    <link href="{{url}}/{{permalink}}">
-      <text>${eventName}</text>
-    </link>
+    ${permalink ? `<link href="${permalink}">
+      <text>${eventName || ""}</text>
+    </link>` : ""}
     <time>${new Date().toISOString()}</time>
     <copyright author="OpenStreetMap Contributors">
       <year>${year}</year>
@@ -109,7 +112,7 @@ export function relayToGPX(eventName, trackName, legs, exchanges, year=new Date(
     ${points}
     </trkseg>
   </trk>
-</gpx>`
+</gpx>`;
 }
 
 export function legToGPX(coords, eventName, trackName) {

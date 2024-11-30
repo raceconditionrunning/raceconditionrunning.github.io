@@ -637,7 +637,8 @@ redirect_from:
         }
         const downloadRouteButton = document.getElementById("download-route-gpx-btn")
         downloadRouteButton.addEventListener("click", event => {
-            let gpxString = relayToGPX("Race Condition Running Light Rail Relay 2022", "Light Rail Relay 2022", legs.features, exchanges.features, 2022)
+            let gpxString = relayToGPX("Light Rail Relay 2022", legs.features, exchanges.features, {eventName: "Race Condition Running Light Rail Relay 2022", year: 2022, permalink: "{{site.url}}{{ page.url }}"})
+
             download(gpxString, "application/gpx+xml", `light-rail-relay-2022.gpx`)
             event.preventDefault()
         })

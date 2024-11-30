@@ -41,6 +41,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             "noUiSlider": "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.mjs",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
+            "pmtiles": "https://cdn.jsdelivr.net/npm/pmtiles@4.0.1/+esm",
             "tabulator-tables": "https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/js/tabulator_esm.js",
             "@turf": "https://cdn.jsdelivr.net/npm/@turf/turf@7.1.0/+esm",
             "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js",
@@ -1170,7 +1171,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         createLegDetailsTable(document.getElementById("leg-details-table"), legsData, exchanges.features)
         const downloadRouteButton = document.getElementById("download-route-gpx-btn")
         downloadRouteButton.addEventListener("click", event => {
-            let gpxString = relayToGPX("Race Condition Running Light Rail Relay 2024", "Light Rail Relay 2024", legs.features, exchanges.features, 2024)
+            let gpxString = relayToGPX("Light Rail Relay 2024", legs.features, exchanges.features, {eventName: "Race Condition Running Light Rail Relay 2024", year: 2024, permalink: "{{site.url}}{{ page.url }}"})
             download(gpxString, "application/gpx+xml", `light-rail-relay-2024.gpx`)
             event.preventDefault()
         })

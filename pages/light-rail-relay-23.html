@@ -877,7 +877,7 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
         createLegDetailsTable(document.getElementById("leg-details-table"), legsData, exchanges.features)
         const downloadRouteButton = document.getElementById("download-route-gpx-btn")
         downloadRouteButton.addEventListener("click", event => {
-            let gpxString = relayToGPX("Race Condition Running Light Rail Relay 2023", "Light Rail Relay 2023", legs.features, exchanges.features, 2023)
+            let gpxString = relayToGPX("Light Rail Relay 2023", legs.features, exchanges.features, {eventName: "Race Condition Running Light Rail Relay 2023", year: 2023, permalink: "{{site.url}}{{ page.url }}"})
             download(gpxString, "application/gpx+xml", `light-rail-relay-2023.gpx`)
             event.preventDefault()
         })
