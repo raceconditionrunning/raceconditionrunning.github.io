@@ -25,18 +25,85 @@ layout: default
 
 </div>
 
+<style>
+    .maplibregl-popup-content
+    {
+        background-color: rgba(0, 0, 0, 0.15);
+        -webkit-backdrop-filter: blur(4px);
+        backdrop-filter: blur(4px);
+        --bs-body-color: black;
+        color: black;
+    }
+    .distance-popup .maplibregl-popup-content {
+        color: var(--bs-body-color);
+        font-weight: 500;
+        font-size: 1rem;
+        line-height: 1;
+        text-align: center;
+        letter-spacing: -.5px;
+    }
+    .distance-popup .leg-dist {
+        font-size: .75rem;
+        font-weight: 300;
+    }
+    .distance-popup .maplibregl-popup-content {
+        padding: .25rem;
+    }
+
+    .distance-popup.maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
+        border-top-color: rgba(0, 0, 0, 0.15);
+    }
+    .distance-popup.maplibregl-popup-anchor-bottom-left .maplibregl-popup-tip {
+        border-top-color: rgba(0, 0, 0, 0.15);
+    }
+    .distance-popup.maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip {
+        border-top-color: rgba(0, 0, 0, 0.15);
+    }
+    .distance-popup.maplibregl-popup-anchor-top-left .maplibregl-popup-tip {
+        border-bottom-color: rgba(0, 0, 0, 0.15);
+    }
+    .distance-popup.maplibregl-popup-anchor-right .maplibregl-popup-tip {
+        border-right-color: rgba(0, 0, 0, 0.15);
+    }
+    .distance-popup.maplibregl-popup-anchor-left .maplibregl-popup-tip {
+        border-left-color: rgba(0, 0, 0, 0.15);
+    }
+</style>
 
 <script type="module">
     import 'maplibre-gl';
+    import {distance, point, nearestPointOnLine, lineString} from '@turf';
+    import { Protocol } from 'pmtiles';
+
+    function computeDistanceAlongLine(queryPoint, route) {
+        let totalDistance = 0
+        // Merge all legs into a single line
+        let line = lineString(route)
+        // Get nearest point on line
+        let nearest = nearestPointOnLine(line, queryPoint, {units: 'meters'})
+        // Calculate cumulative distance up to index
+        for (let i = 1; i < line.geometry.coordinates.length; i++) {
+            let segmentDist = distance(line.geometry.coordinates[i-1], line.geometry.coordinates[i], {units: 'meters'})
+            totalDistance += segmentDist
+            if (i === nearest.properties.index) {
+                totalDistance += distance(nearest.geometry.coordinates, line.geometry.coordinates[i], {units: 'meters'})
+                break
+            }
+        }
+        return [totalDistance, {lng: nearest.geometry.coordinates[0], lat: nearest.geometry.coordinates[1]}]
+    }
 
     document.addEventListener('DOMContentLoaded', () => {
+      let protocol = new Protocol();
+      maplibregl.addProtocol("pmtiles",protocol.tile);
       const map = new maplibregl.Map({
           style: 'https://tiles.openfreemap.org/styles/liberty',
           container: 'map',
           zoom: 9.5,
-          center: [-122.3321, 47.6062], // Default center [lng, lat]
+          center: [-122.3321, 47.6062]
       });
       map.on('load', function () {
+
         map.addSource('route', {
             'type': 'geojson',
             'data': '{{ page.geojson | relative_url }}'
@@ -50,10 +117,170 @@ layout: default
                 'line-cap': 'round'
             },
             'paint': {
-                'line-color': 'red',
-                'line-width': 4
+                'line-color': 'rgba(0, 0, 255, 0.6)',
+                'line-width': 3
             }
         });
+        map.addLayer({
+            'id': 'route-hover-region',
+            'type': 'line',
+            'source': 'route',
+            'layout': {
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            'paint': {
+                'line-color': 'rgba(0, 0, 255, 0)',
+                'line-width': 10
+            }
+        });
+
+
+        // Frame the route
+        map.getSource('route').getData().then((data) => {
+            const coordinates = data.geometry.coordinates;
+            // Zoom to fit route, with buffer
+            const bounds = coordinates.reduce((bounds, coord) => {
+                return bounds.extend(coord);
+            }, new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
+            map.fitBounds(bounds, {padding: 50, animate: false});
+            // Let's add a number every 1mi
+            let totalDistance = 0
+            let mileMarker = 1
+            let distanceLabels = []
+
+            for (let i = 1; i < coordinates.length; i++) {
+                let segmentDist = distance(coordinates[i-1], coordinates[i], {units: 'miles'})
+                totalDistance += segmentDist
+                if (totalDistance >= mileMarker) {
+                    let midPoint = [(coordinates[i-1][0] + coordinates[i][0]) / 2, (coordinates[i-1][1] + coordinates[i][1]) / 2]
+                    distanceLabels.push({
+                        type: 'Feature',
+                        geometry: {
+                            type: 'Point',
+                            coordinates: midPoint
+                        },
+                        properties: {
+                            distance: mileMarker
+                        }
+                    })
+                    mileMarker += 1
+                }
+            }
+
+            map.addSource('terrain_rgb', {
+                type: 'raster-dem',
+                url: 'pmtiles://https://static.raceconditionrunning.com/seattle_dem.pmtiles',
+                tileSize: 512
+            });
+            map.addLayer({
+                id: 'terrain_rgb',
+                type: 'hillshade',
+                source: 'terrain_rgb',
+                minzoom: 0,
+                maxzoom: 22
+            });
+            map.setTerrain({source: 'terrain_rgb', exaggeration: 2.0})
+            map.addSource('distance-labels', {
+                type: 'geojson',
+                data: {
+                    type: 'FeatureCollection',
+                    features: distanceLabels
+                }
+            })
+            map.addLayer({
+                'id': 'distance-labels',
+                'type': 'symbol',
+                'source': 'distance-labels',
+                "minzoom": 9,
+                "layout": {
+                    "text-field": ["to-string", ["get", "distance"]],
+                    "text-font": ["Noto Sans Regular"],
+                    "text-size": {
+                        "stops": [
+                            [9, 10],
+                            [10, 11],
+                            [16, 18]
+                        ]
+                    },
+                    "text-padding": 4,
+                    "text-justify": "center"
+                },
+                "paint": {
+                    "text-color": "#FFF",
+                    "text-halo-color": "rgba(0, 0, 0, 0.8)",
+                    "text-halo-width": 2
+                }
+            })
+
+            map.addSource('points', {
+                type: 'geojson',
+                data: {
+                    type: 'FeatureCollection',
+                    features: [
+                        {
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                coordinates: coordinates[0]
+                            },
+                            properties: {
+                                color: '#00FF00'
+                            }
+                        },
+                        {
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                coordinates: coordinates[coordinates.length - 1]
+                            },
+                            properties: {
+                                color: '#FF0000'
+                            }
+                        }
+                    ]
+                }
+            });
+
+            map.addLayer({
+                id: "colored-dots",
+                type: "circle",
+                source: "points",
+                paint: {
+                    "circle-color": ["get", "color"],
+                    "circle-radius": 5,
+                    "circle-opacity": 0.8,
+                    "circle-stroke-color": "#000",
+                    "circle-stroke-width": 1
+                }
+            });
+
+            // Create a popup, but don't add it to the map yet.
+            const distancePopup = new maplibregl.Popup({
+                closeButton: false,
+                closeOnClick: false,
+                focusAfterOpen: false,
+                className: 'distance-popup'
+            });
+
+            const updateDistancePopup = (e) => {
+                map.getCanvas().style.cursor = 'pointer';
+                const hovered = [e.lngLat.lng, e.lngLat.lat];
+                const [distanceAlongLine, nearestPoint] = computeDistanceAlongLine(point(hovered), coordinates)
+
+                distancePopup
+                    .setLngLat(nearestPoint)
+                    .setHTML(`${(distanceAlongLine / 1609.34).toFixed(2)}mi`)
+                    .addTo(map);
+            }
+            map.on('mouseenter', 'route-hover-region', updateDistancePopup);
+            map.on('mousemove', 'route-hover-region', updateDistancePopup);
+            map.on('mouseleave', 'route-hover-region', () => {
+                map.getCanvas().style.cursor = '';
+                distancePopup.remove()
+            });
+        })
+
           let geolocate = new maplibregl.GeolocateControl({
               positionOptions: {
                   enableHighAccuracy: true
