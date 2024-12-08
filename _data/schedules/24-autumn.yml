@@ -1,4 +1,5 @@
 - date: "2024-09-28"
+  organized-event: true
   plan:
     - time: "8:30"
       route:
@@ -42,7 +43,6 @@
     - time: "8:30"
       route:
         name: Drumheller Half Marathon
-        map: /drumheller-half-23
         dist: 13.1
 
 - date: "2024-11-09"

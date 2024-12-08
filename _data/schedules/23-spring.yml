@@ -49,6 +49,7 @@
       route_id: green-lake-loop
 
 - date: "2023-05-20"
+  organized-event: true
   plan:
     - time: "7:50"
       route:

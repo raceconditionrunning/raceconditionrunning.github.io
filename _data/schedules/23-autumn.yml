@@ -7,6 +7,7 @@
         dist: 71.6
 
 - date: "2023-09-30"
+  organized-event: true
   plan:
     - time: "9:30"
       route:

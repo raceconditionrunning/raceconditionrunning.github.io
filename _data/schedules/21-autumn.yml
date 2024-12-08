@@ -8,6 +8,7 @@
       route_id: green-lake-loop
 
 - date: "2021-10-02"
+  organized-event: true
   plan:
     - time: "9:30"
       route:

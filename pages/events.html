@@ -18,7 +18,7 @@ layout: default
 {% if run.cancelled or run.plan[0].cancelled %}
 {% continue %}
 {% endif %}
-{% if run.plan[0].route.name contains "Light Rail Relay" or run.plan[0].route.name contains "Quarantine" or run.plan[0].route.name contains "Drumheller Half" or run.plan[0].route.name contains "Drumheller Marathon" %}
+{% if run.organized-event %}
 <a href="{{run.plan[0].route.map}}">
     <h3>{{run.plan[0].route.name}}</h3>
     <h5>{{ run.date | date: "%A %B, %e %Y"}}</h5>

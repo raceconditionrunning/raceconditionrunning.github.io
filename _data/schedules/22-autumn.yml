@@ -7,6 +7,7 @@
         dist: 71.6
 
 - date: "2022-10-01"
+  organized-event: true
   plan:
     - time: "9:30"
       route:
