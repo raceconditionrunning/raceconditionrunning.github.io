@@ -1,13 +1,12 @@
 import csv
+import os
 from datetime import datetime, timedelta
 
 import requests
 import rcr
 import haversine
-import os
 
-ROUTES_LOCS_DIR = rcr.ROUTES
-GOOGLE_MAPS_API_KEY = open("_api_keys/google_maps", "r").read().strip()
+GOOGLE_MAPS_API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY")
 
 MAX_REACHABILITY = 3
 
@@ -15,6 +14,24 @@ MAX_REACHABILITY = 3
 locs = rcr.load_loc_db()
 CRITICAL_LOC_NAMES = ["CSE", "GreenLake", "Beacon"]
 CRITICAL_LOCS = []
+
+TRANSPORT_FILES = {
+    "Light Rail": rcr.ROUTES / "transit_data/light_rail.csv",
+    #"Ferry": rcr.ROUTES / "transit_data/ferry.csv",
+    "Bus": rcr.ROUTES / "transit_data/bus.csv",
+}
+
+STOPS = {}
+for system_name, file_name in TRANSPORT_FILES.items():
+    with open(file_name, "r") as f:
+        system = csv.DictReader(f, dialect="unix")
+        for row in system:
+            STOPS[row['stop_name']] = {
+                'lon': float(row['stop_lon']),
+                'lat': float(row['stop_lat']),
+                'system': system_name,
+            }
+
 for critical_loc in CRITICAL_LOC_NAMES:
     for row in locs:
         if row['id'] == critical_loc:
@@ -22,8 +39,8 @@ for critical_loc in CRITICAL_LOC_NAMES:
 
 
 # determine if this stop is "close enough"
-def near_enough(p1, p2, threshold=0.005): #0.005 ~= 0.3 miles or 6 minutes of walking
-    return haversine.haversine(p1, p2) < threshold
+def near_enough(p1, p2, threshold=0.3): #0.3 miles or 6 minutes of walking
+    return haversine.haversine(p1, p2, unit=haversine.Unit.MILES) < threshold
 
 
 for row in locs:
