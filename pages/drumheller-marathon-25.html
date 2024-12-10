@@ -1,0 +1,1059 @@
+---
+permalink: drumheller-marathon-25/
+redirect_from:
+- /dm25/
+registration_link: https://forms.gle/uEAhyLzrcbKWSaRv7
+shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
+---
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>Drumheller Marathon 2025</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Marathon and half marathon around Drumheller Fountain, June 7th, 2025.">
+    <!--meta property="og:image" content="{{ site.url }}/img/dm25/og-banner.jpg"-->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ site.url }}/drumheller-marathon-25/">
+    <meta property="og:title" content="Drumheller Marathon 2025">
+    <meta property="og:description" content="Experience the fountain and the mountain. June 7th, 2025.">
+    <link href="{{ site.baseurl }}/img/dm24/favicon.png" rel="icon" type="image/png"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@0,100..900;1,100..900&family=Prompt:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator.min.css" integrity="sha256-pG2AUZRMdFyuinl2tPudk9iU0gh2pFIcxPbwNc/vUuo=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator_bootstrap5.min.css" integrity="sha256-H1gQqBIR3L9enXuoNfFASj+QdGSEQIAloT7c4FXjNzc=" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe-dynamic-caption-plugin/1.2.7/photoswipe-dynamic-caption-plugin.min.css" integrity="sha512-x20LXbTUxAMuniBAuSyDGScWaoCxvZJ8m0tbJCRtpPkvPgsb2kStG9ZhDQKHj5mDWaKFOP7TadAZ4KVAyFJwNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script type="importmap">
+        {
+          "imports": {
+            "bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.esm.min.js",
+            "d3": "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm",
+            "lit": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
+            "lit-html": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
+            "lit-element": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
+            "maplibre-gl": "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.3.2/maplibre-gl.min.js",
+            "p5": "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/p5.min.js",
+            "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
+            "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
+            "photoswipe-dynamic-caption": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe-dynamic-caption-plugin/1.2.7/photoswipe-dynamic-caption-plugin.esm.min.js",
+            "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js",
+            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.3.0/js/tabulator_esm.min.js"
+          }
+        }
+    </script>
+    {% include analytics.html %}
+    <style>
+        :root {
+            --branding-color: #3CB6BF;
+            --branding-color-light: #aedce6;
+            --branding-color-complement: #BD81C6;
+            --branding-color-complement-light: #dface6;
+            --branding-secondary-color: #B5AFA3;
+            --branding-secondary-color-light: #D1CABD;
+            font-size: 21px;
+            line-height: 1.5;
+
+        }
+        body {
+            margin: 0;
+            --bs-body-color: #eee;
+            --bs-link-color-rgb: 235, 235, 235;
+            --bs-link-hover-color-rgb: 195, 195, 195;
+            --bs-body-bg: #010101;
+            --bs-body-font-family: 'Petrona', 'Yrsa', serif;
+            --bs-body-font-weight: 400;
+            font-optical-sizing: auto;
+            --sans-font-family: "Avenir Next", "Prompt", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        }
+
+        ::selection {
+            background: var(--branding-color-light);
+        }
+
+        hr {
+            width: 6rem;
+            margin: 4rem auto;
+            display: block;
+            border: 1px solid #DDD;
+        }
+
+        ul, ol {
+            /* Don't jam bullet at edge of screen on mobile */
+            padding-left: 1rem
+        }
+
+        @media screen and (min-width: 700px) {
+            ul:not(.no-hanging) {
+                padding-left: 0;
+            }
+        }
+
+        figure {
+            max-width: 1200px;
+            margin: 0 auto 2rem auto;
+        }
+
+        figure img {
+            width: 100%;
+        }
+
+        .full-width {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 1rem
+        }
+
+        header {
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--sans-font-family);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        h3 {
+            font-family: var(--bs-body-font-family);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        a.disabled {
+            color: gray;
+            pointer-events: none;
+        }
+
+        .inline-icon {
+            height: 1em;
+            vertical-align: middle;
+            margin-left: -.2em;
+        }
+
+        .anchor-link {
+            padding: 0 .175rem;
+            font-weight: 400;
+            color: var(--branding-secondary-color);
+            text-decoration: none;
+            opacity: 0;
+            transition: color 0.15s ease-in-out,opacity 0.15s ease-in-out;
+        }
+
+        .anchor-link::after {
+            content: "#";
+        }
+
+        .anchor-link:focus, .anchor-link:hover, :hover > .anchor-link, :target .anchor-link {
+            text-decoration: none;
+            opacity: 1;
+        }
+
+        /* HERO */
+
+        #hero .display-text, #hero #overview {
+            opacity: 0;
+            animation: fade-in 1s ease forwards;
+            animation-delay: 3.4s;
+            color: #ccc;
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Full screen mode */
+        html, body {
+            height: 100%;
+        }
+        #hero {
+            margin-bottom: 0;
+            overflow: hidden;
+        }
+        #hero-mechanism {
+            width: 80vh;
+        }
+
+        #hero .hero-container {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: clamp(.75rem,min(5vh, 10vw),3rem) 1rem;
+            overflow-x: clip; /* Allow underlay gradient to spill out */
+        }
+
+        #hero h1 {
+            font-weight: 600;
+            font-size: clamp(.75rem,min(8vh, 8vw),20rem);
+            line-height: .9;
+            font-family: var(--bs-body-font-family);
+        }
+
+        #hero {
+            height: 100%;
+            position: relative;
+        }
+
+        #hero-toy {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #001316;
+            z-index: -1;
+            animation: fade-in 1s ease forwards;
+            opacity: 0;
+            animation-delay: 1s;
+        }
+
+        #overlay {
+            cursor: pointer;
+        }
+
+        #hero-toy::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%; /* Adjust to your element size */
+            height: 100%; /* Adjust to your element size */
+            background: radial-gradient(circle, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.4) 100%);
+            pointer-events: none; /* Ensures it doesn't block interaction with underlying content */
+        }
+        /* Key ripples*/
+
+        #key-overlay div {
+            transform: translateZ(0); /* Necessary for ripples to stay within div box */
+        }
+
+        span.ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 1000ms ease-out;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Interactive fountain */
+
+
+        /* Suppress loading text shown when p5.js is used with a preload */
+        #p5_loading {
+            display: none;
+        }
+
+        .display-text {
+            font-size: clamp(.75rem,min(5vh, 5vw),10rem);
+            line-height: 1.3;
+            font-style: italic;
+            font-weight: 300;
+
+            text-shadow: 0 0 20px rgba(225, 131, 0, 0.3);
+        }
+        .display-text a {
+            color: #ddd;
+            transition: text-shadow .3s;
+        }
+        .display-text a:hover {
+            text-shadow: 0 0 20px rgba(225, 131, 0, 1.0);
+        }
+
+        .wavy-button {
+            text-decoration-thickness: .5px;
+            text-decoration-style: wavy;
+            text-decoration-color: rgba(255,255,255,.3);
+            font-style: italic;
+            text-underline-offset: 2px;
+            transition: text-shadow .3s;
+            text-shadow: 0 0 20px rgba(225, 131, 0, 0.3);
+            font-weight: 200;
+        }
+
+        .wavy-button:hover {
+            text-decoration-color: var(--branding-color);
+            text-shadow: 0 0 20px rgb(0, 239, 255);
+            font-weight: 300;
+        }
+
+        .wavy-button.complement-color:hover {
+            text-decoration-color: var(--branding-color-complement);
+            text-shadow: 0 0 20px rgb(224, 0, 255);
+
+        }
+
+        .wavy-button.disabled {
+            text-decoration-color: var(--branding-color-light);
+        }
+
+        /* Section specific */
+
+
+        .imprint {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .imprint a {
+            text-decoration: none;
+            color: #333;
+            transition: .3s;
+        }
+
+        .imprint a:hover {
+            color: #bbb;
+        }
+
+        .imprint img {
+            width: 100px;
+            opacity: .5;
+            transition: .3s;
+        }
+
+        .imprint:hover img {
+            opacity: .8;
+        }
+
+        #overview {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .lede {
+            font-style: italic;
+        }
+
+        #course-map {
+            border-radius: 1rem;
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 1rem;
+            max-height: 120vh;
+            /* Max height works fine in FF, but Safari will
+       draw a full width white background box. Setting contain gets rid of the visible box, but the element
+       box remains too big and the border radius won't render...
+     */
+
+            /*object-fit: contain;*/
+        }
+
+        .accordion {
+            --bs-accordion-btn-focus-border-color: #bbb;
+            --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem var(--branding-secondary-color);
+            --bs-accordion-border-radius: .5rem;
+            --bs-accordion-inner-border-radius: .5rem;
+            --bs-accordion-body-padding-x: 1rem;
+            --bs-accordion-body-padding-y: .75rem;
+            --bs-accordion-btn-padding-x: 1rem;
+            --bs-accordion-btn-padding-y: .75rem;
+            --bs-accordion-bg: var(--bs-body-bg);
+            --bs-accordion-color: var(--bs-body-color);
+            --bs-accordion-active-color: var(--bs-emphasis-color);
+            --bs-accordion-active-bg: var(--branding-secondary-color-light);
+            --bs-accordion-btn-icon-width: 1rem;
+            --bs-accordion-border-color: #ccc;
+        }
+
+        .accordion-header button {
+            font-size: 21px;
+            font-family: var(--bs-body-font-family);
+            font-weight: 600;
+        }
+
+        .accordion-button::after {
+            filter: saturate(0%);
+        }
+
+
+        .blockquote {
+            font-style: italic;
+            font-size: 1rem;
+        }
+
+        .blockquote-footer {
+            color: #888;
+        }
+
+        footer {
+            margin: 6rem 0 6rem 0;
+        }
+
+        #epilogue {
+            margin-top: 4rem;
+            padding-top: 4rem;
+        }
+
+        #epilogue .container {
+            margin-bottom: 2rem;
+        }
+
+        #epilogue h1 {
+            margin-bottom: 2rem;
+        }
+
+        #credit {
+            opacity: .35;
+            font-weight: 100;
+            font-size: .75rem;
+            transition: 10s;
+        }
+
+        /* Certs */
+
+        .cert-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+
+        .usatf-certificate {
+            font-size: .66rem;
+            font-family: var(--sans-font-family);
+            border: 2px solid #999;
+            border-radius: .75rem;
+            display: inline-flex;
+            gap: 1rem;
+            flex-direction: row;
+            justify-content: center;
+            margin-bottom: 0;
+            padding: .75rem .75rem;
+            text-decoration: none;
+            color: #666;
+            transition: .3s;
+        }
+
+        .usatf-certificate:hover {
+            color: black;
+            border: 2px solid #333;
+        }
+
+        .usatf-certificate.full:hover {
+            border: 2px solid var(--branding-color);
+        }
+
+        .usatf-certificate.half:hover {
+            border: 2px solid var(--branding-color-complement);
+        }
+
+        .usatf-certificate:hover img {
+            opacity: 1;
+        }
+
+        .usatf-certificate img {
+            height: 4rem;
+            opacity: .6;
+            transition: .3s;
+        }
+
+        .usatf-certificate .details {
+            align-self: center;
+        }
+
+        .usatf-certificate h2,
+        .usatf-certificate p {
+            font-size: inherit;
+            margin-bottom: 0;
+        }
+
+        /* Results */
+
+        .table {
+            background: transparent;
+            width: auto;
+            min-width: 200px;
+            font-size: 21px;
+            line-height: 36px;
+        }
+
+        .table th {
+
+        }
+
+        .table tr td {
+            border-bottom-width: 0;
+        }
+
+        .table thead {
+            border-bottom-width: 1px;
+        }
+
+        .result-detail {
+            padding: 1rem;
+        }
+
+        .pswp-caption-content, .pswp__dynamic-caption {
+            font-weight: 300;
+        }
+
+        track-map {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: min(max(50vh, 300px), 400px);
+        }
+
+        .tabulator {
+            font-size: 1rem;
+        }
+
+        .tabulator,
+        .tabulator .tabulator-header .tabulator-col,
+        .tabulator .tabulator-header,
+        .tabulator .tabulator-tableholder .tabulator-table,
+        .tabulator .tabulator-footer {
+            background-color: transparent;
+        }
+
+        .tabulator-row.tabulator-group {
+            //background-color: rgba(255, 255, 255, 0.075) !important;
+        }
+
+        .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs {
+            background-color: transparent !important;
+        }
+
+        .tabulator-row, .tabulator-row.tabulator-row-even {
+            background-color: transparent;
+        }
+
+        .tabulator-row.details-opened.tabulator-selectable,
+        .tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
+            transition: .2s;
+        }
+
+        .tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+            background-color: rgba(255, 255, 255, .3);
+        }
+
+        .tabulator-row.tabulator-selectable:hover {
+            background-color: rgba(255, 255, 255, .3);
+        }
+
+        .tabulator-row.details-opened.tabulator-selectable,
+        .tabulator-row.details-opened.tabulator-selectable:hover {
+            background-color: #E0E0E0;
+        }
+
+        .tabulator .tabulator-header {
+            border-top: none;
+        }
+
+        .laps-table {
+            padding: 1rem;
+        }
+
+        .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-bottom {
+            border-top: 2px solid #999;
+        }
+
+        .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-top {
+            border-bottom: 2px solid #999;
+        }
+
+        .laps-table.tabulator .tabulator-header {
+            border-bottom: 1px dashed #999;
+        }
+
+        .laps-table .tabulator-row {
+            border-bottom: 1px dashed #999;
+        }
+
+        .laps-table .tabulator-row .tabulator-cell {
+            padding: 4px;
+        }
+        .laps-table.tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-bottom {
+            border-top: 1px solid #999;
+            border-bottom: none;
+        }
+        .laps-table.tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-top {
+            border-bottom: 1px solid #999;
+            border-top: none;
+        }
+
+        .tabulator-row.tabulator-group {
+            border-top: 1px dashed #999;
+            border-right: none;
+        }
+
+        .tabulator-row.tabulator-group:first-of-type {
+            /* Hide the "official laps" header */
+            display: none;
+        }
+
+        .laps-table .tabulator-footer {
+            border-top: 1px dashed #999;
+            border-bottom: none;
+        }
+
+        .tabulator-tableholder, .tabulator-table {
+            max-width: 100%;
+        }
+
+        .bib {
+            font-weight: 600;
+            background-color: black;
+            color: white;
+            font-family: var(--sans-font-family);
+            border-radius: .25rem;
+            display: inline-block;
+            padding: 0 .25rem;
+            font-size: .75rem;
+        }
+        .bib.full, .full.form-check-input:checked {
+            background-color: var(--branding-color);
+        }
+        .bib.half, .half.form-check-input:checked {
+            background-color: var(--branding-color-complement);
+        }
+
+        .full.form-check-input:checked {
+            background-color: var(--branding-color);
+            border-color: var(--branding-color)
+        }
+        .half.form-check-input:checked {
+            background-color: var(--branding-color-complement);
+            border-color: var(--branding-color-complement)
+        }
+
+        .full.form-check-input:focus {
+            border-color: var(--branding-color);
+            box-shadow: 0 0 0 .25rem var(--branding-color-light);
+        }
+
+        .half.form-check-input:focus {
+            border-color: var(--branding-color-complement);
+            box-shadow: 0 0 0 .25rem var(--branding-color-complement-light);
+        }
+
+        .form-control:focus {
+            border-color: var(--branding-color);
+            outline: 0;
+            box-shadow: 0 0 0 .25rem var(--branding-color-light);
+        }
+
+        .input-group-text {
+            background-color: var(--bs-gray-400);
+        }
+        .beta-badge {
+            font-size: .66rem;
+            vertical-align: top;
+            font-weight: 400;
+            border-radius: .25rem;
+        }
+
+        /* Results */
+
+        lap-pace-chart {
+            width: 100%
+        }
+
+        lap-pace-chart rect {
+            transition: .15s;
+        }
+
+        lap-pace-chart .tick line {
+            color: white;
+            opacity: .5;
+        }
+
+        lap-pace-chart .minor {
+            opacity: .4;
+            color: white
+        }
+
+        lap-pace-chart .horizontal-grid {
+            color: white;
+            opacity: .5;
+        }
+
+        lap-pace-chart .data-bar {
+            fill: #888;
+            opacity: .9;
+            stroke: #aaa;
+            stroke-width: .5px;
+        }
+
+        lap-pace-chart .data-bar.extra {
+            fill: #bbb
+        }
+
+        lap-pace-chart .data-bar.highlighted {
+            fill: #999;
+        }
+
+        lap-pace-chart #flaglines line {
+            stroke: #ccc;
+            stroke-width: 1px
+        }
+
+        lap-pace-chart .finish-flag[data-goal="26_2mi"] line {
+            stroke: var(--branding-color);
+        }
+
+        lap-pace-chart .finish-flag[data-goal="26_2mi"] polygon {
+            fill: var(--branding-color);
+        }
+
+        lap-pace-chart .finish-flag[data-goal="13_1mi"] line {
+            stroke: var(--branding-color-complement);
+        }
+
+        lap-pace-chart .finish-flag[data-goal="13_1mi"] polygon {
+            fill: var(--branding-color-complement);
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10mi"] line {
+            stroke: #dc0000;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10mi"] polygon {
+            fill: #dc0000;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10k"] line {
+            stroke: #dc8400;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10k"] polygon {
+            fill: #dc8400;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="5k"] line {
+            stroke: #65b900;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="5k"] polygon {
+            fill: #65b900;
+        }
+
+        lap-pace-chart .finish-flag text {
+            font-family: var(--sans-font-family);
+            font-weight: bold;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header id="hero" class="text-center d-flex justify-content-center flex-column">
+    <div id="overlay" class="d-flex w-100 h-100 position-absolute justify-content-center align-content-center">
+        <img id="hero-mechanism" src="{{ site.baseurl }}/img/dm25/mechanism.svg"/>
+    </div>
+    <div id="hero-toy">
+    </div>
+
+
+    <div id="key-overlay" class="d-flex w-100 h-100 position-absolute justify-content-center align-content-center flex-column">
+        <div class="flex-fill overflow-hidden"></div>
+        <div class="flex-fill overflow-hidden"></div>
+        <div class="flex-fill overflow-hidden"></div>
+        <div class="flex-fill overflow-hidden"></div>
+    </div>
+    <div class="d-flex w-100 h-100 position-absolute justify-content-end align-content-end pe-none">
+        <div id="credit" class="align-self-end text-end p-2 visually-hidden opacity-0 pointer-event">
+            <i>Wasserklavier</i>, Luciano Berio <a href="https://github.com/davidpanderson/Numula/blob/main/examples/wasserklavier.py" class="pe-auto">perf. David P. Anderson</a>
+        </div>
+    </div>
+
+    <div class="hero-container">
+    <div class="display-text mb-4 mt-4">The <a href="{{ site.baseurl }}/" class="text-decoration-none">Race Condition Running</a> <h1>Drumheller&nbsp;Marathon</h1> will run June&nbsp;7th,&nbsp;2025.</div>
+    <div id="overview">
+        <!--div class="col-12">
+            <p class="lede">Join us for laps around UW's historic fountain</p>
+        </div-->
+
+        <div class="gap-2 row justify-content-center mb-4">
+
+        <div class="col-auto">
+            <a class="wavy-button" href="{{ page.registration_link }}" data-goatcounter-click="dm25-apply-full">Apply for Full</a>
+        </div>
+        <div class="col-auto">
+            <a class="wavy-button complement-color" href="{{ page.registration_link }}" data-goatcounter-click="dm25-register-half">Register for Half</a>
+        </div>
+
+
+            <!--<a class="btn btn-lg hero-button" href="#epilogue">Read Epilogue</a>-->
+
+        </div>
+        <!--div class="row justify-content-center">
+            <div class="col-auto">
+                <a class="wavy-button" href="{{ page.shirt_order_link }}">Order a Shirt</a>
+            </div>
+        </div-->
+    </div>
+    </div>
+</header>
+
+
+
+
+<script type="module">
+    import {RippleToy} from "{{ site.baseurl }}/js/dm25/rippleToy.js";
+    import {ResultsTable} from "{{ site.baseurl }}/js/ResultsTable.js";
+    import {durationToSeconds, prepareImagesForPhotoswipe} from "{{ site.baseurl }}/js/common.js";
+    import PhotoSwipeLightbox from 'photoswipe-lightbox';
+    import PhotoSwipeDynamicCaption from 'photoswipe-dynamic-caption';
+    import {Tooltip} from 'bootstrap'
+    import {} from 'p5'
+    import * as d3 from 'd3';
+
+    import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
+    import {Tabulator, ColumnCalcsModule, GroupRowsModule, FormatModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule, ReactiveDataModule, FilterModule} from 'tabulator-tables';
+
+    Tabulator.registerModule([ColumnCalcsModule, FormatModule, GroupRowsModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule, ReactiveDataModule, FilterModule]);
+
+
+    function initialize() {
+
+        function createRipple(event) {
+            const target = event.currentTarget;
+
+            const circle = document.createElement("span");
+            const diameter = Math.max(target.clientWidth, target.clientHeight);
+            const radius = diameter / 2;
+
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - target.offsetLeft - radius}px`;
+            circle.style.top = `${event.clientY - target.offsetTop - radius}px`;
+            circle.classList.add("ripple");
+
+            const ripple = target.getElementsByClassName("ripple")[0];
+
+            if (ripple) {
+                ripple.remove();
+            }
+
+            target.appendChild(circle);
+        }
+
+        const keys = document.querySelectorAll("#key-overlay div");
+        for (const key of keys) {
+            key.addEventListener("click", createRipple);
+        }
+        document.querySelector("#hero-toy").addEventListener("musicStart", () => {
+            const credit = document.querySelector("#credit");
+            credit.classList.remove("visually-hidden");
+            credit.classList.remove("opacity-0");
+            window.goatcounter && window.goatcounter.count({
+                path: 'dm25-found',
+                event: true,
+            });
+        });
+        new p5(RippleToy("{{site.baseurl}}"), document.querySelector("#hero-toy"));
+
+        // Tooltips for sign-up deadlines
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
+
+        /*fetch('{{ site.baseurl }}/results/dm25.json')
+                .then(res => res.json())
+                .then(resultsData => {
+                    const results = resultsData.results
+                    const goalLapsByEvent = resultsData.config.goals
+                    // Sort each event's goals to be ascending by lap count
+                    for (let event in goalLapsByEvent) {
+                        goalLapsByEvent[event] = Object.fromEntries(Object.entries(goalLapsByEvent[event]).sort((a, b) => a[1] - b[1]))
+                    }
+                    let videoStartTime = function () {
+                        // Video assumed to start at moment of earliest start
+                        let earliestStart = Infinity
+                        for (let startName in resultsData.config.starts) {
+                            let start = resultsData.config.starts[startName]
+                            let startSeconds = durationToSeconds(start.time)
+                            if (startSeconds < earliestStart) {
+                                earliestStart = startSeconds
+                            }
+                        }
+                        return earliestStart
+                    }()
+                    const lapDistance = resultsData.config.lapDistance
+                    const starts = resultsData.config.starts
+                    const directionChanges = resultsData.config.directionStarts.map((start) => durationToSeconds(start))
+                    let officialResults = []
+                    let unofficialResults = []
+                    let marathonResults = []
+                    for (let i = 0; i < results.length; i++) {
+                        let entry = results[i]
+                        let startDistance = Number("NaN")
+                        let startTime = Number("NaN")
+                        let cumulativeWallclock = Number("NaN")
+                        for (let startName in starts) {
+                            const start = starts[startName]
+                            if (start.bibs[0] <= entry.id && entry.id <= start.bibs[1]) {
+                                startDistance = start.startDistance
+                                startTime = start.time
+                                entry.startTime = startTime
+                                entry.event = startName.includes("half") ? "half" : "marathon"
+                                cumulativeWallclock = durationToSeconds(startTime)
+                                break
+                            }
+                        }
+
+                        let finished = false
+                        let entranceAdjustment = resultsData.config.firstLapIsEntrance ? 1: 0;
+                        let lapsGoal = entry.event === "marathon" ? goalLapsByEvent["marathon"]["26_2mi"] : goalLapsByEvent["half"]["13_1mi"]
+                        let runnerGoals = goalLapsByEvent[entry.event]
+                        let lapsRun = entry.lapTimes.length - entranceAdjustment
+                        if (lapsRun >= lapsGoal) {
+                            finished = true
+                        }
+
+                        if (finished) {
+                            entry["finishTime"] = entry.lapTimes.slice(0, lapsGoal + entranceAdjustment).reduce((a, b) => a + b, 0)
+                        } else {
+                            entry["finishTime"] = Infinity
+                        }
+                        for (let goalName in runnerGoals) {
+                            let goal = runnerGoals[goalName]
+                            entry[goalName + "Time"] = lapsRun >= goal ? entry.lapTimes.slice(0, goal + entranceAdjustment).reduce((a, b) => a + b, 0) : Infinity
+                        }
+                        entry["nLaps"] = lapsRun
+
+                        let lapObjects = []
+                        let lapsCompleted = 0
+                        let timeElapsed = 0
+                        let distanceElapsed = 0
+                        let directionIndex = -1
+
+                        let lapTarget = Object.values(runnerGoals)[Math.max(d3.bisectRight(Object.values(runnerGoals), lapsRun) - 1, 0)]
+                        entry["goalLaps"] = lapTarget
+                        entry["goalName"] = Object.keys(runnerGoals).find(key => runnerGoals[key] === lapTarget)
+                        for (let i = 0; i < entry.lapTimes.length; i++) {
+                            let lapStartTime = timeElapsed
+                            timeElapsed += entry.lapTimes[i]
+                            cumulativeWallclock += entry.lapTimes[i]
+                            while (cumulativeWallclock > directionChanges[directionIndex + 1]) {
+                                directionIndex += 1
+                            }
+                            let runnerLapDistance = lapDistance
+                            let direction = resultsData.config.directions[directionIndex]
+                            if (i === 0 && resultsData.config.firstLapIsEntrance) {
+                                // 0th lap is entrance from upper vista, not a real lap
+                                runnerLapDistance = startDistance
+                                direction = null
+                            } else {
+                                lapsCompleted += 1
+                            }
+                            distanceElapsed += runnerLapDistance
+                            lapObjects.push({
+                                "index": i,
+                                "lapNumber": resultsData.config.firstLapIsEntrance && i === 0 ? null : lapsCompleted,
+                                "timestamp": cumulativeWallclock,
+                                "duration": entry.lapTimes[i],
+                                "distance": runnerLapDistance,
+                                "distanceElapsed": distanceElapsed,
+                                "timeElapsed": timeElapsed,
+                                "extra": i > lapTarget,
+                                "direction": direction
+                            })
+
+                        }
+
+                        entry["lapDetails"] = lapObjects
+                        if (entry.event === "marathon") {
+                            marathonResults.push(entry)
+                        } else {
+                            if (entry.finishTime === Infinity) {
+                                unofficialResults.push(entry)
+                            } else {
+                                officialResults.push(entry)
+                            }
+                        }
+                    }
+
+                    let table = new ResultsTable(marathonResults)
+
+                    document.querySelector("#results-marathon").append(table)
+                    // Look for preceding .count span, populate with num results
+                    document.querySelector(".count:has(+ #results-marathon)").textContent = ` (${marathonResults.length})`
+                    let fullGoals = Object.fromEntries(Object.entries(goalLapsByEvent["marathon"]).filter(([key, value]) => value < goalLapsByEvent["marathon"]["26_2mi"]))
+                    table.initialize(marathonResults, fullGoals, {videoLink: resultsData.config.finishVideo, videoStartTime: videoStartTime})
+
+                    table = new ResultsTable(officialResults)
+
+                    let halfGoals = Object.fromEntries(Object.entries(goalLapsByEvent["half"]).filter(([key, value]) => value < goalLapsByEvent["half"]["13_1mi"]))
+                    document.querySelector("#results-half-official").append(table)
+                    document.querySelector(".count:has(+ #results-half-official)").textContent = ` (${officialResults.length})`
+                    table.initialize(officialResults, halfGoals, {videoLink: resultsData.config.finishVideo, videoStartTime: videoStartTime})
+
+                    table = new ResultsTable(unofficialResults)
+
+                    document.querySelector("#results-half-unofficial").append(table)
+                    document.querySelector(".count:has(+ #results-half-unofficial)").textContent = ` (${unofficialResults.length})`
+                    table.initialize(unofficialResults, halfGoals, {videoLink: resultsData.config.finishVideo, videoStartTime: videoStartTime})
+                })
+
+         */
+
+    }
+
+
+    function setupLightboxes() {
+        prepareImagesForPhotoswipe(document.querySelectorAll(".lightbox-gallery")).then(() => {
+            const lightbox = new PhotoSwipeLightbox({
+                gallery: '.lightbox-gallery',
+                children: 'a',
+                showHideAnimationType: 'zoom',
+                showAnimationDuration: 200,
+                hideAnimationDuration: 200,
+                pswpModule: () =>  import("photoswipe")
+            });
+            const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
+                type: 'auto',
+                captionContent: (slide) => {
+                    return slide.data.element.parentElement.querySelector("figcaption").innerHTML;
+                }
+            });
+
+            lightbox.init();
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initialize)
+        document.addEventListener('DOMContentLoaded', e => setupLightboxes)
+    } else {
+        initialize()
+        setupLightboxes()
+    }
+</script>
+
+</body>
+</html>
