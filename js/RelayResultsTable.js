@@ -21,7 +21,7 @@ export class RelayResultsTable extends HTMLElement {
         let view
         return new Promise((resolve, reject) => {
             this.innerHTML = `
-        <div class="results-table"></div>
+        <table class="results-table table table-sm"></table>
         `;
             view = new Tabulator(this.querySelector(".results-table"), {
                 reactiveData: true,

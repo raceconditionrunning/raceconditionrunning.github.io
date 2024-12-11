@@ -306,12 +306,9 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             display: block;
         }
 
-
         .subheader p, .subheader p a {
             color: grey;
         }
-
-
 
         .accordion-item ul {
             padding-left: 1rem;
@@ -338,11 +335,20 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         .tabulator .tabulator-tableholder .tabulator-table,
         .tabulator .tabulator-footer,
         .tabulator .tabulator-footer .tabulator-calcs-holder,
-        .tabulator .tabulator-footer .tabulator-calcs-holder .tabulator-row{
-            background-color: transparent !important;
+        .tabulator .tabulator-footer .tabulator-calcs-holder .tabulator-row,
+        .tabulator.table,
+        .tabulator-row, .tabulator-row.tabulator-row-even,
+        .tabulator.table .tabulator-row{
+            background-color: transparent;
         }
 
-        .tabulator {
+        .tabulator.table:not(.thead-light) .tabulator-header, .tabulator.table:not(.thead-light) .tabulator-header .tabulator-col {
+            background-color: var(--bs-table-bg);
+        }
+
+        .tabulator.table .tabulator-row,
+        .tabulator.table .tabulator-tableholder,
+        .tabulator.table:not(.thead-light) .tabulator-header, .tabulator.table:not(.thead-light) .tabulator-header .tabulator-col {
             color: var(--bs-body-color);
         }
 
@@ -354,8 +360,11 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             background-color: transparent !important;
         }
 
-        .tabulator-row, .tabulator-row.tabulator-row-even {
-            background-color: transparent;
+        .tabulator.table .tabulator-row:hover,
+        .tabulator.table .tabulator-row:hover .tabulator-cell,
+        .tabulator-row.tabulator-selectable:hover,
+        .tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover{
+            background-color: var(--bs-table-hover-bg);
         }
 
         .tabulator-row,
