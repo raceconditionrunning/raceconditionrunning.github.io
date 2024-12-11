@@ -53,25 +53,36 @@
   </a>
 </header>
 
-<nav class="navbar navbar-expand-sm mb-4" role="navigation">
+<nav class="navbar navbar-expand-sm mb-4 container" role="navigation">
   <div class="container">
     <ul class="navbar-nav justify-content-between">
       <li class="nav-item"><a href="{{ site.baseurl }}/"{% if page.url == "/" %} class="active"{% endif %}>Schedule</a></li>
       <li class="nav-item"><a href="{{ site.baseurl }}/routes/"{% if page.url == "/routes/" %} class="active"{% endif %}>Routes</a></li>
       <li class="nav-item"><a href="{{ site.baseurl }}/brunch-reviews/"{% if page.url == "/brunch-reviews/" %} class="active"{% endif %}>Brunch Reviews</a></li>
-      <li class="nav-item"><a href="{{ site.baseurl }}/lore/"{% if page.url == "/lore/" %} class="active"{% endif %}>Lore</a></li>
-      <li class="nav-item dropdown dropdown-center"><a href="{{site.baseurl}}/events" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
+      <li class="nav-item dropdown">
+        <a href="{{ site.baseurl }}/events" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
         <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
-          <li><a class="dropdown-item " href="{{ site.baseurl }}/light-rail-relay-24/">Light Rail Relay '24</a></li>
-          <li><a class="dropdown-item" href="{{ site.baseurl }}/drumheller-marathon-24/">Drumheller Marathon '24</a></li>
-          <li><a class="dropdown-item " href="{{ site.baseurl }}/light-rail-relay-23/">Light Rail Relay '23</a></li>
-          <li><a class="dropdown-item" href="{{ site.baseurl }}/drumheller-half-23/">Drumheller Half '23</a></li>
-          <li><a class="dropdown-item" href="{{ site.baseurl }}/light-rail-relay-22/">Light Rail Relay '22</a></li>
-          <li><a class="dropdown-item" href="{{ site.baseurl }}/drumheller-half-22/">Drumheller Half '22</a></li>
-          <li><a class="dropdown-item " href="{{ site.baseurl }}/light-rail-relay-21/">Light Rail Relay '21</a></li>
-          <li><a class="dropdown-item {% if page.url == "{{ site.baseurl }}/quarantine-relay/" %} active{% endif %}" href="{{ site.baseurl }}/quarantine-relay/">Quarantine Relay</a></li>
+          <li>
+            <a class="dropdown-item text-start" href="{{ site.baseurl }}/light-rail-relay-24/">Light Rail Relay '24</a>
+            <ul class="list-inline d-flex gap-2 dropdown-item">
+              <li><a class="link-secondary" href="{{ site.baseurl }}/light-rail-relay-23/">23</a></li>
+              <li><a class="link-secondary" href="{{ site.baseurl }}/light-rail-relay-22/">22</a></li>
+              <li><a class="link-secondary" href="{{ site.baseurl }}/light-rail-relay-21/">21</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a class="dropdown-item text-start" href="{{ site.baseurl }}/drumheller-marathon-24/">Drumheller Marathon '24</a>
+            <ul class="list-inline d-flex gap-2 dropdown-item">
+              <li><a class="link-secondary" href="{{ site.baseurl }}/drumheller-half-23/">23</a></li>
+              <li><a class="link-secondary" href="{{ site.baseurl }}/drumheller-half-22/">22</a></li>
+            </ul>
+          </li>
+
+          <li><a class="dropdown-item text-start {% if page.url == "{{ site.baseurl }}/quarantine-relay/" %} active{% endif %}" href="{{ site.baseurl }}/quarantine-relay/">Quarantine Relay</a></li>
         </ul>
       </li>
+      <li class="nav-item"><a href="{{ site.baseurl }}/lore/"{% if page.url == "/lore/" %} class="active"{% endif %}>Lore</a></li>
     </ul>
   </div>
 </nav>
