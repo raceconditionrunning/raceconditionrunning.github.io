@@ -5,7 +5,7 @@
       route:
         name: Drumheller Marathon 2024
         map: /drumheller-marathon-24
-        dist: 13.1
+        distance_mi: 13.1
       highlight-image: /img/dm24/og-banner.jpg
 
 - date: "2024-06-08"
@@ -77,7 +77,7 @@
       route:
         name: "Westlake, Elliot Bay, Discovery, Ship Canal, South Lake Union Loop"
         map: https://onthegomap.com/s/t5lt2fln
-        dist: 15.8
+        distance_mi: 15.8
 
 - date: "2024-08-24"
   plan:
@@ -89,7 +89,7 @@
 - date: "2024-08-31"
   plan:
     - time: "9:00"
-      route_id: lynwood-jogn-interurban-northgate
+      route_id: lynnwood-jogn-interurban-northgate
 
 - date: "2024-09-07"
   plan:
@@ -117,5 +117,5 @@
 #       route:
 #         name: Light Rail Relay 2024
 #         map: /light-rail-relay-24
-#         dist: 38
+#         distance_mi: 38
 #       highlight-image: /img/lrr24/og-banner.png

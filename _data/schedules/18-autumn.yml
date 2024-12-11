@@ -9,7 +9,7 @@
     - time: '9:00'
       route:
         name: "Paradise Valley Trail Run"
-        dist: 13.10
+        distance_mi: 13.10
         map: "https://www.webscorer.com/race?raceid=152659"
 - date: '2018-09-29'
   plan:
@@ -26,7 +26,7 @@
     - time: '8:45'
       route:
         name: "Dawg Dash 2018"
-        dist: 6.20
+        distance_mi: 6.20
         map: "http://onlineraceresults.com/event/view_event.php?event_id=21582"
 - date: '2018-10-20'
   plan:
@@ -61,14 +61,14 @@
     - time: '8:50'
       route:
         name: "Seattle Half Marathon 2018"
-        dist: 13.10
+        distance_mi: 13.10
         map: "https://results.chronotrack.com/event/results/event/event-38948"
 - date: '2018-12-01'
   plan:
     - time: '8:30'
       route:
         name: "Redmond Reindeer Romp 2018"
-        dist: 13.10
+        distance_mi: 13.10
         map: "https://www.webscorer.com/race?raceid=163121"
 - date: '2018-12-08'
   plan:

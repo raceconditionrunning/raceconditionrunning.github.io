@@ -4,7 +4,7 @@
       route:
         name: Moran Constitutional Relay
         map: https://nwtrailruns.com/events/moran-constitutional-relay/
-        dist: 71.6
+        distance_mi: 71.6
 
 - date: "2022-10-01"
   organized-event: true
@@ -13,7 +13,7 @@
       route:
         name: Light Rail Relay 2022
         map: /light-rail-relay-22
-        dist: 28.3
+        distance_mi: 28.3
       highlight-image: /img/lrr22/lrr-og-banner.png
 
 - date: "2022-10-09"
@@ -22,4 +22,4 @@
       route:
         name: Dawg Dash 2022
         map: https://www.washington.edu/alumni/dawgdash/
-        dist: 6.2
+        distance_mi: 6.2

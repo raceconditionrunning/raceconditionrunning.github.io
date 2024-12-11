@@ -31,7 +31,7 @@
     - time: '7:30'
       route:
         name: "Dawg Dash 2017"
-        dist: 3.10
+        distance_mi: 3.10
         map: "http://onlineraceresults.com/race/view_race.php?race_id=61686"
 - date: '2017-10-28'
   plan:
@@ -58,14 +58,14 @@
     - time: '7:30'
       route:
         name: "Seattle Half Marathon 2017"
-        dist: 13.10
+        distance_mi: 13.10
         map: "/maps/seattle-half-17.png"
 - date: '2017-12-02'
   plan:
     - time: '8:30'
       route:
         name: "Redmond Reindeer Romp 2017"
-        dist: 13.10
+        distance_mi: 13.10
         map: "http://nwtrailruns.com/events/redmond-reindeer-romp/"
 - date: '2017-12-16'
   plan:

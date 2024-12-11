@@ -9,7 +9,7 @@
       route:
         name: Ragnar Northwest Passage 2023
         map: https://www.runragnar.com/event-detail/relay/northwestpassage#course
-        dist: 200
+        distance_mi: 200
       highlight-image: /img/ragnar-team-2023.webp
 
 - date: "2023-07-30"
@@ -18,5 +18,5 @@
       route:
         name: Jack and Jill's Downhill (Half) Marathon
         map: https://web.archive.org/web/20220713060437/https://jackjillmarathon.com/the-half-marathon
-        dist: 13.1
+        distance_mi: 13.1
 

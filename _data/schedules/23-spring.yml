@@ -55,7 +55,7 @@
       route:
         name: Drumheller Half Marathon 2023
         map: /drumheller-half-23
-        dist: 13.1
+        distance_mi: 13.1
       highlight-image: /img/dhm23/dhm-23-og.png
 
 - date: "2023-05-27"

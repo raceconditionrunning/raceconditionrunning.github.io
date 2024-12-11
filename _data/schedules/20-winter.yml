@@ -37,7 +37,7 @@
       route:
         name: "Lake Sammamish Half"
         map: https://lakesammamishhalf.com/
-        dist: 13.1
+        distance_mi: 13.1
     - time: "8:50"
       route_id: roosevelt-carkeek-phinney-ridge-loop
 

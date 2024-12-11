@@ -31,7 +31,7 @@
     - time: '7:30'
       route:
         name: "Dawg Dash 2016"
-        dist: 3.10
+        distance_mi: 3.10
         map: "http://onlineraceresults.com/race/view_race.php?race_id=61686"
 - date: '2016-10-29'
   plan:
@@ -59,7 +59,7 @@
     - time: '7:30'
       route:
         name: "Seattle Half Marathon 2016"
-        dist: 13.10
+        distance_mi: 13.10
         map: "/maps/seattle-half-17.png"
 
 - date: '2016-12-03'
@@ -67,7 +67,7 @@
     - time: '9:00'
       route:
         name: "OB: Gasworks - UW - Greenlake"
-        dist: 8.68
+        distance_mi: 8.68
         map: "https://www.mapmyrun.com/routes/view/1377000250"
 
 - date: '2016-12-24'
@@ -75,7 +75,7 @@
     - time: '10:00'
       route:
         name: "OB: Gasworks - Portage Bay - UW - Greenlake"
-        dist: 10.35
+        distance_mi: 10.35
         map: "https://www.mapmyrun.com/routes/view/1392883327"
 
 - date: '2016-12-31'
@@ -83,10 +83,10 @@
     - time: '8:30'
       route:
         name: "OB: Discovery - Magnolia Bridge"
-        dist: 7.12
+        distance_mi: 7.12
         map: "https://www.gmap-pedometer.com/?r=7001208"
     - time: '9:45'
       route:
         name: "Discovery Park Loop"
-        dist: 3.98
+        distance_mi: 3.98
         map: "https://www.gmap-pedometer.com/?r=7001206"

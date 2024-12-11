@@ -22,7 +22,7 @@
       route:
         name: "Lake Hills 50k Relay"
         map: "https://www.webscorer.com/race?raceid=179092"
-        dist: 31.0
+        distance_mi: 31.0
 - date: "2019-05-11"
   plan:
     - time: "8:50"

@@ -4,7 +4,7 @@
       route:
         name: Moran Constitutional Relay
         map: https://nwtrailruns.com/events/moran-constitutional-relay/
-        dist: 71.6
+        distance_mi: 71.6
 
 - date: "2023-09-30"
   organized-event: true
@@ -13,7 +13,7 @@
       route:
         name: Light Rail Relay 2023
         map: /light-rail-relay-23
-        dist: 28.3
+        distance_mi: 28.3
       highlight-image: /img/lrr23/lrr-og-banner.png
 
 - date: "2023-10-08"
@@ -22,7 +22,7 @@
       route:
         name: Dawg Dash 10K
         map: https://runsignup.com/Race/Results/154482#resultSetId-413024;perpage:100
-        dist: 6.2
+        distance_mi: 6.2
 
 - date: "2023-10-14"
   plan:
@@ -66,7 +66,7 @@
       route:
         name: Seattle Half Marathon
         map: https://www.seattlemarathon.org/
-        dist: 13.1
+        distance_mi: 13.1
 
 - date: "2023-12-02"
   plan:

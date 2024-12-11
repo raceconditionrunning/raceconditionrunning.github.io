@@ -3,7 +3,7 @@
     - time: "10:00"
       route:
         name: "OB: Greenlake - Lake Union Loop"
-        dist: 10
+        distance_mi: 10
         map: "https://www.mapmyrun.com/routes/view/959332821"
     - time: "11:30"
       route_id: green-lake-loop
@@ -12,7 +12,7 @@
     - time: "10:00"
       route:
         name: "OB: Greenlake - Lake Union Loop"
-        dist: 10
+        distance_mi: 10
         map: "https://www.mapmyrun.com/routes/view/959332821"
     - time: "11:30"
       route_id: green-lake-loop
@@ -21,7 +21,7 @@
     - time: "10:00"
       route:
         name: "Something"
-        dist: 10
+        distance_mi: 10
     - time: "11:30"
       route_id: green-lake-loop
 - date: "2016-02-14"
@@ -29,7 +29,7 @@
     - time: "10:00"
       route:
         name: "Something"
-        dist: 10
+        distance_mi: 10
     - time: "11:30"
       route_id: green-lake-loop
 - date: "2016-02-28"
@@ -37,6 +37,6 @@
     - time: "10:00"
       route:
         name: "OB: Greenlake - UW"
-        dist: 9
+        distance_mi: 9
     - time: "11:30"
       route_id: green-lake-loop

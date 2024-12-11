@@ -15,14 +15,14 @@
     - time: "8:50"
       route:
         name: SODO to West Seattle
-        dist: 10.0
+        distance_mi: 10.0
 
 - date: "2019-09-07"
   plan:
     - time: "8:50"
       route:
         name: Lake Union + Capitol Hill Loop
-        dist: 10.0
+        distance_mi: 10.0
 
 - date: "2019-09-14"
   plan:
@@ -35,14 +35,14 @@
       route:
         name: Paradise Valley Trail Run
         map: "https://www.webscorer.com/race?raceid=196328"
-        dist: 13.1
+        distance_mi: 13.1
 
 - date: "2019-09-28"
   plan:
     - time: "8:50"
       route:
         name: "OB: Greenlake, Carkeek"
-        dist: 8.0
+        distance_mi: 8.0
     - time: "10:15"
       route_id: green-lake-loop
 
@@ -60,7 +60,7 @@
     - time: "9:00"
       route:
         name: Dawg Dash 2019
-        dist: 6.2
+        distance_mi: 6.2
         map: https://www.washington.edu/alumni/dawgdash/
 
 - date: "2019-10-20"
@@ -106,7 +106,7 @@
     - time: "7:00"
       route:
         name: "Seattle Half Marathon 2019"
-        dist: 13.1
+        distance_mi: 13.1
         map: "https://raceday.enmotive.com/#/events/2019-amica-insurance-seattle-marathon/results"
 
 - date: "2019-12-07"
@@ -114,5 +114,5 @@
     - time: "9:30"
       route:
         name: Reindeer Romp Trail Run
-        dist: 13.1
+        distance_mi: 13.1
         map: "https://www.webscorer.com/race?raceid=205021"

@@ -3,7 +3,7 @@
     - time: "8:50"
       route:
         name: "OB: CSE - Nature Trail - Burke"
-        dist: 6.33
+        distance_mi: 6.33
         map: "http://www.gmap-pedometer.com/?r=6877564"
     - time: "10:00"
       route_id: cse-portage-bay-loop
@@ -14,7 +14,7 @@
     - time: "10:00"
       route:
         name: "OB: Gasworks - West Burke"
-        dist: 4.17
+        distance_mi: 4.17
         map: "https://www.gmap-pedometer.com/?r=6862847"
 
 - date: "2016-06-19"
@@ -22,12 +22,12 @@
     - time: "8:50"
       route:
         name: "OB: Locks - Ballard Loop"
-        dist: 6.24
+        distance_mi: 6.24
         map: "https://www.mapmyrun.com/routes/view/1115791261"
     - time: "10:00"
       route:
         name: "OB: Locks - Discovery Park"
-        dist: 3.59
+        distance_mi: 3.59
         map: "https://www.gmap-pedometer.com/?r=6861736"
 
 - date: "2016-06-25"
@@ -35,10 +35,10 @@
     - time: "8:50"
       route:
         name: "OB: Arboretum - Lake Washington Boulevard"
-        dist: 7.19
+        distance_mi: 7.19
         map: "https://www.gmap-pedometer.com/?r=6862854"
     - time: "10:00"
       route:
         name: "OB: Arboretum Loop"
-        dist: 3.03
+        distance_mi: 3.03
         map: "https://www.gmap-pedometer.com/?r=6862857"

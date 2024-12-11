@@ -15,7 +15,7 @@
     - time: '8:00'
       route:
         name: "Spring Eagle Trail Runs"
-        dist: 13.10
+        distance_mi: 13.10
         map: "http://nwtrailruns.com/events/spring-eagle-trail-run"
 - date: '2018-04-21'
   plan:
@@ -34,7 +34,7 @@
     - time: '8:00'
       route:
         name: "Lake Hills 50k Relay"
-        dist: 31.00
+        distance_mi: 31.00
         map: "http://nwtrailruns.com/events/lake-hills-50k-relay/"
 - date: '2018-05-12'
   plan:

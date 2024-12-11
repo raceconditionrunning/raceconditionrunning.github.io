@@ -12,7 +12,7 @@
       route:
         name: "OB: Gasworks - Wallingford - Stoneway Loop"
         map: "https://www.mapmyrun.com/routes/view/1412016403"
-        dist: 5.36
+        distance_mi: 5.36
 - date: '2017-01-21'
   plan:
     - time: '9:00'
@@ -26,14 +26,14 @@
     - time: '10:00'
       route:
         name: "Extra miles"
-        dist: 4.0
+        distance_mi: 4.0
 - date: '2017-02-11'
   plan:
     - time: '7:30'
       route:
         name: "PP: Miller to Locks"
         map: "https://www.gmap-pedometer.com/gp/bookmark/view/id/7020652?fbclid=IwAR3189t-t1YH0IKkL8JEA2G_y8ie2KRUAZQCAp5TAxsdQUEh0YwSagLM8Os"
-        dist: 11.09
+        distance_mi: 11.09
     - time: '9:30'
       route_id: locks-discovery-loop
 - date: '2017-02-19'
@@ -41,7 +41,7 @@
     - time: '9:00'
       route:
         name: "Lord Hill Half Marathon"
-        dist: 13.10
+        distance_mi: 13.10
         map: "https://www.webscorer.com/race?raceid=92994"
 - date: '2017-02-25'
   plan:
@@ -49,7 +49,7 @@
       route:
         name: "PP: Golden Gardens to Discovery to Alki Beach"
         map: "https://www.gmap-pedometer.com/gp/bookmark/view/id/7027688Close?fbclid=IwAR3nElNyTOZm2_Y5Ji1Dz5k3A4Hvjo6HCgU6ugKUObaNe35C3U0U9f720aE"
-        dist: 19.04
+        distance_mi: 19.04
 
     - time: '10:10'
       route_id: locks-golden-gardens-ob

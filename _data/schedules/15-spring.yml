@@ -4,14 +4,14 @@
       route:
         name: "Miller Playfield - Ballard Bridge - Gas Works - Interlaken Loop"
         map: "http://www.gmap-pedometer.com/?r=6561739"
-        dist: 12.76
+        distance_mi: 12.76
 - date: '2015-04-05'
   plan:
     - time: '9:30'
       route:
         name: "PP: Miller Playfield - Seward Park Loop - Columbia City"
         map: "http://www.gmap-pedometer.com/?r=6573138"
-        dist: 14.02
+        distance_mi: 14.02
 
 - date: '2015-04-12'
   plan:
@@ -19,7 +19,7 @@
       route:
         name: "PP: Miller Playfield - Seward Park Loop - Columbia City"
         map: "http://www.gmap-pedometer.com/?r=6579617"
-        dist: 12.40
+        distance_mi: 12.40
 
 - date: '2015-04-19'
   plan:
@@ -27,7 +27,7 @@
       route:
         name: "OB: Gasworks - Greenlake - Locks Loop"
         map: "http://www.gmap-pedometer.com/?r=6586547"
-        dist: 14.18
+        distance_mi: 14.18
 
 - date: '2015-04-26'
   plan:
@@ -35,35 +35,35 @@
       route:
         name: "OB: CSE - Burke"
         map: "http://www.gmap-pedometer.com/?r=6591367"
-        dist: 16
+        distance_mi: 16
 - date: '2015-05-10'
   plan:
     - time: '9:30'
       route:
         name: "Gas Works - Foster Island - Lake Union - Green Lake Loop"
         map: "http://www.gmap-pedometer.com/?r=6605695"
-        dist: 16.61
+        distance_mi: 16.61
 - date: '2015-05-17'
   plan:
     - time: '8:30'
       route:
         name: "Gas Works - Foster Island - Lake Union - Green Lake Loop"
         map: "http://www.gmap-pedometer.com/?r=6611621"
-        dist: 16.61
+        distance_mi: 16.61
 - date: '2015-05-24'
   plan:
     - time: '8:30'
       route:
         name: "OB: Gasworks - Seward Park"
         map: "http://www.gmap-pedometer.com/?r=6617531"
-        dist: 19.98
+        distance_mi: 19.98
 - date: '2015-05-31'
   plan:
     - time: '9:00'
       route:
         name: "OB: Gasworks - Seward Park"
         map: "http://www.gmap-pedometer.com/?r=6621940"
-        dist: 20.37
+        distance_mi: 20.37
 - date: '2015-06-07'
   plan:
     - time: '10:00'
@@ -73,4 +73,4 @@
     - time: '7:00'
       route:
         name: "Rock 'n' Roll Seattle Half Marathon 2015"
-        dist: 13.1
+        distance_mi: 13.1

@@ -9,7 +9,7 @@
     - time: '10:00'
       route:
         name: "Magnuson Series Races"
-        dist: 3.10
+        distance_mi: 3.10
         map: "http://magnusonseries.org"
 - date: '2018-01-20'
   plan:
@@ -40,7 +40,7 @@
     - time: '9:00'
       route:
         name: "Lord Hill Half Marathon"
-        dist: 13.10
+        distance_mi: 13.10
         map: "https://www.webscorer.com/race?raceid=127910"
 - date: '2018-02-24'
   plan:
@@ -65,7 +65,7 @@
     - time: '9:00'
       route:
         name: "Mercer Island Half Marathon"
-        dist: 13.10
+        distance_mi: 13.10
         map: "http://onlineraceresults.com/event/view_event.php?event_id=20463"
 - date: '2018-03-24'
   plan:

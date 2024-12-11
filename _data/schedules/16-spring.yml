@@ -13,7 +13,7 @@
     - time: "10:00"
       route:
         name: "OB: Gasworks - Burke"
-        dist: 4
+        distance_mi: 4
 - date: "2016-04-31"
   plan:
     - time: "9:15"
@@ -25,12 +25,12 @@
     - time: "9:15"
       route:
         name: "OB: Olympic Sculpture Park - Alaskan Way"
-        dist: 4.09
+        distance_mi: 4.09
         map: "http://www.gmap-pedometer.com/?r=6849841"
     - time: "10:00"
       route:
         name: "OB: Olympic Sculpture Park"
-        dist: 3.15
+        distance_mi: 3.15
         map: "http://www.gmap-pedometer.com/?r=6849840"
 - date: "2016-05-15"
   plan:
@@ -39,26 +39,26 @@
     - time: "10:00"
       route:
         name: "OB: Locks - Discovery Park"
-        dist: 3
+        distance_mi: 3
         map: "http://www.gmap-pedometer.com/?r=6861736"
 - date: "2016-05-22"
   plan:
     - time: "8:50"
       route:
         name: "OB: Mercer Island - Lake Washington Boulevard"
-        dist: 5.00
+        distance_mi: 5.00
         map: "http://www.gmap-pedometer.com/?r=6862842"
     - time: "10:00"
       route:
         name: "Mercer Island Loop"
-        dist: 2.40
+        distance_mi: 2.40
         map: "http://www.gmap-pedometer.com/?r=6862844"
 - date: "2016-05-29"
   plan:
     - time: "8:50"
       route:
         name: "OB: Greenlake - Ravenna - Burke"
-        dist: 6.11
+        distance_mi: 6.11
         map: "http://www.gmap-pedometer.com/?r=6862850"
     - time: "10:00"
       route_id: green-lake-loop

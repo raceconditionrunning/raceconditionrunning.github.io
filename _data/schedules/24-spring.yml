@@ -52,5 +52,5 @@
 #       route:
 #         name: Drumheller Marathon 2024
 #         map: /drumheller-marathon-24
-#         dist: 13.1
+#         distance_mi: 13.1
 #       highlight-image: /img/dm24/og-banner.jpg

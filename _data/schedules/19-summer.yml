@@ -4,35 +4,35 @@
       route:
         name: "CSE - Sculpture Park - Locks - Loop"
         map: "https://www.gmap-pedometer.com/?r=7378977"
-        dist: 16.93
+        distance_mi: 16.93
 - date: '2019-06-08'
   plan:
     - time: "8:30"
       route:
         name: "Capitol Hill - Volunteer Park - Arboretum - Leschi Loop"
         map: "http://www.gmap-pedometer.com/?r=7379887"
-        dist: 10
+        distance_mi: 10
 - date: '2019-06-16'
   plan:
     - time: "8:15"
       route:
         name: "PP: CSE to Redmond"
         map: "https://www.gmap-pedometer.com/?r=7382424"
-        dist: 10
+        distance_mi: 10
 - date: '2019-07-06'
   plan:
     - time: "8:15"
       route:
         name: "PP: CSE to Mercer Island to Colombia City"
         map: "http://www.gmap-pedometer.com/?r=7388314"
-        dist: 16.5
+        distance_mi: 16.5
 - date: "2019-07-12"
   plan:
     - time: "8:50"
       route:
         name: "Ragnar Road Northwest Passage"
         map: "https://www.runragnar.com/event-detail/relay/northwestpassage"
-        dist: 200
+        distance_mi: 200
       highlight-image: /img/ragnar-team-photo-2019.jpg
 
 - date: "2019-07-20"
@@ -41,7 +41,7 @@
       route:
         name: "PP: CSE to Pancake Corral"
         map: "http://www.gmap-pedometer.com/?r=7392861"
-        dist: 8
+        distance_mi: 8
 
 - date: "2019-07-28"
   plan:
@@ -49,4 +49,4 @@
       route:
         name: "Jack and Jill's Downhill Marathon"
         map: "http://jackjillmarathon.com"
-        dist: 26.2
+        distance_mi: 26.2

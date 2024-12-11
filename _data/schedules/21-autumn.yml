@@ -14,7 +14,7 @@
       route:
         name: Light Rail Relay 2021
         map: /light-rail-relay-21
-        dist: 27.9
+        distance_mi: 27.9
       highlight-image: /img/lrr21/light-rail-relay-og-banner.png
 
 - date: "2021-10-09"
@@ -28,7 +28,7 @@
       route:
         name: Dawg Dash 2021
         map: https://onlineraceresults.com/race/view_race.php?race_id=73933
-        dist: 3.1
+        distance_mi: 3.1
 
 - date: "2021-10-16"
   plan:
@@ -71,7 +71,7 @@
       route:
         name: Seattle Half Marathon 2021
         map: https://web.archive.org/web/20211115194137/https://www.seattlemarathon.org/marathon
-        dist: 13.1
+        distance_mi: 13.1
       cancelled: "We don't like the route"
     - time: "8:30"
       route_id: sodo-alki-beach-half-ob
@@ -82,7 +82,7 @@
       route:
         name: Redmond Reindeer Romp
         map: https://nwtrailruns.com/events/redmond-reindeer-romp/
-        dist: 5.0
+        distance_mi: 5.0
       cancelled: "Sold out"
     - time: "8:30"
       route_id: wash-park-lwb-mt-baker-beach-ob

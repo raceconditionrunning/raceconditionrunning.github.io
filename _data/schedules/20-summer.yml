@@ -5,5 +5,5 @@
       route:
         name: Quarantine Relay
         map: /quarantine-relay
-        dist: 81.67
+        distance_mi: 81.67
       highlight-image: /img/quarantine-relay-medal.png
