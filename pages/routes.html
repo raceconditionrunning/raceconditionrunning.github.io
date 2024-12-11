@@ -1,6 +1,6 @@
 ---
 permalink: routes/
-layout: default
+layout: base
 ---
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator.min.css" integrity="sha256-pG2AUZRMdFyuinl2tPudk9iU0gh2pFIcxPbwNc/vUuo=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator_bootstrap5.min.css" integrity="sha256-H1gQqBIR3L9enXuoNfFASj+QdGSEQIAloT7c4FXjNzc=" crossorigin="anonymous">
@@ -15,21 +15,16 @@ layout: default
     .tabulator .tabulator-footer,
     .tabulator .tabulator-footer .tabulator-calcs-holder,
     .tabulator .tabulator-footer .tabulator-calcs-holder .tabulator-row,
-    .tabulator .tabulator-tableholder .tabulator-table .tabulator-row{
-        background-color: transparent !important;
+    .tabulator .tabulator-tableholder .tabulator-table .tabulator-row,
+    .tabulator.table{
+        background-color: transparent;
         color: inherit;
     }
-    .tabulator.table .tabulator-tableholder {
-        color: var(--bs-body-color);
-    }
+    .tabulator.table .tabulator-tableholder,
     .tabulator.table:not(.thead-light) .tabulator-header, .tabulator.table:not(.thead-light) .tabulator-header .tabulator-col {
         color: var(--bs-body-color);
     }
-    .tabulator .tabulator-header .tabulator-col .tabulator-header-filter input {
-        background-color: transparent;
-        border-color: inherit;
-        color: var(--bs-body-color);
-    }
+
     .tabulator-row,
     .tabulator .tabulator-header {
         border: none;
@@ -37,76 +32,88 @@ layout: default
     .tabulator-row.deprecated {
         opacity: .35 !important;
     }
+    .tabulator.table:not(.thead-light) .tabulator-header, .tabulator.table:not(.thead-light) .tabulator-header .tabulator-col {
+        background-color: var(--bs-table-bg);
+    }
+    .tabulator.table .tabulator-row:hover .tabulator-cell,
+    .tabulator-row.tabulator-selectable:hover,
+    .tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover{
+        background-color: var(--bs-table-hover-bg);
+    }
 </style>
 
 <div id="routes">
-  <div id="filter-controls" class="row align-items-center mb-2 justify-content-center justify-content-sm-between d-none">
+  <div class="container">
+    <div id="filter-controls" class="row align-items-center mb-2 justify-content-center justify-content-sm-between d-none">
 
-    <div class="col-12 col-sm mb-1">
-      <div class="input-group">
-        <span class="input-group-text">Search</span>
-        <input class="form-control" id="filter-search" type="search">
+      <div class="col-12 col-sm mb-1">
+        <div class="input-group">
+          <span class="input-group-text">Search</span>
+          <input class="form-control" id="filter-search" type="search">
+        </div>
       </div>
-    </div>
-    <div class="col-auto">
-      <div class="form-check form-check-inline">
-        <input class="form-check-input deprecated" type="checkbox" id="filter-deprecated">
-        <label class="form-check-label" for="filter-deprecated">Deprecated</label>
+      <div class="col-auto">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input deprecated" type="checkbox" id="filter-deprecated">
+          <label class="form-check-label" for="filter-deprecated">Deprecated</label>
+        </div>
       </div>
-    </div>
 
+    </div>
   </div>
-  <table class="table" id="route-list">
-    <thead>
-    <tr>
-      <th>Route Name</th>
-      <th>Miles</th>
-      <th>Dates Run</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% assign sorted_routes = site.data.routes | sort: 'dist' %}
-    {% for route in sorted_routes %}
+  <div class="d-flex">
+    {% comment %} This static table is for the benefit of non-JS clients {% endcomment %}
+    <table class="table w-auto mx-auto" id="route-list">
+      <thead>
       <tr>
-        <td>
-          <a href="{{ route.id }}" title="{{ route.id }}">
-            <span class="name">{{ route.name }}</span>
-          </a>
-          {% if route.gpx %}
-          &nbsp; <a href="{{ route.gpx }}" class="gpx-link" title="Download GPX">&#8986;</a>
-          {% endif %}
-        </td>
-        {% comment %}
-
-          The following is a ridiculous hack to be able to format route
-          distances as %.2f
-
-          See: https://stackoverflow.com/questions/37862167/trailing-zeros-in-jekyll-liquid
-
-        {% endcomment %}
-        {% assign dist_split = route.dist | round: 2 | split: "." %}
-        {% assign dist_integral = dist_split[0] %}
-        {% assign dist_fractional = dist_split[1] | append: "00" | truncate: 2, "" %}
-        <td><span class="dist" title="{{ route.dist | times: 1.609 | round: 1}}km">{{ dist_integral }}.{{ dist_fractional }}</span></td>
-        <td>
-          <ul class="matched-runs comma-sep">
-          {% for event in site.data.schedule %}
-            {% assign matched_runs = event.plan | where: 'route_id', route.id %}
-            {% for run in matched_runs %}
-              <li class="date">{{ event.date }}</li>
-            {% endfor %}
-          {% endfor %}
-          </ul>
-        </td>
+        <th>Route Name</th>
+        <th>Miles</th>
+        <th>Dates Run</th>
       </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+      {% assign sorted_routes = site.data.routes | sort: 'dist' %}
+      {% for route in sorted_routes %}
+        <tr>
+          <td>
+            <a href="{{ route.id }}" title="{{ route.id }}">
+              <span class="name">{{ route.name }}</span>
+            </a>
+            {% if route.gpx %}
+            &nbsp; <a href="{{ route.gpx }}" class="gpx-link" title="Download GPX">&#8986;</a>
+            {% endif %}
+          </td>
+          {% comment %}
 
+            The following is a ridiculous hack to be able to format route
+            distances as %.2f
+
+            See: https://stackoverflow.com/questions/37862167/trailing-zeros-in-jekyll-liquid
+
+          {% endcomment %}
+          {% assign dist_split = route.dist | round: 2 | split: "." %}
+          {% assign dist_integral = dist_split[0] %}
+          {% assign dist_fractional = dist_split[1] | append: "00" | truncate: 2, "" %}
+          <td><span class="dist" title="{{ route.distance_mi | times: 1.609 | round: 1}}km">{{ dist_integral }}.{{ dist_fractional }}</span></td>
+          <td>
+            <ul class="matched-runs comma-sep">
+            {% for event in site.data.schedule %}
+              {% assign matched_runs = event.plan | where: 'route_id', route.id %}
+              {% for run in matched_runs %}
+                <li class="date">{{ event.date }}</li>
+              {% endfor %}
+            {% endfor %}
+            </ul>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
   <script type="module">
-      import {Tabulator, ColumnCalcsModule, EditModule, FormatModule, InteractionModule, MutatorModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule, ReactiveDataModule, FilterModule} from 'tabulator-tables';
+      import {Tabulator, EditModule, FormatModule, InteractionModule, MutatorModule, ResizeColumnsModule, ResizeTableModule, SortModule, SelectRowModule, FilterModule} from 'tabulator-tables';
 
-      Tabulator.registerModule([ColumnCalcsModule, EditModule, FormatModule, InteractionModule, MutatorModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule, ReactiveDataModule, FilterModule]);
+      Tabulator.registerModule([EditModule, FormatModule, InteractionModule, MutatorModule, ResizeColumnsModule, ResizeTableModule, SortModule, SelectRowModule, FilterModule]);
 
       document.addEventListener("DOMContentLoaded", () => {
         let table = new Tabulator("#routes table", {
@@ -119,8 +126,15 @@ layout: default
                     link.title = route.id;
                     link.innerHTML = value;
                     return link;}},
-                 {title: "Miles", field: "dist", sorter: "number"},
-                 //{title: "Type", field: "type"},
+                 {title: "Miles", field: "distance_mi", sorter: "number"},
+                    {title: "↑ ft", field: "ascent_m", sorter: "number", formatter: cell => {
+                            return Math.round(cell.getValue() * 3.28084);
+                        }},
+                    {title: "↓ ft", field: "descent_m", sorter: "number", formatter: cell => {
+                        return Math.round(cell.getValue() * 3.28084);
+                    }},
+                 {title: "Start", field: "start"},
+                  {title: "End", field: "end"},
                     {
                         title: "Times Run",
                         field: "times_run",
@@ -148,7 +162,7 @@ layout: default
                          return Array.isArray(items) && items.length > 0 ? items[items.length - 1] : "";
                      }}],
 
-            initialSort: [{column: "dist", dir: "asc"}],
+            initialSort: [{column: "distance_mi", dir: "asc"}, {column: "start", dir: "desc"}],
             initialFilter: [{field: "deprecated", type: "!=", value: true}],
             class: "table table-sm",
             selectableRows: false,
@@ -158,6 +172,7 @@ layout: default
                     row.getElement().classList.add("deprecated");
                 }
             },
+            layout: "fitDataTable",
             data: {{ site.data.routes | jsonify}}});
         table.element.classList.add("table-sm");
         table.on("columnsLoaded", () =>

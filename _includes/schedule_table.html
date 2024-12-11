@@ -51,7 +51,7 @@
             {% else %}
             {{route.name}}
             {% endif %}
-            {% if route.dist %}&nbsp; (<span title="{{ route.dist | times: 1.609 | round: 1}}km">{{ route.dist | round: 1}})</span>{% endif %}
+            {% if route.distance_mi %}&nbsp; (<span title="{{ route.distance_mi | times: 1.609 | round: 1}}km">{{ route.distance_mi | round: 1}})</span>{% endif %}
             {% if route.gpx %}
                 &nbsp; <a href="{{ route.gpx }}" class="gpx-link" title="Download GPX">&#8986;</a>
             {% endif %}
