@@ -32,7 +32,7 @@
         <td class="time {{part-cancelled-class}} text-end">{{ plan.time }}</td>
         {% if plan.route.name %}
         {% assign route = plan.route %}
-        {% else if plan.route_id %}
+        {% elsif plan.route_id %}
         {% assign route = site.data.routes | where: 'id', plan.route_id | first %}
         {% if route == nil and plan.route == nil %}
         <td>TBD</td>
@@ -46,7 +46,7 @@
         <td class="{{part-cancelled-class}}">
             {% if plan.route_id %}
             <a href="{{site.baseurl}}/routes/{{ plan.route_id }}" title="{{ plan.route_id }}">{{route.name}}</a>
-            {% else if route.map %}
+            {% elsif route.map %}
             <a target="_blank" href="{{ route.map }}">{{route.name}}</a>
             {% else %}
             {{route.name}}
