@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>Race Condition Running</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel='stylesheet' type='text/css' href='{{ site.baseurl }}/css/style.css'>
+
+  <!-- favicon -->
+  <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="WrPqIrZlSl3HcFgqvyw3hRpeYOgaxXfyjEXTtctEJhY" />
+
+  <script type="importmap">
+    {
+      "imports": {
+        "maplibre-gl": "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.js",
+        "masonry-layout": "https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js",
+        "noUiSlider": "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.mjs",
+        "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
+        "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
+        "pmtiles": "https://cdn.jsdelivr.net/npm/pmtiles@4.0.1/+esm",
+        "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.3.0/js/tabulator_esm.min.js",
+        "@turf": "https://cdn.jsdelivr.net/npm/@turf/turf@7.1.0/+esm",
+        "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js",
+        "bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.esm.min.js"
+      }
+    }
+  </script>
+</head>
+<body>
+
+<header class="container">
+  <a href="/" class="text-body">
+    <img src='{{ site.baseurl }}/img/rcc-logo.png' width='150' alt='RCC Logo' class="float-end">
+    <h1>Race Condition Running</h1>
+  </a>
+</header>
+
+<nav class="navbar navbar-expand-sm mb-4" role="navigation">
+  <div class="container">
+    <ul class="navbar-nav justify-content-between">
+      <li class="nav-item"><a href="{{ site.baseurl }}/"{% if page.url == "/" %} class="active"{% endif %}>Schedule</a></li>
+      <li class="nav-item"><a href="{{ site.baseurl }}/routes/"{% if page.url == "/routes/" %} class="active"{% endif %}>Routes</a></li>
+      <li class="nav-item"><a href="{{ site.baseurl }}/brunch-reviews/"{% if page.url == "/brunch-reviews/" %} class="active"{% endif %}>Brunch Reviews</a></li>
+      <li class="nav-item"><a href="{{ site.baseurl }}/lore/"{% if page.url == "/lore/" %} class="active"{% endif %}>Lore</a></li>
+      <li class="nav-item dropdown dropdown-center"><a href="{{site.baseurl}}/events" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
+        <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
+          <li><a class="dropdown-item " href="{{ site.baseurl }}/light-rail-relay-24/">Light Rail Relay '24</a></li>
+          <li><a class="dropdown-item" href="{{ site.baseurl }}/drumheller-marathon-24/">Drumheller Marathon '24</a></li>
+          <li><a class="dropdown-item " href="{{ site.baseurl }}/light-rail-relay-23/">Light Rail Relay '23</a></li>
+          <li><a class="dropdown-item" href="{{ site.baseurl }}/drumheller-half-23/">Drumheller Half '23</a></li>
+          <li><a class="dropdown-item" href="{{ site.baseurl }}/light-rail-relay-22/">Light Rail Relay '22</a></li>
+          <li><a class="dropdown-item" href="{{ site.baseurl }}/drumheller-half-22/">Drumheller Half '22</a></li>
+          <li><a class="dropdown-item " href="{{ site.baseurl }}/light-rail-relay-21/">Light Rail Relay '21</a></li>
+          <li><a class="dropdown-item {% if page.url == "{{ site.baseurl }}/quarantine-relay/" %} active{% endif %}" href="{{ site.baseurl }}/quarantine-relay/">Quarantine Relay</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+{{ content }}
+
+{% if jekyll.environment == "production" %}
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-84537680-1', 'auto');
+    ga('send', 'pageview');
+</script>
+{% endif %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+</html>
