@@ -33,16 +33,20 @@ jobs:
           python-version: '3.x'
           cache: pip
 
-      - name: Install calendar dependencies
+      - name: Install Python Dependencies
         run: pip install -r requirements.txt
 
-      - name: Check and build routes from route db
+      - name: Check Schedules
+        continue-on-error: false
+        run: make check-schedules
+
+      - name: Normalize Routes
+        run: make routes
+
+      - name: Make Routes Table
         run: make _data/routes.yml
 
-      - name: Build GIS files
-        run: make gis
-
-      - name: Build calendar
+      - name: Build Calendar
         run: make rcc.ics
 
       - name: Set up Pages
@@ -57,28 +61,23 @@ jobs:
 
       - name: Build with Jekyll
         # Outputs to the './_site' directory by default
-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+        run: make build
         env:
           JEKYLL_ENV: production
+          JEKYLL_FLAGS: --baseurl "${{ steps.pages.outputs.base_path }}"
 
-      - name: cache HTMLProofer
+      - name: Cache HTMLProofer
         id: cache-htmlproofer
         uses: actions/cache@v4
         with:
           path: tmp/.htmlproofer
           key: ${{ runner.os }}-htmlproofer
 
-      - name: Run tests
+      - name: Check HTML
         continue-on-error: true
-        run: |
-          bundle exec htmlproofer ./_site \
-          --only-4xx \
-          --assume-extension .html \
-          --no-enforce-https \
-          --ignore-missing-alt \
-          --ignore-urls '/fonts.googleapis.com/,/fonts.gstatic.com/' \
-          --swap-urls 'https?\:\/\/raceconditionrunning\.com:,^${{ steps.pages.outputs.base_path }}:' \
-          --cache '{ "timeframe": { "external": "30d" } }'
+        run: make check-html
+        env:
+          URL_BASE_PATH: ${{ steps.pages.outputs.base_path }}
 
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
