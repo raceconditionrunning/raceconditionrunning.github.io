@@ -73,9 +73,9 @@ def main():
 
             name = route['name']
             gmap = route['map'] if 'map' in route else ''
-            dist = route['dist'] if 'dist' in route else None
+            dist = route['distance_mi'] if 'distance_mi' in route else None
 
-            event_name = f'{name} ({dist})' if dist else name
+            event_name = f'{name} ({dist}mi)' if dist else name
 
             start = dtstart(date, phase["time"])
             if i < len(phases) - 1:
