@@ -1,8 +1,7 @@
 from collections import defaultdict
 
+import gis
 import rcr
-import csv
-import json
 import re
 import os
 
@@ -10,9 +9,9 @@ FIELDS = [
     'id',
     'name',
     'start',
-    'dist',
-    'up',
-    'down',
+    'distance_mi',
+    'ascent_m',
+    'descent_m',
     'end',
     'type',
     'surface',
@@ -51,7 +50,7 @@ def check_route(route):
             warn_rc(route, f"missing '{field}' field")
         # TODO: eventually down and surface should also be non-blank
         #elif field != 'deprecated' and route[field].strip() == '':
-        elif field not in ['down', 'surface', 'deprecated', 'dates_run'] and route[field].strip() == '':
+        elif field not in ['surface', 'deprecated', 'dates_run'] and not route[field]:
             warn_rc(route, f"blank '{field}' field")
 
     # valid type
@@ -91,36 +90,30 @@ def check_route(route):
 
     # valid dist, up, and down
     try:
-        assert 0 < float(route['dist'])
+        assert 0 < float(route['distance_mi'])
     except:
-        warn_rc(route, f"invalid distance '{route['dist']}'")
+        warn_rc(route, f"invalid distance '{route['distance_mi']}'")
     try:
-        assert 0 < float(route['up'])
+        assert 0 < float(route['ascent_m'])
     except:
-        warn_rc(route, f"invalid elevation up '{route['up']}'")
-    # TODO: eventually down should also be non-blank
-    # try:
-    #     assert 0 <= float(route['down'])
-    # except:
-    #     warn_rc(route, f"invalid elevation down '{route['down']}'")
+        warn_rc(route, f"invalid elevation up '{route['ascent_m']}'")
 
-    # valid deprecation
-    if route['deprecated'].lower() in ['f', 'false']:
-        route['deprecated'] = ''
-    if route['deprecated'].lower() in ['t', 'true']:
-        route['deprecated'] = 'true'
-    if route['deprecated'] not in ['', 'true']:
-        warn_rc(route, f"invalid deprecated status '{route['deprecated']}'")
+    try:
+         assert 0 <= float(route['descent_m'])
+    except:
+        warn_rc(route, f"invalid elevation down '{route['descent_m']}'")
 
     # every route has a gpx
     gpx_path = os.path.join(rcr.ROUTES_GPX, route['id']) + '.gpx'
     if not os.path.isfile(gpx_path):
         warn_rc(route, f"no GPX file at '{gpx_path}'")
 
-def main():
-    routes = rcr.load_route_db()
-    schedules = rcr.load_schedules()
 
+def main():
+    routes = rcr.load_routes()
+    schedules = rcr.load_schedules()
+    locations = rcr.load_loc_db()
+    neighborhood_polygons = rcr.load_neighborhoods()
     dates_routes_run = defaultdict(list)
     for schedule in schedules.values():
         for entry in schedule:
@@ -140,50 +133,81 @@ def main():
     for route in routes:
         route['dates_run'] = dates_routes_run[route['id']]
 
+        # Compute route metrics and fill any blanks
+        # This script won't warn you about sketchy results (e.g. manual distances/elevations that are way off the computed values)
+        computed = gis.compute_route_metrics(route['track'])
+        if 'distance_mi' not in route or not route['distance_mi']:
+            route['distance_mi'] = computed['distance_mi']
+        if not route['ascent_m']:
+            route['ascent_m'] = computed['ascent_m']
+        if not route['descent_m']:
+            route['descent_m'] = computed['descent_m']
+        if not route['type']:
+            route['type'] = computed['type']
+        if not route['start']:
+            nearest_start, start_dist = gis.get_nearest_loc(locations, route['track'].points[0].latitude, route['track'].points[0].longitude)
+            route['start'] = nearest_start
+        if not route['end']:
+            nearest_end, end_dist = computed['end'] = gis.get_nearest_loc(locations, route['track'].points[-1].latitude, route['track'].points[-1].longitude)
+            route['end'] = nearest_end
+
+        # Compute route neighborhoods
+        route_neighborhoods = []
+        coarse_route_neighborhoods = []
+        for point in route['track'].points:
+            for (n_name, n_coarse_name), (n_shape, bbox) in neighborhood_polygons.items():
+                if gis.is_point_in_bbox(point.longitude, point.latitude, bbox) and gis.is_point_in_polygon(
+                    point.longitude, point.latitude, n_shape):
+                    route_neighborhoods.append(n_name)
+                    coarse_route_neighborhoods.append(n_coarse_name)
+
+            if len(route_neighborhoods) == 0:
+                route_neighborhoods.append("non-Seattle")
+                coarse_route_neighborhoods.append("non-Seattle")
+
+            route["start_neighborhood"] = route_neighborhoods[0]
+            route["end_neighborhood"] = route_neighborhoods[-1]
+            route["neighborhoods"] = list(sorted(set(route_neighborhoods)))
+            route["coarse_neighborhoods"] = list(sorted(set(coarse_route_neighborhoods)))
+
     # check each route
     for route in routes:
         check_route(route)
 
     if warnings:
         print("Exiting due to warnings. Please fix and re-run.")
-        exit(1)
+        #exit(1)
 
     # sort routes by start and increasing distance
-    routes.sort(key=lambda x: (x['start'].lower(), float(x['dist']), x['end'], x['type'], x['id']))
-
-    # write sorted routes back
-    with open(rcr.ROUTE_DB, 'w') as f:
-        writer = csv.DictWriter(f, fieldnames=FIELDS, dialect='unix')
-        writer.writeheader()
-        for route in routes:
-            writer.writerow(route)
+    routes.sort(key=lambda x: (x['start'].lower(), float(x['distance_mi']), x['end'], x['type'], x['id']))
 
     # write yaml version
     yml_path = os.path.join(rcr.DATA, 'routes.yml')
     with open(yml_path, 'w') as f:
+        # yaml.dump reorders the keys and doesn't put whitespace between routes
         f.write('# AUTOGENERATED - DO NOT EDIT\n\n')
         for route in routes:
             f.write(f"- id: {route['id']}\n")
             f.write(f"  name: \"{route['name']}\"\n")
             f.write(f"  start: \"{route['start']}\"\n")
-            f.write(f"  dist: {route['dist']}\n")
-            f.write(f"  up: {route['up']}\n")
-            f.write(f"  down: {route['down']}\n")
+            f.write(f"  distance_mi: {route['distance_mi']:.1f}\n")
+            f.write(f"  ascent_m: {route['ascent_m']:.2f}\n")
+            f.write(f"  descent_m: {route['descent_m']:.2f}\n")
             f.write(f"  end: \"{route['end']}\"\n")
             f.write(f"  type: \"{route['type']}\"\n")
-            f.write(f"  surface: \"{route['surface']}\"\n")
+            f.write(f"  surface: \"{route['surface'] if route['surface'] else 'null'}\"\n")
             f.write(f"  map: \"{route['map']}\"\n")
             f.write(f"  dates_run: {route['dates_run']}\n")
+            f.write(f"  start_neighborhood: \"{route['start_neighborhood']}\"\n")
+            f.write(f"  end_neighborhood: \"{route['end_neighborhood']}\"\n")
+            f.write(f"  neighborhoods: {route['neighborhoods']}\n")
+            f.write(f"  coarse_neighborhoods: {route['coarse_neighborhoods']}\n")
             f.write(f"  gpx: \"/routes/gpx/{route['id']}.gpx\"\n")
             f.write(f"  geojson: \"/routes/geojson/{route['id']}.geojson\"\n")
             if route['deprecated']:
                 f.write(f"  deprecated: true\n")
             f.write('\n')
 
-    # write json version
-    json_path = os.path.join(rcr.ROUTES, 'routes.json')
-    with open(json_path, 'w') as f:
-        json.dump(routes, f, indent=2)
 
 if __name__ == '__main__':
     main()

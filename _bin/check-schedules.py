@@ -28,7 +28,7 @@ def check_schedule(schedule, route_ids):
 def main():
     routes = rcr.load_route_db()
     route_ids = set([route['id'] for route in routes])
-    for schedule in rcr.load_schedules():
+    for _, schedule in rcr.load_schedules().items():
         check_schedule(schedule, route_ids)
 
 if __name__ == '__main__':
