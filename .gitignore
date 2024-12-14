@@ -5,7 +5,11 @@ _site/
 # generated from route db and gpx files
 _data/routes.yml
 routes/geojson/*.geojson
-routes/transit_data
+routes/_transit_data
+
+# Compiled/normalized routes
+routes/geojson
+routes/gpx
 
 # auto-built iCal file
 rcc.ics

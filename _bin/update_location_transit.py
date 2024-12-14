@@ -21,9 +21,9 @@ CRITICAL_LOC_NAMES = ["CSE", "GreenLake", "Beacon"]
 CRITICAL_LOCS = []
 
 TRANSPORT_FILES = {
-    "Light Rail": rcr.ROUTES / "transit_data/light_rail.csv",
-    #"Ferry": rcr.ROUTES / "transit_data/ferry.csv",
-    "Bus": rcr.ROUTES / "transit_data/bus.csv",
+    "Light Rail": rcr.ROUTES / "_transit_data/light_rail.csv",
+    #"Ferry": rcr.ROUTES / "_transit_data/ferry.csv",
+    "Bus": rcr.ROUTES / "_transit_data/bus.csv",
 }
 
 STOPS = {}

@@ -1,3 +1,6 @@
+import pathlib
+import sys
+
 import gis
 import rcr
 import json
@@ -86,6 +89,10 @@ def route_geojson(route):
 
 
 def main():
+    outroot = sys.argv[1] if len(sys.argv) > 1 else rcr.ROOT
+    outroot = pathlib.Path(outroot)
+    (outroot / "routes/gpx").mkdir(parents=True, exist_ok=True)
+    (outroot / "routes/geojson").mkdir(parents=True, exist_ok=True)
     seen = set()
     all_gjs = []
     routes = rcr.load_routes()
@@ -96,7 +103,7 @@ def main():
         if route['path'].name != f"{route['id']}.gpx":
             raise RogueRouteError(f"Route path mismatch: {route['path']} vs {route['id']}.gpx")
 
-        normalize_gpx(route["track"].points, route['path'], route)
+        normalize_gpx(route["track"].points, outroot / f"routes/gpx/{route['id']}.gpx", route)
 
         computed = gis.compute_route_metrics(route["track"])
         if route['distance_mi'] and abs(computed['distance_mi'] - float(route['distance_mi'])) > 0.1:
@@ -121,14 +128,14 @@ def main():
         route["start"] = route["start"] if route["start"] else computed_start[0]
         route["end"] = route["end"] if route["end"] else computed_end[0]
         # generate geojson file, overwriting if it already exists
-        gj_path = os.path.join(rcr.ROUTES_GEOJSON, route['id']) + '.geojson'
+        gj_path = outroot / f"routes/geojson/{route['id']}.geojson"
         gj = route_geojson(route)
         with open(gj_path, 'w') as f:
             json.dump(gj, f, indent=2)
         all_gjs.append(gj)
 
     # generate a merged geojson of all routes
-    all_gj_path = os.path.join(rcr.ROUTES_GEOJSON, 'routes.geojson')
+    all_gj_path = outroot / "routes/geojson/routes.geojson"
     all_gj = {
         'type': 'FeatureCollection',
         'features': all_gjs,

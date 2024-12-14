@@ -26,8 +26,8 @@ ROOT = pathlib.Path(os.path.realpath(os.path.join(os.path.dirname(__file__), '..
 DATA = ROOT / '_data'
 SCHEDULES =  ROOT / '_data' / 'schedules'
 ROUTES = ROOT / 'routes'
-ROUTES_GPX =  ROUTES / 'gpx'
-ROUTES_GEOJSON =  ROUTES / 'geojson'
+# These are "raw" routes, not directly served on the site thanks to _ prefix
+ROUTES_GPX =  ROUTES / '_gpx'
 NEIGHBORHOOD_FILE = ROUTES / "neighborhoods.geojson"
 
 for path in [ROOT, DATA, ROUTES , ROUTES_GPX]:
