@@ -1,6 +1,5 @@
 import json
 import os
-import csv
 import pathlib
 import re
 from typing import List
@@ -37,7 +36,7 @@ for path in [ROOT, DATA, ROUTES , ROUTES_GPX]:
     exit(1)
 
 # key files
-LOC_DB = os.path.join(ROUTES, 'locs.csv')
+LOC_DB = os.path.join(ROUTES, 'locations.geojson')
 
 for path in [LOC_DB]:
   if not os.path.isfile(path):
@@ -119,14 +118,34 @@ def load_routes():
     return routes
 
 def load_loc_db():
-   with open(LOC_DB, 'r') as f:
-       reader = csv.DictReader(f, dialect='unix')
-       locs = list(reader)
-       # Ensure lat and lon are floats
-       for loc in locs:
-          loc['lat'] = float(loc['lat'])
-          loc['lon'] = float(loc['lon'])
-       return locs
+    with open(LOC_DB, 'r') as f:
+        locs = json.load(f)["features"]
+        for loc in locs:
+            loc["lat"] = loc["geometry"]["coordinates"][1]
+            loc["lon"] = loc["geometry"]["coordinates"][0]
+            del loc["geometry"]
+            del loc["type"]
+            for prop in loc["properties"]:
+                loc[prop] = loc["properties"][prop]
+            del loc["properties"]
+
+    return locs
+
+def save_loc_db(locs):
+    with open(LOC_DB, 'w') as f:
+        as_geojson = []
+        for loc in locs:
+            geometry = {
+                "type": "Point",
+                "coordinates": [loc["lon"], loc["lat"]]
+            }
+            properties = {prop: loc[prop] for prop in loc if prop not in ["lat", "lon", "type"]}
+            as_geojson.append({
+                "type": "Feature",
+                "geometry": geometry,
+                "properties": properties
+            })
+        json.dump({"type": "FeatureCollection", "features": as_geojson}, f, indent=2)
 
 def gpx_paths():
   paths = ROUTES_GPX.glob('*.gpx')
