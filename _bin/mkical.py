@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 import copy
+from zoneinfo import ZoneInfo
 
 import yaml
 from icalendar import Calendar, Event, vText, vDatetime, vUri
 from datetime import datetime, timedelta
-import pytz
+
+from icalendar.cal import Timezone
 from yaml import Loader
 
-# TODO ical validator complains about this
-# possibly due to method:publish ?
-rivd = 'refresh-interval;value=duration'
 
 calHeader = lambda name: \
     [ ('version'         , '2.0')
@@ -21,7 +20,7 @@ calHeader = lambda name: \
     , ('x-wr-caldesc'    , 'Race Condition Running')
     , ('timezone-id'     , 'America/Los_Angeles')
     , ('x-wr-timezone'   , 'America/Los_Angeles')
-    , (rivd              , 'PT12H')
+    , ('refresh-interval;value=duration', 'PT12H')
     , ('x-published-ttl' , 'PT12H')
     , ('calscale'        , 'GREGORIAN')
     , ('method'          , 'PUBLISH')
@@ -49,11 +48,11 @@ def main():
                      , time.minute
                      , 0
                      , 0
-                     , tzinfo=pytz.timezone('America/Los_Angeles')
+                     , tzinfo=ZoneInfo("America/Los_Angeles")
                      )
 
     # ics timestamps must be utc
-    now = datetime.now(pytz.utc)
+    now = datetime.now(ZoneInfo("UTC"))
 
     # NOTE: assumes events back-to-back on single day
     weekend_runs = []
@@ -171,6 +170,12 @@ def main():
     second_block['uid'] = 'shortruns_2@raceconditionrunning.com'
     weekday_runs.append(second_block)
 
+    timezone = Timezone.from_tzinfo(
+        ZoneInfo("America/Los_Angeles"),
+        first_date=first_run,
+        last_date=next_start
+    )
+
     def add_header_to_calendar(calendar, header):
         for (k, v) in header:
             if v.startswith('http'):
@@ -193,11 +198,13 @@ def main():
             calendar.add_component(e)
 
     full_calendar = Calendar()
+    full_calendar.add_component(timezone)
     add_header_to_calendar(full_calendar, calHeader("rcc"))
     add_runs_to_calendar(full_calendar, weekday_runs)
     add_runs_to_calendar(full_calendar, weekend_runs)
 
     weekend_only_calendar = Calendar()
+    weekend_only_calendar.add_component(timezone)
     add_header_to_calendar(weekend_only_calendar, calHeader("rcc_weekends"))
     add_runs_to_calendar(weekend_only_calendar, weekend_runs)
 
