@@ -5,20 +5,38 @@ layout: default
 
 <div class="route">
   <h3 title="{{ page.id }}" class="mb-0">{{ page.title }}</h3>
-  {% assign ascentft = page.ascentm | times: 3.28084 %}
-  {% assign descentft = page.descentm | times: 3.28084 %}
-  <h5>{{page.distancemi}}mi ↑{{ascentft | round}}ft ↓{{ascentft | round}}ft {% if page.deprecated %} <span class="text-secondary mx-2" title="We no longer schedule this route">Deprecated</span>{% endif%}</h5>
+  {% assign ascent_ft = page.ascent_m | times: 3.28084 %}
+  {% assign descent_ft = page.descent_m | times: 3.28084 %}
+  <h5><span title="{{ page.distance_mi | times: 1.609 | round: 1}}km">{{ page.distance_mi | round: 1}}</span>mi ↑<span title="{{ page.ascent_m}}m">{{ascent_ft | round}}ft</span> ↓<span title="{{ page.descent_m}}m">{{ascent_ft | round}}ft</span> {% if page.deprecated %} <span class="text-warning mx-2" title="We no longer schedule this route">Deprecated</span>{% endif%}</h5>
   <div class="mb-4">
     <a class="btn btn-sm btn-outline-primary" href="{{ page.gpx | relative_url }}">Download GPX</a> <a class="btn btn-sm btn-outline-primary" href="{{page.map}}">OnTheGoMap</a>
   </div>
   <div id="map" style="height: 500px;" class="mb-3 w-100"></div>
   <elevation-profile class="mb-3"></elevation-profile>
 
+  <div><b>Start:</b> {{ page.start }}  {% for location in site.data.locations.features %}
+    {% if location.properties.id == page.start and location.properties.meeting_point_desc %}
+    <span class="text-secondary ms-1">{{ location.properties.meeting_point_desc }}</span>
+    <ul class="list d-flex gap-4 mb-0">
+      <li><a href="https://google.com/maps/dir/?api=1&destination={{location.geometry.coordinates[1]}},{{location.geometry.coordinates[0]}}" class="link-secondary">Google Maps</a></li>
+      <li><a href="https://maps.apple.com/?daddr={{location.geometry.coordinates[1]}},{{location.geometry.coordinates[0]}}}" class="link-secondary">Apple Maps</a></li>
+    </ul>
+  {% endif %}
+  {% endfor %}
+  <div><b>End:</b> {{ page.end }}
+    {% for location in site.data.locations.features %}
+    {% if location.properties.id == page.end and location.properties.meeting_point_desc %}
+    <span class="text-secondary ms-1">{{ location.properties.meeting_point_desc }}</span>
+    {% endif %}
+    {% endfor %}
+  </div>
+    <div><b>Neighborhoods:</b> {{ page.neighborhoods | join: ', ' }}</div>
+
   <div><b>Last run:</b>
     {% if page.dates_run.size == 0 %}
     Never
     {% endif %}
-    {% for date_run in page.dates_run %}
+    {% for date_run in page.dates_run reversed %}
     <a href="{{ site.baseurl }}/lore#{{ date_run }}">{{ date_run }}</a>{% if forloop.last == false %}, {% endif %}
     {% endfor %}
   </div>
@@ -80,7 +98,7 @@ layout: default
     import 'maplibre-gl';
     import {distance, point, nearestPointOnLine, lineString} from '@turf';
     import { Protocol } from 'pmtiles';
-    import { ElevationProfile } from '/js/ElevationProfile.js';
+    import { ElevationProfile } from '{{site.baseurl}}/js/ElevationProfile.js';
 
     function computeDistanceAlongLine(queryPoint, route) {
         let totalDistance = 0
