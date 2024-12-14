@@ -6,7 +6,6 @@ _site/
 _data/routes.yml
 routes/geojson/*.geojson
 routes/transit_data
-routes/neighborhoods.geojson
 
 # auto-built iCal file
 rcc.ics

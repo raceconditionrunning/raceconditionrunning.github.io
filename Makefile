@@ -1,6 +1,9 @@
 ROUTES = routes
 ROUTES_GEOJSON = $(ROUTES)/geojson
 ROUTES_GPX := $(wildcard $(ROUTES)/gpx/*.gpx)
+NEIGHBORHOODS = $(ROUTES)/neighborhoods.geojson
+NEIGHBORHOODS_URL="https://hub.arcgis.com/api/v3/datasets/b4a142f592e94d39a3bf787f3c112c1d_0/downloads/data?format=geojson&spatialRefId=4326&where=1%3D1"
+
 TRANSIT_DATA = $(ROUTES)/transit_data
 TRANSIT_DATA_CSV = $(wildcard $(ROUTES)/transit_data/*.csv)
 
@@ -20,14 +23,16 @@ all: check-schedules rcc.ics build
 $(ROUTES_YML): _bin/route-db.py $(ROUTES_GPX)
 	python3 $<
 
+$(NEIGHBORHOODS):
+	@wget -c $(NEIGHBORHOODS_URL) -O $@
 
-routes: $(ROUTES_GPX)
+routes: $(ROUTES_GPX) $(NEIGHBORHOODS)
 	python3 _bin/route-gis.py
 
 $(TRANSIT_DATA):
 	_bin/fetch_transit_data.sh
 
-locations: $(TRANSIT_DATA_CSV) $(TRANSIT_DATA)
+locations: $(TRANSIT_DATA_CSV) $(TRANSIT_DATA) $(NEIGHBORHOODS)
 	python3 _bin/update_location_transit.py
 
 # also generates rcc_weekends.ics

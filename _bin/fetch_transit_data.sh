@@ -14,11 +14,8 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 LIGHT_RAIL_PATH=https://www.soundtransit.org/GTFS-rail/40_gtfs.zip
 BUS_PATH=https://www.soundtransit.org/GTFS-KCM/google_transit.zip
 FERRY_PATH=https://gtfs.sound.obaweb.org/prod/95_gtfs.zip
-NEIGHBORHOOD_PATH="https://hub.arcgis.com/api/v3/datasets/b4a142f592e94d39a3bf787f3c112c1d_0/downloads/data?format=geojson&spatialRefId=4326&where=1%3D1"
-
 
 mkdir -p $SCRIPT_DIR/tmp/ $SCRIPT_DIR/../routes/transit_data/
-wget -c $NEIGHBORHOOD_PATH -O $SCRIPT_DIR/../routes/neighborhoods.geojson
 
 wget -c $FERRY_PATH -O $SCRIPT_DIR/tmp/ferry.zip
 unzip -o $SCRIPT_DIR/tmp/ferry.zip -d $SCRIPT_DIR/tmp/ferry
