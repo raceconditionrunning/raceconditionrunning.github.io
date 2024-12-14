@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running" xmlns:rcr="http://raceconditionrunning.com/extensions">
   <metadata>
-    <name>cc-chief-sealth-cc-center-loop</name>
-    <desc>Columbia City, Chief Sealth, CC Center Loop (3.0 mi)</desc>
-    <link href="https://raceconditionrunning.com/routes/cc-chief-sealth-cc-center-loop">
-      <text>Race Condition Running: Columbia City, Chief Sealth, CC Center Loop</text>
+    <name>cc-chief-sealth-cc-center</name>
+    <desc>Columbia City, Chief Sealth, CC Center (3.0 mi)</desc>
+    <link href="https://raceconditionrunning.com/routes/cc-chief-sealth-cc-center">
+      <text>Race Condition Running: Columbia City, Chief Sealth, CC Center</text>
     </link>
     <author>
       <name>Race Condition Running</name>
@@ -18,8 +18,8 @@
     </extensions>
   </metadata>
   <trk>
-    <name>cc-chief-sealth-cc-center-loop</name>
-    <desc>Columbia City, Chief Sealth, CC Center Loop (3.0 mi)</desc>
+    <name>cc-chief-sealth-cc-center</name>
+    <desc>Columbia City, Chief Sealth, CC Center (3.0 mi)</desc>
     <trkseg>
       <trkpt lat="47.56083" lon="-122.29365"><ele>41.42</ele></trkpt>
       <trkpt lat="47.56083" lon="-122.2937"><ele>41.40</ele></trkpt>
