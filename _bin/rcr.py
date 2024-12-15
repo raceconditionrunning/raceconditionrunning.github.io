@@ -60,61 +60,65 @@ def load_neighborhoods():
         polygons[(n_sname, n_lname)] = (n_shape, bbox)
     return polygons
 
+
+def load_route(path):
+    with open(path, 'r') as f:
+        try:
+            with open(path, 'r') as f:
+                reader = gpxpy.parse(f)
+        except Exception as e:
+            raise GPXParseError(f"Could not parse '{path}'\n{e}")
+
+        # Read all metadata extensions
+        metadata = {
+            ext.tag.split('}')[1]: ext.text for ext in reader.metadata_extensions
+        }
+
+        track = None
+        if len(reader.tracks) == 1 and len(reader.tracks[0].segments) == 1:
+            track = reader.tracks[0]
+
+        if len(reader.routes) == 1:
+            track = reader.routes[0]
+
+        if not track:
+            raise GPXFormatError(f"Bogus number of tracks in:\n{path}")
+
+        ascent = metadata.get('ascent', None)
+        if ascent:
+            ascent = float(ascent)
+        descent = metadata.get('descent', None)
+        if descent:
+            descent = float(descent)
+        type = None
+        if OB_ID_RE.search(path.stem):
+            type = "OB"
+        elif LOOP_ID_RE.search(path.stem):
+            type = "Loop"
+        elif path.stem.startswith("p2p"):
+            type = "P2P"
+        route = {
+            'id': path.stem,
+            'name': metadata.get('name', track.description.split("(")[0].strip()),
+            'distance_mi': metadata.get('distance', float(track.description.split("(")[1].split("mi)")[0].strip())),
+            'ascent_m': ascent,
+            'descent_m': descent,
+            'map': metadata.get('map', None),
+            'type': metadata.get('type', type),
+            'surface': metadata.get('surface', None),
+            'track': track.segments[0],
+            'path': path,
+            'start': metadata.get('start', None),
+            'end': metadata.get('end', None),
+            'deprecated': metadata.get('deprecated', None),
+        }
+        return route
+
 def load_routes():
     # Open each GPX file, read metadata, and store in a dictionary
     routes = []
     for path in gpx_paths():
-        with open(path, 'r') as f:
-            try:
-                with open(path, 'r') as f:
-                    reader = gpxpy.parse(f)
-            except Exception as e:
-                raise GPXParseError(f"Could not parse '{path}'\n{e}")
-
-            # Read all metadata extensions
-            metadata = {
-                ext.tag.split('}')[1]: ext.text for ext in reader.metadata_extensions
-            }
-
-            track = None
-            if len(reader.tracks) == 1 and len(reader.tracks[0].segments) == 1:
-                track = reader.tracks[0]
-
-            if len(reader.routes) == 1:
-                track = reader.routes[0]
-
-            if not track:
-                raise GPXFormatError(f"Bogus number of tracks in:\n{path}")
-
-            ascent = metadata.get('ascent', None)
-            if ascent:
-                ascent = float(ascent)
-            descent = metadata.get('descent', None)
-            if descent:
-                descent = float(descent)
-            type = None
-            if OB_ID_RE.search(path.stem):
-                type = "OB"
-            elif LOOP_ID_RE.search(path.stem):
-                type = "Loop"
-            elif path.stem.startswith("p2p"):
-                type = "P2P"
-            route = {
-                'id': path.stem,
-                'name': metadata.get('name', track.description.split("(")[0].strip()),
-                'distance_mi': metadata.get('distance', float(track.description.split("(")[1].split("mi)")[0].strip())),
-                'ascent_m': ascent,
-                'descent_m': descent,
-                'map': metadata.get('map', None),
-                'type': metadata.get('type', type),
-                'surface': metadata.get('surface', None),
-                'track': track.segments[0],
-                'path': path,
-                'start': metadata.get('start', None),
-                'end': metadata.get('end', None),
-                'deprecated': metadata.get('deprecated', None),
-            }
-            routes.append(route)
+        routes.append(load_route(path))
     return routes
 
 def load_loc_db():

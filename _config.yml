@@ -34,7 +34,6 @@ exclude:
   - "README.md"
   - Gemfile
   - Gemfile.lock
-  - posters
   - requirements.txt
   - venv
 

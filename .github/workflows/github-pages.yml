@@ -41,7 +41,10 @@ jobs:
         run: make check-schedules
 
       - name: Normalize Routes
-        run: make routes
+        run: make normalize-routes
+
+      - name: Convert Routes to GeoJSON
+        run: make convert-routes
 
       - name: Make Routes Table
         run: make _data/routes.yml

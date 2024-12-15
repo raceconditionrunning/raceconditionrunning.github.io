@@ -8,8 +8,8 @@ This repo contains the website for Race Condition Running
 Install dependencies with `pip3 install -r requirements.txt` and
 `bundle install`.
 
-To test locally, run `make serve` (requires `watchy`; install with
-`npm install -g watchy`), after which the page will be available at
+To test locally, run `make serve` (requires [`entr`](https://github.com/eradman/entr); install with
+`brew install entr` or `sudo apt install entr`), after which the page will be available at
 [http://localhost:4000](http://localhost:4000).
 
 The entire site is built by `_bin/mkical.py` and Jekyll; the live site is built
