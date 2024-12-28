@@ -6,17 +6,18 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -122.4158763,
-          47.5801187
+          -122.380303,
+          47.58944
         ]
       },
       "properties": {
-        "id": "Alki",
-        "name": "Alki Beach",
+        "id": "Seacrest",
+        "name": "Seacrest Park",
         "maps_url": null,
-        "meeting_point_desc": null,
-        "transit": "Bus to Alki Ave SW & 61st Ave SW stop",
-        "reachability": 3
+        "meeting_point_desc": "In front of pier",
+        "transit": "Bus to Harbor Ave SW & SW Maryland Pl stop",
+        "reachability": 3,
+        "neighborhood": "Industrial District"
       }
     },
     {
@@ -90,7 +91,7 @@
         "maps_url": "https://maps.app.goo.gl/d9JjJchMbFj3Dngg9",
         "meeting_point_desc": "North Entrance, SE corner of E John St & Broadway E",
         "transit": "Light Rail to Broadway & E Denny Way stop",
-        "reachability": 3,
+        "reachability": 1,
         "neighborhood": "Broadway",
         "coarse_neighborhood": "Capitol Hill"
       }
@@ -268,7 +269,7 @@
         "maps_url": "https://maps.app.goo.gl/3NFyYHvPvtdW5ZhA6",
         "meeting_point_desc": "Parking lot, east side",
         "transit": "Bus to N 35th St & Wallingford Ave N stop",
-        "reachability": 3,
+        "reachability": 2,
         "neighborhood": "Wallingford",
         "coarse_neighborhood": "North Central"
       }
@@ -288,7 +289,7 @@
         "maps_url": "https://maps.app.goo.gl/iQq4hdSYjUakMWQZ7",
         "meeting_point_desc": null,
         "transit": "Bus to NE Ravenna Blvd & Woodlawn Ave NE stop",
-        "reachability": 3,
+        "reachability": 2,
         "neighborhood": "Green Lake",
         "coarse_neighborhood": "North Central"
       }
@@ -604,8 +605,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -122.1923785,
-          47.5865506
+          -122.190543,
+          47.586838
         ]
       },
       "properties": {
