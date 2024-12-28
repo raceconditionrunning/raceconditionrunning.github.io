@@ -11,41 +11,40 @@ export class ElevationProfile extends HTMLElement {
 }
 
     connectedCallback() {
-
         this.width = this.offsetWidth - this.margin.left - this.margin.right;
         this.height = this.offsetHeight - this.margin.top - this.margin.bottom;
+
         // Listen for element resize
         this.resizeObserver = new ResizeObserver(() => {
             this.width = this.offsetWidth - this.margin.left - this.margin.right;
             this.height = this.offsetHeight - this.margin.top - this.margin.bottom;
-            this.render()
+            this.render();
         });
         this.resizeObserver.observe(this);
+
         this.render();
     }
 
     set elevationData(data) {
         this.data = data.map(d => ({ lat: d[0], lng: d[1], ele: d[2] }));
-
-        // Schedule a microtask to render the data
-        window.setTimeout(() => this.render(), 0);
+        this.render();
     }
 
     render() {
-    this.innerHTML = `
-          <style>
-            svg {
-              font-family: sans-serif;
-              font-size: 10px;
-            }
-          </style>
-          <svg width="${this.width + this.margin.left + this.margin.right}"
-               height="${this.height + this.margin.top + this.margin.bottom}">
-            <g transform="translate(${this.margin.left},${this.margin.top})"></g>
-          </svg>
+        this.innerHTML = `
+            <style>
+                svg {
+                    font-family: sans-serif;
+                    font-size: 10px;
+                }
+            </style>
+            <svg width="${this.width + this.margin.left + this.margin.right}"
+                 height="${this.height + this.margin.top + this.margin.bottom}">
+                <g transform="translate(${this.margin.left},${this.margin.top})"></g>
+            </svg>
         `;
 
-    const svg = d3.select(this.querySelector('svg g'));
+    this.svg = d3.select(this.querySelector('svg g'));
 
     const x = d3.scaleLinear()
     .domain([0, this.data.length - 1])
@@ -60,9 +59,11 @@ export class ElevationProfile extends HTMLElement {
     .y0(this.height)
     .y1(d => y(d.ele));
 
-    svg.append('path')
-    .datum(this.data)
-    .attr('d', area);
+    this.svg.append('g')
+        .append('path')
+        .datum(this.data)
+        .attr('d', area)
+        .attr('style', "fill: var(--ep-fill-color)")
 
     const xAxis = d3.axisBottom(x).tickFormat((d, i) => i);
     const yAxis = d3.axisLeft(y);
