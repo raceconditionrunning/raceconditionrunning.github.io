@@ -52,6 +52,7 @@ redirect_from:
         }
     </script>
 
+    {% include analytics.html %}
     <style>
         :root {
             --branding-color: #3CB6BF;
@@ -1163,9 +1164,7 @@ redirect_from:
     <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg" alt="A happy piece of toast who is running"/></a></p>
 
     <ul class="list-unstyled d-flex justify-content-center gap-3 opacity-50 font-weight-light">
-        <li><a href="{{ site.baseurl }}/dm24">2024</a></li>
-        <li><a href="{{ site.baseurl }}/dhm23">2023</a></li>
-        <li><a href="{{ site.baseurl }}/dhm22">2022</a></li>
+        {% include drumheller_years.html %}
     </ul>
 </footer>
 

@@ -49,9 +49,8 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
           }
         }
     </script>
-
+    {% include analytics.html %}
     <style>
-
         :root {
             --theme-primary-color: #3DAE2B;
             --theme-primary-color-subdued: #327328;
@@ -1108,10 +1107,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 <footer>
     <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg" alt="A happy piece of toast running"/></a></p>
     <ul class="list-unstyled d-flex justify-content-center gap-3 opacity-50 font-weight-light">
-        <li><a href="{{ site.baseurl }}/lrr24">2024</a></li>
-        <li><a href="{{ site.baseurl }}/lrr23">2023</a></li>
-        <li><a href="{{ site.baseurl }}/lrr22">2022</a></li>
-        <li><a href="{{ site.baseurl }}/lrr21">2021</a></li>
+        {% include lrr_years.html %}
     </ul>
 </footer>
 <script type="module">

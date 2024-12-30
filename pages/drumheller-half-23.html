@@ -25,7 +25,7 @@ redirect_from:
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator.min.css" integrity="sha256-pG2AUZRMdFyuinl2tPudk9iU0gh2pFIcxPbwNc/vUuo=" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator_bootstrap5.min.css" integrity="sha256-H1gQqBIR3L9enXuoNfFASj+QdGSEQIAloT7c4FXjNzc=" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    {% include analytics.html %}
     <script type="importmap">
         {
           "imports": {
@@ -867,29 +867,12 @@ redirect_from:
 
 
 <footer>
-    <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg"
-                                                          alt="A happy piece of toast who is running"/></a></p>
+    <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg" alt="A happy piece of toast who is running"/></a></p>
 
     <ul class="list-unstyled d-flex justify-content-center gap-3 opacity-50 font-weight-light">
-        <li><a href="{{ site.baseurl }}/dm24">2024</a></li>
-        <li><a href="{{ site.baseurl }}/dhm23">2023</a></li>
-        <li><a href="{{ site.baseurl }}/dhm22">2022</a></li>
+        {% include drumheller_years.html %}
     </ul>
 </footer>
-
-<template id="result-detail-template">
-    <div class="result-detail-holder">
-        <div class="result-detail">
-            <p>
-                <span class="total-laps"></span>
-                <span class="average-pace"></span>
-            </p>
-            <div class="laps-graph d-block"></div>
-            <div class="pace-graph d-block"></div>
-            <div class="laps-table d-block"></div>
-        </div>
-    </div>
-</template>
 
 <script type="module" >
     import {durationToSeconds, prepareImagesForPhotoswipe} from "{{ site.baseurl }}/js/common.js";

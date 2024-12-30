@@ -43,313 +43,314 @@ redirect_from:
           }
         }
     </script>
-
-</head>
-<style>
-    body {
-        margin: 0;
-        margin-top: 2rem;
-        font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !important;
-        font-size: 16px;
-        line-height: 1.5;
-    }
-
-    ::selection {
-        background: #85db5d;
-    }
-
-    a {
-        color: #6abf4a;
-        --bs-link-hover-color: #6dd047
-    }
-
-    ul {
-        /* Don't jam bullet at edge of screen on mobile */
-        padding-left: 1rem
-    }
-    
-    @media screen and (min-width: 700px) {
-        ul {
-            padding-left: 0;
+    {% include analytics.html %}
+    <style>
+        body {
+            margin: 0;
+            margin-top: 2rem;
+            font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !important;
+            font-size: 16px;
+            line-height: 1.5;
         }
-    }
 
-    .anchor-link {
-        padding: 0 .175rem;
-        font-weight: 400;
-        color: #6abf4a;
-        text-decoration: none;
-        opacity: 0;
-        transition: color 0.15s ease-in-out,opacity 0.15s ease-in-out;
-    }
+        ::selection {
+            background: #85db5d;
+        }
 
-    .anchor-link::after {
-        content: "#";
-    }
+        a {
+            color: #6abf4a;
+            --bs-link-hover-color: #6dd047
+        }
 
-    .anchor-link:focus, .anchor-link:hover, :hover > .anchor-link, :target > .anchor-link {
-        text-decoration: none;
-        opacity: 1;
-    }
+        ul {
+            /* Don't jam bullet at edge of screen on mobile */
+            padding-left: 1rem
+        }
 
-    .imprint {
-        text-align: center;
-        margin-bottom: 1.5rem;
-        font-style: italic;
-        font-weight: 300;
-    }
+        @media screen and (min-width: 700px) {
+            ul {
+                padding-left: 0;
+            }
+        }
 
-    .imprint a {
-        text-decoration: none;
-        color: lightgray;
-    }
+        .anchor-link {
+            padding: 0 .175rem;
+            font-weight: 400;
+            color: #6abf4a;
+            text-decoration: none;
+            opacity: 0;
+            transition: color 0.15s ease-in-out,opacity 0.15s ease-in-out;
+        }
 
-    .imprint img {
-        width: 100px;
-        opacity: .5;
-    }
+        .anchor-link::after {
+            content: "#";
+        }
 
-    #map {
-        height: 70vh;
-    }
+        .anchor-link:focus, .anchor-link:hover, :hover > .anchor-link, :target > .anchor-link {
+            text-decoration: none;
+            opacity: 1;
+        }
 
-    dt {
-        font-weight: bold;
-    }
+        .imprint {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            font-weight: 300;
+        }
 
-    dd {
-        margin-left: 0;
-        margin-bottom: 1rem
-    }
+        .imprint a {
+            text-decoration: none;
+            color: lightgray;
+        }
 
-    header {
-        margin-bottom: 1rem;
-    }
+        .imprint img {
+            width: 100px;
+            opacity: .5;
+        }
 
-    header img {
-        flex: 1;
-        aspect-ratio: 1;
-        max-width: 300px;
-    }
+        #map {
+            height: 70vh;
+        }
 
-    section {
-        margin-bottom: 4rem;
-    }
+        dt {
+            font-weight: bold;
+        }
 
-    .lead {
-        max-width: 340px;
-    }
+        dd {
+            margin-left: 0;
+            margin-bottom: 1rem
+        }
 
-    .hero-button {
-        background-color: #6abf4a;
-        font-weight: bold;
-        font-size: 1.5rem;
-        --bs-btn-hover-bg: #6dd047;
-        --bs-btn-hover-color: white;
-        --bs-btn-hover-border-color: transparent;
-        color: white;
-    }
+        header {
+            margin-bottom: 1rem;
+        }
 
-    .btn {
-        border-radius: 0;
-    }
+        header img {
+            flex: 1;
+            aspect-ratio: 1;
+            max-width: 300px;
+        }
 
-    .leaflet-popup-content {
-        font-size: 1rem;
-        margin: 1rem;
-    }
+        section {
+            margin-bottom: 4rem;
+        }
 
-    .leaflet-container a.leaflet-popup-close-button {
-        padding: .5rem .5rem 0 0;
-    }
+        .lead {
+            max-width: 340px;
+        }
 
-    .leaflet-popup-content h3 {
-        margin-top: 0;
-        margin-bottom: .5rem;
-    }
+        .hero-button {
+            background-color: #6abf4a;
+            font-weight: bold;
+            font-size: 1.5rem;
+            --bs-btn-hover-bg: #6dd047;
+            --bs-btn-hover-color: white;
+            --bs-btn-hover-border-color: transparent;
+            color: white;
+        }
 
-    .leaflet-popup-content-wrapper {
-        box-shadow: 0 3px 14px rgba(0, 0, 0, 0.1);
-        border-radius: 3px;
-    }
+        .btn {
+            border-radius: 0;
+        }
 
-    .leaflet-popup {
-        bottom: 1rem !important;
-        left: 1rem !important;
-    }
+        .leaflet-popup-content {
+            font-size: 1rem;
+            margin: 1rem;
+        }
 
-    .leaflet-popup-tip-container {
-        top: 0px !important;
-        overflow: auto !important;
-        display: none;
-    }
+        .leaflet-container a.leaflet-popup-close-button {
+            padding: .5rem .5rem 0 0;
+        }
 
-    .leaflet-popup-tip {
-        box-shadow: none !important;
-        background-clip: none !important;
-        display: none;
-    }
+        .leaflet-popup-content h3 {
+            margin-top: 0;
+            margin-bottom: .5rem;
+        }
 
-    .leaflet-popup:before {
-        display: none;
-        content: "";
-        position: absolute;
-        border: 13px solid transparent;
-        border-bottom-color: white;
-        bottom: 0px;
-        margin-left: -13px;
-    }
+        .leaflet-popup-content-wrapper {
+            box-shadow: 0 3px 14px rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
 
-    .station-marker {
-        font-size: 1rem;
-        font-weight: bold;
-        border-radius: 2rem;
-        width: 1.5rem;
-        height: 1.5rem;
-        text-align: center;
-        margin: 0;
-        padding: 0;
-        box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-        letter-spacing: -1px;
-    }
+        .leaflet-popup {
+            bottom: 1rem !important;
+            left: 1rem !important;
+        }
 
-    .station-name {
-        font-size: 1rem
-    }
+        .leaflet-popup-tip-container {
+            top: 0px !important;
+            overflow: auto !important;
+            display: none;
+        }
 
-    .leaflet-container a {
-        color: grey;
-    }
+        .leaflet-popup-tip {
+            box-shadow: none !important;
+            background-clip: none !important;
+            display: none;
+        }
 
-    footer {
-        margin: 6rem 0 6rem 0;
-    }
+        .leaflet-popup:before {
+            display: none;
+            content: "";
+            position: absolute;
+            border: 13px solid transparent;
+            border-bottom-color: white;
+            bottom: 0px;
+            margin-left: -13px;
+        }
 
-    .container {
-        max-width: 700px;
-    }
+        .station-marker {
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 2rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+            letter-spacing: -1px;
+        }
 
-    .tabulator,
-    .tabulator .tabulator-header .tabulator-col,
-    .tabulator .tabulator-header,
-    .tabulator .tabulator-tableholder .tabulator-table,
-    .tabulator .tabulator-footer,
-    .tabulator .tabulator-footer .tabulator-calcs-holder,
-    .tabulator .tabulator-footer .tabulator-calcs-holder .tabulator-row{
-        background-color: transparent !important;
-    }
+        .station-name {
+            font-size: 1rem
+        }
 
-    .tabulator {
-        color: var(--bs-body-color);
-    }
+        .leaflet-container a {
+            color: grey;
+        }
 
-    .tabulator-row.tabulator-group {
-        background-color: rgba(255, 255, 255, 0.075) !important;
-    }
+        footer {
+            margin: 6rem 0 6rem 0;
+        }
 
-    .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs {
-        background-color: transparent !important;
-    }
+        .container {
+            max-width: 700px;
+        }
 
-    .tabulator-row, .tabulator-row.tabulator-row-even {
-        background-color: transparent;
-    }
+        .tabulator,
+        .tabulator .tabulator-header .tabulator-col,
+        .tabulator .tabulator-header,
+        .tabulator .tabulator-tableholder .tabulator-table,
+        .tabulator .tabulator-footer,
+        .tabulator .tabulator-footer .tabulator-calcs-holder,
+        .tabulator .tabulator-footer .tabulator-calcs-holder .tabulator-row{
+            background-color: transparent !important;
+        }
 
-    .tabulator-row,
-    .tabulator .tabulator-header {
-        border: none;
-    }
+        .tabulator {
+            color: var(--bs-body-color);
+        }
 
-    .tabulator-row .tabulator-responsive-collapse {
-        border-top: 0px;
-        padding-bottom: 1rem;
-        white-space: normal;
-    }
+        .tabulator-row.tabulator-group {
+            background-color: rgba(255, 255, 255, 0.075) !important;
+        }
 
-    .tabulator-responsive-collapse strong {
-        font-weight: 500;
-    }
+        .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs {
+            background-color: transparent !important;
+        }
 
-    .tabulator .tabulator-footer {
-        border: none !important;
-    }
+        .tabulator-row, .tabulator-row.tabulator-row-even {
+            background-color: transparent;
+        }
 
-    .tabulator .tabulator-footer .tabulator-calcs-holder {
-        border: none;
-        border-top: 1px solid #ddd;
-    }
+        .tabulator-row,
+        .tabulator .tabulator-header {
+            border: none;
+        }
 
-    .leg-leader {
-        font-weight: 700;
-    }
+        .tabulator-row .tabulator-responsive-collapse {
+            border-top: 0px;
+            padding-bottom: 1rem;
+            white-space: normal;
+        }
 
-    .first-leg {
-        text-decoration: underline;
-    }
+        .tabulator-responsive-collapse strong {
+            font-weight: 500;
+        }
 
-    #countdown {
-        text-align: center;
-        background-color: #4daeec;
-        font-size: 36px;
-        font-weight: 300;
-        padding: 4rem 0;
-        color: white;
-    }
+        .tabulator .tabulator-footer {
+            border: none !important;
+        }
 
-    #countdown .container {
-        max-width: none;
-    }
+        .tabulator .tabulator-footer .tabulator-calcs-holder {
+            border: none;
+            border-top: 1px solid #ddd;
+        }
+
+        .leg-leader {
+            font-weight: 700;
+        }
+
+        .first-leg {
+            text-decoration: underline;
+        }
+
+        #countdown {
+            text-align: center;
+            background-color: #4daeec;
+            font-size: 36px;
+            font-weight: 300;
+            padding: 4rem 0;
+            color: white;
+        }
+
+        #countdown .container {
+            max-width: none;
+        }
 
 
-    figure {
-        max-width: 1200px;
-        margin: 0 auto 2rem auto;
-    }
+        figure {
+            max-width: 1200px;
+            margin: 0 auto 2rem auto;
+        }
 
-    figure a img {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-    }
+        figure a img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
 
 
-    .masonry {
-        background-color: rgba(0,0,0,.05);
-    }
-    /* clear fix */
-    .masonry:after {
-        content: '';
-        display: block;
-        clear: both;
-    }
-    .masonry > a {
-        float: left;
-    }
+        .masonry {
+            background-color: rgba(0,0,0,.05);
+        }
+        /* clear fix */
+        .masonry:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        .masonry > a {
+            float: left;
+        }
 
-    .masonry img {
-        display: block;
-        max-width: 100%;
-    }
+        .masonry img {
+            display: block;
+            max-width: 100%;
+        }
 
-    .masonry .grid-sizer,
-    .masonry a {
-        width: 50%;
-    }
-
-    @media screen and (width > 720px) {
         .masonry .grid-sizer,
         .masonry a {
-            width: 33.33%;
+            width: 50%;
         }
-    }
 
-    hr {
-        width: 8rem;
-        margin: 4rem auto;
-        display: block;
-        border: 1px solid #ccc;
-    }
-</style>
+        @media screen and (width > 720px) {
+            .masonry .grid-sizer,
+            .masonry a {
+                width: 33.33%;
+            }
+        }
+
+        hr {
+            width: 8rem;
+            margin: 4rem auto;
+            display: block;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
 <body>
 
 <section>
@@ -580,10 +581,7 @@ redirect_from:
 <footer>
     <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg" alt="A happy piece of toast who is running"/></a></p>
     <ul class="list-unstyled d-flex justify-content-center gap-3 opacity-50 font-weight-light">
-        <li><a href="{{ site.baseurl }}/lrr24">2024</a></li>
-        <li><a href="{{ site.baseurl }}/lrr23">2023</a></li>
-        <li><a href="{{ site.baseurl }}/lrr22">2022</a></li>
-        <li><a href="{{ site.baseurl }}/lrr21">2021</a></li>
+        {% include lrr_years.html %}
     </ul>
 </footer>
 
