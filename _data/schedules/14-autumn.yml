@@ -1,26 +1,26 @@
-- date: '2014-8-31'
+- date: '2014-08-31'
   plan:
     - time: '10:00'
       route:
         name: "CSE - Foster Island - Montlake Playfield Loop"
         map: "http://www.gmap-pedometer.com/?r=6422125"
         distance_mi: 4.44
-- date: '2014-9-07'
+- date: '2014-09-07'
   plan:
     - time: '10:00'
       route_id: cse-gas-works-ob
-- date: '2014-9-13'
+- date: '2014-09-13'
   plan:
     - time: '10:00'
       route:
         name: "Gasworks - Portage Bay loop"
         map: "http://www.gmap-pedometer.com/?r=6435531"
         distance_mi: 5.55
-- date: '2014-9-21'
+- date: '2014-09-21'
   plan:
     - time: '9:30'
       route_id: gas-works-lake-union-loop
-- date: '2014-9-28'
+- date: '2014-09-28'
   plan:
     - time: '9:30'
       route_id: gas-works-around-green-lake-ob

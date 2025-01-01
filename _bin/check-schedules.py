@@ -1,3 +1,5 @@
+import re
+
 import rcr
 import yaml
 
@@ -15,6 +17,10 @@ def check_schedule(schedule, route_ids):
         if 'plan' not in entry:
             warn_sc(entry, "missing plan")
             continue
+
+        if re.match(r'\d{4}-\d{2}-\d{2}', entry['date']) is None:
+            # Dates in ISO 8601 should be zero padded
+            warn_sc(entry, "date must be in format 'YYYY-MM-DD'")
 
         for phase in entry['plan']:
           if 'route_id' in phase:
