@@ -1,10 +1,12 @@
-name: Deploy Jekyll site to Pages
+name: Build and Deploy Jekyll Site
 
 on:
   push:
     branches:
       - main
-  # Allows you to run this workflow manually from the Actions tab
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -52,18 +54,13 @@ jobs:
       - name: Build Calendar
         run: make rcc.ics
 
-      - name: Set up Pages
-        id: pages
-        uses: actions/configure-pages@v4
-
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-          cache-version: 0 # Increment this number if you need to re-download cached gems
+          bundler-cache: true
+          cache-version: 0
 
       - name: Build with Jekyll
-        # Outputs to the './_site' directory by default
         run: make build
         env:
           JEKYLL_ENV: production
@@ -86,8 +83,8 @@ jobs:
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v3
 
-  # Deployment job
   deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
