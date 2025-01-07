@@ -1,0 +1,74 @@
+- date: "2025-1-11"
+  plan:
+    - time: "8:30"
+      route_id: northgate-bitter-lake-ob
+    - time: "9:40"
+      route_id: northgate-carkeek-ob
+    
+- date: "2025-1-18"
+  plan:
+    - time: "10:00"
+      route:
+        name: Mile City
+        map: https://gohuskies.com/sports/2014/7/8/209542300.aspx
+        distance_mi: 1
+
+- date: "2025-1-25"
+  plan:
+    - time: "8:30"
+      route_id: cap-hill-i90-ob
+    - time: "10:20"
+      route_id: cap-hill-volunteer-park-westlake	
+
+- date: "2025-2-1"
+  plan:
+    - time: "8:30"
+      route_id: gas-works-around-green-lake-ob
+    - time: "9:40"
+      route_id: gas-works-green-lake-ob
+
+- date: "2025-2-8"
+  plan:
+    - time: "8:30"
+      route_id: beacon-cheasty-lwb-seward-loop-cc
+    - time: "10:20"
+      route_id: cc-chief-sealth-cc-center
+
+- date: "2025-2-15"
+  plan:
+    - time: "8:30"
+      route_id: northgate-carkeek-roosevelt
+    - time: "9:50"
+      route_id: roosevelt-green-lake-rose-gardens-loop
+
+- date: "2025-2-22"
+  plan:
+    - time: "8:30"
+      route_id: cid-marginal-alki-sodo
+
+- date: "2025-3-1"
+  plan:
+    - time: "8:30"
+      route_id: cse-cap-hill-parks-loop
+    - time: "9:50"
+      route_id: cse-arb-lwb-mt-baker
+
+- date: "2025-3-8"
+  plan:
+    - time: "7:30"
+      route:
+        name: Lake Sammamish Half
+        map: https://www.orcarunning.com/lake-sammamish-half/
+        distance_mi: 13.1
+
+- date: "2025-3-15"
+  plan:
+    - time: "8:30"
+      route_id: miller-judkins-i90-bridge-ob
+
+- date: "2025-3-22"
+  plan:
+    - time: "8:30"
+      route_id: cse-magnuson-ob
+    - time: "9:50"
+      route_id: cse-520-bell-dtwn
