@@ -1,3 +1,8 @@
+- date: "2025-01-04"
+  plan:
+    - time: "8:30"
+      route_id: gas-works-lake-union-loop
+
 - date: "2025-01-11"
   plan:
     - time: "8:30"
