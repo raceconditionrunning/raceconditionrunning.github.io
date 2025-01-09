@@ -25,7 +25,7 @@
     - time: "8:30"
       route_id: gas-works-around-green-lake-ob
     - time: "9:40"
-      route_id: gas-works-green-lake-ob
+      route_id: gas-works-locks-salmon-bay-loop
 
 - date: "2025-02-08"
   plan:
