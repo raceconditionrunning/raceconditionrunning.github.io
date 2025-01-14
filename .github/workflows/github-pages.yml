@@ -60,6 +60,11 @@ jobs:
           bundler-cache: true
           cache-version: 0
 
+      # Needed for deploying under user namespaces (username.github.io/repository/)
+      - name: Set up Pages
+        id: pages
+        uses: actions/configure-pages@v4
+
       - name: Build with Jekyll
         run: make build
         env:
@@ -72,6 +77,13 @@ jobs:
         with:
           path: tmp/.htmlproofer
           key: ${{ runner.os }}-htmlproofer
+
+      - name: Check Images
+        continue-on-error: true
+        run: |
+          sudo apt-get update && \
+          sudo apt-get install -y imagemagick && \
+          make check-images
 
       - name: Check HTML
         continue-on-error: true

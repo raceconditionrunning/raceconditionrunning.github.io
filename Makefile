@@ -62,6 +62,9 @@ rcc.ics: _bin/mkical.py $(ROUTES_YML)
 build: rcc.ics $(ROUTES_YML) $(ROUTE_GEOJSON_FILES)
 	bundle exec jekyll build $(JEKYLL_FLAGS)
 
+check-images: _bin/check_images.sh
+	$< ./_site
+
 check-html:
 	bundle exec htmlproofer ./_site \
 	  --only-4xx \
@@ -78,7 +81,7 @@ check-javascript:
 check-schedules: $(SCHEDULE)
 	python3 _bin/check-schedules.py
 
-check: check-html check-javascript check-schedules
+check: check-images check-html check-javascript check-schedules
 
 serve: rcc.ics $(ROUTES_YML) $(ROUTE_GEOJSON_FILES)
 	ls _config.yml | entr -r bundle exec jekyll serve --watch --drafts --host=0.0.0.0 $(JEKYLL_FLAGS)
