@@ -72,7 +72,7 @@ layout: base
       </tr>
       </thead>
       <tbody>
-      {% assign sorted_routes = site.data.routes | sort: 'dist' %}
+      {% assign sorted_routes = site.data.routes | sort: 'distance_mi' %}
       {% for route in sorted_routes %}
         <tr>
           <td>
@@ -91,9 +91,9 @@ layout: base
             See: https://stackoverflow.com/questions/37862167/trailing-zeros-in-jekyll-liquid
 
           {% endcomment %}
-          {% assign dist_split = route.dist | round: 2 | split: "." %}
+          {% assign dist_split = route.distance_mi | round: 1 | split: "." %}
           {% assign dist_integral = dist_split[0] %}
-          {% assign dist_fractional = dist_split[1] | append: "00" | truncate: 2, "" %}
+          {% assign dist_fractional = dist_split[1] | append: "0" | truncate: 1, "" %}
           <td><span class="dist" title="{{ route.distance_mi | times: 1.609 | round: 1}}km">{{ dist_integral }}.{{ dist_fractional }}</span></td>
           <td>
             <ul class="matched-runs comma-sep">
