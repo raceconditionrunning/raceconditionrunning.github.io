@@ -6,6 +6,8 @@ redirect_from:
 - /dm/
 - /drumheller-marathon/
 - /dm24/
+registration_link: https://forms.gle/BhJpHUGZSfjRMNds5
+shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +21,7 @@ redirect_from:
     <meta property="og:url" content="{{ site.url }}/drumheller-marathon-24/">
     <meta property="og:title" content="Drumheller Marathon 2024">
     <meta property="og:description" content="Experience the fountain and the mountain. June 1st, 2024.">
+    <link rel="canonical" href="{{ site.url }}/drumheller-marathon-24/" />
     <link href="{{ site.baseurl }}/img/dm24/favicon.png" rel="icon" type="image/png"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -86,7 +89,12 @@ redirect_from:
             width: 6rem;
             margin: 4rem auto;
             display: block;
-            border: 1px solid #DDD;
+            border: 1px solid #BBB;
+        }
+
+        hr.minor {
+            width: 3rem;
+            margin: 2rem auto;
         }
 
         ul, ol {
@@ -839,25 +847,29 @@ redirect_from:
             <p class="lede">Join us for laps around UW's historic fountain</p>
         </div>
 
-        <div class="gap-2 row justify-content-center mb-4">
+        <!--div class="gap-2 row justify-content-center mb-4">
 
-        <div class="col-auto">
-            <a class="wavy-button disabled" href="https://forms.gle/BhJpHUGZSfjRMNds5" data-bs-toggle="tooltip" data-bs-title="Closed 5-1" data-bs-placement="bottom">Apply for Full</a>
-            <div>5:30AM</div>
-        </div>
-        <div class="col-auto">
-            <a class="wavy-button complement-color disabled" href="https://forms.gle/BhJpHUGZSfjRMNds5" data-bs-toggle="tooltip" data-bs-title="Closed 5-30" data-bs-placement="bottom">Register for Half</a>
-            <div>8:00AM</div>
-        </div>
+            <div class="col-auto">
+                <a class="wavy-button disabled" href="{{ page.registration_link }}" data-bs-toggle="tooltip" data-bs-title="Closed 5-1" data-bs-placement="bottom">Apply for Full</a>
+                <div>5:30AM</div>
+            </div>
+            <div class="col-auto">
+                <a class="wavy-button complement-color disabled" href="{{ page.registration_link }}" data-bs-toggle="tooltip" data-bs-title="Closed 5-30" data-bs-placement="bottom">Register for Half</a>
+                <div>8:00AM</div>
+            </div>
 
-
-            <!--<a class="btn btn-lg hero-button" href="#epilogue">Read Epilogue</a>-->
-
-        </div>
+        </div-->
         <div class="row justify-content-center">
             <div class="col-auto">
-                <a class="wavy-button" href="https://forms.gle/GroYX6gFR88b4rqb6">Order a Shirt</a>
+                <a class="wavy-button" href="#results" data-goatcounter-click="dm24-results">Results</a>
             </div>
+            <div class="col-auto">
+                <a class="wavy-button" href="#epilogue" data-goatcounter-click="dm24-epilogue">Epilogue</a>
+            </div>
+        </div>
+
+        <div class="alert alert-dark mt-3" role="alert" style="">
+            This event took place in 2024. Looking for <a href="/dm25">a more recent Drumheller Marathon</a>?
         </div>
     </div>
 
@@ -941,22 +953,61 @@ redirect_from:
             <li><i>20 minutes after last Full finisher</i>: Full awards and photo</li>
             <li>11:00AM: Course closes, group photo</li>
         </ul>
-    </div>
-</section>
 
-<section>
-    <div class="container-xxl">
-        <h2 class="mb-4" id="results">Results <a href="#results" class="anchor-link" aria-label="Link to this section. Results"></a></h2>
+        <h3>Emails</h3>
+
+        <p>Everything important is above, but participants should have also received the following by email:</p>
+        <accordion-group class="accordion accordion-flush" id="briefs">
+            <accordion-item>
+                <accordion-header>Race day - 6/01/24</accordion-header>
+                <accordion-body>
+
+                    <p>Hello Drumheller runners, <br />
+                        Happy Race Day! The schedule is posted on the site.</p>
+
+                        <p>Be at the start line early for instructions, and please bring a bottle with you. We'll have water but no cups.</p>
+
+                        <p>If counting laps isn't enough and you'd like to time them too, here's a table with lap times for various goals.</p>
+
+                        <p>See you in a bit,<br/>—Nick Walker</p>
+
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>Shirts and tracking - 5/29/24</accordion-header>
+                <accordion-body>
+                    <p>Hello Drumheller runners,<br />
+
+                        <p>We have a small number of shirts available for purchase with race-day pickup <a href="{{ page.shirt_order_link }}">(order here)</a>. Note that we're giving visitors and guests priority, but we'll make another order if we end up short. Thanks to Chandra for making this happen.</p>
+
+                        <p>Also attached is your unique live tracking credential for easy access (alternatively available at your link). There is some setup required, so take a look at the details and instructions on the site. Use it as a backup lap-counting method, but test before the race.</p>
 
 
-        <h3 class="d-inline" >Marathon</h3><span class="count"></span>
-        <div id="results-marathon" class="mb-5"></div>
 
-        <h3 class="d-inline">Half Marathon</h3><span class="count"></span>
-        <div id="results-half-official" class="mb-3"></div>
-        <hr/>
-        <h3 class="d-inline">Unofficial</h3><span class="count"></span>
-        <div id="results-half-unofficial" class="mb-2"></div>
+                    <p>Forecast is looking good for running, bad for mountain-gazing. So it goes,<br>Nick Walker</p>
+                    <p>[Unique participant QR code]</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>Details - 5/22/24</accordion-header>
+                <accordion-body>
+                    <p>
+                        Hello Drumheller runners,<br/>
+
+                        Race day approaches. Event details are on the site, and any updates will show up there too.</p>
+
+                    <p><a href="https://raceconditionrunning.com/dm24">https://raceconditionrunning.com/dm24</a></p>
+
+                    <p>We have a new live-tracking system this year. Usage is optional but highly encouraged, at least as a backup lap counting method. It's live now, and you can (should) test before the event. See the page for instructions. Your unique credential is linked below.</p>
+
+                    <p> See you at the fountain next week!<br>--Nick Walker</p>
+
+                    <p>[Unique participant URL]</p>
+
+                </accordion-body>
+            </accordion-item>
+
+        </accordion-group>
     </div>
 
 </section>
@@ -969,17 +1020,17 @@ redirect_from:
             <accordion-item>
                 <accordion-header>Do I have to run the whole thing?</accordion-header>
                 <accordion-body>
-                        <p>No. Anyone running or walking fewer than 109 laps is welcome to join the half marathon. Here are some lap counts for common distances. Add a lap if not starting at the official start line.</p>
-                        <table class="table table-sm ms-2 mt-2 mb-4">
-                            <thead><tr><th scope="col">Distance</th><th scope="col">Laps</th></tr></thead>
-                            <tbody>
-                            <tr><td>5k</td> <td>26</td></tr>
-                            <tr><td>10k</td> <td>52</td></tr>
-                            <tr><td>10mi</td><td>83</td></tr>
-                            </tbody>
-                        </table>
+                    <p>No. Anyone running or walking fewer than 109 laps is welcome to join the half marathon. Here are some lap counts for common distances. Add a lap if not starting at the official start line.</p>
+                    <table class="table table-sm ms-2 mt-2 mb-4">
+                        <thead><tr><th scope="col">Distance</th><th scope="col">Laps</th></tr></thead>
+                        <tbody>
+                        <tr><td>5k</td> <td>26</td></tr>
+                        <tr><td>10k</td> <td>52</td></tr>
+                        <tr><td>10mi</td><td>83</td></tr>
+                        </tbody>
+                    </table>
 
-                        <p>Excepting pacers, <i>full marathon</i> participants must intend to complete the full distance.</p>
+                    <p>Excepting pacers, <i>full marathon</i> participants must intend to complete the full distance.</p>
                 </accordion-body>
             </accordion-item>
             <accordion-item>
@@ -1018,11 +1069,11 @@ redirect_from:
             <accordion-item>
                 <accordion-header>How do we keep track of distance?</accordion-header>
                 <accordion-body><p>Use a running watch to mark laps if you're wearing one, though you should check that it is capable of handling 100+ laps. GPS will clip the curve, so don't rely on it for more than a couple
-                        laps at a
-                        time.
-                        We'll have <a href="https://en.wikipedia.org/wiki/Tally_counter">tally counters</a> available if
-                        you
-                        prefer an analog counting aide.</p>
+                    laps at a
+                    time.
+                    We'll have <a href="https://en.wikipedia.org/wiki/Tally_counter">tally counters</a> available if
+                    you
+                    prefer an analog counting aide.</p>
 
 
                     <p>Counting without assistance is not recommended.</p>
@@ -1032,7 +1083,7 @@ redirect_from:
             <accordion-item>
                 <accordion-header>Which direction do we run?</accordion-header>
                 <accordion-body>
-                        <p>The race will begin counterclockwise and alternate directions every hour to help balance the strain across your legs. Having the field run a single direction at a time will help us manage course congestion. Change directions only at the end of a lap and only by rounding the finish line marker.</p>
+                    <p>The race will begin counterclockwise and alternate directions every hour to help balance the strain across your legs. Having the field run a single direction at a time will help us manage course congestion. Change directions only at the end of a lap and only by rounding the finish line marker.</p>
                 </accordion-body>
             </accordion-item>
 
@@ -1047,21 +1098,21 @@ redirect_from:
             <accordion-item>
                 <accordion-header>Why do I have to apply for the marathon?</accordion-header>
                 <accordion-body>
-                        <p>We can't guarantee spots until we know the overall makeup of the field. Here are some of the things we're taking into account:</p>
-                        <ol>
-                            <li>We will only host the marathon distance if there are at least 3 registered participants who will start the race. <b>As of March 1st, the minimum field size is met.</b></li>
-                            <li>If target times are highly disparate, we will need to test paces and plans on our compact course. If we cannot support all runners' plans, we will discuss compromises.</li>
-                            <li>We will connect any participants targeting similar goals so that they can coordinate pacing plans. The more people that want to run similar paces, the more people that can participate.</li>
-                            <li>We will not accept more runners than can have a good experience on our small course. If we need to be selective, we will judge based on evidence of preparedness in the form of prior race results and of commitment in the form of reasonable plans.</li>
-                        </ol>
-                        <p>Our goal is to confirm all applications by April 6th. We may close applications before then if the field fills.</p>
+                    <p>We can't guarantee spots until we know the overall makeup of the field. Here are some of the things we're taking into account:</p>
+                    <ol>
+                        <li>We will only host the marathon distance if there are at least 3 registered participants who will start the race. <b>As of March 1st, the minimum field size is met.</b></li>
+                        <li>If target times are highly disparate, we will need to test paces and plans on our compact course. If we cannot support all runners' plans, we will discuss compromises.</li>
+                        <li>We will connect any participants targeting similar goals so that they can coordinate pacing plans. The more people that want to run similar paces, the more people that can participate.</li>
+                        <li>We will not accept more runners than can have a good experience on our small course. If we need to be selective, we will judge based on evidence of preparedness in the form of prior race results and of commitment in the form of reasonable plans.</li>
+                    </ol>
+                    <p>Our goal is to confirm all applications by April 6th. We may close applications before then if the field fills.</p>
                 </accordion-body>
             </accordion-item>
 
             <accordion-item>
                 <accordion-header>Is it okay if I've never run a full marathon before?</accordion-header>
                 <accordion-body>
-                        <p>Maybe. The answer will depend on your background, so please discuss with the organizers first if you would like to plan on Drumheller being your first marathon. As a rule of thumb, if you have not yet successfully completed a half marathon, you will have a better time doing that instead.</p>
+                    <p>Maybe. The answer will depend on your background, so please discuss with the organizers first if you would like to plan on Drumheller being your first marathon. As a rule of thumb, if you have not yet successfully completed a half marathon, you will have a better time doing that instead.</p>
 
                 </accordion-body>
             </accordion-item>
@@ -1069,16 +1120,16 @@ redirect_from:
             <accordion-item>
                 <accordion-header>Are pacers allowed?</accordion-header>
                 <accordion-body>
-                        <p>Yes. Runners intending to use pacers must submit a pacing plan with their application. Pacers can register after approval. Unlike most road races, we expect to be able to support rotating/non-starting pacers, however official times will only be given to participants who run the complete course.</p>
-                    </accordion-body>
+                    <p>Yes. Runners intending to use pacers must submit a pacing plan with their application. Pacers can register after approval. Unlike most road races, we expect to be able to support rotating/non-starting pacers, however official times will only be given to participants who run the complete course.</p>
+                </accordion-body>
             </accordion-item>
 
 
             <accordion-item>
                 <accordion-header>Can I take breaks?</accordion-header>
                 <accordion-body>
-                        <p>Yes. In addition to the aid station there are benches surrounding the course. You must continue running the lap in the same direction as when you stopped or the lap will not count. To remove this possibility, we recommend you start and stop only on at the lap finish line so you can begin the next lap in either direction.</p>
-                    </accordion-body>
+                    <p>Yes. In addition to the aid station there are benches surrounding the course. You must continue running the lap in the same direction as when you stopped or the lap will not count. To remove this possibility, we recommend you start and stop only on at the lap finish line so you can begin the next lap in either direction.</p>
+                </accordion-body>
             </accordion-item>
 
             <accordion-item>
@@ -1091,25 +1142,25 @@ redirect_from:
             <accordion-item>
                 <accordion-header>Is this a Boston Qualifying race?</accordion-header>
                 <accordion-body>
-                        <p>Yes, the full marathon will meet the B.A.A. criteria for a qualifying race (see <a href="https://www.baa.org/sites/default/files/2021-08/Boston_Marathon_Rules_and_Policies_08_2021.pdf">Rules and Policies</a> pp.5-6 &sect;2.2.1).</p>
-                    </accordion-body>
+                    <p>Yes, the full marathon will meet the B.A.A. criteria for a qualifying race (see <a href="https://www.baa.org/sites/default/files/2021-08/Boston_Marathon_Rules_and_Policies_08_2021.pdf">Rules and Policies</a> pp.5-6 &sect;2.2.1).</p>
+                </accordion-body>
             </accordion-item>
 
             <accordion-item>
                 <accordion-header>Isn't running a continuous curve going to slow me down?</accordion-header>
                 <accordion-body>
-                        <p>Yes, but not substantially. You will need to supply an additional centripetal force due to the curve, but the effect of this is <a
+                    <p>Yes, but not substantially. You will need to supply an additional centripetal force due to the curve, but the effect of this is <a
                             href="https://blog.stryd.com/2020/01/09/how-much-time-do-you-lose-due-to-curves-and-turns/">likely less than 1% when running at world record marathon pace on a 30m radius</a>. Because the force increases in the square of velocity, the effect is negligible for recreational runners. There are individual differences in running technique and physiology that may make the effect more or less pronounced for you. Consider practicing on the course or a track.</p>
-                    </accordion-body>
+                </accordion-body>
             </accordion-item>
 
             <accordion-item>
                 <accordion-header>Will running a continuous curve for dozens of laps injure me?</accordion-header>
                 <accordion-body>
-                        <p>Unlikely. Many athletes train and race on smaller radius tracks without issue during indoor track season. There <i>is</i> <a href="https://doi.org/10.1097/00042752-200010000-00004">evidence</a> that consistently running the same direction on small indoor tracks over time leads to strength asymmetries which likely cause injuries. Alternating directions introduces rest and is probably sufficient to avoid acute issues for most runners.</p>
+                    <p>Unlikely. Many athletes train and race on smaller radius tracks without issue during indoor track season. There <i>is</i> <a href="https://doi.org/10.1097/00042752-200010000-00004">evidence</a> that consistently running the same direction on small indoor tracks over time leads to strength asymmetries which likely cause injuries. Alternating directions introduces rest and is probably sufficient to avoid acute issues for most runners.</p>
 
-                        <p>You may also take comfort from knowing that <a href="https://www.outsideonline.com/health/running/inside-bizarre-world-indoor-marathons/">indoor track marathons have been held for years without event</a>.</p>
-                    </accordion-body>
+                    <p>You may also take comfort from knowing that <a href="https://www.outsideonline.com/health/running/inside-bizarre-world-indoor-marathons/">indoor track marathons have been held for years without event</a>.</p>
+                </accordion-body>
             </accordion-item>
 
             <accordion-item>
@@ -1122,12 +1173,98 @@ redirect_from:
     </div>
 </section>
 
+<section>
+    <div class="container-xxl">
+        <h2 class="mb-4" id="results">Results <a href="#results" class="anchor-link" aria-label="Link to this section. Results"></a></h2>
+
+
+        <h3 class="d-inline" >Marathon</h3><span class="count"></span>
+        <div id="results-marathon" class="mb-5"></div>
+
+        <h3 class="d-inline">Half Marathon</h3><span class="count"></span>
+        <div id="results-half-official" class="mb-3"></div>
+        <hr>
+        <h3 class="d-inline">Unofficial</h3><span class="count"></span>
+        <div id="results-half-unofficial" class="mb-2"></div>
+    </div>
+
+</section>
+
+
+
+<section id="epilogue">
+
+    <figure>
+        <img src="{{ site.baseurl }}/img/dm24/1.avif" class="w-100 rounded mb-4" />
+
+    </figure>
+    <div class="container">
+        <h2 class="mb-4">Epilogue <a href="#epilogue" class="anchor-link" aria-label="Link to this section. Epilogue"></a></h2>
+
+        <p>Most people resist the idea of running long distances in circles. Those who <i>don't</i> are often <a href="https://www.npr.org/2022/12/09/1141969790/a-man-ran-415-circles-around-a-roundabout-a-36-mile-ultramarathon">examined in</a> <a href="https://www.kuer.org/sports-recreation/2023-10-31/how-many-laps-does-it-take-to-run-a-marathon-around-salt-lake-citys-rainbow-whale">human-interest</a> <a href="https://www.runnersworld.com/news/a25908201/david-stephenson-half-marathon-in-roundabout-in-business-clothes/">stories</a>. But every year, Drumheller runners have a good time, and for many of them, the experience is better than the alternatives. For the devoted, a flat course and a table for bottles. For the novices, the constant company of peers.</p>
+
+        <p>The full marathon was a new test though, and I worried a little each time someone withdrew their registration (which happened three times). Would anyone run 200+ laps around a fountain?</p>
+
+        <p>So it's a joy that we got to celebrate the first four Drumheller Marathoners this year. They were joined by 21 half marathoners, just about equaling the number from the first two years of the event combined. Olivia Harris bettered the women's half course record (1:40:27), and Joe and yours-truly bettered the men's (1:27:33). Congratulations to the many who ran their first half or set their distance PR. Together, we ran 4227 laps.</p>
+
+        <p>The full distance raised the stakes. The prospect of <a href="https://therunningchannel.com/what-are-world-marathon-major-qualifying-times-boston-chicago-london/">qualifying times</a> meant our timing camera <i>had</i> to work, and for hours longer than last year. Counting to 219 is more difficult and the consequences for miscounting more wrenching.</p>
+
+        <p>But we met the challenge. Our finish line camera evolved into a lamppost mounted system. We developed <a href="https://github.com/raceconditionrunning/visual-race-timing">better lap counting annotation tools</a>, though it meant final results were delayed. And for the first time, we trialed <a href="https://live.raceconditionrunning.com">a homegrown <i>live</i> lap counting service</a> to give runners a fallback.<!--Whether it worked varied based on participants' phones. None were mislead when it didn't work, and several found it useful when it did.--> Still, some half runners came up a lap short, so work remains.</p>
+
+        <!-- And reducing the direction change frequency to once an hour was maybe a step too far -->
+
+        <p>Plenty went right, with plenty of assistance. Thanks, Zach, for getting us a dedicated Drumheller camera, Hannah and Theo for measurement help, Lauren for medal help, and Anshul for course marking. Thanks to Hannah and Sanjana for photos and for helping marathoners in the morning. Zach's "Drumheller Water" (Tailwind) and the on-course bottle table were aid station highlights. And thanks, Yuqian, for helping with annotation tools.</p>
+
+        <hr class="minor"/>
+
+        <p>If you were inventing the marathon today, I'm not sure if you'd land on the big city marathon format. Squeezed police departments and wary city officials are loath to close streets, and the labor costs to do so are high and rising. The largest, most-successful races pencil out only with massive sponsorship deals, whose dollar amounts dwarf entry fees. All in service of <a href="https://info.runsignup.com/wp-content/uploads/sites/3/2024/01/23-Race-Trends-ONLINE-compressed_3.pdf">relatively few runners</a>.</p>
+
+        <p>We should cherish the city marathons that we have, but we should also explore sustainable alternatives. The Drumheller Marathon is one model. Like city races, it's easy to access because it happens where the community is, not a drive or a plane-ride away. Centering a single, meaningful location taps into our love of place, and whittles down essential support to the point where it can be supplied by one person.</p>
+
+        <p>More formal than a <a href="https://www.google.com/search?q=roundabout+marathon">roundabout marathon</a>, and on a shorter loop than any <a href="https://citiusmag.com/articles/the-lap-count-mckirdy-micro-marathon">short-loop marathon</a>, Drumheller is somehow closer to a <a href="https://citiusmag.com/articles/world-athletics-renames-indoor-track-to-short-track">"short track"</a> marathon than anything else. It's a model worth repeating, but for now it remains a singular event.</p>
+
+        <p><i>Nick Walker</i></p>
+    </div>
+    <figure id="gallery" class="d-flex flex-column gap-2 lightbox-gallery">
+        <a href="{{ site.baseurl }}/img/dm24/2.avif">
+            <img loading="lazy" src="{{ site.baseurl }}/img/dm24/2.avif"
+                 class="w-100 shadow-1-strong rounded"/>
+        </a>
+
+        <div class="d-flex flex-column flex-sm-row gap-2">
+            <div class="col d-flex flex-column gap-2">
+                <a href="{{ site.baseurl }}/img/dm24/3.avif">
+                    <img loading="lazy" src="{{ site.baseurl }}/img/dm24/3.avif"
+                         class="w-100 shadow-1-strong rounded"/>
+                </a>
+                <a href="{{ site.baseurl }}/img/dm24/4.avif">
+                    <img loading="lazy" src="{{ site.baseurl }}/img/dm24/4.avif"
+                         class="w-100 shadow-1-strong rounded"/>
+                </a>
+            </div>
+
+            <div class="col d-flex flex-column gap-2">
+                <a href="{{ site.baseurl }}/img/dm24/5.avif">
+                    <img loading="lazy" src="{{ site.baseurl }}/img/dm24/5.avif"
+                         class="w-100 shadow-1-strong rounded">
+                </a>
+
+                <a href="{{ site.baseurl }}/img/dm24/6.avif">
+                    <img loading="lazy" src="{{ site.baseurl }}/img/dm24/6.avif"
+                         class="w-100 shadow-1-strong rounded"/>
+                </a>
+            </div>
+
+        </div>
+    </figure>
+
+</section>
+
 <hr/>
 
 <section id="history">
     <figure class="gallery lightbox-gallery">
-        <a href="https://files.nickwalker.us/aype.avif" data-pswp-width="3000" data-pswp-height="2389">
-            <!-- FIXME: Track in repo when image is done src="{{ site.baseurl }}/img/dm24/aype-thumb.webp"-->
+        <a href="{{ site.baseurl }}/img/dm24/aype-thumb.webp" data-pswp-width="3000" data-pswp-height="2389">
             <img src="{{ site.baseurl }}/img/dm24/aype-thumb.webp"
                  alt="View of the Alaska-Yukon-Pacific Exposition, 1909"
                  class="w-100 shadow-1-strong rounded"/>
@@ -1139,24 +1276,7 @@ redirect_from:
                 Frank H.
             Nowell, photographer, Nowellx1040a</i></figcaption>
     </figure>
-    <div class="container">
 
-        <figure>
-        <blockquote class="blockquote">Rainier Vista, partly framed by Johnson and Mary Gates halls, is the most sacred space on campus.
-            The vista was first conceived as a centerpiece of the campus plan by the Olmsted Brothers in 1906, when the
-            elusive mountain revealed itself during the firm's visit to Seattle to develop a plan for the Alaska-Yukon-Pacific Exposition. Rainier
-            Vista is the most dramatic borrowing from nature on any campus in the United
-            States, with Mount Rainier as its climax, and with both architecture and landscape reinforcing its thrust
-            past a minor view of the city toward the mountain beyond. As Edmond Meany put it, &#8220;No campus in all the
-            world can equal Rainier Vista. In those rare moments when Mother Nature in kindly mood pulls aside the
-            vaporous curtains we may gaze upon Mt. Rainier, a three-mile…flow…of rock and ice. A spectacle of unending
-            fascination!&#8221;
-        </blockquote>
-        <figcaption class="blockquote-footer">Norman J. Johnston, <cite title="The Fountain and the Mountain">The Fountain and the Mountain</cite>
-        </figcaption>
-        </figure>
-
-    </div>
 </section>
 
 
@@ -1215,6 +1335,8 @@ redirect_from:
                     const lapDistance = resultsData.config.lapDistance
                     const starts = resultsData.config.starts
                     const directionChanges = resultsData.config.directionStarts.map((start) => durationToSeconds(start))
+                    const totalLapsRun = results.reduce((a, b) => a + b.lapTimes.length, 0)
+
                     let officialResults = []
                     let unofficialResults = []
                     let marathonResults = []
@@ -1332,7 +1454,7 @@ redirect_from:
 
 
     function setupLightboxes() {
-        prepareImagesForPhotoswipe(document.querySelectorAll(".lightbox-gallery")).then(() => {
+        prepareImagesForPhotoswipe(document.querySelectorAll(".lightbox-gallery a")).then(() => {
             const lightbox = new PhotoSwipeLightbox({
                 gallery: '.lightbox-gallery',
                 children: 'a',
@@ -1344,7 +1466,8 @@ redirect_from:
             const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
                 type: 'auto',
                 captionContent: (slide) => {
-                    return slide.data.element.parentElement.querySelector("figcaption").innerHTML;
+                    const caption = slide.data.element.parentElement.querySelector("figcaption")
+                    return caption ? caption.innerHTML : "";
                 }
             });
 
