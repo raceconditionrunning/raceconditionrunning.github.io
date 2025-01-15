@@ -129,3 +129,28 @@ layout: default
   }, false);
 
 </script>
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SportsOrganization",
+    "name": "{{ site.title }}",
+    "url": "{{ site.url }}",
+    "description": "{{ site.description }}",
+    "location": {
+      "@type": "Place",
+      "name": "Paul G. Allen Center for Computer Science & Engineering (CSE2), University of Washington",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "185 E Stevens Way NE",
+        "addressLocality": "Seattle",
+        "addressRegion": "WA",
+        "postalCode": "98195",
+        "addressCountry": "US"
+      }
+    },
+    "sameAs": [
+      "https://www.strava.com/clubs/raceconditionrunning"
+    ]
+  }
+</script>

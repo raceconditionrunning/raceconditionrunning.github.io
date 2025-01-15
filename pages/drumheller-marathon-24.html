@@ -1,4 +1,6 @@
 ---
+title: Drumheller Marathon 2024
+description: Marathon at the University of Washington's iconic Drumheller Fountain on June 1, 2024. Choose from 219 laps for the marathon or 109 laps for the half
 permalink: drumheller-marathon-24/
 redirect_from:
 - /dhm/
@@ -13,15 +15,15 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Drumheller Marathon 2024</title>
+    <title>{{ page.title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Marathon and half marathon around Drumheller Fountain, June 1st, 2024.">
+    <meta name="description" content="{{ page.description }}">
     <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
     <meta property="og:image" content="{{ site.url }}/img/dm24/og-banner.jpg">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ site.url }}/drumheller-marathon-24/">
-    <meta property="og:title" content="Drumheller Marathon 2024">
-    <meta property="og:description" content="Experience the fountain and the mountain. June 1st, 2024.">
+    <meta property="og:url" content="{{ site.url }}{{ page.url}}">
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:description" content="{{ page.description}}">
 
     <link href="{{ site.baseurl }}/img/dm24/favicon.png" rel="icon" type="image/png"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -36,7 +38,35 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe-dynamic-caption-plugin/1.2.7/photoswipe-dynamic-caption-plugin.min.css" integrity="sha512-x20LXbTUxAMuniBAuSyDGScWaoCxvZJ8m0tbJCRtpPkvPgsb2kStG9ZhDQKHj5mDWaKFOP7TadAZ4KVAyFJwNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Event",
+            "name": "{{ page.title }}",
+            "startDate": "2024-06-01T05:30:00-07:00",
+            "endDate": "2024-06-01T11:00:00-07:00",
+            "location": {
+                "@type": "Place",
+                "name": "Drumheller Fountain, University of Washington",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Seattle",
+                    "addressRegion": "WA",
+                    "postalCode": "98195",
+                    "addressCountry": "US"
+                }
+            },
+            "description": "{{ page.description }}",
+            "url": "{{ site.url }}{{ page.url }}",
+            "eventStatus": "https://schema.org/EventScheduled",
+            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+            "organizer": {
+                "@type": "Organization",
+                "name": "{{ site.title }}",
+                "url": "{{ site.url }}"
+            }
+        }
+    </script>
     <script type="importmap">
         {
           "imports": {
@@ -1017,7 +1047,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
     <div id="faq" class="container">
         <h2>FAQ <a href="#faq" class="anchor-link" aria-label="Link to this section. FAQ"></a></h2>
 
-        <accordion-group id="faq-accordion">
+        <accordion-group id="faq-accordion" faq>
             <accordion-item>
                 <accordion-header>Do I have to run the whole thing?</accordion-header>
                 <accordion-body>
@@ -1208,13 +1238,13 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
         <p>So it's a joy that we got to celebrate the first four Drumheller Marathoners this year. They were joined by 21 half marathoners, just about equaling the number from the first two years of the event combined. Olivia Harris bettered the women's half course record (1:40:27), and Joe and yours-truly bettered the men's (1:27:33). Congratulations to the many who ran their first half or set their distance PR. Together, we ran 4227 laps.</p>
 
-        <p>The full distance raised the stakes. The prospect of <a href="https://therunningchannel.com/what-are-world-marathon-major-qualifying-times-boston-chicago-london/">qualifying times</a> meant our timing camera <i>had</i> to work, and for hours longer than last year. Counting to 219 is more difficult and the consequences for miscounting more wrenching.</p>
+        <p>The full distance raised the stakes. The prospect of <a href="https://therunningchannel.com/what-are-world-marathon-major-qualifying-times-boston-chicago-london/">qualifying times</a> meant our timing camera <i>had</i> to work, and for hours longer than last year. The higher count is more difficult and the consequences for miscounting more wrenching.</p>
 
         <p>But we met the challenge. Our finish line camera evolved into a lamppost mounted system. We developed <a href="https://github.com/raceconditionrunning/visual-race-timing">better lap counting annotation tools</a>, though it meant final results were delayed. And for the first time, we trialed <a href="https://live.raceconditionrunning.com">a homegrown <i>live</i> lap counting service</a> to give runners a fallback.<!--Whether it worked varied based on participants' phones. None were mislead when it didn't work, and several found it useful when it did.--> Still, some half runners came up a lap short, so work remains.</p>
 
         <!-- And reducing the direction change frequency to once an hour was maybe a step too far -->
 
-        <p>Plenty went right, with plenty of assistance. Thanks, Zach, for getting us a dedicated Drumheller camera, Hannah and Theo for measurement help, Lauren for medal help, and Anshul for course marking. Thanks to Hannah and Sanjana for photos and for helping marathoners in the morning. Zach's "Drumheller Water" (Tailwind) and the on-course bottle table were aid station highlights. And thanks, Yuqian, for helping with annotation tools.</p>
+        <p>Plenty went right, with plenty of assistance. Thanks, Zach, for getting us a dedicated Drumheller camera, Hannah and Theo for measurement help, Lauren for medal help, Chandra for shirt help, and Anshul for course marking. Thanks to Hannah and Sanjana for photos and for helping marathoners in the morning. Zach's "Drumheller Water" (Tailwind) and the on-course bottle table were aid station highlights. And thanks, Yuqian, for helping with annotation tools.</p>
 
         <hr class="minor"/>
 

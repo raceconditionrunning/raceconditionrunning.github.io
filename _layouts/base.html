@@ -2,8 +2,12 @@
 <html lang="en" data-bs-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <title>Race Condition Running</title>
+  {% capture title %}{% if page.title %}{{ page.title | escape }} || {{ site.title | escape}}{% else %}{{ site.title | escape }}{% endif %}{% endcapture %}
+  {% capture description %}{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}{% endcapture %}
+  {% capture url %}{{ page.url | absolute_url }}{% endcapture %}
+  <title>{{ title }}</title>
   <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
+  <meta name="description" content="{{ description }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel='stylesheet' type='text/css' href='{{ site.baseurl }}/css/style.css'>
 
@@ -32,7 +36,7 @@
     {
       "imports": {
         "d3": "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm",
-        "maplibre-gl": "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.js",
+        "maplibre-gl": "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.0.0/maplibre-gl.min.js",
         "masonry-layout": "https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js",
         "noUiSlider": "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.mjs",
         "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",

@@ -86,10 +86,16 @@ export class AccordionItem extends HTMLElement {
         this.classList.add('accordion-item');
     }
     connectedCallback() {
+        const parent = this.parentElement.closest('accordion-group');
+        if (parent.hasAttribute("faq")) {
+            this.setAttribute("itemscope", "");
+            this.setAttribute("itemtype", "https://schema.org/Question");
+        }
         // Give each accordion item a unique ID
         const items = this.parentElement.querySelectorAll("accordion-item");
         const index = Array.from(items).indexOf(this);
         this.dataset.index = index;
+
     }
 }
 
@@ -106,6 +112,9 @@ export class AccordionHeader extends HTMLElement {
         const wrapper = document.createElement('h3');
         wrapper.classList.add('accordion-header');
         wrapper.id = scopedHeaderName;
+        if (parent.hasAttribute("faq")) {
+            wrapper.setAttribute("itemprop", "name");
+        }
 
         wrapper.innerHTML = `
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="${scopedContentName}" data-bs-target="#${scopedContentName}">
@@ -135,7 +144,16 @@ export class AccordionBody extends HTMLElement {
         this.id = scopedContentName;
         this.setAttribute('aria-labelledby', scopedHeaderName);
         this.setAttribute('data-bs-parent', `#${parent.id}`);
-        const wrapper = document.createElement('div');
+        let wrapper = document.createElement('div');
+        if (parent.hasAttribute("faq")) {
+            wrapper.setAttribute("itemscope", "");
+            wrapper.setAttribute("itemprop", "acceptedAnswer");
+            wrapper.setAttribute("itemtype", "https://schema.org/Answer");
+            let innerWrapper = document.createElement('div');
+            innerWrapper.setAttribute("itemprop", "text");
+            wrapper.appendChild(innerWrapper);
+            wrapper = innerWrapper;
+        }
         wrapper.classList.add('accordion-body');
         // Move existing children to the new wrapper
         while (this.firstChild) {

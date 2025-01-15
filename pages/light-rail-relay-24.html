@@ -1,4 +1,6 @@
 ---
+title: Light Rail Relay 2024
+description: Join Seattle’s premier urban relay on September 28, 2024. Run solo or with a team, covering 38 miles along Link Light Rail from Angle Lake to Lynnwood.
 permalink: light-rail-relay-24/
 redirect_from:
 - /lrr/
@@ -12,16 +14,16 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 <html lang="en" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <title>Light Rail Relay 2024</title>
+    <title>{{ page.title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Ultra relay along the Link 1 Line happening September 28th, 2024.">
+    <meta name="description" content="{{ page.description }}">
     <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
     <meta name="theme-color" content="#000000">
     <meta property="og:image" content="{{ site.baseurl }}/img/lrr24/og-banner.png">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ site.baseurl }}/light-rail-relay-24/">
-    <meta property="og:title" content="Light Rail Relay 2024">
-    <meta property="og:description" content="Ultra relay along the Link Line 1 happening September 28th, 2024.">
+    <meta property="og:url" content="{{ site.baseurl }}{{ page.url }}">
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:description" content="{{ page.description }}">
 
     <link rel="manifest" href="{{ site.baseurl }}/maps/lrr-24-manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -33,6 +35,35 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" integrity="sha256-V2sIX92Uh6ZaGSFTKMHghsB85b9toJtmazgG09AI2uk=" crossorigin="anonymous">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Event",
+            "name": "{{ page.title }}",
+            "startDate": "2024-09-28T08:30:00-07:00",
+            "location": {
+                "@type": "Place",
+                "name": "Angle Lake Station",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "19955 28th Ave S",
+                    "addressLocality": "SeaTac",
+                    "addressRegion": "WA",
+                    "postalCode": "98188",
+                    "addressCountry": "US"
+                }
+            },
+            "description": "{{ page.description }}",
+            "url": "{{ site.url }}{{ page.url }}",
+            "eventStatus": "https://schema.org/EventScheduled",
+            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+            "organizer": {
+                "@type": "Organization",
+                "name": "{{ site.title }}",
+                "url": "{{ site.url }}"
+            }
+        }
+    </script>
     <script type="importmap">
         {
           "imports": {
@@ -596,8 +627,8 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                         <!--a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-24" data-bs-placement="bottom">Add Team</a-->
                         <!--a href="{{ page.team_registration_link }}" class="btn btn-outline btn-outline-primary btn-lg" data-bs-toggle="tooltip" data-bs-title="by 9-24" data-bs-placement="bottom">Enter Solo</a-->
 
-                        <a href="#results" class="btn btn-outline btn-outline-primary btn-lg">Results</a>
-                        <!--a href="#epilogue" class="btn btn-outline btn-outline-primary btn-lg">Read Epilogue</a-->
+                        <a href="#results" class="btn btn-outline btn-outline-primary btn-lg" data-goatcounter-click="lrr24-results">Results</a>
+                        <a href="#epilogue" class="btn btn-outline btn-outline-primary btn-lg" data-goatcounter-click="lrr24-epilogue">Epilogue</a>
 
 
 
@@ -625,7 +656,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         </div>
         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-baseline">
             <h2 id="route">Route <a href="#route" class="anchor-link" aria-label="Link to this section. Route"></a></h2>
-            <a href="#" class="btn btn-outline-primary mb-3 m-sm-0 " id="download-route-gpx-btn" hidden>Download Route GPX</a>
+            <a href="#" class="btn btn-outline-primary mb-3 m-sm-0 " id="download-route-gpx-btn" hidden data-goatcounter-click="lrr24-download-gpx">Download Route GPX</a>
         </div>
 
         <h5>22 legs - 38 mi ↑3400ft ↓3400ft</h5>
@@ -657,7 +688,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
     <div class="container">
         <h2 id="faq">FAQ <a href="#faq" class="anchor-link" aria-label="Link to this section. FAQ"></a></h2>
 
-        <accordion-group class="accordion-flush mb-4" id="faq-items">
+        <accordion-group class="accordion-flush mb-4" id="faq-items" faq>
             <accordion-item>
                 <accordion-header>Why do this?</accordion-header>
                 <accordion-body>

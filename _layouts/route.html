@@ -23,6 +23,7 @@ layout: default
     </ul>
   {% endif %}
   {% endfor %}
+  </div>
   <div><b>End:</b> {{ page.end }}
     {% for location in site.data.locations.features %}
     {% if location.properties.id == page.end and location.properties.meeting_point_desc %}
@@ -321,5 +322,23 @@ layout: default
     });
 
 </script>
-</body>
-</html>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Routes",
+        "item": "{{ site.url }}{{ page.url | split: '/' | slice: 0, 2 | join: '/' }}/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "{{ route.title }}",
+        "item": "{{ site.url }}{{page.url}}"
+      }
+    ]
+  }
+</script>

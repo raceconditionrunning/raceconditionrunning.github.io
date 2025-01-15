@@ -1,4 +1,5 @@
 ---
+title: Quarantine Relay
 permalink: quarantine-relay/
 layout: default
 ---

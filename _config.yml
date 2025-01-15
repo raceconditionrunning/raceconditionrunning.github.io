@@ -1,5 +1,6 @@
+title: Race Condition Running
 url: https://raceconditionrunning.com
-
+description: Weekend brunch club, also happens to train for races in the PNW.
 permalink: /:title/
 
 plugins:

@@ -1,4 +1,5 @@
 ---
+title: Brunch Reviews
 layout: default
 permalink: brunch-reviews/
 ---
@@ -8,8 +9,15 @@ permalink: brunch-reviews/
 
 {% include brunch_review_card.html reviews=sorted_brunch_reviews %}
 
-<div class="brunch-review">
-  <h2>{{ latest_review.restaurant }}</h2>
-  <h5 class="text-secondary">{{ latest_review.date | date_to_long_string }}</h5>
+<article class="brunch-review" itemscope itemtype="https://schema.org/BlogPosting">
+  <h2 itemprop="headline" class="mb-0">{{ latest_review.restaurant }}</h2>
+  <h5 class="text-secondary">  <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ latest_review.date | date_to_long_string }}</time>
+  </h5>
+  {% if latest_review.author %}
+  <h6 class="text-secondary">By <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author }}</span></span></h6>
+  {% endif %}
+
+  <div class="post-content" itemprop="articleBody">
   {{ latest_review.content }}
-</div>
+  </div>
+</article>
