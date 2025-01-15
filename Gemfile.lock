@@ -9,6 +9,7 @@ GEM
       console (~> 1.29)
       fiber-annotation
       io-event (~> 1.6, >= 1.6.5)
+    base64 (0.2.0)
     bigdecimal (3.1.8)
     colorator (1.1.0)
     concurrent-ruby (1.3.4)
@@ -16,27 +17,28 @@ GEM
       fiber-annotation
       fiber-local (~> 1.1)
       json
+    csv (3.3.2)
     em-websocket (0.5.3)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0)
     ethon (0.16.0)
       ffi (>= 1.15.0)
     eventmachine (1.2.7)
-    ffi (1.17.0-arm64-darwin)
-    ffi (1.17.0-x86_64-darwin)
-    ffi (1.17.0-x86_64-linux-gnu)
+    ffi (1.17.1-arm64-darwin)
+    ffi (1.17.1-x86_64-darwin)
+    ffi (1.17.1-x86_64-linux-gnu)
     fiber-annotation (0.2.0)
     fiber-local (1.1.0)
       fiber-storage
     fiber-storage (1.0.0)
     forwardable-extended (2.6.0)
-    google-protobuf (4.28.3-arm64-darwin)
+    google-protobuf (4.29.3-arm64-darwin)
       bigdecimal
       rake (>= 13)
-    google-protobuf (4.28.3-x86_64-darwin)
+    google-protobuf (4.29.3-x86_64-darwin)
       bigdecimal
       rake (>= 13)
-    google-protobuf (4.28.3-x86_64-linux)
+    google-protobuf (4.29.3-x86_64-linux)
       bigdecimal
       rake (>= 13)
     hashery (2.1.2)
@@ -93,12 +95,13 @@ GEM
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
+    logger (1.6.4)
     mercenary (0.4.0)
-    nokogiri (1.16.7-arm64-darwin)
+    nokogiri (1.18.1-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.16.7-x86_64-darwin)
+    nokogiri (1.18.1-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.16.7-x86_64-linux)
+    nokogiri (1.18.1-x86_64-linux-gnu)
       racc (~> 1.4)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
@@ -142,12 +145,15 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  base64
+  csv
   html-proofer
   jekyll (>= 4.3.2)
   jekyll-datapage-generator
   jekyll-redirect-from
   jekyll-sitemap
   jekyll-tidy
+  logger
 
 RUBY VERSION
    ruby 3.2.3p157
