@@ -1,5 +1,6 @@
 ---
 title: Routes
+description: Every place worth running around our corner of Seattle
 permalink: routes/
 layout: base
 ---
@@ -81,7 +82,7 @@ layout: base
               <span class="name">{{ route.name }}</span>
             </a>
             {% if route.gpx %}
-            &nbsp; <a href="{{ route.gpx }}" class="gpx-link" title="Download GPX">&#8986;</a>
+            &nbsp; <a href="{{ route.gpx }}" class="gpx-link" title="Download GPX" data-goatcounter-click="download-{{ route.id }}">&#8986;</a>
             {% endif %}
           </td>
           {% comment %}

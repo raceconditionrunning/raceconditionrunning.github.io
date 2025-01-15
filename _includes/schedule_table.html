@@ -53,7 +53,7 @@
             {% endif %}
             {% if route.distance_mi %}&nbsp; (<span title="{{ route.distance_mi | times: 1.609 | round: 1}}km">{{ route.distance_mi | round: 1}})</span>{% endif %}
             {% if route.gpx %}
-                &nbsp; <a href="{{ route.gpx }}" class="gpx-link" title="Download GPX">&#8986;</a>
+                &nbsp; <a href="{{ route.gpx }}" class="gpx-link" title="Download GPX" data-goatcounter-click="download-{{ route.id }}">&#8986;</a>
             {% endif %}
         </td>
     </tr>

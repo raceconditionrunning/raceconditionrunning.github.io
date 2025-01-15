@@ -9,7 +9,7 @@ layout: default
   {% assign descent_ft = page.descent_m | times: 3.28084 %}
   <h5><span title="{{ page.distance_mi | times: 1.609 | round: 1}}km">{{ page.distance_mi | round: 1}}</span>mi ↑<span title="{{ page.ascent_m}}m">{{ascent_ft | round}}ft</span> ↓<span title="{{ page.descent_m}}m">{{ascent_ft | round}}ft</span> {% if page.deprecated %} <span class="text-warning mx-2" title="We no longer schedule this route">Deprecated</span>{% endif%}</h5>
   <div class="mb-4">
-    <a class="btn btn-sm btn-outline-primary" href="{{ page.gpx | relative_url }}">Download GPX</a> <a class="btn btn-sm btn-outline-primary" href="{{page.map}}">OnTheGoMap</a>
+    <a class="btn btn-sm btn-outline-primary" href="{{ page.gpx | relative_url }}" data-goatcounter-click="download-{{ page.id }}">Download GPX</a> <a class="btn btn-sm btn-outline-primary" href="{{page.map}}" data-goatcounter-click="ext-map-{{ page.id }}">OnTheGoMap</a>
   </div>
   <div id="map" style="height: 500px;" class="mb-3 w-100"></div>
   <elevation-profile class="mb-3"></elevation-profile>
