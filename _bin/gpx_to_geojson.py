@@ -1,3 +1,4 @@
+import argparse
 import json
 import pathlib
 import sys
@@ -43,15 +44,15 @@ def dump_geojson_with_compact_geometry(geojson, f):
 
 
 def main():
-    if len(sys.argv) == 2:
-        input_files = [sys.argv[1]]
-        output_files = [sys.argv[1]]
-    elif len(sys.argv) < 3 or len(sys.argv) % 2 != 1:
-        raise ValueError("Usage: gpx_to_geojson.py <input> <output> ...")
-    else:
-        input_files = sys.argv[1:][::2]
-        output_files = sys.argv[2:][::2]
-    for inpath, outpath in zip(input_files, output_files):
+    parser = argparse.ArgumentParser(description="Convert RCR Route GPX to GeoJSON.")
+    parser.add_argument("--input", required=True, nargs="+", help="Input GPX file(s).")
+    parser.add_argument("--output", required=True, nargs="+", help="Output GPX file(s).")
+    args = parser.parse_args()
+
+    if len(args.input) != len(args.output):
+        raise ValueError("The number of inputs must match the number of outputs.")
+
+    for inpath, outpath in zip(args.input, args.output):
         route = rcr.load_route(pathlib.Path(inpath))
         with open(outpath, 'w') as f:
             dump_geojson_with_compact_geometry(route_geojson(route), f)

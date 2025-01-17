@@ -28,12 +28,13 @@ $(ROUTES_YML): _bin/make_routes_table.py $(ROUTES_GPX_NORMALIZED)
 
 routes/geojson/%.geojson: _bin/gpx_to_geojson.py routes/_gpx/%.gpx $(NEIGHBORHOODS)
 	@mkdir -p $(@D)
-	python3 $< routes/_gpx/$*.gpx $@
+	python3 $< --input routes/_gpx/$*.gpx --output $@
 
 # Batch convert; use when building from scratch (e.g. CI)
 convert-routes:
 	@mkdir -p routes/geojson
-	python3 _bin/gpx_to_geojson.py $(foreach raw, $(ROUTE_RAW_GPX_FILES), $(raw) $(patsubst %.gpx, routes/geojson/%.geojson, $(notdir $(raw))))
+	python3 _bin/gpx_to_geojson.py --input $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(raw))\
+	 	--output $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(patsubst %.gpx, routes/geojson/%.geojson, $(notdir $(raw))))
 
 
 # All routes in one file
@@ -42,12 +43,13 @@ routes/geojson/routes.geojson: _bin/merge_geojson.py $(ROUTE_GEOJSON_FILES)
 
 routes/gpx/%.gpx: _bin/normalize_gpx.py routes/_gpx/%.gpx
 	@mkdir -p $(@D)
-	python3 $< routes/_gpx/$*.gpx routes/gpx/$*.gpx
+	python3 $< --input routes/_gpx/$*.gpx --output routes/gpx/$*.gpx
 
 # Batch normalize; use when building from scratch (e.g. CI)
 normalize-routes:
 	@mkdir -p routes/gpx
-	python3 _bin/normalize_gpx.py $(foreach raw, $(ROUTE_RAW_GPX_FILES), $(raw) $(patsubst routes/_gpx/%, routes/gpx/%,$(raw)))
+	python3 _bin/normalize_gpx.py --input $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(raw))\
+		--output $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(patsubst routes/_gpx/%, routes/gpx/%,$(raw)))
 
 $(TRANSIT_DATA):
 	_bin/fetch_transit_data.sh

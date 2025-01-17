@@ -1,5 +1,5 @@
+import argparse
 import pathlib
-import sys
 
 import gis
 import rcr
@@ -63,16 +63,15 @@ def route_gpx(route):
 
 
 def main():
-    if len(sys.argv) == 2:
-        input_files = [sys.argv[1]]
-        output_files = [sys.argv[1]]
-    elif len(sys.argv) < 3 or len(sys.argv) % 2 != 1:
-        raise ValueError("Usage: normalize_gpx.py <input> <output> ...")
-    else:
-        input_files = sys.argv[1:][::2]
-        output_files = sys.argv[2:][::2]
+    parser = argparse.ArgumentParser(description="Normalize GPX files.")
+    parser.add_argument("--input", required=True, nargs="+", help="Input GPX file(s).")
+    parser.add_argument("--output", required=True, nargs="+", help="Output GPX file(s).")
+    args = parser.parse_args()
 
-    for inpath, outpath in zip(input_files, output_files):
+    if len(args.input) != len(args.output):
+        raise ValueError("The number of inputs must match the number of outputs.")
+
+    for inpath, outpath in zip(args.input, args.output):
         route = rcr.load_route(pathlib.Path(inpath))
         locs = rcr.load_loc_db()
 
