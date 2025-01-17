@@ -182,15 +182,28 @@ layout: base
           table.element.querySelectorAll("input").forEach((input) => {
             input.classList.add("form-control");
           });
-            const sortOrder = JSON.parse(sessionStorage.getItem('tabulator-sort'));
-            if (sortOrder) {
-                table.setSort(sortOrder);
-            }
 
-            const filters = JSON.parse(sessionStorage.getItem('tabulator-filters'));
-            if (filters) {
-                table.setFilter(filters);
+          const sortOrder = JSON.parse(sessionStorage.getItem('tabulator-sort'));
+          if (sortOrder) {
+              table.setSort(sortOrder);
+          }
+          if (window.location.search) {
+            const url = new URL(window.location);
+            const search = url.searchParams.get("q");
+            if (search) {
+               // Queue up event to set the search value
+              const searchField = document.getElementById("filter-search")
+              searchField.value = search;
+              const event = new Event('input');
+              searchField.dispatchEvent(event);
             }
+            return;
+          }
+
+          const filters = JSON.parse(sessionStorage.getItem('tabulator-filters'));
+          if (filters) {
+              table.setFilter(filters);
+          }
         });
         table.on('dataSorted', function(sorters) {
             //sessionStorage.setItem('tabulator-sort', JSON.stringify(sorters));
@@ -208,6 +221,10 @@ layout: base
             }
             // Debounce 100ms
             previousTimeout = setTimeout(() => {
+                // Update query parameter
+                const url = new URL(window.location);
+                url.searchParams.set("q", event.target.value);
+                window.history.replaceState({}, "", url);
                 table.setFilter("name", "like", event.target.value);
             }, 100);
 
