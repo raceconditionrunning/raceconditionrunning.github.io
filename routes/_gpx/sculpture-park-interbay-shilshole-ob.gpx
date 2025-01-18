@@ -15,7 +15,6 @@
     <extensions>
       <rcr:ascent>620</rcr:ascent>
       <rcr:descent>620</rcr:descent>
-      <rcr:deprecated>true</rcr:deprecated>
       <rcr:map>https://onthegomap.com/s/c1f579n8</rcr:map>
     </extensions>
   </metadata>
