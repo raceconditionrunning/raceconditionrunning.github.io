@@ -8,8 +8,8 @@ fi
 assets_root=$1/img
 
 # Ensure ImageMagick's 'identify' command is installed
-command -v identify >/dev/null 2>&1 || { echo >&2 "I need identify from ImageMagick, but it is not installed."; exit 1; }
-echo "Checking $(echo "$imgs" | wc -l) images..."
+# command -v identify >/dev/null 2>&1 || { echo >&2 "I need identify from ImageMagick, but it is not installed."; exit 1; }
+# echo "Checking $(echo "$imgs" | wc -l) images..."
 # All images with .webp, .jpg, .jpeg, .png, .gif, .svg, .avif
 find "$assets_root" -type f \( -iname "*.webp" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.svg" -o -iname "*.avif" \) |
 while IFS= read -r file; do
