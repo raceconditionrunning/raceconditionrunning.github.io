@@ -12,7 +12,7 @@
     - time: "9:30"
       route:
         name: Light Rail Relay 2023
-        map: /light-rail-relay-23
+        map: /light-rail-relay-23/
         distance_mi: 28.3
       highlight-image: /img/lrr23/lrr-og-banner.png
 

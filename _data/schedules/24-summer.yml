@@ -1,13 +1,3 @@
-- date: "2024-06-01"
-  organized-event: true
-  plan:
-    - time: "7:50"
-      route:
-        name: Drumheller Marathon 2024
-        map: /drumheller-marathon-24
-        distance_mi: 13.1
-      highlight-image: /img/dm24/og-banner.jpg
-
 - date: "2024-06-08"
   plan:
     - time: "8:30"
@@ -110,12 +100,3 @@
     - time: "10:30"
       route_id: roosevelt-green-lake-loop
 
-# Copied to 24-autumn
-# - date: "2024-09-28"
-#   plan:
-#     - time: "8:30"
-#       route:
-#         name: Light Rail Relay 2024
-#         map: /light-rail-relay-24
-#         distance_mi: 38
-#       highlight-image: /img/lrr24/og-banner.png

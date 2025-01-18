@@ -54,7 +54,7 @@
     - time: "7:50"
       route:
         name: Drumheller Half Marathon 2023
-        map: /drumheller-half-23
+        map: /drumheller-half-23/
         distance_mi: 13.1
       highlight-image: /img/dhm23/dhm-23-og.png
 

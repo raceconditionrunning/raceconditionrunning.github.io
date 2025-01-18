@@ -13,7 +13,7 @@
     - time: "9:30"
       route:
         name: Light Rail Relay 2021
-        map: /light-rail-relay-21
+        map: /light-rail-relay-21/
         distance_mi: 27.9
       highlight-image: /img/lrr21/light-rail-relay-og-banner.png
 

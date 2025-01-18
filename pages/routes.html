@@ -124,7 +124,7 @@ layout: base
                     let value = cell.getValue();
                     let route = cell.getRow().getData();
                     let link = document.createElement("a");
-                    link.href = route.id;
+                    link.href = route.id + "/";
                     link.title = route.id;
                     link.innerHTML = value;
                     return link;}},

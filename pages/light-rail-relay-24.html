@@ -41,6 +41,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             "@type": "Event",
             "name": "{{ page.title }}",
             "startDate": "2024-09-28T08:30:00-07:00",
+            "endDate": "2024-09-28T20:30:00-07:00",
             "location": {
                 "@type": "Place",
                 "name": "Angle Lake Station",
@@ -54,6 +55,12 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                 }
             },
             "description": "{{ page.description }}",
+            "image": {
+                "@type": "ImageObject",
+                "url": "{{ site.url }}{{ site.baseurl }}/img/lrr24/og-banner.png",
+                "height": "631",
+                "width": "1201"
+            },
             "url": "{{ site.url }}{{ page.url }}",
             "eventStatus": "https://schema.org/EventScheduled",
             "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",

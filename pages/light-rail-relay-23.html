@@ -28,6 +28,42 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator_bootstrap5.min.css" integrity="sha256-H1gQqBIR3L9enXuoNfFASj+QdGSEQIAloT7c4FXjNzc=" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" integrity="sha256-V2sIX92Uh6ZaGSFTKMHghsB85b9toJtmazgG09AI2uk=" crossorigin="anonymous">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Event",
+            "name": "{{ page.title }}",
+            "startDate": "2023-09-30T08:30:00-07:00",
+            "endDate": "2023-09-30T20:30:00-07:00",
+            "location": {
+                "@type": "Place",
+                "name": "Angle Lake Station",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "19955 28th Ave S",
+                    "addressLocality": "SeaTac",
+                    "addressRegion": "WA",
+                    "postalCode": "98188",
+                    "addressCountry": "US"
+                }
+            },
+            "description": "{{ page.description }}",
+            "image": {
+                "@type": "ImageObject",
+                "url": "{{ site.url }}{{ site.baseurl }}/img/lrr23/lrr-og-banner.png",
+                "height": "399",
+                "width": "1200"
+            },
+            "url": "{{ site.url }}{{ page.url }}",
+            "eventStatus": "https://schema.org/EventScheduled",
+            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+            "organizer": {
+                "@type": "Organization",
+                "name": "{{ site.title }}",
+                "url": "{{ site.url }}"
+            }
+        }
+    </script>
     <script type="importmap">
         {
           "imports": {
