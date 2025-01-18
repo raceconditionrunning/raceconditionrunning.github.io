@@ -18,6 +18,16 @@
         map: https://gohuskies.com/sports/2014/7/8/209542300.aspx
         distance_mi: 1
 
+- date: "2025-01-18"
+  plan:
+    - time: "8:30"
+      route_id: sculpture-park-interbay-ship-canal-wlave-loop
+    - time: "9:50"
+      route:
+        name: Sculpture Park Smith Cove OB
+        map: https://onthegomap.com/s/fkv1af8u
+        distance_mi: 6.4
+
 - date: "2025-01-25"
   plan:
     - time: "8:30"
