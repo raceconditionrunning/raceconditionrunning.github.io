@@ -3,10 +3,6 @@ title: Drumheller Marathon 2024
 description: Marathon at the University of Washington's iconic Drumheller Fountain on June 1, 2024. Choose from 219 laps for the marathon or 109 laps for the half
 permalink: drumheller-marathon-24/
 redirect_from:
-- /dhm/
-- /drumheller-half/
-- /dm/
-- /drumheller-marathon/
 - /dm24/
 registration_link: https://forms.gle/BhJpHUGZSfjRMNds5
 shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
@@ -276,6 +272,10 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             line-height: 1;
             font-style: italic;
             font-weight: 300;
+        }
+
+        #credit {
+            transition: 10s opacity;
         }
 
         /* Interactive fountain */
@@ -882,6 +882,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
     <div id="overview">
         <div class="col-12">
             <p class="lede">Join us for laps around UW's historic fountain</p>
+            <p id="credit" class="visually-hidden text-secondary opacity-0 fw-lighter"><a href="https://en.wikipedia.org/wiki/La_fille_aux_cheveux_de_lin" class="link-secondary"><i>La fille aux cheveux de lin</i></a> - Claude Debussy</p>
         </div>
 
         <!--div class="gap-2 row justify-content-center mb-4">
@@ -906,8 +907,9 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
         </div>
 
         <div class="alert alert-dark mt-3" role="alert" style="">
-            This event took place in 2024. Looking for <a href="/dm25">a more recent Drumheller Marathon</a>?
+            This event took place in 2024. Looking for <a href="/dm">a more recent Drumheller Marathon</a>?
         </div>
+
     </div>
 
 </header>
@@ -1343,6 +1345,15 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
     function initialize() {
         new p5(FountainToy("{{site.baseurl}}"), document.querySelector("#hero-toy .interactive"));
+        document.querySelector("#hero-toy").addEventListener("musicStart", () => {
+            const credit = document.querySelector("#credit");
+            credit.classList.remove("visually-hidden");
+            credit.classList.remove("opacity-0");
+            window.goatcounter && window.goatcounter.count({
+                path: 'dm24-found',
+                event: true,
+            });
+        });
 
         // Tooltips for sign-up deadlines
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')

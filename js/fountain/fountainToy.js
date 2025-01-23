@@ -140,6 +140,9 @@ export let FountainToy = rootUrl => p => {
             // Decide whether to complete the piece
             const playingTime = deltaBuffer.reduce((a, b) => a + b, 0)
             if (1800 < playingTime && playingTime < 4000 && deltaBuffer[0] / (deltaBuffer[1] + deltaBuffer[2]) > 2.0 && (deltaBuffer[1] / deltaBuffer[2]) < 1.2) {
+                // Dispatch custom event
+                let event = new CustomEvent('musicStart', {detail: {}, bubbles: true, cancelable: true})
+                p._userNode.dispatchEvent(event)
                 musicPlaying = true
                 let lastNote = sounds.play('note5', .700)
                 lastNote.addEventListener('ended', () => {

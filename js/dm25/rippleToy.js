@@ -213,9 +213,10 @@ export let RippleToy = rootUrl => p => {
             // Normalize deltas
             const deltaSum = deltaBuffer.reduce((a, b) => a + b, 0)
             const deltaNorm = deltaBuffer.map(d => d / deltaSum)
-            const closeEnough = deltaNorm.map((d, i) => Math.abs(d - targetDurationsNorm[i]) < 0.1)
-
-            if (closeEnough.reduce((a, b) => a && b, true)) {
+            // Too subtle
+            // const closeEnough = deltaNorm.map((d, i) => Math.abs(d - targetDurationsNorm[i]) < 0.1)
+            // closeEnough.reduce((a, b) => a && b, true)
+            if (deltaSum > 1000 && deltaSum < 4000) {
                 musicPlaying = true
                 // Dispatch custom event
                 let event = new CustomEvent('musicStart', {detail: {}, bubbles: true, cancelable: true})
@@ -242,11 +243,6 @@ export let RippleToy = rootUrl => p => {
     p.touchEnded = () => {
     }
     p.touchMoved = () => {
-        if (p.mouseX < 0 || p.mouseX > p._userNode.offsetWidth || p.mouseY < 0 || p.mouseY > p._userNode.offsetHeight) {
-            return
-        }
-
-        return false;
     }
 
     p.draw = function () {
