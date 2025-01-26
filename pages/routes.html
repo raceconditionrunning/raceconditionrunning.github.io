@@ -78,7 +78,7 @@ layout: base
       {% for route in sorted_routes %}
         <tr>
           <td>
-            <a href="{{ route.id }}" title="{{ route.id }}">
+            <a href="{{ route.id }}/" title="{{ route.id }}">
               <span class="name">{{ route.name }}</span>
             </a>
             {% if route.gpx %}
@@ -117,6 +117,7 @@ layout: base
 
       Tabulator.registerModule([EditModule, FormatModule, InteractionModule, MutatorModule, ResizeColumnsModule, ResizeTableModule, SortModule, SelectRowModule, FilterModule]);
 
+      let searched = false
       document.addEventListener("DOMContentLoaded", () => {
         let table = new Tabulator("#routes table", {
             columns:
@@ -217,23 +218,74 @@ layout: base
         let previousTimeout = null;
         document.getElementById("filter-search").addEventListener("input", (event) => {
             if (previousTimeout) {
-                clearTimeout(previousTimeout);
+              clearTimeout(previousTimeout);
             }
-            // Debounce 100ms
-            previousTimeout = setTimeout(() => {
-                // Update query parameter
-                const url = new URL(window.location);
-                url.searchParams.set("q", event.target.value);
-                window.history.replaceState({}, "", url);
-                table.setFilter("name", "like", event.target.value);
-            }, 100);
+
+          // Debounce
+          previousTimeout = setTimeout(() => {
+              if (window.goatcounter && !searched) {
+                  window.goatcounter.count({path: "searched", event: true});
+                    searched = true;
+              }
+              const query = event.target.value;
+              const url = new URL(window.location);
+
+              // Update query parameter
+              url.searchParams.set("q", query);
+              window.history.replaceState({}, "", url);
+
+              const startMatch = query.match(/start:([^ ]+)/);
+              const endMatch = query.match(/end:([^ ]+)/);
+              const distanceMatches = [...query.matchAll(/distance:(<=|>=|<|>|)?([0-9.]+)/g)];
+              const neighborhoodMatches = [...query.matchAll(/neighborhood:(['"]([^'"]+)['"]|[^ ]+)/g)];
+              const nameQuery = query
+                  .replace(/start:[^ ]+/, "")
+                  .replace(/end:[^ ]+/, "")
+                  .replace(/distance:(<=|>=|<|>|)?[0-9.]+/, "")
+                  .replace(/neighborhood:(['"]([^'"]+)['"]|[^ ]+)/g, "")
+                  .trim();
+
+              // Remove only relevant filters
+              table.getFilters().forEach((filter) => {
+                console.log(filter);
+                  if (
+                      ["start", "end", "distance_mi", "name", "neighborhoods"].includes(filter.field)
+                  ) {
+                      table.removeFilter(filter.field, filter.type, filter.value);
+                  }
+              });
+
+              if (startMatch) {
+                  table.addFilter("start", "starts", startMatch[1]);
+              }
+
+              if (endMatch) {
+                  table.addFilter("end", "starts", endMatch[1]);
+              }
+
+              if (neighborhoodMatches.length > 0) {
+                table.addFilter("neighborhoods", "keywords", neighborhoodMatches.map((match) => match[2] || match[1]).join(","), {matchAll: true, separator: ","});
+              }
+
+
+              // FIXME: Only one actually works
+              distanceMatches.forEach((match) => {
+                  const operator = match[1] || "="; // Default operator is "=" if not provided
+                  const value = Number.parseFloat(match[2]);
+                  table.addFilter("distance_mi", operator, value);
+              });
+
+              if (nameQuery) {
+                  table.addFilter("name", "like", nameQuery);
+              }
+          }, 150);
 
         });
         document.getElementById("filter-deprecated").addEventListener("change", (event) => {
             if (event.target.checked) {
                 table.removeFilter("deprecated", "!=", true);
             } else {
-                table.setFilter("deprecated", "!=", true);
+                table.addFilter("deprecated", "!=", true);
             }
             table.redraw();
         });
