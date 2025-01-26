@@ -6,11 +6,11 @@ layout: default
 {% include brunch_review_card.html reviews=sorted_brunch_reviews %}
 
 <article class="brunch-review" itemscope itemtype="https://schema.org/BlogPosting">
-  <h2 itemprop="headline" class="mb-0">{{ page.restaurant }}</h2>
-  <h5 class="text-secondary">  <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date_to_long_string }}</time>
-  </h5>
+  <h1 itemprop="headline" class="mb-0 h2">{{ page.restaurant }}</h1>
+  <h2 class="text-secondary h5">  <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date_to_long_string }}</time>
+  </h2>
   {% if page.author %}
-  <h6 class="text-secondary">By <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author }}</span></span></h6>
+  <h3 class="text-secondary h6">By <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author }}</span></span></h3>
   {% endif %}
 
   <div class="post-content" itemprop="articleBody">

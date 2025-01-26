@@ -67,6 +67,25 @@ redirect_from:
         color: var(--theme-primary-color);
     }
 
+    .anchor-link {
+      padding: 0 .175rem;
+      font-weight: 400;
+      color: #d2650c;
+      text-decoration: none;
+      opacity: 0;
+      transition: color 0.15s ease-in-out,opacity 0.15s ease-in-out;
+    }
+
+    .anchor-link::after {
+      content: "#";
+    }
+
+    .anchor-link:focus, .anchor-link:hover, :hover > .anchor-link, :target > .anchor-link {
+      color: #fd8f00;
+      text-decoration: none;
+      opacity: 1;
+    }
+
     .btn-outline-primary {
         --bs-btn-color: var(--theme-primary-color);
         --bs-btn-border-color: var(--theme-primary-color);
@@ -808,7 +827,7 @@ redirect_from:
             L.control.locate({keepCurrentZoomLevel: true, flyTo: true}).addTo(map);
 
             function downloadLegGPX(legNumber) {
-                let gpxString = legToGPX(routeGeoJSON.features[legNumber - 1].geometry.coordinates, legNumber)
+                let gpxString = legToGPX(routeGeoJSON.features[legNumber - 1].geometry.coordinates, legNumber, "2023")
                 download(gpxString, "application/gpx+xml", `ragnar-nwp-leg-${legNumber}.gpx`)
             }
 
@@ -1119,15 +1138,15 @@ redirect_from:
                         offset: [10, 0],
                         sticky: true
                     })
-                    let makeHeader = (idPrefix, type) => `<h3 id="${idPrefix}-${legNumber}" class="mb-2 leg-${legNumber}">Leg ${legNumber} <a href="${idPrefix}-${legNumber}" class="anchor-link" aria-label="Link to this section. Leg ${legNumber} ${type}"></a></h3>`
+                    let makeHeader = (idPrefix, type) => `<h3 class="mb-2 leg-${legNumber}">Leg ${legNumber} <a href="#${idPrefix}-${legNumber}" class="anchor-link" aria-label="Link to this section. Leg ${legNumber} ${type}"></a></h3>`
                     let content = `${feature.properties.distance}mi ↑${feature.properties.ascent}ft ↓${feature.properties.descent}ft<br/>`
                     if (feature.properties.notes) {
                         content += feature.properties.notes
                     }
 
-                    sideBarLegNotes.innerHTML += `<div class="mb-4">${makeHeader("leg-notes", "Notes")}${content}</div>`
-                    sideBarTurnByTurn.innerHTML += `<div class="mb-4"><a class="btn btn-outline-secondary float-end gpx-download download-${legNumber} mx-2" data-leg-number="${legNumber}" href="#">GPX</a>${makeHeader("leg-runner-directions", "Runner Directions")}${feature.properties.turnByTurn}</div>`
-                    sideBarVanDirections.innerHTML += `<div class="mb-4">${makeHeader("leg-van-directions", "Van Directions")}${feature.properties.vanDirections}<br/><h6 class="exchange-${exchange.properties.id} mb-0">Exchange ${exchange.properties.id}</h6>${exchange.properties.addressString.replaceAll('\n', "<br/>")}</div>`
+                    sideBarLegNotes.innerHTML += `<div class="mb-4" id="leg-notes-${legNumber}">${makeHeader("leg-notes", "Notes")}${content}</div>`
+                    sideBarTurnByTurn.innerHTML += `<div class="mb-4" id="leg-runner-directions-${legNumber}"><a class="btn btn-outline-secondary float-end gpx-download download-${legNumber} mx-2" data-leg-number="${legNumber}" href="#">GPX</a>${makeHeader("leg-runner-directions", "Runner Directions")}${feature.properties.turnByTurn}</div>`
+                    sideBarVanDirections.innerHTML += `<div class="mb-4" id="leg-van-directions-${legNumber}">${makeHeader("leg-van-directions", "Van Directions")}${feature.properties.vanDirections}<br/><h6 class="exchange-${exchange.properties.id} mb-0">Exchange ${exchange.properties.id}</h6>${exchange.properties.addressString.replaceAll('\n', "<br/>")}</div>`
                 }
             })
             const activeLegColor = '#933b00'

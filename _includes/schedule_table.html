@@ -45,7 +45,7 @@
         {% endif %}
         <td class="{{part-cancelled-class}}">
             {% if plan.route_id %}
-            <a href="{{site.baseurl}}/routes/{{ plan.route_id }}" title="{{ plan.route_id }}">{{route.name}}</a>
+            <a href="{{site.baseurl}}/routes/{{ plan.route_id }}/" title="{{ plan.route_id }}">{{route.name}}</a>
             {% elsif route.map %}
             <a target="_blank" href="{{ route.map }}">{{route.name}}</a>
             {% else %}

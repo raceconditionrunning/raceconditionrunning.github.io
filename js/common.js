@@ -115,7 +115,7 @@ export function relayToGPX(trackName, legs, exchanges, options = {}) {
 </gpx>`;
 }
 
-export function legToGPX(coords, eventName, trackName) {
+export function legToGPX(coords, eventName, trackName, year) {
     let points = ""
     for (let coord of coords) {
         points += `    <rtept lat="${coord[1]}" lon="${coord[0]}"/>\n`

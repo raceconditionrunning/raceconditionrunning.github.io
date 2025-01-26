@@ -3,7 +3,22 @@
 <head>
   <meta charset="UTF-8">
   {% capture title %}{% if page.title %}{{ page.title | escape }} || {{ site.title | escape}}{% else %}{{ site.title | escape }}{% endif %}{% endcapture %}
-  {% capture description %}{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}{% endcapture %}
+  {% capture type %}{% if page.type == "OB" %}out-and-back{% elsif page.type == "Loop" %}loop{% elsif page.type == "P2P" %}point-to-point{% endif %}{% endcapture %}
+  {% if page.distance_mi  %}
+    {% if page.start_neighborhood == page.end_neighborhood %}
+      {% if page.start_neighborhood == 'non-Seattle' %}
+        {% capture description %}{{ page.distance_mi }} mile {{type}} running/walking route with {{page.ascent_m}}m of elevation gain{% endcapture %}
+      {% elsif page.type == "OB" or page.type == "P2P" %}
+        {% capture description %}{{ page.distance_mi }} mile {{type}} running/walking route visiting {% for neighborhood in page.neighborhoods limit:3 %}{{neighborhood}}{% unless forloop.last%}, {%endunless%}{%endfor%}.{% endcapture %}
+      {% else %}
+        {% capture description %}{{ page.distance_mi }} mile {{type}} running/walking route near {{page.start_neighborhood }}{% endcapture %}
+      {% endif %}
+    {% else %}
+      {% capture description %}{{ page.distance_mi }} mile {{type}} running/walking route from {{page.start_neighborhood}} to {{page.end_neighborhood}} via {% for neighborhood in page.neighborhoods limit:3 %}{{neighborhood}}{% unless forloop.last%}, {%endunless%}{%endfor%}.{% endcapture %}
+    {% endif %}
+  {% else %}
+    {% capture description %}{{ page.excerpt | default: page.description | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}{% endcapture %}
+  {% endif %}
   {% capture url %}{{ page.url | absolute_url }}{% endcapture %}
   <title>{{ title }}</title>
   <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
@@ -54,43 +69,43 @@
 <body>
 
 <header class="container">
-  <a href="/" class="text-body">
-    <img src='{{ site.baseurl }}/img/rcc-logo.png' width='150' alt='RCC Logo' class="float-end">
-    <h1>Race Condition Running</h1>
+  <a href="/" class="text-body d-flex flex-wrap align-content-end justify-content-between">
+    <h2 class="align-self-center">Race Condition Running</h2>
+    <img src='{{ site.baseurl }}/img/rcc-logo.png' width='150' alt='RCC Logo'>
   </a>
 </header>
 
 <nav class="navbar navbar-expand-sm mb-4 container" role="navigation">
   <div class="container">
     <ul class="navbar-nav justify-content-between">
-      <li class="nav-item"><a href="{{ site.baseurl }}/"{% if page.url == "/" %} class="active"{% endif %}>Schedule</a></li>
-      <li class="nav-item"><a href="{{ site.baseurl }}/routes/"{% if page.url == "/routes/" %} class="active"{% endif %}>Routes</a></li>
-      <li class="nav-item"><a href="{{ site.baseurl }}/brunch-reviews/"{% if page.url == "/brunch-reviews/" %} class="active"{% endif %}>Brunch Reviews</a></li>
+      <li class="nav-item"><a href="{% link index.html %}"{% if page.url == "/" %} class="active"{% endif %}>Schedule</a></li>
+      <li class="nav-item"><a href="{% link pages/routes.html %}"{% if page.url == "/routes/" %} class="active"{% endif %}>Routes</a></li>
+      <li class="nav-item"><a href="{% link pages/brunch-reviews.html %}"{% if page.url == "/brunch-reviews/" %} class="active"{% endif %}>Brunch Reviews</a></li>
       <li class="nav-item dropdown">
-        <a href="{{ site.baseurl }}/events" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
+        <a href="{% link pages/events.html %}" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
         <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
           <li>
-            <a class="dropdown-item text-start" href="{{ site.baseurl }}/light-rail-relay-24/">Light Rail Relay '24</a>
+            <a class="dropdown-item text-start" href="{% link pages/light-rail-relay-24.html %}">Light Rail Relay '24</a>
             <ul class="list-inline d-flex gap-2 dropdown-item">
-              <li><a class="link-secondary" href="{{ site.baseurl }}/light-rail-relay-23/">23</a></li>
-              <li><a class="link-secondary" href="{{ site.baseurl }}/light-rail-relay-22/">22</a></li>
-              <li><a class="link-secondary" href="{{ site.baseurl }}/light-rail-relay-21/">21</a></li>
+              <li><a class="link-secondary" href="{% link pages/light-rail-relay-23.html %}">23</a></li>
+              <li><a class="link-secondary" href="{% link pages/light-rail-relay-22.html %}">22</a></li>
+              <li><a class="link-secondary" href="{% link pages/light-rail-relay-21.html %}">21</a></li>
             </ul>
           </li>
 
           <li>
-            <a class="dropdown-item text-start" href="{{ site.baseurl }}/drumheller-marathon-25/">Drumheller Marathon '25</a>
+            <a class="dropdown-item text-start" href="{% link pages/drumheller-marathon-25.html %}">Drumheller Marathon '25</a>
             <ul class="list-inline d-flex gap-2 dropdown-item">
-              <li><a class="link-secondary" href="{{ site.baseurl }}/drumheller-marathon-24/">24</a></li>
-              <li><a class="link-secondary" href="{{ site.baseurl }}/drumheller-half-23/">23</a></li>
-              <li><a class="link-secondary" href="{{ site.baseurl }}/drumheller-half-22/">22</a></li>
+              <li><a class="link-secondary" href="{% link pages/drumheller-marathon-24.html %}">24</a></li>
+              <li><a class="link-secondary" href="{% link pages/drumheller-half-23.html %}">23</a></li>
+              <li><a class="link-secondary" href="{% link pages/drumheller-half-22.html %}">22</a></li>
             </ul>
           </li>
 
           <li><a class="dropdown-item text-start {% if page.url == "{{ site.baseurl }}/quarantine-relay/" %} active{% endif %}" href="{{ site.baseurl }}/quarantine-relay/">Quarantine Relay</a></li>
         </ul>
       </li>
-      <li class="nav-item"><a href="{{ site.baseurl }}/lore/"{% if page.url == "/lore/" %} class="active"{% endif %}>Lore</a></li>
+      <li class="nav-item"><a href="{% link pages/lore.html %}"{% if page.url == "/lore/" %} class="active"{% endif %}>Lore</a></li>
     </ul>
   </div>
 </nav>

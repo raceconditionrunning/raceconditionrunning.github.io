@@ -4,7 +4,7 @@ permalink: quarantine-relay/
 layout: default
 ---
 
-## Race Condition Running Inaugural Quarantine Relay
+# Race Condition Running Inaugural Quarantine Relay
 
 ### Abstract
 
