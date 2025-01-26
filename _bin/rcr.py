@@ -69,10 +69,24 @@ def load_route(path):
         except Exception as e:
             raise GPXParseError(f"Could not parse '{path}'\n{e}")
 
-        # Read all metadata extensions
-        metadata = {
-            ext.tag.split('}')[1]: ext.text for ext in reader.metadata_extensions
-        }
+        # Recursively strip `{<extension_url}:` prefix from metadata keys. Nesting only used for changelog right now
+        def strip_rcr_prefix(item_list):
+            if len(item_list) == 0:
+                return item_list.text
+            return [(item.tag.split('}')[1], strip_rcr_prefix(item)) for item in item_list]
+        metadata_entries = strip_rcr_prefix(reader.metadata_extensions)
+        metadata = {}
+        # Changelog will be multiset of ('change, <dict>) tuples
+        for i, (key, value) in enumerate(metadata_entries):
+            if key == 'changelog':
+                changes = []
+                for _, change in value:
+                    changes.append(dict(change))
+                metadata['changelog'] = changes
+                # Sort by date
+                metadata['changelog'].sort(key=lambda x: x['date'])
+            else:
+                metadata[key] = value
 
         track = None
         if len(reader.tracks) == 1 and len(reader.tracks[0].segments) == 1:
@@ -100,6 +114,7 @@ def load_route(path):
         route = {
             'id': path.stem,
             'name': metadata.get('name', track.description.split("(")[0].strip()),
+            'last_updated': metadata.get('last_updated', None),
             'distance_mi': metadata.get('distance', float(track.description.split("(")[1].split("mi)")[0].strip())),
             'ascent_m': ascent,
             'descent_m': descent,
@@ -111,6 +126,8 @@ def load_route(path):
             'start': metadata.get('start', None),
             'end': metadata.get('end', None),
             'deprecated': metadata.get('deprecated', None),
+            'changelog': metadata.get('changelog', None),
+            'notes': metadata.get('notes', None),
         }
         return route
 

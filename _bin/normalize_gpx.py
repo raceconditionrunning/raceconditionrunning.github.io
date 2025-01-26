@@ -11,6 +11,22 @@ class RogueRouteError(Exception):
 # TODO
 # <keywords>{route['type']}, {route['start']}, {route['end']}</keywords> (also do surface type)
 def route_gpx(route):
+    def indent(s, n):
+        return '\n'.join([' ' * n + line for line in s.split('\n')])
+    changelog = ''
+    if route['changelog']:
+        for change in route['changelog']:
+            changelog += \
+f'''\
+<rcr:change>
+  <rcr:date>{change['date']}</rcr:date>
+  <rcr:note>{change['note']}</rcr:note>
+</rcr:change>'''
+        changelog = \
+f'''<rcr:changelog>
+{indent(changelog, 2)}
+</rcr:changelog>'''
+
     extensions = [
         f"<rcr:ascent>{round(route['ascent_m'])}</rcr:ascent>" if route['ascent_m'] else '',
         f"<rcr:descent>{round(route['descent_m'])}</rcr:descent>" if route['descent_m'] else '',
@@ -19,8 +35,12 @@ def route_gpx(route):
         f"<rcr:end>{route['end']}</rcr:end>" if 'end' in route and route.get("end", None) else '',
         f'<rcr:deprecated>true</rcr:deprecated>' if 'deprecated' in route and route.get('deprecated', None) == 'true' else '',
         f'<rcr:map>{route["map"]}</rcr:map>' if 'map' in route and route['map'] else '',
+        f'<rcr:notes>{route["notes"]}</rcr:notes>' if 'notes' in route and route['notes'] else '',
+        f'<rcr:last_updated>{route["last_updated"]}</rcr:last_updated>' if 'last_updated' in route and route['last_updated'] else '',
+        changelog if 'changelog' in route else '',
     ]
-    extensions = '\n'.join([f'      {ext}' for ext in extensions if ext])
+    extensions = '\n'.join([ext for ext in extensions if ext])
+    extensions = indent(extensions, 6)
 
     hdr = f'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running" xmlns:rcr="http://raceconditionrunning.com/extensions">

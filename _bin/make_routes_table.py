@@ -52,7 +52,7 @@ def check_route(route):
             warn_rc(route, f"missing '{field}' field")
         # TODO: eventually down and surface should also be non-blank
         #elif field != 'deprecated' and route[field].strip() == '':
-        elif field not in ['surface', 'deprecated', 'dates_run'] and not route[field]:
+        elif field not in ['map', 'surface', 'deprecated', 'dates_run'] and not route[field]:
             warn_rc(route, f"blank '{field}' field")
 
     # valid type
@@ -202,6 +202,10 @@ def main():
             f.write(f"- id: {route['id']}\n")
             f.write(f"  name: \"{route['name']}\"\n")
             f.write(f"  start: \"{route['start']}\"\n")
+            if route['last_updated']:
+                f.write(f"  last_updated: \"{route['last_updated']}\"\n")
+            else:
+                f.write(f"  last_updated: null\n")
             f.write(f"  distance_mi: {route['distance_mi']:.1f}\n")
             f.write(f"  ascent_m: {route['ascent_m']:.2f}\n")
             f.write(f"  descent_m: {route['descent_m']:.2f}\n")
@@ -211,16 +215,30 @@ def main():
                 f.write(f"  surface: \"{route['surface']}\"\n")
             else:
                 f.write(f"  surface: null\n")
-            f.write(f"  map: \"{route['map']}\"\n")
+            if route['map']:
+                f.write(f"  map: \"{route['map']}\"\n")
+            else:
+                f.write(f"  map: null\n")
             f.write(f"  dates_run: {route['dates_run']}\n")
             f.write(f"  start_neighborhood: \"{route['start_neighborhood']}\"\n")
             f.write(f"  end_neighborhood: \"{route['end_neighborhood']}\"\n")
             f.write(f"  neighborhoods: {route['neighborhoods']}\n")
             f.write(f"  coarse_neighborhoods: {route['coarse_neighborhoods']}\n")
-            f.write(f"  gpx: \"/routes/gpx/{route['id']}.gpx\"\n")
-            f.write(f"  geojson: \"/routes/geojson/{route['id']}.geojson\"\n")
+            if route['notes']:
+                f.write(f"  notes: \"{route['notes']}\"\n")
+            else:
+                f.write(f"  notes: null\n")
+            if route['changelog']:
+                f.write(f"  changelog:\n")
+                for entry in route['changelog']:
+                    f.write(f"    - date: {entry['date']}\n")
+                    f.write(f"      note: {entry['note']}\n")
+            else:
+                f.write(f"  changelog: []\n")
             if route['deprecated']:
                 f.write(f"  deprecated: true\n")
+            f.write(f"  gpx: \"/routes/gpx/{route['id']}.gpx\"\n")
+            f.write(f"  geojson: \"/routes/geojson/{route['id']}.geojson\"\n")
             f.write('\n')
 
 

@@ -1,7 +1,6 @@
 import re
 
 import rcr
-import yaml
 
 warnings = False
 def warn(msg):

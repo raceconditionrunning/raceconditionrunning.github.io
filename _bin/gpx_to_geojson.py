@@ -1,7 +1,6 @@
 import argparse
 import json
 import pathlib
-import sys
 import rcr
 
 def route_geojson(route):
@@ -22,6 +21,9 @@ def route_geojson(route):
             'surface': route['surface'],
             'map': route['map'],
             'deprecated': route.get("deprecated") == True,
+            'last_updated': route.get('last_updated', None),
+            'changelog': route.get('changelog', None),
+            'notes': route.get('notes', None),
         },
         'geometry': {
             'type': 'LineString',
