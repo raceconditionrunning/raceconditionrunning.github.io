@@ -47,7 +47,13 @@ add_h1: true
 
 <div id="routes">
   <h1 class="visually-hidden">{{ page.title }}</h1>
-  <div class="container">
+  <div class="container constrain-width">
+    <div id="common-filters" class="justify-content-center mb-2 opacity-75">
+      <span class="text-secondary">Common filters:</span>
+      <a class="badge text-bg-secondary fw-normal" href="#">start:CSE</a>
+      <a class="badge text-bg-secondary fw-normal" href="#">distance:>13</a>
+      <a class="badge text-bg-secondary fw-normal" href="#">neighborhood:"industrial district"</a>
+    </div>
     <div id="filter-controls" class="row align-items-center mb-2 justify-content-center justify-content-sm-between d-none">
 
       <div class="col-12 col-sm mb-1">
@@ -290,6 +296,16 @@ add_h1: true
                 table.addFilter("deprecated", "!=", true);
             }
             table.redraw();
+        });
+        document.getElementById("common-filters").addEventListener("click", (event) => {
+            if (event.target.tagName !== "A") {
+                return;
+            }
+            event.preventDefault();
+            const query = event.target.textContent;
+            const searchField = document.getElementById("filter-search");
+            searchField.value = searchField.value + " " + query;
+            searchField.dispatchEvent(new Event('input'));
         });
     });
 

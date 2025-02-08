@@ -68,14 +68,14 @@
 </head>
 <body>
 
-<header class="container">
-  <a href="/" class="text-body d-flex flex-wrap align-content-end justify-content-between">
+<header class="container constrain-width">
+  <a href="/" class="text-body d-flex flex-wrap align-content-end justify-content-center justify-content-sm-between">
     <h2 class="align-self-center">Race Condition Running</h2>
     <img src='{{ site.baseurl }}/img/rcc-logo.png' width='150' alt='RCC Logo'>
   </a>
 </header>
 
-<nav class="navbar navbar-expand-sm mb-4 container" role="navigation">
+<nav class="navbar navbar-expand-sm mb-4 container constrain-width" role="navigation">
   <div class="container">
     <ul class="navbar-nav justify-content-between">
       <li class="nav-item"><a href="{% link index.html %}"{% if page.url == "/" %} class="active"{% endif %}>Schedule</a></li>

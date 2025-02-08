@@ -1,9 +1,9 @@
 ---
-layout: default
+layout: base
 ---
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" integrity="sha256-V2sIX92Uh6ZaGSFTKMHghsB85b9toJtmazgG09AI2uk=" crossorigin="anonymous">
 
-<div class="route">
+<div class="route container">
   <h1 title="{{ page.id }}" class="mb-0 h2">{{ page.title }}</h1>
   {% assign ascent_ft = page.ascent_m | times: 3.28084 %}
   {% assign descent_ft = page.descent_m | times: 3.28084 %}
@@ -12,9 +12,8 @@ layout: default
     <a class="btn btn-sm btn-outline-primary" href="{{ page.gpx | relative_url }}" data-goatcounter-click="download-{{ page.id }}">Download GPX</a> {% if page.map %}<a class="btn btn-sm btn-outline-primary" href="{{page.map}}" data-goatcounter-click="ext-map-{{ page.id }}">OnTheGoMap</a>{% endif %}
   </div>
   <h2 class="visually-hidden">Map</h2>
-  <div id="map" style="height: 500px;" class="mb-3 w-100"></div>
+  <div id="map" class="mb-3 w-100"></div>
   <elevation-profile class="mb-3"></elevation-profile>
-
   <div><b>Start:</b> {{ page.start }}  {% for location in site.data.locations.features %}
     {% if location.properties.id == page.start and location.properties.meeting_point_desc %}
     <span class="text-secondary ms-1">{{ location.properties.meeting_point_desc }}</span>
@@ -61,6 +60,10 @@ layout: default
 </div>
 
 <style>
+    #map {
+        height: 60vh;
+        min-height: 500px;
+    }
     elevation-profile {
         --ep-fill-color: darkgray;
         --ep-line-color: #ccc;
@@ -147,7 +150,7 @@ layout: default
               return bounds.extend(coord);
           }, new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
           const map = new maplibregl.Map({
-              style: 'https://tiles.openfreemap.org/styles/liberty',
+              style: '{{ site.baseurl }}/maps/route-map-style.json',
               container: 'map',
               zoom: 9.5,
               center: [-122.3321, 47.6062],
@@ -155,39 +158,7 @@ layout: default
               fitBoundsOptions: {padding: 50, animate: false}
           });
           map.on('load', function () {
-
-              map.addSource('route', {
-                  'type': 'geojson',
-                  'data': data
-              });
-              map.addLayer({
-                  'id': 'route',
-                  'type': 'line',
-                  'source': 'route',
-                  'layout': {
-                      'line-join': 'round',
-                      'line-cap': 'round'
-                  },
-                  'paint': {
-                      'line-color': 'rgba(0, 0, 255, 0.6)',
-                      'line-width': 3
-                  }
-              });
-              map.addLayer({
-                  'id': 'route-hover-region',
-                  'type': 'line',
-                  'source': 'route',
-                  'layout': {
-                      'line-join': 'round',
-                      'line-cap': 'round'
-                  },
-                  'paint': {
-                      'line-color': 'rgba(0, 0, 255, 0)',
-                      'line-width': 10
-                  }
-              });
-
-
+              map.getSource('route').setData(data);
               // Frame the route
 
               let totalDistance = 0
@@ -213,91 +184,37 @@ layout: default
                   }
               }
 
-              map.addSource('terrain_rgb', {
-                  type: 'raster-dem',
-                  url: 'pmtiles://https://static.raceconditionrunning.com/seattle_dem.pmtiles',
-                  tileSize: 512
-              });
-              map.addLayer({
-                  id: 'terrain_rgb',
-                  type: 'hillshade',
-                  source: 'terrain_rgb',
-                  minzoom: 0,
-                  maxzoom: 12
-              });
-              map.setTerrain({source: 'terrain_rgb', exaggeration: 2.0})
-              map.addSource('distance-labels', {
-                  type: 'geojson',
-                  data: {
-                      type: 'FeatureCollection',
-                      features: distanceLabels
-                  }
-              })
-              map.addLayer({
-                  'id': 'distance-labels',
-                  'type': 'symbol',
-                  'source': 'distance-labels',
-                  "minzoom": 9,
-                  "layout": {
-                      "text-field": ["to-string", ["get", "distance"]],
-                      "text-font": ["Noto Sans Regular"],
-                      "text-size": {
-                          "stops": [
-                              [9, 10],
-                              [10, 11],
-                              [16, 18]
-                          ]
-                      },
-                      "text-padding": 4,
-                      "text-justify": "center"
-                  },
-                  "paint": {
-                      "text-color": "#FFF",
-                      "text-halo-color": "rgba(0, 0, 0, 0.8)",
-                      "text-halo-width": 2
-                  }
-              })
+            map.getSource('distance-labels').setData({
+                type: 'FeatureCollection',
+                features: distanceLabels
+            });
 
-              map.addSource('points', {
-                  type: 'geojson',
-                  data: {
-                      type: 'FeatureCollection',
-                      features: [
-                          {
-                              type: 'Feature',
-                              geometry: {
-                                  type: 'Point',
-                                  coordinates: coordinates[0]
-                              },
-                              properties: {
-                                  color: '#00FF00'
-                              }
+
+              map.getSource('points').setData({
+                  type: 'FeatureCollection',
+                  features: [
+                      {
+                          type: 'Feature',
+                          geometry: {
+                              type: 'Point',
+                              coordinates: coordinates[0]
                           },
-                          {
-                              type: 'Feature',
-                              geometry: {
-                                  type: 'Point',
-                                  coordinates: coordinates[coordinates.length - 1]
-                              },
-                              properties: {
-                                  color: '#FF0000'
-                              }
+                          properties: {
+                              color: '#00FF00'
                           }
-                      ]
-                  }
-              });
+                      },
+                      {
+                          type: 'Feature',
+                          geometry: {
+                              type: 'Point',
+                              coordinates: coordinates[coordinates.length - 1]
+                          },
+                          properties: {
+                              color: '#FF0000'
+                          }
+                      }
+                  ]
 
-              map.addLayer({
-                  id: "colored-dots",
-                  type: "circle",
-                  source: "points",
-                  paint: {
-                      "circle-color": ["get", "color"],
-                      "circle-radius": 5,
-                      "circle-opacity": 0.8,
-                      "circle-stroke-color": "#000",
-                      "circle-stroke-width": 1
-                  }
               });
 
               // Create a popup, but don't add it to the map yet.
