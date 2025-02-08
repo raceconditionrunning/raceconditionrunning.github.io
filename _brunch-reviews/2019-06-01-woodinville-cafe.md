@@ -71,15 +71,15 @@ flowing, and checked in frequently to make sure everyone at the table was
 recovering all right.
 
 <div class="row">
-  <div class="column">
-    <img src="/img/brunch-reviews/190601-woodinville-cafe/wcafe-veggie-omelet.jpg" alt="Veggie Omelet">
+  <div class="col">
+    <img src="{{ site.baseurl }}/img/brunch-reviews/2019-woodinville-cafe/wcafe-veggie-omelet.avif" alt="Veggie Omelet">
   </div>
-  <div class="column">
-    <img src="/img/brunch-reviews/190601-woodinville-cafe/wcafe-french-toast.jpg" alt="French Toast">
+  <div class="col">
+    <img src="{{ site.baseurl }}/img/brunch-reviews/2019-woodinville-cafe/wcafe-french-toast.avif" alt="French Toast">
   </div>
 </div>
 <div class="row">
-  <img src="/img/brunch-reviews/190601-woodinville-cafe/wcafe-bennies.jpg" alt="Benedicts" width="48%">
+  <img src="{{ site.baseurl }}/img/brunch-reviews/2019-woodinville-cafe/wcafe-bennies.avif" alt="Benedicts">
 </div>
 
 ### Verdict
@@ -90,7 +90,7 @@ Train-themed-ness: 5 "loco"-motives out of 5
 Chill Factor: 5 delirious runners out of 5  
 
 [woodinville-cafe-web]: http://woodinville.cafesinc.com/
-[wcafe-logo]: /img/brunch-reviews/190601-woodinville-cafe/wcafe-logo.png
-[wcafe-sign]: /img/brunch-reviews/190601-woodinville-cafe/wcafe-sign.jpg
-[cse-woodinville-route]: /img/brunch-reviews/190601-woodinville-cafe/cse-woodinville-route.png
-[wcafe-luggage]: /img/brunch-reviews/190601-woodinville-cafe/wcafe-luggage.jpg
+[wcafe-logo]: {{ site.baseurl }}/img/brunch-reviews/2019-woodinville-cafe/wcafe-logo.png
+[wcafe-sign]: {{ site.baseurl }}/img/brunch-reviews/2019-woodinville-cafe/wcafe-sign.avif
+[cse-woodinville-route]: {{ site.baseurl }}/img/brunch-reviews/2019-woodinville-cafe/cse-woodinville-route.png
+[wcafe-luggage]: {{ site.baseurl }}/img/brunch-reviews/2019-woodinville-cafe/wcafe-luggage.avif

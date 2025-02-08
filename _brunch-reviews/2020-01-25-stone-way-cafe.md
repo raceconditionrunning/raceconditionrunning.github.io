@@ -85,5 +85,5 @@ Runner friendliness: 5/5
 Spiritual home of RCR-ness: ✔️  
 
 
-[map]: /img/brunch-reviews/200125-stone-way-cafe/map.png
-[burrito]: /img/brunch-reviews/200125-stone-way-cafe/burrito.jpg
+[map]: {{ site.baseurl }}/img/brunch-reviews/2020-stone-way-cafe/map.png
+[burrito]: {{ site.baserul }}/img/brunch-reviews/2020-stone-way-cafe/burrito.jpg

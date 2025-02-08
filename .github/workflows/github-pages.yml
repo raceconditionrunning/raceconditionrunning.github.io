@@ -79,7 +79,6 @@ jobs:
           key: ${{ runner.os }}-htmlproofer
 
       - name: Check Images
-        continue-on-error: true
         run: |
           make check-images
 

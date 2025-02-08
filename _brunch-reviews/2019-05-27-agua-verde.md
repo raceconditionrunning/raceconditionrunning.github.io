@@ -26,15 +26,15 @@ tried the various salsas from the salsa bar. (The diablito is not actually hot;
 it's a lie. The habanero, on the other hand, is.)
 
 <div class="row">
-  <div class="column">
-    <img src="/img/brunch-reviews/agua-verde/salmon-tacos.jpg" alt="Salmon Tacos">
+  <div class="col">
+    <img src="/img/brunch-reviews/2019-agua-verde/salmon-tacos.avif" alt="Salmon Tacos">
   </div>
-  <div class="column">
-    <img src="/img/brunch-reviews/agua-verde/boniato-tacos.jpg" alt="Boniato Tacos">
+  <div class="col">
+    <img src="/img/brunch-reviews/2019-agua-verde/boniato-tacos.avif" alt="Boniato Tacos">
   </div>
 </div>
 <div class="row">
-  <img src="/img/brunch-reviews/agua-verde/burrito.jpg" alt="Burrito" width="48%">
+  <img src="/img/brunch-reviews/2019-agua-verde/burrito.avif" alt="Burrito">
 </div>
 
 Agua Verde recently changed ownership, and the new owners have tweaked some of
@@ -55,4 +55,4 @@ Chill Factor: Sadly, they do require you to wear a shirt and shoes, but that's
               where the requirements end.
 
 [agua-verde-web]: http://aguaverde.com/
-[agua-verde]:  /img/brunch-reviews/agua-verde/agua-verde.jpg
+[agua-verde]:  {{ site.baseurl }}/img/brunch-reviews/2019-agua-verde/agua-verde.avif

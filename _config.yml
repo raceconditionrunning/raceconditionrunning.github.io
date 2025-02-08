@@ -47,3 +47,4 @@ liquid:
 collections:
   brunch-reviews:
     output: true
+    permalink: brunch-reviews/:year-:slug/

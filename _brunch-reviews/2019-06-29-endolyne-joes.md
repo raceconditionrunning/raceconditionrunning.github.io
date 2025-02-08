@@ -31,18 +31,18 @@ came with a delicious blueberry compote. They were hot and delicious. About as
 good as can be this far from Cafe du Monde.
 
 <div class="row">
-  <img src="/img/brunch-reviews/190629-endolyne-joes/beignets.jpg" alt="Beignets" width="48%">
+  <img src="{{ site.baseurl }}/img/brunch-reviews/2019-endolyne-joes/beignets.avif" alt="Beignets" width="48%">
 </div>
 
 The orders around the table varied. The Andouille sausage skillet with a Cajun
 pepper hash was excellent. The forager's omlette was another favorite.
 
 <div class="row">
-  <div class="column">
-    <img src="/img/brunch-reviews/190629-endolyne-joes/sausage-skillet.jpg" alt="Sausage Skillet">
+  <div class="col">
+    <img src="{{ site.baseurl }}/img/brunch-reviews/2019-endolyne-joes/sausage-skillet.avif" alt="Sausage Skillet">
   </div>
-  <div class="column">
-    <img src="/img/brunch-reviews/190629-endolyne-joes/omlette.jpg" alt="Omlette">
+  <div class="col">
+    <img src="{{ site.baseurl }}/img/brunch-reviews/2019-endolyne-joes/omlette.avif" alt="Omlette">
   </div>
 </div>
 
@@ -60,4 +60,4 @@ Chill Factor: *Laissez le bon temps rouler*
 
 
 [endolynejoes]: https://endolynejoes.com/
-[ggtows]: {{ site.baseurl }}/img/brunch-reviews/190629-endolyne-joes/golden-gardens-to-west-seattle.png
+[ggtows]: {{ site.baseurl }}/img/brunch-reviews/2019-endolyne-joes/golden-gardens-to-west-seattle.png
