@@ -53,8 +53,12 @@
   plan:
     - time: "8:30"
       route_id: northgate-carkeek-roosevelt
+      cancelled: ""
     - time: "9:50"
       route_id: roosevelt-green-lake-rose-gardens-loop
+      cancelled: Wanted central route
+    - time: "8:30"
+      route_id: westlake-elliot-bay-locks-burke-westlake-loop
 
 - date: "2025-02-22"
   plan:

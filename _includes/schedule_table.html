@@ -63,7 +63,7 @@
         <td>{{ plan.notes }}</td>
     </tr>
     {% endif %}
-    {% if plan.cancelled %}
+    {% if plan.cancelled and plan.cancelled != "" %}
     <tr class="cancellation-note">
         <td></td>
         <td></td>
@@ -84,7 +84,7 @@
     {% endif %}
 
     {% endfor %}
-    {% if run.cancelled %}
+    {% if run.cancelled and plan.cancelled != "" %}
     <tr class="cancellation-note">
         <td></td>
         <td></td>

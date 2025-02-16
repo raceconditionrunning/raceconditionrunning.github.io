@@ -129,10 +129,10 @@ def main():
     dates_routes_run = defaultdict(list)
     for schedule in schedules.values():
         for entry in schedule:
-            if not 'plan' in entry:
+            if not 'plan' in entry or 'cancelled' in entry:
                 continue
             for phase in entry['plan']:
-                if 'route_id' in phase:
+                if 'route_id' in phase and not 'cancelled' in phase:
                     dates_routes_run[phase['route_id']].append(entry['date'])
 
     # ensure all route ids unique
