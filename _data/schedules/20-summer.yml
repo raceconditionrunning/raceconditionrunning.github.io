@@ -4,6 +4,6 @@
     - time: "7:30"
       route:
         name: Quarantine Relay
-        map: /quarantine-relay
+        map: /quarantine-relay/
         distance_mi: 81.67
       highlight-image: /img/quarantine-relay-medal.png
