@@ -2,7 +2,7 @@
 <html lang="en" data-bs-theme="dark">
 <head>
   <meta charset="UTF-8">
-  {% capture title %}{% if page.title %}{{ page.title | escape }} || {{ site.title | escape}}{% else %}{{ site.title | escape }}{% endif %}{% endcapture %}
+  {% capture title %}{{ page.title | default: site.title | escape }}{% endcapture %}
   {% capture type %}{% if page.type == "OB" %}out-and-back{% elsif page.type == "Loop" %}loop{% elsif page.type == "P2P" %}point-to-point{% endif %}{% endcapture %}
   {% if page.distance_mi  %}
     {% if page.start_neighborhood == page.end_neighborhood %}
@@ -46,6 +46,15 @@
   <meta name="theme-color" content="#ffffff">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-site-verification" content="WrPqIrZlSl3HcFgqvyw3hRpeYOgaxXfyjEXTtctEJhY" />
+
+  {% if page.distance_mi %}
+  {% assign ascent_ft = page.ascent_m | times: 3.28084 %}
+  {% assign descent_ft = page.descent_m | times: 3.28084 %}
+  <meta name="twitter:label1" value="Distance" />
+  <meta name="twitter:data1" value="{{page.distance_mi | round: 1 }}mi ({{ page.distance_mi | times: 1.609 | round: 1}}km)" />
+  <meta name="twitter:label2" value="Elevation Gain" />
+  <meta name="twitter:data2" value="↑{{ascent_ft | round}}ft ↓{{ascent_ft | round}}ft" />
+  {% endif %}
 
   <script type="importmap">
     {
