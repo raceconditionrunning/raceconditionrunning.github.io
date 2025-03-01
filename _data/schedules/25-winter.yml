@@ -70,7 +70,7 @@
     - time: "8:30"
       route_id: cse-cap-hill-parks-loop
     - time: "9:50"
-      route_id: cse-arb-lwb-mt-baker
+      route_id: cse-green-lake-roosevelt
 
 - date: "2025-03-08"
   plan:
