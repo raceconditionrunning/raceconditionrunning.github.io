@@ -10,12 +10,12 @@ Sadly, establishments which meet this very low bar are few and far between in Se
 
 ### The Run (Setting the scene)
 
-This was peak week. This meant a distance PR of 20 miles for a few of us. I was among this number.
-Leg 1 had been one of the more challenging routes we have, with significant uphill sections as we climbed from campus to Golden Gardens and back.
+This was peak week, entailing a distance PR of 20 miles for a few of us. I was among this number.
+Leg 1 was one of the more challenging routes we have, with significant uphill sections as we climbed from campus to Golden Gardens and back.
 
 ![Run Route Leg 1][map1]
 
-We'd also had a particularly popular second leg, picking up 6 or so runners at CSE for a gallivant about our home turf. 
+We'd also had a particularly popular second leg, picking up 6 or so runners at Roosevelt for a victory lap (it was a Pyrrhic victory) around Green Lake.
 
 ![Run Route Leg 2][map2]
 
@@ -34,7 +34,7 @@ I've ordered my default dish, the Seattle Benedict, around 8-12 times now. I can
 
 Again, no genius to be found here, but little to complain of either. 
 
-The only thing that stood out about this weekend's experience was that I was told to get my own $5 extra charge mini bowl of seasonal fruit at the berry bar, instead of relying on the somewhat stingy hand of a hurried kitchen team. Needless to say, I took the opportunity to practice my immigrant buffet-food-stacking skills. The berry bar, for the uninitiated, is an island in the restaurant upon which sit massive bowls of berries, nuts, whipped cream, and other suitable accoutrements for pancakes and french toast, each order of which includes a trip to said bar. It's thoroughly unhygienic and gimmicky, but also kind of delightful.
+The only thing unusual about this weekend's experience was that I was dispatched to the berry bar to get my own $5 extra charge mini bowl of seasonal fruit, instead of relying on the somewhat stingy hand of a hurried kitchen team. Needless to say, I took the opportunity to practice my immigrant buffet-food-stacking skills. The berry bar, for the uninitiated, is an island in the restaurant upon which sit massive bowls of berries, nuts, whipped cream, and other suitable accoutrements for pancakes and french toast, each order of which includes a trip to said bar. It's thoroughly unhygienic and gimmicky, but also kind of delightful.
 
 In addition to my own orders, I am known to shamelessly try the food of anyone within fork-stab distance. In this case, Matthew and James were penalized for sitting too close to me. 
 

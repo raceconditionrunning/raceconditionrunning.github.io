@@ -84,6 +84,12 @@
   plan:
     - time: "8:30"
       route_id: miller-judkins-i90-bridge-ob
+      cancelled: "wanted 2 legs"
+    - time: "8:30"
+      route_id: roosevelt-golden-gardens-stone-way-loop
+    - time: "11:00"
+      route_id: roosevelt-green-lake-loop
+      notes: Leg 1 terminates and Leg 2 starts at the Green Lake Community Center
 
 - date: "2025-03-22"
   plan:

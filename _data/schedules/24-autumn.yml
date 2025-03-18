@@ -51,6 +51,9 @@
       route_id: roosevelt-carkeek-golden-gardens-roses-loop
     - time: "11:00"
       route_id: roosevelt-cse-p2p
+      cancelled: "Wanted to end at Roosevelt"
+    - time: "11:00"
+      route_id: roosevelt-green-lake-loop
 
 - date: "2024-11-16"
   plan:
