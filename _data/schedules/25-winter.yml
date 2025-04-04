@@ -95,5 +95,9 @@
   plan:
     - time: "8:30"
       route_id: cse-magnuson-ob
+      cancelled: ""
     - time: "9:50"
       route_id: cse-520-bell-dtwn
+      cancelled: "opted for shorter route without bridge"
+    - time: "8:30"
+      route_id: northgate-shoreline-interurban-ob
