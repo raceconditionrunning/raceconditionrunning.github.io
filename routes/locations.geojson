@@ -663,6 +663,23 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          -122.1989346,
+          47.6443851
+        ]
+      },
+      "properties": {
+        "id": "SoKirk",
+        "name": "South Kirkland Park & Ride",
+        "maps_url": "https://maps.app.goo.gl/Dk7in7nXHEMnBkXh8",
+        "meeting_point_desc": null,
+        "transit": "Parking lot for South Kirkland Park & Ride"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           -122.29417,
           47.6280587
         ]
