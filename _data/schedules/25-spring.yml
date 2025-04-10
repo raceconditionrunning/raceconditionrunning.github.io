@@ -2,17 +2,18 @@
     plan:
     -   time: '8:30'
         route_id: westlake-sculpture-smith-cove-ob
-        notes: "Shortened to 8 miles total"
 -   date: '2025-04-12'
     plan:
-    -   time: '8:30'
-        route_id: sodo-alki-beach-little-liberty-ob
+    -   time: '9:10'
+        route_id: sodo-alki-trail-seacrest-ob
+        notes: "Later start time. Meet at 9AM"
     -   time: '10:40'
         route_id: sodo-4th-ave-airport-way-industrial-loop
 -   date: '2025-04-19'
     plan:
     -   time: '8:30'
         route_id: cse-cap-hill-parks-loop
+        notes: "Light rail disruptions Westlake-Stadium"
 -   date: '2025-04-26'
     plan:
     -   time: '8:30'
@@ -60,4 +61,3 @@
         route_id: gas-works-around-green-lake-ob
     -   time: '9:45'
         route_id: gas-works-ballard-bridge-ship-canal-loop
-
