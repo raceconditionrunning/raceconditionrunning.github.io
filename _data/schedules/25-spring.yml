@@ -12,8 +12,9 @@
 -   date: '2025-04-19'
     plan:
     -   time: '8:30'
-        route_id: cse-cap-hill-parks-loop
-        notes: "Light rail disruptions Westlake-Stadium"
+        route_id: gas-works-lake-union-loop
+    -   time: '9:40'
+        route_id: gas-works-green-lake-ob
 -   date: '2025-04-26'
     plan:
     -   time: '8:30'
