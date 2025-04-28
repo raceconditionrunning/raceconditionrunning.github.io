@@ -24,7 +24,9 @@
 -   date: '2025-05-03'
     plan:
     -   time: '8:30'
-        route_id: cse-520-trail-redmond-tech-center
+        route_id: cse-arboretum-interlaken-portage-bay-loop
+    -   time: '9:40'
+        route_id: cse-lake-union-westlake
 -   date: '2025-05-10'
     plan:
     -   time: '8:30'
@@ -44,9 +46,7 @@
 -   date: '2025-05-31'
     plan:
     -   time: '8:30'
-        route_id: cse-arboretum-interlaken-portage-bay-loop
-    -   time: '9:40'
-        route_id: cse-green-lake-roosevelt
+        route_id: cse-520-trail-redmond-tech-center
 -   date: '2025-06-07'
     organized-event: true
     plan:
