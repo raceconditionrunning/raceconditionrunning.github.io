@@ -338,6 +338,12 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             }
         }
 
+        #credit {
+            opacity: .35;
+            font-weight: 100;
+            transition: 10s;
+        }
+
         /* Interactive fountain */
 
 
@@ -496,10 +502,11 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             margin-bottom: 2rem;
         }
 
-        #credit {
-            opacity: .35;
-            font-weight: 100;
-            transition: 10s;
+        figure a img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            background-color: var(--bs-tertiary-bg);
         }
 
         /* Certs */
@@ -1147,11 +1154,11 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
 <section id="history">
     <figure class="gallery lightbox-gallery">
-        <a href="{{ site.baseurl }}/img/dm25/uw42568.webp" data-pswp-width="3420" data-pswp-height="3160">
-            <img src="{{ site.baseurl }}/img/dm25/uw42568.webp"
+        {% assign img_name = site.baseurl | append: "/img/dm25/uw42568.webp" %}
+        <a href="{{img_name}}" data-pswp-width="3420" data-pswp-height="3160">
+            <img src="{{img_name}}"
                  alt="Silhouette of couple in front of Drumheller Fountain at night between 1968 and 1972"
-                 class="w-100 shadow-1-strong rounded"/>
-
+                 class="w-100 shadow-1-strong rounded" {% imagesize img_name:props %}/>
         </a>
         <figcaption class="pswp-caption-content">Silhouette of couple in front of Drumheller Fountain at night between 1968 and 1972. Scan retouched
             to remove damage from the original negative. <cite>University of Washington Libraries, Special Collections, Joseph Karpen, photographer, UW42568</cite></figcaption>

@@ -463,13 +463,13 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             display: block;
             margin: 0 auto;
             margin-bottom: 1rem;
-            max-height: 120vh;
+            max-height: 95vh;
             /* Max height works fine in FF, but Safari will
        draw a full width white background box. Setting contain gets rid of the visible box, but the element
        box remains too big and the border radius won't render...
      */
 
-            /*object-fit: contain;*/
+            object-fit: contain;
         }
 
         .accordion {
@@ -526,6 +526,12 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             margin-bottom: 2rem;
         }
 
+        figure a img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            background-color: var(--bs-secondary-bg);
+        }
 
         /* Certs */
 
@@ -1233,8 +1239,11 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
 <section id="epilogue">
 
-    <figure>
-        <img src="{{ site.baseurl }}/img/dm24/1.avif" class="w-100 rounded mb-4" />
+    <figure class="gallery lightbox-gallery">
+        {% assign img_name = site.baseurl | append: "/img/dm24/1.avif" %}
+        <a href="{{ img_name }}" class="lightbox">
+        <img src="{{ img_name }}" class="w-100 rounded mb-4" {% imagesize img_name:props %} />
+        </a>
 
     </figure>
     <div class="container">
@@ -1265,35 +1274,39 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
         <p><i>Nick Walker</i></p>
     </div>
     <figure id="gallery" class="d-flex flex-column gap-2 lightbox-gallery">
-        <a href="{{ site.baseurl }}/img/dm24/2.avif">
-            <img loading="lazy" src="{{ site.baseurl }}/img/dm24/2.avif"
-                 class="w-100 shadow-1-strong rounded"/>
+        {% assign img_name = site.baseurl | append: "/img/dm24/2.avif" %}
+        <a href="{{img_name}}">
+            <img loading="lazy" src="{{img_name}}"
+                 class="shadow-1-strong rounded" {% imagesize img_name:props %}/>
         </a>
 
         <div class="d-flex flex-column flex-sm-row gap-2">
-            <div class="col d-flex flex-column gap-2">
-                <a href="{{ site.baseurl }}/img/dm24/3.avif">
-                    <img loading="lazy" src="{{ site.baseurl }}/img/dm24/3.avif"
-                         class="w-100 shadow-1-strong rounded"/>
+            <div class="d-flex flex-column gap-2">
+                {% assign img_name = site.baseurl | append: "/img/dm24/3.avif" %}
+                <a href="{{img_name}}">
+                    <img loading="lazy" src="{{img_name}}"
+                         class=" shadow-1-strong rounded" {% imagesize img_name:props %}/>
                 </a>
-                <a href="{{ site.baseurl }}/img/dm24/4.avif">
-                    <img loading="lazy" src="{{ site.baseurl }}/img/dm24/4.avif"
-                         class="w-100 shadow-1-strong rounded"/>
-                </a>
-            </div>
-
-            <div class="col d-flex flex-column gap-2">
-                <a href="{{ site.baseurl }}/img/dm24/5.avif">
-                    <img loading="lazy" src="{{ site.baseurl }}/img/dm24/5.avif"
-                         class="w-100 shadow-1-strong rounded">
-                </a>
-
-                <a href="{{ site.baseurl }}/img/dm24/6.avif">
-                    <img loading="lazy" src="{{ site.baseurl }}/img/dm24/6.avif"
-                         class="w-100 shadow-1-strong rounded"/>
+                {% assign img_name = site.baseurl | append: "/img/dm24/4.avif" %}
+                <a href="{{img_name}}">
+                    <img loading="lazy" src="{{img_name}}"
+                         class=" shadow-1-strong rounded" {% imagesize img_name:props %}/>
                 </a>
             </div>
 
+            <div class="d-flex flex-column gap-2">
+                {% assign img_name = site.baseurl | append: "/img/dm24/5.avif" %}
+                <a href="{{img_name}}">
+                    <img loading="lazy" src="{{img_name}}"
+                         class=" shadow-1-strong rounded" {% imagesize img_name:props %}/>
+                </a>
+
+                {% assign img_name = site.baseurl | append: "/img/dm24/6.avif" %}
+                <a href="{{img_name}}">
+                    <img loading="lazy" src="{{img_name}}"
+                         class=" shadow-1-strong rounded" {% imagesize img_name:props %}/>
+                </a>
+            </div>
         </div>
     </figure>
 
@@ -1303,11 +1316,11 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
 <section id="history">
     <figure class="gallery lightbox-gallery">
-        <a href="{{ site.baseurl }}/img/dm24/aype-thumb.webp" data-pswp-width="3000" data-pswp-height="2389">
-            <img src="{{ site.baseurl }}/img/dm24/aype-thumb.webp"
+        <a href="{{ site.baseurl }}/img/dm24/aype.avif" data-pswp-width="3000" data-pswp-height="2389">
+            {% assign img_name = site.baseurl | append: "/img/dm24/aype-thumb.webp" %}
+            <img src="{{img_name}}"
                  alt="View of the Alaska-Yukon-Pacific Exposition, 1909"
-                 class="w-100 shadow-1-strong rounded"/>
-
+                 class="w-100 shadow-1-strong rounded" {% imagesize img_name:props %}/>
         </a>
         <figcaption class="pswp-caption-content">Rainier Vista during the 1909 Alaska-Yukon-Pacific Exposition. The
             photographer composited two images, resulting in the larger-than-life mountain. This scan has been retouched

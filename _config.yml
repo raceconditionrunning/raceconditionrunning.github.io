@@ -5,6 +5,7 @@ permalink: /:title/
 
 plugins:
   - jekyll-datapage-generator
+  - jekyll-image-size
   - jekyll-redirect-from
   - jekyll-sitemap
   - jekyll-tidy

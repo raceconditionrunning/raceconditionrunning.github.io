@@ -351,38 +351,9 @@ redirect_from:
             --bs-accordion-active-bg: #eee;
         }
 
-        /*
-         * GALLERY
-         */
-        .masonry {
-            background-color: rgba(0,0,0,.05);
-        }
-
-        /* clear fix */
-        .masonry:after {
-            content: '';
-            display: block;
-            clear: both;
-        }
-        .masonry > a {
-            float: left;
-        }
-
-        .masonry img {
-            display: block;
-            max-width: 100%;
-        }
-
-        .masonry .grid-sizer,
-        .masonry a {
-            width: 50%;
-        }
-
-        @media screen and (width > 720px) {
-            .masonry .grid-sizer,
-            .masonry a {
-                width: 33.33%;
-            }
+        masonry-image-gallery {
+            --placeholder-bg: var(--bs-secondary-bg);
+            --placeholder-border-color: #FFF;
         }
 
         .pswp img {
@@ -605,7 +576,17 @@ redirect_from:
     </div>
 
     <div id="gallery" class="w-100">
-        <masonry-image-gallery base-url="{{ site.baseurl }}/img/lrr22/" image-names="0|1|2|3|4|5|5_1|6|7|8|9|10|11|12|13|14|15|16|17|18" file-extension=".webp"></masonry-image-gallery>
+        {% assign base_url = site.baseurl | append: "/img/lrr22/" %}
+        {% assign image_names_array = "0|1|2|3|4|5|5_1|6|7|8|9|10|11|12|13|14|15|16|17|18" | split: "|" %}
+
+        <masonry-image-gallery>
+            {% for img_name_suffix in image_names_array %}
+            {% assign img_name = base_url | append: img_name_suffix | append: ".webp" %}
+            <a href="{{img_name}}">
+                <img loading="lazy" src="{{img_name}}" {% imagesize img_name:props %}/>
+            </a>
+            {% endfor %}
+        </masonry-image-gallery>
     </div>
 </section>
 

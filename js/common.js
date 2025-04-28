@@ -256,6 +256,15 @@ export async function prepareImagesForPhotoswipe(galleryElements) {
     const promisesList = [];
     galleryElements.forEach((element) => {
         const thumbImage = element.querySelector('img')
+        if (element.dataset.pswpWidth && element.dataset.pswpHeight) {
+            return;
+        }
+        if (thumbImage.getAttribute("width") !== undefined && thumbImage.getAttribute("height") !== undefined) {
+            // No need to fetch image, it's already in the DOM
+            element.dataset.pswpWidth = thumbImage.getAttribute("width");
+            element.dataset.pswpHeight = thumbImage.getAttribute("height");
+            return
+        }
         const promise = new Promise(function (resolve) {
             // We're assuming that the thumbnail image is in fact the full-size image
             // If that's not true and you want to force load the full image:

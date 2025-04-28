@@ -84,7 +84,17 @@ Final details:
 <li> Weather: perfect! It drizzled a bit in the morning but the sun came out during most of the day.</li>
 <li> 
   Giant collage of handoff selfies? Check.
-    <masonry-image-gallery style="width:100%" base-url="{{ site.baseurl }}/img/quarantinerelay/" image-names="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21" file-extension=".webp"></masonry-image-gallery>
+{% assign base_url = site.baseurl | append: "/img/quarantinerelay/" %}
+{% assign image_names_array = "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21" | split: "|" %}
+
+<masonry-image-gallery class="w-100">
+    {% for img_name_suffix in image_names_array %}
+        {% assign img_name = base_url | append: img_name_suffix | append: ".webp" %}
+        <a href="{{img_name}}">
+            <img loading="lazy" src="{{img_name}}" {% imagesize img_name:props %}/>
+        </a>
+    {% endfor %}
+</masonry-image-gallery>
 </li>
 <li>
   Huge map with even more selfies? Also check.

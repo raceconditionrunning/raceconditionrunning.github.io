@@ -10,3 +10,5 @@ gem 'html-proofer'
 gem 'csv'
 gem 'logger'
 gem 'base64'
+
+gem "jekyll-image-size", "~> 1.2"

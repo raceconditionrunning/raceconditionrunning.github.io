@@ -13,17 +13,6 @@ export class MasonryImageGallery extends HTMLElement {
     }
 
     render() {
-        const imagePath = this.getAttribute('base-url');
-        const fileExtension = this.getAttribute('file-extension');
-        const imageNames = (this.getAttribute('image-names')).split('|');
-
-        const galleryHTML = "<div class='grid-sizer'></div>" + imageNames.map(name => `
-      <a href="${imagePath}${name}${fileExtension}">
-        <img loading="lazy" src="${imagePath}${name}${fileExtension}"/>
-      </a>
-    `).join('');
-
-
         const styles = `<style>
     /* GALLERY **************************/
     .masonry {
@@ -38,11 +27,19 @@ export class MasonryImageGallery extends HTMLElement {
     }
     .masonry > a {
         float: left;
+        border: .5px solid var(--placeholder-border-color, #222);
+        box-sizing: border-box;
+        //margin-bottom: 2px;
     }
     
     .masonry img {
         display: block;
         max-width: 100%;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        background-color: var(--placeholder-bg, rgb(233, 236, 239));
+
     }
     
     .masonry .grid-sizer,
@@ -58,12 +55,18 @@ export class MasonryImageGallery extends HTMLElement {
     }
     
     .pswp img {
-    max-width: none;
-    object-fit: contain;
+        max-width: none;
+        object-fit: contain;
     }
     </style>`;
 
-        this.shadowRoot.innerHTML = `${styles}<div class="masonry">${galleryHTML}</div>`;
+        this.shadowRoot.innerHTML = `${styles}<div class="masonry"><div class='grid-sizer'></div></div>`;
+        // Move light elements to shadow DOM
+        this.childNodes.forEach((child) => {
+            if (child.tagName === "A") {
+                this.shadowRoot.querySelector(".masonry").appendChild(child);
+            }
+        })
         prepareImagesForPhotoswipe(this.shadowRoot.querySelectorAll("a")).then(() => {
             const lightbox = new PhotoSwipeLightbox({
                 gallery: this.shadowRoot.querySelector(".masonry"),
@@ -80,7 +83,8 @@ export class MasonryImageGallery extends HTMLElement {
             let msnry = new Masonry(container, {
                 itemSelector: 'a',
                 columnWidth: '.grid-sizer',
-                percentPosition: true
+                percentPosition: true,
+                //gutter: 4
             });
             msnry.layout()
         });

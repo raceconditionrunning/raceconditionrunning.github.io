@@ -310,37 +310,13 @@ redirect_from:
             height: 100%;
             width: 100%;
             object-fit: cover;
+            background-color: var(--bs-secondary-bg);
         }
 
 
-        .masonry {
-            background-color: rgba(0,0,0,.05);
-        }
-        /* clear fix */
-        .masonry:after {
-            content: '';
-            display: block;
-            clear: both;
-        }
-        .masonry > a {
-            float: left;
-        }
-
-        .masonry img {
-            display: block;
-            max-width: 100%;
-        }
-
-        .masonry .grid-sizer,
-        .masonry a {
-            width: 50%;
-        }
-
-        @media screen and (width > 720px) {
-            .masonry .grid-sizer,
-            .masonry a {
-                width: 33.33%;
-            }
+        masonry-image-gallery {
+            --placeholder-bg: var(--bs-secondary-bg);
+            --placeholder-border-color: #FFF;
         }
 
         hr {
@@ -520,45 +496,54 @@ redirect_from:
     <!-- This will get easier once Bootstrap includes CSS Grid utils. Laying out by hand with flexbox for now.
     https://getbootstrap.com/docs/5.3/layout/css-grid/
     -->
+
     <figure id="station-gallery" class="gap-2">
-    <div class="row mb-2 mx-0 g-0 gap-2">
-        <a href="{{ site.baseurl }}/img/lrr21/udistrict1.webp" class="col">
-            <img loading="lazy" src="{{ site.baseurl }}/img/lrr21/udistrict1.webp"/>
-        </a>
-
-        <a href="{{ site.baseurl }}/img/lrr21/udistrict2.webp" class="col">
-            <img loading="lazy" src="{{ site.baseurl }}/img/lrr21/udistrict2.webp"/>
-        </a>
-    </div>
-    <div class="row mb-2 mx-0 g-0 gap-2">
-        <a href="{{ site.baseurl }}/img/lrr21/udistrict3.webp">
-            <img loading="lazy" src="{{ site.baseurl }}/img/lrr21/udistrict3.webp"/>
-        </a>
-    </div>
-
-    <div class="row mb-2 mx-0 g-0 gap-2">
-        <a href="{{ site.baseurl }}/img/lrr21/roosevelt2.webp" class="col-4">
-            <img loading="lazy" src="{{ site.baseurl }}/img/lrr21/roosevelt2.webp"/>
-        </a>
-        <div class="row col g-0 gap-2">
-            <a href="{{ site.baseurl }}/img/lrr21/roosevelt1.webp">
-                <img loading="lazy" src="{{ site.baseurl }}/img/lrr21/roosevelt1.webp"/>
+        <div class="row mb-2 mx-0 g-0 gap-2">
+            {% assign img_name = site.baseurl | append: "/img/lrr21/udistrict1.webp" %}
+            <a href="{{img_name}}" class="col">
+                <img loading="lazy" src="{{img_name}}" {% imagesize img_name:props %}/>
             </a>
-            <a href="{{ site.baseurl }}/img/lrr21/roosevelt3.webp">
-                <img loading="lazy" src="{{ site.baseurl }}/img/lrr21/roosevelt3.webp"/>
+
+            {% assign img_name = site.baseurl | append: "/img/lrr21/udistrict2.webp" %}
+            <a href="{{img_name}}" class="col">
+                <img loading="lazy" src="{{img_name}}" {% imagesize img_name:props %}/>
             </a>
         </div>
-    </div>
+        <div class="row mb-2 mx-0 g-0 gap-2">
+            {% assign img_name = site.baseurl | append: "/img/lrr21/udistrict3.webp" %}
+            <a href="{{img_name}}">
+                <img loading="lazy" src="{{img_name}}" {% imagesize img_name:props %}/>
+            </a>
+        </div>
 
-    <div class="row mb-2 mx-0 g-0 gap-2">
-        <a href="{{ site.baseurl }}/img/lrr21/northgate1.webp" class="col">
-            <img loading="lazy" src="{{ site.baseurl }}/img/lrr21/northgate1.webp"/>
-        </a>
+        <div class="row mb-2 mx-0 g-0 gap-2">
+            {% assign img_name = site.baseurl | append: "/img/lrr21/roosevelt2.webp" %}
+            <a href="{{img_name}}" class="col-4">
+                <img loading="lazy" src="{{img_name}}" {% imagesize img_name:props %}/>
+            </a>
+            <div class="row col g-0 gap-2">
+                {% assign img_name = site.baseurl | append: "/img/lrr21/roosevelt1.webp" %}
+                <a href="{{img_name}}">
+                    <img loading="lazy" src="{{img_name}}" {% imagesize img_name:props %}/>
+                </a>
+                {% assign img_name = site.baseurl | append: "/img/lrr21/roosevelt3.webp" %}
+                <a href="{{img_name}}">
+                    <img loading="lazy" src="{{img_name}}" {% imagesize img_name:props %}/>
+                </a>
+            </div>
+        </div>
 
-        <a href="{{ site.baseurl }}/img/lrr21/northgate2.webp" class="col">
-            <img loading="lazy" src="{{ site.baseurl }}/img/lrr21/northgate2.webp"/>
-        </a>
-    </div>
+        <div class="row mb-2 mx-0 g-0 gap-2">
+            {% assign img_name = site.baseurl | append: "/img/lrr21/northgate1.webp" %}
+            <a href="{{img_name}}" class="col">
+                <img loading="lazy" src="{{img_name}}" {% imagesize img_name:props %}/>
+            </a>
+
+            {% assign img_name = site.baseurl | append: "/img/lrr21/northgate2.webp" %}
+            <a href="{{img_name}}" class="col">
+                <img loading="lazy" src="{{img_name}}" {% imagesize img_name:props %}/>
+            </a>
+        </div>
     </figure>
 
     <div class="container">
@@ -575,7 +560,17 @@ redirect_from:
 
 
     <div id="gallery" class="w-100">
-        <masonry-image-gallery base-url="{{ site.baseurl }}/img/lrr21/" image-names="0|1|2|3|4|5|5_2|6|7|7_2|8|9|10|11|12|12_2|13|14|14_2|15|15_2|15_3|16|16_2|16_3|17|17_2|17_3|18|18_2|18_3" file-extension=".webp"></masonry-image-gallery>
+        {% assign image_names_array = "0|1|2|3|4|5|5_2|6|7|7_2|8|9|10|11|12|12_2|13|14|14_2|15|15_2|15_3|16|16_2|16_3|17|17_2|17_3|18|18_2|18_3" | split: "|" %}
+        {% assign base_url = site.baseurl | append: "/img/lrr21/" %}
+
+        <masonry-image-gallery>
+            {% for img_name in image_names_array %}
+            {% assign img_path = base_url | append: img_name | append: ".webp" %}
+            <a href="{{ img_path }}" >
+                <img loading="lazy" src="{{ img_path }}" {% imagesize img_path:props %}/>
+            </a>
+            {% endfor %}
+        </masonry-image-gallery>
     </div>
 </section>
 

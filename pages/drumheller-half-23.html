@@ -284,6 +284,7 @@ redirect_from:
         #course-map {
             border-radius: 1rem;
             margin-bottom: 1rem;
+            max-height: 95vh;
         }
 
         #history, #overview {
@@ -323,6 +324,13 @@ redirect_from:
 
         figure img {
             width: 100%;
+        }
+
+        figure a img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            background-color: var(--bs-secondary-bg);
         }
 
         .full-width {
@@ -811,35 +819,39 @@ redirect_from:
         <p><i>Nick Walker</i></p>
     </div>
     <figure id="gallery" class="d-flex flex-column gap-4 lightbox-gallery">
-        <a href="{{ site.baseurl }}/img/dhm23/3.avif">
-            <img loading="lazy" src="{{ site.baseurl }}/img/dhm23/3.avif"
-                 class="w-100 shadow-1-strong rounded"/>
+        {% assign img_name = site.baseurl | append: "/img/dhm23/3.avif" %}
+        <a href="{{img_name}}">
+            <img loading="lazy" src="{{img_name}}"
+                 class="w-100 shadow-1-strong rounded" {% imagesize img_name:props %}/>
         </a>
 
         <div class="d-flex flex-column flex-sm-row gap-4">
-            <div class="col d-flex flex-column gap-4">
-                <a href="{{ site.baseurl }}/img/dhm23/4.webp">
-                    <img loading="lazy" src="{{ site.baseurl }}/img/dhm23/4.webp"
-                         class="w-100 shadow-1-strong rounded"/>
+            <div class="d-flex flex-column gap-4">
+                {% assign img_name = site.baseurl | append: "/img/dhm23/4.webp" %}
+                <a href="{{img_name}}">
+                    <img loading="lazy" src="{{img_name}}"
+                         class="w-100 shadow-1-strong rounded" {% imagesize img_name:props %}/>
                 </a>
-                <a href="{{ site.baseurl }}/img/dhm23/2.avif">
-                    <img loading="lazy" src="{{ site.baseurl }}/img/dhm23/2.avif"
-                        class="w-100 shadow-1-strong rounded"/>
-                </a>
-            </div>
-
-            <div class="col d-flex flex-column gap-4">
-                <a href="{{ site.baseurl }}/img/dhm23/1.avif">
-                    <img loading="lazy" src="{{ site.baseurl }}/img/dhm23/1.avif"
-                         class="w-100 shadow-1-strong rounded">
-                </a>
-
-                <a href="{{ site.baseurl }}/img/dhm23/5.webp">
-                    <img loading="lazy" src="{{ site.baseurl }}/img/dhm23/5.webp"
-                     class="w-100 shadow-1-strong rounded"/>
+                {% assign img_name = site.baseurl | append: "/img/dhm23/2.avif" %}
+                <a href="{{img_name}}">
+                    <img loading="lazy" src="{{img_name}}"
+                         class="w-100 shadow-1-strong rounded" {% imagesize img_name:props %}/>
                 </a>
             </div>
 
+            <div class="d-flex flex-column gap-4">
+                {% assign img_name = site.baseurl | append: "/img/dhm23/1.avif" %}
+                <a href="{{img_name}}">
+                    <img loading="lazy" src="{{img_name}}"
+                         class="w-100 shadow-1-strong rounded" {% imagesize img_name:props %}/>
+                </a>
+
+                {% assign img_name = site.baseurl | append: "/img/dhm23/5.webp" %}
+                <a href="{{img_name}}">
+                    <img loading="lazy" src="{{img_name}}"
+                         class="w-100 shadow-1-strong rounded" {% imagesize img_name:props %}/>
+                </a>
+            </div>
         </div>
     </figure>
 

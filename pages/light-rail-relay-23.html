@@ -196,6 +196,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
             height: 100%;
             width: 100%;
             object-fit: cover;
+            background-color: var(--bs-secondary-bg);
         }
 
         .full-width {
@@ -521,35 +522,9 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         }
 
         /* GALLERY **************************/
-        .masonry {
-            background-color: rgba(0,0,0,.05);
-        }
-
-        /* clear fix */
-        .masonry:after {
-            content: '';
-            display: block;
-            clear: both;
-        }
-        .masonry > a {
-            float: left;
-        }
-
-        .masonry img {
-            display: block;
-            max-width: 100%;
-        }
-
-        .masonry .grid-sizer,
-        .masonry a {
-            width: 50%;
-        }
-
-        @media screen and (width > 720px) {
-            .masonry .grid-sizer,
-            .masonry a {
-                width: 33.33%;
-            }
+        masonry-image-gallery {
+            --placeholder-bg: var(--bs-secondary-bg);
+            --placeholder-border-color: #222;
         }
 
         .pswp img {
@@ -843,27 +818,28 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
 -->
     <figure id="story-gallery">
         <div class="row mb-2 g-0 gap-2">
-            <a href="{{ site.baseurl }}/img/lrr23/story1.avif" class="col">
-                <img loading="lazy" src="{{ site.baseurl }}/img/lrr23/story1.avif"/>
+            {% assign img_name = site.baseurl | append: "/img/lrr23/story1.avif" %}
+            <a href="{{img_name}}" class="col">
+                <img loading="lazy" src="{{img_name}}" {% imagesize img_name:props %}/>
             </a>
 
-
-            <a href="{{ site.baseurl }}/img/lrr23/story2.avif" class="col">
-                <img loading="lazy" src="{{ site.baseurl }}/img/lrr23/story2.avif"/>
+            {% assign img_name = site.baseurl | append: "/img/lrr23/story2.avif" %}
+            <a href="{{img_name}}" class="col">
+                <img loading="lazy" src="{{img_name}}" {% imagesize img_name:props %}/>
             </a>
         </div>
 
         <div class="row mb-2 g-0 gap-2">
-            <a href="{{ site.baseurl }}/img/lrr23/story3.avif" class="col">
-                <img loading="lazy" src="{{ site.baseurl }}/img/lrr23/story3.avif"/>
+            {% assign img_name = site.baseurl | append: "/img/lrr23/story3.avif" %}
+            <a href="{{img_name}}" class="col">
+                <img loading="lazy" src="{{img_name}}" {% imagesize img_name:props %}/>
             </a>
 
-
-            <a href="{{ site.baseurl }}/img/lrr23/story4.avif" class="col">
-                <img loading="lazy" src="{{ site.baseurl }}/img/lrr23/story4.avif"/>
+            {% assign img_name = site.baseurl | append: "/img/lrr23/story4.avif" %}
+            <a href="{{img_name}}" class="col">
+                <img loading="lazy" src="{{img_name}}" {% imagesize img_name:props %}/>
             </a>
         </div>
-
     </figure>
     <div class="container">
 
@@ -877,7 +853,17 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
     </div>
 
     <div id="gallery" class="w-100">
-        <masonry-image-gallery base-url="{{ site.baseurl }}/img/lrr23/" image-names="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18" file-extension=".webp"></masonry-image-gallery>
+        {% assign base_url = site.baseurl | append: "/img/lrr23/" %}
+        {% assign image_names_array = "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18" | split: "|" %}
+
+        <masonry-image-gallery>
+            {% for img_name_suffix in image_names_array %}
+            {% assign img_name = base_url | append: img_name_suffix | append: ".webp" %}
+            <a href="{{img_name}}">
+                <img loading="lazy" src="{{img_name}}" {% imagesize img_name:props %}/>
+            </a>
+            {% endfor %}
+        </masonry-image-gallery>
     </div>
 </section>
 
