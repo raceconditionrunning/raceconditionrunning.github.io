@@ -80,6 +80,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             "lit-html": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
             "lit-element": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
             "maplibre-gl": "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.3.2/maplibre-gl.min.js",
+            "p5": "https://cdn.jsdelivr.net/npm/p5@2.0.1/+esm",
             "p5": "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/p5.min.js",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
@@ -108,7 +109,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             --bs-body-color: #eee;
             --bs-link-color-rgb: 235, 235, 235;
             --bs-link-hover-color-rgb: 195, 195, 195;
-            --bs-body-bg: #010101;
+            --bs-body-bg: #000; /* Off-black renders too bright in Safari */
             --bs-body-font-family: 'Petrona', 'Yrsa', serif;
             font-size-adjust: 0.5;
             --bs-body-font-weight: 400;
@@ -145,6 +146,14 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
         figure img {
             width: 100%;
+        }
+
+        .grayscale {
+            filter: brightness(95%) grayscale(90%) contrast(115%);
+            transition: filter 0.3s;
+        }
+        .grayscale:hover {
+            filter: brightness(100%) grayscale(70%) contrast(115%);
         }
 
         .full-width {
@@ -255,7 +264,11 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             overflow: hidden;
         }
         #hero-mechanism {
-            width: 80vh;
+            width: 90vh;
+            mix-blend-mode: multiply;
+            opacity: .8;
+            filter: blur(1px) url(#distort);
+            transform: translateX(-8%) translateY(4%) translate3d(0,0,0); /* No op 3d transform to make Safari apply the blend mode correctly */
         }
 
         #hero .hero-container {
@@ -421,13 +434,13 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             display: block;
             margin: 0 auto;
             margin-bottom: 1rem;
-            max-height: 120vh;
+            max-height: 95vh;
             /* Max height works fine in FF, but Safari will
        draw a full width white background box. Setting contain gets rid of the visible box, but the element
        box remains too big and the border radius won't render...
      */
 
-            /*object-fit: contain;*/
+            object-fit: contain;
         }
 
         .accordion {
@@ -893,6 +906,8 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
 
         <div class="map-item">
+            <img id="course-map" src="{{ site.baseurl }}/img/dm25/dm-course-map-alt.svg"
+                 alt="A map of the course showing the full start line 129.17m north of the fountain and the half start line 65.97m north of the fountain, followed by 219 or 109 laps of the 192.37m fountain loop." class="rounded-5">
 
             <div class="d-flex justify-content-center gap-2 gap-md-4 flex-wrap">
                 <div class="cert-wrapper">
@@ -932,6 +947,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 </section>
 
 <section>
+
     <div id="marathon-start-list" class="container">
         <h2>Marathon Start List <a href="#marathon-start-list" class="anchor-link" aria-label="Link to this section. Marathon Start List"></a></h2>
 
@@ -947,13 +963,19 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             <tr><td>Dylan Hull</td> <td>3:00</td></tr>
             </tbody>
         </table>
-        <p class="text-body-tertiary">Updated 2/16/25</p>
+        <p class="text-body-tertiary">Updated 4/28/25</p>
     </div>
 </section>
 
 
 
 <section>
+    <figure class="gallery lightbox-gallery">
+        {% assign img_name = site.baseurl | append: "/img/dm24/5.avif" %}
+        <a href="{{img_name}}">
+            <img src="{{img_name}}" class="rounded mb-4 grayscale" {% imagesize img_name:props %}>
+        </a>
+    </figure>
     <div id="faq" class="container">
         <h2>FAQ <a href="#faq" class="anchor-link" aria-label="Link to this section. FAQ"></a></h2>
 
@@ -1121,6 +1143,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
         </accordion-group>
     </div>
 </section>
+
 
 <section id="history">
     <figure class="gallery lightbox-gallery">
@@ -1355,7 +1378,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
 
     function setupLightboxes() {
-        prepareImagesForPhotoswipe(document.querySelectorAll(".lightbox-gallery")).then(() => {
+        prepareImagesForPhotoswipe(document.querySelectorAll(".lightbox-gallery a")).then(() => {
             const lightbox = new PhotoSwipeLightbox({
                 gallery: '.lightbox-gallery',
                 children: 'a',
@@ -1367,7 +1390,8 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
                 type: 'auto',
                 captionContent: (slide) => {
-                    return slide.data.element.parentElement.querySelector("figcaption").innerHTML;
+                    const caption = slide.data.element.parentElement.querySelector("figcaption")
+                    return caption ? caption.innerHTML : "";
                 }
             });
 
@@ -1383,6 +1407,24 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
         setupLightboxes()
     }
 </script>
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute; width:0; height:0;">
+    <defs>
+        <filter id="distort">
+            <feTurbulence baseFrequency="0.01 0.01" numOctaves="1" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="R"/>
+        </filter>
+    </defs>
+</svg>
 
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute; width:0; height:0;">
+    <defs>
+        <filter id="noise">
+            <feTurbulence
+                    type="fractalNoise"
+                    baseFrequency="0.65"
+                    numOctaves="3" ></feTurbulence>
+        </filter>
+    </defs>
+</svg>
 </body>
 </html>

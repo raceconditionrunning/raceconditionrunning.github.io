@@ -152,12 +152,12 @@ export let RippleToy = rootUrl => p => {
                     ambiance.play(`honk${sound}`)
                 }
             }
-            setTimeout(ambianceMachine, Math.random() * 15000 + 2000)
+            setTimeout(ambianceMachine, Math.random() * 18000 + 4000)
 
         }
         setTimeout(() => {
             ambianceMachine()
-        }, Math.random() * 4000 + 1000)
+        }, Math.random() * 5000 + 2000)
         hintMachine()
 
     }
