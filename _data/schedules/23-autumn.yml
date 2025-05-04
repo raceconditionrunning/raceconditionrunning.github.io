@@ -48,7 +48,7 @@
     - time: "9:00"
       route_id: northgate-bitter-lake-ob
     - time: "10:15"
-      route_id: northgate-resevoirs-roosevelt
+      route_id: northgate-reservoirs-roosevelt
 
 - date: "2023-11-11"
   plan:

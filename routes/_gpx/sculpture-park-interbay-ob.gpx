@@ -2,9 +2,9 @@
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running" xmlns:rcr="http://raceconditionrunning.com/extensions">
   <metadata>
     <name>sculpture-park-interbay-ob</name>
-    <desc>OB: Sculpture Park, Interbary (6.5 mi)</desc>
+    <desc>OB: Sculpture Park, Interbay (6.5 mi)</desc>
     <link href="https://raceconditionrunning.com/routes/sculpture-park-interbay-ob">
-      <text>Race Condition Running: OB: Sculpture Park, Interbary</text>
+      <text>Race Condition Running: OB: Sculpture Park, Interbay</text>
     </link>
     <author>
       <name>Race Condition Running</name>
@@ -21,7 +21,7 @@
   </metadata>
   <trk>
     <name>sculpture-park-interbay-ob</name>
-    <desc>OB: Sculpture Park, Interbary (6.5 mi)</desc>
+    <desc>OB: Sculpture Park, Interbay (6.5 mi)</desc>
     <trkseg>
       <trkpt lat="47.61618" lon="-122.35388"><ele>13.21</ele></trkpt>
       <trkpt lat="47.6162" lon="-122.35403"><ele>12.99</ele></trkpt>

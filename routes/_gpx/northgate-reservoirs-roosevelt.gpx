@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running" xmlns:rcr="http://raceconditionrunning.com/extensions">
   <metadata>
-    <name>northgate-resevoirs-roosevelt</name>
-    <desc>Northgate, Resevoirs, Roosevelt (4.1 mi)</desc>
+    <name>northgate-reservoirs-roosevelt</name>
+    <desc>Northgate, Reservoirs, Roosevelt (4.1 mi)</desc>
     <link href="https://raceconditionrunning.com/routes/northgate-resevoirs-roosevelt">
-      <text>Race Condition Running: Northgate, Resevoirs, Roosevelt</text>
+      <text>Race Condition Running: Northgate, Reservoirs, Roosevelt</text>
     </link>
     <author>
       <name>Race Condition Running</name>
@@ -15,11 +15,12 @@
     <extensions>
       <rcr:ascent>183</rcr:ascent>
       <rcr:map>https://onthegomap.com/s/2tmbpess</rcr:map>
+      <rcr:last_updated>2024-02-25</rcr:last_updated>
     </extensions>
   </metadata>
   <trk>
-    <name>northgate-resevoirs-roosevelt</name>
-    <desc>Northgate, Resevoirs, Roosevelt (4.1 mi)</desc>
+    <name>northgate-reservoirs-roosevelt</name>
+    <desc>Northgate, Reservoirs, Roosevelt (4.1 mi)</desc>
     <trkseg>
       <trkpt lat="47.70135" lon="-122.32794"><ele>77.48</ele></trkpt>
       <trkpt lat="47.70135" lon="-122.32785"><ele>77.70</ele></trkpt>
