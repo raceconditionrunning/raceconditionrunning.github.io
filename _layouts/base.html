@@ -54,6 +54,8 @@
   <meta name="twitter:data1" value="{{page.distance_mi | round: 1 }}mi ({{ page.distance_mi | times: 1.609 | round: 1}}km)" />
   <meta name="twitter:label2" value="Elevation Gain" />
   <meta name="twitter:data2" value="↑{{ascent_ft | round}}ft ↓{{ascent_ft | round}}ft" />
+  <meta name="og:image" content="{{ site.url }}/img/routes/{{page.id}}.jpg" />
+  {% else %}
   {% endif %}
 
   <script type="importmap">

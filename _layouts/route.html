@@ -7,13 +7,19 @@ layout: base
   <h1 title="{{ page.id }}" class="mb-0 h2">{{ page.title }}</h1>
   {% assign ascent_ft = page.ascent_m | times: 3.28084 %}
   {% assign descent_ft = page.descent_m | times: 3.28084 %}
-  <h3 class="h5"><span title="{{ page.distance_mi | times: 1.609 | round: 1}}km">{{ page.distance_mi | round: 1}}</span>mi ↑<span title="{{ page.ascent_m}}m">{{ascent_ft | round}}ft</span> ↓<span title="{{ page.descent_m}}m">{{ascent_ft | round}}ft</span> {% if page.deprecated %} <span class="text-warning mx-2" title="We no longer schedule this route">Deprecated</span>{% endif%}</h3>
+  {% capture stats %}<span title="{{ page.distance_mi | times: 1.609 | round: 1}}km" class="route-stats-distance">{{ page.distance_mi | round: 1}}mi</span> <span class="route-stats-elevation">↑<span title="{{ page.ascent_m}}m">{{ascent_ft | round}}ft</span> ↓<span title="{{ page.descent_m}}m">{{ascent_ft | round}}ft</span></span> {% if page.deprecated %} <span class="text-warning mx-2 route-stats-deprecated" title="We no longer schedule this route">Deprecated</span>{% endif%}{% endcapture %}
+  <h3 class="h5">{{ stats }}</h3>
   <div class="mb-4">
     <a class="btn btn-sm btn-outline-primary" href="{{ page.gpx | relative_url }}" data-goatcounter-click="download-{{ page.id }}">Download GPX</a> {% if page.map %}<a class="btn btn-sm btn-outline-primary" href="{{page.map}}" data-goatcounter-click="ext-map-{{ page.id }}">OnTheGoMap</a>{% endif %}
   </div>
   <h2 class="visually-hidden">Map</h2>
-  <div id="map" class="mb-3 w-100"></div>
-  <elevation-profile class="mb-3"></elevation-profile>
+  <div id="route-map" class="mb-3 w-100">
+    <div id="map" class="w-100"></div>
+    <!-- These are restyled as overlays when rendering route preview images. -->
+    <elevation-profile class="w-100"></elevation-profile>
+    <div class="stats d-none">{{ stats }}</div>
+  </div>
+
   <div><b>Start:</b> {{ page.start }}  {% for location in site.data.locations.features %}
     {% if location.properties.id == page.start and location.properties.meeting_point_desc %}
     <span class="text-secondary ms-1">{{ location.properties.meeting_point_desc }}</span>
@@ -66,7 +72,9 @@ layout: base
     }
     elevation-profile {
         --ep-fill-color: darkgray;
-        --ep-line-color: #ccc;
+        --ep-gradient-color-top: gray;
+        --ep-gradient-color-bottom: #333;
+        --ep-line-color: transparent;
         --ep-text-color: gray;
         background-color: #333;
         height: 100px;
@@ -111,6 +119,62 @@ layout: base
     }
     .distance-popup.maplibregl-popup-anchor-left .maplibregl-popup-tip {
         border-left-color: rgba(0, 0, 0, 0.15);
+    }
+
+    .maplibregl-ctrl-attrib.maplibregl-compact {
+        background-color: rgba(255, 255, 255, 0.50);
+    }
+
+    /* ROUTE PREVIEW IMAGE ================================= */
+    .preview-mode  .maplibregl-ctrl-attrib.maplibregl-compact .maplibregl-ctrl-attrib-button,
+    .preview-mode .maplibregl-ctrl-geolocate,
+    .preview-mode .maplibregl-ctrl-fullscreen
+    {
+        display: none;
+    }
+    .preview-mode .maplibregl-ctrl-attrib.maplibregl-ctrl-attrib.maplibregl-compact-show {
+      margin: 0;
+      padding: 1px 3px;
+        border-radius: 3px;
+        margin-right: 4px;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+        font-size: 10px
+    }
+    .preview-mode {
+        position: relative;
+    }
+    .preview-mode elevation-profile {
+        position: absolute;
+        bottom: 0;
+        --ep-fill-color: rgba(200, 200, 200, 0.75);
+        --ep-line-color: #999;
+        --ep-gradient-color-top: rgba(200, 200, 200, 0.95);
+        --ep-gradient-color-bottom: rgba(255, 255, 255, 0.20);
+        background-color: transparent;
+    }
+
+    .preview-mode .stats {
+        display: block !important;
+        text-align: right;
+        position: absolute;
+        bottom: 24px;
+        right: 0;
+        background-color: rgba(255, 255, 255, 0.5);
+        padding: 2px 8px;
+        margin: 4px;
+        color: #111;
+        border-radius: 3px;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .preview-mode .route-stats-distance {
+        display: block;
+        font-size: 2rem;
+        font-weight: bold;
+        line-height: 1;
+    }
+    .preview-mode .route-stats-deprecated {
+        display: none;
     }
 </style>
 
@@ -255,24 +319,4 @@ layout: base
       });
     });
 
-</script>
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Routes",
-        "item": "{{ site.url }}{{ page.url | split: '/' | slice: 0, 2 | join: '/' }}/"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "{{ page.title }}",
-        "item": "{{ site.url }}{{page.url}}"
-      }
-    ]
-  }
 </script>

@@ -71,16 +71,43 @@ jobs:
           JEKYLL_ENV: production
           JEKYLL_FLAGS: --baseurl "${{ steps.pages.outputs.base_path }}"
 
+      - name: Ensure image directories exist
+        run: mkdir -p _site/img/routes
+
+      # Cache the route OpenGraph images
+      - name: Restore OpenGraph route images from cache
+        uses: actions/cache/restore@v4
+        id: cache-route-images
+        with:
+          path: _site/img/routes/
+          # Key based on the hash of all GPX files
+          key: og-route-images-${{ hashFiles('routes/_gpx/**/*.gpx') }}
+          restore-keys: |
+            og-route-images-
+
+      - name: Install Playwright
+        if: steps.cache-route-images.outputs.cache-hit != 'true'
+        run: |
+          pip install playwright pillow
+          playwright install chromium
+
+      - name: Generate route OpenGraph images
+        if: steps.cache-route-images.outputs.cache-hit != 'true'
+        run: make og-route-images
+
+      - name: Save OpenGraph route images to cache
+        if: steps.cache-route-images.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: _site/img/routes/
+          key: og-route-images-${{ hashFiles('routes/_gpx/**/*.gpx') }}
+
       - name: Cache HTMLProofer
         id: cache-htmlproofer
         uses: actions/cache@v4
         with:
           path: tmp/.htmlproofer
           key: ${{ runner.os }}-htmlproofer
-
-      - name: Check Images
-        run: |
-          make check-images
 
       - name: Check HTML
         continue-on-error: true

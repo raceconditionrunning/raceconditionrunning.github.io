@@ -40,6 +40,10 @@ export class ElevationProfile extends HTMLElement {
             </style>
             <svg width="${this.width + this.margin.left + this.margin.right}"
                  height="${this.height + this.margin.top + this.margin.bottom}">
+                   <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="var(--ep-gradient-color-top)" />
+                        <stop offset="100%" stop-color="var(--ep-gradient-color-bottom)" />
+                  </linearGradient>
                 <g transform="translate(${this.margin.left},${this.margin.top})"></g>
             </svg>
         `;
@@ -63,7 +67,7 @@ export class ElevationProfile extends HTMLElement {
         .append('path')
         .datum(this.data)
         .attr('d', area)
-        .attr('style', "fill: var(--ep-fill-color)")
+        .attr('style', "fill: url(#gradient); stroke: var(--ep-line-color); stroke-width: 2px")
 
     const xAxis = d3.axisBottom(x).tickFormat((d, i) => i);
     const yAxis = d3.axisLeft(y);
