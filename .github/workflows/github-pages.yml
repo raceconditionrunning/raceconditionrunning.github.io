@@ -65,11 +65,23 @@ jobs:
         id: pages
         uses: actions/configure-pages@v4
 
+      - name: Set up Jekyll configuration
+        run: |
+          # Create override config file
+          cat > _config_ci.yml << EOF
+          url: ${{ github.repository == 'raceconditionrunning/raceconditionrunning.github.io' 
+                && 'https://raceconditionrunning.com' 
+                || format('https://{0}.github.io', github.repository_owner) }}
+          baseurl: ${{ steps.pages.outputs.base_path }}
+          EOF
+          echo "Created Jekyll config override:"
+          cat _config_ci.yml
+
       - name: Build with Jekyll
         run: make build
         env:
           JEKYLL_ENV: production
-          JEKYLL_FLAGS: --baseurl "${{ steps.pages.outputs.base_path }}"
+          JEKYLL_FLAGS: "--config _config.yml,_config_ci.yml"
 
       - name: Ensure image directories exist
         run: mkdir -p _site/img/routes
