@@ -10,7 +10,7 @@ redirect_from:
     <title>Light Rail Relay 2022</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Relay along the Link Line 1 happening October 1st, 2022.">
-    <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
+    <link rel="canonical" href="{{ page.url | absolute_url }}" />
     <meta name="theme-color" content="#000000">
     <meta property="og:image" content="{{ site.baseurl }}/img/lrr22/lrr-og-banner.png">
     <meta property="og:type" content="website">
@@ -617,7 +617,7 @@ redirect_from:
         }
         const downloadRouteButton = document.getElementById("download-route-gpx-btn")
         downloadRouteButton.addEventListener("click", event => {
-            let gpxString = relayToGPX("Light Rail Relay 2022", legs.features, exchanges.features, {eventName: "Race Condition Running Light Rail Relay 2022", year: 2022, permalink: "{{site.url}}{{ page.url }}"})
+            let gpxString = relayToGPX("Light Rail Relay 2022", legs.features, exchanges.features, {eventName: "Race Condition Running Light Rail Relay 2022", year: 2022, permalink: "{{ page.url | absolute_url }}"})
 
             download(gpxString, "application/gpx+xml", `light-rail-relay-2022.gpx`)
             event.preventDefault()

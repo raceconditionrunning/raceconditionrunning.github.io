@@ -21,10 +21,10 @@
   {% endif %}
   {% capture url %}{{ page.url | absolute_url }}{% endcapture %}
   <title>{{ title }}</title>
-  <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
+  <link rel="canonical" href="{{ page.url | absolute_url }}" />
   <meta name="description" content="{{ description }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel='stylesheet' type='text/css' href='{{ site.baseurl }}/css/style.css'>
+  <link rel='stylesheet' type='text/css' href="{{ '/css/style.css' | relative_url }}" />
 
   <!-- favicon -->
   <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
@@ -54,7 +54,7 @@
   <meta name="twitter:data1" value="{{page.distance_mi | round: 1 }}mi ({{ page.distance_mi | times: 1.609 | round: 1}}km)" />
   <meta name="twitter:label2" value="Elevation Gain" />
   <meta name="twitter:data2" value="↑{{ascent_ft | round}}ft ↓{{ascent_ft | round}}ft" />
-  <meta name="og:image" content="{{ site.url }}/img/routes/{{page.id}}.jpg" />
+  <meta name="og:image" content="{{ '/img/routes/' | append: page.id | append: '.jpg' | absolute_url }}" />
   {% else %}
   {% endif %}
 
@@ -82,7 +82,7 @@
 <header class="container constrain-width">
   <a href="/" class="text-body d-flex flex-wrap align-content-end justify-content-center justify-content-sm-between">
     <h2 class="align-self-center">Race Condition Running</h2>
-    <img src='{{ site.baseurl }}/img/rcc-logo.png' width='150' alt='RCC Logo'>
+    <img src="{{ '/img/rcc-logo.png' | relative_url }}" width='150' alt='RCC Logo'>
   </a>
 </header>
 

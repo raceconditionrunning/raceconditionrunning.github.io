@@ -6,8 +6,8 @@ permalink: /brunch-reviews/rss.xml
   <channel>
     <title>Race Condition Brunch Reviews</title>
     <description>Seattle's premier running computer scientist brunch blog</description>
-    <link>{{ site.url }}/brunch-reviews/</link>
-    <atom:link href="{{ site.url }}/brunch-reviews/rss.xml" rel="self" type="application/rss+xml" />
+    <link>{{ '/brunch-reviews/' | absolute_url }}</link>
+    <atom:link href="{{ page.url | absolute_url }}" rel="self" type="application/rss+xml" />
     <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
     <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
     <generator>Jekyll v{{ jekyll.version }}</generator>
@@ -18,8 +18,8 @@ permalink: /brunch-reviews/rss.xml
         <title>{{ review.restaurant | xml_escape }}</title>
         <description>{{ review.content | xml_escape }}</description>
         <pubDate>{{ review.date | date_to_rfc822 }}</pubDate>
-        <link>{{ site.url }}{{ review.url }}</link>
-        <guid isPermaLink="false">{{ site.url }}/brunch-reviews/#{{ review_id }}</guid>
+        <link>{{ review.url | absolute_url }}</link>
+        <guid isPermaLink="false">{{ review.url | absolute_url }}</guid>
       </item>
     {% endfor %}
   </channel>

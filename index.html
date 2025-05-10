@@ -48,13 +48,13 @@ add_h1: true
 <li>Runs are at conversational pace (often <span class="text-decoration-underline" title="6:15-7:30 min/km"> 10-12 min/mi</span>).</li>
 </ul>
 <a class="btn btn-outline-primary float-end" target="_blank"
-   href="http://www.google.com/calendar/render?cid={{ site.url }}/rcc.ics">
+   href="http://www.google.com/calendar/render?cid={{ '/rcc.ics' | absolute_url }}">
   Subscribe 📆
 </a>
 <p class="text-secondary">
   If you are having trouble accessing the calendar, try manually by adding
   the following url to your calendar application:
-  <a href="{{ site.baseurl }}/rcc.ics">{{ site.url }}/rcc.ics</a>
+  <a href="{{ '/rcc.ics' | relative_url }}">{{ '/rcc.ics' | relative_url }}</a>
 </p>   <!-- add a query param on ics link to bypass cache for testing (e.g. ?foo) -->
 
 
@@ -139,7 +139,7 @@ add_h1: true
     "name": "{{ site.title }}",
     "url": "{{ site.url }}",
     "description": "{{ site.description }}",
-    "logo": "{{ site.url }}/img/rcc-logo.png",
+    "logo": "{{ '/img/rcc-logo.png' | absolute_url }}",
     "foundingDate": "2014",
     "location": {
       "@type": "Place",

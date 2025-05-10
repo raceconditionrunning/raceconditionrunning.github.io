@@ -14,10 +14,10 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
     <title>{{ page.title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{{ page.description }}">
-    <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
+    <link rel="canonical" href="{{ page.url | absolute_url }}" />
     <meta property="og:image" content="{{ site.url }}/img/dm24/og-banner.jpg">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ site.url }}{{ page.url}}">
+    <meta property="og:url" content="{{ page.url | absolute_url }}">
     <meta property="og:title" content="{{ page.title }}">
     <meta property="og:description" content="{{ page.description}}">
 
@@ -55,11 +55,11 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             "description": "{{ page.description }}",
             "image": {
                 "@type": "ImageObject",
-                "url": "{{ site.url }}{{ site.baseurl }}/img/dm24/og-banner.jpg",
+                "url": "{{ '/img/dm24/og-banner.jpg' | absolute_url }}",
                 "height": "630",
                 "width": "1200"
             },
-            "url": "{{ site.url }}{{ page.url }}",
+            "url": "{{ page.url | absolute_url }}",
             "eventStatus": "https://schema.org/EventScheduled",
             "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
             "organizer": {

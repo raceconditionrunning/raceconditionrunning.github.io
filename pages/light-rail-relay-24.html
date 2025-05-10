@@ -17,11 +17,11 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
     <title>{{ page.title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{{ page.description }}">
-    <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
+    <link rel="canonical" href="{{ page.url | absolute_url }}" />
     <meta name="theme-color" content="#000000">
     <meta property="og:image" content="{{ site.baseurl }}/img/lrr24/og-banner.png">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ site.baseurl }}{{ page.url }}">
+    <meta property="og:url" content="{{ page.url | absolute_url }}">
     <meta property="og:title" content="{{ page.title }}">
     <meta property="og:description" content="{{ page.description }}">
 
@@ -57,11 +57,11 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             "description": "{{ page.description }}",
             "image": {
                 "@type": "ImageObject",
-                "url": "{{ site.url }}{{ site.baseurl }}/img/lrr24/og-banner.png",
+                "url": "{{ '/img/lrr24/og-banner.png' | absolute_url }}",
                 "height": "631",
                 "width": "1201"
             },
-            "url": "{{ site.url }}{{ page.url }}",
+            "url": "{{ page.url | absolute_url }}",
             "eventStatus": "https://schema.org/EventScheduled",
             "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
             "organizer": {
@@ -1238,7 +1238,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         createLegDetailsTable(document.getElementById("leg-details-table"), legsData, exchanges.features)
         const downloadRouteButton = document.getElementById("download-route-gpx-btn")
         downloadRouteButton.addEventListener("click", event => {
-            let gpxString = relayToGPX("Light Rail Relay 2024", legs.features, exchanges.features, {eventName: "Race Condition Running Light Rail Relay 2024", year: 2024, permalink: "{{site.url}}{{ page.url }}"})
+            let gpxString = relayToGPX("Light Rail Relay 2024", legs.features, exchanges.features, {eventName: "Race Condition Running Light Rail Relay 2024", year: 2024, permalink: "{{ page.url | absolute_url }}"})
             download(gpxString, "application/gpx+xml", `light-rail-relay-2024.gpx`)
             event.preventDefault()
         })

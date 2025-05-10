@@ -214,7 +214,7 @@ layout: base
               return bounds.extend(coord);
           }, new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
           const map = new maplibregl.Map({
-              style: '{{ site.baseurl }}/maps/route-map-style.json',
+              style: "{{'/maps/route-map-style.json' | relative_url }}",
               container: 'map',
               zoom: 9.5,
               center: [-122.3321, 47.6062],

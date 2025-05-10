@@ -14,7 +14,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
     <title>Light Rail Relay 2023</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Marathon relay along the Link Line 1 happening September 30th, 2023.">
-    <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
+    <link rel="canonical" href="{{ page.url | absolute_url }}" />
     <meta name="theme-color" content="#000000">
     <meta property="og:image" content="{{ site.baseurl }}/img/lrr23/lrr-og-banner.png">
     <meta property="og:type" content="website">
@@ -52,11 +52,11 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
             "description": "{{ page.description }}",
             "image": {
                 "@type": "ImageObject",
-                "url": "{{ site.url }}{{ site.baseurl }}/img/lrr23/lrr-og-banner.png",
+                "url": "{{ '/img/lrr23/lrr-og-banner.png' | absolute_url }}",
                 "height": "399",
                 "width": "1200"
             },
-            "url": "{{ site.url }}{{ page.url }}",
+            "url": "{{ page.url | absolute_url }}",
             "eventStatus": "https://schema.org/EventScheduled",
             "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
             "organizer": {
@@ -900,7 +900,7 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
         createLegDetailsTable(document.getElementById("leg-details-table"), legsData, exchanges.features)
         const downloadRouteButton = document.getElementById("download-route-gpx-btn")
         downloadRouteButton.addEventListener("click", event => {
-            let gpxString = relayToGPX("Light Rail Relay 2023", legs.features, exchanges.features, {eventName: "Race Condition Running Light Rail Relay 2023", year: 2023, permalink: "{{site.url}}{{ page.url }}"})
+            let gpxString = relayToGPX("Light Rail Relay 2023", legs.features, exchanges.features, {eventName: "Race Condition Running Light Rail Relay 2023", year: 2023, permalink: "{{ page.url | absolute_url }}"})
             download(gpxString, "application/gpx+xml", `light-rail-relay-2023.gpx`)
             event.preventDefault()
         })
