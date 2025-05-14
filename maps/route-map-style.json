@@ -7029,7 +7029,8 @@
           8, 0,
           10, 0.5,
           12, 0
-        ]
+        ],
+        "hillshade-method": "igor"
       }
     },
     {
@@ -7039,7 +7040,7 @@
       "minzoom": 9,
       "layout": {
         "text-field": ["to-string", ["get", "distance"]],
-        "text-font": ["Noto Sans Regular"],
+        "text-font": ["Noto Sans Bold"],
         "text-size": {
           "stops": [
             [9, 10],

@@ -145,7 +145,7 @@ def process_route(task: RouteTask, quality: int) -> Optional[pathlib.Path]:
         logger.info(f"Processing {task.route_key} from {task.url}")
 
         page.goto(task.url, wait_until="networkidle", timeout=30000)
-        page.wait_for_selector("#map", timeout=10000)
+        page.wait_for_selector("#map.loading-complete", timeout=10000)
         page.evaluate("""
             () => {
                 const container = document.getElementById('route-map');

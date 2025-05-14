@@ -1,16 +1,23 @@
 ---
 layout: base
 ---
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" integrity="sha256-V2sIX92Uh6ZaGSFTKMHghsB85b9toJtmazgG09AI2uk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.5.0/dist/maplibre-gl.css" crossorigin="anonymous">
 
 <div class="route container">
   <h1 title="{{ page.id }}" class="mb-0 h2">{{ page.title }}</h1>
   {% assign ascent_ft = page.ascent_m | times: 3.28084 %}
   {% assign descent_ft = page.descent_m | times: 3.28084 %}
-  {% capture stats %}<span title="{{ page.distance_mi | times: 1.609 | round: 1}}km" class="route-stats-distance">{{ page.distance_mi | round: 1}}mi</span> <span class="route-stats-elevation">↑<span title="{{ page.ascent_m}}m">{{ascent_ft | round}}ft</span> ↓<span title="{{ page.descent_m}}m">{{ascent_ft | round}}ft</span></span> {% if page.deprecated %} <span class="text-warning mx-2 route-stats-deprecated" title="We no longer schedule this route">Deprecated</span>{% endif%}{% endcapture %}
+  {% capture stats %}<span title="{{ page.distance_mi | times: 1.609 | round: 1}}km" class="route-stats-distance">{{ page.distance_mi | round: 1}}mi</span>
+  <span class="route-stats-elevation">↑<span title="{{ page.ascent_m}}m">{{ascent_ft | round}}ft</span> ↓<span
+          title="{{ page.descent_m}}m">{{ascent_ft | round}}ft</span></span> {% if page.deprecated %} <span
+        class="text-warning mx-2 route-stats-deprecated" title="We no longer schedule this route">Deprecated</span>{%
+  endif%}{% endcapture %}
   <h3 class="h5">{{ stats }}</h3>
   <div class="mb-4">
-    <a class="btn btn-sm btn-outline-primary" href="{{ page.gpx | relative_url }}" data-goatcounter-click="download-{{ page.id }}">Download GPX</a> {% if page.map %}<a class="btn btn-sm btn-outline-primary" href="{{page.map}}" data-goatcounter-click="ext-map-{{ page.id }}">OnTheGoMap</a>{% endif %}
+    <a class="btn btn-sm btn-outline-primary" href="{{ page.gpx | relative_url }}"
+       data-goatcounter-click="download-{{ page.id }}">Download GPX</a> {% if page.map %}<a
+          class="btn btn-sm btn-outline-primary" href="{{page.map}}" data-goatcounter-click="ext-map-{{ page.id }}">OnTheGoMap</a>{%
+    endif %}
   </div>
   <h2 class="visually-hidden">Map</h2>
   <div id="route-map" class="mb-3 w-100">
@@ -20,15 +27,19 @@ layout: base
     <div class="stats d-none">{{ stats }}</div>
   </div>
 
-  <div><b>Start:</b> {{ page.start }}  {% for location in site.data.locations.features %}
+  <div><b>Start:</b> {{ page.start }} {% for location in site.data.locations.features %}
     {% if location.properties.id == page.start and location.properties.meeting_point_desc %}
     <span class="text-secondary ms-1">{{ location.properties.meeting_point_desc }}</span>
     <ul class="list d-flex gap-4 mb-0">
-      <li><a href="https://google.com/maps/dir/?api=1&destination={{location.geometry.coordinates[1]}},{{location.geometry.coordinates[0]}}" class="link-secondary">Google Maps</a></li>
-      <li><a href="https://maps.apple.com/?daddr={{location.geometry.coordinates[1]}},{{location.geometry.coordinates[0]}}}" class="link-secondary">Apple Maps</a></li>
+      <li>
+        <a href="https://google.com/maps/dir/?api=1&destination={{location.geometry.coordinates[1]}},{{location.geometry.coordinates[0]}}"
+           class="link-secondary">Google Maps</a></li>
+      <li>
+        <a href="https://maps.apple.com/?daddr={{location.geometry.coordinates[1]}},{{location.geometry.coordinates[0]}}}"
+           class="link-secondary">Apple Maps</a></li>
     </ul>
-  {% endif %}
-  {% endfor %}
+    {% endif %}
+    {% endfor %}
   </div>
   <div><b>End:</b> {{ page.end }}
     {% for location in site.data.locations.features %}
@@ -37,7 +48,7 @@ layout: base
     {% endif %}
     {% endfor %}
   </div>
-    <div><b>Neighborhoods:</b> {{ page.neighborhoods | join: ', ' }}</div>
+  <div><b>Neighborhoods:</b> {{ page.neighborhoods | join: ', ' }}</div>
 
   <div><b>Last run:</b>
     {% if page.dates_run.size == 0 %}
@@ -49,19 +60,23 @@ layout: base
     {% endfor %}
   </div>
   {% if page.notes %}
-    <div><b>Notes:</b> {{ page.notes | markdownify | remove: '<p>' | remove: '</p>'}}</div>
+  <div><b>Notes:</b> {{ page.notes | markdownify | remove: '<p>' | remove: '</p>'}}</div>
   {% endif %}
   {% if page.changelog and page.changelog.size > 0 %}
-    <div><b>Changelog:</b>
-      <ol class="list-unstyled ms-4">
-    {% for change in page.changelog %}
-      <li><b>{{ change.date }}:</b> {{ change.note | markdownify | remove: '<p>' | remove: '</p>' }}</ol></li>
+  <div><b>Changelog:</b>
+    <ol class="list-unstyled ms-4">
+      {% for change in page.changelog %}
+      <li><b>{{ change.date }}:</b> {{ change.note | markdownify | remove: '<p>' | remove: '</p>' }}
+    </ol>
+    </li>
     {% endfor %}
-      </ol>
-    </div>
+    </ol>
+  </div>
   {% endif %}
   {% if page.last_updated %}
-  <div><b>Last updated:</b> <time datetime="{{ page.last_updated }}">{{ page.last_updated }}</time></div>
+  <div><b>Last updated:</b>
+    <time datetime="{{ page.last_updated }}">{{ page.last_updated }}</time>
+  </div>
   {% endif %}
 </div>
 
@@ -126,15 +141,14 @@ layout: base
     }
 
     /* ROUTE PREVIEW IMAGE ================================= */
-    .preview-mode  .maplibregl-ctrl-attrib.maplibregl-compact .maplibregl-ctrl-attrib-button,
+    .preview-mode .maplibregl-ctrl-attrib.maplibregl-compact .maplibregl-ctrl-attrib-button,
     .preview-mode .maplibregl-ctrl-geolocate,
-    .preview-mode .maplibregl-ctrl-fullscreen
-    {
+    .preview-mode .maplibregl-ctrl-fullscreen {
         display: none;
     }
     .preview-mode .maplibregl-ctrl-attrib.maplibregl-ctrl-attrib.maplibregl-compact-show {
-      margin: 0;
-      padding: 1px 3px;
+        margin: 0;
+        padding: 1px 3px;
         border-radius: 3px;
         margin-right: 4px;
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
@@ -182,10 +196,81 @@ layout: base
 <script type="module">
     import 'maplibre-gl';
     import {distance, point, nearestPointOnLine, lineString} from '@turf';
-    import { Protocol } from 'pmtiles';
-    import { ElevationProfile } from '{{site.baseurl}}/js/ElevationProfile.js';
-    let protocol = new Protocol();
-    maplibregl.addProtocol("pmtiles", protocol.tile);
+    import {Protocol} from 'pmtiles';
+    import {ElevationProfile} from '{{site.baseurl}}/js/ElevationProfile.js';
+    import Protobuf from 'https://unpkg.com/pbf@4.0.1/index.js';
+    import {VectorTile} from 'https://esm.run/@mapbox/vector-tile@2.0.3/index.js';
+    import tileToProtobuf from 'https://esm.run/vt-pbf@3.1.3/index.js';
+
+    let pmtilesProtocol = new Protocol();
+    maplibregl.addProtocol("pmtiles", pmtilesProtocol.tile);
+
+    // Add custom protocol for street name abbreviations
+    const abbrevProtocol = 'street-abbrev';
+    maplibregl.addProtocol(abbrevProtocol, (request) => {
+        const url = request.url.replace(abbrevProtocol + '://', '');
+
+        // Define the abbreviation replacements once
+        const replacements = [
+            [/\bNortheast\b/g, 'NE'],
+            [/\bNorthwest\b/g, 'NW'],
+            [/\bSoutheast\b/g, 'SE'],
+            [/\bSouthwest\b/g, 'SW'],
+            [/\bNorth\b/g, 'N'],
+            [/\bSouth\b/g, 'S'],
+            [/\bEast\b/g, 'E'],
+            [/\bWest\b/g, 'W'],
+            [/\bStreet\b/g, 'St'],
+            [/\bAvenue\b/g, 'Ave'],
+            [/\bBoulevard\b/g, 'Blvd'],
+            [/\bRoad\b/g, 'Rd'],
+            [/\bLane\b/g, 'Ln'],
+            [/\bDrive\b/g, 'Dr'],
+            [/\bCourt\b/g, 'Ct'],
+            [/\bPlace\b/g, 'Pl']
+        ];
+
+        // Function to apply all replacements to a string
+        const abbreviateText = (text) => {
+            if (typeof text !== 'string') return text;
+
+            return replacements.reduce(
+                (result, [pattern, replacement]) => result.replace(pattern, replacement),
+                text
+            );
+        };
+
+        return fetch(url)
+            .then((response) => response.arrayBuffer())
+            .then((data) => new VectorTile(new Protobuf(data)))
+            .then((tile) => ({
+                layers: Object.entries(tile.layers).reduce((acc, [layerId, layer]) => ({
+                    ...acc,
+                    [layerId]: {
+                        ...layer,
+                        feature: (index) => {
+                            const feature = layer.feature(index);
+
+                            // Only process the transportation_name layer
+                            if (layerId === 'transportation_name' && feature.properties) {
+                                // Handle all potential name properties
+                                const nameProps = ['name', 'name_en', 'name:latin', 'name:nonlatin'];
+
+                                for (const prop of nameProps) {
+                                    if (typeof feature.properties[prop] === 'string') {
+                                        feature.properties[prop] = abbreviateText(feature.properties[prop]);
+                                    }
+                                }
+                            }
+
+                            return feature;
+                        }
+                    }
+                }), {})
+            }))
+            .then((tile) => tileToProtobuf(tile).buffer)
+            .then((data) => ({ data }));
+    });
 
     function computeDistanceAlongLine(queryPoint, route) {
         let totalDistance = 0
@@ -195,7 +280,7 @@ layout: base
         let nearest = nearestPointOnLine(line, queryPoint, {units: 'meters'})
         // Calculate cumulative distance up to index
         for (let i = 1; i < line.geometry.coordinates.length; i++) {
-            let segmentDist = distance(line.geometry.coordinates[i-1], line.geometry.coordinates[i], {units: 'meters'})
+            let segmentDist = distance(line.geometry.coordinates[i - 1], line.geometry.coordinates[i], {units: 'meters'})
             totalDistance += segmentDist
             if (i === nearest.properties.index) {
                 totalDistance += distance(nearest.geometry.coordinates, line.geometry.coordinates[i], {units: 'meters'})
@@ -206,118 +291,129 @@ layout: base
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      let routeGeojson = fetch('{{ page.geojson | relative_url }}').then(response => response.json())
+        let routeGeojson = fetch('{{ page.geojson | relative_url }}').then(response => response.json())
 
-      routeGeojson.then(data => {
-          const coordinates = data.geometry.coordinates;
-          document.querySelector('elevation-profile').elevationData = coordinates;
-          const bounds = coordinates.reduce((bounds, coord) => {
-              return bounds.extend(coord);
-          }, new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
-          const map = new maplibregl.Map({
-              style: "{{'/maps/route-map-style.json' | relative_url }}",
-              container: 'map',
-              zoom: 9.5,
-              center: [-122.3321, 47.6062],
-              bounds: bounds,
-              fitBoundsOptions: {padding: 50, animate: false}
-          });
-          map.on('load', function () {
-              map.getSource('route').setData(data);
-              // Frame the route
-
-              let totalDistance = 0
-              let mileMarker = 1
-              let distanceLabels = []
-
-              for (let i = 1; i < coordinates.length; i++) {
-                  let segmentDist = distance(coordinates[i - 1], coordinates[i], {units: 'miles'})
-                  totalDistance += segmentDist
-                  if (totalDistance >= mileMarker) {
-                      let midPoint = [(coordinates[i - 1][0] + coordinates[i][0]) / 2, (coordinates[i - 1][1] + coordinates[i][1]) / 2]
-                      distanceLabels.push({
-                          type: 'Feature',
-                          geometry: {
-                              type: 'Point',
-                              coordinates: midPoint
-                          },
-                          properties: {
-                              distance: mileMarker
-                          }
-                      })
-                      mileMarker += 1
-                  }
-              }
-
-            map.getSource('distance-labels').setData({
-                type: 'FeatureCollection',
-                features: distanceLabels
+        routeGeojson.then(data => {
+            const coordinates = data.geometry.coordinates;
+            document.querySelector('elevation-profile').elevationData = coordinates;
+            const bounds = coordinates.reduce((bounds, coord) => {
+                return bounds.extend(coord);
+            }, new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
+            const map = new maplibregl.Map({
+                style: "{{'/maps/route-map-style.json' | relative_url }}",
+                container: 'map',
+                zoom: 9.5,
+                center: [-122.3321, 47.6062],
+                bounds: bounds,
+                fitBoundsOptions: {padding: 50, animate: false}
             });
 
+            // Apply the transformation to vector tiles
+            map.setTransformRequest((url, resourceType) => {
+                if (resourceType === 'Tile' && url.includes('openfreemap')) {
+                    return { url: abbrevProtocol + '://' + url };
+                }
+                return undefined;
+            });
 
-              map.getSource('points').setData({
-                  type: 'FeatureCollection',
-                  features: [
-                      {
-                          type: 'Feature',
-                          geometry: {
-                              type: 'Point',
-                              coordinates: coordinates[0]
-                          },
-                          properties: {
-                              color: '#00FF00'
-                          }
-                      },
-                      {
-                          type: 'Feature',
-                          geometry: {
-                              type: 'Point',
-                              coordinates: coordinates[coordinates.length - 1]
-                          },
-                          properties: {
-                              color: '#FF0000'
-                          }
-                      }
-                  ]
+            map.on('load', () => {
+                map.once('idle' , () => {
+                    // Our route preview image generation script waits for this to appear before taking the screengrab. Otherwise, the route may not be rendered yet.
+                    map.getContainer().classList.add("loading-complete")
+                });
+                map.getSource('route').setData(data);
+                // Frame the route
+                let totalDistance = 0
+                let mileMarker = 1
+                let distanceLabels = []
 
-              });
+                for (let i = 1; i < coordinates.length; i++) {
+                    let segmentDist = distance(coordinates[i - 1], coordinates[i], {units: 'miles'})
+                    totalDistance += segmentDist
+                    if (totalDistance >= mileMarker) {
+                        let midPoint = [(coordinates[i - 1][0] + coordinates[i][0]) / 2, (coordinates[i - 1][1] + coordinates[i][1]) / 2]
+                        distanceLabels.push({
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                coordinates: midPoint
+                            },
+                            properties: {
+                                distance: mileMarker
+                            }
+                        })
+                        mileMarker += 1
+                    }
+                }
 
-              // Create a popup, but don't add it to the map yet.
-              const distancePopup = new maplibregl.Popup({
-                  closeButton: false,
-                  closeOnClick: false,
-                  focusAfterOpen: false,
-                  className: 'distance-popup'
-              });
+                map.getSource('distance-labels').setData({
+                    type: 'FeatureCollection',
+                    features: distanceLabels
+                });
 
-              const updateDistancePopup = (e) => {
-                  map.getCanvas().style.cursor = 'pointer';
-                  const hovered = [e.lngLat.lng, e.lngLat.lat];
-                  const [distanceAlongLine, nearestPoint] = computeDistanceAlongLine(point(hovered), coordinates)
 
-                  distancePopup
-                      .setLngLat(nearestPoint)
-                      .setHTML(`${(distanceAlongLine / 1609.34).toFixed(2)}mi`)
-                      .addTo(map);
-              }
-              map.on('mouseenter', 'route-hover-region', updateDistancePopup);
-              map.on('mousemove', 'route-hover-region', updateDistancePopup);
-              map.on('mouseleave', 'route-hover-region', () => {
-                  map.getCanvas().style.cursor = '';
-                  distancePopup.remove()
-              });
+                map.getSource('points').setData({
+                    type: 'FeatureCollection',
+                    features: [
+                        {
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                coordinates: coordinates[0]
+                            },
+                            properties: {
+                                color: '#00FF00'
+                            }
+                        },
+                        {
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                coordinates: coordinates[coordinates.length - 1]
+                            },
+                            properties: {
+                                color: '#FF0000'
+                            }
+                        }
+                    ]
 
-              let geolocate = new maplibregl.GeolocateControl({
-                  positionOptions: {
-                      enableHighAccuracy: true
-                  },
-                  trackUserLocation: true
-              });
+                });
 
-              map.addControl(geolocate);
-              map.addControl(new maplibregl.FullscreenControl());
-          });
-      });
+                // Create a popup, but don't add it to the map yet.
+                const distancePopup = new maplibregl.Popup({
+                    closeButton: false,
+                    closeOnClick: false,
+                    focusAfterOpen: false,
+                    className: 'distance-popup'
+                });
+
+                const updateDistancePopup = (e) => {
+                    map.getCanvas().style.cursor = 'pointer';
+                    const hovered = [e.lngLat.lng, e.lngLat.lat];
+                    const [distanceAlongLine, nearestPoint] = computeDistanceAlongLine(point(hovered), coordinates)
+
+                    distancePopup
+                        .setLngLat(nearestPoint)
+                        .setHTML(`${(distanceAlongLine / 1609.34).toFixed(2)}mi`)
+                        .addTo(map);
+                }
+                map.on('mouseenter', 'route-hover-region', updateDistancePopup);
+                map.on('mousemove', 'route-hover-region', updateDistancePopup);
+                map.on('mouseleave', 'route-hover-region', () => {
+                    map.getCanvas().style.cursor = '';
+                    distancePopup.remove()
+                });
+
+                let geolocate = new maplibregl.GeolocateControl({
+                    positionOptions: {
+                        enableHighAccuracy: true
+                    },
+                    trackUserLocation: true
+                });
+
+                map.addControl(geolocate);
+                map.addControl(new maplibregl.FullscreenControl());
+            });
+        });
     });
-
 </script>
