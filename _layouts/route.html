@@ -198,6 +198,7 @@ layout: base
     import {distance, point, nearestPointOnLine, lineString} from '@turf';
     import {Protocol} from 'pmtiles';
     import {ElevationProfile} from '{{site.baseurl}}/js/ElevationProfile.js';
+    import {FrameControl} from "{{site.baseurl}}/js/FrameControl.js";
     import Protobuf from 'https://unpkg.com/pbf@4.0.1/index.js';
     import {VectorTile} from 'https://esm.run/@mapbox/vector-tile@2.0.3/index.js';
     import tileToProtobuf from 'https://esm.run/vt-pbf@3.1.3/index.js';
@@ -413,6 +414,7 @@ layout: base
 
                 map.addControl(geolocate);
                 map.addControl(new maplibregl.FullscreenControl());
+                map.addControl(new FrameControl({bounds, padding: 50}));
             });
         });
     });
