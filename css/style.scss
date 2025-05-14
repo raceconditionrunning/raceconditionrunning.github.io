@@ -85,6 +85,12 @@ tr:has(+ tr) td {
   padding-bottom: .25rem;
 }
 
+:popover-open {
+  position: absolute;
+  inset: unset;
+  border: 1px solid gray;
+}
+
 :target {
   animation: target-fade 3s 1;
 }

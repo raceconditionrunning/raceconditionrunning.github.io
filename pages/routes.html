@@ -130,13 +130,33 @@ add_h1: true
         let table = new Tabulator("#routes table", {
             columns:
                 [{title: "Route Name", field: "name", formatter: (cell, formatterParams, onRendered) => {
-                    let value = cell.getValue();
-                    let route = cell.getRow().getData();
-                    let link = document.createElement("a");
-                    link.href = route.id + "/";
-                    link.title = route.id;
-                    link.innerHTML = value;
-                    return link;}},
+                        const value = cell.getValue();
+                        const route = cell.getRow().getData();
+                        const popoverId = `map-popover-${route.id}`;
+                        const container = document.createElement("div");
+                        container.innerHTML = `
+      <a href="${route.id}/"
+         title="${route.id}"
+         popovertarget="${popoverId}">
+        ${value}
+      </a>
+      <div id="${popoverId}"
+           class="route-map-popover"
+           popover>
+        <img src="{{ '/img/routes/' | absolute_url }}/${route.id}.jpg"
+             alt="${route.name} map"
+             class="route-image"
+             loading="lazy" />
+      </div>
+    `;
+                        const link = container.querySelector('a');
+                        const popover = container.querySelector('.route-map-popover');
+                        link.addEventListener('mouseover', () => popover.showPopover());
+                        link.addEventListener('mouseout', () => popover.hidePopover());
+
+                        return container;
+                    }
+                },
                  {title: "Miles", field: "distance_mi", sorter: "number"},
                     {title: "↑ ft", field: "ascent_m", sorter: "number", formatter: cell => {
                             return Math.round(cell.getValue() * 3.28084);
