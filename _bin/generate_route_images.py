@@ -40,6 +40,7 @@ parser.add_argument('--quality', type=int, default=85, help='JPEG quality (1-100
 parser.add_argument('--port', type=int, default=0, help='Port for local server (0 = auto-select)')
 parser.add_argument('--incremental', action='store_true', help='Only generate images for new/changed routes')
 parser.add_argument('--workers', type=int, default=4, help='Number of parallel workers')
+parser.add_argument('--base-path', type=str, default='', help='Base path for serving content (e.g., __rcr__)')
 args = parser.parse_args()
 
 os.makedirs(args.output_dir, exist_ok=True)
@@ -64,18 +65,49 @@ def find_free_port():
         s.close()
         return port
 
-def start_http_server(directory, port):
+def start_http_server(directory, port, base_path=''):
     """Start a local HTTP server in a separate thread"""
     os.chdir(directory)
-    handler = http.server.SimpleHTTPRequestHandler
 
-    class QuietHTTPRequestHandler(handler):
+    # Create a custom handler that can handle base path
+    class BasePathHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
+        def translate_path(self, path):
+            """
+            Translate request path to actual file path, handling base path if present
+            """
+            # Handle the root case first
+            if path == '/':
+                return super().translate_path('/')
+
+            # Special case: If base_path is just '/', all paths are served from root
+            if base_path == '/':
+                return super().translate_path(path)
+
+            # If base_path is specified and not empty
+            if base_path:
+                # Handle exact path match (with or without trailing slash)
+                if path == f'/{base_path}' or path == f'/{base_path}/':
+                    return super().translate_path('/')
+
+                # Handle subpaths - make sure there's a / after base_path
+                prefix = f'/{base_path}/'
+                if path.startswith(prefix):
+                    # Remove the base path prefix and provide the rest to the parent method
+                    path = '/' + path[len(prefix):]
+
+            # Use the standard translation method from parent class
+            return super().translate_path(path)
+
         def log_message(self, format, *args):
             # Suppress server logs to avoid cluttering the output
             pass
 
-    with socketserver.TCPServer(("", port), handler) as httpd:
-        logger.info(f"Started local server at http://localhost:{port}")
+    with socketserver.TCPServer(("", port), BasePathHTTPRequestHandler) as httpd:
+        base_url = f"http://localhost:{port}"
+        if base_path:
+            logger.info(f"Started local server at {base_url}/{base_path}")
+        else:
+            logger.info(f"Started local server at {base_url}")
         httpd.serve_forever()
 
 @dataclass
@@ -106,6 +138,10 @@ class PlaywrightThread(threading.local):
                 args=[
                     "--disable-web-security",  # Disable CORS
                     "--enable-webgl",
+                    "--ignore-certificate-errors",
+                    "--allow-insecure-localhost",
+                    "--enable-unsafe-webgl",
+                    "--enable-unsafe-swiftshader"
                 ]
             )
             self.page = self.browser.new_page(viewport={"width": 1920, "height": 1080})
@@ -145,7 +181,7 @@ def process_route(task: RouteTask, quality: int) -> Optional[pathlib.Path]:
         logger.info(f"Processing {task.route_key} from {task.url}")
 
         page.goto(task.url, wait_until="networkidle", timeout=30000)
-        page.wait_for_selector("#map.loading-complete", timeout=10000)
+        page.wait_for_selector("#map.loading-complete", timeout=60000)
         page.evaluate("""
             () => {
                 const container = document.getElementById('route-map');
@@ -185,10 +221,14 @@ def generate_route_images():
     port = find_free_port()
     original_dir = os.getcwd()
 
+    base_path = args.base_path
+    if base_path and base_path != '/':
+        base_path = base_path.strip('/')
+
     # Start HTTP server in a separate thread
     server_thread = threading.Thread(
         target=start_http_server,
-        args=(args.site_dir, port),
+        args=(args.site_dir, port, base_path),
         daemon=True
     )
     server_thread.start()
@@ -217,7 +257,12 @@ def generate_route_images():
                     logger.info(f"Skipping {route_key} (unchanged)")
                 continue
 
-        url = f"http://localhost:{port}/routes/{route_key}/"
+        if base_path == '/' or not base_path:
+            # If base_path is just '/', no need to add it
+            url = f"http://localhost:{port}/routes/{route_key}/"
+        else:
+            url = f"http://localhost:{port}/{base_path}/routes/{route_key}/"
+
         tasks.append(RouteTask(route_key, gpx_file, output_path, url))
 
     if not tasks:

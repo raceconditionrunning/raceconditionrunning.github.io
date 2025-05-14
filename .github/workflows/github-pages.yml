@@ -106,6 +106,8 @@ jobs:
       - name: Generate route OpenGraph images
         if: steps.cache-route-images.outputs.cache-hit != 'true'
         run: make og-route-images
+        env:
+          URL_BASE_PATH: ${{ steps.pages.outputs.base_path }}
 
       - name: Save OpenGraph route images to cache
         if: steps.cache-route-images.outputs.cache-hit != 'true'

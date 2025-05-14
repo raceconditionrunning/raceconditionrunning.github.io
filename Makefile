@@ -86,7 +86,7 @@ check-schedules: $(SCHEDULE)
 check: check-images check-html check-javascript check-schedules
 
 og-route-images:
-	python _bin/generate_route_images.py
+	python _bin/generate_route_images.py $(if $(URL_BASE_PATH),--base-path $(URL_BASE_PATH),)
 
 serve: rcc.ics $(ROUTES_YML) $(ROUTE_GEOJSON_FILES)
 	ls _config.yml | entr -r bundle exec jekyll serve --watch --drafts --host=0.0.0.0 $(JEKYLL_FLAGS)
