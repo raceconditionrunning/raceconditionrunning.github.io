@@ -54,7 +54,7 @@ add_h1: true
 <p class="text-secondary">
   If you are having trouble accessing the calendar, try manually by adding
   the following url to your calendar application:
-  <a href="{{ '/rcc.ics' | relative_url }}">{{ '/rcc.ics' | relative_url }}</a>
+  <a href="{{ '/rcc.ics' | relative_url }}">{{ '/rcc.ics' | absolute_url }}</a>
 </p>   <!-- add a query param on ics link to bypass cache for testing (e.g. ?foo) -->
 
 
@@ -96,7 +96,7 @@ add_h1: true
   function highlightDates() {
     const today = new Date();
     let afterNext = false;
-    let runs = Array.prototype.slice.call(document.querySelectorAll("tbody.run"))
+    let runs = [...document.querySelectorAll("tbody.run")]
     runs.forEach(function(element) {
       let date = new Date(element.getAttribute("data-date"));
       date.setDate(date.getDate() + 1);
@@ -116,10 +116,8 @@ add_h1: true
   }
 
   function noteScheduleEnd() {
-    let runs = Array.prototype.slice.call(document.querySelectorAll("tbody.run"))
-    let scheduleFinished = runs.every(function (element){
-      return element.classList.contains("past")
-    })
+    let runs = [...document.querySelectorAll("tbody.run")]
+    let scheduleFinished = runs.every((element) => element.classList.contains("past"))
     if (scheduleFinished) {
       document.getElementById("schedule-finished").style.display = ""
     }

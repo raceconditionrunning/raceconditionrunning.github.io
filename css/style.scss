@@ -89,6 +89,7 @@ tr:has(+ tr) td {
   position: absolute;
   inset: unset;
   border: 1px solid gray;
+  max-width: 80vw;
 }
 
 :target {
