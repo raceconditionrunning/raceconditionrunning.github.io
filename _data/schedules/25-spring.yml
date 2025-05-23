@@ -42,7 +42,7 @@
 -   date: '2025-05-24'
     plan:
     -   time: '8:30'
-        route_id: cse-520-wetherill-ob
+        route_id: cse-magnuson-park-loop-ob
     -   time: '10:00'
         route_id: cse-arboretum-azalea-way-ob
 -   date: '2025-05-31'
