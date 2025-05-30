@@ -5,6 +5,10 @@
 body {
   margin: 1rem auto;
 }
+@view-transition {
+  navigation: auto;
+}
+
 .constrain-width {
     max-width: 750px;
 }
@@ -89,6 +93,8 @@ tr:has(+ tr) td {
   position: absolute;
   inset: unset;
   border: 1px solid gray;
+}
+:popover-open img {
   max-width: 80vw;
 }
 
