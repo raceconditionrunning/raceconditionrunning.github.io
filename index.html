@@ -10,24 +10,24 @@ add_h1: true
       <div class="card-body">
       <h6 class="card-title">Tuesday</h6>
       <p class="card-text"><span class="text-decoration-underline" title="5-6km">3-4 miles</span><br/>
-        <span>Meet in front of CSE2 at 4:40pm.</span> <span class="text-secondary">Run starts at
-      4:45pm sharp.</span></p>
+        <span>Meet in front of CSE2 at <span class="regular-time">4:40pm</span><span class="summer-time" title="This time applies from Memorial Day to Labor Day" hidden>5:25pm</span>.</span> <span class="text-secondary">Run starts at
+      <span class="regular-time">4:45pm</span><span class="summer-time" hidden>5:30pm</span> sharp.</span></p>
     </div>
     </div>
     <div class="col card">
       <div class="card-body">
       <h6 class="card-title">Wednesday</h6>
       <p class="card-text"><span class="text-decoration-underline" title="2-3km">1-2 miles</span><br/>
-        <span>Meet in front of CSE2 at 4:40pm.</span> <span class="text-secondary">Run starts at
-      4:45pm sharp.</span></p>
+        <span>Meet in front of CSE2 at <span class="regular-time">4:40pm</span><span class="summer-time" title="This time applies from Memorial Day to Labor Day" hidden>5:25pm</span>.</span> <span class="text-secondary">Run starts at
+      <span class="regular-time">4:45pm</span><span class="summer-time" hidden>5:30pm</span> sharp.</span></p>
     </div>
     </div>
     <div class="col card">
       <div class="card-body">
       <h6 class="card-title">Thursday</h6>
       <p class="card-text"><span class="text-decoration-underline" title="10-13km">6-8 miles</span><br/>
-        <span>Meet in front of CSE2 at 4:40pm.</span> <span class="text-secondary">Run starts at
-      4:45pm sharp.</span></p>
+        <span>Meet in front of CSE2 at <span class="regular-time">4:40pm</span><span class="summer-time" title="This time applies from Memorial Day to Labor Day" hidden>5:25pm</span>.</span> <span class="text-secondary">Run starts at
+      <span class="regular-time">4:45pm</span><span class="summer-time" hidden>5:30pm</span> sharp.</span></p>
     </div>
     </div>
     <div class="col card">
@@ -123,9 +123,35 @@ add_h1: true
     }
   }
 
+  function displaySummerTime() {
+      // Summer schedule applies from Memorial Day to Labor Day
+      // Memorial day is the last Monday in May, Labor day is the first Monday in September
+      const today = new Date();
+      const memorialDay = new Date(today.getFullYear() + 1, 4, 31);
+      memorialDay.setDate(memorialDay.getDate() - (memorialDay.getDay() + 6) % 7);
+      const laborDay = new Date(today.getFullYear() + 1, 8, 1);
+      laborDay.setDate(laborDay.getDate() + (7 - (laborDay.getDay() + 6) % 7));
+      const isSummer = today >= memorialDay && today < laborDay;
+      document.querySelectorAll(".summer-time").forEach((element) => {
+        if (isSummer) {
+          element.removeAttribute("hidden");
+        } else {
+          element.setAttribute("hidden", "true");
+        }
+      });
+      document.querySelectorAll(".regular-time").forEach((element) => {
+        if (isSummer) {
+          element.setAttribute("hidden", "true");
+        } else {
+          element.removeAttribute("hidden");
+        }
+      });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     highlightDates();
     noteScheduleEnd();
+    displaySummerTime()
   }, false);
 
 </script>

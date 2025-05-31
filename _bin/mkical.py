@@ -122,16 +122,18 @@ def main():
     first_run = min([datetime.strptime(r['date'], '%Y-%m-%d').date() for r in sched])
     start = min(previous_tuesday(datetime.today().date()),
                 previous_tuesday(first_run))
-    # Roughly memorial day to labor day
-    summer_start_date = f"{first_run.year}-W22"
-    summer_start_date = datetime.strptime(summer_start_date + '-1', "%Y-W%W-%w")
-    summer_end_date = f"{first_run.year}-W36"
-    summer_end_date = datetime.strptime(summer_end_date + '-1', "%Y-W%W-%w")
-    next_summer_start_date = f"{first_run.year + 1}-W22"
-    next_summer_start_date = datetime.strptime(next_summer_start_date + '-1', "%Y-W%W-%w")
-    next_summer_end_date = f"{first_run.year + 1}-W36"
-    next_summer_end_date = datetime.strptime(next_summer_end_date + '-1', "%Y-W%W-%w")
-    block_dates = [summer_start_date, summer_end_date, next_summer_start_date, next_summer_end_date]
+    # Summer is Memorial Day to Labor Day
+    # Memorial Day is the last Monday in May
+    # Labor Day is the first Monday in September
+    memorial_day = datetime.strptime(f"{first_run.year}-05-31", "%Y-%m-%d")
+    memorial_day = memorial_day - timedelta(days=memorial_day.weekday())
+    labor_day = datetime.strptime(f"{first_run.year}-09-01", "%Y-%m-%d")
+    labor_day = labor_day + timedelta(days=(7 - labor_day.weekday()) % 7)
+    next_memorial_day = datetime.strptime(f"{first_run.year + 1}-05-31", "%Y-%m-%d")
+    next_memorial_day = next_memorial_day - timedelta(days=next_memorial_day.weekday())
+    next_labor_day = datetime.strptime(f"{first_run.year + 1}-09-01", "%Y-%m-%d")
+    next_labor_day = next_labor_day + timedelta(days=(7 - next_labor_day.weekday()) % 7)
+    block_dates = [memorial_day, labor_day, next_memorial_day, next_labor_day]
     block_is_summer = [True, False, True, False]
     for i, (block_start_date, is_summer) in enumerate(zip(block_dates, block_is_summer)):
         if start < block_start_date.date():
