@@ -123,35 +123,35 @@ add_h1: true
     }
   }
 
-  function displaySummerTime() {
-      // Summer schedule applies from Memorial Day to Labor Day
-      // Memorial day is the last Monday in May, Labor day is the first Monday in September
-      const today = new Date();
-      const memorialDay = new Date(today.getFullYear() + 1, 4, 31);
-      memorialDay.setDate(memorialDay.getDate() - (memorialDay.getDay() + 6) % 7);
-      const laborDay = new Date(today.getFullYear() + 1, 8, 1);
-      laborDay.setDate(laborDay.getDate() + (7 - (laborDay.getDay() + 6) % 7));
-      const isSummer = today >= memorialDay && today < laborDay;
-      document.querySelectorAll(".summer-time").forEach((element) => {
-        if (isSummer) {
-          element.removeAttribute("hidden");
-        } else {
-          element.setAttribute("hidden", "true");
-        }
-      });
-      document.querySelectorAll(".regular-time").forEach((element) => {
-        if (isSummer) {
-          element.setAttribute("hidden", "true");
-        } else {
-          element.removeAttribute("hidden");
-        }
-      });
+  function hideElement(selector) {
+    document.querySelectorAll(selector).forEach((element) => element.setAttribute("hidden", "true"));
+  }
+
+  function showElement(selector) {
+    document.querySelectorAll(selector).forEach((element) => element.removeAttribute("hidden"));
+  }
+
+  function isSummerScheduleActive() {
+    // The summer schedule for RCR applies from Memorial Day to Labor Day.
+    // Memorial Day is the last Monday in May, Labor Day is the first Monday in September.
+    const today = new Date();
+    const memorialDay = new Date(today.getFullYear() + 1, 4, 31);
+    memorialDay.setDate(memorialDay.getDate() - (memorialDay.getDay() + 6) % 7);
+    const laborDay = new Date(today.getFullYear() + 1, 8, 1);
+    laborDay.setDate(laborDay.getDate() + (7 - (laborDay.getDay() + 6) % 7));
+    return today >= memorialDay && today < laborDay;
   }
 
   document.addEventListener('DOMContentLoaded', function () {
     highlightDates();
     noteScheduleEnd();
-    displaySummerTime()
+    if (isSummerScheduleActive()) {
+      showElement(".summer-time");
+      hideElement(".regular-time");
+    } else {
+      showElement(".regular-time");
+      hideElement(".summer-time");
+    }
   }, false);
 
 </script>
