@@ -52,7 +52,7 @@
 -   date: '2025-06-07'
     organized-event: true
     plan:
-        -   time: "8:30"
+        -   time: "8:00"
             route:
                 name: Drumheller Marathon and Half
                 map: /drumheller-marathon-25/

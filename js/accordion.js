@@ -18,21 +18,6 @@ export class AccordionGroup extends HTMLElement {
         this.classList.add('accordion');
     }
     connectedCallback() {
-        // We use this wrapper so we can sneak style element in without impacting
-        // styles that use :first-child or :last-child.
-        const wrapper = document.createElement('div');
-        const style = document.createElement("style");
-
-        // Boostrap styles expect to be applied on block elements
-        style.textContent = `
-        accordion-item, accordion-header, accordion-body, accordion-group {
-    display: block;
-        }
-        `;
-
-        while (this.firstChild) {
-            wrapper.appendChild(this.firstChild);
-        }
         if (!this.id) {
             console.error('Accordion group must have an ID');
         }
@@ -73,8 +58,7 @@ export class AccordionGroup extends HTMLElement {
         // Listen to hash changes and open the corresponding accordion item
         window.addEventListener('hashchange', openBasedOnHash.bind(this));
 
-        this.appendChild(wrapper);
-        this.appendChild(style);
+        this.style.display = this.style.display ? this.style.display : 'block';
         // Run once on page load, but after the accordion has been fully initialized
         window.addEventListener("load", openBasedOnHash.bind(this));
     }
@@ -95,6 +79,7 @@ export class AccordionItem extends HTMLElement {
         const items = this.parentElement.querySelectorAll("accordion-item");
         const index = Array.from(items).indexOf(this);
         this.dataset.index = index;
+        this.style.display = this.style.display ? this.style.display : 'block';
 
     }
 }
@@ -110,7 +95,9 @@ export class AccordionHeader extends HTMLElement {
         const scopedHeaderName = `${parent.id}-header-${parentItem.dataset.index}`;
         const scopedContentName = `${parent.id}-content-${parentItem.dataset.index}`;
         const wrapper = document.createElement('h3');
-        wrapper.classList.add('accordion-header');
+        this.classList.add('accordion-header');
+        this.style.display = this.style.display ? this.style.display : 'block';
+        wrapper.classList.add('mb-0');
         wrapper.id = scopedHeaderName;
         if (parent.hasAttribute("faq")) {
             wrapper.setAttribute("itemprop", "name");
@@ -142,6 +129,7 @@ export class AccordionBody extends HTMLElement {
         const scopedHeaderName = `${parent.id}-header-${parentItem.dataset.index}`;
         const scopedContentName = `${parent.id}-content-${parentItem.dataset.index}`;
         this.id = scopedContentName;
+
         this.setAttribute('aria-labelledby', scopedHeaderName);
         this.setAttribute('data-bs-parent', `#${parent.id}`);
         let wrapper = document.createElement('div');
@@ -157,11 +145,23 @@ export class AccordionBody extends HTMLElement {
         wrapper.classList.add('accordion-body');
         // Move existing children to the new wrapper
         while (this.firstChild) {
-           wrapper.appendChild(this.firstChild);
+            wrapper.appendChild(this.firstChild);
         }
 
         // Append the wrapper as the only child of the custom element
         this.appendChild(wrapper);
+        // HAX: Once only, create a style tag and tuck it into the first accordion body.
+        // We can't put the style any higher up because it will mess with first-child last-child
+        // that boostrap uses to to style accordions
+        if (parentItem.dataset.index == 0) {
+            const styleElement = document.createElement('style');
+            styleElement.textContent = `
+            accordion-body {
+                display: block;
+            }
+        `;
+            this.appendChild(styleElement);
+        }
     }
 }
 
