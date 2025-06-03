@@ -135,9 +135,9 @@ add_h1: true
     // The summer schedule for RCR applies from Memorial Day to Labor Day.
     // Memorial Day is the last Monday in May, Labor Day is the first Monday in September.
     const today = new Date();
-    const memorialDay = new Date(today.getFullYear() + 1, 4, 31);
+    const memorialDay = new Date(today.getFullYear(), 4, 31);
     memorialDay.setDate(memorialDay.getDate() - (memorialDay.getDay() + 6) % 7);
-    const laborDay = new Date(today.getFullYear() + 1, 8, 1);
+    const laborDay = new Date(today.getFullYear(), 8, 1);
     laborDay.setDate(laborDay.getDate() + (7 - (laborDay.getDay() + 6) % 7));
     return today >= memorialDay && today < laborDay;
   }
