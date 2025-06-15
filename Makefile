@@ -23,43 +23,43 @@ $(NEIGHBORHOODS):
 	@wget -c $(NEIGHBORHOODS_URL) -O $@
 
 $(ROUTES_YML): _bin/make_routes_table.py $(ROUTES_GPX_NORMALIZED)
-	python3 $< $(ROUTES_GPX_NORMALIZED) $@
+	uv run python3 $< $(ROUTES_GPX_NORMALIZED) $@
 
 
 routes/geojson/%.geojson: _bin/gpx_to_geojson.py routes/_gpx/%.gpx $(NEIGHBORHOODS)
 	@mkdir -p $(@D)
-	python3 $< --input routes/_gpx/$*.gpx --output $@
+	uv run python3 $< --input routes/_gpx/$*.gpx --output $@
 
 # Batch convert; use when building from scratch (e.g. CI)
 convert-routes:
 	@mkdir -p routes/geojson
-	python3 _bin/gpx_to_geojson.py --input $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(raw))\
+	uv run python3 _bin/gpx_to_geojson.py --input $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(raw))\
 	 	--output $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(patsubst %.gpx, routes/geojson/%.geojson, $(notdir $(raw))))
 
 
 # All routes in one file
 routes/geojson/routes.geojson: _bin/merge_geojson.py $(ROUTE_GEOJSON_FILES)
-	python3 $< $(ROUTE_GEOJSON_FILES) $@
+	uv run python3 $< $(ROUTE_GEOJSON_FILES) $@
 
 routes/gpx/%.gpx: _bin/normalize_gpx.py routes/_gpx/%.gpx
 	@mkdir -p $(@D)
-	python3 $< --input routes/_gpx/$*.gpx --output routes/gpx/$*.gpx
+	uv run python3 $< --input routes/_gpx/$*.gpx --output routes/gpx/$*.gpx
 
 # Batch normalize; use when building from scratch (e.g. CI)
 normalize-routes:
 	@mkdir -p routes/gpx
-	python3 _bin/normalize_gpx.py --input $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(raw))\
+	uv run python3 _bin/normalize_gpx.py --input $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(raw))\
 		--output $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(patsubst routes/_gpx/%, routes/gpx/%,$(raw)))
 
 $(TRANSIT_DATA):
 	_bin/fetch_transit_data.sh
 
 update-locations: _bin/update_location_transit.py $(TRANSIT_DATA_CSV) $(TRANSIT_DATA) $(NEIGHBORHOODS)
-	python3 $<
+	uv run python3 $<
 
 # also generates rcc_weekends.ics
 rcc.ics: _bin/mkical.py $(ROUTES_YML)
-	python3 $<
+	uv run python3 $<
 
 build: rcc.ics $(ROUTES_YML) $(ROUTE_GEOJSON_FILES)
 	bundle exec jekyll build $(JEKYLL_FLAGS)
@@ -78,15 +78,15 @@ check-html:
 	  --cache '{ "timeframe": { "external": "30d" } }'
 
 check-javascript:
-	python3 _bin/check_javascript.py _site
+	uv run python3 _bin/check_javascript.py _site
 
 check-schedules: $(SCHEDULE)
-	python3 _bin/check-schedules.py
+	uv run python3 _bin/check-schedules.py
 
 check: check-images check-html check-javascript check-schedules
 
 og-route-images:
-	python _bin/generate_route_images.py $(if $(URL_BASE_PATH),--base-path $(URL_BASE_PATH),)
+	uv run python _bin/generate_route_images.py $(if $(URL_BASE_PATH),--base-path $(URL_BASE_PATH),)
 
 serve: rcc.ics $(ROUTES_YML) $(ROUTE_GEOJSON_FILES)
 	ls _config.yml | entr -r bundle exec jekyll serve --watch --drafts --host=0.0.0.0 $(JEKYLL_FLAGS)
