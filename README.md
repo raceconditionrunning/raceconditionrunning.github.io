@@ -14,13 +14,13 @@ You should use virtual environments to isolate dependencies for Python.
 
 1. Install [`uv`](https://github.com/astral-sh/uv). Run `uv help` to make sure
 your installation was successful.
-2. Run: `uv add -r requirements.txt` and `bundle install`.
+2. Run: `uv sync` and `bundle install`.
 3. Install [`entr`](https://github.com/eradman/entr), either via running:
 `brew install entr` (for macOS) or `sudo apt install entr`.
 
 ### Running Locally
 
-After you've installed the Python (`uv add -r requirements.txt` ),
+After you've installed the Python (`uv sync` ),
   Ruby (`bundle install`) dependencies and `entr` (see section above for commands),
   run:
 
