@@ -36,7 +36,7 @@ jobs:
           cache: pip
 
       - name: Install Python Dependencies
-        run: pip install -r requirements.txt
+        run: pip install uv && uv sync
 
       - name: Check Schedules
         continue-on-error: false
@@ -100,8 +100,7 @@ jobs:
       - name: Install Playwright
         if: steps.cache-route-images.outputs.cache-hit != 'true'
         run: |
-          pip install playwright pillow
-          playwright install chromium
+          uv sync --extra route-images
 
       - name: Generate route OpenGraph images
         if: steps.cache-route-images.outputs.cache-hit != 'true'

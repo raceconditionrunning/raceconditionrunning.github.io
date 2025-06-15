@@ -5,12 +5,30 @@
 This repo contains the website for Race Condition Running
   http://raceconditionrunning.com/
 
-Install dependencies with `pip3 install -r requirements.txt` and
-`bundle install`.
+## Building and Developing Locally
 
-To test locally, run `make serve` (requires [`entr`](https://github.com/eradman/entr); install with
-`brew install entr` or `sudo apt install entr`), after which the page will be available at
-[http://localhost:4000](http://localhost:4000).
+You should use virtual environments to isolate dependencies for Python.
+  [`uv`](https://github.com/astral-sh/uv) is a great way to simplify dependency
+  and virtual environment management, and it enables you to use per-project
+  Python versions.
+
+1. Install [`uv`](https://github.com/astral-sh/uv). Run `uv help` to make sure
+your installation was successful.
+2. Run: `uv sync` and `bundle install`.
+3. Install [`entr`](https://github.com/eradman/entr), either via running:
+`brew install entr` (for macOS) or `sudo apt install entr`.
+
+### Running Locally
+
+After you've installed the Python (`uv sync` ),
+  Ruby (`bundle install`) dependencies and `entr` (see section above for commands),
+  run:
+
+> `make serve`
+
+From the root of this directory.
+A successful deployment will serve a local instance of `raceconditionrunning.github.io`
+on [http://localhost:4000](`localhost:4000`).
 
 The entire site is built by `_bin/mkical.py` and Jekyll; the live site is built
 and deployed by a GitHub action and served by GitHub pages.

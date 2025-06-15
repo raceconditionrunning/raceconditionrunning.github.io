@@ -1,0 +1,21 @@
+[project]
+name = "raceconditionrunning-github-io"
+version = "0.1.0"
+description = "Website for Race Condition Running (RCR)"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "gpxpy",
+    "haversine",
+    "icalendar",
+    "joblib",
+    "pyyaml",
+    "requests",
+    "tqdm",
+]
+
+[project.optional-dependencies]
+route-images = [
+    "playwright",
+    "pillow",
+]
