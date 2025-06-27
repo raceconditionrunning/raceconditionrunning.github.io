@@ -572,7 +572,8 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             background: transparent;
             width: auto;
             min-width: 200px;
-            font-size: 1rem;
+            line-height: 36px;
+            --bs-table-bg: var(--bs-dark-bg-subtle);
         }
 
         .table th {
@@ -591,15 +592,85 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             padding: 1rem;
         }
 
-        .pswp-caption-content, .pswp__dynamic-caption {
-            font-weight: 300;
+        lap-pace-chart {
+            width: 100%
         }
 
-        track-map {
-            display: block;
-            margin: 0 auto;
-            max-width: 100%;
-            height: min(max(50vh, 300px), 400px);
+        lap-pace-chart rect {
+            transition: .15s;
+        }
+
+        lap-pace-chart .tick line {
+            color: white;
+            opacity: .5;
+        }
+
+        lap-pace-chart .minor {
+            opacity: .4;
+            color: white
+        }
+
+        lap-pace-chart .horizontal-grid {
+            color: white;
+            opacity: .5;
+        }
+
+        lap-pace-chart .data-bar {
+            fill: #777;
+            opacity: .9;
+            stroke: #aaa;
+            stroke-width: .5px;
+        }
+
+        lap-pace-chart .data-bar.extra {
+            fill: #555
+        }
+
+        lap-pace-chart .data-bar.highlighted {
+            fill: #999;
+        }
+
+        lap-pace-chart #flaglines line {
+            stroke: #ccc;
+            stroke-width: 1px
+        }
+
+        lap-pace-chart .finish-flag[data-lap-target='110'] line {
+            stroke: #BD81C6;
+        }
+
+        lap-pace-chart .finish-flag[data-lap-target='110'] polygon {
+            fill: #BD81C6;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10mi"] line {
+            stroke: #dc0000;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10mi"] polygon {
+            fill: #dc0000;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10k"] line {
+            stroke: #dc8400;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10k"] polygon {
+            fill: #dc8400;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="5k"] line {
+            stroke: #65b900;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="5k"] polygon {
+            fill: #65b900;
+        }
+
+        lap-pace-chart .finish-flag text {
+            font-family: var(--sans-font-family);
+            font-weight: bold;
+            font-size: 16px;
         }
 
         .tabulator {
@@ -615,7 +686,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
         }
 
         .tabulator-row.tabulator-group {
-            //background-color: rgba(255, 255, 255, 0.075) !important;
+            background-color: rgba(255, 255, 255, 0.075) !important;
         }
 
         .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs {
@@ -641,7 +712,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
         .tabulator-row.details-opened.tabulator-selectable,
         .tabulator-row.details-opened.tabulator-selectable:hover {
-            background-color: #E0E0E0;
+            background-color: #111;
         }
 
         .tabulator .tabulator-header {
@@ -656,10 +727,6 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             border-top: 2px solid #999;
         }
 
-        .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-top {
-            border-bottom: 2px solid #999;
-        }
-
         .laps-table.tabulator .tabulator-header {
             border-bottom: 1px dashed #999;
         }
@@ -672,12 +739,8 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             padding: 4px;
         }
         .laps-table.tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-bottom {
-            border-top: 1px solid #999;
+            border-top: 1px dashed #999;
             border-bottom: none;
-        }
-        .laps-table.tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-top {
-            border-bottom: 1px solid #999;
-            border-top: none;
         }
 
         .tabulator-row.tabulator-group {
@@ -698,6 +761,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
         .tabulator-tableholder, .tabulator-table {
             max-width: 100%;
         }
+
 
         .bib {
             font-weight: 600;
@@ -841,6 +905,10 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             font-weight: bold;
             font-size: 16px;
         }
+        /* Gallery */
+        .pswp-caption-content, .pswp__dynamic-caption {
+            font-weight: 300;
+        }
     </style>
 </head>
 
@@ -875,17 +943,24 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
         <div class="gap-2 row justify-content-center mb-4">
 
-        <div class="col-auto">
+        <!--div class="col-auto">
             <a class="wavy-button" href="{{ page.registration_link }}" data-goatcounter-click="dm25-apply-full">Apply for Full</a>
             <div class="small">5:30AM</div>
         </div>
         <div class="col-auto">
             <a class="wavy-button complement-color" href="{{ page.registration_link }}" data-goatcounter-click="dm25-register-half">Register for Half</a>
             <div class="small">8:00AM</div>
+        </div-->
+
+
+        <div class="col-auto">
+            <a class="wavy-button" href="#results" data-goatcounter-click="dm25-results">Results</a>
         </div>
+        <!--div class="col-auto">
+            <a class="wavy-button" href="#epilogue" data-goatcounter-click="dm25-epilogue">Epilogue</a>
+        </div-->
 
 
-            <!--<a class="btn btn-lg hero-button" href="#epilogue">Read Epilogue</a>-->
 
         </div>
         <!--div class="row justify-content-center">
@@ -978,7 +1053,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
         </ul>
 
 
-        <h3>Marathon Start List <a href="#marathon-start-list" class="anchor-link" aria-label="Link to this section. Marathon Start List"></a></h2>
+        <h3>Marathon Start List <a href="#marathon-start-list" class="anchor-link" aria-label="Link to this section. Marathon Start List"></a></h3>
         <span class="text-body-tertiary">Updated 5/30/25</span>
 
 
@@ -1028,8 +1103,22 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
 </section>
 
+<section>
+    <div class="container-xxl">
+        <h2 class="mb-4" id="results">Results <a href="#results" class="anchor-link" aria-label="Link to this section. Results"></a></h2>
 
 
+        <h3 class="d-inline" >Marathon</h3><span class="count"></span>
+        <div id="results-marathon" class="mb-5"></div>
+
+        <h3 class="d-inline">Half Marathon</h3><span class="count"></span>
+        <div id="results-half-official" class="mb-3"></div>
+        <hr>
+        <h3 class="d-inline">Unofficial</h3><span class="count"></span>
+        <div id="results-half-unofficial" class="mb-2"></div>
+    </div>
+
+</section>
 
 <section>
     <figure class="gallery lightbox-gallery">
@@ -1296,7 +1385,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
 
-        /*fetch('{{ site.baseurl }}/results/dm25.json')
+        fetch('{{ site.baseurl }}/results/dm25.json')
                 .then(res => res.json())
                 .then(resultsData => {
                     const results = resultsData.results
@@ -1330,13 +1419,26 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
                         let cumulativeWallclock = Number("NaN")
                         for (let startName in starts) {
                             const start = starts[startName]
-                            if (start.bibs[0] <= entry.id && entry.id <= start.bibs[1]) {
-                                startDistance = start.startDistance
-                                startTime = start.time
-                                entry.startTime = startTime
-                                entry.event = startName.includes("half") ? "half" : "marathon"
-                                cumulativeWallclock = durationToSeconds(startTime)
-                                break
+                            if (start.hasOwnProperty("bibRange")) {
+                                if (start.bibRange[0] <= entry.id && entry.id <= start.bibRange[1]) {
+                                    startDistance = start.startDistance
+                                    startTime = start.time
+                                    entry.startTime = startTime
+                                    entry.event = startName.includes("half") ? "half" : (startName.includes("marathon") ?  "marathon" : "half")
+                                    cumulativeWallclock = durationToSeconds(startTime)
+                                    break
+                                }
+                            } else if (start.hasOwnProperty("bibs")) {
+                                if (start.bibs.includes(entry.id)) {
+                                    startDistance = start.startDistance
+                                    startTime = start.time
+                                    entry.startTime = startTime
+                                    entry.event = startName.includes("half") ? "half" : (startName.includes("marathon") ?  "marathon" : "half");
+                                    cumulativeWallclock = durationToSeconds(startTime)
+                                    break
+                                }
+                            } else {
+                                console.warn("Unknown start type for", startName, start)
                             }
                         }
 
@@ -1434,7 +1536,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
                     table.initialize(unofficialResults, halfGoals, {videoLink: resultsData.config.finishVideo, videoStartTime: videoStartTime})
                 })
 
-         */
+
 
     }
 

@@ -1408,7 +1408,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
                         let cumulativeWallclock = Number("NaN")
                         for (let startName in starts) {
                             const start = starts[startName]
-                            if (start.bibs[0] <= entry.id && entry.id <= start.bibs[1]) {
+                            if (start.bibRange[0] <= entry.id && entry.id <= start.bibRange[1]) {
                                 startDistance = start.startDistance
                                 startTime = start.time
                                 entry.startTime = startTime

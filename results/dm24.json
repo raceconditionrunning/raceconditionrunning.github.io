@@ -14,7 +14,7 @@
     "starts": {
       "marathon": {
         "time": "05:30:00;00",
-        "bibs": [
+        "bibRange": [
           240,
           256
         ],
@@ -22,7 +22,7 @@
       },
       "fast-half": {
         "time": "06:00:00;00",
-        "bibs": [
+        "bibRange": [
           160,
           176
         ],
@@ -30,7 +30,7 @@
       },
       "half": {
         "time": "08:00:00;00",
-        "bibs": [
+        "bibRange": [
           0,
           160
         ],
