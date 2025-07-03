@@ -1,0 +1,102 @@
+- date: "2024-06-08"
+  plan:
+    - time: "8:30"
+      route_id: beacon-cheasty-lwb-genessee-cc
+    - time: "9:30"
+      route_id: cc-chief-sealth-new-holly-ob
+
+- date: "2024-06-16"
+  plan:
+    - time: "8:30"
+      route_id: cougar-airshaft-wilderness-falls-loop
+
+- date: "2024-06-22"
+  plan:
+    - time: "8:30"
+      route_id: sodo-mts-sound-i90-trail-ob
+    - time: "9:30"
+      route_id: sodo-duwamish-trail-1st-loop
+
+- date: "2024-06-29"
+  plan:
+    - time: "8:30"
+      route_id: cse-520-ob
+    - time: "9:45"
+      route_id: cse-eastlake-stairs-volunteer-park-cap-hill
+
+- date: "2024-07-06"
+  plan:
+    - time: "8:30"
+      route_id: northgate-cemeteries-interurban-boeing-creek-ob
+    - time: "10:30"
+      route_id: northgate-reservoirs-roosevelt
+
+- date: "2024-07-13"
+  plan:
+    - time: "8:30"
+      route_id: locks-fremont-bridge-loop
+    - time: "9:35"
+      route_id: locks-discovery-radar-magnolia-discovery-ob
+
+- date: "2024-07-20"
+  plan:
+    - time: "7:45"
+      route_id: bainbridge-coast-to-coast-loop
+      notes: "Take the 7:55 ferry from the terminal https://maps.app.goo.gl/ZtprmndPHd2rGWrGA"
+
+- date: "2024-07-27"
+  plan:
+    - time: "8:30"
+      route_id: cse-arb-lwb-seward-loop-cc
+
+- date: "2024-08-03"
+  plan:
+    - time: "8:30"
+      route_id: cap-hill-volunteer-park-westlake
+    - time: "9:10"
+      route_id: westlake-sculpture-marina-ob
+
+- date: "2024-08-10"
+  plan:
+    - time: "8:00"
+      route_id: beacon-i90-luther-burbank-ob
+
+- date: "2024-08-17"
+  plan:
+    - time: "8:30"
+      route:
+        name: "Westlake, Elliot Bay, Discovery, Ship Canal, South Lake Union Loop"
+        map: https://onthegomap.com/s/t5lt2fln
+        distance_mi: 15.8
+
+- date: "2024-08-24"
+  plan:
+    - time: "8:30"
+      route_id: cid-i90-trail-south-bellvue
+    - time: "9:55"
+      route_id: sobell-follow-2-line-redtech
+
+- date: "2024-08-31"
+  plan:
+    - time: "9:00"
+      route_id: lynnwood-jogn-interurban-northgate
+
+- date: "2024-09-07"
+  plan:
+    - time: "8:30"
+      route_id: cse-woodinville-cafe
+
+- date: "2024-09-14"
+  plan:
+    - time: "8:30"
+      route_id: cse-lwb-frog-pond-i90-trail-sodo
+    - time: "9:05"
+      route_id: sodo-duwamish-trail-1st-loop
+
+- date: "2024-09-21"
+  plan:
+    - time: "8:30"
+      route_id: roosevelt-carkeek-phinney-ridge-loop
+    - time: "10:30"
+      route_id: roosevelt-green-lake-loop
+
