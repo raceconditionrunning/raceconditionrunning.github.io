@@ -1,0 +1,13 @@
+- date: "2025-06-21"
+  plan:
+    - time: "8:30"
+      route_id: roosevelt-carkeek-phinney-ridge-loop
+    - time: "10:45"
+      route_id: roosevelt-green-lake-loop
+
+- date: "2025-06-28"
+  plan:
+    - time: "8:30"
+      route_id: gas-works-locks-salmon-bay-loop
+    - time: "10:00"
+      route_id: gas-works-lake-union-loop
