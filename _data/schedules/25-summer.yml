@@ -22,7 +22,7 @@
 - date: "2025-07-12"
   plan:
     - time: "8:30"
-      route_id: locks-discovery-radar-magnolia-discovery-ob
+      route_id: cse-lake-union-loop
 
 - date: "2025-07-19"
   plan:
@@ -34,12 +34,13 @@
     - time: "8:30"
       route_id: cse-arb-lwb-seward-loop-cc
 
-- date: "2025-08-02"
+- date: "2025-08-03"
   plan:
     - time: "8:30"
-      route_id: cap-hill-volunteer-park-westlake
-    - time: "9:10"
-      route_id: westlake-sculpture-marina-ob
+      route_id: cse-magnuson-park-loop-ob
+    - time: "10:00"
+      route_id: cse-foster-arboretum-loop
+      notes: "Changed to Aug 3 due to several folks away on Aug 2"
 
 - date: "2025-08-09"
   plan:
@@ -53,20 +54,19 @@
 
 - date: "2025-08-23"
   plan:
-    - time: "8:30"
-      route_id: cid-i90-trail-south-bellvue
-    - time: "9:55"
-      route_id: sobell-follow-2-line-redtech
+    - time: "7:45"
+      route_id: bainbridge-coast-to-coast-loop
+      notes: "Take the 7:55 ferry from the terminal https://maps.app.goo.gl/ZtprmndPHd2rGWrGA"
 
 - date: "2025-08-30"
   plan:
-    - time: "9:00"
-      route_id: westlake-cranes-alki-sodo
+    - time: "8:30"
+      route_id: roosevelt-carkeek-golden-gardens-roses-loop
 
 - date: "2025-09-06"
   plan:
     - time: "8:30"
-      route_id: cse-woodinville-cafe
+      route_id: sodo-alki-camp-long-chinese-garden-loop
 
 - date: "2025-09-13"
   plan:
@@ -77,6 +77,5 @@
 
 - date: "2025-09-20"
   plan:
-    - time: "7:45"
-      route_id: bainbridge-coast-to-coast-loop
-      notes: "Take the 7:55 ferry from the terminal https://maps.app.goo.gl/ZtprmndPHd2rGWrGA"
+    - time: "8:30"
+      route_id: cid-marginal-alki-sodo
