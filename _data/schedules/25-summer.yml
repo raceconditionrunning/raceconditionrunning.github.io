@@ -38,7 +38,7 @@
   plan:
     - time: "8:30"
       route_id: cse-magnuson-park-loop-ob
-    - time: "10:00"
+    - time: "10:15"
       route_id: cse-foster-arboretum-loop
       notes: "Changed to Aug 3 due to several folks away on Aug 2"
 
@@ -71,11 +71,11 @@
 - date: "2025-09-13"
   plan:
     - time: "8:30"
-      route_id: cse-lwb-frog-pond-i90-trail-sodo
-    - time: "9:05"
-      route_id: sodo-duwamish-trail-1st-loop
+      route_id: cse-portage-sculpture-locks-loop
 
 - date: "2025-09-20"
   plan:
     - time: "8:30"
-      route_id: cid-marginal-alki-sodo
+      route_id: locks-discovery-magnolia-discovery-ob
+    - time: "10:15"
+      route_id: locks-fremont-bridge-loop
