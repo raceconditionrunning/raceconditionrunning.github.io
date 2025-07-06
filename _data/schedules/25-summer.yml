@@ -32,7 +32,9 @@
 - date: "2025-07-26"
   plan:
     - time: "8:30"
-      route_id: cse-arb-lwb-seward-loop-cc
+      route_id: cc-genessee-lwb-seward-loop-ob
+    - time: "10:15"
+      route_id: cc-chief-sealth-new-holly-ob
 
 - date: "2025-08-03"
   plan:
