@@ -15,9 +15,9 @@
 - date: "2025-07-05"
   plan:
     - time: "8:30"
-      route_id: northgate-cemeteries-interurban-boeing-creek-ob
-    - time: "10:30"
-      route_id: northgate-reservoirs-roosevelt
+      route_id: westlake-jack-perry-memorial-park-ob
+    - time: "9:30"
+      route_id: westlake-dravus-street-ob
 
 - date: "2025-07-12"
   plan:
