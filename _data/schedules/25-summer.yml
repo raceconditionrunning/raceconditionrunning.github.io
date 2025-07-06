@@ -22,15 +22,12 @@
 - date: "2025-07-12"
   plan:
     - time: "8:30"
-      route_id: locks-fremont-bridge-loop
-    - time: "9:35"
       route_id: locks-discovery-radar-magnolia-discovery-ob
 
 - date: "2025-07-19"
   plan:
-    - time: "7:45"
-      route_id: bainbridge-coast-to-coast-loop
-      notes: "Take the 7:55 ferry from the terminal https://maps.app.goo.gl/ZtprmndPHd2rGWrGA"
+    - time: "8:30"
+      route_id: northgate-cemeteries-interurban-boeing-creek-ob
 
 - date: "2025-07-26"
   plan:
@@ -52,10 +49,7 @@
 - date: "2025-08-16"
   plan:
     - time: "8:30"
-      route:
-        name: "Westlake, Elliot Bay, Discovery, Ship Canal, South Lake Union Loop"
-        map: https://onthegomap.com/s/t5lt2fln
-        distance_mi: 15.8
+      route_id: lynnwood-jogn-interurban-northgate
 
 - date: "2025-08-23"
   plan:
@@ -67,7 +61,7 @@
 - date: "2025-08-30"
   plan:
     - time: "9:00"
-      route_id: lynnwood-jogn-interurban-northgate
+      route_id: westlake-cranes-alki-sodo
 
 - date: "2025-09-06"
   plan:
@@ -83,7 +77,6 @@
 
 - date: "2025-09-20"
   plan:
-    - time: "8:30"
-      route_id: roosevelt-carkeek-phinney-ridge-loop
-    - time: "10:30"
-      route_id: roosevelt-green-lake-loop
+    - time: "7:45"
+      route_id: bainbridge-coast-to-coast-loop
+      notes: "Take the 7:55 ferry from the terminal https://maps.app.goo.gl/ZtprmndPHd2rGWrGA"
