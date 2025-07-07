@@ -11,3 +11,73 @@
       route_id: gas-works-locks-salmon-bay-loop
     - time: "10:00"
       route_id: gas-works-lake-union-loop
+
+- date: "2025-07-05"
+  plan:
+    - time: "8:30"
+      route_id: westlake-jack-perry-memorial-park-ob
+    - time: "9:30"
+      route_id: westlake-dravus-street-ob
+
+- date: "2025-07-12"
+  plan:
+    - time: "8:30"
+      route_id: cse-lake-union-loop
+
+- date: "2025-07-19"
+  plan:
+    - time: "8:30"
+      route_id: northgate-cemeteries-interurban-boeing-creek-ob
+
+- date: "2025-07-26"
+  plan:
+    - time: "8:30"
+      route_id: cc-genessee-lwb-seward-loop-ob
+    - time: "10:15"
+      route_id: cc-chief-sealth-new-holly-ob
+
+- date: "2025-08-03"
+  plan:
+    - time: "8:30"
+      route_id: cse-magnuson-park-loop-ob
+    - time: "10:15"
+      route_id: cse-foster-arboretum-loop
+      notes: "Changed to Aug 3 due to several folks away on Aug 2"
+
+- date: "2025-08-09"
+  plan:
+    - time: "8:00"
+      route_id: beacon-i90-luther-burbank-ob
+
+- date: "2025-08-16"
+  plan:
+    - time: "8:30"
+      route_id: lynnwood-jogn-interurban-northgate
+
+- date: "2025-08-23"
+  plan:
+    - time: "7:45"
+      route_id: bainbridge-coast-to-coast-loop
+      notes: "Take the 7:55 ferry from the terminal https://maps.app.goo.gl/ZtprmndPHd2rGWrGA"
+
+- date: "2025-08-30"
+  plan:
+    - time: "8:30"
+      route_id: roosevelt-carkeek-golden-gardens-roses-loop
+
+- date: "2025-09-06"
+  plan:
+    - time: "8:30"
+      route_id: sodo-alki-camp-long-chinese-garden-loop
+
+- date: "2025-09-13"
+  plan:
+    - time: "8:30"
+      route_id: cse-portage-sculpture-locks-loop
+
+- date: "2025-09-20"
+  plan:
+    - time: "8:30"
+      route_id: locks-discovery-magnolia-discovery-ob
+    - time: "10:15"
+      route_id: locks-fremont-bridge-loop
