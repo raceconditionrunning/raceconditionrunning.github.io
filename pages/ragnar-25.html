@@ -1,0 +1,904 @@
+---
+permalink: ragnar-25/
+redirect_from:
+- /ragnar/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RCR Ragnar NWP 2025 Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="theme-color" content="#000000">
+  <link rel="manifest" href="{{ site.baseurl}}/maps/ragnar-23-manifest.json">
+  <!--<meta property="og:image" content="{{ site.baseurl }}/img/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ site.baseurl }}/ragnar-23/">
+  <meta property="og:title" content="">
+  <meta property="og:description" content=".">-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+        integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+        crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+          integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+          crossorigin=""></script>
+  <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+  <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css'
+        rel='stylesheet'/>
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.1/dist/L.Control.Locate.min.js"
+          charset="utf-8"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-sidebar-v2@3.2.3/css/leaflet-sidebar.min.css"
+        integrity="sha256-10dwwxs/pdWEYoC56aJvmY3kbMMa9/3uSWWNkGcrGq8=" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/leaflet-sidebar-v2@3.2.3/js/leaflet-sidebar.min.js"
+          integrity="sha256-4r81BYKeNxSG+nrK/UPQq75pDlH+GkiZn/zc/xkNMLA=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"
+          integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        integrity="sha256-wLz3iY/cO4e6vKZ4zRmo4+9XDpMcgKOvv/zEU3OMlRo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  {% include analytics.html %}
+
+</head>
+<style>
+
+    :root {
+        --theme-primary-color: #F17A21;
+        --theme-primary-color-bright: #ff6f00;
+        --bs-btn-hover-bg: var(--theme-primary-color-bright);
+        --bs-link-hover-color: var(--theme-primary-color-bright);
+        --bs-btn-hover-color: white;
+        --bs-btn-active-bg: var(--theme-primary-color-bright);
+        --bs-btn-hover-border-color: transparent;
+    }
+
+    body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+
+    a {
+        color: var(--theme-primary-color);
+    }
+
+    .anchor-link {
+        padding: 0 .175rem;
+        font-weight: 400;
+        color: #d2650c;
+        text-decoration: none;
+        opacity: 0;
+        transition: color 0.15s ease-in-out, opacity 0.15s ease-in-out;
+    }
+
+    .anchor-link::after {
+        content: "#";
+    }
+
+    .anchor-link:focus, .anchor-link:hover, :hover > .anchor-link, :target > .anchor-link {
+        color: #fd8f00;
+        text-decoration: none;
+        opacity: 1;
+    }
+
+    .btn-outline-primary {
+        --bs-btn-color: var(--theme-primary-color);
+        --bs-btn-border-color: var(--theme-primary-color);
+        --bs-btn-hover-bg: var(--theme-primary-color);
+        --bs-btn-hover-border-color: var(--theme-primary-color);
+
+        color: var(--theme-primary-color)
+    }
+
+    ul {
+        /* Don't jam bullet at edge of screen on mobile */
+        padding-left: 1rem
+    }
+
+    @media screen and (min-width: 700px) {
+        ul {
+            padding-left: 0;
+        }
+    }
+
+    .imprint {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-style: italic;
+        font-weight: 300;
+    }
+
+    .imprint a {
+        text-decoration: none;
+        color: #666;
+    }
+
+    .imprint img {
+        width: 100px;
+        opacity: .5;
+    }
+
+    #map {
+        height: 100vh
+    }
+
+    .leaflet-sidebar-tabs > li.active, .leaflet-sidebar-tabs > ul > li.active,
+    .leaflet-sidebar-header {
+        background-color: var(--theme-primary-color);
+    }
+
+    .leaflet-container {
+        font-size: inherit;
+    }
+
+    .leaflet-sidebar-close {
+        margin-right: 1rem;
+    }
+
+    .leaflet-sidebar-header {
+        position: sticky;
+        top: 0
+    }
+
+    .leaflet-popup-content {
+        font-size: 1rem;
+        margin: 1rem;
+    }
+
+    .leaflet-container {
+        font-family: inherit;
+    }
+
+    .leaflet-container a.leaflet-popup-close-button {
+        padding: .5rem .5rem 0 0;
+    }
+
+    .leaflet-popup-content h3 {
+        margin-top: 0;
+        margin-bottom: .5rem;
+    }
+
+    .leaflet-popup-content-wrapper {
+        box-shadow: 0 3px 14px rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+    }
+
+    .leaflet-popup {
+        bottom: 1rem !important;
+        left: 1rem !important;
+    }
+
+    .leaflet-popup-tip-container {
+        top: 0px !important;
+        overflow: auto !important;
+        display: none;
+    }
+
+    .leaflet-popup-tip {
+        box-shadow: none !important;
+        background-clip: none !important;
+        display: none;
+    }
+
+    .leaflet-popup:before {
+        display: none;
+        content: "";
+        position: absolute;
+        border: 13px solid transparent;
+        border-bottom-color: white;
+        bottom: 0px;
+        margin-left: -13px;
+    }
+
+    .station-marker {
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 2rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        opacity: .85;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+        letter-spacing: -1px;
+    }
+
+    .station-name {
+        font-size: 1rem
+    }
+
+    .leaflet-container a {
+        color: inherit;
+    }
+
+    @keyframes leaflet-livemarker-pulsate {
+        from {
+            transform: scale(0.2);
+            opacity: 0.0;
+        }
+        5% {
+            opacity: .6;
+        }
+        95% {
+            transform: scale(1.3);
+            opacity: 0;
+        }
+        to {
+            transform: scale(0.7);
+            opacity: 0;
+        }
+    }
+
+    .leaflet-livemarker,
+    .leaflet-livemarker-small {
+        width: 36px;
+        height: 36px;
+        background: #000;
+        border-radius: 50%;
+    }
+
+    .leaflet-livemarker i.inner,
+    .leaflet-livemarker-small i.inner {
+        display: block;
+        background: #000;
+        width: calc(100% - 6px);
+        height: calc(100% - 6px);
+        border-radius: 50%;
+        margin-left: 3px;
+        margin-top: 3px;
+    }
+
+    .leaflet-livemarker-small {
+        width: 17px;
+        height: 17px;
+    }
+
+    .leaflet-livemarker i.pulse,
+    .leaflet-livemarker-small i.pulse {
+        display: block;
+        animation: leaflet-livemarker-pulsate 1.5s ease-in-out infinite;
+    / / border: 1 pt solid #fff;
+        --pulse-color: #444;
+        border-radius: 51px;
+        box-shadow: inset 0 0 3px var(--pulse-color), inset 0 0 3px var(--pulse-color), inset 0 0 3px var(--pulse-color), 0 0 3px var(--pulse-color), 0 0 3px var(--pulse-color), 0 0 3px var(--pulse-color);
+        /* set the ring's new dimension and re-center it */
+        height: 70px !important;
+        width: 70px !important;
+        position: absolute;
+        top: -18px;
+        left: -18px
+    }
+
+    .leaflet-livemarker-small i.pulse {
+        height: 39px !important;
+        width: 39px !important;
+        top: -11px;
+        left: -11px;
+    }
+
+    .leaflet-livemarker::after {
+        content: attr(data-age);
+        background-color: white;
+        color: #38f;
+        font-size: 1rem;
+        padding: 1px 8px;
+        position: absolute;
+        top: -8px;
+        left: 24px;
+        text-align: center;
+        border-radius: 20px;
+    }
+
+    .leaflet-livemarker i.inner::after {
+        content: attr(data-label-text);
+        text-align: center;
+        color: #EEE;
+        font-size: 1rem;
+        text-align: center;
+        display: block;
+        font-style: normal;
+
+    }
+
+    .leaflet-livemarker.stale::after {
+        color: #6584b2;
+    }
+
+    .leaflet-livemarker .image {
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        height: 80%;
+        width: 80%;
+        border-radius: 50%;
+    }
+
+    .leaflet-livemarker.stale .image {
+        opacity: .6;
+    }
+
+    @media only screen and (max-width: 768px) {
+        .leaflet-control-attribution {
+            display: none;
+        }
+    }
+</style>
+<body>
+
+
+<section id="course-map">
+  <div id="sidebar" class="leaflet-sidebar collapsed">
+    <!-- Nav tabs -->
+    <div class="leaflet-sidebar-tabs">
+      <ul role="tablist"> <!-- top aligned tabs -->
+        <li><a href="#assignments" role="tab"><i class="bi bi-calendar-range-fill"></i></a></li>
+        <li><a href="#leg-notes" role="tab"><i class="bi bi-info-circle-fill"></i></a></li>
+        <!--li><a href="#van-directions" role="tab"><i class="bi bi-car-front-fill"></i></a></li-->
+      </ul>
+
+    </div>
+
+    <!-- Tab panes -->
+    <div class="leaflet-sidebar-content">
+      <div class="leaflet-sidebar-pane" id="assignments">
+        <h1 class="leaflet-sidebar-header mb-2">
+          Leg Assignments
+          <div class="leaflet-sidebar-close"><i class="bi bi-caret-left"></i></div>
+        </h1>
+        <div id="assignments-content">
+          <table class="table">
+            <thead>
+            <tr>
+              <th class="col-data-1">Runner</th>
+              <th class="col-data-2">1st</th>
+              <th class="col-data-3">2nd</th>
+              <th class="col-data-4">3rd</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td class="col-value-1"><a href="#" class="runner-link">1 Aishwarya</a></td>
+              <td class="col-value-2"><label>6.4</label><br><a href="#" class="leg-link">L1</a>
+              </td>
+              <td class="col-value-2"><label>4.5</label><br><a href="#" class="leg-link">L13</a>
+              </td>
+              <td class="col-value-2"><label>3.2</label><br><a href="#" class="leg-link">L25</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-value-1"><a href="#" class="runner-link">2 Ellis</a></td>
+              <td class="col-value-2"><label>4.8</label><br><a href="#" class="leg-link">L2</a>
+              </td>
+              <td class="col-value-2"><label>5.1</label><br><a href="#" class="leg-link">L14</a>
+              </td>
+              <td class="col-value-2"><label>2.8</label><br><a href="#" class="leg-link">L26</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-value-1"><a href="#" class="runner-link">3 Theo</a></td>
+              <td class="col-value-2"><label>9</label><br><a href="#" class="leg-link">L3</a>
+              </td>
+              <td class="col-value-2"><label>6.6</label><br><a href="#" class="leg-link">L15</a>
+              </td>
+              <td class="col-value-2"><label>3.1</label><br><a href="#" class="leg-link">L27</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-value-1"><a href="#" class="runner-link">4 Anshul</a></td>
+              <td class="col-value-2"><label>3.8</label><br><a href="#" class="leg-link">L4</a>
+              </td>
+              <td class="col-value-2"><label>4</label><br><a href="#" class="leg-link">L16</a>
+              </td>
+              <td class="col-value-2"><label>2.5</label><br><a href="#" class="leg-link">L28</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-value-1"><a href="#" class="runner-link">5 Ethan W.</a></td>
+              <td class="col-value-2"><label>2.7</label><br><a href="#" class="leg-link">L5</a>
+              </td>
+              <td class="col-value-2"><label>8.2</label><br><a href="#" class="leg-link">L17</a>
+              </td>
+              <td class="col-value-2"><label>8</label><br><a href="#" class="leg-link">L29</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-value-1"><a href="#" class="runner-link">6 Hannah</a></td>
+              <td class="col-value-2"><label> 3.8</label><br><a href="#" class="leg-link">L6</a>
+              </td>
+              <td class="col-value-2"><label> 5.6</label><br><a href="#" class="leg-link">L18</a>
+              </td>
+              <td class="col-value-2"><label> 5.6</label><br><a href="#" class="leg-link">L30</a>
+              </td>
+            </tr>
+            <tr class="border-top border-3">
+              <td class="col-value-1"><a href="#" class="runner-link">7 James</a></td>
+              <td class="col-value-2"><label>7.3</label><br><a href="#" class="leg-link">L7</a>
+              </td>
+              <td class="col-value-2"><label> 10.5</label><br><a href="#" class="leg-link">L19</a>
+              </td>
+              <td class="col-value-2"><label> 6.4</label><br><a href="#" class="leg-link">L31</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-value-1"><a href="#" class="runner-link">8 Chandra</a></td>
+              <td class="col-value-2"><label>6</label><br><a href="#" class="leg-link"
+              >L8</a></td>
+              <td class="col-value-2"><label>5.5</label><br><a href="#" class="leg-link">L20</a>
+              </td>
+              <td class="col-value-2"><label> 7.7</label><br><a href="#" class="leg-link">L32</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-value-1"><a href="#" class="runner-link">9 Ethan P.</a></td>
+              <td class="col-value-2"><label> 6.6</label><br><a href="#" class="leg-link">L9</a>
+              </td>
+              <td class="col-value-2"><label> 2.8</label><br><a href="#" class="leg-link">L21</a>
+              </td>
+              <td class="col-value-2"><label> 6.8</label><br><a href="#" class="leg-link">L33</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-value-1"><a href="#" class="runner-link">10 Margaret</a></td>
+              <td class="col-value-2"><label>6.3</label><br><a href="#" class="leg-link">L10</a>
+              </td>
+              <td class="col-value-2"><label>2</label><br><a href="#" class="leg-link"
+              >L22</a></td>
+              <td class="col-value-2"><label> 5.7</label><br><a href="#" class="leg-link">L34</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-value-1"><a href="#" class="runner-link">11 Zach</a></td>
+              <td class="col-value-2"><label>5</label><br><a href="#" class="leg-link">L11</a>
+              </td>
+              <td class="col-value-2"><label>9.8</label><br><a href="#" class="leg-link">L23</a>
+              </td>
+              <td class="col-value-2"><label>3.6</label><br><a href="#" class="leg-link">L35</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-value-1"><a href="#" class="runner-link">12 Nick</a></td>
+              <td class="col-value-2"><label>4.2</label><br><a href="#" class="leg-link">L12</a>
+              </td>
+              <td class="col-value-2"><label>9</label><br><a href="#" class="leg-link">L24</a>
+              </td>
+              <td class="col-value-2"><label>5.1</label><br><a href="#" class="leg-link">L36</a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+      <div class="leaflet-sidebar-pane" id="leg-notes">
+        <h1 class="leaflet-sidebar-header mb-2">
+          Leg Info
+          <div class="leaflet-sidebar-close"><i class="bi bi-caret-left"></i></div>
+        </h1>
+        <div id="leg-notes-content"></div>
+      </div>
+
+      <!--div class="leaflet-sidebar-pane" id="van-directions">
+          <h1 class="leaflet-sidebar-header mb-2">
+              Van Directions
+              <div class="leaflet-sidebar-close"><i class="bi bi-caret-left"></i></div>
+          </h1>
+          <div id="van-directions-content"></div>
+      </div-->
+
+
+    </div>
+  </div>
+  <div id="map"></div>
+</section>
+
+<!--suppress JSVoidFunctionReturnValueUsed -->
+<script type="module">
+
+    import {download, legToGPX, formatDuration} from "../js/common.js";
+
+    Promise.all([
+        fetch("{{ site.baseurl }}/maps/ragnar-nwp-25.json")
+    ])
+        .then(responses => Promise.all(responses.map(res => res.json())))
+        .then(([legs]) => {
+            let routeGeoJSON = {type: "FeatureCollection", features: []}
+            let exchangesGeoJSON = {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "id": 0,
+                            "address": {}
+                        },
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [
+                                -122.753892034, 49.001428375
+                            ]
+                        }
+                    }
+                ]
+            }
+            exchangesGeoJSON.features.push()
+            let waypoints = [{
+                "type": "_waypoint",
+                "desc": "Exchange 0",
+                "rad": 100,
+                "lat": 49.001428375,
+                "lon": -122.753892034
+            }]
+            const legNumberRegex = /Leg (\d+)/;
+            const difficultyRegex = /Difficulty - (\w+)/;
+            // Look for "No Van Support" in the meta data name
+            const noVanSupportRegex = /No Van Support/;
+            for (let i = 0; i < legs.length; i++) {
+                let leg = legs[i]
+                let points = legs[i].track
+
+                let coordinates = []
+                for (let point of points) {
+                    coordinates.push([point.Lon, point.Lat, point.Ele])
+                }
+                const elevChange = []
+                if (points.length > 1) {
+                    for (let j = 1; j < points.length; j++) {
+                        elevChange.push(points[j].Ele - points[j - 1].Ele)
+                    }
+                }
+                let segment = {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "LineString",
+                        "coordinates": coordinates
+                    },
+                    "properties": {
+                        "notes": leg.notes,
+                        "vanDirections": leg.van_directions,
+                        "vanSupport": !leg.meta.name.match(/No Van Support/),
+                        "ascent": (elevChange.reduce((a, b) => a + Math.max(b, 0), 0) * 3.28).toFixed(0),
+                        "descent": (-elevChange.reduce((a, b) => a + Math.min(b, 0), 0) * 3.28).toFixed(0),
+                        "difficulty": leg.meta.difficulty ? leg.meta.difficulty.match(difficultyRegex)[1] : "unknown",
+                        "legNumber": parseInt(leg.meta.name.match(legNumberRegex)[1]),
+                        "distance": (leg.meta.distance / 1609.344).toFixed(2), // convert from meters to miles
+                    }
+                }
+                routeGeoJSON.features.push(segment)
+                const endPoint = leg.track[leg.track.length - 1]
+                let exchange = {
+                    "type": "Feature",
+                    "properties": {
+                        "id": i + 1,
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            endPoint.Lon, endPoint.Lat
+                        ]
+                    }
+                }
+                exchangesGeoJSON.features.push(exchange)
+                waypoints.push({
+                    "_type": "waypoint",
+                    "desc": `Exchange ${i + 1}`,
+                    "rad": 100,
+                    "lat": Number(endPoint.Lat),
+                    "lon": Number(endPoint.Lon)
+                })
+
+            }
+
+            // initialize the map
+            let map = L.map('map', {
+                fullscreenControl: true,
+                scrollWheelZoom: false
+            })
+            L.control.scale().addTo(map);
+            map.createPane("marks")
+            map.getPane("marks").style.zIndex = 650;
+            // Allow scroll interaction while the user is engaged with the map, but not while just landing or casually scrolling the page
+            map.on('focus', () => map.scrollWheelZoom.enable());
+            map.on('blur', () => map.scrollWheelZoom.disable());
+
+            // load a tile layer
+            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                maxZoom: 18,
+                minZoom: 9,
+                id: 'nickswalker/cljjd8u5w001701rgbzkp6r62',
+                tileSize: 512,
+                zoomOffset: -1,
+                accessToken: 'pk.eyJ1Ijoibmlja3N3YWxrZXIiLCJhIjoiY2t0ZjgyenE4MDR1YjJ1cno0N3hxYzI4YSJ9.ivPdsoEtV9TaLGbOOfFXKA'
+            }).addTo(map);
+            L.control.locate({keepCurrentZoomLevel: true, flyTo: true}).addTo(map);
+
+            function downloadLegGPX(legNumber) {
+                let gpxString = legToGPX(routeGeoJSON.features[legNumber - 1].geometry.coordinates, legNumber, "2023")
+                download(gpxString, "application/gpx+xml", `ragnar-nwp-leg-${legNumber}.gpx`)
+            }
+
+            let exchanges = L.geoJSON(exchangesGeoJSON, {
+                pointToLayer: function (feature, latlng) {
+                    let labelMarker = L.circleMarker(latlng, {
+                        radius: 0,
+                        weight: 0,
+                        opacity: 0,
+                        fillOpacity: 0
+                    });
+                    let exchangeNumber = feature.properties.id
+                    labelMarker.bindTooltip(exchangeNumber.toString(), {
+                        "permanent": true,
+                        "offset": L.point(0, 0),
+                        "direction": "center",
+                        "className": "station-marker",
+
+                    })
+                    let backingCircle = L.circleMarker(latlng, {
+                        radius: 10,
+                        weight: 0,
+                        opacity: 0,
+                        color: "rgba(0,0,0,0)"
+                    });
+                    //backingCircle
+                    return L.featureGroup([labelMarker, backingCircle]);
+
+                },
+                onEachFeature(feature, layer) {
+                    if (feature.properties.addressString) {
+                        layer.bindTooltip(feature.properties.addressString.replaceAll("\n", "<br/>"), {
+                            "offset": [20, 0],
+                            "direction": "right",
+                            "className": "station-name",
+                            opacity: 0.75
+                        });
+                    }
+                    layer.on('mouseover', e => {
+                        e.layer.openTooltip();
+                    });
+                    layer.on('mouseout', function (e) {
+                        this.closeTooltip();
+                    });
+                }
+            })
+
+            exchanges.on("click", function (e) {
+                setClickedLeg(null)
+                let parent = e.layer._eventParents;
+
+                let layer = parent[Object.keys(parent)[0]]
+                if (clickedExchange === layer) {
+                    // Allow unselection
+                    clickedExchange = null
+                    return
+                }
+
+                clickedExchange = layer
+                sidebar.open("van-directions")
+            })
+
+
+            let clickedLeg = null
+            let clickedExchange = null
+            let activeSidebarPane = "leg-notes"
+
+            function setClickedLeg(newClickedLeg) {
+                if (clickedLeg) {
+                    clickedLeg.setStyle({color: inactiveLegColor})
+                }
+                if (newClickedLeg) {
+                    newClickedLeg.setStyle({color: activeLegColor})
+                }
+                clickedLeg = newClickedLeg
+            }
+
+            function scrollToActiveLeg(pane, smooth = true) {
+                let legElement
+                if (clickedLeg) {
+                    let legNumber = clickedLeg.feature.properties.legNumber
+                    legElement = pane.querySelector(`.leg-${legNumber}`)
+                } else if (clickedExchange) {
+                    let exchangeNumber = clickedExchange.feature.properties.id
+                    legElement = pane.querySelector(`.exchange-${exchangeNumber}`)
+                } else {
+                    return
+                }
+                if (!legElement) {
+                    return;
+                }
+                let scrollContainer = document.querySelector(".leaflet-sidebar-content")
+                scrollContainer.scrollTo({top: legElement.offsetTop - 50, behavior: "smooth"})
+                setTimeout(() => {
+                    scrollContainer.scrollTo({top: legElement.offsetTop - 50, behavior: "smooth"})
+                }, 200)
+
+            }
+
+            let landmarks = [
+                {
+                    name: "Olive Garden A",
+                    lat: 48.7954645683097,
+                    lng: -122.48527569604408,
+                },
+                {
+                    name: "Olive Garden B",
+                    lat: 48.45154231200904,
+                    lng: -122.33830566334503
+                },
+                {
+                    name: "House",
+                    lat: 48.38691814642963,
+                    lng: -122.31497994547617
+                },
+                {
+                    name: "Denny's A",
+                    lat: 48.78399873230745,
+                    lng: -122.4856908161194
+                },
+                {
+                    name: "Denny's B",
+                    lat: 48.43547800734311,
+                    lng: -122.33940669208073
+                }
+            ]
+
+
+            let layers = []
+            for (let landmark of landmarks) {
+                layers.push(L.marker([landmark.lat, landmark.lng], {pane: "marks"}).bindTooltip(landmark.name))
+                waypoints.push({
+                    "_type": "waypoint",
+                    "desc": landmark.name,
+                    "rad": 50,
+                    "lat": landmark.lat,
+                    "lon": landmark.lng
+                })
+            }
+            let landmarksLayer = L.layerGroup(layers).addTo(map)
+            const sideBarVanDirections = document.getElementById("van-directions-content")
+            const sideBarLegNotes = document.getElementById("leg-notes-content")
+            const legsLayer = L.geoJSON(routeGeoJSON, {
+                "style": {"color": "#fd8f00", "weight": 6}, onEachFeature: function (feature, layer) {
+                    let legNumber = feature.properties.legNumber
+                    let exchange = exchangesGeoJSON.features[legNumber]
+                    let stats = `${feature.properties.distance}mi<br/> ↑${feature.properties.ascent}ft ↓${feature.properties.descent}ft<br/>`
+                    layer.bindTooltip(`<b>Leg ${legNumber}</b>\t${stats}`, {
+                        opacity: 0.75,
+                        offset: [10, 0],
+                        sticky: true
+                    })
+                    let makeHeader = (idPrefix, type) => `<h3 class="mb-2 leg-${legNumber}">Leg ${legNumber} <a href="#${idPrefix}-${legNumber}" class="anchor-link" aria-label="Link to this section. Leg ${legNumber} ${type}"></a></h3>`
+                    let content = `${feature.properties.distance}mi ↑${feature.properties.ascent}ft ↓${feature.properties.descent}ft<br/>`
+                    if (feature.properties.notes) {
+                        content += feature.properties.notes
+                    }
+
+                    sideBarLegNotes.innerHTML += `<div class="mb-4" id="leg-notes-${legNumber}"><a class="btn btn-outline-secondary float-end gpx-download download-${legNumber} mx-2" data-leg-number="${legNumber}" data-goatcounter-click="nwp-25-download-${legNumber}" href="#">GPX</a>${makeHeader("leg-notes", "Notes")}${content}</div>`
+                    //sideBarVanDirections.innerHTML += `<div class="mb-4" id="leg-van-directions-${legNumber}">${makeHeader("leg-van-directions", "Van Directions")}${feature.properties.vanDirections}<br/><h6 class="exchange-${exchange.properties.id} mb-0">Exchange ${exchange.properties.id}</h6>${exchange.properties.addressString.replaceAll('\n', "<br/>")}</div>`
+                }
+            })
+            const activeLegColor = '#933b00'
+            const hoverLegColor = '#d2650c'
+            const inactiveLegColor = '#fd8f00'
+            legsLayer.on("click", function (e) {
+                if (clickedExchange) {
+                    // Only one kind of selection at a time
+                    clickedExchange = null
+                }
+                let layer = e.layer;
+                setClickedLeg(layer)
+                if (activeSidebarPane === "assignments") {
+                    activeSidebarPane = "leg-notes"
+                }
+                sidebar.open(activeSidebarPane)
+            })
+
+            legsLayer.on("mouseover", function (e) {
+                let layer = e.layer;
+                layer.setStyle({
+                    color: hoverLegColor,
+                });
+                if (layer === clickedLeg) {
+                    return;
+                }
+            })
+            legsLayer.on("mouseout", function (e) {
+                let layer = e.layer;
+                if (layer === clickedLeg) {
+                    layer.setStyle({
+                        color: activeLegColor,
+                    });
+                } else {
+                    layer.setStyle({
+                        color: inactiveLegColor,
+                    });
+                }
+            })
+
+
+            let sidebar = L.control.sidebar({
+                autopan: true,       // whether to maintain the centered map point when opening the sidebar
+                closeButton: true,    // whether t add a close button to the panes
+                container: document.getElementById("sidebar"), // the DOM container or #ID of a predefined sidebar container that should be used
+                position: 'left',     // left or right
+            }).addTo(map).close();
+            let lastActiveTab = null
+            sidebar.on('content', function (e) {
+                activeSidebarPane = e.id
+                let smooth = false
+                if (lastActiveTab && lastActiveTab === e.id) {
+                    smooth = true
+                }
+                scrollToActiveLeg(document.getElementById(e.id), smooth)
+                lastActiveTab = e.id
+            })
+
+
+            legsLayer.addTo(map)
+            exchanges.addTo(map)
+
+            map.fitBounds(legsLayer.getBounds().pad(0.1))
+            let layerControl = L.control.layers({}, {
+                "Legs": legsLayer,
+                "Exchanges": exchanges,
+                "Landmarks": landmarksLayer
+            }).addTo(map);
+
+
+            document.querySelectorAll(".leg-link").forEach(element => {
+                let legNumber = parseInt(element.innerHTML.match(/L([^)]+)/)[1])
+                let legLayer = null
+                legsLayer.eachLayer(function (layer) {
+                    if (layer.feature.properties.legNumber === legNumber) {
+                        let parent = layer._eventParents;
+                        legLayer = parent[Object.keys(parent)[0]]
+                        legLayer = layer
+                    }
+                })
+
+                element.addEventListener("mouseover", () => {
+                    legLayer.openTooltip()
+                    legLayer.setStyle({
+                        color: hoverLegColor,
+                    });
+                })
+                element.addEventListener("mouseout", () => {
+                    legLayer.closeTooltip()
+                    if (legLayer === clickedLeg) {
+                        legLayer.setStyle({
+                            color: activeLegColor,
+                        });
+                    } else {
+                        legLayer.setStyle({
+                            color: inactiveLegColor,
+                        });
+                    }
+                })
+
+                element.addEventListener("click", () => {
+                    setClickedLeg(legLayer)
+                    map.setView(legLayer.getBounds().getCenter(), 12)
+                    sidebar.open("leg-notes")
+                })
+            })
+
+
+            document.querySelectorAll(".gpx-download").forEach(element => {
+                let legNumber = element.attributes["data-leg-number"].value
+                element.addEventListener("click", (event) => {
+                    downloadLegGPX(legNumber)
+                    event.preventDefault()
+                })
+            })
+        })
+
+</script>
+
+</body>
+</html>
