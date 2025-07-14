@@ -21,7 +21,12 @@ export class FrameControl {
         this.container.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            this.map.fitBounds(this.options.bounds, {
+            const targetBounds = typeof this.options.bounds === 'function' ? this.options.bounds() : this.options.bounds;
+            if (!targetBounds) {
+                console.warn("FrameControl: No bounds provided to fit the map to.");
+                return;
+            }
+            this.map.fitBounds(targetBounds, {
                 duration: this.options.duration ?? 1000,
                 padding: this.options.padding ?? 0,
             });
@@ -34,18 +39,25 @@ export class FrameControl {
     update() {
         const button = this.container.querySelector("button")
         const span =  this.container.querySelector("span")
+        const targetBounds = typeof this.options.bounds === 'function' ? this.options.bounds() : this.options.bounds;
+        if (!targetBounds) {
+            console.warn("FrameControl: No bounds provided to fit the map to.");
+            button.setAttribute('disabled', 'true');
+            span.style.opacity = .15;
+            return;
+        }
         const bounds = this.map.getBounds();
         const center = bounds.getCenter();
         const eps = 0.1;
-        const boundsDifferent = Math.abs(bounds._ne.lng - this.options.bounds._ne.lng) > eps ||
-            Math.abs(bounds._sw.lat - this.options.bounds._sw.lat) > eps;
-        const frameCenter = this.options.bounds.getCenter();
+        const boundsDifferent = Math.abs(bounds._ne.lng - targetBounds._ne.lng) > eps ||
+            Math.abs(bounds._sw.lat - targetBounds._sw.lat) > eps;
+        const frameCenter = targetBounds.getCenter();
         const centerDifferent = Math.abs(center.lng - frameCenter.lng) > .001 ||
             Math.abs(center.lat - frameCenter.lat) > .001
         // Check if frame bounds are pretty much the same
         if (!boundsDifferent && !centerDifferent) {
             button.setAttribute('disabled', 'true');
-            span.style.opacity = .1;
+            span.style.opacity = .15;
         } else {
             button.removeAttribute('disabled');
             span.style.opacity = 1;

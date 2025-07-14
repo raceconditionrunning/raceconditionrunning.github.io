@@ -1,7 +1,8 @@
 import {formatLegDescription} from "./common.js";
+import {FrameControl} from "./FrameControl.js";
 import {ElevationProfile} from "./ElevationProfile.js";
 import { Protocol } from 'pmtiles';
-
+import maplibregl from 'maplibre-gl';
 const mapboxKey = 'pk.eyJ1Ijoibmlja3N3YWxrZXIiLCJhIjoiY2t0ZjgyenE4MDR1YjJ1cno0N3hxYzI4YSJ9.ivPdsoEtV9TaLGbOOfFXKA'
 // For future live elements:
 // https://maplibre.org/maplibre-gl-js/docs/examples/add-image-animated/
@@ -11,33 +12,6 @@ const transformRequest = (url, resourceType) => {
         return transformMapboxUrl(url, resourceType, mapboxKey)
     }
     return {url}
-}
-
-class HomeControl {
-    onAdd(map){
-        this.map = map;
-        this.container = document.createElement('div');
-        this.container.className = 'maplibregl-ctrl maplibregl-ctrl-group';
-        this.container.textContent = 'Home';
-
-        this.container.innerHTML =
-            '<div class="tools-box">' +
-            '<button>' +
-            '<span class="maplibregl-ctrl-icon" aria-hidden="true" title="Home"></span>' +
-            '</button>' +
-            '</div>';
-        this.container.querySelector("span").style.backgroundImage = "url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDEzNiAxMjkuNiI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5jbHMtMSB7CiAgICAgICAgZmlsbDogIzMzMzsKICAgICAgICBmaWxsLXJ1bGU6IGV2ZW5vZGQ7CiAgICAgICAgc3Ryb2tlLXdpZHRoOiAwcHg7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTcwLDIxLjlsNDMuNCw0Mi4xYzEuOSwxLjguNiw1LTIsNWgtMTB2NDAuOWgtMjMuOHYtMjZoLTE5LjN2MjZoLTIzLjh2LTQwLjloLTEwYy0yLjYsMC0zLjktMy4yLTItNWw0My40LTQyLjFjMS4xLTEuMSwyLjktMS4xLDQsMFoiLz4KPC9zdmc+)"
-        this.container.onclick = () => {
-            map.fitBounds(map.homeBounds, {
-                padding: 32
-            });
-        }
-        return this.container;
-    }
-    onRemove(){
-        this.container.parentNode.removeChild(this.container);
-        this.map = undefined;
-    }
 }
 
 
@@ -50,7 +24,6 @@ export class RelayMap extends HTMLElement {
 
         let protocol = new Protocol();
         maplibregl.addProtocol("pmtiles",protocol.tile);
-        this.mapInitialized = false;
 
         this.mapReady = new Promise((resolve) => {
             this._resolveMapReady = resolve;
@@ -134,60 +107,54 @@ export class RelayMap extends HTMLElement {
             let legsData = legs.features
 
             if (useStationCodes) {
-                map.loadImage(`${imgBasePath}1_station_code.png`).then((image) => {
+                map.loadImage(`${imgBasePath}1_station_code_vertical_dark.png`).then((image) => {
                     map.addImage('1stationcode', image.data, {
-                        stretchX: [[76, 77]],
-                        // This part of the image that can contain text ([x1, y1, x2, y2]):
-                        content: [76, 2, 96, 77],
                         pixelRatio: 4
                     });
                 });
-                map.loadImage(`${imgBasePath}2_station_code.png`).then((image) => {
+                map.loadImage(`${imgBasePath}2_station_code_vertical_dark.png`).then((image) => {
                     map.addImage('2stationcode', image.data, {
-                        stretchX: [[76, 77]],
-                        // This part of the image that can contain text ([x1, y1, x2, y2]):
-                        content: [76, 2, 96, 77],
                         pixelRatio: 4
                     });
                 });
-                map.loadImage(`${imgBasePath}3_station_code.png`).then((image) => {
+                map.loadImage(`${imgBasePath}3_station_code_vertical_dark.png`).then((image) => {
                     map.addImage('3stationcode', image.data, {
-                        stretchX: [[76, 77]],
-                        // This part of the image that can contain text ([x1, y1, x2, y2]):
-                        content: [76, 2, 96, 77],
                         pixelRatio: 4
                     });
                 });
-                map.loadImage(`${imgBasePath}4_station_code.png`).then((image) => {
+                map.loadImage(`${imgBasePath}4_station_code_vertical_dark.png`).then((image) => {
                     map.addImage('4stationcode', image.data, {
-                        stretchX: [[76, 77]],
-                        // This part of the image that can contain text ([x1, y1, x2, y2]):
-                        content: [76, 2, 96, 77],
                         pixelRatio: 4
                     });
                 });
-                map.loadImage(`${imgBasePath}T_station_code.png`).then((image) => {
+                map.loadImage(`${imgBasePath}T_station_code_vertical_dark.png`).then((image) => {
                     map.addImage('Tstationcode', image.data, {
-                        stretchX: [[76, 77]],
-                        // This part of the image that can contain text ([x1, y1, x2, y2]):
-                        content: [76, 2, 96, 77],
                         pixelRatio: 4
-                    });
-                });
-                map.loadImage(`${imgBasePath}train_icon.png`) .then((image) => {
-
-                    map.addImage('train', image.data, {
-                        content: [0, 0, 1, 1],
-                        pixelRatio: 2
                     });
                 });
             }
+            map.loadImage(`${imgBasePath}train_icon.png`) .then((image) => {
+
+                map.addImage('train', image.data, {
+                    content: [0, 0, 1, 1],
+                    pixelRatio: 2
+                });
+            });
+            map.loadImage(`${imgBasePath}lrv.png`) .then((image) => {
+
+                map.addImage('lrv', image.data, {
+                    content: [0, 0, 1, 1],
+                    pixelRatio: 2,
+                    sdf: true
+                });
+            });
 
             const relayBounds = legsData.reduce((bounds, leg) => leg.geometry.coordinates.reduce((bounds, coord) => {
                 return bounds.extend(coord);
             }, bounds), new maplibregl.LngLatBounds(legsData[0].geometry.coordinates[0], legsData[0].geometry.coordinates[0]));
 
             map.homeBounds = relayBounds
+            this.frameControl.update()
             if (map.getZoom() < 10) {
             map.fitBounds(relayBounds, {
                 padding: 32
@@ -249,12 +216,12 @@ export class RelayMap extends HTMLElement {
                     .setLngLat([bounds.getEast(), bounds.getCenter().lat])
                     .setMaxWidth("300px")
                     .setHTML(formatLegDescription(exchangeNames[leg.properties.start_exchange], exchangeNames[leg.properties.end_exchange], leg.properties, false, false, coordinates))
-                    .on("close", () => {
-                        this.highlightLeg(-1)
-                        currentActiveLeg = null
-                        this.focus()
-                    })
                     .addTo(map);
+                currentLegPopup.on("close", () => {
+                    this.highlightLeg(-1)
+                    currentActiveLeg = null
+                    this.focus()
+                })
                 let profile = currentLegPopup._content.querySelector("elevation-profile")
                 profile.style.width = "100%"
                 profile.style.height = "64px"
@@ -291,6 +258,32 @@ export class RelayMap extends HTMLElement {
                 map.getCanvas().style.cursor = '';
                 distancePopup.remove()
             });
+
+            const updateExchangeCursor = (e) => {
+                map.getCanvas().style.cursor = 'pointer';
+            }
+            const zoomToExchange = (e) => {
+                // Zoom in on the exchange
+                const exchange = e.features[0];
+                const coordinates = exchange.geometry.coordinates;
+                const bounds = new maplibregl.LngLatBounds(coordinates, coordinates);
+                map.fitBounds(bounds, {
+                    padding: 32,
+                    maxZoom: 17
+                });
+            }
+            map.on('mouseenter', 'exchange-name', updateExchangeCursor);
+            map.on('mousemove', 'exchange-name', updateExchangeCursor);
+            map.on('mouseleave', 'exchange-name', () => {
+                map.getCanvas().style.cursor = '';
+            });
+            map.on('click', 'exchange-name', zoomToExchange)
+            map.on('mouseenter', 'exchange-station-code', updateExchangeCursor);
+            map.on('mousemove', 'exchange-station-code', updateExchangeCursor);
+            map.on('mouseleave', 'exchange-station-code', () => {
+                map.getCanvas().style.cursor = '';
+            });
+            map.on('click', 'exchange-station-code', zoomToExchange)
         })
     }
 
@@ -399,6 +392,7 @@ export class RelayMap extends HTMLElement {
                 const zoom = map.getZoom();
                 const pitch = map.getPitch();
                 const bounds = map.getBounds();
+                console.info(zoom)
 
                 // If conditions are not met, remove all popups and clear intervals
                 if (zoom < 17 || pitch > 50) {
@@ -469,6 +463,9 @@ relay-map {
         let boundaryValue = this.attributes.getNamedItem("max-bounds").value
         this.style.display = "block"
         Promise.all([JSON.parse(centerValue), JSON.parse(boundaryValue)]).then(([center, boundary]) => {
+            const bounds = boundary.reduce((bounds, coord) => {
+                return bounds.extend(coord);
+            }, new maplibregl.LngLatBounds(boundary[0], boundary[0]));
             let map = new maplibregl.Map({
                 container: this,
                 attributionControl: true,
@@ -530,8 +527,8 @@ relay-map {
                 maxWidth: 80,
                 unit: 'imperial'
             });
-            map.addControl(new HomeControl(), 'top-left');
-
+            this.frameControl = new FrameControl({bounds: () => map.homeBounds, padding: 32})
+            map.addControl(this.frameControl, 'top-left');
             map.addControl(scale);
             this.map = map
         })

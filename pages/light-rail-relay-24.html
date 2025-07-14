@@ -3,8 +3,6 @@ title: Light Rail Relay 2024
 description: Join Seattle’s premier urban relay on September 28, 2024. Run solo or with a team, covering 38 miles along Link Light Rail from Angle Lake to Lynnwood.
 permalink: light-rail-relay-24/
 redirect_from:
-- /lrr/
-- /light-rail-relay/
 - /lrr24/
 team_registration_link: https://forms.gle/9DLctNws7jWC3WyU6
 registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
@@ -26,15 +24,14 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
     <meta property="og:description" content="{{ page.description }}">
 
     <link rel="manifest" href="{{ site.baseurl }}/maps/lrr-24-manifest.json">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.1/dist/maplibre-gl.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.1/dist/css/tabulator.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.1/dist/css/tabulator_bootstrap5.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css" integrity="sha512-qveKnGrvOChbSzAdtSs8p69eoLegyh+1hwOMbmpCViIwj7rn4oJjdmMvWOuyQlTOZgTlZA0N2PXA7iA8/2TUYA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator.min.css" integrity="sha256-pG2AUZRMdFyuinl2tPudk9iU0gh2pFIcxPbwNc/vUuo=" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator_bootstrap5.min.css" integrity="sha256-H1gQqBIR3L9enXuoNfFASj+QdGSEQIAloT7c4FXjNzc=" crossorigin="anonymous">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" integrity="sha256-V2sIX92Uh6ZaGSFTKMHghsB85b9toJtmazgG09AI2uk=" crossorigin="anonymous">
+
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -74,17 +71,17 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
     <script type="importmap">
         {
           "imports": {
+            "bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.6/js/bootstrap.esm.min.js",
             "d3": "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm",
-            "maplibre-gl": "https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js",
+            "maplibre-gl": "https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.1/+esm",
             "masonry-layout": "https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js",
             "noUiSlider": "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.mjs",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
             "pmtiles": "https://cdn.jsdelivr.net/npm/pmtiles@4.0.1/+esm",
-            "tabulator-tables": "https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/js/tabulator_esm.js",
+            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.3.1/js/tabulator_esm.min.js",
             "@turf": "https://cdn.jsdelivr.net/npm/@turf/turf@7.1.0/+esm",
-            "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js",
-            "bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.esm.min.js"
+            "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js"
           }
         }
     </script>
@@ -115,6 +112,11 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
         #title ::selection {
             background: #333;
+        }
+
+
+        .container {
+            max-width: 700px;
         }
 
         a {
@@ -160,13 +162,6 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             filter: invert();
         }
 
-        #map-container {
-            height: 100%;
-        }
-        #map {
-            height: 70vh;
-        }
-
         dt {
             font-weight: bold;
         }
@@ -200,6 +195,81 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             --bs-btn-focus-shadow-rgb: 255, 255, 255
         }
 
+        #countdown .container {
+            max-width: none;
+        }
+
+        figure {
+            max-width: 1200px;
+            margin: 0 auto 2rem auto;
+        }
+
+        figure a img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            background-color: var(--bs-secondary-bg);
+        }
+
+        hr {
+            width: 8rem;
+            margin: 4rem auto;
+            display: block;
+            border: 1px solid var(--bs-secondary-color);
+        }
+
+        header {
+            margin: 0 auto;
+
+        }
+
+        .one-bg {
+            background-color: var(--theme-primary-color);
+            background: linear-gradient(rgba(0,0,0,.1), transparent, rgba(0,0,0,.1)), var(--theme-primary-color);
+        }
+        header img {
+            flex: 1;
+            max-width: 100%;
+            max-height: 6.5rem;
+            margin: 0 auto;
+            padding: 1rem .5rem;
+            display: block;
+        }
+
+        .subheader p, .subheader p a {
+            color: grey;
+        }
+
+        /* Accordion */
+
+        .accordion-item ul {
+            padding-left: 1rem;
+        }
+
+        .accordion {
+            --bs-accordion-btn-focus-border-color: var(--theme-primary-color-subdued);
+            --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem var(--theme-primary-color-subdued);
+            --bs-accordion-bg: #111;
+            --bs-accordion-active-color: var(--bs-emphasis-color);
+            --bs-accordion-active-bg: #333;
+        }
+        .accordion-item {
+            border-bottom: 1px solid #666;
+        }
+
+        .accordion-button::after {
+            filter: saturate(0%);
+        }
+
+        /* RELAY MAP */
+
+        #map-container {
+            height: 100%;
+        }
+        #map {
+            height: 70vh;
+        }
+
         .maplibregl-map {
             font-family: var(--bs-font-sans-serif);
             font-size: 1rem;
@@ -225,7 +295,6 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             margin-top: 0;
             margin-bottom: .5rem;
         }
-
         .maplibregl-popup-content
         {
             background-color: rgba(255, 255, 255, 0.6);
@@ -291,82 +360,144 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             outline: none;
             box-shadow: 0 0 0 0.25rem var(--theme-primary-color-subdued);
         }
+        /* Relay Map - Arrivals Popup */
+
+        .arrivals-popup {
+            background-color: rgba(0, 0, 0, 0.6);
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
+            vertical-align: top;
+            transition: opacity 0.4s ease-out;
+            opacity: 1;
+        }
+
+        .arrivals-popup tr {
+            line-height: 1;
+            vertical-align: top;
+        }
+        .arrivals-popup tr:not(:last-child) td {
+            padding-bottom: .25rem;
+        }
+
+        .arrivals-popup.fade-out {
+            opacity: 0;
+        }
+        .arrivals-popup .maplibregl-popup-tip {
+            display: none;
+        }
+        .arrivals-popup .maplibregl-popup-content {
+            background: none;
+            color: white;
+            padding: 1rem;
+        }
+        .arrivals-popup .trip-destination {
+            font-weight: 600;
+        }
+        .arrivals-popup .maplibregl-popup-close-button {
+            color: #888;
+        }
+        .arrivals-popup .realtime-symbol {
+            /* Inline SVG of two radio waves going up and to the right */
+            background: url("data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20id%3D%22Layer_1%22%20data-name%3D%22Layer%201%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cdefs%3E%3Cstyle%3E%20%20%20%20%20%20.cls-1%20%7B%20%20%20%20%20%20%20%20fill%3A%20none%3B%20%20%20%20%20%20%20%20stroke%3A%20%23fff%3B%20%20%20%20%20%20%20%20stroke-width%3A%203px%3B%20%20%20%20%20%20%7D%20%20%20%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M3.6%2C5.6c7.9%2C0%2C14.2%2C6.4%2C14.2%2C14.2%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M3.6%2C11.5c4.6%2C0%2C8.3%2C3.7%2C8.3%2C8.3%22%2F%3E%3C%2Fsvg%3E") no-repeat;
+            display: inline-block;
+            width: .9rem;
+            height: .9rem;
+        }
+        .trip-id {
+            font-size: .8rem;
+            font-weight: 300;
+            color: #888;
+        }
+        .line-marker {
+            font-weight: bold;
+        }
+        .line-40_100479 {
+            background-color: var(--theme-primary-color);
+            width: .9rem;
+            height: .9rem;
+            font-size: .9rem;
+            border-radius: .5rem;
+            display: inline-block;
+        }
+        .line-40_100479::before {
+            content: "1";
+            /* Horizontally and vertically center the number */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+        .line-40_2LINE {
+            background-color: rgb(0, 160, 223);
+            width: .9rem;
+            height: .9rem;
+            font-size: .9rem;
+            border-radius: .5rem;
+            display: inline-block;
+        }
+        .line-40_2LINE::before {
+            content: "2";
+            /* Horizontally and vertically center the number */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+        .line-40_TLINE {
+            background-color: rgb(243, 139, 0);
+            width: .9rem;
+            height: .9rem;
+            font-size: .8rem;
+            border-radius: .5rem;
+            display: inline-block;
+        }
+        .line-40_TLINE::before {
+            content: "T";
+            color: black;
+            /* Horizontally and vertically center the number */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Epilogue */
+        masonry-image-gallery {
+            --placeholder-bg: var(--bs-secondary-bg);
+            --placeholder-border-color: #222;
+        }
+
+        .imprint {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .imprint a {
+            text-decoration: none;
+            color: #666;
+        }
+
+        .imprint img {
+            width: 100px;
+            opacity: .5;
+        }
 
         footer {
             margin: 6rem 0 6rem 0;
         }
 
-        .container {
-            max-width: 700px;
-        }
 
         #finish-row td {
             font-weight: bold;
         }
 
-        #countdown .container {
-            max-width: none;
-        }
 
-        figure {
-            max-width: 1200px;
-            margin: 0 auto 2rem auto;
-        }
-
-        figure a img {
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-            background-color: var(--bs-secondary-bg);
-        }
-
-        hr {
-            width: 8rem;
-            margin: 4rem auto;
-            display: block;
-            border: 1px solid var(--bs-secondary-color);
-        }
-
-        header {
-            margin: 0 auto;
-
-        }
-
-        .one-bg {
-            background-color: var(--theme-primary-color);
-            background: linear-gradient(rgba(0,0,0,.1), transparent, rgba(0,0,0,.1)), var(--theme-primary-color);
-        }
-        header img {
-            flex: 1;
-            max-width: 100%;
-            max-height: 6.5rem;
-            margin: 0 auto;
-            padding: 1rem .5rem;
-            display: block;
-        }
-
-        .subheader p, .subheader p a {
-            color: grey;
-        }
-
-        .accordion-item ul {
-            padding-left: 1rem;
-        }
-
-        .accordion {
-            --bs-accordion-btn-focus-border-color: var(--theme-primary-color-subdued);
-            --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem var(--theme-primary-color-subdued);
-            --bs-accordion-bg: #111;
-            --bs-accordion-active-color: var(--bs-emphasis-color);
-            --bs-accordion-active-bg: #333;
-        }
-        .accordion-item {
-            border-bottom: 1px solid #666;
-        }
-
-        .accordion-button::after {
-            filter: saturate(0%);
-        }
+        /* RESULTS */
 
         .tabulator,
         .tabulator .tabulator-header .tabulator-col,
@@ -429,20 +560,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             border-top: 1px solid #AAA;
         }
 
-        .leg-leader {
-            font-weight: 700;
-        }
-
-        .first-leg {
-            text-decoration: underline;
-        }
-        #leg-details-table h6, #leg-details-table .leg-number {
-            color: var(--bs-secondary-color);
-        }
-        #leg-details-table h5 a {
-            color: var(--bs-body-color);
-            text-decoration-color: var(--theme-primary-color);
-        }
+        /* Segment Calculator Slider */
 
         #leg-calculator {
             border: 1px solid #111;
@@ -473,140 +591,55 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             background-color: #555;
         }
         .noUi-tooltip {
-            width: 2rem;
-            height: 2rem;
-            border-radius: 1rem;
-            padding: 3px 0 0 0;
+            background-color: transparent;
+            border: none;
         }
 
         .noUi-horizontal .noUi-tooltip {
             bottom: 130%;
         }
 
-        masonry-image-gallery {
-            --placeholder-bg: var(--bs-secondary-bg);
-            --placeholder-border-color: #222;
+        #leg-details-table h6, #leg-details-table .leg-number {
+            color: var(--bs-secondary-color);
         }
+        #leg-details-table h5 a {
+            color: var(--bs-body-color);
+            text-decoration-color: var(--theme-primary-color);
+        }
+        .link-station-label {
+            display: flex;
+            border-radius: 1rem;
+            height: 2rem;
+            font-weight: 500;
+            line-height: 1.5;
+            align-items: center;
+            justify-content: center;
+            padding: 0 3px;
 
-        .imprint {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            font-style: italic;
-            font-weight: 300;
         }
-
-        .imprint a {
-            text-decoration: none;
-            color: #666;
-        }
-
-        .imprint img {
-            width: 100px;
-            opacity: .5;
-        }
-
-        /*.gradient-background {
-            background: radial-gradient(circle at 20% -10%,var(--theme-primary-color),rgba(255,0,0,0) 30%),radial-gradient(circle at 93.3% 10%,var(--two-line-color),rgba(0,255,0,0) 30%),radial-gradient(circle at 6.7% 20%,var(--t-line-color),rgba(0,0,255,0) 30%) !important;
-        }*/
-
-        .arrivals-popup {
-            background-color: rgba(0, 0, 0, 0.6);
-            -webkit-backdrop-filter: blur(4px);
-            backdrop-filter: blur(4px);
-            vertical-align: top;
-            transition: opacity 0.4s ease-out;
-            opacity: 1;
-        }
-
-        .arrivals-popup tr {
-            line-height: 1;
-            vertical-align: top;
-        }
-        .arrivals-popup tr:not(:last-child) td {
-            padding-bottom: .25rem;
-        }
-
-        .arrivals-popup.fade-out {
-            opacity: 0;
-        }
-        .arrivals-popup .maplibregl-popup-tip {
-            display: none;
-        }
-        .arrivals-popup .maplibregl-popup-content {
-            background: none;
+        .link-station-label.link-station-label-dark {
             color: white;
-            padding: 1rem;
+            background-color: rgba(0, 0, 0, 0.85);
+            border: 1px solid #CCC;
+
         }
-        .arrivals-popup .trip-destination {
-            font-weight: 600;
-        }
-        .arrivals-popup .maplibregl-popup-close-button {
-            color: #888;
-        }
-        .arrivals-popup .realtime-symbol {
-            /* Inline SVG of two radio waves going up and to the right */
-            background: url("data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20id%3D%22Layer_1%22%20data-name%3D%22Layer%201%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cdefs%3E%3Cstyle%3E%20%20%20%20%20%20.cls-1%20%7B%20%20%20%20%20%20%20%20fill%3A%20none%3B%20%20%20%20%20%20%20%20stroke%3A%20%23fff%3B%20%20%20%20%20%20%20%20stroke-width%3A%203px%3B%20%20%20%20%20%20%7D%20%20%20%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M3.6%2C5.6c7.9%2C0%2C14.2%2C6.4%2C14.2%2C14.2%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M3.6%2C11.5c4.6%2C0%2C8.3%2C3.7%2C8.3%2C8.3%22%2F%3E%3C%2Fsvg%3E") no-repeat;
+        .link-station-label .line-name {
             display: inline-block;
-            width: .9rem;
-            height: .9rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            font-weight: 700;
+            border-radius: .75rem;
+            margin-right: 3px;
         }
-        .trip-id {
-            font-size: .8rem;
-            font-weight: 300;
-            color: #888;
-        }
-        .line-40_100479 {
+
+        .link-station-label .line-name.line-name-1 {
             background-color: var(--theme-primary-color);
-            width: .9rem;
-            height: .9rem;
-            font-size: .9rem;
-            border-radius: .5rem;
-            display: inline-block;
+            color: white;
         }
-        .line-40_100479::before {
-            content: "1";
-            /* Horizontally and vertically center the number */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            width: 100%;
+        .link-station-label .link-station-code {
+            padding-right: 3px;
         }
-        .line-40_2LINE {
-            background-color: rgb(0, 160, 223);
-            width: .9rem;
-            height: .9rem;
-            font-size: .9rem;
-            border-radius: .5rem;
-            display: inline-block;
-        }
-        .line-40_2LINE::before {
-            content: "2";
-            /* Horizontally and vertically center the number */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            width: 100%;
-        }
-        .line-40_TLINE {
-            background-color: rgb(243, 139, 0);
-            width: .9rem;
-            height: .9rem;
-            font-size: .8rem;
-            border-radius: .5rem;
-            display: inline-block;
-        }
-        .line-40_TLINE::before {
-            content: "T";
-            color: black;
-            /* Horizontally and vertically center the number */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            width: 100%;
-        }
+
     </style>
 </head>
 
@@ -641,8 +674,6 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
                         <a href="#results" class="btn btn-outline btn-outline-primary btn-lg" data-goatcounter-click="lrr24-results">Results</a>
                         <a href="#epilogue" class="btn btn-outline btn-outline-primary btn-lg" data-goatcounter-click="lrr24-epilogue">Epilogue</a>
-
-
 
                 </div>
             </div>
@@ -1175,7 +1206,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 <script type="module">
     import { relayToGPX, download, createCountdown, processRelayGeoJSON, prepareImagesForPhotoswipe} from "../js/common.js";
     import { createLegDetailsTable} from "{{ site.baseurl }}/js/tables.js";
-    import "maplibre-gl";
+    import maplibregl from 'maplibre-gl';
     import PhotoSwipeLightbox from 'photoswipe-lightbox';
     import { MasonryImageGallery} from "{{ site.baseurl }}/js/MasonryImageGallery.js";
     import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
@@ -1232,8 +1263,20 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         return [exchanges, exchangeNames]
     })
 
+    processedRouteData.then(([legs, exchanges, exchangeNames]) => {
+        let legsData = legs.features
+        let exchangeInfo = exchanges.features.reduce((acc, exchange) => {
+            acc[exchange.properties.id] = exchange.properties
+            // NOTE: Interlined stations still have two stop IDs in the GTFS, which we reflect
+            // in our exchange data as well. Here we only present one line at a time.
+            acc[exchange.properties.id].line = Math.floor(exchange.properties.id / 100)
+            acc[exchange.properties.id].stationCode = exchange.properties.id % 100
+            return acc
+        }, {})
+        document.getElementById("leg-calculator").setLegs(legs.features, exchangeInfo)
+        createLegDetailsTable(document.getElementById("leg-details-table"), legsData, exchanges.features)
+    });
     Promise.all([processedRouteData, processedFutureData]).then(([[legs, exchanges, exchangeNames], future],) => {
-
         let legsData = legs.features
         createLegDetailsTable(document.getElementById("leg-details-table"), legsData, exchanges.features)
         const downloadRouteButton = document.getElementById("download-route-gpx-btn")
@@ -1257,10 +1300,6 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
     let startTime = new Date("Sept 28, 2024 8:30:00")
 
     createCountdown(startTime.getTime(), "countdown-ended")
-
-    processedRouteData.then( ([legs, exchanges, exchangeNames]) => {
-        document.getElementById("leg-calculator").setLegs(legs.features, exchangeNames)
-    })
 
     // Tooltips for sign-up deadlines
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')

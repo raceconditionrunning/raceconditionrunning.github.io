@@ -6,8 +6,9 @@
       "properties": {
         "name": "Redmond Downtown",
         "id": 265,
-        "stationInfo": "https://www.soundtransit.org/system-expansion/downtown-redmond-link-extension",
-        "open": 2025
+        "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/downtown-redmond-station",
+        "stopCodeNorth": "40_E31-T2",
+        "stopCodeSouth": "40_E31-T1"
       },
       "geometry": {
         "type": "Point",
@@ -22,8 +23,9 @@
     "properties": {
       "name": "Marymoor Village",
       "id": 264,
-      "stationInfo": "https://www.soundtransit.org/system-expansion/downtown-redmond-link-extension",
-      "open": 2025
+      "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/marymoor-village-station",
+      "stopCodeNorth": "40_E29-T2",
+      "stopCodeSouth": "40_E29-T1"
     },
     "geometry": {
       "coordinates": [
@@ -174,7 +176,7 @@
       "properties": {
         "name": "Mercer Island",
         "id": 255,
-        "open": 2025
+        "open": 2026
       },
       "geometry": {
         "coordinates": [
@@ -190,7 +192,7 @@
         "name": "Judkins Park Station",
         "id": 254,
         "stationInfo": "https://www.soundtransit.org/system-expansion/east-link-extension",
-        "open": 2025
+        "open": 2026
       },
       "geometry": {
         "coordinates": [
@@ -206,7 +208,7 @@
         "name": "Kent/Des Moines",
         "id": 166,
         "stationInfo": "https://www.soundtransit.org/system-expansion/federal-way-link-extension",
-        "open": 2026
+        "open": 2025
       },
       "geometry": {
         "coordinates": [
@@ -222,7 +224,7 @@
         "name": "Star Lake",
         "id": 167,
         "stationInfo": "https://www.soundtransit.org/system-expansion/federal-way-link-extension",
-        "open": 2026
+        "open": 2025
       },
       "geometry": {
         "coordinates": [
@@ -238,7 +240,7 @@
         "name": "Federal Way Downtown",
         "id": 168,
         "stationInfo": "https://www.soundtransit.org/system-expansion/federal-way-link-extension",
-        "open": 2026
+        "open": 2025
       },
       "geometry": {
         "coordinates": [
@@ -251,7 +253,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "NE 130th St",
+        "name": "Pinehurst",
         "id": 144,
         "stationInfo": "https://www.soundtransit.org/system-expansion/ne-130th-st-infill-station",
         "open": 2026},
