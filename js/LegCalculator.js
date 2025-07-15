@@ -1,47 +1,48 @@
 import noUiSlider from 'noUiSlider';
 
+function bisectLeft(arr, value, lo=0, hi=arr.length) {
+    while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (arr[mid] < value) {
+            lo = mid + 1;
+        } else {
+            hi = mid;
+        }
+    }
+    return lo;
+}
+
+/**
+ * Custom element representing a dual-handler slider over the distance of the route, with grid lines placed
+ * at each exchange between the legs. The underlying datastore is snapping the handles to distance of the nearest exchange,
+ * so the code frequently makes the inverse mapping from distance to exchange number.
+ */
 export class LegCalculator extends HTMLElement {
   constructor() {
       super();
         this.style.display = "none"
-      this._exchangeMapping = []
+      this._legToExchangeId = []
   }
 
-  setLegs(legs, exchangeNames) {
+  setLegs(legs, exchangeInfo) {
       this.style.display = "block"
       let valuesSlider = document.getElementById('leg-calculator-slider');
       let cumulativeDistances = [0]
       let cumulativeAscents = [0]
       let cumulativeDescents = [0]
-      this._exchangeMapping = []
+      this._legToExchangeId = []
       for (let i = 1; i < legs.length + 1; i++) {
           let leg = legs[i - 1]
           cumulativeDistances.push(cumulativeDistances[i - 1] + leg.properties.distance_mi)
           cumulativeAscents.push(cumulativeAscents[i - 1] + leg.properties.ascent_ft)
           cumulativeDescents.push(cumulativeDescents[i - 1] + leg.properties.descent_ft)
-            this._exchangeMapping.push(leg.properties.start_exchange)
+            this._legToExchangeId.push(leg.properties.start_exchange)
       }
-      this._exchangeMapping.push(legs[legs.length - 1].properties.end_exchange)
-
-      function bisectLeft(arr, value, lo=0, hi=arr.length) {
-          while (lo < hi) {
-              const mid = (lo + hi) >> 1;
-              if (arr[mid] < value) {
-                  lo = mid + 1;
-              } else {
-                  hi = mid;
-              }
-          }
-          return lo;
-      }
+      this._legToExchangeId.push(legs[legs.length - 1].properties.end_exchange)
 
       let formatToStationNumber = {
-          to: function(value) {
-              return bisectLeft(cumulativeDistances, value);
-          },
-          from: function (value) {
-              return cumulativeDistances[Math.round(value)];
-          }
+          to: (value) => bisectLeft(cumulativeDistances, value),
+          from: (value) => cumulativeDistances[Math.round(value)]
       };
 
       let steppedRange = {}
@@ -55,7 +56,18 @@ export class LegCalculator extends HTMLElement {
           start: ["4", "12"],
           range: steppedRange,
           margin: .5,
-          tooltips: true,
+          tooltips: // tooltip with manual formatting
+              { to: (value) => {
+                let index = bisectLeft(cumulativeDistances, value)
+                      let exchange = this._legToExchangeId[index]
+                      if (exchangeInfo[exchange].line) {
+                          const lineCode = exchangeInfo[exchange].line
+                          //FIXME: Hardcoded theming here
+                          return `<span class="link-station-label link-station-label-dark" title="${exchangeInfo[exchange].name}"><span class="line-name line-name-${String(lineCode).toLowerCase()}">${lineCode}</span><span class='link-station-code'>${exchangeInfo[exchange].stationCode}</span></span>`
+                      }
+                        return `<span class="link-station-label link-station-label-dark" title="${exchangeInfo[exchange].name}">${exchangeInfo[exchange].stationCode}</span>`;
+                      }
+              },
           snap: true,
           connect: true,
           format: formatToStationNumber,
@@ -93,8 +105,8 @@ export class LegCalculator extends HTMLElement {
           let ascent = cumulativeAscents[rightValue] - cumulativeAscents[leftValue]
           let descent = cumulativeDescents[rightValue] - cumulativeDescents[leftValue]
           let legName = ""
-          if (this._exchangeMapping.length > 0) {
-              legName = `${exchangeNames[this._exchangeMapping[leftValue]]} to ${exchangeNames[this._exchangeMapping[rightValue]]}`
+          if (this._legToExchangeId.length > 0) {
+              legName = `${exchangeInfo[this._legToExchangeId[leftValue]].name} to ${exchangeInfo[this._legToExchangeId[rightValue]].name}`
           }
 
           // "values" has the "to" function from "format" applied
