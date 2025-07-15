@@ -982,18 +982,18 @@ redirect_from:
                     officialResults.push(entry)
                 }
             }
-
+            const videoStartTime = durationToSeconds(startTime)
             let table = new ResultsTable(officialResults)
             let halfGoals = Object.fromEntries(Object.entries(goals).filter(([key, value]) => value < goals["13_1mi"]))
             document.querySelector("#results-table-official").append(table)
             document.querySelector(".count:has(+ #results-table-official)").textContent = ` (${officialResults.length})`
-            table.initialize(officialResults, halfGoals, {videoLink: resultsData.config.finishVideo})
+            table.initialize(officialResults, halfGoals, {videoLink: resultsData.config.finishVideo, videoStartTime: videoStartTime})
 
             table = new ResultsTable(unofficialResults)
 
             document.querySelector("#results-table-unofficial").append(table)
             document.querySelector(".count:has(+ #results-table-unofficial)").textContent = ` (${unofficialResults.length})`
-            table.initialize(unofficialResults, halfGoals, {videoLink: resultsData.config.finishVideo})
+            table.initialize(unofficialResults, halfGoals, {videoLink: resultsData.config.finishVideo, videoStartTime: videoStartTime})
         })
 
     document.addEventListener('DOMContentLoaded', e => {
