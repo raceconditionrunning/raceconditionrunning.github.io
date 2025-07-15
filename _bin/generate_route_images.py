@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-Generate OpenGraph images for route maps with parallelization and retry logic.
+Generate OpenGraph images for route maps using switchRoute function.
 This script:
 1. Finds all GPX route files
 2. Starts a local HTTP server to serve the compiled site
-3. Processes routes in parallel using a thread pool
-4. For each route, renders the corresponding HTML page via HTTP
-5. Captures the map element as an image
+3. Loads a single route page once
+4. For each additional route, calls switchRoute() instead of loading new pages
+5. Captures the map element as an image after each switch
 6. Optimizes and saves to img/routes/[key].jpg
-7. Retries failed routes with exponential backoff
+7. Retries failed routes up to max_retries times
 """
 
 import os
@@ -24,28 +24,24 @@ import http.server
 import socketserver
 import socket
 import random
-import concurrent.futures
 from dataclasses import dataclass
 from typing import List, Optional
-import traceback
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 # Parse arguments
-parser = argparse.ArgumentParser(description='Generate OpenGraph images for routes')
+parser = argparse.ArgumentParser(description='Generate OpenGraph images for routes using switchRoute')
 parser.add_argument('--site-dir', type=pathlib.Path, default='_site', help='Path to the compiled site directory')
 parser.add_argument('--gpx-dir', type=pathlib.Path, default='routes/_gpx', help='Path to the GPX files directory')
 parser.add_argument('--output-dir', type=pathlib.Path, default='_site/img/routes', help='Path to save generated images')
 parser.add_argument('--quality', type=int, default=85, help='JPEG quality (1-100)')
 parser.add_argument('--port', type=int, default=0, help='Port for local server (0 = auto-select)')
 parser.add_argument('--incremental', action='store_true', help='Only generate images for new/changed routes')
-parser.add_argument('--workers', type=int, default=4, help='Number of parallel workers')
 parser.add_argument('--base-path', type=str, default='', help='Base path for serving content (e.g., __rcr__)')
-parser.add_argument('--max-retries', type=int, default=2, help='Maximum number of retry attempts per route')
-parser.add_argument('--retry-delay', type=float, default=2.0, help='Initial retry delay in seconds (doubles with each retry)')
-parser.add_argument('--timeout', type=int, default=60, help='Timeout in seconds for page load and map rendering')
+parser.add_argument('--initial-route', type=str, help='Route key to load initially (if not specified, uses first route)')
+parser.add_argument('--max-retries', type=int, default=2, help='Maximum number of retries for failed routes')
 args = parser.parse_args()
 
 os.makedirs(args.output_dir, exist_ok=True)
@@ -120,61 +116,9 @@ class RouteTask:
     route_key: str
     gpx_path: str
     output_path: pathlib.Path
-    url: str
+    geojson_url: str
 
-from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
-
-# We won't use a browser pool since Playwright objects aren't thread-safe
-# Instead, each worker thread will have its own browser instance
-
-class PlaywrightThread(threading.local):
-    """Thread-local storage for Playwright instances"""
-    def __init__(self):
-        self.playwright = None
-        self.browser = None
-        self.page = None
-
-    def initialize(self):
-        """Initialize Playwright for this thread"""
-        if self.playwright is None:
-            self.playwright = sync_playwright().start()
-            self.browser = self.playwright.chromium.launch(
-                headless=True,
-                args=[
-                    "--disable-web-security",  # Disable CORS
-                    "--enable-webgl",
-                    "--ignore-certificate-errors",
-                    "--allow-insecure-localhost",
-                    "--enable-unsafe-webgl",
-                    "--enable-unsafe-swiftshader"
-                ]
-            )
-            self.page = self.browser.new_page(viewport={"width": 1920, "height": 1080})
-            self.page.on("console", lambda msg: logger.warning(f"Browser console: {msg.text}"))
-
-    def cleanup(self):
-        """Clean up resources for this thread"""
-        if self.browser:
-            self.browser.close()
-            self.browser = None
-        if self.playwright:
-            self.playwright.stop()
-            self.playwright = None
-
-    def reset_page(self):
-        """Reset the page instance (useful for retries)"""
-        if self.page:
-            try:
-                self.page.close()
-            except:
-                pass
-        if self.browser:
-            self.page = self.browser.new_page(viewport={"width": 1920, "height": 1080})
-            self.page.on("console", lambda msg: logger.warning(f"Browser console: {msg.text}"))
-
-# Create a thread-local instance
-playwright_context = PlaywrightThread()
-
+from playwright.sync_api import sync_playwright
 
 def get_file_size_str(file_path):
     """Get human-readable file size"""
@@ -186,29 +130,16 @@ def get_file_size_str(file_path):
     else:
         return f"{size_bytes / (1024 * 1024):.2f} MB"
 
-
-def process_route_attempt(task: RouteTask, quality: int, attempt: int) -> Optional[pathlib.Path]:
-    """Process a single route task attempt"""
+def capture_route_image(page, route_key: str, output_path: pathlib.Path, quality: int) -> Optional[pathlib.Path]:
+    """Capture the current map state as an image"""
     try:
-        # Initialize Playwright in this thread if not already done
-        playwright_context.initialize()
+        # Wait for the map to finish loading the new route
+        page.wait_for_selector("#map.loading-complete", timeout=30000)
 
-        # Reset page for retry attempts (clears any previous state)
-        if attempt > 1:
-            playwright_context.reset_page()
+        # Add a small delay to ensure rendering is complete
+        time.sleep(0.5)
 
-        page = playwright_context.page
-        timeout_ms = args.timeout * 1000
-
-        logger.info(f"Processing {task.route_key} from {task.url} (attempt {attempt})")
-
-        # Navigate to the page with timeout
-        page.goto(task.url, wait_until="networkidle", timeout=timeout_ms)
-
-        # Wait for the map to finish loading
-        page.wait_for_selector("#map.loading-complete", timeout=timeout_ms)
-
-        # Add preview mode styling
+        # Set preview mode
         page.evaluate("""
             () => {
                 const container = document.getElementById('route-map');
@@ -223,50 +154,107 @@ def process_route_attempt(task: RouteTask, quality: int, attempt: int) -> Option
         if map_element:
             screenshot_bytes = map_element.screenshot()
             image = Image.open(io.BytesIO(screenshot_bytes))
-            image.save(task.output_path, "JPEG", quality=quality, optimize=True)
+            image.save(output_path, "JPEG", quality=quality, optimize=True)
 
             # Get and log the file size
-            file_size_bytes = os.path.getsize(task.output_path)
-            file_size_str = get_file_size_str(task.output_path)
+            file_size_bytes = os.path.getsize(output_path)
+            file_size_str = get_file_size_str(output_path)
+            logger.info(f"Saved OpenGraph image for {route_key} to {output_path} (Size: {file_size_str})")
 
-            # Check if file size is suspiciously small (possibly empty map)
+            # Optional: Log a warning if file size is suspiciously small
             if file_size_bytes < 10000:  # Less than 10KB might indicate a problem
-                raise Exception(f"Generated image is too small ({file_size_str}). Map may not have loaded properly!")
+                logger.warning(f"WARNING: Image size for {route_key} is very small ({file_size_str}). Map may not have loaded properly!")
 
-            logger.info(f"Saved OpenGraph image to {task.output_path} (Size: {file_size_str}, {file_size_bytes} bytes)")
-            return task.output_path
+            return output_path
         else:
-            raise Exception("Could not find map element")
+            logger.error(f"Could not find map element for {route_key}")
+            return None
 
-    except PlaywrightTimeoutError as e:
-        raise Exception(f"Timeout error: {str(e)}")
     except Exception as e:
-        raise Exception(f"Processing error: {str(e)}")
+        logger.error(f"Error capturing image for {route_key}: {str(e)}")
+        return None
 
+def switch_to_route(page, route_key: str, geojson_url: str) -> bool:
+    """Switch to a new route using the switchRoute function"""
+    try:
+        logger.info(f"Switching to route {route_key}")
 
-def process_route(task: RouteTask, quality: int) -> Optional[pathlib.Path]:
-    """Process a single route task with retry logic"""
-    last_exception = None
+        # Remove loading-complete class to indicate we're loading a new route
+        page.evaluate("""
+            () => {
+                const map = document.querySelector("#map");
+                if (map) {
+                    map.classList.remove("loading-complete");
+                }
+            }
+        """)
 
-    for attempt in range(1, args.max_retries + 1):
+        # Call switchRoute function
+        result = page.evaluate(f"""
+            () => {{
+                if (typeof window.switchRoute === 'function') {{
+                    window.switchRoute('{geojson_url}');
+                    return true;
+                }} else {{
+                    console.error('switchRoute function not found');
+                    return false;
+                }}
+            }}
+        """)
+
+        if not result:
+            logger.error(f"switchRoute function not available for {route_key}")
+            return False
+
+        return True
+
+    except Exception as e:
+        logger.error(f"Error switching to route {route_key}: {str(e)}")
+        return False
+
+def process_route_with_retry(page, task: RouteTask, is_initial_route: bool = False, max_retries: int = 2) -> Optional[pathlib.Path]:
+    """Process a single route with retry logic"""
+    for attempt in range(max_retries + 1):
         try:
-            return process_route_attempt(task, quality, attempt)
-        except Exception as e:
-            last_exception = e
-
-            if attempt < args.max_retries:
-                # Calculate delay with exponential backoff
-                delay = args.retry_delay * (2 ** (attempt - 1))
-                logger.warning(f"Attempt {attempt} failed for {task.route_key}: {str(e)}")
-                logger.info(f"Retrying in {delay:.1f} seconds...")
-                time.sleep(delay)
+            # For the first route, we might already be on it
+            if is_initial_route and attempt == 0:
+                logger.info(f"Already on route {task.route_key}, capturing image")
             else:
-                logger.error(f"All {args.max_retries} attempts failed for {task.route_key}: {str(e)}")
-                # Log the full traceback for the final failure
-                logger.debug(f"Final failure traceback for {task.route_key}:\n{traceback.format_exc()}")
+                # Switch to the new route
+                if not switch_to_route(page, task.route_key, task.geojson_url):
+                    if attempt < max_retries:
+                        logger.warning(f"Failed to switch to route {task.route_key} (attempt {attempt + 1}/{max_retries + 1}), retrying...")
+                        time.sleep(2)  # Wait before retry
+                        continue
+                    else:
+                        logger.error(f"Failed to switch to route {task.route_key} after {max_retries + 1} attempts")
+                        return None
+
+            # Capture the image
+            output_path = capture_route_image(page, task.route_key, task.output_path, args.quality)
+            if output_path:
+                if attempt > 0:
+                    logger.info(f"Successfully processed {task.route_key} on attempt {attempt + 1}")
+                return output_path
+            else:
+                if attempt < max_retries:
+                    logger.warning(f"Failed to capture image for {task.route_key} (attempt {attempt + 1}/{max_retries + 1}), retrying...")
+                    time.sleep(2)  # Wait before retry
+                    continue
+                else:
+                    logger.error(f"Failed to capture image for {task.route_key} after {max_retries + 1} attempts")
+                    return None
+
+        except Exception as e:
+            if attempt < max_retries:
+                logger.warning(f"Exception processing {task.route_key} (attempt {attempt + 1}/{max_retries + 1}): {str(e)}, retrying...")
+                time.sleep(2)  # Wait before retry
+                continue
+            else:
+                logger.error(f"Exception processing {task.route_key} after {max_retries + 1} attempts: {str(e)}")
+                return None
 
     return None
-
 
 def generate_route_images():
     port = find_free_port()
@@ -301,64 +289,77 @@ def generate_route_images():
             gpx_modified = os.path.getmtime(gpx_file)
             img_modified = os.path.getmtime(output_path)
             if gpx_modified <= img_modified:
-                if os.path.exists(output_path):
-                    file_size_str = get_file_size_str(output_path)
-                    logger.info(f"Skipping {route_key} (unchanged, current size: {file_size_str})")
-                else:
-                    logger.info(f"Skipping {route_key} (unchanged)")
+                file_size_str = get_file_size_str(output_path)
+                logger.info(f"Skipping {route_key} (unchanged, current size: {file_size_str})")
                 continue
 
+        # Construct the geojson URL for switchRoute
         if base_path == '/' or not base_path:
-            # If base_path is just '/', no need to add it
-            url = f"http://localhost:{port}/routes/{route_key}/"
+            geojson_url = f"/routes/geojson/{route_key}.geojson"
         else:
-            url = f"http://localhost:{port}/{base_path}/routes/{route_key}/"
+            geojson_url = f"/{base_path}/routes/geojson/{route_key}.geojson"
 
-        tasks.append(RouteTask(route_key, gpx_file, output_path, url))
+        tasks.append(RouteTask(route_key, gpx_file, output_path, geojson_url))
 
     if not tasks:
         logger.info("No routes to process")
         return []
 
-    # Process all tasks in parallel
+    # Determine which route to load initially
+    initial_route_key = args.initial_route
+    if not initial_route_key and tasks:
+        initial_route_key = tasks[0].route_key
+
+    # Start Playwright
     generated_images = []
     failed_routes = []
-    logger.info(f"Processing {len(tasks)} routes with {args.workers} workers (max {args.max_retries} retries per route)")
 
-    # Using ThreadPoolExecutor with thread-local storage for Playwright
-    with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as executor:
-        # Submit all tasks
-        future_to_task = {
-            executor.submit(process_route, task, args.quality): task
-            for task in tasks
-        }
+    with sync_playwright() as p:
+        browser = p.chromium.launch(
+            headless=True,
+            args=[
+                "--disable-web-security",  # Disable CORS
+                "--enable-webgl",
+                "--ignore-certificate-errors",
+                "--allow-insecure-localhost",
+                "--enable-unsafe-webgl",
+                "--enable-unsafe-swiftshader"
+            ]
+        )
+        page = browser.new_page(viewport={"width": 1920, "height": 1080})
+        page.on("console", lambda msg: logger.warning(f"Browser console: {msg.text}"))
 
-        # Process completed tasks
-        for future in concurrent.futures.as_completed(future_to_task):
-            task = future_to_task[future]
-            try:
-                output_path = future.result()
+        try:
+            # Load the initial route page
+            if base_path == '/' or not base_path:
+                initial_url = f"http://localhost:{port}/routes/{initial_route_key}/"
+            else:
+                initial_url = f"http://localhost:{port}/{base_path}/routes/{initial_route_key}/"
+
+            logger.info(f"Loading initial route page: {initial_url}")
+            page.goto(initial_url, wait_until="networkidle", timeout=30000)
+            page.wait_for_selector("#map.loading-complete", timeout=60000)
+
+            logger.info(f"Processing {len(tasks)} routes using switchRoute (max retries: {args.max_retries})")
+
+            # Process each route
+            for i, task in enumerate(tasks):
+                is_initial_route = (i == 0 and task.route_key == initial_route_key)
+                output_path = process_route_with_retry(page, task, is_initial_route, args.max_retries)
+
                 if output_path:
                     generated_images.append(output_path)
                 else:
                     failed_routes.append(task.route_key)
-            except Exception as e:
-                logger.error(f"Unexpected exception processing {task.route_key}: {str(e)}")
-                failed_routes.append(task.route_key)
 
-    # Report results
+        finally:
+            browser.close()
+
+    # Log summary of results
     if failed_routes:
-        logger.warning(f"Failed to process {len(failed_routes)} routes: {', '.join(failed_routes)}")
+        logger.warning(f"Failed to process {len(failed_routes)} routes after {args.max_retries + 1} attempts: {', '.join(failed_routes)}")
 
     return generated_images
-
-
-def cleanup_resources():
-    """Cleanup function to ensure Playwright resources are properly released"""
-    try:
-        playwright_context.cleanup()
-    except:
-        pass
 
 if __name__ == "__main__":
     try:
@@ -370,6 +371,6 @@ if __name__ == "__main__":
             logger.info(f"Generated {len(generated_images)} OpenGraph images in {elapsed_time:.2f} seconds")
         else:
             logger.info(f"No new images generated in {elapsed_time:.2f} seconds")
-    finally:
-        # Make sure we clean up resources even if there's an exception
-        cleanup_resources()
+    except Exception as e:
+        logger.error(f"Script failed: {str(e)}")
+        raise

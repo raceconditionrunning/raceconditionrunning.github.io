@@ -291,16 +291,174 @@ layout: base
         return [totalDistance, {lng: nearest.geometry.coordinates[0], lat: nearest.geometry.coordinates[1]}]
     }
 
+    // Global variables to store map instance and current route data
+    let map;
+    let currentCoordinates = [];
+    let frameControl;
+
+    // Shared function to generate distance labels
+    function generateDistanceLabels(coordinates) {
+        let totalDistance = 0;
+        let mileMarker = 1;
+        let distanceLabels = [];
+
+        for (let i = 1; i < coordinates.length; i++) {
+            let segmentDist = distance(coordinates[i - 1], coordinates[i], {units: 'miles'});
+            totalDistance += segmentDist;
+            if (totalDistance >= mileMarker) {
+                let midPoint = [(coordinates[i - 1][0] + coordinates[i][0]) / 2, (coordinates[i - 1][1] + coordinates[i][1]) / 2];
+                distanceLabels.push({
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        coordinates: midPoint
+                    },
+                    properties: {
+                        distance: mileMarker
+                    }
+                });
+                mileMarker += 1;
+            }
+        }
+
+        return distanceLabels;
+    }
+
+    // Shared function to generate start/end points
+    function generateEndPoints(coordinates) {
+        return {
+            type: 'FeatureCollection',
+            features: [
+                {
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        coordinates: coordinates[0]
+                    },
+                    properties: {
+                        color: '#00FF00'
+                    }
+                },
+                {
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        coordinates: coordinates[coordinates.length - 1]
+                    },
+                    properties: {
+                        color: '#FF0000'
+                    }
+                }
+            ]
+        };
+    }
+
+    // Shared function to update route data on the map
+    function updateRouteData(data) {
+        // Update current coordinates
+        const coordinates = data.geometry.coordinates;
+        currentCoordinates = coordinates;
+
+        // Update elevation profile
+        const elevationProfile = document.querySelector('elevation-profile');
+        if (elevationProfile) {
+            if (coordinates[0].length === 3) {
+                elevationProfile.elevationData = coordinates;
+            } else {
+                elevationProfile.classList.add('d-none')
+            }
+        }
+
+        // Calculate bounds
+        const bounds = coordinates.reduce((bounds, coord) => {
+            return bounds.extend(coord);
+        }, new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
+
+        // Update map sources
+        map.getSource('route').setData(data);
+        map.getSource('distance-labels').setData({
+            type: 'FeatureCollection',
+            features: generateDistanceLabels(coordinates)
+        });
+        map.getSource('points').setData(generateEndPoints(coordinates));
+
+        // Fit map to bounds
+        map.fitBounds(bounds, {padding: 50, animate: true});
+
+        // Update frame control bounds
+        if (frameControl) {
+            frameControl.options.bounds = bounds;
+        }
+        map.once('idle' , () => {
+            // Our route preview image generation script waits for this to appear before taking the screengrab. Otherwise, the route may not be rendered yet.
+            map.getContainer().classList.add("loading-complete")
+        });
+
+
+        return bounds;
+    }
+
+    function updateStats(data) {
+        const statsElement = document.querySelector('.stats');
+        if (statsElement) {
+            statsElement.innerHTML = '';
+            const distanceMi = data.properties.distance_mi || 0;
+            const ascentFt = (data.properties.ascent_m ||
+                data.geometry.coordinates.reduce((total, coord, i, arr) => {
+                    if (i === 0) return 0;
+                    const elevationGain = Math.max(0, coord[2] - arr[i-1][2]);
+                    return total + elevationGain;
+                }, 0)) * 3.28084;
+
+            const descentFt = (data.properties.descent_m ||
+                data.geometry.coordinates.reduce((total, coord, i, arr) => {
+                    if (i === 0) return 0;
+                    const elevationLoss = Math.max(0, arr[i-1][2] - coord[2]);
+                    return total + elevationLoss;
+                }, 0)) * 3.28084;
+            statsElement.innerHTML = `<span class="route-stats-distance" title="${data.properties.distance_mi} miles">${distanceMi.toFixed(1)}mi</span>
+                                      <span class="route-stats-elevation">↑${ascentFt.toFixed(0)}ft ↓${descentFt.toFixed(0)}ft</span>`;
+        }
+    }
+
+    // Function to load and display a route
+    async function loadRoute(geojsonUrl) {
+        try {
+            document.querySelector("#map").classList.remove("loading-complete");
+            const response = await fetch(geojsonUrl);
+            const data = await response.json();
+
+            updateRouteData(data);
+            updateStats(data);
+
+        } catch (error) {
+            console.error('Error loading route:', error);
+        }
+    }
+
+    window.switchRoute = function(geojsonUrl) {
+        if (!map) {
+            console.error('Map not initialized yet');
+            return;
+        }
+        loadRoute(geojsonUrl);
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
-        let routeGeojson = fetch('{{ page.geojson | relative_url }}').then(response => response.json())
+
+        // Load initial route
+        let initialRouteUrl = '{{ page.geojson | relative_url }}';
+        let routeGeojson = fetch(initialRouteUrl).then(response => response.json());
 
         routeGeojson.then(data => {
             const coordinates = data.geometry.coordinates;
-            document.querySelector('elevation-profile').elevationData = coordinates;
+
+            // Calculate initial bounds
             const bounds = coordinates.reduce((bounds, coord) => {
                 return bounds.extend(coord);
             }, new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
-            const map = new maplibregl.Map({
+
+            map = new maplibregl.Map({
                 style: "{{'/maps/route-map-style.json' | relative_url }}",
                 container: 'map',
                 zoom: 9.5,
@@ -322,63 +480,8 @@ layout: base
                     // Our route preview image generation script waits for this to appear before taking the screengrab. Otherwise, the route may not be rendered yet.
                     map.getContainer().classList.add("loading-complete")
                 });
-                map.getSource('route').setData(data);
-                // Frame the route
-                let totalDistance = 0
-                let mileMarker = 1
-                let distanceLabels = []
 
-                for (let i = 1; i < coordinates.length; i++) {
-                    let segmentDist = distance(coordinates[i - 1], coordinates[i], {units: 'miles'})
-                    totalDistance += segmentDist
-                    if (totalDistance >= mileMarker) {
-                        let midPoint = [(coordinates[i - 1][0] + coordinates[i][0]) / 2, (coordinates[i - 1][1] + coordinates[i][1]) / 2]
-                        distanceLabels.push({
-                            type: 'Feature',
-                            geometry: {
-                                type: 'Point',
-                                coordinates: midPoint
-                            },
-                            properties: {
-                                distance: mileMarker
-                            }
-                        })
-                        mileMarker += 1
-                    }
-                }
-
-                map.getSource('distance-labels').setData({
-                    type: 'FeatureCollection',
-                    features: distanceLabels
-                });
-
-
-                map.getSource('points').setData({
-                    type: 'FeatureCollection',
-                    features: [
-                        {
-                            type: 'Feature',
-                            geometry: {
-                                type: 'Point',
-                                coordinates: coordinates[0]
-                            },
-                            properties: {
-                                color: '#00FF00'
-                            }
-                        },
-                        {
-                            type: 'Feature',
-                            geometry: {
-                                type: 'Point',
-                                coordinates: coordinates[coordinates.length - 1]
-                            },
-                            properties: {
-                                color: '#FF0000'
-                            }
-                        }
-                    ]
-
-                });
+                updateRouteData(data);
 
                 // Create a popup, but don't add it to the map yet.
                 const distancePopup = new maplibregl.Popup({
@@ -391,13 +494,14 @@ layout: base
                 const updateDistancePopup = (e) => {
                     map.getCanvas().style.cursor = 'pointer';
                     const hovered = [e.lngLat.lng, e.lngLat.lat];
-                    const [distanceAlongLine, nearestPoint] = computeDistanceAlongLine(point(hovered), coordinates)
+                    const [distanceAlongLine, nearestPoint] = computeDistanceAlongLine(point(hovered), currentCoordinates)
 
                     distancePopup
                         .setLngLat(nearestPoint)
                         .setHTML(`${(distanceAlongLine / 1609.34).toFixed(2)}mi`)
                         .addTo(map);
                 }
+
                 map.on('mouseenter', 'route-hover-region', updateDistancePopup);
                 map.on('mousemove', 'route-hover-region', updateDistancePopup);
                 map.on('mouseleave', 'route-hover-region', () => {
@@ -414,7 +518,10 @@ layout: base
 
                 map.addControl(geolocate);
                 map.addControl(new maplibregl.FullscreenControl());
-                map.addControl(new FrameControl({bounds, padding: 50}));
+
+                // Store reference to frame control for later updates
+                frameControl = new FrameControl({bounds, padding: 50});
+                map.addControl(frameControl);
             });
         });
     });
