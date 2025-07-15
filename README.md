@@ -72,6 +72,15 @@ Both plans and individual legs can include a `cancelled` key:
 - Any value (including empty string) causes strikethrough display
 - The value content is shown as the cancellation reason
 
+### Adding a Route
+
+To add a new route, add a GPX file to the `routes/_gpx/` directory. Route files follow strict formatting rules, which get checked by `_bin/make_routes_table.py`. The build will fail with a descriptive error if any route doesn't meet the minimum formatting requirements.
+
+Before you commit changes to a route, run `make normalize-routes-in-place` to ensure the route is formatted correctly.
+
+To supply elevation data, run `make replace-route-elevations` and `make normalize-routes-in-place`.
+
+
 ## Important Files and Folders
 
 - `_bin/mkical.py` generates an iCalendar file for the current schedule.

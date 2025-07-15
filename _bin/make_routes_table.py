@@ -62,6 +62,10 @@ def check_route(route):
     if route['type'] not in TYPES:
         warn_rc(route, f"invalid type '{route['type']}'")
 
+    # Route must have elevation data
+    if not all([point.elevation for point in route['track'].points]):
+        warn_rc(route, "route must have elevation data in the GPX track. Use _bin/replace_route_elevations.py to fill in missing elevations.")
+
 
     # TODO eventually all routes should have a valid surface
     # valid surface

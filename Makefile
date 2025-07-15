@@ -51,6 +51,17 @@ normalize-routes:
 	uv run python3 _bin/normalize_gpx.py --input $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(raw))\
 		--output $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(patsubst routes/_gpx/%, routes/gpx/%,$(raw)))
 
+# Use this to standardize format when adding a new route or updating an existing one
+normalize-routes-in-place:
+	@mkdir -p routes/gpx
+	uv run python3 _bin/normalize_gpx.py --input $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(raw))\
+		--output $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(raw))
+
+# Use this when adding a new GPX that doesn't have elevation data
+replace-route-elevations:
+	uv run python3 _bin/replace_route_elevations.py --input $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(raw))\
+                                                    		--output $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(raw))
+
 $(TRANSIT_DATA):
 	_bin/fetch_transit_data.sh
 
