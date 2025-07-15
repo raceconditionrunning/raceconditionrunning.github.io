@@ -69,6 +69,10 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
           "imports": {
             "bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.6/js/bootstrap.esm.min.js",
             "d3": "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm",
+            "lit": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
+            "lit-html": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
+            "lit-html/directives/map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/map.js",
+            "lit-html/directives/repeat.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/repeat.js",
             "maplibre-gl": "https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.1/+esm",
             "masonry-layout": "https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js",
             "noUiSlider": "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.mjs",
@@ -78,7 +82,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
             "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.3.1/js/tabulator_esm.min.js",
             "@turf": "https://cdn.jsdelivr.net/npm/@turf/turf@7.1.0/+esm",
             "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js"
-            }
+          }
         }
     </script>
     {% include analytics.html %}
@@ -237,7 +241,7 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
 
         /* MAP ********************/
 
-        #relay-map {
+        .map-container {
             height: 100%;
         }
         #map {
@@ -575,7 +579,9 @@ registration_link: https://forms.gle/mudG4DHJFhPuqYbV6
         <relay-map id="relay-map"
                    center="[-122.32747365635417,47.60640473782326]"
                    max-bounds="[[-122.90236980551624, 47.23422996598591], [-121.60263821424818, 47.83106353346886]]"
-                   style-href="{{ site.baseurl }}/maps/lrr23-map-style.json"></relay-map>
+                   style-href="{{ site.baseurl }}/maps/lrr23-map-style.json"
+                   img-base-path="{{ site.baseurl }}/img/lrr24/"
+        ></relay-map>
 
     </section>
 
@@ -911,8 +917,15 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
     ]).then(([railLines, [legs, exchanges, exchangeNames]]) => {
         // Get colors from css vars
         let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-primary-color')
-        document.querySelector("#relay-map").addLines(railLines)
-        document.querySelector("#relay-map").addRelayLine(legs, exchanges, exchangeNames, false, [primaryColor], "{{ site.baseurl }}/img/lrr24/")
+        const relayMap = document.querySelector("#relay-map")
+        relayMap.railLines = railLines
+        legs.features = legs.features.map(leg => {
+            leg.properties.lineColor = primaryColor
+            return leg
+        })
+        relayMap.exchanges = exchanges
+        relayMap.exchangeNames = exchangeNames
+        relayMap.legs = legs
     })
 
 
@@ -925,9 +938,16 @@ https://getbootstrap.com/docs/5.3/layout/css-grid/
 
     createCountdown(startTime.getTime(), "countdown-ended")
 
-    processedRouteData.then( ([legs, exchanges, exchangeNames]) => {
-        document.getElementById("leg-calculator").setLegs(legs.features, exchangeNames)
-    })
+    processedRouteData.then(([legs, exchanges, exchangeNames]) => {
+        let legsData = legs.features
+        let exchangeInfo = exchanges.features.reduce((acc, exchange) => {
+            acc[exchange.properties.id] = exchange.properties
+            acc[exchange.properties.id].stationCode = exchange.properties.id % 100
+            return acc
+        }, {})
+        document.getElementById("leg-calculator").setLegs(legs.features, exchangeInfo)
+        createLegDetailsTable(document.getElementById("leg-details-table"), legsData, exchanges.features)
+    });
 
     // Tooltips for sign-up deadlines
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')

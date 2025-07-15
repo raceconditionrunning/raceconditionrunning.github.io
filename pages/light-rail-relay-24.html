@@ -73,6 +73,10 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
           "imports": {
             "bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.6/js/bootstrap.esm.min.js",
             "d3": "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm",
+            "lit": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
+            "lit-html": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
+            "lit-html/directives/map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/map.js",
+            "lit-html/directives/repeat.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/repeat.js",
             "maplibre-gl": "https://cdn.jsdelivr.net/npm/maplibre-gl@5.6.1/+esm",
             "masonry-layout": "https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js",
             "noUiSlider": "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.mjs",
@@ -263,7 +267,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
         /* RELAY MAP */
 
-        #map-container {
+        .map-container {
             height: 100%;
         }
         #map {
@@ -688,7 +692,10 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
     <relay-map id="relay-map"
                center="[-122.32747,47.60640]"
                max-bounds="[[-123.90236, 46.63422], [-120.20263, 49.85310]]"
-               style-href="{{ site.baseurl }}/maps/lrr24-map-style.json"></relay-map>
+               style-href="{{ site.baseurl }}/maps/lrr24-map-style.json"
+               use-station-codes="true"
+               img-base-path="{{ site.baseurl }}/img/lrr24/"
+    ></relay-map>
 
 </section>
 
@@ -1236,14 +1243,14 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             "type": "FeatureCollection",
             "features": vehiclesGeojson}
 
-        document.querySelector("#relay-map").addTrains(vehiclesGeojson)
+        document.querySelector("#relay-map").trains = vehiclesGeojson
     });
 
     let routeData = fetch("{{ site.baseurl }}/maps/lrr24.geojson").then(res => res.json())
     let futureRouteData = fetch("{{ site.baseurl }}/maps/lrr-future.geojson").then(res => res.json())
     let railData = fetch("{{ site.baseurl }}/maps/link-light-rail.geojson").then(res => res.json())
     railData.then((railLines) => {
-        document.querySelector("#relay-map").addLines(railLines)
+        document.querySelector("#relay-map").railLines = railLines
     })
     let processedRouteData = routeData.then((relay) => {
         let [legs, exchanges] = processRelayGeoJSON(relay)
@@ -1293,7 +1300,14 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         exchangeNames = {...future[1], ...exchangeNames}
         // Get colors from css vars
         let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-primary-color')
-        document.querySelector("#relay-map").addRelayLine(legs, allExchanges, exchangeNames, true, [primaryColor], "{{ site.baseurl }}/img/lrr24/")
+        let map = document.querySelector("#relay-map")
+        legs.features = legs.features.map(leg => {
+            leg.properties.lineColor = primaryColor
+            return leg
+        })
+        map.exchanges = allExchanges
+        map.exchangeNames = exchangeNames
+        map.legs = legs
         document.querySelector("#relay-map").registerLiveArrivalsSource(allExchanges, vehicleMonitor.getArrivalsForStop.bind(vehicleMonitor))
     })
 

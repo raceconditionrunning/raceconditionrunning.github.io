@@ -27,6 +27,16 @@
       "promoteId": "id",
       "data": {}
     },
+    "leg-splits": {
+      "type": "geojson",
+      "promoteId": "id",
+      "data": {}
+    },
+    "overall-splits": {
+      "type": "geojson",
+      "promoteId": "id",
+      "data": {}
+    },
     "exchanges": {
       "type": "geojson",
       "promoteId": "id",
@@ -40,6 +50,15 @@
         "type": "geojson",
         "data": {}
     }
+  },
+  "state": {
+    "selectedLeg": {"default": null},
+    "selectedExchange": {"default": null},
+    "selectedTrain": {"default": null},
+    "showLegs": {"default": true},
+    "showExchanges": {"default": true},
+    "showTrains": {"default": true},
+    "showRailLines": {"default": true}
   },
   "sprite": "https://api.maptiler.com/maps/7a6c1614-9502-4770-b503-f7551c1bdfe4/sprite",
   "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=YvNrcU9QI9xFBf4H4cam",
@@ -3108,7 +3127,15 @@
         "line-cap": "round"
       },
       "paint": {
-        "line-color": ["case", ["boolean", ["feature-state", "selected"], false], ["interpolate-lab", ["linear"], 0.5, 0, "#000", 1, ["get", "lineColor"]], ["get", "lineColor"]],
+        "line-color": ["case",
+          ["boolean",
+            ["all",
+              ["!=",["feature-state", "selectedLeg"], null],
+              ["==", ["feature-state", "selected"], false]
+            ]
+          , false],
+          ["interpolate-lab", ["linear"], 0.5, 0, "#000000", 1, ["get", "lineColor"]],
+          ["get", "lineColor"]],
         "line-width": {
           "stops": [
             [10, 3],
@@ -3118,6 +3145,72 @@
           ]
         },
         "line-opacity": ["interpolate", ["linear"],["zoom"], 14, 1.0, 15, 0.6, 16, 0.45]
+      }
+    },
+    {
+      "id": "overall-splits",
+      "type": "symbol",
+      "source": "overall-splits",
+      "filter": [
+        "all",
+        ["==", ["global-state", "selectedLeg"], null],
+        [
+          ">=",
+          ["zoom"],
+          ["-",17,["get", "importance"]]
+        ]
+      ],
+        "minzoom": 13,
+      "layout": {
+        "text-field": ["to-string",  ["get", "distance"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": {
+          "stops": [
+            [9, 8],
+            [10, 10],
+            [16, 18]
+          ]
+        },
+        "text-padding": 4,
+        "text-justify": "center"
+      },
+      "paint": {
+        "text-color": "#FFF",
+        "text-halo-color": "rgba(0, 0, 0, 0.6)",
+        "text-halo-width": 2
+      }
+    },
+    {
+      "id": "leg-splits",
+      "type": "symbol",
+      "source": "leg-splits",
+      "filter": [
+        "all",
+        ["!=", ["global-state", "selectedLeg"], null],
+        [
+          ">=",
+          ["zoom"],
+          ["-",17,["get", "importance"]]
+        ]
+      ],
+      "minzoom": 13,
+      "layout": {
+        "text-field": ["to-string", ["get", "distance"]],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": {
+          "stops": [
+            [9, 8],
+            [10, 10],
+            [16, 18]
+          ]
+        },
+        "text-padding": 4,
+        "text-justify": "center"
+      },
+      "paint": {
+        "text-color": "#FFF",
+        "text-halo-color": "rgba(0, 0, 0, 0.6)",
+        "text-halo-width": 2
       }
     },
     {
