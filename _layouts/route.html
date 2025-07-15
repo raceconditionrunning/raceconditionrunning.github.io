@@ -9,7 +9,7 @@ layout: base
   {% assign descent_ft = page.descent_m | times: 3.28084 %}
   {% capture stats %}<span title="{{ page.distance_mi | times: 1.609 | round: 1}}km" class="route-stats-distance">{{ page.distance_mi | round: 1}}mi</span>
   <span class="route-stats-elevation">↑<span title="{{ page.ascent_m}}m">{{ascent_ft | round}}ft</span> ↓<span
-          title="{{ page.descent_m}}m">{{ascent_ft | round}}ft</span></span> {% if page.deprecated %} <span
+          title="{{ page.descent_m}}m">{{descent_ft | round}}ft</span></span> {% if page.deprecated %} <span
         class="text-warning mx-2 route-stats-deprecated" title="We no longer schedule this route">Deprecated</span>{%
   endif%}{% endcapture %}
   <h3 class="h5">{{ stats }}</h3>
@@ -22,7 +22,7 @@ layout: base
   <h2 class="visually-hidden">Map</h2>
   <div id="route-map" class="mb-3 w-100">
     <div id="map" class="w-100"></div>
-    <!-- These are restyled as overlays when rendering route preview images. -->
+    <!-- These are restyled as overlays when rendering route preview images (class `preview-mode` on route-map div). -->
     <elevation-profile class="w-100"></elevation-profile>
     <div class="stats d-none">{{ stats }}</div>
   </div>

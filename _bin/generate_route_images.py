@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generate OpenGraph images for route maps with parallelization.
+Generate OpenGraph images for route maps with parallelization and retry logic.
 This script:
 1. Finds all GPX route files
 2. Starts a local HTTP server to serve the compiled site
@@ -8,6 +8,7 @@ This script:
 4. For each route, renders the corresponding HTML page via HTTP
 5. Captures the map element as an image
 6. Optimizes and saves to img/routes/[key].jpg
+7. Retries failed routes with exponential backoff
 """
 
 import os
@@ -26,6 +27,7 @@ import random
 import concurrent.futures
 from dataclasses import dataclass
 from typing import List, Optional
+import traceback
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -41,6 +43,9 @@ parser.add_argument('--port', type=int, default=0, help='Port for local server (
 parser.add_argument('--incremental', action='store_true', help='Only generate images for new/changed routes')
 parser.add_argument('--workers', type=int, default=4, help='Number of parallel workers')
 parser.add_argument('--base-path', type=str, default='', help='Base path for serving content (e.g., __rcr__)')
+parser.add_argument('--max-retries', type=int, default=2, help='Maximum number of retry attempts per route')
+parser.add_argument('--retry-delay', type=float, default=2.0, help='Initial retry delay in seconds (doubles with each retry)')
+parser.add_argument('--timeout', type=int, default=60, help='Timeout in seconds for page load and map rendering')
 args = parser.parse_args()
 
 os.makedirs(args.output_dir, exist_ok=True)
@@ -117,7 +122,7 @@ class RouteTask:
     output_path: pathlib.Path
     url: str
 
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 
 # We won't use a browser pool since Playwright objects aren't thread-safe
 # Instead, each worker thread will have its own browser instance
@@ -156,6 +161,17 @@ class PlaywrightThread(threading.local):
             self.playwright.stop()
             self.playwright = None
 
+    def reset_page(self):
+        """Reset the page instance (useful for retries)"""
+        if self.page:
+            try:
+                self.page.close()
+            except:
+                pass
+        if self.browser:
+            self.page = self.browser.new_page(viewport={"width": 1920, "height": 1080})
+            self.page.on("console", lambda msg: logger.warning(f"Browser console: {msg.text}"))
+
 # Create a thread-local instance
 playwright_context = PlaywrightThread()
 
@@ -171,17 +187,28 @@ def get_file_size_str(file_path):
         return f"{size_bytes / (1024 * 1024):.2f} MB"
 
 
-def process_route(task: RouteTask, quality: int) -> Optional[pathlib.Path]:
-    """Process a single route task using a thread-local browser instance"""
+def process_route_attempt(task: RouteTask, quality: int, attempt: int) -> Optional[pathlib.Path]:
+    """Process a single route task attempt"""
     try:
         # Initialize Playwright in this thread if not already done
         playwright_context.initialize()
+
+        # Reset page for retry attempts (clears any previous state)
+        if attempt > 1:
+            playwright_context.reset_page()
+
         page = playwright_context.page
+        timeout_ms = args.timeout * 1000
 
-        logger.info(f"Processing {task.route_key} from {task.url}")
+        logger.info(f"Processing {task.route_key} from {task.url} (attempt {attempt})")
 
-        page.goto(task.url, wait_until="networkidle", timeout=30000)
-        page.wait_for_selector("#map.loading-complete", timeout=60000)
+        # Navigate to the page with timeout
+        page.goto(task.url, wait_until="networkidle", timeout=timeout_ms)
+
+        # Wait for the map to finish loading
+        page.wait_for_selector("#map.loading-complete", timeout=timeout_ms)
+
+        # Add preview mode styling
         page.evaluate("""
             () => {
                 const container = document.getElementById('route-map');
@@ -201,20 +228,44 @@ def process_route(task: RouteTask, quality: int) -> Optional[pathlib.Path]:
             # Get and log the file size
             file_size_bytes = os.path.getsize(task.output_path)
             file_size_str = get_file_size_str(task.output_path)
-            logger.info(f"Saved OpenGraph image to {task.output_path} (Size: {file_size_str}, {file_size_bytes} bytes)")
 
-            # Optional: Log a warning if file size is suspiciously small (possibly empty map)
+            # Check if file size is suspiciously small (possibly empty map)
             if file_size_bytes < 10000:  # Less than 10KB might indicate a problem
-                logger.warning(f"WARNING: Image size for {task.route_key} is very small ({file_size_str}). Map may not have loaded properly!")
+                raise Exception(f"Generated image is too small ({file_size_str}). Map may not have loaded properly!")
 
+            logger.info(f"Saved OpenGraph image to {task.output_path} (Size: {file_size_str}, {file_size_bytes} bytes)")
             return task.output_path
         else:
-            logger.error(f"Could not find map element for {task.route_key}")
-            return None
+            raise Exception("Could not find map element")
 
+    except PlaywrightTimeoutError as e:
+        raise Exception(f"Timeout error: {str(e)}")
     except Exception as e:
-        logger.error(f"Error processing {task.route_key}: {str(e)}")
-        return None
+        raise Exception(f"Processing error: {str(e)}")
+
+
+def process_route(task: RouteTask, quality: int) -> Optional[pathlib.Path]:
+    """Process a single route task with retry logic"""
+    last_exception = None
+
+    for attempt in range(1, args.max_retries + 1):
+        try:
+            return process_route_attempt(task, quality, attempt)
+        except Exception as e:
+            last_exception = e
+
+            if attempt < args.max_retries:
+                # Calculate delay with exponential backoff
+                delay = args.retry_delay * (2 ** (attempt - 1))
+                logger.warning(f"Attempt {attempt} failed for {task.route_key}: {str(e)}")
+                logger.info(f"Retrying in {delay:.1f} seconds...")
+                time.sleep(delay)
+            else:
+                logger.error(f"All {args.max_retries} attempts failed for {task.route_key}: {str(e)}")
+                # Log the full traceback for the final failure
+                logger.debug(f"Final failure traceback for {task.route_key}:\n{traceback.format_exc()}")
+
+    return None
 
 
 def generate_route_images():
@@ -271,7 +322,8 @@ def generate_route_images():
 
     # Process all tasks in parallel
     generated_images = []
-    logger.info(f"Processing {len(tasks)} routes with {args.workers} workers")
+    failed_routes = []
+    logger.info(f"Processing {len(tasks)} routes with {args.workers} workers (max {args.max_retries} retries per route)")
 
     # Using ThreadPoolExecutor with thread-local storage for Playwright
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as executor:
@@ -288,8 +340,15 @@ def generate_route_images():
                 output_path = future.result()
                 if output_path:
                     generated_images.append(output_path)
+                else:
+                    failed_routes.append(task.route_key)
             except Exception as e:
-                logger.error(f"Exception processing {task.route_key}: {str(e)}")
+                logger.error(f"Unexpected exception processing {task.route_key}: {str(e)}")
+                failed_routes.append(task.route_key)
+
+    # Report results
+    if failed_routes:
+        logger.warning(f"Failed to process {len(failed_routes)} routes: {', '.join(failed_routes)}")
 
     return generated_images
 
