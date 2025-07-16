@@ -67,7 +67,7 @@ def load_route(path):
             with open(path, 'r') as f:
                 reader = gpxpy.parse(f)
         except Exception as e:
-            raise GPXParseError(f"Could not parse '{path}'\n{e}")
+            raise GPXParseError(f"Could not parse '{path}'\n{e}. Make sure rcr extension is specified.")
 
         # Recursively strip `{<extension_url}:` prefix from metadata keys. Nesting only used for changelog right now
         def strip_rcr_prefix(item_list):
@@ -98,6 +98,14 @@ def load_route(path):
         if not track:
             raise GPXFormatError(f"Bogus number of tracks in:\n{path}")
 
+        if not track.description:
+            raise GPXFormatError(f"Track description (<desc>) is empty in:\n{path}")
+        extracted_distance = None
+        try:
+            extracted_distance = float(track.description.split("(")[1].split("mi)")[0].strip())
+        except (ValueError, IndexError):
+            raise GPXFormatError(f"Could not extract distance from track description in:\n{path}. Should be in format 'Description (X mi)'")
+
         ascent = metadata.get('ascent', None)
         if ascent:
             ascent = float(ascent)
@@ -115,7 +123,7 @@ def load_route(path):
             'id': path.stem,
             'name': metadata.get('name', track.description.split("(")[0].strip()),
             'last_updated': metadata.get('last_updated', None),
-            'distance_mi': metadata.get('distance', float(track.description.split("(")[1].split("mi)")[0].strip())),
+            'distance_mi': metadata.get('distance', extracted_distance),
             'ascent_m': ascent,
             'descent_m': descent,
             'map': metadata.get('map', None),

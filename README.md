@@ -74,7 +74,13 @@ Both plans and individual legs can include a `cancelled` key:
 
 ### Adding a Route
 
-To add a new route, add a GPX file to the `routes/_gpx/` directory. Route files follow strict formatting rules, which get checked by `_bin/make_routes_table.py`. The build will fail with a descriptive error if any route doesn't meet the minimum formatting requirements.
+Add a GPX file to the `routes/_gpx/` directory. The build will fail with a descriptive error if any route doesn't meet the minimum formatting requirements which get checked by `_bin/make_routes_table.py`. 
+  
+  * The file's `<gpx>` tag must include the RCR extension: `<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running" xmlns:rcr="http://raceconditionrunning.com/extensions">`
+  * `<name>` - lowercase, hyphenated name of the route. Ends with `loop` if the route is a loop or `ob` if the route is an out-and-back.
+  * `<desc>` - The presentation name of the route, e.g. "Lake Union Loop".
+  * You must include an `<extensions>` tag in the `<metadata>` section, with
+    `<rcr:last_updated>YYYY-MM-DD</rcr:last_updated>`.
 
 Before you commit changes to a route, run `make normalize-routes-in-place` to ensure the route is formatted correctly.
 
