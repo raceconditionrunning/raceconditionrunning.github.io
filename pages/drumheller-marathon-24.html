@@ -78,7 +78,8 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             "lit-html": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
             "lit-element": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
             "maplibre-gl": "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.3.2/maplibre-gl.min.js",
-            "p5": "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/p5.min.js",
+            "p5": "https://cdn.jsdelivr.net/npm/p5@2.0.4/lib/p5.esm.min.js",
+            "p5": "https://cdnjs.cloudflare.com/ajax/libs/p5.js/2.0.3/p5.esm.min.js",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
             "photoswipe-dynamic-caption": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe-dynamic-caption-plugin/1.2.7/photoswipe-dynamic-caption-plugin.esm.min.js",
@@ -1347,7 +1348,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
     import PhotoSwipeLightbox from 'photoswipe-lightbox';
     import PhotoSwipeDynamicCaption from 'photoswipe-dynamic-caption';
     import {Tooltip} from 'bootstrap'
-    import {} from 'p5'
+    import p5 from 'p5'
     import * as d3 from 'd3';
 
     import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
@@ -1357,6 +1358,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
 
     function initialize() {
+        p5.disableFriendlyErrors = true;
         new p5(FountainToy("{{site.baseurl}}"), document.querySelector("#hero-toy .interactive"));
         document.querySelector("#hero-toy").addEventListener("musicStart", () => {
             const credit = document.querySelector("#credit");

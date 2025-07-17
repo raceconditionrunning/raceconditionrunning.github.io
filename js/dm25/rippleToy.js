@@ -85,9 +85,7 @@ export let RippleToy = rootUrl => p => {
     let notesPlayed = []
 
 
-    p.preload = function () {
-        rippleShader = p.loadShader(`${rootUrl}/js/dm25/ripple.vert`, `${rootUrl}/js/dm25/ripple.frag`);
-        glintShader = p.loadShader(`${rootUrl}/js/dm25/ripple.vert`, `${rootUrl}/js/dm25/glint.frag`);
+    p.setup = async () =>{
 
         sounds = new AudioSprite({
             src: [`${rootUrl}/img/dm25/wasserklavier.mp3`],
@@ -110,9 +108,7 @@ export let RippleToy = rootUrl => p => {
             }
         });
         startStamp = Date.now() / 1000.0
-    }
 
-    p.setup = function () {
         width = p._userNode.offsetWidth;
         height = p._userNode.offsetHeight;
         canvas = p.createCanvas(width, height, p.WEBGL);
@@ -128,7 +124,13 @@ export let RippleToy = rootUrl => p => {
         outBuffer = p.createFramebuffer({format: p.UNSIGNED_BYTE, width: width, height: height, density: 1, depth: false})
         p.imageMode(p.CENTER)
         p.noStroke();
+        rippleShader = await p.loadShader(`${rootUrl}/js/dm25/ripple.vert`, `${rootUrl}/js/dm25/ripple.frag`);
+        glintShader = await p.loadShader(`${rootUrl}/js/dm25/ripple.vert`, `${rootUrl}/js/dm25/glint.frag`);
+        // First call builds the shader program
+        p.shader(rippleShader);
+        p.shader(glintShader);
     }
+
     p.startAmbiance = () => {
         ambiance.play('drone', 0, true)
 

@@ -199,7 +199,7 @@ void main() {
     pressure *= dampening;
 
     // Jet turbulence
-    float jetsValue = texture(jets, vec2(uv.x, 1.0 - uv.y)).w;
+    float jetsValue = texture(jets, vec2(uv.x, uv.y)).w;
     if (jetsValue > 0.0) {
         vec2 step = vec2(1.3, 1.7);
         // Can't have large low frequency components or we'll get pressure pulses across the jet map

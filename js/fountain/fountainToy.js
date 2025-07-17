@@ -59,11 +59,7 @@ export let FountainToy = rootUrl => p => {
     let lastMouseVel = null
     let lastWaterContactVec = null
 
-    p.preload = function () {
-        rippleShader = p.loadShader(`${rootUrl}/js/fountain/ripple.vert`, `${rootUrl}/js/fountain/ripple.frag`);
-        glintShader = p.loadShader(`${rootUrl}/js/fountain/ripple.vert`, `${rootUrl}/js/fountain/glint.frag`);
-        //baseWaterShader = p.loadShader(`${rootUrl}/js/fountain/ripple.vert`, `${rootUrl}/js/fountain/flowNoise.frag`);
-
+    p.setup = async () => {
         sounds = new AudioSprite({
             src: [`${rootUrl}/img/dm24/la-fille-aux-cheveux-de-lin.mp3`],
             sprite: {
@@ -74,11 +70,12 @@ export let FountainToy = rootUrl => p => {
                 note5: [10400, 252600],
             }
         });
-        jetsTexture = p.loadImage(`${rootUrl}/img/dm24/jets.png`)
+        jetsTexture = await p.loadImage(`${rootUrl}/img/dm24/jets.png`)
         startStamp = Date.now() / 1000.0
-    }
+        rippleShader = await p.loadShader(`${rootUrl}/js/fountain/ripple.vert`, `${rootUrl}/js/fountain/ripple.frag`);
+        glintShader = await p.loadShader(`${rootUrl}/js/fountain/ripple.vert`, `${rootUrl}/js/fountain/glint.frag`);
+        //baseWaterShader = p.loadShader(`${rootUrl}/js/fountain/ripple.vert`, `${rootUrl}/js/fountain/flowNoise.frag`);
 
-    p.setup = function () {
         width = p._userNode.offsetWidth;
         height = p._userNode.offsetHeight;
         canvas = p.createCanvas(width, height, p.WEBGL);
@@ -99,6 +96,9 @@ export let FountainToy = rootUrl => p => {
         p.imageMode(p.CENTER)
         //testImage = p.loadImage("/img/rcc-logo.png")
         p.noStroke();
+        // First call builds the shader
+        p.shader(glintShader);
+        p.shader(rippleShader);
     }
 
     p.mousePressed = () => {
@@ -187,12 +187,12 @@ export let FountainToy = rootUrl => p => {
     }
 
     p.draw = function () {
-        if (p.mouseIsPressed && p.mouseButton === p.LEFT) {
+        if (p.mouseButton.left) {
             // Clicking and dragging should feel like dragging a finger through water, but simulation
             // is too slow to keep up with the mouse. We slow down the water contact point movement by interpolating
             // between the last water contact and the current mouse position
-            const currentMouseVec = new p.createVector(p.mouseX, p.mouseY)
-            const diff = lastWaterContactVec ? lastWaterContactVec.copy().sub(currentMouseVec) : new p.createVector(0, 0)
+            const currentMouseVec = p.createVector(p.mouseX, p.mouseY)
+            const diff = lastWaterContactVec ? lastWaterContactVec.copy().sub(currentMouseVec) : p.createVector(0, 0)
             const newDiff = diff.limit(lastMouseVel * .8 + .2 * diff.limit(p.lerp(6,8, (p.frameRate() - 60) / 60)).mag())
             lastMouseVel = newDiff.mag()
             lastWaterContactVec = lastWaterContactVec ? lastWaterContactVec.sub(newDiff): currentMouseVec
@@ -213,7 +213,7 @@ export let FountainToy = rootUrl => p => {
         // Match ripple radius to the apparent size of the fountain. Makes ripples on mobile feel right
         rippleShader.setUniform("interactionRadius", p.lerp( 0.012, .005, p.constrain((p.windowWidth - 800) / 400, 0.0, 1.0)));
         if (lastWaterContactVec) {
-            rippleShader.setUniform("mouse", [lastWaterContactVec.x / width, 1.0 - (lastWaterContactVec.y / height), true])
+            rippleShader.setUniform("mouse", [lastWaterContactVec.x / width,lastWaterContactVec.y / height, true])
         } else {
             rippleShader.setUniform("mouse", [0, 0, false])
         }
