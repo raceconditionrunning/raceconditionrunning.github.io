@@ -72,8 +72,8 @@ export let FountainToy = rootUrl => p => {
         });
         jetsTexture = await p.loadImage(`${rootUrl}/img/dm24/jets.png`)
         startStamp = Date.now() / 1000.0
-        rippleShader = await p.loadShader(`${rootUrl}/js/fountain/ripple.vert`, `${rootUrl}/js/fountain/ripple.frag`);
-        glintShader = await p.loadShader(`${rootUrl}/js/fountain/ripple.vert`, `${rootUrl}/js/fountain/glint.frag`);
+        rippleShader = await p.loadShader(`${rootUrl}/js/dm24/ripple.vert`, `${rootUrl}/js/dm24/ripple.frag`);
+        glintShader = await p.loadShader(`${rootUrl}/js/dm24/ripple.vert`, `${rootUrl}/js/dm24/glint.frag`);
         //baseWaterShader = p.loadShader(`${rootUrl}/js/fountain/ripple.vert`, `${rootUrl}/js/fountain/flowNoise.frag`);
 
         width = p._userNode.offsetWidth;
