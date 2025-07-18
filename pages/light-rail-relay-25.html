@@ -1,6 +1,6 @@
 ---
 title: Light Rail Relay 2025
-description: Join Seattle’s premier urban relay on September 28, 2024. Run solo or with a team, covering 38 miles along Link Light Rail from Angle Lake to Lynnwood.
+description: Join Seattle’s premier urban relay on 9-27-25. Join solo or with a team, covering 36 miles along Link Light Rail from Angle Lake to Lynnwood.
 permalink: light-rail-relay-25/
 redirect_from:
 - /lrr/
@@ -218,15 +218,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             color: var(--theme-primary-color) !important;
         }
 
-        #countdown .container {
-            max-width: none;
-        }
-
-        .image-washout {
-            opacity: .75;
-            filter: grayscale(.50) contrast(1.1);
-        }
-
+ 
         figure {
             max-width: 1200px;
             margin: 0 auto 2rem auto;
@@ -267,11 +259,11 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
         header img {
             flex: 0 1 auto;
+            height: 100%; /* Safari flexbox renders the element really wide unless we have an actual height... */
             max-height: 18rem;
             padding: .75rem .5rem;
             display: block;
             filter: drop-shadow(0px 0px 10px rgba(0,0,0,.25));
-
         }
 
         /* Overview */
@@ -503,6 +495,23 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             height: 100%;
             width: 100%;
         }
+        
+        /* Countdown */
+        
+        .cap-height {
+            max-height: 80vh;
+            overflow: hidden;
+        }
+
+        #countdown .container {
+            max-width: none;
+        }
+
+        .image-washout {
+            opacity: .75;
+            filter: grayscale(.50) contrast(1.1);
+        }
+
 
         /* Epilogue */
         masonry-image-gallery {
@@ -782,7 +791,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             <a href="#" class="btn btn-outline-primary mb-3 m-sm-0 " id="download-route-gpx-btn" hidden data-goatcounter-click="lrr25-download-gpx">Download Route GPX</a>
         </div>
 
-        <h5>22 legs - 38 mi ↑3400ft ↓3400ft</h5>
+        <h5>22 legs - 36 mi ↑3000ft ↓3000ft</h5>
         <p>The relay will start at Angle Lake station and follow the 1 Line to Lynnwood, visiting every station on the way. The route passes through 6 cities across 2 counties.</p>
 
         <leg-calculator id="leg-calculator" class="mb-3 p-2 p-lg-4" style="display: none">
@@ -956,15 +965,16 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                     <p>It's possible to run the ~60k route unsupported. Otherwise, there are many shops along the way for supplies (zoom into the map to see data from OpenStreetMap). Here are some within 100ft of the route:</p>
                     <ul>
                         <li><b>Mile 0:</b> All Star Grocery, Chevron ExtraMile</li>
-                        <li><b>Mile 6.5:</b> 7-Eleven</li>
-                        <li><b>Mile 11.45:</b> Chevron ExtraMile</li>
-                        <li><b>Mile 14.6:</b> Hilltop Red Apple Market</li>
-                        <li><b>Mile 19.35:</b> H Mart</li>
-                        <li><b>Mile 20.55:</b> M2M Mart</li>
-                        <li><b>Mile 25:</b> Trader Joe's</li>
-                        <li><b>Mile 31.8:</b> 7-Eleven</li>
-                        <li><b>Mile 33.8:</b> Arctic Mini-Mart</li>
-                        <li><b>Mile 37:</b> 7-Eleven</li>
+                        <li><b>Mile 6.4:</b> Chevron Food Mart</li>
+                        <li><b>Mile 9.55:</b> Chevron ExtraMile</li>
+                        <li><b>Mile 12.95:</b> Hilltop Red Apple Market</li>
+                        <li><b>Mile 17.10:</b> H Mart</li>
+                        <li><b>Mile 18.40:</b> M2M Mart</li>
+                        <li><b>Mile 19.70:</b> Volunteer Park Cafe & Pantry</li>
+                        <li><b>Mile 22.65:</b> Trader Joe's</li>
+                        <li><b>Mile 29.45:</b> 7-Eleven</li>
+                        <li><b>Mile 31.45:</b> Arctic Mini-Mart</li>
+                        <li><b>Mile 34.65:</b> 7-Eleven</li>
                      </ul>
                     <p>Seattle's <a href="https://www.theurbanist.org/2022/08/20/why-peeing-your-pants-in-seattle-is-not-a-personal-failure/">shameful lack of public restrooms</a> means libraries are your safest bet. The Beacon Hill Branch is only a block off the course and will be open in time for most runners, as are the Central Library downtown on 4th Ave, and University Branch on Roosevelt. Stations from Northgate northward have restrooms. Some of the above stores <i>may</i> have restrooms available, and you can zoom into the map to see other restrooms from OpenStreetMap. Do not count on access to any restrooms on the UW campus on weekends.</p>
 
@@ -996,7 +1006,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
     </div>
 </section>
 
-<section class="one-bg d-grid h-auto">
+<section class="one-bg d-grid h-auto cap-height">
     <div class="container mb-2 p-5 z-1" style="grid-area: 1/1">
         <div id="countdown" class="display-3 fw-lightest ">
             <span class="">Arriving</span> <span id="static-count" class="fw-bolder">soon</span><span id="dynamic-count" style="display:none" class="">in
@@ -1071,7 +1081,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         document.querySelector("#relay-map").trains = vehiclesGeojson
     });
 
-    let routeData = fetch("{{ site.baseurl }}/maps/lrr24.geojson").then(res => res.json())
+    let routeData = fetch("{{ site.baseurl }}/maps/lrr25.geojson").then(res => res.json())
     let futureRouteData = fetch("{{ site.baseurl }}/maps/lrr-future.geojson").then(res => res.json())
     let railData = fetch("{{ site.baseurl }}/maps/link-light-rail.geojson").then(res => res.json())
     railData.then((railLines) => {
@@ -1113,8 +1123,8 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         createLegDetailsTable(document.getElementById("leg-details-table"), legsData, exchanges.features)
         const downloadRouteButton = document.getElementById("download-route-gpx-btn")
         downloadRouteButton.addEventListener("click", event => {
-            let gpxString = relayToGPX("Light Rail Relay 2024", legs.features, exchanges.features, {eventName: "Race Condition Running Light Rail Relay 2024", year: 2024, permalink: "{{ page.url | absolute_url }}"})
-            download(gpxString, "application/gpx+xml", `light-rail-relay-2024.gpx`)
+            let gpxString = relayToGPX("Light Rail Relay 2025", legs.features, exchanges.features, {eventName: "Race Condition Running Light Rail Relay 2025", year: 2025, permalink: "{{ page.url | absolute_url }}"})
+            download(gpxString, "application/gpx+xml", `light-rail-relay-2025.gpx`)
             event.preventDefault()
         })
         downloadRouteButton.hidden = false
