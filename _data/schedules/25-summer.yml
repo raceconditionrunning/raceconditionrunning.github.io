@@ -27,14 +27,14 @@
 - date: "2025-07-19"
   plan:
     - time: "8:30"
-      route_id: northgate-cemeteries-interurban-boeing-creek-ob
+      route_id: cc-genessee-lwb-seward-loop-ob
+    - time: "10:15"
+      route_id: cc-chief-sealth-new-holly-ob
 
 - date: "2025-07-26"
   plan:
     - time: "8:30"
-      route_id: cc-genessee-lwb-seward-loop-ob
-    - time: "10:15"
-      route_id: cc-chief-sealth-new-holly-ob
+      route_id: northgate-cemeteries-interurban-boeing-creek-ob
 
 - date: "2025-08-03"
   plan:
