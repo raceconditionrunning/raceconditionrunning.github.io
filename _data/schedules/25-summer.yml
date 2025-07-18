@@ -81,3 +81,13 @@
       route_id: locks-discovery-magnolia-discovery-ob
     - time: "10:15"
       route_id: locks-fremont-bridge-loop
+
+- date: "2025-09-27"
+  organized-event: true
+  plan:
+    - time: "8:30"
+      route:
+        name: Light Rail Relay 2025
+        map: /light-rail-relay-25/
+        distance_mi: 36
+      highlight-image: /img/lrr25/og-banner.jpg
