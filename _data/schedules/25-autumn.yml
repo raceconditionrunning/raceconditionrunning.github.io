@@ -49,16 +49,13 @@
   plan:
     - time: "8:30"
       route:
-        name: Drumheller Half Marathon
+        name: Drumheller Half Marathon SE
         distance_mi: 13.1
 
 - date: "2025-11-08"
   plan:
     - time: "8:30"
       route_id: roosevelt-carkeek-golden-gardens-roses-loop
-    - time: "11:00"
-      route_id: roosevelt-cse-p2p
-      cancelled: "Wanted to end at Roosevelt"
     - time: "11:00"
       route_id: roosevelt-green-lake-loop
 

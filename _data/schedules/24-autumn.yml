@@ -42,7 +42,7 @@
   plan:
     - time: "8:30"
       route:
-        name: Drumheller Half Marathon
+        name: Drumheller Half Marathon SE
         distance_mi: 13.1
 
 - date: "2024-11-09"
