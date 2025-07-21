@@ -432,7 +432,11 @@ export class RelayMap extends LitElement {
             return bounds.extend(coord);
         }, new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
 
-        console.log("Clicked leg", leg.properties.id, "at coordinates", coordinates);
+        const legDetails = {
+            ...leg.properties
+        }
+        legDetails.id += 1; // Convert to 1-based index for display
+        legDetails.coordinates = coordinates; // Store the coordinates for elevation profile
         this.currentLegPopup = new maplibregl.Popup({
             anchor: "bottom-left",
             offset: [16, 0],
@@ -444,10 +448,7 @@ export class RelayMap extends LitElement {
             .setHTML(formatLegDescription(
                 this.exchangeNames[leg.properties.start_exchange],
                 this.exchangeNames[leg.properties.end_exchange],
-                leg.properties,
-                false,
-                false,
-                coordinates
+                legDetails
             ))
             .addTo(this.map);
 

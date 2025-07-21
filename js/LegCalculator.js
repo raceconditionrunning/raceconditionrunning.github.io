@@ -111,12 +111,19 @@ export class LegCalculator extends HTMLElement {
 
           // "values" has the "to" function from "format" applied
           // "unencoded" contains the raw numerical slider values
+          let segmentLegDesc = ""
+          if (rightValue - leftValue === 1) {
+            segmentLegDesc = `<div class="text-secondary">Leg ${leftValue + 1}</div>`
+          } else {
+              segmentLegDesc = `<div class="text-secondary">${rightValue - leftValue} legs (${leftValue + 1} through
+                  ${rightValue})</div>`
+          }
           let segmentDesc = `
 <div class="d-flex flex-column flex-lg-row justify-content-between align-items-baseline">
 <h5>${segmentName}</h5>
 <div class="d-flex flex-column text-lg-end flex-shrink-0 mb-1">
     <h6 class="mb-0">${distance.toFixed(2)}mi ↑${ascent.toFixed(0)}ft ↓${descent.toFixed(0)}ft</h6>
-    <div class="text-secondary">${rightValue - leftValue} legs (${leftValue + 1} through ${rightValue})</div>
+    ${segmentLegDesc}
 </div>
 </div>`
           container.querySelector("#leg-calculator-description").innerHTML = segmentDesc
