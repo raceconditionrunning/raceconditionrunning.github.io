@@ -155,12 +155,42 @@ export class RelayMap extends LitElement {
                             return;
                         }
                         this.map.addImage(`${code}stationcode`, image.data, { pixelRatio: 4 });
+                    })
+                    this.map.loadImage(`${this.imgBasePath}${code}_station_code_vertical_dark_small.png`).then((image) => {
+                        if (!image || !image.data) {
+                            console.warn(`Image for ${code} not found or invalid.`);
+                            return;
+                        }
+                        this.map.addImage(`${code}stationcodesmall`, image.data, { pixelRatio: 1 });
 
                     })
                 } catch (e) {
                     console.warn(`Failed to load station code image for ${code}:`, e);
                 }
             }
+            // Generate a roundrect texture
+            const canvas = document.createElement('canvas');
+            canvas.width = 36;
+            canvas.height = 24;
+            const radius = 4;
+            const padding = 12;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.roundRect(0, 0, canvas.width, canvas.height, radius);
+            ctx.fill();
+            this.map.addImage('roundrect', {
+                width: canvas.width,
+                height: canvas.height,
+                data: ctx.getImageData(0, 0, canvas.width, canvas.height).data,
+                stretchX: [radius + 1, canvas.width - radius - 1],
+                stretchY: [radius + 1, canvas.height - radius - 1],
+                content: [radius + 1 + padding, radius + 1 + padding, canvas.width - radius - 1 - padding, canvas.height - radius - 1 - padding],
+                pixelRatio: 1,
+                sdf: true
+            });
+
+
         }
     }
 

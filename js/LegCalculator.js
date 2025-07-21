@@ -104,15 +104,22 @@ export class LegCalculator extends HTMLElement {
           let distance = cumulativeDistances[rightValue] - cumulativeDistances[leftValue]
           let ascent = cumulativeAscents[rightValue] - cumulativeAscents[leftValue]
           let descent = cumulativeDescents[rightValue] - cumulativeDescents[leftValue]
-          let legName = ""
+          let segmentName = ""
           if (this._legToExchangeId.length > 0) {
-              legName = `${exchangeInfo[this._legToExchangeId[leftValue]].name} to ${exchangeInfo[this._legToExchangeId[rightValue]].name}`
+              segmentName = `${exchangeInfo[this._legToExchangeId[leftValue]].name} to ${exchangeInfo[this._legToExchangeId[rightValue]].name}`
           }
 
           // "values" has the "to" function from "format" applied
           // "unencoded" contains the raw numerical slider values
-          let legDesc = `<div class="d-flex flex-column flex-lg-row justify-content-between align-items-baseline"><h5>${legName}</h5><h6>${distance.toFixed(2)}mi ↑${ascent.toFixed(0)}ft ↓${descent.toFixed(0)}ft</h6></div>`
-          container.querySelector("#leg-calculator-description").innerHTML = legDesc
+          let segmentDesc = `
+<div class="d-flex flex-column flex-lg-row justify-content-between align-items-baseline">
+<h5>${segmentName}</h5>
+<div class="d-flex flex-column text-lg-end flex-shrink-0 mb-1">
+    <h6 class="mb-0">${distance.toFixed(2)}mi ↑${ascent.toFixed(0)}ft ↓${descent.toFixed(0)}ft</h6>
+    <div class="text-secondary">${rightValue - leftValue} legs (${leftValue + 1} through ${rightValue})</div>
+</div>
+</div>`
+          container.querySelector("#leg-calculator-description").innerHTML = segmentDesc
       });
 
       let profile = container.querySelector("elevation-profile")

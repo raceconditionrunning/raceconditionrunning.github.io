@@ -215,6 +215,16 @@
             "promoteId": "id",
             "data": {}
         },
+        "leg-splits": {
+            "type": "geojson",
+            "promoteId": "id",
+            "data": {}
+        },
+        "overall-splits": {
+            "type": "geojson",
+            "promoteId": "id",
+            "data": {}
+        },
         "exchanges": {
             "type": "geojson",
             "promoteId": "id",
