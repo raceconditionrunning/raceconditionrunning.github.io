@@ -38,11 +38,11 @@
 
 - date: "2025-08-03"
   plan:
-    - time: "8:30"
+    - time: "7:30"
       route_id: cse-magnuson-park-loop-ob
-    - time: "10:15"
+    - time: "9:15"
       route_id: cse-foster-arboretum-loop
-      notes: "Changed to Aug 3 due to several folks away on Aug 2"
+      notes: "Changed to Aug 3 at 7:30 am!!"
 
 - date: "2025-08-09"
   plan:
