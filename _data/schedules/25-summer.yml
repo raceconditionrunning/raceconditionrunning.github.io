@@ -46,8 +46,10 @@
 
 - date: "2025-08-09"
   plan:
-    - time: "8:00"
-      route_id: beacon-i90-luther-burbank-ob
+    - time: "9:00"
+      route_id: locks-magnolia-ferry-terminal
+    - time: "10:20"
+      route_id: ferry-terminal-cranes-alki
 
 - date: "2025-08-16"
   plan:
