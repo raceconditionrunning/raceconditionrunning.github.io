@@ -6,8 +6,8 @@ redirect_from:
 - /lrr/
 - /light-rail-relay/
 - /lrr25/
-team_registration_link: #
-registration_link: #
+team_registration_link: https://panto.raceconditionrunning.com/create-team
+registration_link: https://panto.raceconditionrunning.com/join-team
 email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 ---
 <!DOCTYPE html>
@@ -199,6 +199,19 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
         .btn {
             border-radius: 0;
+        }
+
+        .btn-primary {
+            --bs-btn-color: var(--bs-body-color);
+            --bs-btn-bg: var(--theme-primary-color);
+            --bs-btn-hover-bg: var(--theme-primary-color);
+            --bs-btn-hover-color: var(--bs-body-color);
+            --bs-btn-hover-border-color: var(--theme-primary-color);
+            --bs-btn-active-bg: var(--theme-primary-color-bright);
+            --bs-btn-active-border-color: var(--theme-primary-color-bright);
+            --bs-btn-active-color: #eee;
+            --bs-btn-border-color: var(--theme-primary-color);
+            --bs-btn-focus-shadow-rgb: 255, 255, 255;
         }
 
         .btn-outline-primary {
@@ -700,12 +713,12 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             <img src="{{ site.baseurl }}/img/lrr25/logo.svg" alt="Light Rail Relay" class=""/>
             <div class="subheader d-flex flex-column align-items-start align-items-md-end px-2 px-md-5 mb-4 justify-content-md-end text-md-end">
                 <p><span class="h3">Ultra relay along Seattle's 1 Line</span><br/> by <a href="{{ site.baseurl }}/" class="fst-italic text-decoration-none text-light">Race Condition Running</a>. 08:30 September 27th</p>
-                <p>Registration opens August 1st</p>
+                <p class="text-muted">Registration closes September 25th</p>
                 <div class="gap-2 d-flex flex-wrap">
-                    <a class="btn btn-outline-light btn-lg disabled" role="button" aria-disabled="true" data-bs-toggle="tooltip" data-bs-title="by 9-26"  data-bs-placement="bottom" >Join Team
+                    <a class="btn btn-outline-light btn-lg" role="button" data-bs-title="by 9-25"  data-bs-placement="bottom" href="{{ page.registration_link }}" >Join Team
                         </a>
-                    <a class="btn btn-outline-light btn-lg disabled" role="button" aria-disabled="true" data-bs-toggle="tooltip" data-bs-title="by 9-24"  data-bs-placement="bottom" >Add Team</a>
-                    <a class="btn btn-outline-light btn-lg disabled" role="button" aria-disabled="true" data-bs-toggle="tooltip" data-bs-title="by 9-24"  data-bs-placement="bottom" >Enter Solo</a>
+                    <a class="btn btn-outline-light btn-lg" role="button" data-bs-title="by 9-25"  data-bs-placement="bottom" href="{{ page.team_registration_link }}">Add Team</a>
+                    <a class="btn btn-outline-light btn-lg" role="button" data-bs-title="by 9-25"  data-bs-placement="bottom" href="{{ page.team_registration_link }}" >Enter Solo</a>
 
                     <!--a href="#results" class="btn btn-outline-light btn-lg" data-goatcounter-click="lrr25-results">Results</a>
                     <a href="#epilogue" class="btn btn-outline-light btn-lg" data-goatcounter-click="lrr25-epilogue">Epilogue</a-->
@@ -739,7 +752,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                 <div class="answer-text">Roads closed? <b>No.</b></div>
                 <div class="answer-text">Aid stations? <b>No.</b></div>
                 <!--div class="answer-text">Gear check? <b>No.</b></div-->
-                <div class="answer-text">Official timing? <b>No*.</b></div>
+              <div class="answer-text">Official timing? <b>No<a href="#faq-items-content-6">*</a>.</b></div>
                 <div class="answer-text">Amazing morning? <b>Guaranteed.</b></div>
 
             </div>
@@ -750,7 +763,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                 <div class="section-divider"></div>
 
                 <div class="answer-text">
-                    We recommend teams of 4-6 people. But you're welcome to run solo, or with as many people as you like.
+                    We recommend teams of 6 people. But you're welcome to run solo, or with as many people as you like.
                 </div>
 
             </div>
@@ -787,13 +800,13 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         </div-->
         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-baseline">
             <h2 id="route">Route <a href="#route" class="anchor-link" aria-label="Link to this section. Route"></a></h2>
-            <a href="#" class="btn btn-outline-primary mb-3 m-sm-0 " id="download-route-gpx-btn" hidden data-goatcounter-click="lrr25-download-gpx">Download Route GPX</a>
+            <a href="#" class="btn btn-outline-secondary mb-3 m-sm-0 " id="download-route-gpx-btn" hidden data-goatcounter-click="lrr25-download-gpx">Download Route GPX</a>
         </div>
 
         <h5>22 legs - 36 mi ↑3000ft ↓3000ft</h5>
         <p>The relay will start at Angle Lake station and follow the 1 Line to Lynnwood, visiting every station on the way. The route passes through 6 cities across 2 counties.</p>
 
-        <leg-calculator id="leg-calculator" class="mb-3 p-2 p-lg-4" style="display: none">
+        <leg-calculator id="leg-calculator" class="mb-3 p-2 `p-lg-4" style="display: none">
             <h6 class="text-secondary">Segment Calculator</h6>
             <div id="leg-calculator-description"></div>
             <div class="mx-3">
@@ -814,29 +827,36 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
     </div>
 </section>
 
-<!--section>
+<section>
     <div class="container">
         <h2 id="registration" class="mb-3">Registration</h2>
+        <p>
+          We are using <a href="https://panto.raceconditionrunning.com">Pantograph</a> for registration this year. Pantograph was tailor-made for team relays, and also lets your team upload exchange photos for timing purposes.
+        </p>
         <div class="row justify-content-center">
             <div class="col-md-4 mb-4">
                 <div class="card h-100 text-center">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Join Team</h5>
-                        <p class="card-text flex-grow-1">Join an existing team and compete together.</p>
-                        <a href="{{ page.registration_link}}" class="btn btn-outline-light">Join Team</button>
+                        <p class="card-text flex-grow-1">Join an existing team.</p>
+                      <div class="mb-3">
+                        <span class="h4 text-primary">Free</span>
+                      </div>
+                      <div class="p-4"></div>
+                        <a href="{{ page.registration_link}}" class="btn btn-primary">Join Team</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 mb-4">
                 <div class="card h-100 text-center">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Add Team</h5>
+                        <h5 class="card-title">Create Team</h5>
                         <p class="card-text flex-grow-1">Create a new team and invite others to join.</p>
                         <div class="mb-3">
-                            <span class="h4 text-primary">$15*</span>
+                            <span class="h4 text-primary">$16*</span>
                             <small class="text-muted d-block">*Free if you use your baton from past years</small>
                         </div>
-                        <a href="{{ page.team_registration_link}}" class="btn btn-outline-light">Add Team</button>
+                        <a href="{{ page.team_registration_link}}" class="btn btn-primary">Add Team</a>
                     </div>
                 </div>
             </div>
@@ -844,18 +864,18 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                 <div class="card h-100 text-center">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Enter Solo</h5>
-                        <p class="card-text flex-grow-1">Compete individually in the solo category.</p>
+                        <p class="card-text flex-grow-1">Team of one. Save the fare, just run the whole way.</p>
                         <div class="mb-3">
-                            <span class="h4 text-primary">$15*</span>
+                            <span class="h4 text-primary">$16*</span>
                             <small class="text-muted d-block">*Free if you use your baton from past years</small>
                         </div>
-                        <a href="{{ page.team_registration_link}}" class="btn btn-outline-light">Enter Solo</button>
+                        <a href="{{ page.team_registration_link}}" class="btn btn-primary">Enter Solo</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</section-->
+</section>
 
 <section>
     <div class="container">
@@ -916,7 +936,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             <accordion-item>
                 <accordion-header>How does timing work?</accordion-header>
                 <accordion-body>
-                    <p>If you want an <i>official</i> time, your team captain will need to submit a set of 23 station photos with time metadata. We'll verify the photos and post the results. The photos you share will not be posted.</p>
+                    <p>If you want an <i>official</i> time, your team will need to upload 23 station photos with time metadata on <a href="https://panto.raceconditionrunning.com">Pantograph</a>. We'll verify the photos and post the results. The photos you share will not be posted.</p>
                 </accordion-body>
             </accordion-item>
             <accordion-item>
