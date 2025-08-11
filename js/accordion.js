@@ -25,42 +25,45 @@ export class AccordionGroup extends HTMLElement {
         // Deep-link to open based on URL hash
         this.addEventListener('show.bs.collapse',  (e) => {
             // Check if the owning item has an ID
-            const header = e.target.parentElement
-            if (header.id) {
+            const body = e.target
+            if (body.id) {
                 // Update the URL hash to reflect the current state, don't change history
-                history.replaceState(null, null, `#${header.id}`);
+                history.replaceState(null, null, `#${body.id}`);
             }
         });
 
         this.addEventListener('hide.bs.collapse',  (e) => {
-            const header = e.target.parentElement
-            if (header.id && window.location.hash === `#${header.id}`) {
+            const body = e.target
+            if (body.id && window.location.hash === `#${body.id}`) {
                 // Clear hash, don't change history
-                history.replaceState(null, null, ' ');
+                history.replaceState(null, null, window.location.pathname + window.location.search);
             }
         });
 
-        const openBasedOnHash = () => {
+        this.openBasedOnHash = () => {
             const hash = window.location.hash;
             if (!hash) {
                 return;
             }
             const target = this.querySelector(hash);
-            if (target && target instanceof AccordionItem) {
-                const myCollapse = target.getElementsByClassName('collapse')[0];
-                console.log(myCollapse);
-                const bsCollapse = new Collapse(myCollapse, {
+            if (target && target instanceof AccordionBody) {
+                const bsCollapse = new Collapse(target, {
                     toggle: true
                 });
+                // Make sure focus is set to the header of the opened item
+                const header = target.parentElement.querySelector('.accordion-header');
+                if (header) {
+                    header.querySelector('.accordion-button').focus();
+                }
             }
         }
 
         // Listen to hash changes and open the corresponding accordion item
-        window.addEventListener('hashchange', openBasedOnHash.bind(this));
+        window.addEventListener('hashchange', this.openBasedOnHash.bind(this));
 
         this.style.display = this.style.display ? this.style.display : 'block';
         // Run once on page load, but after the accordion has been fully initialized
-        window.addEventListener("load", openBasedOnHash.bind(this));
+        window.addEventListener("load", this.openBasedOnHash.bind(this));
     }
 }
 
