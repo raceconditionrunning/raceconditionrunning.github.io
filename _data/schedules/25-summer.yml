@@ -56,7 +56,7 @@
     - time: "8:30"
       route_id: northgate-interurban-lynnwood
     - time: "10:20"
-      route_id: lynnwood-interurban-ashway-ob
+      route_id: lynnwood-scriber-lake-five-laps-ob
 
 - date: "2025-08-23"
   plan:
