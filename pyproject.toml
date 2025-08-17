@@ -19,3 +19,6 @@ route-images = [
     "playwright",
     "pillow",
 ]
+gis = [
+    "shapely",
+]

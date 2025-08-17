@@ -1,8 +1,6 @@
 ROUTE_RAW_GPX_FILES = $(wildcard routes/_gpx/*.gpx)
 ROUTE_GEOJSON_FILES = $(patsubst routes/_gpx/%.gpx, routes/geojson/%.geojson, $(ROUTE_RAW_GPX_FILES))
 ROUTES_GPX_NORMALIZED = $(patsubst routes/_gpx/%.gpx, routes/gpx/%.gpx, $(ROUTE_RAW_GPX_FILES))
-NEIGHBORHOODS = routes/neighborhoods.geojson
-NEIGHBORHOODS_URL="https://hub.arcgis.com/api/v3/datasets/b4a142f592e94d39a3bf787f3c112c1d_0/downloads/data?format=geojson&spatialRefId=4326&where=1%3D1"
 
 TRANSIT_DATA = routes/transit_data
 TRANSIT_DATA_CSV = $(wildcard routes/transit_data/*.csv)
@@ -19,14 +17,11 @@ URL_BASE_PATH ?=
 
 all: $(ROUTES_GPX_NORMALIZED) $(ROUTE_GEOJSON_FILES) $(ROUTES_YML) check-schedules rcc.ics build
 
-$(NEIGHBORHOODS):
-	@wget -c $(NEIGHBORHOODS_URL) -O $@
-
 $(ROUTES_YML): _bin/make_routes_table.py $(ROUTES_GPX_NORMALIZED)
 	uv run python3 $< $(ROUTES_GPX_NORMALIZED) $@
 
 
-routes/geojson/%.geojson: _bin/gpx_to_geojson.py routes/_gpx/%.gpx $(NEIGHBORHOODS)
+routes/geojson/%.geojson: _bin/gpx_to_geojson.py routes/_gpx/%.gpx
 	@mkdir -p $(@D)
 	uv run python3 $< --input routes/_gpx/$*.gpx --output $@
 
@@ -65,7 +60,7 @@ replace-route-elevations:
 $(TRANSIT_DATA):
 	_bin/fetch_transit_data.sh
 
-update-locations: _bin/update_location_transit.py $(TRANSIT_DATA_CSV) $(TRANSIT_DATA) $(NEIGHBORHOODS)
+update-locations: _bin/update_location_transit.py $(TRANSIT_DATA_CSV) $(TRANSIT_DATA)
 	uv run python3 $<
 
 # also generates rcc_weekends.ics
