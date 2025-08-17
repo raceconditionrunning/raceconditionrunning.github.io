@@ -10,7 +10,7 @@ export class FrameControl {
         this.container = document.createElement('div');
         this.container.className = 'maplibregl-ctrl maplibregl-ctrl-group';
         this.container.innerHTML = `
-        <button>
+        <button class="maplibregl-ctrl-frame">
           <span class="maplibregl-ctrl-icon" aria-hidden="true" title="Zoom to fit"></span>
         </button>
     `;
