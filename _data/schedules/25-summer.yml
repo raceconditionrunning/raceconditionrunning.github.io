@@ -67,7 +67,9 @@
 - date: "2025-08-30"
   plan:
     - time: "8:30"
-      route_id: roosevelt-carkeek-golden-gardens-roses-loop
+      route_id: roosevelt-carkeek-golden-gardens-locks
+    - time: "10:10"
+      route_id: locks-phinney-ridge-green-lake-roosevelt
 
 - date: "2025-09-06"
   plan:
