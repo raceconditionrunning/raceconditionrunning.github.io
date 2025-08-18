@@ -90,7 +90,14 @@ To supply elevation data, run `make replace-route-elevations` and `make normaliz
 
 Here are the concrete steps for making and adding routes to the repo:
 
-1. Make a new route on https://onthegomap.com. Please be careful when making them, pay attention, think carefully whether the route is actually runnable and safe. Refer to google maps street view for help.
+1. Make a new route via [OnTheGoMap](https://onthegomap.com).
+  Please be careful when making them,
+      pay attention,
+      think carefully whether the route is actually runnable and safe.
+   For example,
+       if a route involves running alongside traffic (i.e., on the shoulder of a road) for long stretches,
+       it is likely not very safe.
+   Use Street View on [Google Maps](https://www.google.com/maps/) to help scope out a run.
 
 2. Go to the hamburger menu at the top right corner of https://onthegomap.com and "Export as GPX". Save the "shortened link" of the route for later use in Step 4 for `rcr:map`).
 
