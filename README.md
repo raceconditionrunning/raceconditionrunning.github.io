@@ -97,12 +97,12 @@ Here are the concrete steps for making and adding routes to the repo:
 3. Then move the GPX file to `routes/_gpx` and give it a name based on its type and where it starts and what main areas it goes through. If the route is a loop, put `-loop` and if it is an out-and-back, put `-ob` at the end.
 
 4. Edit the GPX (which is just XML) like so: from any existing route in `routes/_gpx`, take all the content down to the `<trkseg>` tag and replace all the content in the original GPX file up until the start of `<trkseg>` with it. Then modify the fields specific to the route. This includes:
-  - metadata `name` (same as GPX file name)
-  - metadata `desc`
-  - metadata `link` including `text`
-  - Only `rcr:map` and `rcr:last_updated` under `extensions`
-  - track `name` (same as GPX file name)
-  - track `desc`
+      * metadata `name` (same as GPX file name)
+      * metadata `desc`
+      * metadata `link` including `text`
+      * Only `rcr:map` and `rcr:last_updated` under `extensions`
+      * track `name` (same as GPX file name)
+      * track `desc`
 
 5. Run `./bin/gpx-inplace-fixup.sh routes/_gpx/recently-added-route.gpx` to add elevation data to the route.
 
