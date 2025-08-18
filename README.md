@@ -115,7 +115,7 @@ Here are the concrete steps for making and adding routes to the repo:
 
 6. Follow the instructions for `Building and Developing Locally`. Then run `make serve` to check that it works locally and the site looks right.
 
-7. Commit the run but the CI build is somewhat slow, so if you are making more than one route, push once for batching.
+7. If you are making more than one route, commit and push once for batching. The CI build is somewhat slow.
 
 ## Important Files and Folders
 
