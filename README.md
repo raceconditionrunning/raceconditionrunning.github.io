@@ -86,6 +86,36 @@ Before you commit changes to a route, run `make normalize-routes-in-place` to en
 
 To supply elevation data, run `make replace-route-elevations` and `make normalize-routes-in-place`.
 
+#### Typical workflow for adding routes
+
+Here are the concrete steps for making and adding routes to the repo:
+
+1. Make a new route via [OnTheGoMap](https://onthegomap.com).
+  Please be careful when making them,
+      pay attention,
+      think carefully whether the route is actually runnable and safe.
+   For example,
+       if a route involves running alongside traffic (i.e., on the shoulder of a road) for long stretches,
+       it is likely not very safe.
+   Use Street View on [Google Maps](https://www.google.com/maps/) to help scope out a run.
+
+2. Go to the hamburger menu at the top-right corner of [OnTheGoMap](https://onthegomap.com) and select "Export as GPX". Save the "shortened link" of the route for later use in Step 4 for `rcr:map`).
+
+3. Move the GPX file to `routes/_gpx` and give it a name based on its type (e.g., out-and-back, point-to-point, loop, etc.) and where it starts and what main areas it goes through. If the route is a loop, put `-loop` and if it is an out-and-back, put `-ob` at the end.
+
+4. Edit the GPX (which is just XML) like so: from any existing route in `routes/_gpx`, take all the content down to the `<trkseg>` tag and replace all the content in the original GPX file up until the start of `<trkseg>` with it. Then modify the fields specific to the route. This includes:
+      * metadata `name` (same as GPX file name)
+      * metadata `desc`
+      * metadata `link` including `text`
+      * Only `rcr:map` and `rcr:last_updated` under `extensions`
+      * track `name` (same as GPX file name)
+      * track `desc`
+
+5. Run `./_bin/gpx-inplace-fixup.sh routes/_gpx/recently-added-route.gpx` to add elevation data to the route. Make sure you have python installed since this script invokes other python scripts.
+
+6. Follow the instructions for `Building and Developing Locally`. Then run `make serve` to check that it works locally and the site looks right.
+
+7. If you are making more than one route, commit and push once for batching. The CI build is somewhat slow.
 
 ## Important Files and Folders
 
