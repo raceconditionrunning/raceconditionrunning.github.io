@@ -86,6 +86,29 @@ Before you commit changes to a route, run `make normalize-routes-in-place` to en
 
 To supply elevation data, run `make replace-route-elevations` and `make normalize-routes-in-place`.
 
+#### Typical workflow for adding routes
+
+Here are the concrete steps for making and adding routes to the repo:
+
+1. Make a new route on https://onthegomap.com. Please be careful when making them, pay attention, think carefully whether the route is actually runnable and safe. Refer to google maps street view for help.
+
+2. Go to the hamburger menu at the top right corner of https://onthegomap.com and "Export as GPX". Save the "shortened link" of the route for later use in Step 4 for `rcr:map`).
+
+3. Then move the GPX file to `routes/_gpx` and give it a name based on its type and where it starts and what main areas it goes through. If the route is a loop, put `-loop` and if it is an out-and-back, put `-ob` at the end.
+
+4. Edit the GPX (which is just XML) like so: from any existing route in `routes/_gpx`, take all the content down to the `<trkseg>` tag and replace all the content in the original GPX file up until the start of `<trkseg>` with it. Then modify the fields specific to the route. This includes:
+  - metadata `name` (same as GPX file name)
+  - metadata `desc`
+  - metadata `link` including `text`
+  - Only `rcr:map` and `rcr:last_updated` under `extensions`
+  - track `name` (same as GPX file name)
+  - track `desc`
+
+5. Run `./bin/gpx-inplace-fixup.sh routes/_gpx/recently-added-route.gpx` to add elevation data to the route.
+
+6. Follow the instructions for `Building and Developing Locally`. Then run `make serve` to check that it works locally and the site looks right.
+
+7. Commit the run but the CI build is somewhat slow, so if you are making more than one route, push once for batching.
 
 ## Important Files and Folders
 
