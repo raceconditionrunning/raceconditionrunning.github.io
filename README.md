@@ -99,7 +99,7 @@ Here are the concrete steps for making and adding routes to the repo:
        it is likely not very safe.
    Use Street View on [Google Maps](https://www.google.com/maps/) to help scope out a run.
 
-2. Go to the hamburger menu at the top right corner of https://onthegomap.com and "Export as GPX". Save the "shortened link" of the route for later use in Step 4 for `rcr:map`).
+2. Go to the hamburger menu at the top-right corner of [OnTheGoMap](https://onthegomap.com) and select "Export as GPX". Save the "shortened link" of the route for later use in Step 4 for `rcr:map`).
 
 3. Then move the GPX file to `routes/_gpx` and give it a name based on its type and where it starts and what main areas it goes through. If the route is a loop, put `-loop` and if it is an out-and-back, put `-ob` at the end.
 
