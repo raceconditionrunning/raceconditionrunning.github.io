@@ -79,7 +79,9 @@
 - date: "2025-09-13"
   plan:
     - time: "8:30"
-      route_id: cse-portage-sculpture-locks-loop
+      route_id: cse-arb-lwb-seward-loop-cc
+    - time: "10:45"
+      route_id: cc-chief-sealth-cc-center
 
 - date: "2025-09-20"
   plan:
