@@ -91,8 +91,21 @@ check-schedules: $(SCHEDULE)
 
 check: check-images check-html check-javascript check-schedules
 
-og-route-images:
+route-previews-check:
+	_bin/manage_route_preview_cache.sh
+
+route-previews-generate:
 	uv run python _bin/generate_route_images.py $(if $(URL_BASE_PATH),--base-path $(URL_BASE_PATH),)
+
+route-previews-generate-incremental:
+	@if [ -f .route-preview-cache-changed-files ] && [ -s .route-preview-cache-changed-files ]; then \
+		echo "Generating images for changed routes only..."; \
+		uv run python _bin/generate_route_images.py $(if $(URL_BASE_PATH),--base-path $(URL_BASE_PATH),) --specific-files $$(cat .route-preview-cache-changed-files); \
+		_bin/manage_route_preview_cache.sh update; \
+	else \
+		echo "No changed routes found, skipping image generation"; \
+	fi
+
 
 serve: rcc.ics $(ROUTES_YML) $(ROUTE_GEOJSON_FILES)
 	ls _config.yml | entr -r bundle exec jekyll serve --watch --drafts --host=0.0.0.0 $(JEKYLL_FLAGS)

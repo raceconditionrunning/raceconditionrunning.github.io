@@ -24,6 +24,9 @@ ztatlock-notes
 .venv
 _bin/__pycache__
 
+# Route preview image generation cache files
+.route-preview-cache-*
+
 # Bundler
 .bundle/
 vendor/

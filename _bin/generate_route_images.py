@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generate OpenGraph images for route maps using switchRoute function.
+Generate preview images for route maps using switchRoute function.
 This script:
 1. Finds all GPX route files
 2. Starts a local HTTP server to serve the compiled site
@@ -32,16 +32,16 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 # Parse arguments
-parser = argparse.ArgumentParser(description='Generate OpenGraph images for routes using switchRoute')
+parser = argparse.ArgumentParser(description='Generate preview images for routes using switchRoute')
 parser.add_argument('--site-dir', type=pathlib.Path, default='_site', help='Path to the compiled site directory')
 parser.add_argument('--gpx-dir', type=pathlib.Path, default='routes/_gpx', help='Path to the GPX files directory')
 parser.add_argument('--output-dir', type=pathlib.Path, default='_site/img/routes', help='Path to save generated images')
 parser.add_argument('--quality', type=int, default=85, help='JPEG quality (1-100)')
 parser.add_argument('--port', type=int, default=0, help='Port for local server (0 = auto-select)')
-parser.add_argument('--incremental', action='store_true', help='Only generate images for new/changed routes')
 parser.add_argument('--base-path', type=str, default='', help='Base path for serving content (e.g., __rcr__)')
 parser.add_argument('--initial-route', type=str, help='Route key to load initially (if not specified, uses first route)')
 parser.add_argument('--max-retries', type=int, default=2, help='Maximum number of retries for failed routes')
+parser.add_argument('--specific-files', nargs='*', help='Process only these specific GPX files (used by manifest-based incremental system)')
 args = parser.parse_args()
 
 os.makedirs(args.output_dir, exist_ok=True)
@@ -159,7 +159,7 @@ def capture_route_image(page, route_key: str, output_path: pathlib.Path, quality
             # Get and log the file size
             file_size_bytes = os.path.getsize(output_path)
             file_size_str = get_file_size_str(output_path)
-            logger.info(f"Saved OpenGraph image for {route_key} to {output_path} (Size: {file_size_str})")
+            logger.info(f"Saved preview image for {route_key} to {output_path} (Size: {file_size_str})")
 
             # Optional: Log a warning if file size is suspiciously small
             if file_size_bytes < 10000:  # Less than 10KB might indicate a problem
@@ -275,23 +275,28 @@ def generate_route_images():
     # Small delay to ensure server is up
     time.sleep(1)
 
-    gpx_files = glob.glob(f"{original_dir}/{args.gpx_dir}/*.gpx")
-    logger.info(f"Found {len(gpx_files)} GPX files")
+    if args.specific_files:
+        # Use specific files provided
+        gpx_files = []
+        for file_path in args.specific_files:
+            if os.path.isabs(file_path):
+                gpx_files.append(file_path)
+            else:
+                gpx_files.append(os.path.join(original_dir, file_path))
+
+        # Filter to only existing files
+        gpx_files = [f for f in gpx_files if os.path.exists(f) and f.endswith('.gpx')]
+        logger.info(f"Processing {len(gpx_files)} specific GPX files")
+    else:
+        # Use all files in directory
+        gpx_files = glob.glob(f"{original_dir}/{args.gpx_dir}/*.gpx")
+        logger.info(f"Found {len(gpx_files)} GPX files")
 
     # Create tasks for all routes
     tasks = []
     for gpx_file in gpx_files:
         route_key = os.path.splitext(os.path.basename(gpx_file))[0]
-        output_path = original_dir / args.output_dir / f"{route_key}.jpg"
-
-        # Skip if image exists and we're in incremental mode
-        if args.incremental and os.path.exists(output_path):
-            gpx_modified = os.path.getmtime(gpx_file)
-            img_modified = os.path.getmtime(output_path)
-            if gpx_modified <= img_modified:
-                file_size_str = get_file_size_str(output_path)
-                logger.info(f"Skipping {route_key} (unchanged, current size: {file_size_str})")
-                continue
+        output_path = pathlib.Path(original_dir) / args.output_dir / f"{route_key}.jpg"
 
         # Construct the geojson URL for switchRoute
         if base_path == '/' or not base_path:
@@ -359,6 +364,24 @@ def generate_route_images():
     if failed_routes:
         logger.warning(f"Failed to process {len(failed_routes)} routes after {args.max_retries + 1} attempts: {', '.join(failed_routes)}")
 
+    # Write successful files to manifest for error handling
+    if generated_images:
+        successful_files = []
+        for img_path in generated_images:
+            route_key = img_path.stem  # Remove .jpg extension
+            gpx_path = pathlib.Path(original_dir) / "routes" / "_gpx" / f"{route_key}.gpx"
+            if gpx_path.exists():
+                # Use relative path for portability
+                relative_path = f"routes/_gpx/{route_key}.gpx"
+                successful_files.append(relative_path)
+
+        successful_files_path = pathlib.Path(original_dir) / '.route-preview-cache-successful-files'
+        with open(successful_files_path, 'w') as f:
+            for gpx_file in successful_files:
+                f.write(f"{gpx_file}\n")
+
+        logger.info(f"Wrote {len(successful_files)} successful files to .route-preview-cache-successful-files")
+
     return generated_images
 
 if __name__ == "__main__":
@@ -368,7 +391,7 @@ if __name__ == "__main__":
         elapsed_time = time.time() - start_time
 
         if generated_images:
-            logger.info(f"Generated {len(generated_images)} OpenGraph images in {elapsed_time:.2f} seconds")
+            logger.info(f"Generated {len(generated_images)} preview images in {elapsed_time:.2f} seconds")
         else:
             logger.info(f"No new images generated in {elapsed_time:.2f} seconds")
     except Exception as e:
