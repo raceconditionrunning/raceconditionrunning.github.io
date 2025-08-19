@@ -914,7 +914,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             <accordion-item>
                 <accordion-header>How can I make a team?</accordion-header>
                 <accordion-body>
-                    <p>Decide which format you'd like to participate in. There are three categories for results purposes: <b>Competitive</b> for teams of four, <b>Solo</b> for teams of one, and <b>Open</b> for all other formats. All teams will:</p>
+                    <p>Decide which format you'd like to participate in. There are three categories for results purposes: <b>Competitive</b> for teams of six, <b>Solo</b> for teams of one, and <b>Open</b> for all other formats. All teams will:</p>
                     <ul>
                         <li>Register their members.</li>
                         <li>Have a runner present at the Angle Lake Station platform at 08:30 on the morning of the event to receive their baton.</li>
@@ -965,7 +965,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                         recommended schedule.</p>
 
                     <h5>Competitive Teams</h5>
-                    <p>If you're looking to set a course record, your team must have exactly four runners each running at least one leg. So you may exchange as few as three times or as many times as there are stations. A mixed team is 2 men and 2 women, and a womens' team is 4 female runners.</p>
+                    <p>If you're looking to set a course record, your team must have exactly six runners each running at least one leg. So you may exchange as few as five times or as many times as there are stations. A mixed team is 3 men and 3 women, and a womens' team is 6 female runners.</p>
                 </accordion-body>
             </accordion-item>
             <accordion-item>
@@ -1176,7 +1176,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
 
-    Promise.all([fetch('{{ site.baseurl }}/results/lrr24.json').then(res => res.json()), processedRouteData]).then(([results, [legs, exchanges, exchangeNames]]) => {
+    /*Promise.all([fetch('{{ site.baseurl }}/results/lrr25.json').then(res => res.json()), processedRouteData]).then(([results, [legs, exchanges, exchangeNames]]) => {
         results.results.forEach((result, index) => {
             result.index = index
 
