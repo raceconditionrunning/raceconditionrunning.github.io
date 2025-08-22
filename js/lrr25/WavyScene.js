@@ -203,6 +203,7 @@ export let WavyScene = gradientColors => p => {
     let waveShader;
     let canvas;
     let gradientTexture;
+    let hasRenderedFirstFrame = false;
 
     p.setup = async () => {
         width = p._userNode.offsetWidth;
@@ -232,6 +233,10 @@ export let WavyScene = gradientColors => p => {
         waveShader = p.createShader(DEFAULT_VERTEX_SHADER, shader['shader']);
         // First call builds the shader program
         p.shader(waveShader);
+        
+        // Start with canvas invisible for fade-in effect
+        canvas.elt.style.opacity = '0';
+        canvas.elt.style.transition = 'opacity 0.8s ease-in-out';
     }
 
     p.draw = () => {
@@ -250,6 +255,12 @@ export let WavyScene = gradientColors => p => {
 
         p.clear();
         p.image(outBuffer, 0, 0, p._userNode.offsetWidth, -p._userNode.offsetHeight);
+        
+        // Fade in after first successful render
+        if (!hasRenderedFirstFrame) {
+            hasRenderedFirstFrame = true;
+            canvas.elt.style.opacity = '1';
+        }
     }
 
     p.windowResized = function () {
