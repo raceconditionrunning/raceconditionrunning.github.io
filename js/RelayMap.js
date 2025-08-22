@@ -5,16 +5,7 @@ import { ElevationProfile } from "./ElevationProfile.js";
 import { Protocol } from 'pmtiles';
 import maplibregl from 'maplibre-gl';
 import { along, distance, point, nearestPointOnLine, lineString } from '@turf';
-import { isMapboxURL, transformMapboxUrl } from "https://cdn.jsdelivr.net/npm/maplibregl-mapbox-request-transformer@0.0.2/src/index.min.js";
 
-const mapboxKey = 'pk.eyJ1Ijoibmlja3N3YWxrZXIiLCJhIjoiY2t0ZjgyenE4MDR1YjJ1cno0N3hxYzI4YSJ9.ivPdsoEtV9TaLGbOOfFXKA';
-
-const transformRequest = (url, resourceType) => {
-    if (isMapboxURL(url)) {
-        return transformMapboxUrl(url, resourceType, mapboxKey);
-    }
-    return { url };
-};
 
 function queryNearestDistanceAlongLegs(queryPoint, legs) {
     let totalDistance = 0;

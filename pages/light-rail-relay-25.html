@@ -191,6 +191,9 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
         header {
             margin-bottom: 1rem;
+        }
+
+        header p {
             text-shadow: 0 0 10px rgba(0,0,0,.2);
         }
 
@@ -231,7 +234,6 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             color: var(--theme-primary-color) !important;
         }
 
- 
         figure {
             max-width: 1200px;
             margin: 0 auto 2rem auto;
@@ -508,9 +510,9 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             height: 100%;
             width: 100%;
         }
-        
+
         /* Countdown */
-        
+
         .cap-height {
             max-height: 80vh;
             overflow: hidden;
@@ -712,14 +714,14 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
         <header class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3 position-relative z-1">
             <img src="{{ site.baseurl }}/img/lrr25/logo.svg" alt="Light Rail Relay" class=""/>
-            <div class="subheader d-flex flex-column align-items-start align-items-md-end px-2 px-md-5 mb-4 justify-content-md-end text-md-end">
+            <div class="subheader d-flex flex-column align-items-start align-items-md-end px-4 px-md-5 mb-4 justify-content-md-end text-md-end">
                 <p><span class="h3">Ultra relay along Seattle's 1 Line</span><br/> by <a href="{{ site.baseurl }}/" class="fst-italic text-decoration-none text-light">Race Condition Running</a>. 08:30 September 27th</p>
                 <p class="text-muted">Registration closes September 25th</p>
                 <div class="gap-2 d-flex flex-wrap">
-                    <a class="btn btn-outline-light btn-lg" role="button" data-bs-title="by 9-25"  data-bs-placement="bottom" href="{{ page.registration_link }}" >Join Team
+                    <a class="btn btn-outline-light btn-lg" role="button" data-bs-title="by 9-25"  data-bs-placement="bottom" href="{{ page.registration_link }}" data-goatcounter-click="ext-join-team-hero" >Join Team
                         </a>
-                    <a class="btn btn-outline-light btn-lg" role="button" data-bs-title="by 9-25"  data-bs-placement="bottom" href="{{ page.team_registration_link }}">Add Team</a>
-                    <a class="btn btn-outline-light btn-lg" role="button" data-bs-title="by 9-25"  data-bs-placement="bottom" href="{{ page.solo_registration_link }}" >Enter Solo</a>
+                    <a class="btn btn-outline-light btn-lg" role="button" data-bs-title="by 9-25"  data-bs-placement="bottom" href="{{ page.team_registration_link }}" data-goatcounter-click="ext-add-team-hero">Add Team</a>
+                    <a class="btn btn-outline-light btn-lg" role="button" data-bs-title="by 9-25"  data-bs-placement="bottom" href="{{ page.solo_registration_link }}" data-goatcounter-click="ext-enter-solo-hero" >Enter Solo</a>
 
                     <!--a href="#results" class="btn btn-outline-light btn-lg" data-goatcounter-click="lrr25-results">Results</a>
                     <a href="#epilogue" class="btn btn-outline-light btn-lg" data-goatcounter-click="lrr25-epilogue">Epilogue</a-->
@@ -844,7 +846,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                         <span class="h4 text-primary">Free</span>
                       </div>
                       <div class="p-4"></div>
-                        <a href="{{ page.registration_link}}" class="btn btn-primary">Join Team</a>
+                        <a href="{{ page.registration_link}}" class="btn btn-primary" data-goatcounter-click="ext-join-team">Join Team</a>
                     </div>
                 </div>
             </div>
@@ -857,7 +859,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                             <span class="h4 text-primary">$16*</span>
                             <small class="text-muted d-block">*Free if you use your baton from past years</small>
                         </div>
-                        <a href="{{ page.team_registration_link}}" class="btn btn-primary">Add Team</a>
+                        <a href="{{ page.team_registration_link}}" class="btn btn-primary" data-goatcounter-click="ext-add-team">Add Team</a>
                     </div>
                 </div>
             </div>
@@ -870,7 +872,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                             <span class="h4 text-primary">$16*</span>
                             <small class="text-muted d-block">*Free if you use your baton from past years</small>
                         </div>
-                        <a href="{{ page.solo_registration_link}}" class="btn btn-primary">Enter Solo</a>
+                        <a href="{{ page.solo_registration_link}}" class="btn btn-primary" data-goatcounter-click="ext-enter-solo">Enter Solo</a>
                     </div>
                 </div>
             </div>
