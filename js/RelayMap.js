@@ -225,8 +225,7 @@ export class RelayMap extends LitElement {
             bearing: Number(sessionStorage.getItem('mapBearing')) || 0,
             minZoom: 8,
             maxBounds: maxBounds,
-            hash: false,
-            transformRequest: transformRequest,
+            hash: false
         });
 
         this.setupMapControls();
