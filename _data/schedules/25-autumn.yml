@@ -17,7 +17,7 @@
 - date: "2025-10-05"
   plan:
     - time: "7:00"
-      route: cse-burke-salmon-bay-ship-canal-ob
+      route_id: cse-burke-salmon-bay-ship-canal-ob
     - time: "9:00"
       route:
         name: Dawg Dash 10K
