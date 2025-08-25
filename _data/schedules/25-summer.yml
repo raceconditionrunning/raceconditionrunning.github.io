@@ -88,9 +88,9 @@
 - date: "2025-09-20"
   plan:
     - time: "8:30"
-      route_id: locks-discovery-magnolia-discovery-ob
-    - time: "10:15"
-      route_id: locks-fremont-bridge-loop
+      route_id: cse-jays-cafe
+    - time: "10:25"
+      route_id: jays-cafe-woodinville-cafe
 
 - date: "2025-09-27"
   organized-event: true
