@@ -67,6 +67,10 @@ export function createLegDetailsTable(container, legsGeojson, exchangesGeoJson) 
     function formatLegDescription(startExchange, endExchange, leg) {
         let legNumber = `<span class="leg-number">${leg.id}:</span> `;
 
+        let landmarkImg = startExchange.image_url ? `<img src="${startExchange.image_url}" class="landmark-img w-100 mb-2" style="max-width:180px;max-height:180px;object-fit: cover;" loading="lazy">` : "";
+
+        let landmark = landmarkImg ? `<figure class="landmark-img-container float-start me-3 border-rounded mb-2" >${landmarkImg} <figcaption class="text-muted small lh-1" style="max-width:180px;max-height:180px">Start: ${startExchange.landmark}</figcaption></figure>` : `<i>Start: ${startExchange.landmark}</i>`;
+
         let startLink = startExchange.stationInfo
             ? `<a href="${startExchange.stationInfo}" target="_new">${startExchange.name}</a>`
             : startExchange.name;
@@ -77,7 +81,7 @@ export function createLegDetailsTable(container, legsGeojson, exchangesGeoJson) 
 
         let legName = `${legNumber}${startLink} to ${endLink}`;
 
-        return `<div class="d-flex flex-column flex-lg-row justify-content-between align-items-baseline"><h5>${legName}</h5><h6>${leg.distance_mi.toFixed(2)}mi ↑${leg.ascent_ft.toFixed(0)}ft ↓${leg.descent_ft.toFixed(0)}ft</h6></div><i>Landmark: ${startExchange.landmark}</i><p class="mb-0">${leg.notes ?? ""}</p>`;
+        return `<div class="d-flex flex-column flex-lg-row justify-content-between align-items-baseline"><h5>${legName}</h5><h6>${leg.distance_mi.toFixed(2)}mi ↑${leg.ascent_ft.toFixed(0)}ft ↓${leg.descent_ft.toFixed(0)}ft</h6></div>${landmark}<p class="mb-0">${leg.notes ?? ""}</p>`;
     }
     // Copy the legsGeojson array so we can modify it
     legsGeojson = JSON.parse(JSON.stringify(legsGeojson))
@@ -86,7 +90,7 @@ export function createLegDetailsTable(container, legsGeojson, exchangesGeoJson) 
         legData.id += 1
         let startExchange = exchangesGeoJson.filter(exchange => exchange.properties.id === legData.start_exchange)[0].properties
         let endExchange = exchangesGeoJson.filter(exchange => exchange.properties.id === legData.end_exchange)[0].properties
-        legDescriptions += `<div class="mb-4">${formatLegDescription(startExchange, endExchange, legData)}</div>`
+        legDescriptions += `<div class="mb-4 overflow-auto">${formatLegDescription(startExchange, endExchange, legData)}</div>`
     }
     container.innerHTML = legDescriptions
 

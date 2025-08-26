@@ -92,6 +92,7 @@ export class RelayMap extends LitElement {
         lineColors: { type: Object },
         imgBasePath: { type: String, attribute: 'img-base-path' },
         pointCollections: { type: Object },
+        pois: { type: Object },
         liveArrivalsSetup: { type: Boolean, state: true }
     };
 
@@ -111,6 +112,7 @@ export class RelayMap extends LitElement {
         this.lineColors = {};
         this.imgBasePath = '';
         this.pointCollections = {};
+        this.pois = null;
         this.liveArrivalsSetup = false;
 
         this.mapReady = new Promise((resolve) => {
@@ -122,6 +124,7 @@ export class RelayMap extends LitElement {
         this.map = null;
         this.frameControl = null;
         this.popupStore = new Map();
+        this.landmarkMarkers = new Map();
     }
 
     render() {
@@ -152,7 +155,7 @@ export class RelayMap extends LitElement {
                             console.warn(`Image for ${code} not found or invalid.`);
                             return;
                         }
-                        this.map.addImage(`${code}stationcodesmall`, image.data, { pixelRatio: 1 });
+                        this.map.addImage(`${code}stationcodesmall`, image.data, { pixelRatio: 3 });
 
                     })
                 } catch (e) {
@@ -161,15 +164,16 @@ export class RelayMap extends LitElement {
             }
             // Generate a roundrect texture
             const canvas = document.createElement('canvas');
-            canvas.width = 36;
-            canvas.height = 24;
-            const radius = 4;
-            const padding = 12;
+            canvas.width = 108;
+            canvas.height = 72;
+            const radius = 12;
+            const padding = 8;
             const ctx = canvas.getContext('2d');
             ctx.fillStyle = '#ffffff';
             ctx.beginPath();
             ctx.roundRect(0, 0, canvas.width, canvas.height, radius);
             ctx.fill();
+            // FIXME: The corners are visibly stretched for short mile markers. Are the stretch regions correct?
             this.map.addImage('roundrect', {
                 width: canvas.width,
                 height: canvas.height,
@@ -177,7 +181,7 @@ export class RelayMap extends LitElement {
                 stretchX: [radius + 1, canvas.width - radius - 1],
                 stretchY: [radius + 1, canvas.height - radius - 1],
                 content: [radius + 1 + padding, radius + 1 + padding, canvas.width - radius - 1 - padding, canvas.height - radius - 1 - padding],
-                pixelRatio: 1,
+                pixelRatio: 3,
                 sdf: true
             });
 
@@ -205,6 +209,10 @@ export class RelayMap extends LitElement {
 
             if (changedProperties.has('pointCollections')) {
                 this.updatePointCollections();
+            }
+
+            if (changedProperties.has('pois') && this.pois) {
+                this.updatePOIs();
             }
         });
     }
@@ -292,6 +300,7 @@ export class RelayMap extends LitElement {
             sessionStorage.setItem('mapPitch', JSON.stringify(this.map.getPitch()));
             sessionStorage.setItem('mapBearing', JSON.stringify(this.map.getBearing()));
             console.log(`Zoom level: ${this.map.getZoom()}`);
+            this.updateLandmarkImages();
         });
     }
 
@@ -382,6 +391,7 @@ export class RelayMap extends LitElement {
         }
 
         this.setupExchangeInteractions();
+        this.updateLandmarkImages();
     }
 
     updateTrains() {
@@ -411,6 +421,60 @@ export class RelayMap extends LitElement {
                 id: name,
                 source: name,
                 ...style
+            });
+        });
+    }
+
+    updatePOIs() {
+        if (!this.pois) return;
+
+        // Filter to only include POI features and ensure they have the feature_type property
+        const poisFeatures = (this.pois.features || []).filter(feature =>
+            feature.properties && feature.properties.feature_type === 'poi'
+        );
+
+        const poiCollection = {
+            type: 'FeatureCollection',
+            features: poisFeatures
+        };
+
+        // Update or create POI source
+        if (this.map.getSource('pois')) {
+            this.map.getSource('pois').setData(poiCollection);
+        } else {
+            this.map.addSource('pois', {
+                type: 'geojson',
+                data: poiCollection
+            });
+        }
+
+        this.setupPOIInteractions();
+    }
+
+    setupPOIInteractions() {
+        const updatePOICursor = (e) => {
+            this.map.getCanvas().style.cursor = 'pointer';
+        };
+
+        const removePOICursor = () => {
+            this.map.getCanvas().style.cursor = '';
+        };
+
+        // Add interactions for both POI layers
+        ['pois', 'pois-labels'].forEach(layerId => {
+            this.map.on('mouseenter', layerId, updatePOICursor);
+            this.map.on('mouseleave', layerId, removePOICursor);
+            this.map.on('click', layerId, {
+                // Zoom to POI on click
+                zoomToExchange: (e) => {
+                    const poi = e.features[0];
+                    const coordinates = poi.geometry.coordinates;
+                    const bounds = new maplibregl.LngLatBounds(coordinates, coordinates);
+                    this.map.fitBounds(bounds, {
+                        padding: 32,
+                        maxZoom: 17
+                    });
+                }
             });
         });
     }
@@ -532,16 +596,115 @@ export class RelayMap extends LitElement {
         });
     }
 
+    updateLandmarkImages() {
+        if (!this.exchanges) return;
+
+        const zoom = this.map.getZoom();
+        const bounds = this.map.getBounds();
+
+        // Only show landmarks at zoom 15+
+        if (zoom < 15) {
+            this.clearLandmarkImages();
+            return;
+        }
+
+        // Update sizes of existing markers
+        const baseSize = 80;
+        const scaleFactor = Math.min(2.0, Math.max(0.8, (zoom - 14) * 0.15 + 0.8));
+        const imageSize = Math.round(baseSize * scaleFactor);
+
+        this.landmarkMarkers.forEach(marker => {
+            const img = marker.getElement().querySelector('img');
+            if (img) {
+                img.style.maxWidth = `${imageSize}px`;
+                img.style.maxHeight = `${imageSize}px`;
+            }
+        });
+
+        // Get currently visible exchanges with landmark images
+        const visibleExchangesWithImages = this.exchanges.features.filter(exchange => {
+            const coords = exchange.geometry.coordinates;
+            const hasImage = exchange.properties.image_url;
+            const isVisible = bounds.contains(coords);
+            return hasImage && isVisible;
+        });
+
+        // Remove markers that are no longer needed
+        this.landmarkMarkers.forEach((marker, exchangeId) => {
+            const stillVisible = visibleExchangesWithImages.some(ex => ex.properties.id === exchangeId);
+            if (!stillVisible) {
+                marker.remove();
+                this.landmarkMarkers.delete(exchangeId);
+            }
+        });
+
+        // Add markers for newly visible exchanges
+        visibleExchangesWithImages.forEach(exchange => {
+            const exchangeId = exchange.properties.id;
+            if (!this.landmarkMarkers.has(exchangeId)) {
+                const marker = this.createLandmarkMarker(exchange);
+                if (marker) {
+                    this.landmarkMarkers.set(exchangeId, marker);
+                }
+            }
+        });
+    }
+
+    createLandmarkMarker(exchange) {
+        const coords = exchange.geometry.coordinates;
+        const imageUrl = exchange.properties.image_url;
+
+        if (!imageUrl) return null;
+
+        const element = document.createElement('div');
+        element.className = 'landmark-marker';
+
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.src = imageUrl;
+        img.alt = exchange.properties.name || 'Exchange landmark';
+        img.style.cssText = `
+            max-width: 80px;
+            max-height: 80px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            display: block;
+        `;
+
+        // Handle image load errors
+        img.onerror = () => {
+            element.style.display = 'none';
+        };
+
+        element.appendChild(img);
+
+        const marker = new maplibregl.Marker({
+            element: element,
+            anchor: 'bottom-left',
+            offset: [28, -40],
+            focusAfterOpen: false
+        })
+            .setLngLat(coords)
+            .addTo(this.map);
+
+        return marker;
+    }
+
+    clearLandmarkImages() {
+        this.landmarkMarkers.forEach(marker => marker.remove());
+        this.landmarkMarkers.clear();
+    }
+
     // Public API methods
     highlightLeg(legId) {
         this.mapReady.then(() => {
-            // FIXME: Waiting on maplibre 5.7.0 for this call to actually work
             this.map.setGlobalStateProperty('selectedLeg', legId);
             if (legId) {
                 this.map.setFeatureState(
                     {source: 'legs', id: legId},
-                    {selected: true,
-                    selectedLeg: legId}
+                    {selected: true}
                 );
             }
 
@@ -549,8 +712,7 @@ export class RelayMap extends LitElement {
                 if (feature.id !== legId) {
                     this.map.setFeatureState(
                         {source: 'legs', id: feature.id},
-                        {selected: false,
-                            selectedLeg: legId
+                        {selected: false
                         }
                     );
                 }
@@ -768,6 +930,11 @@ export class RelayMap extends LitElement {
                 popup.remove();
             });
             this.popupStore.clear();
+        }
+
+        // Clean up landmark markers
+        if (this.landmarkMarkers) {
+            this.clearLandmarkImages();
         }
 
         // Remove map if it exists

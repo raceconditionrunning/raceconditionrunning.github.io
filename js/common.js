@@ -81,7 +81,16 @@ export function relayToGPX(trackName, legs, exchanges, options = {}) {
     const { eventName, permalink, year = new Date().getFullYear() } = options;
 
     let points = "";
+    let latestTimestamp = null;
+
     for (let leg of legs) {
+        if (leg.properties && leg.properties.time) {
+            const legTime = new Date(leg.properties.time);
+            if (!latestTimestamp || legTime > latestTimestamp) {
+                latestTimestamp = legTime;
+            }
+        }
+
         let coords = leg.geometry.coordinates;
         for (let coord of coords) {
             if (coord.length === 3) {
@@ -98,6 +107,8 @@ export function relayToGPX(trackName, legs, exchanges, options = {}) {
         waypoints += `    <wpt lat="${coords[1]}" lon="${coords[0]}"><name>${exchange.properties.name}</name></wpt>\n`;
     }
 
+    const timestamp = latestTimestamp ? latestTimestamp.toISOString() : new Date().toISOString();
+
     return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <gpx version="1.1" creator="https://raceconditionrunning.com" xmlns="http://www.topografix.com/GPX/1/1">
   <metadata>
@@ -105,7 +116,7 @@ export function relayToGPX(trackName, legs, exchanges, options = {}) {
     ${permalink ? `<link href="${permalink}">
       <text>${eventName || ""}</text>
     </link>` : ""}
-    <time>${new Date().toISOString()}</time>
+    <time>${timestamp}</time>
     <copyright author="OpenStreetMap Contributors">
       <year>${year}</year>
     </copyright>
@@ -226,11 +237,19 @@ export function createCountdown(countDownDate, unhideOnCompletion) {
 export function processRelayGeoJSON(relay) {
     let legs = []
     let exchanges = []
+    let pois = []
+
     for (let feature of relay.features) {
         if (feature.geometry.type === "LineString") {
             legs.push(feature)
         } else if (feature.geometry.type === "Point") {
-            exchanges.push(feature)
+            // Check if this is a POI or an exchange
+            if (feature.properties.feature_type === 'poi' ||
+                (feature.properties.symbol && !feature.properties.id)) {
+                pois.push(feature)
+            } else {
+                exchanges.push(feature)
+            }
         }
     }
 
@@ -242,6 +261,9 @@ export function processRelayGeoJSON(relay) {
     }
     exchanges.sort((a, b) => a.properties.id - b.properties.id)
 
+    // Sort POIs by leg sequence if available
+    pois.sort((a, b) => (a.properties.leg_sequence || 0) - (b.properties.leg_sequence || 0))
+
     legs = {
         type: "FeatureCollection",
         features: legs
@@ -250,8 +272,12 @@ export function processRelayGeoJSON(relay) {
         type: "FeatureCollection",
         features: exchanges
     }
+    pois = {
+        type: "FeatureCollection",
+        features: pois
+    }
 
-    return [legs, exchanges]
+    return [legs, exchanges, pois]
 }
 
 

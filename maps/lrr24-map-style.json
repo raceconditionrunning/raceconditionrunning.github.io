@@ -13,7 +13,7 @@
       "tileSize": 512
     },
     "planet": {
-      "url": "pmtiles://https://static.raceconditionrunning.com/seattle_24.pmtiles",
+      "url": "pmtiles://https://static.raceconditionrunning.com/seattle_25.pmtiles",
       "attribution": "<a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">&copy; OpenStreetMap contributors</a>",
       "type": "vector"
     },
@@ -47,6 +47,10 @@
         "data": {}
       },
     "rail-lines" : {
+        "type": "geojson",
+        "data": {}
+    },
+      "pois" : {
         "type": "geojson",
         "data": {}
     }
@@ -3130,7 +3134,7 @@
         "line-color": ["case",
           ["boolean",
             ["all",
-              ["!=",["feature-state", "selectedLeg"], null],
+              ["!=",["global-state", "selectedLeg"], null],
               ["==", ["feature-state", "selected"], false]
             ]
           , false],
@@ -3587,7 +3591,76 @@
         "text-color": "#CCC",
         "text-opacity": 0.6
       }
+    },
+  {
+    "id": "pois",
+    "type": "circle",
+    "source": "pois",
+    "filter": ["has", "feature_type"],
+    "minzoom": 9,
+    "paint": {
+      "circle-radius": [
+        "step",
+        ["zoom"],
+        4,
+        15,
+        6,
+        17,
+        8
+      ],
+      "circle-color": [
+        "case",
+        ["==", ["get", "symbol"], "Alert"], "#ff6b6b",
+        ["==", ["get", "symbol"], "Construction"], "#ffd93d",
+        ["==", ["get", "symbol"], "Info"], "#4ecdc4",
+        "#4ecdc4"
+      ],
+      "circle-stroke-color": "#ffffff",
+      "circle-stroke-width": [
+        "step",
+        ["zoom"],
+        1,
+        15,
+        1.5,
+        17,
+        2
+      ],
+      "circle-opacity": 0.9
     }
+  },
+  {
+    "id": "pois-labels",
+    "type": "symbol",
+    "source": "pois",
+    "minzoom": 15,
+    "layout": {
+              "text-field": [
+          "step",
+          ["zoom"],
+          ["format", ["get", "name"], { "font-scale": 1.0 }],
+          17,
+          ["format", ["get", "name"], { "font-scale": 1.0 }, "\n", {}, ["get", "description"], { "font-scale": 0.8, "text-font": ["literal", ["Roboto Condensed Regular"]] }]
+        ],
+      "text-font": ["Robot Regular"],
+      "text-size": {
+          "stops": [
+            [12, 11],
+            [16, 14],
+            [20, 20]
+          ]
+        },
+        "text-justify": "left",
+      "text-offset": [0, 1.0],
+      "text-anchor": "top",
+      "text-max-width": 8
+    },
+    "paint": {
+      "text-color": "#ffffff",
+      "text-halo-color": "#000000",
+      "text-halo-width": 1
+    }
+  }
+
   ],
 
   "projection": {"type": "globe"},

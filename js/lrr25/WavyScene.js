@@ -204,6 +204,8 @@ export let WavyScene = gradientColors => p => {
     let canvas;
     let gradientTexture;
     let hasRenderedFirstFrame = false;
+    let isVisible = true;
+    let observer;
 
     p.setup = async () => {
         width = p._userNode.offsetWidth;
@@ -237,6 +239,28 @@ export let WavyScene = gradientColors => p => {
         // Start with canvas invisible for fade-in effect
         canvas.elt.style.opacity = '0';
         canvas.elt.style.transition = 'opacity 0.8s ease-in-out';
+        
+        // Set up intersection observer to pause when not visible
+        setupVisibilityObserver();
+    }
+    
+    function setupVisibilityObserver() {
+        if ('IntersectionObserver' in window) {
+            observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isVisible = entry.isIntersecting;
+                    if (isVisible) {
+                        p.loop();
+                    } else {
+                        p.noLoop();
+                    }
+                });
+            }, {
+                threshold: 0.1 // Trigger when 10% of element is visible
+            });
+            
+            observer.observe(p._userNode);
+        }
     }
 
     p.draw = () => {
@@ -268,5 +292,13 @@ export let WavyScene = gradientColors => p => {
         height = p._userNode.offsetHeight;
         p.resizeCanvas(width, height, true);
         outBuffer.resize(width, height);
+    }
+    
+    // Cleanup when p5 instance is removed
+    p.remove = function() {
+        if (observer) {
+            observer.disconnect();
+            observer = null;
+        }
     }
 }
