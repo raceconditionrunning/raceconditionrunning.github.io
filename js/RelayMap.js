@@ -610,7 +610,7 @@ export class RelayMap extends LitElement {
 
         // Update sizes of existing markers
         const baseSize = 80;
-        const scaleFactor = Math.min(2.0, Math.max(0.8, (zoom - 14) * 0.15 + 0.8));
+        const scaleFactor = Math.min(3.0, Math.max(0.8, (zoom - 14) * 0.25 + 0.8));
         const imageSize = Math.round(baseSize * scaleFactor);
 
         this.landmarkMarkers.forEach(marker => {
