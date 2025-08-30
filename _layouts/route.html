@@ -27,7 +27,7 @@ layout: base
     <div class="stats d-none">{{ stats }}</div>
   </div>
 
-  <div><b>Start:</b> {{ page.start }} {% for location in site.data.locations.features %}
+  <div><b>Start:</b> <a href="{{ '/routes/?q=start:' | append: page.start | relative_url }}" title="See other routes that start at {{ page.start }}">{{ page.start }}</a> {% for location in site.data.locations.features %}
     {% if location.properties.id == page.start and location.properties.meeting_point_desc %}
     <span class="text-secondary ms-1">{{ location.properties.meeting_point_desc }}</span>
     <ul class="list d-flex gap-4 mb-0">
@@ -41,14 +41,18 @@ layout: base
     {% endif %}
     {% endfor %}
   </div>
-  <div><b>End:</b> {{ page.end }}
+  <div><b>End:</b> <a href="{{ '/routes/?q=end:' | append: page.end | relative_url }}">{{ page.end }}</a>
     {% for location in site.data.locations.features %}
     {% if location.properties.id == page.end and location.properties.meeting_point_desc %}
     <span class="text-secondary ms-1">{{ location.properties.meeting_point_desc }}</span>
     {% endif %}
     {% endfor %}
   </div>
-  <div><b>Neighborhoods:</b> {{ page.neighborhoods | join: ', ' }}</div>
+  <div><b>Neighborhoods:</b>
+    {% for neighborhood in page.neighborhoods %}
+      <a href="{{ '/routes/?q=neighborhood:"' | append: neighborhood | append: '"' | relative_url }}">{{ neighborhood }}</a>{% unless forloop.last %}, {% endunless %}
+    {% endfor %}
+  </div>
 
   <div><b>Last run:</b>
     {% if page.dates_run.size == 0 %}
