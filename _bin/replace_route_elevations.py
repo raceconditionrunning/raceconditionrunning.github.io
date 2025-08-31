@@ -95,6 +95,10 @@ def main():
                 for point in tqdm.tqdm(segment.points):
                     if not point.elevation or args.overwrite:
                         point.elevation = query_usgs_elevation(point.latitude, point.longitude, wait_time=0.1)
+        # Iterate over all waypoints (pois)
+        for waypoint in route.waypoints:
+            if not waypoint.elevation or args.overwrite:
+                waypoint.elevation = query_usgs_elevation(waypoint.latitude, waypoint.longitude, wait_time=0.1)
 
         # Save GPX
         with open(outpath, 'w') as f:
