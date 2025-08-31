@@ -119,6 +119,31 @@ def classify_stairs(highway_tag):
     return highway_tag == 'steps'
 
 
+def classify_crossing(node_tags):
+    """Classify a crossing node by type (signalized, marked, unmarked)"""
+    if node_tags is None or node_tags.get('highway') != 'crossing':
+        return None
+
+    crossing_tag = node_tags.get('crossing', '')
+    if type(crossing_tag) is str:
+        crossing_tag = crossing_tag.lower()
+
+    traffic_signals = node_tags.get('traffic_signals', '')
+    if type(traffic_signals) is str:
+        traffic_signals = traffic_signals.lower()
+
+    # Check for traffic signals first
+    if crossing_tag in ['traffic_signals', 'signals'] or traffic_signals == 'yes':
+        return 'signalized'
+    elif crossing_tag in ['marked', 'zebra', 'controlled']:
+        return 'marked'
+    elif crossing_tag in ['unmarked', 'uncontrolled'] or crossing_tag == '':
+        return 'unmarked'
+    else:
+        # Default to marked for other crossing types
+        return 'marked'
+
+
 def classify_way(highway_tag, surface_tag):
     """Classify a way into material, infrastructure, and stairs dimensions"""
     # Get material classification
@@ -135,36 +160,57 @@ def classify_way(highway_tag, surface_tag):
     return material, infrastructure, has_stairs
 
 
-def get_route_surface_percentages(route_points, street_network, buffer_meters=15):
-    """Calculate surface type percentages for a GPX route in both dimensions"""
-
-    # Convert route points to coordinates
+def create_buffered_route(route_points, buffer_meters):
+    """Create a buffered route geometry for intersection analysis"""
     coords = [(point.longitude, point.latitude) for point in route_points]
     route_line = LineString(coords)
 
-    print(f"    Route has {len(coords)} points, line length: {route_line.length:.6f} degrees")
-
-    # Buffer the route to capture nearby ways
-    # Use a projected CRS for accurate buffering in meters
     route_gdf = gpd.GeoDataFrame([1], geometry=[route_line], crs='EPSG:4326')
-    route_projected = route_gdf.to_crs('EPSG:3857')  # Web Mercator for meters
+    route_projected = route_gdf.to_crs('EPSG:3857')
     buffered_route = route_projected.geometry.iloc[0].buffer(buffer_meters)
     buffered_gdf = gpd.GeoDataFrame([1], geometry=[buffered_route], crs='EPSG:3857')
     buffered_back = buffered_gdf.to_crs('EPSG:4326')
 
+    return coords, route_line, route_projected, buffered_back
+
+
+def get_route_surface_and_crossings(route_points, street_network, crossings_network=None, buffer_meters=15):
+    """Calculate surface type percentages and crossing counts for a GPX route"""
+
+    coords, route_line, route_projected, buffered_back = create_buffered_route(route_points, buffer_meters)
+
+    print(f"    Route has {len(coords)} points, line length: {route_line.length:.6f} degrees")
     print(f"    Buffered route area: {buffered_back.geometry.iloc[0].area:.8f} sq degrees")
 
     # Find intersecting ways
     intersecting_ways = street_network[street_network.intersects(buffered_back.geometry.iloc[0])]
-
     print(f"    Found {len(intersecting_ways)} intersecting ways out of {len(street_network)} total ways")
+
+    # Find and count intersecting crossings (use smaller buffer for crossings)
+    crossing_counts = {'signalized': 0, 'marked': 0, 'unmarked': 0}
+    if crossings_network is not None:
+        # Create smaller buffer for crossing detection (1 meter)
+        _, _, _, crossing_buffered_back = create_buffered_route(route_points, 1)
+
+        intersecting_crossings = crossings_network[crossings_network.intersects(crossing_buffered_back.geometry.iloc[0])]
+        print(f"    Found {len(intersecting_crossings)} intersecting crossings out of {len(crossings_network)} total crossings")
+
+        for idx, crossing in intersecting_crossings.iterrows():
+            crossing_type = classify_crossing(crossing)
+            if crossing_type:
+                crossing_counts[crossing_type] += 1
+
+
+        print(f"    Crossings - Signalized: {crossing_counts['signalized']}, Marked: {crossing_counts['marked']}, Unmarked: {crossing_counts['unmarked']}")
 
     if len(intersecting_ways) == 0:
         print("    No intersecting ways found!")
-        return {
+        result = {
             'paved': 0, 'unpaved': 0,
             'street': 0, 'trail': 0, 'sidewalk': 0, 'stairs': 0
         }
+        result.update(crossing_counts)
+        return result
 
     # Calculate distances along route for each surface type
     material_distances = defaultdict(float)
@@ -229,10 +275,12 @@ def get_route_surface_percentages(route_points, street_network, buffer_meters=15
 
     # Convert to percentages
     if total_route_length == 0:
-        return {
+        result = {
             'paved': 0, 'unpaved': 0,
             'street': 0, 'trail': 0, 'sidewalk': 0, 'stairs': 0
         }
+        result.update(crossing_counts)
+        return result
 
     percentages = {}
 
@@ -247,22 +295,16 @@ def get_route_surface_percentages(route_points, street_network, buffer_meters=15
     # Stairs percentage (tracked separately since it's orthogonal)
     percentages['stairs'] = round(100 * stairs_distance / total_route_length, 1)
 
+    # Add crossing counts
+    percentages.update(crossing_counts)
+
     return percentages
 
 
 def get_route_surface_segments(route_points, street_network, buffer_meters=15):
     """Get detailed surface classification for each route segment"""
 
-    # Convert route points to coordinates
-    coords = [(point.longitude, point.latitude) for point in route_points]
-    route_line = LineString(coords)
-
-    # Buffer the route to capture nearby ways
-    route_gdf = gpd.GeoDataFrame([1], geometry=[route_line], crs='EPSG:4326')
-    route_projected = route_gdf.to_crs('EPSG:3857')
-    buffered_route = route_projected.geometry.iloc[0].buffer(buffer_meters)
-    buffered_gdf = gpd.GeoDataFrame([1], geometry=[buffered_route], crs='EPSG:3857')
-    buffered_back = buffered_gdf.to_crs('EPSG:4326')
+    coords, route_line, route_projected, buffered_back = create_buffered_route(route_points, buffer_meters)
 
     # Find intersecting ways
     intersecting_ways = street_network[street_network.intersects(buffered_back.geometry.iloc[0])]
@@ -403,6 +445,56 @@ def get_color_for_surface(material, infrastructure):
         return '#bcbd22'  # Olive - unknown material
 
 
+def get_color_for_crossing(crossing_type):
+    """Get color for crossing type visualization"""
+    if crossing_type == 'signalized':
+        return '#ff0000'  # Red - signalized crossing
+    elif crossing_type == 'marked':
+        return '#ffa500'  # Orange - marked crossing
+    elif crossing_type == 'unmarked':
+        return '#ffff00'  # Yellow - unmarked crossing
+    else:
+        return '#808080'  # Gray - unknown crossing
+
+
+def create_crossing_geojson_features(crossings_gdf, route_id):
+    """Create GeoJSON features for crossing points"""
+    features = []
+
+    for idx, crossing in crossings_gdf.iterrows():
+        # Get coordinates from geometry
+        coords = [crossing.geometry.x, crossing.geometry.y]
+
+        # Classify the crossing
+        crossing_type = classify_crossing(crossing)
+        if crossing_type is None:
+            continue
+
+        # Create feature
+        feature = {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": coords
+            },
+            "properties": {
+                "route_id": route_id,
+                "crossing_type": crossing_type,
+                "crossing_tag": str(crossing.get('crossing', '')),
+                "traffic_signals": str(crossing.get('traffic_signals', '')),
+                "feature_type": "crossing",
+                # Visual styling
+                "marker-color": get_color_for_crossing(crossing_type),
+                "marker-size": "medium",
+                "marker-symbol": "circle"
+            }
+        }
+        features.append(feature)
+
+
+    return features
+
+
 def get_combined_bounding_box(routes):
     """Calculate bounding box encompassing all routes"""
     all_lats = []
@@ -434,6 +526,9 @@ def main():
     # Add surface tag to the list of tags OSMNX fetches
     ox.settings.useful_tags_way += ['surface']
 
+    # Add crossing-related tags for nodes
+    ox.settings.useful_tags_node += ['highway', 'crossing', 'traffic_signals']
+
     # Load all routes first to calculate combined bounding box
     print("Loading routes...")
     routes = []
@@ -459,12 +554,18 @@ def main():
 
         # Convert to GeoDataFrame
         edges = ox.graph_to_gdfs(G, nodes=False, edges=True)
-        print(f"Downloaded {len(edges)} street segments")
+        nodes = ox.graph_to_gdfs(G, nodes=True, edges=False)
+        print(f"Downloaded {len(edges)} street segments and {len(nodes)} nodes")
+
+        # Filter nodes to only crossings
+        crossings = nodes[nodes['highway'] == 'crossing'] if 'highway' in nodes.columns else gpd.GeoDataFrame()
+        print(f"Found {len(crossings)} crossing nodes")
 
     except Exception as e:
         print(f"Error downloading network: {e}")
         print("Falling back to individual route processing...")
         edges = None
+        crossings = None
 
     # Process each route
     all_geojson_features = []
@@ -474,6 +575,7 @@ def main():
 
         # If we couldn't get the combined network, try individual route
         route_edges = edges
+        route_crossings = crossings
         if route_edges is None:
             try:
                 route_points = route["track"].points
@@ -488,24 +590,36 @@ def main():
                     retain_all=True
                 )
                 route_edges = ox.graph_to_gdfs(route_G, nodes=False, edges=True)
+                route_nodes = ox.graph_to_gdfs(route_G, nodes=True, edges=False)
+                route_crossings = route_nodes[route_nodes['highway'] == 'crossing'] if 'highway' in route_nodes.columns else gpd.GeoDataFrame()
             except Exception as e:
                 print(f"Error processing {route['id']}: {e}")
                 continue
 
-        # Calculate surface percentages
-        surface_percentages = get_route_surface_percentages(route["track"].points, route_edges)
+        # Calculate surface percentages and crossing counts
+        route_data = get_route_surface_and_crossings(route["track"].points, route_edges, route_crossings)
 
-        print(f"  Material - Paved: {surface_percentages['paved']}%, Unpaved: {surface_percentages['unpaved']}%")
-        print(f"  Infrastructure - Street: {surface_percentages['street']}%, Trail: {surface_percentages['trail']}%, Sidewalk: {surface_percentages['sidewalk']}%, Stairs: {surface_percentages['stairs']}%")
+        print(f"  Material - Paved: {route_data['paved']}%, Unpaved: {route_data['unpaved']}%")
+        print(f"  Infrastructure - Street: {route_data['street']}%, Trail: {route_data['trail']}%, Sidewalk: {route_data['sidewalk']}%, Stairs: {route_data['stairs']}%")
+        print(f"  Crossings - Signalized: {route_data['signalized']}, Marked: {route_data['marked']}, Unmarked: {route_data['unmarked']}")
 
-        # Add surface tags to existing GPX and write
-        add_surface_tags_to_gpx(args.input[i], outpath, surface_percentages)
+        # Add surface and crossing tags to existing GPX and write
+        add_surface_and_crossing_tags_to_gpx(args.input[i], outpath, route_data)
 
         # Generate GeoJSON segments if requested
         if args.geojson:
             segments = get_route_surface_segments(route["track"].points, route_edges)
             route_geojson = create_geojson_from_segments(segments, route['id'])
             all_geojson_features.extend(route_geojson['features'])
+
+            # Add crossing points that are on the route to GeoJSON for debugging
+            if route_crossings is not None and len(route_crossings) > 0:
+                # Filter crossings to only those that intersect with a small route buffer (1m for crossings)
+                _, _, _, crossing_buffered_back = create_buffered_route(route["track"].points, 1)
+
+                intersecting_crossings = route_crossings[route_crossings.intersects(crossing_buffered_back.geometry.iloc[0])]
+                crossing_features = create_crossing_geojson_features(intersecting_crossings, route['id'])
+                all_geojson_features.extend(crossing_features)
 
     # Write combined GeoJSON if requested
     if args.geojson and all_geojson_features:
@@ -521,12 +635,12 @@ def main():
         print(f"GeoJSON saved to {args.geojson} with {len(all_geojson_features)} segments")
 
 
-def add_surface_tags_to_gpx(input_path, output_path, surface_percentages):
+def add_surface_and_crossing_tags_to_gpx(input_path, output_path, route_data):
     """Add surface percentage tags to existing GPX file via string manipulation"""
     with open(input_path, 'r') as f:
         gpx_content = f.read()
 
-    # Remove existing surface tags if present
+    # Remove existing surface and crossing tags if present
     import re
     surface_tag_patterns = [
         r'      <rcr:surface_paved>.*?</rcr:surface_paved>\n',
@@ -534,19 +648,25 @@ def add_surface_tags_to_gpx(input_path, output_path, surface_percentages):
         r'      <rcr:surface_street>.*?</rcr:surface_street>\n',
         r'      <rcr:surface_trail>.*?</rcr:surface_trail>\n',
         r'      <rcr:surface_sidewalk>.*?</rcr:surface_sidewalk>\n',
-        r'      <rcr:stairs>.*?</rcr:stairs>\n'
+        r'      <rcr:stairs>.*?</rcr:stairs>\n',
+        r'      <rcr:crossings_signalized>.*?</rcr:crossings_signalized>\n',
+        r'      <rcr:crossings_marked>.*?</rcr:crossings_marked>\n',
+        r'      <rcr:crossings_unmarked>.*?</rcr:crossings_unmarked>\n'
     ]
 
     for pattern in surface_tag_patterns:
         gpx_content = re.sub(pattern, '', gpx_content)
 
     # Create surface extension tags (convert percentages to decimals with 3 digits precision)
-    surface_tags = f"""      <rcr:surface_paved>{surface_percentages['paved'] / 100:.3f}</rcr:surface_paved>
-      <rcr:surface_unpaved>{surface_percentages['unpaved'] / 100:.3f}</rcr:surface_unpaved>
-      <rcr:surface_street>{surface_percentages['street'] / 100:.3f}</rcr:surface_street>
-      <rcr:surface_trail>{surface_percentages['trail'] / 100:.3f}</rcr:surface_trail>
-      <rcr:surface_sidewalk>{surface_percentages['sidewalk'] / 100:.3f}</rcr:surface_sidewalk>
-      <rcr:stairs>{surface_percentages['stairs'] / 100:.3f}</rcr:stairs>"""
+    surface_tags = f"""      <rcr:surface_paved>{route_data['paved'] / 100:.3f}</rcr:surface_paved>
+      <rcr:surface_unpaved>{route_data['unpaved'] / 100:.3f}</rcr:surface_unpaved>
+      <rcr:surface_street>{route_data['street'] / 100:.3f}</rcr:surface_street>
+      <rcr:surface_trail>{route_data['trail'] / 100:.3f}</rcr:surface_trail>
+      <rcr:surface_sidewalk>{route_data['sidewalk'] / 100:.3f}</rcr:surface_sidewalk>
+      <rcr:stairs>{route_data['stairs'] / 100:.3f}</rcr:stairs>
+      <rcr:crossings_signalized>{route_data['signalized']}</rcr:crossings_signalized>
+      <rcr:crossings_marked>{route_data['marked']}</rcr:crossings_marked>
+      <rcr:crossings_unmarked>{route_data['unmarked']}</rcr:crossings_unmarked>"""
 
     # Insert before the closing </extensions> tag
     if '    </extensions>' in gpx_content:
