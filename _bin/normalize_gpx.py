@@ -9,7 +9,7 @@ class RogueRouteError(Exception):
     pass
 
 # TODO
-# <keywords>{route['type']}, {route['start']}, {route['end']}</keywords> (also do surface type)
+# <keywords>{route['type']}, {route['start']}, {route['end']}</keywords>
 def route_gpx(route):
     def indent(s, n):
         return '\n'.join([' ' * n + line for line in s.split('\n')])
@@ -31,6 +31,12 @@ f'''<rcr:changelog>
         f"<rcr:ascent>{round(route['ascent_m'])}</rcr:ascent>" if route['ascent_m'] else '',
         f"<rcr:descent>{round(route['descent_m'])}</rcr:descent>" if route['descent_m'] else '',
         f"<rcr:surface>{route['surface']}</rcr:surface>" if route['surface'] else '',
+        f"<rcr:surface_paved>{route['paved']}</rcr:surface_paved>" if 'paved' in route and route['paved'] else '',
+        f"<rcr:surface_unpaved>{route['unpaved']}</rcr:surface_unpaved>" if 'unpaved' in route and route['unpaved'] else '',
+        f"<rcr:surface_street>{route['street']}</rcr:surface_street>" if 'street' in route and route['street'] else '',
+        f"<rcr:surface_sidewalk>{route['sidewalk']}</rcr:surface_sidewalk>" if 'sidewalk' in route and route['sidewalk'] else '',
+        f"<rcr:surface_trail>{route['trail']}</rcr:surface_trail>" if 'trail' in route and route['trail'] else '',
+        f"<rcr:stairs>{route['stairs']}</rcr:stairs>" if 'stairs' in route and route['stairs'] else '',
         f"<rcr:start>{route['start']}</rcr:start>" if 'start' in route and route.get('start', None) else '',
         f"<rcr:end>{route['end']}</rcr:end>" if 'end' in route and route.get("end", None) else '',
         f'<rcr:deprecated>true</rcr:deprecated>' if 'deprecated' in route and route.get('deprecated', None) == 'true' else '',

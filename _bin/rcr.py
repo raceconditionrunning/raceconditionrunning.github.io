@@ -112,6 +112,24 @@ def load_route(path):
         descent = metadata.get('descent', None)
         if descent:
             descent = float(descent)
+        paved = metadata.get('surface_paved', None)
+        if paved:
+            paved = float(paved)
+        unpaved = metadata.get('surface_unpaved', None)
+        if unpaved:
+            unpaved = float(unpaved)
+        street = metadata.get('surface_street', None)
+        if street:
+            street = float(street)
+        sidewalk = metadata.get('surface_sidewalk', None)
+        if sidewalk:
+            sidewalk = float(sidewalk)
+        trail = metadata.get('surface_trail', None)
+        if trail:
+            trail = float(trail)
+        stairs = metadata.get('stairs', None)
+        if stairs:
+            stairs = float(stairs)
         type = None
         if OB_ID_RE.search(path.stem):
             type = "OB"
@@ -129,6 +147,12 @@ def load_route(path):
             'map': metadata.get('map', None),
             'type': metadata.get('type', type),
             'surface': metadata.get('surface', None),
+            'paved': paved,
+            'unpaved': unpaved,
+            'street': street,
+            'sidewalk': sidewalk,
+            'trail': trail,
+            'stairs': stairs,
             'track': track.segments[0],
             'path': path,
             'start': metadata.get('start', None),

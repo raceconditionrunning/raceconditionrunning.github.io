@@ -33,5 +33,8 @@ fi
 # inject the elevation data into the GPX file
 uv run python3 ${SDIR}/replace_route_elevations.py --input "$1" --output "$1"
 
+# add surface metadata to the GPX file
+uv run python3 ${SDIR}/add_surface_to_gpx.py --input "$1" --output "$1"
+
 # pretty print the GPX file back to itself
 uv run python3 ${SDIR}/normalize_gpx.py --input "$1" --output "$1"

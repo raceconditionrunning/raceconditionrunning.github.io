@@ -16,7 +16,7 @@ FIELDS = [
     'descent_m',
     'end',
     'type',
-    'surface',
+    #'surface',
     'map',
     'dates_run',
     'deprecated',
@@ -50,9 +50,7 @@ def check_route(route):
     for field in FIELDS:
         if field not in route:
             warn_rc(route, f"missing '{field}' field")
-        # TODO: eventually down and surface should also be non-blank
-        #elif field != 'deprecated' and route[field].strip() == '':
-        elif field not in ['map', 'surface', 'deprecated', 'dates_run'] and not route[field]:
+        elif field not in ['map', 'deprecated', 'dates_run'] and not route[field]:
             warn_rc(route, f"blank '{field}' field")
 
     if not route.get('last_updated', None) and not route.get('changelog', None):
@@ -65,12 +63,6 @@ def check_route(route):
     # Route must have elevation data
     if not all([point.elevation for point in route['track'].points]):
         warn_rc(route, "route must have elevation data in the GPX track. Use _bin/replace_route_elevations.py to fill in missing elevations.")
-
-
-    # TODO eventually all routes should have a valid surface
-    # valid surface
-    # if route['surface'] not in SURFACES:
-    #     warn_rc(route, f"invalid surface '{route['surface']}'")
 
     # check id and name conventions for type
     if route['type'] == 'Loop':
@@ -171,6 +163,16 @@ def main():
         if not route['end']:
             nearest_end, end_dist = computed['end'] = gis.get_nearest_loc(locations, route['track'].points[-1].latitude, route['track'].points[-1].longitude)
             route['end'] = nearest_end
+        if not route['surface'] and route['paved'] is not None and route['unpaved'] is not None:
+            if route['paved'] > 0.80:
+                route['surface'] = 'Road'
+            elif route['unpaved'] > 0.80:
+                route['surface'] = 'Trail'
+            elif route['paved'] > 0.30 and route['unpaved'] > 0.30:
+                route['surface'] = 'Mixed'
+            else:
+                # Not enough info to determine surface
+                pass
 
         # Compute route neighborhoods
         route_neighborhoods = []
@@ -224,6 +226,30 @@ def main():
                 f.write(f"  surface: \"{route['surface']}\"\n")
             else:
                 f.write(f"  surface: null\n")
+            if route['paved'] is not None:
+                f.write(f"  paved: {route['paved']}\n")
+            else:
+                f.write(f"  paved: null\n")
+            if route['unpaved'] is not None:
+                f.write(f"  unpaved: {route['unpaved']}\n")
+            else:
+                f.write(f"  unpaved: null\n")
+            if route['street'] is not None:
+                f.write(f"  street: {route['street']}\n")
+            else:
+                f.write(f"  street: null\n")
+            if route['sidewalk'] is not None:
+                f.write(f"  sidewalk: {route['sidewalk']}\n")
+            else:
+                f.write(f"  sidewalk: null\n")
+            if route['trail'] is not None:
+                f.write(f"  trail: {route['trail']}\n")
+            else:
+                f.write(f"  trail: null\n")
+            if route['stairs'] is not None:
+                f.write(f"  stairs: {route['stairs']}\n")
+            else:
+                f.write(f"  stairs: null\n")
             if route['map']:
                 f.write(f"  map: \"{route['map']}\"\n")
             else:

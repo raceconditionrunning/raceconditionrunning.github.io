@@ -164,6 +164,19 @@ add_h1: true
                     {title: "↓ ft", field: "descent_m", sorter: "number", formatter: cell => {
                         return Math.round(cell.getValue() * 3.28084);
                     }},
+                    {title: "Surface", field: "surface_type",
+                        mutator: function(value, data) {
+                            if (!data.surface) return "";
+                            return data.surface;
+                        },
+                        formatter: function(cell) {
+                            const value = cell.getValue();
+                            if (!value) return "";
+                            const borderClass = value === "Road" ? "border-primary" :
+                                              value === "Trail" ? "border-success" : "border-secondary";
+                            return `<span class="badge border fw-normal ${borderClass}">${value}</span>`;
+                        }
+                    },
                  {title: "Start", field: "start"},
                   {title: "End", field: "end"},
                     {
@@ -264,11 +277,13 @@ add_h1: true
 
               const startMatch = query.match(/start:([^ ]+)/);
               const endMatch = query.match(/end:([^ ]+)/);
+              const surfaceMatch = query.match(/surface:([^ ]+)/);
               const distanceMatches = [...query.matchAll(/distance:(<=|>=|<|>|)?([0-9.]+)/g)];
               const neighborhoodMatches = [...query.matchAll(/neighborhood:(['"]([^'"]+)['"]|[^ ]+)/g)];
               const nameQuery = query
                   .replace(/start:[^ ]+/, "")
                   .replace(/end:[^ ]+/, "")
+                  .replace(/surface:[^ ]+/, "")
                   .replace(/distance:(<=|>=|<|>|)?[0-9.]+/, "")
                   .replace(/neighborhood:(['"]([^'"]+)['"]|[^ ]+)/g, "")
                   .trim();
@@ -277,7 +292,7 @@ add_h1: true
               table.getFilters().forEach((filter) => {
                 console.log(filter);
                   if (
-                      ["start", "end", "distance_mi", "name", "neighborhoods"].includes(filter.field)
+                      ["start", "end", "surface_type", "distance_mi", "name", "neighborhoods"].includes(filter.field)
                   ) {
                       table.removeFilter(filter.field, filter.type, filter.value);
                   }
@@ -289,6 +304,14 @@ add_h1: true
 
               if (endMatch) {
                   table.addFilter("end", "starts", endMatch[1]);
+              }
+
+              if (surfaceMatch) {
+                  const surfaceType = surfaceMatch[1].toLowerCase();
+                  if (["road", "trail", "mixed"].includes(surfaceType)) {
+                      const capitalizedSurface = surfaceType.charAt(0).toUpperCase() + surfaceType.slice(1);
+                      table.addFilter("surface_type", "=", capitalizedSurface);
+                  }
               }
 
               if (neighborhoodMatches.length > 0) {
