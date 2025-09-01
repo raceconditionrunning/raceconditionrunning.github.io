@@ -732,6 +732,24 @@
         "transit": "Bus to 140th Ave NE & NE 175th St stop",
         "reachability": 3
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.29732238196833,
+          47.42439993684268
+        ]
+      },
+      "properties": {
+        "id": "AngleLake",
+        "name": "Angle Lake Station",
+        "maps_url": "https://maps.app.goo.gl/Xg1iKohM6gtNr84k9",
+        "meeting_point_desc": null,
+        "transit": "Light Rail to Angle Lake stop",
+        "reachability": 2
+      }
     }
   ]
 }
