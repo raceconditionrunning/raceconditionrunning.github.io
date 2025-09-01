@@ -85,10 +85,8 @@
 - date: "2025-11-30"
   plan:
     - time: "7:00"
-      route:
-        name: Seattle Marathon
-        map: https://www.seattlemarathon.org/
-        distance_mi: 26.2
+      route_id: 2025-seattle-marathon
+      notes: "https://www.seattlemarathon.org/"
 
 - date: "2025-12-06"
   plan:

@@ -768,6 +768,39 @@
         "transit": "Light Rail to Mountlake Terrace stop",
         "reachability": 2
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.34750561535375,
+          47.62222803092812
+        ]
+      },
+      "properties": {
+        "id": "HarrFifth",
+        "name": "Harrison Street and 5th Avenue N",
+        "maps_url": "https://maps.app.goo.gl/aXKLZLXfEwF91ND47",
+        "meeting_point_desc": "North side of the MoPop",
+        "transit": "Take Monorail from Westlake to Seattle Center"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.34961894009183,
+          47.61188405383856
+        ]
+      },
+      "properties": {
+        "id": "Pier66",
+        "name": "Seattle Pier 66",
+        "maps_url": "https://maps.app.goo.gl/96cLWWopRCYXQZQs7",
+        "meeting_point_desc": null
+      }
     }
   ]
 }
