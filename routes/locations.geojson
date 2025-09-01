@@ -750,6 +750,24 @@
         "transit": "Light Rail to Angle Lake stop",
         "reachability": 2
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.31479193192045,
+          47.7850791251942
+        ]
+      },
+      "properties": {
+        "id": "MtlkTerr",
+        "name": "Mountlake Terrace Station",
+        "maps_url": "https://maps.app.goo.gl/gqBWxHiBcG5jeCrk6",
+        "meeting_point_desc": null,
+        "transit": "Light Rail to Mountlake Terrace stop",
+        "reachability": 2
+      }
     }
   ]
 }
