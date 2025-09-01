@@ -43,9 +43,9 @@
 - date: "2025-10-18"
   plan:
     - time: "8:30"
-      route_id: locks-discovery-magnolia-discovery-ob
-    - time: "10:15"
-      route_id: locks-fremont-bridge-loop
+      route_id: mountlake-terrace-edmonds-beach-half-ob
+    - time: "10:50"
+      route_id: mountlake-terrace-vets-park-terrace-creek-park-ob
 
 - date: "2025-10-25"
   plan:
