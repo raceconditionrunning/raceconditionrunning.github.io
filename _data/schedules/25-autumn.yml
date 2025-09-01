@@ -86,6 +86,8 @@
   plan:
     - time: "7:00"
       route_id: 2025-seattle-marathon
+    - time: "7:30"
+      route_id: 2025-seattle-half-marathon
       notes: "https://www.seattlemarathon.org/"
 
 - date: "2025-12-06"
