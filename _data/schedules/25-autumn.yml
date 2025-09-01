@@ -43,16 +43,17 @@
 - date: "2025-10-18"
   plan:
     - time: "8:30"
-      route_id: mountlake-terrace-edmonds-beach-half-ob
-    - time: "10:50"
-      route_id: mountlake-terrace-vets-park-terrace-creek-park-ob
+      route_id: roosevelt-stone-way-golden-gardens-loop
+    - time: "10:45"
+      route_id: roosevelt-rainbow-point-reservoir-loops-ob
+      notes: "Some folks running Dicks-a-thon 2025"
 
 - date: "2025-10-25"
   plan:
     - time: "8:30"
-      route_id: westlake-elliot-bay-locks-burke-westlake-loop
-    - time: "10:30"
-      route_id: westlake-waterfront-cranes-sodo
+      route_id: mountlake-terrace-edmonds-beach-half-ob
+    - time: "10:50"
+      route_id: mountlake-terrace-vets-park-terrace-creek-park-ob
 
 - date: "2025-11-01"
   plan:

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running" xmlns:rcr="http://raceconditionrunning.com/extensions">
   <metadata>
-    <name>roosevelt-rainbow-point-reservoir-loops</name>
-    <desc>Roosevelt, Rainbow Point, Reservoir Loops (3.4 mi)</desc>
-    <link href="https://raceconditionrunning.com/routes/roosevelt-rainbow-point-reservoir-loops">
-      <text>Race Condition Running: Roosevelt, Rainbow Point, Reservoir Loops</text>
+    <name>roosevelt-rainbow-point-reservoir-loops-ob</name>
+    <desc>OB: Roosevelt, Rainbow Point, Reservoir Loops (3.4 mi)</desc>
+    <link href="https://raceconditionrunning.com/routes/roosevelt-rainbow-point-reservoir-loops-ob">
+      <text>Race Condition Running: OB: Roosevelt, Rainbow Point, Reservoir Loops</text>
     </link>
     <author>
       <name>Race Condition Running</name>
@@ -24,8 +24,8 @@
     </extensions>
   </metadata>
   <trk>
-    <name>roosevelt-rainbow-point-reservoir-loops</name>
-    <desc>Roosevelt, Rainbow Point, Reservoir Loops (3.4 mi)</desc>
+    <name>roosevelt-rainbow-point-reservoir-loops-ob</name>
+    <desc>OB: Roosevelt, Rainbow Point, Reservoir Loops (3.4 mi)</desc>
     <trkseg>
       <trkpt lat="47.6759" lon="-122.31579"><ele>66.00</ele></trkpt>
       <trkpt lat="47.67591" lon="-122.31579"><ele>66.12</ele></trkpt>
