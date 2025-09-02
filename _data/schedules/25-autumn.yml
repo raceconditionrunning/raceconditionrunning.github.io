@@ -82,6 +82,12 @@
       route_id: cap-hill-i90-trail-beacon
       notes: "Running this route in reverse!"
 
+- date: "2025-11-29"
+  plan:
+    - time: "10:30"
+      route_id: westlake-2nd-seattle-center-5th-westin-loop
+      notes: "Seattle Marathon shakeout then expo!"
+
 - date: "2025-11-30"
   plan:
     - time: "7:00"
