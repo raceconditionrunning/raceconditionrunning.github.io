@@ -93,6 +93,7 @@ export class RelayMap extends LitElement {
         imgBasePath: { type: String, attribute: 'img-base-path' },
         pointCollections: { type: Object },
         pois: { type: Object },
+        loading: { type: Boolean },
         liveArrivalsSetup: { type: Boolean, state: true }
     };
 
@@ -113,6 +114,7 @@ export class RelayMap extends LitElement {
         this.imgBasePath = '';
         this.pointCollections = {};
         this.pois = null;
+        this.loading = true;
         this.liveArrivalsSetup = false;
 
         this.mapReady = new Promise((resolve) => {
@@ -128,7 +130,16 @@ export class RelayMap extends LitElement {
     }
 
     render() {
-        return html`<div class="map-container"></div>`;
+        return html`
+            <div class="map-container">
+                ${this.loading ? html`
+                    <div class="map-loading text-muted">
+                        <div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>
+                        Loading map data...
+                    </div>
+                ` : ''}
+            </div>
+        `;
     }
 
     createRenderRoot() {
@@ -228,20 +239,19 @@ export class RelayMap extends LitElement {
             attributionControl: true,
             style: this.styleHref,
             center: sessionStorage.getItem('mapCenter') ? JSON.parse(sessionStorage.getItem('mapCenter')) : this.center,
-            zoom: Number(sessionStorage.getItem('mapZoom')) || 9,
+            zoom: Number(sessionStorage.getItem('mapZoom')) || 10, // Note that the loading event won't fire if any tile in view can't be loaded. We don't have full terrain, so we need to be zoomed in
             pitch: Number(sessionStorage.getItem('mapPitch')) || 0,
             bearing: Number(sessionStorage.getItem('mapBearing')) || 0,
             minZoom: 8,
             maxBounds: maxBounds,
             hash: false
         });
-
-        this.setupMapControls();
-        this.setupMapEvents();
-
         this.map.on('load', () => {
             this._resolveMapReady();
         });
+
+        this.setupMapControls();
+        this.setupMapEvents();
     }
 
     setupMapControls() {

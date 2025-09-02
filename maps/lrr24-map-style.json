@@ -20,39 +20,63 @@
     "legs": {
       "type": "geojson",
       "promoteId": "id",
-      "data": {}
+      "data": {
+        "type": "FeatureCollection",
+        "features": []
+      }
     },
     "leg-labels": {
       "type": "geojson",
       "promoteId": "id",
-      "data": {}
+      "data": {
+        "type": "FeatureCollection",
+        "features": []
+      }
     },
     "leg-splits": {
       "type": "geojson",
       "promoteId": "id",
-      "data": {}
+      "data": {
+        "type": "FeatureCollection",
+        "features": []
+      }
     },
     "overall-splits": {
       "type": "geojson",
       "promoteId": "id",
-      "data": {}
+      "data": {
+        "type": "FeatureCollection",
+        "features": []
+      }
     },
     "exchanges": {
       "type": "geojson",
       "promoteId": "id",
-      "data": {}
+      "data": {
+        "type": "FeatureCollection",
+        "features": []
+      }
       },
       "trains": {
         "type": "geojson",
-        "data": {}
+        "data": {
+        "type": "FeatureCollection",
+        "features": []
+      }
       },
     "rail-lines" : {
         "type": "geojson",
-        "data": {}
+        "data": {
+        "type": "FeatureCollection",
+        "features": []
+      }
     },
       "pois" : {
         "type": "geojson",
-        "data": {}
+        "data": {
+        "type": "FeatureCollection",
+        "features": []
+      }
     }
   },
   "state": {
