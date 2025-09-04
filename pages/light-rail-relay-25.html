@@ -731,7 +731,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             <img src="{{ site.baseurl }}/img/lrr25/logo.svg" alt="Light Rail Relay" class="p-0 p-md-1"/>
             <div class="subheader d-flex flex-column align-items-start align-items-md-end px-md-5 mb-4 justify-content-md-end text-md-end">
                 <p><span class="h3">Ultra relay along Seattle's 1 Line</span><br/> by <a href="{{ site.baseurl }}/" class="fst-italic text-decoration-none text-light">Race Condition Running</a>. 08:30 September 27th</p>
-                <p class="text-muted">Registration closes September 25th</p>
+                <p class="text-muted">Registration closes September 25th <span class="stats-text d-none">• <span class="stats-teams">-</span> teams registered</span></p>
                 <div class="gap-2 d-flex flex-wrap">
                     <a class="btn btn-outline-light btn-lg" role="button" data-bs-title="by 9-25"  data-bs-placement="bottom" href="{{ page.registration_link }}" data-goatcounter-click="ext-join-team-hero" >Join Team
                         </a>
@@ -848,6 +848,9 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
 <section>
     <div class="container">
+        <span class="stats-text float-end fw-light text-muted d-none pt-sm-2">
+            <span class="stats-teams">-</span> teams and <span class="stats-members">-</span> people are going. <span class="stats-thinking-about-it">-</span> are thinking about it.
+        </span>
         <h2 id="registration" class="mb-3">Registration</h2>
         <p>
           We are using <a href="https://panto.raceconditionrunning.com">Pantograph</a> for registration this year. Pantograph was tailor-made for team relays, and also lets your team upload exchange photos for timing purposes.
@@ -1210,6 +1213,29 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         relayResultsTable.initialize(results.results, exchangeNames)
         document.getElementById("results-table").appendChild(relayResultsTable)
     })*/
+
+    // Fetch and update stats
+    async function updateStats() {
+        try {
+            const response = await fetch('https://panto.raceconditionrunning.com/stats');
+            if (response.ok) {
+                const stats = await response.json();
+                document.querySelectorAll('.stats-text').forEach(el => el.classList.remove("d-none"));
+                document.querySelectorAll('.stats-teams').forEach(el => el.textContent = stats.teams || 0);
+                document.querySelectorAll('.stats-members').forEach(el => el.textContent = stats.memberships || 0);
+                document.querySelectorAll('.stats-thinking-about-it').forEach(el => el.textContent = stats.users - stats.memberships || 0);
+            } else {
+                // Hide stats elements if API fails
+                document.querySelectorAll('.stats-text').forEach(el => el.style.display = 'none');
+            }
+        } catch (error) {
+            // Hide stats elements if fetch fails
+            document.querySelectorAll('.stats-text').forEach(el => el.style.display = 'none');
+        }
+    }
+
+    // Update stats on load
+    updateStats();
 
     document.addEventListener('DOMContentLoaded', e => {
         const greenGradient = [
