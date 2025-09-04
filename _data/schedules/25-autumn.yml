@@ -51,7 +51,7 @@
 - date: "2025-10-25"
   plan:
     - time: "8:30"
-      route: "TBD"
+      route_id: TBD
 
 - date: "2025-11-01"
   plan:
@@ -63,22 +63,17 @@
 - date: "2025-11-08"
   plan:
     - time: "8:30"
-      route_id: roosevelt-carkeek-golden-gardens-roses-loop
-    - time: "11:00"
-      route_id: roosevelt-green-lake-loop
+      route_id: TBD
 
 - date: "2025-11-15"
   plan:
     - time: "8:30"
-      route_id: cse-jays-cafe
+      route_id: TBD
 
 - date: "2025-11-22"
   plan:
     - time: "8:30"
-      route_id: beacon-jefferson-park-chief-sealth-new-holly-ob
-    - time: "10:00"
-      route_id: cap-hill-i90-trail-beacon
-      notes: "Running this route in reverse!"
+      route_id: TBD
 
 - date: "2025-11-29"
   plan:
@@ -97,14 +92,10 @@
 - date: "2025-12-06"
   plan:
     - time: "8:30"
-      route_id: westlake-sculpture-park-kerry-park-loop
-    - time: "9:45"
-      route_id: westlake-sculpture-park-ob
+      route_id: TBD
 
 - date: "2025-12-13"
   plan:
     - time: "8:30"
-      route_id: cap-hill-i90-trail-lwb-arborlaken-loop
-    - time: "10:00"
-      route_id: cap-hill-volunteer-park-westlake
+      route_id: TBD
 
