@@ -58,7 +58,7 @@
     - time: "8:30"
       route_id: mountlake-terrace-edmonds-beach-half-ob
     - time: "10:50"
-      route_id: mountlake-terrace-vets-park-terrace-creek-park-ob
+      route_id: mountlake-terrace-vets-jack-long-terrace-creek-parks-loop
 
 - date: "2025-11-08"
   plan:
