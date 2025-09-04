@@ -51,7 +51,7 @@
 - date: "2025-10-25"
   plan:
     - time: "8:30"
-      route_id: TBD
+      route: "TBD"
 
 - date: "2025-11-01"
   plan:
@@ -63,17 +63,17 @@
 - date: "2025-11-08"
   plan:
     - time: "8:30"
-      route_id: TBD
+      route: "TBD"
 
 - date: "2025-11-15"
   plan:
     - time: "8:30"
-      route_id: TBD
+      route: "TBD"
 
 - date: "2025-11-22"
   plan:
     - time: "8:30"
-      route_id: TBD
+      route: "TBD"
 
 - date: "2025-11-29"
   plan:
@@ -92,10 +92,10 @@
 - date: "2025-12-06"
   plan:
     - time: "8:30"
-      route_id: TBD
+      route: "TBD"
 
 - date: "2025-12-13"
   plan:
     - time: "8:30"
-      route_id: TBD
+      route: "TBD"
 
