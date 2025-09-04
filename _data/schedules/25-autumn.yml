@@ -51,16 +51,14 @@
 - date: "2025-10-25"
   plan:
     - time: "8:30"
-      route_id: mountlake-terrace-edmonds-beach-half-ob
-    - time: "10:50"
-      route_id: mountlake-terrace-vets-park-terrace-creek-park-ob
+      route: "TBD"
 
 - date: "2025-11-01"
   plan:
     - time: "8:30"
-      route:
-        name: Drumheller Half Marathon SE
-        distance_mi: 13.1
+      route_id: mountlake-terrace-edmonds-beach-half-ob
+    - time: "10:50"
+      route_id: mountlake-terrace-vets-park-terrace-creek-park-ob
 
 - date: "2025-11-08"
   plan:
