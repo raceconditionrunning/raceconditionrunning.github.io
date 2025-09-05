@@ -51,7 +51,10 @@
 - date: "2025-10-25"
   plan:
     - time: "8:30"
-      route: "TBD"
+      route:
+        - name: TBD
+        - map: https://raceconditionrunning.com/
+        - distance_mi: 16
 
 - date: "2025-11-01"
   plan:
@@ -63,17 +66,27 @@
 - date: "2025-11-08"
   plan:
     - time: "8:30"
-      route: "TBD"
+      route:
+      route:
+        - name: TBD
+        - map: https://raceconditionrunning.com/
+        - distance_mi: 15
 
 - date: "2025-11-15"
   plan:
     - time: "8:30"
-      route: "TBD"
+      route:
+        - name: TBD
+        - map: https://raceconditionrunning.com/
+        - distance_mi: 12
 
 - date: "2025-11-22"
   plan:
     - time: "8:30"
-      route: "TBD"
+      route:
+        - name: TBD
+        - map: https://raceconditionrunning.com/
+        - distance_mi: 6
 
 - date: "2025-11-29"
   plan:
@@ -89,13 +102,17 @@
       route_id: 2025-seattle-half-marathon
       notes: "https://www.seattlemarathon.org/"
 
-- date: "2025-12-06"
-  plan:
-    - time: "8:30"
-      route: "TBD"
-
-- date: "2025-12-13"
-  plan:
-    - time: "8:30"
-      route: "TBD"
+## TODO
+##
+## - date: "2025-12-06"
+##   plan:
+##     - time: "8:30"
+##       route:
+##         - name: "TBD"
+##
+## - date: "2025-12-13"
+##   plan:
+##     - time: "8:30"
+##       route:
+##         - name: "TBD"
 
