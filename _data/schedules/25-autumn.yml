@@ -61,36 +61,42 @@
 - date: "2025-10-25"
   plan:
     - time: "8:30"
-      route_id: mountlake-terrace-edmonds-beach-half-ob
-    - time: "10:50"
-      route_id: mountlake-terrace-vets-park-terrace-creek-park-ob
+      route:
+        - name: TBD
+        - map: https://raceconditionrunning.com/
+        - distance_mi: 16
 
 - date: "2025-11-01"
   plan:
     - time: "8:30"
-      route:
-        name: Drumheller Half Marathon SE
-        distance_mi: 13.1
+      route_id: mountlake-terrace-edmonds-beach-half-ob
+    - time: "10:50"
+      route_id: mountlake-terrace-vets-jack-long-terrace-creek-parks-loop
 
 - date: "2025-11-08"
   plan:
     - time: "8:30"
-      route_id: roosevelt-carkeek-golden-gardens-roses-loop
-    - time: "11:00"
-      route_id: roosevelt-green-lake-loop
+      route:
+      route:
+        - name: TBD
+        - map: https://raceconditionrunning.com/
+        - distance_mi: 15
 
 - date: "2025-11-15"
   plan:
     - time: "8:30"
-      route_id: cse-jays-cafe
+      route:
+        - name: TBD
+        - map: https://raceconditionrunning.com/
+        - distance_mi: 12
 
 - date: "2025-11-22"
   plan:
     - time: "8:30"
-      route_id: beacon-jefferson-park-chief-sealth-new-holly-ob
-    - time: "10:00"
-      route_id: cap-hill-i90-trail-beacon
-      notes: "Running this route in reverse!"
+      route:
+        - name: TBD
+        - map: https://raceconditionrunning.com/
+        - distance_mi: 6
 
 - date: "2025-11-29"
   plan:
@@ -106,17 +112,17 @@
       route_id: 2025-seattle-half-marathon
       notes: "https://www.seattlemarathon.org/"
 
-- date: "2025-12-06"
-  plan:
-    - time: "8:30"
-      route_id: westlake-sculpture-park-kerry-park-loop
-    - time: "9:45"
-      route_id: westlake-sculpture-park-ob
-
-- date: "2025-12-13"
-  plan:
-    - time: "8:30"
-      route_id: cap-hill-i90-trail-lwb-arborlaken-loop
-    - time: "10:00"
-      route_id: cap-hill-volunteer-park-westlake
+## TODO
+##
+## - date: "2025-12-06"
+##   plan:
+##     - time: "8:30"
+##       route:
+##         - name: "TBD"
+##
+## - date: "2025-12-13"
+##   plan:
+##     - time: "8:30"
+##       route:
+##         - name: "TBD"
 
