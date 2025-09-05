@@ -86,6 +86,8 @@ Before you commit changes to a route, run `make normalize-routes-in-place` to en
 
 To supply elevation data, run `make replace-route-elevations` and `make normalize-routes-in-place`.
 
+If your route starts or ends at a new location, add a new feature to the `routes/locations.json` file.
+
 #### Typical workflow for adding routes
 
 Here are the concrete steps for making and adding routes to the repo:

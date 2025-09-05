@@ -14,6 +14,16 @@
 #   cse-magnuson-park-loop-ob
 #   cse-portage-bay-lake-union-loop
 # see https://raceconditionrunning.com/routes/?q=+start%3ACSE+end%3ACSE
+
+- date: "2025-10-04"
+  plan:
+    - time: "8:30"
+      route:
+        name: Seattle Half Marathon Preview
+        map: https://onthegomap.com/s/eb337rh0
+        distance_mi: 15.6
+        notes: "Start and finish at Westlake Light Rail Station. Most of RCR will run the Dawg Dash 10K on Oct 5 instead"
+
 - date: "2025-10-05"
   plan:
     - time: "7:00"

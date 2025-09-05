@@ -81,9 +81,9 @@
 - date: "2025-09-13"
   plan:
     - time: "8:30"
-      route_id: cse-arb-lwb-seward-loop-cc
-    - time: "10:45"
-      route_id: cc-chief-sealth-cc-center
+      route_id: beacon-hill-mlk-tukwila-p2p
+    - time: "10:20"
+      route_id: tukwila-sunset-park-botanical-gardens-loop
 
 - date: "2025-09-20"
   plan:

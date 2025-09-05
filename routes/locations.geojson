@@ -680,6 +680,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          -122.2887506,
+          47.4640449
+        ]
+      },
+      "properties": {
+        "id": "Tukwila",
+        "name": "Tukwila International Blvd Station",
+        "maps_url": "https://maps.app.goo.gl/CZbKP5REmV97Zt8p7",
+        "meeting_point_desc": "Street-level, 'Soundings' banjo-esque sculpture"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           -122.29417,
           47.6280587
         ]

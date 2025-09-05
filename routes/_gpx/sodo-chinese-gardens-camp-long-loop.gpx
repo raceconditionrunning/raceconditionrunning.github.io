@@ -13,6 +13,12 @@
       </link>
     </author>
     <extensions>
+      <rcr:surface_paved>0.636</rcr:surface_paved>
+      <rcr:surface_unpaved>0.185</rcr:surface_unpaved>
+      <rcr:surface_street>0.147</rcr:surface_street>
+      <rcr:surface_sidewalk>0.413</rcr:surface_sidewalk>
+      <rcr:surface_trail>0.262</rcr:surface_trail>
+      <rcr:stairs>0.003</rcr:stairs>
       <rcr:map>https://onthegomap.com/s/bn4eqgr3</rcr:map>
       <rcr:last_updated>2025-08-20</rcr:last_updated>
     </extensions>

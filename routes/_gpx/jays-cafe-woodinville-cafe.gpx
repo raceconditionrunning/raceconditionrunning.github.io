@@ -13,6 +13,10 @@
       </link>
     </author>
     <extensions>
+      <rcr:surface_paved>0.902</rcr:surface_paved>
+      <rcr:surface_street>0.07</rcr:surface_street>
+      <rcr:surface_sidewalk>0.004</rcr:surface_sidewalk>
+      <rcr:surface_trail>0.828</rcr:surface_trail>
       <rcr:map>https://onthegomap.com/s/gvckkjeg</rcr:map>
       <rcr:last_updated>2025-08-24</rcr:last_updated>
     </extensions>
