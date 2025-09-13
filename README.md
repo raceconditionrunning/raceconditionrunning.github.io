@@ -66,6 +66,20 @@ You can specify routes in two ways:
   - `map` - Web map URL (string)
   - `distance_mi` - Distance in miles (float)
 
+When a route hasn't been chosen yet,
+  omit `route_id` and either leave out `route` entirely or
+  include an inline `route` with just a `name` of `TBD`.
+The schedule layout will render these entries with a "TBD" placeholder.
+Example TBD schedule entry:
+
+```yaml
+- date: 2024-07-14
+  plan:
+    - time: "08:30"
+      route:
+        name: TBD
+```
+
 #### Cancellations
 
 Both plans and individual legs can include a `cancelled` key:
