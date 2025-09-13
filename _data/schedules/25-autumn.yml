@@ -75,7 +75,9 @@
 - date: "2025-11-08"
   plan:
     - time: "8:30"
-      route_id: beacon-cheasty-lwb-seward-genesee-jefferson-loop
+      route_id: beacon-cheasty-lwb-seward-othello
+    - time: "10:30"
+      route_id: othello-chief-sealth-jefferson-park-beacon
 
 - date: "2025-11-15"
   plan:

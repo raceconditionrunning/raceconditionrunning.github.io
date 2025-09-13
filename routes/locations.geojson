@@ -817,6 +817,24 @@
         "maps_url": "https://maps.app.goo.gl/96cLWWopRCYXQZQs7",
         "meeting_point_desc": null
       }
+    } ,
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+           -122.2815472308949,
+          47.53822016086776
+        ]
+      },
+      "properties": {
+        "id": "Othello",
+        "name": "Othello Station",
+        "maps_url": "https://maps.app.goo.gl/Q5vz5fbuv5PRzLNt5",
+        "meeting_point_desc": null,
+        "transit": "Light Rail to Othello Station stop",
+        "reachability": 2
+      }
     }
   ]
 }
