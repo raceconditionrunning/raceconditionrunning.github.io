@@ -75,9 +75,7 @@
 - date: "2025-11-08"
   plan:
     - time: "8:30"
-      route:
-        name: TBD
-        distance_mi: 15
+      route_id: beacon-cheasty-lwb-seward-genesee-jefferson-loop
 
 - date: "2025-11-15"
   plan:
