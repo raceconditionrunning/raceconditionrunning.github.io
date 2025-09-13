@@ -62,7 +62,7 @@
   plan:
     - time: "8:30"
       route_id: cap-hill-i90-trail-lwb-arborlaken-loop
-    - time: "9:25"
+    - time: "10:25"
       route_id: cap-hill-lakeview-blvd-seattle-center-westlake
 
 - date: "2025-11-01"
@@ -76,7 +76,7 @@
   plan:
     - time: "8:30"
       route_id: beacon-cheasty-lwb-seward-othello
-    - time: "10:30"
+    - time: "10:25"
       route_id: othello-chief-sealth-jefferson-park-beacon
 
 - date: "2025-11-15"
