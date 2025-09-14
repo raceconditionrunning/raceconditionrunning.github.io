@@ -89,9 +89,9 @@
 - date: "2025-11-22"
   plan:
     - time: "8:30"
-      route:
-        name: TBD
-        distance_mi: 6
+      route_id: locks-interbay-trains-ob
+    - time: "9:30"
+      route_id: locks-fremont-bridge-loop
 
 - date: "2025-11-29"
   plan:
@@ -107,11 +107,11 @@
       route_id: 2025-seattle-half-marathon
       notes: "https://www.seattlemarathon.org/"
 
-- date: "2025-12-06"
-  plan:
-    - time: "8:30"
-      route:
-        name: TBD
+## - date: "2025-12-06"
+##   plan:
+##     - time: "8:30"
+##       route:
+##         name: TBD
 
 - date: "2025-12-13"
   plan:
