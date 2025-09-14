@@ -2,9 +2,9 @@
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running" xmlns:rcr="http://raceconditionrunning.com/extensions">
   <metadata>
     <name>sodo-mts-sound-i90-portal-king-st-cranes-loop</name>
-    <desc>SODO, Mts to Sound, I90 Trail, East Portal View, King St Station, Alaskan Way Cranes Loop (8.3 mi)</desc>
+    <desc>SODO, Mts to Sound, I90 East Portal View, King St, Cranes Loop (8.3 mi)</desc>
     <link href="https://raceconditionrunning.com/routes/sodo-mts-sound-i90-portal-king-st-cranes-loop">
-      <text>Race Condition Running: SODO, Mts to Sound, I90 Trail, East Portal View, King St Station, Alaskan Way Cranes Loop</text>
+      <text>Race Condition Running: SODO, Mts to Sound, I90 East Portal View, King St, Cranes Loop</text>
     </link>
     <author>
       <name>Race Condition Running</name>
@@ -24,7 +24,7 @@
   </metadata>
   <trk>
     <name>sodo-mts-sound-i90-portal-king-st-cranes-loop</name>
-    <desc>SODO, Mts to Sound, I90 Trail, East Portal View, King St Station, Alaskan Way Cranes Loop (8.3 mi)</desc>
+    <desc>SODO, Mts to Sound, I90 East Portal View, King St, Cranes Loop (8.3 mi)</desc>
     <trkseg>
       <trkpt lat="47.57993" lon="-122.32727"><ele>5.93</ele></trkpt>
       <trkpt lat="47.57994" lon="-122.32727"><ele>5.95</ele></trkpt>
