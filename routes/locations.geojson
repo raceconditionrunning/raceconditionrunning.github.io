@@ -817,7 +817,7 @@
         "maps_url": "https://maps.app.goo.gl/96cLWWopRCYXQZQs7",
         "meeting_point_desc": null
       }
-    } ,
+    },
     {
       "type": "Feature",
       "geometry": {
@@ -834,6 +834,21 @@
         "meeting_point_desc": null,
         "transit": "Light Rail to Othello Station stop",
         "reachability": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.21355245973314,
+          47.49575751653726
+        ]
+      },
+      "properties": {
+        "id": "CRTPark",
+        "name": "Cedar River Trail Park",
+        "maps_url": "https://maps.app.goo.gl/35aLvKjyyjogpqy86"
       }
     }
   ]

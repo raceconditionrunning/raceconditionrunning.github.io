@@ -115,6 +115,6 @@
 
 - date: "2025-12-13"
   plan:
-    - time: "8:30"
-      route:
-        name: TBD
+    - time: "9:30"
+      route_id: cedar-river-trail-10-ob
+      notes: "Car pool to start from Rainier Beach station at 9:00am"
