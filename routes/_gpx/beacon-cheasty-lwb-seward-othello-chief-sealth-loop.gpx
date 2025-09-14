@@ -2,9 +2,9 @@
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running" xmlns:rcr="http://raceconditionrunning.com/extensions">
   <metadata>
     <name>beacon-cheasty-lwb-seward-othello-chief-sealth-loop</name>
-    <desc>Beacon Hill, Cheasty Blvd, LWB, Seward Lap, Othello, Chief Sealth Loop (14.9 mi)</desc>
+    <desc>Beacon, Cheasty, LWB, Seward, Othello, Chief Sealth Loop (14.9 mi)</desc>
     <link href="https://raceconditionrunning.com/routes/beacon-cheasty-lwb-seward-othello-chief-sealth-loop">
-      <text>Race Condition Running: Beacon Hill, Cheasty Blvd, LWB, Seward Lap, Othello, Chief Sealth Loop</text>
+      <text>Race Condition Running: Beacon, Cheasty, LWB, Seward, Othello, Chief Sealth Loop</text>
     </link>
     <author>
       <name>Race Condition Running</name>
@@ -24,7 +24,7 @@
   </metadata>
   <trk>
     <name>beacon-cheasty-lwb-seward-othello-chief-sealth-loop</name>
-    <desc>Beacon Hill, Cheasty Blvd, LWB, Seward Lap, Othello, Chief Sealth Loop (14.9 mi)</desc>
+    <desc>Beacon, Cheasty, LWB, Seward, Othello, Chief Sealth Loop (14.9 mi)</desc>
     <trkseg>
       <trkpt lat="47.57925" lon="-122.31204"><ele>89.19</ele></trkpt>
       <trkpt lat="47.57925" lon="-122.31205"><ele>89.19</ele></trkpt>

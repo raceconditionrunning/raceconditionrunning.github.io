@@ -2,9 +2,9 @@
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running" xmlns:rcr="http://raceconditionrunning.com/extensions">
   <metadata>
     <name>beacon-cheasty-lwb-seward-genesee-jefferson-loop</name>
-    <desc>Beacon Hill, Cheasty Blvd, LWB, Seward Lap, Genesee Park, Jefferson Park Loop (15.0 mi)</desc>
+    <desc>Beacon, Cheasty, LWB, Seward, Genesee, Jefferson Loop (15.0 mi)</desc>
     <link href="https://raceconditionrunning.com/routes/beacon-cheasty-lwb-seward-genesee-jefferson-loop">
-      <text>Race Condition Running: Beacon Hill, Cheasty Blvd, LWB, Seward Lap, Genesee Park, Jefferson Park Loop</text>
+      <text>Race Condition Running: Beacon, Cheasty, LWB, Seward, Genesee, Jefferson Loop</text>
     </link>
     <author>
       <name>Race Condition Running</name>
@@ -24,7 +24,7 @@
   </metadata>
   <trk>
     <name>beacon-cheasty-lwb-seward-genesee-jefferson-loop</name>
-    <desc>Beacon Hill, Cheasty Blvd, LWB, Seward Lap, Genesee Park, Jefferson Park Loop (15.0 mi)</desc>
+    <desc>Beacon, Cheasty, LWB, Seward, Genesee, Jefferson Loop (15.0 mi)</desc>
     <trkseg>
       <trkpt lat="47.57929" lon="-122.31207"><ele>89.23</ele></trkpt>
       <trkpt lat="47.57925" lon="-122.31205"><ele>89.19</ele></trkpt>
