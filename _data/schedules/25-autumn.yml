@@ -9,12 +9,6 @@
 #        distance_mi: 36
 #      highlight-image: /img/lrr25/og-banner.jpg
 
-# for pre-dawg-dash also considering:
-#   cse-arb-mercer-westlake-burke-loop
-#   cse-magnuson-park-loop-ob
-#   cse-portage-bay-lake-union-loop
-# see https://raceconditionrunning.com/routes/?q=+start%3ACSE+end%3ACSE
-
 - date: "2025-10-04"
   plan:
     - time: "8:30"
@@ -33,15 +27,6 @@
         name: Dawg Dash 10K
         map: https://www.washington.edu/alumni/events/alaska-airlines-dawg-dash-2025/
         distance_mi: 6.2
-
-# Maybe re-inject later?
-#- date: "2025-10-04"
-#  plan:
-#    - time: "8:30"
-#      route_id: cc-genessee-lwb-seward-loop
-#    - time: "9:50"
-#      route_id: cse-lwb-cc
-#      notes: "Running this route in reverse!"
 
 - date: "2025-10-11"
   plan:

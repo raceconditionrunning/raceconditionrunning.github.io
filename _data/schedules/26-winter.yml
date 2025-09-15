@@ -1,0 +1,71 @@
+- date: "2026-01-10"
+  plan:
+    - time: "8:30"
+      route:
+        name: TBD
+
+- date: "2026-01-17"
+  plan:
+    - time: "8:30"
+      route:
+        name: TBD
+
+- date: "2026-01-24"
+  plan:
+    - time: "8:30"
+      route:
+        name: TBD
+
+- date: "2026-01-31"
+  plan:
+    - time: "8:30"
+      route:
+        name: TBD
+
+- date: "2026-02-07"
+  plan:
+    - time: "8:30"
+      route:
+        name: TBD
+
+- date: "2026-02-14"
+  plan:
+    - time: "8:30"
+      route:
+        name: TBD
+
+- date: "2026-02-21"
+  plan:
+    - time: "8:30"
+      route:
+        name: TBD
+
+- date: "2026-02-28"
+  plan:
+    - time: "8:30"
+      route:
+        name: TBD
+
+- date: "2026-03-07"
+  plan:
+    - time: "8:30"
+      route:
+        name: TBD
+
+- date: "2026-03-14"
+  plan:
+    - time: "8:30"
+      route:
+        name: TBD
+
+- date: "2026-03-21"
+  plan:
+    - time: "8:30"
+      route:
+        name: TBD
+
+- date: "2026-03-28"
+  plan:
+    - time: "8:30"
+      route:
+        name: TBD
