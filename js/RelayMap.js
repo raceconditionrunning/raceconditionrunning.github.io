@@ -309,9 +309,11 @@ export class RelayMap extends LitElement {
             sessionStorage.setItem('mapZoom', JSON.stringify(this.map.getZoom()));
             sessionStorage.setItem('mapPitch', JSON.stringify(this.map.getPitch()));
             sessionStorage.setItem('mapBearing', JSON.stringify(this.map.getBearing()));
-            console.log(`Zoom level: ${this.map.getZoom()}`);
-            this.updateLandmarkImages();
+            //console.log(`Zoom level: ${this.map.getZoom()}`);
         });
+        this.map.on('zoom', () => {
+           this.updateLandmarkImages();
+        })
     }
 
     updateLegs() {
@@ -620,7 +622,7 @@ export class RelayMap extends LitElement {
 
         // Update sizes of existing markers
         const baseSize = 80;
-        const scaleFactor = Math.min(3.0, Math.max(0.8, (zoom - 14) * 0.25 + 0.8));
+        const scaleFactor = Math.min(4.5, Math.max(0.8, (zoom - 14) * 0.35 + 0.8));
         const imageSize = Math.round(baseSize * scaleFactor);
 
         this.landmarkMarkers.forEach(marker => {
@@ -643,7 +645,8 @@ export class RelayMap extends LitElement {
         this.landmarkMarkers.forEach((marker, exchangeId) => {
             const stillVisible = visibleExchangesWithImages.some(ex => ex.properties.id === exchangeId);
             if (!stillVisible) {
-                marker.remove();
+                marker.getElement().classList.add('opacity-0');
+                setTimeout(() => marker.remove(), 500); // Wait for the fade-out transition to complete
                 this.landmarkMarkers.delete(exchangeId);
             }
         });
@@ -703,7 +706,10 @@ export class RelayMap extends LitElement {
     }
 
     clearLandmarkImages() {
-        this.landmarkMarkers.forEach(marker => marker.remove());
+        this.landmarkMarkers.forEach(marker => {
+            marker.getElement().classList.add('opacity-0');
+            setTimeout(() => marker.remove(), 500); // Wait for the fade-out transition to complete
+        });
         this.landmarkMarkers.clear();
     }
 
@@ -926,7 +932,7 @@ export class RelayMap extends LitElement {
     fadeOutAndRemovePopup(popup) {
         const popupElement = popup._content?.parentElement;
         if (!popupElement) return;
-        popupElement.classList.add('fade-out');
+        popupElement.classList.add('opacity-0');
         setTimeout(() => popup.remove(), 500); // Wait for the fade-out transition to complete
     }
 
