@@ -7,6 +7,8 @@
   "results": [
     {
     "name": "Batonkadonks",
+      "category": "Open",
+      "teamSize": 9,
     "exchangeTimes": {
         "140": 21145,
       "165": 0
@@ -14,6 +16,8 @@
 },
 {
     "name": "Cool Beanz",
+    "category": "Open",
+    "teamSize": 6,
     "exchangeTimes": {
         "140": 27999,
       "165": 0
@@ -21,6 +25,8 @@
 },
     {
       "name": "Husky Run Club",
+      "category": "Open",
+      "teamSize": 14,
       "exchangeTimes": {
    "140": 20891,
         "165": 0
@@ -28,7 +34,8 @@
     },
       {
       "name": "Husky Swim Club",
-        "category": "Open",
+      "category": "Open",
+      "teamSize": 12,
       "exchangeTimes": {
         "140": 25323,
         "141": 23835,
@@ -106,6 +113,7 @@
   {
     "name": "Not Fast, Just Furious",
     "category": "Open",
+    "teamSize": 11,
     "exchangeTimes": {
       "140": 23837,
       "141": 22156,
@@ -135,6 +143,8 @@
 
     {
       "name": "Race Condition Running",
+      "category": "Open",
+      "teamSize": 33,
       "exchangeTimes": {
         "140": 30926,
         "141": 28735,
@@ -157,6 +167,7 @@
 
   {
     "name": "Seattle Green Line Running Group",
+    "teamSize": 6,
     "category": "Open",
     "exchangeTimes": {
       "140": 19393,
@@ -186,6 +197,7 @@
     {
       "name": "The 3 Line",
       "category": "Open",
+      "teamSize": 13,
       "exchangeTimes": {
         "140": 24535,
         "141": 22661,
@@ -204,6 +216,8 @@
 
     {
     "name": "RBRC Local #7",
+    "category": "Competitive",
+    "teamSize": 4,
     "exchangeTimes": {
         "140": 20068,
       "165": 0
@@ -211,6 +225,8 @@
 },
     {
       "name": "Velociraptors",
+      "category": "Open",
+      "teamSize": 5,
       "exchangeTimes": {
         "140": 24402,
         "141": 22102,
@@ -232,6 +248,7 @@
         {
       "name": "Which Way to the Beach",
       "category": "Open",
+      "teamSize": 5,
       "exchangeTimes": {
         "140": 20326,
         "150": 9796,
@@ -241,6 +258,13 @@
         "160": 5526,
         "165": 0
       }
+    },
+      {
+    "name": "Eastside Urbanism",
+    "teamSize": 4,
+    "category": "Competitive",
+    "exchangeTimes": {
     }
+  }
   ]
 }
