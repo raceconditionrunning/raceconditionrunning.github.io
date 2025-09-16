@@ -72,20 +72,20 @@ def query_usgs_elevation(lat, lon, wait_time=0.0):
         'units': 'Meters',
     }
 
+    # Use this param to avoid slamming the server
+    time.sleep(wait_time)
+
     # sometimes the USGS server returns a 200 but with an empty body?!
     # hypothesis: this is some kind of bad rate limiting
-    raw = requests.get(url, params=params)
+    resp = requests.get(url, params=params)
     try:
-        res = raw.json()
-        # Use this param to avoid slamming the server
-        time.sleep(wait_time)
-        return float(res['value'])
-    except Exception as e:
+        return float(resp.json()['value'])
+    except requests.exceptions.JSONDecodeError as e:
         print(f"Error querying elevation for {lat}, {lon}")
         print(f"Exception: {e}")
-        print(f"Response code: {raw.status_code} ({raw.reason})")
-        print(f"Response text: {raw.text}")
-        print(f"Response content: {raw.content}")
+        print(f"Response code: {resp.status_code} ({resp.reason})")
+        print(f"Response text: {resp.text}")
+        print(f"Response content: {resp.content}")
         print(f"Consider waiting an hour and increasing --wait")
         sys.exit(1)
 
