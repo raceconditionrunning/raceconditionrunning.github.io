@@ -8,6 +8,7 @@ import time
 import haversine
 from typing import Callable
 import tqdm
+import sys
 
 cache = Memory("cache", verbose=0).cache
 
@@ -70,10 +71,26 @@ def query_usgs_elevation(lat, lon, wait_time=0.0):
         'y': lat,
         'units': 'Meters',
     }
-    res = requests.get(url, params=params).json()
-    # Use this param to avoid slamming the server
-    time.sleep(wait_time)
-    return float(res['value'])
+    ## res = requests.get(url, params=params).json()
+    ## # Use this param to avoid slamming the server
+    ## time.sleep(wait_time)
+    ## return float(res['value'])
+
+    # sometimes the USGS server returns and invalid response (empty?)
+    raw = requests.get(url, params=params)
+    try:
+        res = raw.json()
+        # Use this param to avoid slamming the server
+        time.sleep(wait_time)
+        return float(res['value'])
+    except Exception as e:
+        print(f"Error querying elevation for {lat}, {lon}")
+        print(f"Exception: {e}")
+        print(f"{raw}")
+        print(f"{raw.text}")
+        print(f"{raw.content}")
+        sys.exit(1)
+        return None
 
 def main():
     parser = argparse.ArgumentParser(description="Replace route elevations files.")
