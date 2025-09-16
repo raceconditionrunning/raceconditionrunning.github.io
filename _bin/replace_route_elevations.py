@@ -76,7 +76,8 @@ def query_usgs_elevation(lat, lon, wait_time=0.0):
     ## time.sleep(wait_time)
     ## return float(res['value'])
 
-    # sometimes the USGS server returns and invalid response (empty?)
+    # sometimes the USGS server returns a 200 but with an empty body
+    # hypothesis: this is some kind of bad rate limiting
     raw = requests.get(url, params=params)
     try:
         res = raw.json()
@@ -86,9 +87,10 @@ def query_usgs_elevation(lat, lon, wait_time=0.0):
     except Exception as e:
         print(f"Error querying elevation for {lat}, {lon}")
         print(f"Exception: {e}")
-        print(f"{raw}")
-        print(f"{raw.text}")
-        print(f"{raw.content}")
+        print(f"Response code: {raw.status_code} ({raw.reason})")
+        print(f"Response text: {raw.text}")
+        print(f"Response content: {raw.content}")
+        print(f"Consider waiting an hour and increasing --wait")
         sys.exit(1)
         return None
 
@@ -97,6 +99,7 @@ def main():
     parser.add_argument("--input", required=True, nargs="+", help="Input GPX file(s).")
     parser.add_argument("--output", required=True, nargs="+", help="Output GPX file(s).")
     parser.add_argument("--overwrite", action="store_true", help="Replace any existing elevation data")
+    parser.add_argument("--wait", type=float, default=0.25, help="Wait time between elevation queries (seconds)")
     args = parser.parse_args()
     print("Resulting GPX files will be denormalized. Use `normalize_gpx.py` to fix them before committing.")
 
@@ -111,11 +114,11 @@ def main():
             for segment in track.segments:
                 for point in tqdm.tqdm(segment.points):
                     if not point.elevation or args.overwrite:
-                        point.elevation = query_usgs_elevation(point.latitude, point.longitude, wait_time=0.1)
+                        point.elevation = query_usgs_elevation(point.latitude, point.longitude, wait_time=args.wait)
         # Iterate over all waypoints (pois)
         for waypoint in route.waypoints:
             if not waypoint.elevation or args.overwrite:
-                waypoint.elevation = query_usgs_elevation(waypoint.latitude, waypoint.longitude, wait_time=0.1)
+                waypoint.elevation = query_usgs_elevation(waypoint.latitude, waypoint.longitude, wait_time=args.wait)
 
         # Save GPX
         with open(outpath, 'w') as f:
