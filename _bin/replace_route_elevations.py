@@ -71,12 +71,8 @@ def query_usgs_elevation(lat, lon, wait_time=0.0):
         'y': lat,
         'units': 'Meters',
     }
-    ## res = requests.get(url, params=params).json()
-    ## # Use this param to avoid slamming the server
-    ## time.sleep(wait_time)
-    ## return float(res['value'])
 
-    # sometimes the USGS server returns a 200 but with an empty body
+    # sometimes the USGS server returns a 200 but with an empty body?!
     # hypothesis: this is some kind of bad rate limiting
     raw = requests.get(url, params=params)
     try:
@@ -92,7 +88,6 @@ def query_usgs_elevation(lat, lon, wait_time=0.0):
         print(f"Response content: {raw.content}")
         print(f"Consider waiting an hour and increasing --wait")
         sys.exit(1)
-        return None
 
 def main():
     parser = argparse.ArgumentParser(description="Replace route elevations files.")
