@@ -80,7 +80,7 @@ def query_usgs_elevation(lat, lon, wait_time=0.0):
     resp = requests.get(url, params=params)
     try:
         return float(resp.json()['value'])
-    except requests.exceptions.JSONDecodeError as e:
+    except Exception as e:
         print(f"Error querying elevation for {lat}, {lon}")
         print(f"Exception: {e}")
         print(f"Response code: {resp.status_code} ({resp.reason})")
