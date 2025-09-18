@@ -83,7 +83,7 @@ export function createLegDetailsTable(container, legsGeojson, exchangesGeoJson) 
 
         let legName = `${legNumber}${startLink} to ${endLink}`;
 
-        return `<div class="d-flex flex-column flex-lg-row justify-content-between align-items-baseline"><h5>${legName}</h5><h6>${leg.distance_mi.toFixed(2)}mi ↑${leg.ascent_ft.toFixed(0)}ft ↓${leg.descent_ft.toFixed(0)}ft</h6></div><div class="row w-100">${landmark}<p class="mb-0 col">${leg.notes ?? ""}</p>${endLandmark}</div>`;
+        return `<div class="d-flex flex-column flex-lg-row justify-content-between align-items-baseline"><h5>${legName}</h5><h6><span class="text-decoration-dashed" title="${(leg.distance_mi * 1.60934).toFixed(2)}km">${leg.distance_mi.toFixed(2)}mi</span> ↑<span title="${(leg.ascent_ft / 3.28).toFixed(0)}m" class="text-decoration-dashed">${leg.ascent_ft.toFixed(0)}ft</span> ↓<span title="${(leg.descent_ft / 3.28).toFixed(0)}m" class="text-decoration-dashed">${leg.descent_ft.toFixed(0)}ft</span></h6></div><div class="row w-100">${landmark}<p class="mb-0 col">${leg.notes ?? ""}</p>${endLandmark}</div>`;
     }
     // Copy the legsGeojson array so we can modify it
     legsGeojson = JSON.parse(JSON.stringify(legsGeojson))

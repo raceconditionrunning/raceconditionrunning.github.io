@@ -122,7 +122,7 @@ export class LegCalculator extends HTMLElement {
 <div class="d-flex flex-column flex-lg-row justify-content-between align-items-baseline">
 <h5>${segmentName}</h5>
 <div class="d-flex flex-column text-lg-end flex-shrink-0 mb-1">
-    <h6 class="mb-0">${distance.toFixed(2)}mi ↑${ascent.toFixed(0)}ft ↓${descent.toFixed(0)}ft</h6>
+    <h6 class="mb-0"><span class="text-decoration-dashed" title="${(distance * 1.60934).toFixed(2)}km">${distance.toFixed(2)}mi</span> ↑<span title="${(ascent / 3.28).toFixed(0)}m" class="text-decoration-dashed">${ascent.toFixed(0)}ft</span> ↓<span title="${(descent / 3.28).toFixed(0)}m" class="text-decoration-dashed">${descent.toFixed(0)}ft</span></h6>
     ${segmentLegDesc}
 </div>
 </div>`

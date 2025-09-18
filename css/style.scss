@@ -5,6 +5,7 @@
 body {
   margin: 1rem auto;
 }
+
 @view-transition {
   navigation: auto;
 }
@@ -18,6 +19,11 @@ h1 {
 
 a {
   text-decoration: none;
+}
+
+.text-decoration-dashed {
+    text-decoration: underline dashed;
+    text-decoration-color: rgba(from currentcolor r g b / 0.5);
 }
 
 dt {
