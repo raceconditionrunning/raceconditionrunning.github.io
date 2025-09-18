@@ -534,6 +534,10 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             background-color: transparent;
         }
 
+        .tabulator-row .tabulator-cell.tabulator-frozen {
+            background-color: var(--bs-body-bg);
+        }
+
         .tabulator.table:not(.thead-light) .tabulator-header, .tabulator.table:not(.thead-light) .tabulator-header .tabulator-col {
             background-color: var(--bs-table-bg);
         }
@@ -557,6 +561,10 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         .tabulator-row.tabulator-selectable:hover,
         .tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover{
             background-color: var(--bs-table-hover-bg);
+        }
+
+        .tabulator.table .tabulator-row:hover .tabulator-cell.tabulator-frozen {
+            background-color: var(--bs-body-bg);
         }
 
         .tabulator-row,
@@ -1106,7 +1114,6 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         </div>
 
         <div id="results-table"></div>
-        <p class="text-body-tertiary">Updated 11/17/24</p>
         <div class="container">
 
         <p class="text-body-tertiary"><b>Blanks in your results?</b> Some images were missing time information, maybe because they passed through an application that strips metadata. You can read more about EXIF metadata and test whether the "DateTimeOriginal" field is present on your image files on <a href="https://hturan.com/writing/exploring-exif">this page</a>. You're welcome to resubmit just the missing images.</p>
@@ -1348,9 +1355,14 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             result.index = index
 
         })
-        const relayResultsTable = new RelayResultsTable(results.results)
+        const relayResultsTable = new RelayResultsTable(results)
 
-        relayResultsTable.initialize(results.results, exchangeNames)
+        // Reverse the order of the exchangeNames object so that exchanges are listed from last to first
+        let exchangeColumns = []
+        Object.keys(exchangeNames).reverse().forEach(key => {
+            exchangeColumns.push([key, exchangeNames[key]])
+        })
+        relayResultsTable.initialize(results, exchangeColumns)
         document.getElementById("results-table").appendChild(relayResultsTable)
     })
 
