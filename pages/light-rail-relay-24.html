@@ -566,6 +566,11 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             color: var(--bs-body-color);
         }
 
+        .tabulator.table:not(.thead-light) .tabulator-header, .tabulator.table:not(.thead-light) .tabulator-header .tabulator-col,
+        .tabulator-row .tabulator-cell.tabulator-frozen.tabulator-frozen-left{
+            border-color: var(--bs-secondary);
+        }
+
         .tabulator-row.tabulator-group {
             background-color: rgba(255, 255, 255, 0.075) !important;
         }

@@ -10,6 +10,7 @@ export function formatPace(seconds, unit = " /mi") {
     return pace + unit
 }
 
+// FIXME: This API is terrible. Use an options object, fix all usages
 export function formatDuration(seconds, includeHours = true, includeMilliseconds = false, trimLeadingZeros = false) {
     if (!Number.isFinite(seconds)) {
         // Don't render Infinity, NaN, etc.
@@ -46,6 +47,12 @@ export function formatDuration(seconds, includeHours = true, includeMilliseconds
     let result = date.toISOString().substring(start, end)
     if (trimLeadingZeros) {
         result = result.replace(/^0+/, '')
+        // FIXME: Only handles two leading zeros. Consider modifying API to be more specific about how many to trim
+        //   (what if it's all zeros?)
+        // Remove leading colon if it exists
+        if (result.startsWith(":")) {
+            result = result.substring(1)
+        }
     }
     return result
 }

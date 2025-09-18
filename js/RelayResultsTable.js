@@ -73,7 +73,7 @@ export class RelayResultsTable extends HTMLElement {
                         }
                         return ""
                     }
-                    return formatDuration(value, true)
+                    return formatDuration(value, true, false, true)
                 },
                 sorter: (a, b) => {
                     // Treat undefined as very large number so it sorts to bottom in descending order
@@ -104,7 +104,7 @@ export class RelayResultsTable extends HTMLElement {
                     }
                     const isFirst = exchangeCode === this.exchangeOrder[0]
                     const prefix = isFirst ? "" : "+"
-                    return `${prefix}${formatDuration(value, true)}`
+                    return `${prefix}${formatDuration(value, true, false, true)}`
                 },
                 sorter: (a, b) => {
                     // Treat undefined as very large number so it sorts to bottom in descending order
@@ -125,7 +125,7 @@ export class RelayResultsTable extends HTMLElement {
                 <label class="form-check-label" for="splitModeSwitch">Show splits</label>
             </div>
         </div>
-        <table class="results-table table table-sm"></table>
+        <table class="results-table table table-sm" style="font-variant-numeric: tabular-nums;"></table>
         <div class="last-updated text-secondary mt-2" style="display: none;"></div>
         `;
             view = new Tabulator(this.querySelector(".results-table"), {
