@@ -8,6 +8,7 @@ import time
 import haversine
 from typing import Callable
 import tqdm
+import sys
 
 cache = Memory("cache", verbose=0).cache
 
@@ -70,16 +71,30 @@ def query_usgs_elevation(lat, lon, wait_time=0.0):
         'y': lat,
         'units': 'Meters',
     }
-    res = requests.get(url, params=params).json()
+
     # Use this param to avoid slamming the server
     time.sleep(wait_time)
-    return float(res['value'])
+
+    # sometimes the USGS server returns a 200 but with an empty body?!
+    # hypothesis: this is some kind of bad rate limiting
+    resp = requests.get(url, params=params)
+    try:
+        return float(resp.json()['value'])
+    except Exception as e:
+        print(f"Error querying elevation for {lat}, {lon}")
+        print(f"Exception: {e}")
+        print(f"Response code: {resp.status_code} ({resp.reason})")
+        print(f"Response text: {resp.text}")
+        print(f"Response content: {resp.content}")
+        print(f"Consider waiting an hour and increasing --wait")
+        sys.exit(1)
 
 def main():
     parser = argparse.ArgumentParser(description="Replace route elevations files.")
     parser.add_argument("--input", required=True, nargs="+", help="Input GPX file(s).")
     parser.add_argument("--output", required=True, nargs="+", help="Output GPX file(s).")
     parser.add_argument("--overwrite", action="store_true", help="Replace any existing elevation data")
+    parser.add_argument("--wait", type=float, default=0.25, help="Wait time between elevation queries (seconds)")
     args = parser.parse_args()
     print("Resulting GPX files will be denormalized. Use `normalize_gpx.py` to fix them before committing.")
 
@@ -94,11 +109,11 @@ def main():
             for segment in track.segments:
                 for point in tqdm.tqdm(segment.points):
                     if not point.elevation or args.overwrite:
-                        point.elevation = query_usgs_elevation(point.latitude, point.longitude, wait_time=0.1)
+                        point.elevation = query_usgs_elevation(point.latitude, point.longitude, wait_time=args.wait)
         # Iterate over all waypoints (pois)
         for waypoint in route.waypoints:
             if not waypoint.elevation or args.overwrite:
-                waypoint.elevation = query_usgs_elevation(waypoint.latitude, waypoint.longitude, wait_time=0.1)
+                waypoint.elevation = query_usgs_elevation(waypoint.latitude, waypoint.longitude, wait_time=args.wait)
 
         # Save GPX
         with open(outpath, 'w') as f:

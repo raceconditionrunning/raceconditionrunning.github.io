@@ -823,7 +823,7 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-           -122.2815472308949,
+          -122.2815472308949,
           47.53822016086776
         ]
       },
@@ -849,6 +849,23 @@
         "id": "CRTPark",
         "name": "Cedar River Trail Park",
         "maps_url": "https://maps.app.goo.gl/35aLvKjyyjogpqy86"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.30386319659321,
+          47.3163886181274
+        ]
+      },
+      "properties": {
+        "id": "FedWay",
+        "name": "Federal Way Downtown Station",
+        "maps_url": "https://maps.app.goo.gl/rXFRnmNW3VpPe5Dg6",
+        "transit": "Light Rail to Federal Way Downtown Station stop",
+        "reachability": 2
       }
     }
   ]
