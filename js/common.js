@@ -61,7 +61,7 @@ export function formatLegDescription(startStation, endStation, leg){
     if (id) legNumber = `<span class="leg-number">${id}:</span> `
     let profileSummary = ""
     if (ascent_ft && descent_ft) {
-        profileSummary = `<h6>${distance_mi.toFixed(2)}mi ↑${ascent_ft.toFixed(0)}ft ↓${descent_ft.toFixed(0)}ft</h6>`
+        profileSummary = `<h6><span class="text-decoration-dashed" title="${(distance_mi * 1.609).toFixed(2)}km">${distance_mi.toFixed(2)}mi</span>  ↑<span class="text-decoration-dashed" title="${(ascent_ft / 3.28).toFixed(0)}m">${ascent_ft.toFixed(0)}ft</span> ↓<span class="text-decoration-dashed" title="${(descent_ft / 3.28).toFixed(0)}m">${descent_ft.toFixed(0)}ft</span></h6>`
     }
     let profile = ""
     if (coordinates && coordinates.length > 0) profile = "<elevation-profile></elevation-profile>"

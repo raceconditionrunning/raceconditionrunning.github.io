@@ -119,7 +119,8 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         }
 
         .text-decoration-dashed {
-            text-decoration: underline dashed;
+            text-decoration-line: underline;
+            text-decoration-style: dashed;
             text-decoration-color: rgba(from currentcolor r g b / 0.5);
         }
 
@@ -150,6 +151,24 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         .fw-boldest {
             font-weight: 900;
         }
+
+        @media (pointer: coarse), (hover: none) {
+          [title] {
+            position: relative;
+          }
+          [title]:hover::after {
+            content: attr(title);
+            position: absolute;
+            top: 90%;
+            color: var(--bs-body-color);
+            background-color: var(--bs-secondary-bg-subtle);
+            border: 1px solid;
+            width: fit-content;
+            padding: 3px;
+            z-index: 10;
+          }
+        }
+
 
         @media screen and (min-width: 700px) {
             ul {
