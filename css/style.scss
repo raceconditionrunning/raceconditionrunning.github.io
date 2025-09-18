@@ -93,6 +93,17 @@ tbody tr:last-child td {
   font-style: italic;
 }
 
+@media (max-width: 600px) {
+    .schedule-table {
+        //font-size: .875em;
+        }
+  .schedule-table tr > td:first-of-type  {
+    text-orientation: upright;
+    writing-mode: sideways-lr;
+    font-stretch: condensed;
+  }
+}
+
 .schedule-table img {
   max-height: 200px;
   max-width: 100%;
