@@ -1,6 +1,7 @@
 ROUTE_RAW_GPX_FILES = $(wildcard routes/_gpx/*.gpx)
 ROUTE_GEOJSON_FILES = $(patsubst routes/_gpx/%.gpx, routes/geojson/%.geojson, $(ROUTE_RAW_GPX_FILES))
 ROUTES_GPX_NORMALIZED = $(patsubst routes/_gpx/%.gpx, routes/gpx/%.gpx, $(ROUTE_RAW_GPX_FILES))
+AGGREGATE_GEOJSON_FILES = routes/geojson/routes.geojson
 
 TRANSIT_DATA = routes/transit_data
 TRANSIT_DATA_CSV = $(wildcard routes/transit_data/*.csv)
@@ -15,7 +16,7 @@ URL_BASE_PATH ?=
 
 .PHONY: all build check check-html check-javascript check-schedules clean update-locations normalize-routes serve
 
-all: $(ROUTES_GPX_NORMALIZED) $(ROUTE_GEOJSON_FILES) $(ROUTES_YML) check-schedules rcc.ics build
+all: $(ROUTES_GPX_NORMALIZED) $(ROUTE_GEOJSON_FILES) $(AGGREGATE_GEOJSON_FILES) $(ROUTES_YML) check-schedules rcc.ics build
 
 $(ROUTES_YML): _bin/make_routes_table.py $(ROUTES_GPX_NORMALIZED)
 	uv run python3 $< $(ROUTES_GPX_NORMALIZED) $@
@@ -67,7 +68,7 @@ update-locations: _bin/update_location_transit.py $(TRANSIT_DATA_CSV) $(TRANSIT_
 rcc.ics: _bin/mkical.py $(ROUTES_YML)
 	uv run python3 $<
 
-build: rcc.ics $(ROUTES_YML) $(ROUTE_GEOJSON_FILES)
+build: rcc.ics $(ROUTES_YML) $(ROUTE_GEOJSON_FILES) $(AGGREGATE_GEOJSON_FILES)
 	bundle exec jekyll build $(JEKYLL_FLAGS)
 
 check-images: _bin/check_images.sh
@@ -107,7 +108,7 @@ route-previews-generate-incremental:
 	fi
 
 
-serve: rcc.ics $(ROUTES_YML) $(ROUTE_GEOJSON_FILES)
+serve: rcc.ics $(ROUTES_YML) $(ROUTE_GEOJSON_FILES) $(AGGREGATE_GEOJSON_FILES)
 	ls _config.yml | entr -r bundle exec jekyll serve --watch --drafts --host=0.0.0.0 $(JEKYLL_FLAGS)
 
 clean:
