@@ -28,19 +28,20 @@ a {
 }
 
 @media (pointer: coarse), (hover: none) {
-  [title] {
-    position: relative;
+  :not(.maplibregl-ctrl) > [title] {
+      position: relative;
   }
-  [title]:hover::after {
-    content: attr(title);
-    position: absolute;
-    top: 90%;
-    color: var(--bs-body-color);
-    background-color: var(--bs-secondary-bg-subtle);
-    border: 1px solid;
-    width: fit-content;
-    padding: 3px;
-    z-index: 1;
+
+  :not(.maplibregl-ctrl) > [title]:hover::after {
+      content: attr(title);
+      position: absolute;
+      top: 90%;
+      color: var(--bs-body-color);
+      background-color: var(--bs-secondary-bg-subtle);
+      border: 1px solid;
+      width: fit-content;
+      padding: 3px;
+      z-index: 10;
   }
 }
 

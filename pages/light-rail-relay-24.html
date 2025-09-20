@@ -116,20 +116,21 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             text-decoration-color: rgba(from currentcolor r g b / 0.5);
         }
 
-        @media (pointer: coarse), (hover: none) {
-          [title] {
-            position: relative;
+      @media (pointer: coarse), (hover: none) {
+          :not(.maplibregl-ctrl) > [title] {
+              position: relative;
           }
-          [title]:hover::after {
-            content: attr(title);
-            position: absolute;
-            top: 90%;
-            color: var(--bs-body-color);
-            background-color: var(--bs-secondary-bg-subtle);
-            border: 1px solid;
-            width: fit-content;
-            padding: 3px;
-            z-index: 10;
+
+          :not(.maplibregl-ctrl) > [title]:hover::after {
+              content: attr(title);
+              position: absolute;
+              top: 90%;
+              color: var(--bs-body-color);
+              background-color: var(--bs-secondary-bg-subtle);
+              border: 1px solid;
+              width: fit-content;
+              padding: 3px;
+              z-index: 10;
           }
         }
 
