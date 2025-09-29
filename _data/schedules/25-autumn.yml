@@ -1,13 +1,14 @@
 # Temporarily added to end of summer schedule for visibility. Remove and uncomment later.
-#- date: "2025-09-27"
-#  organized-event: true
-#  plan:
-#    - time: "8:30"
-#      route:
-#        name: Light Rail Relay 2025
-#        map: /light-rail-relay-25/
-#        distance_mi: 36
-#      highlight-image: /img/lrr25/og-banner.jpg
+
+- date: "2025-09-27"
+  organized-event: true
+  plan:
+    - time: "8:30"
+      route:
+        name: Light Rail Relay 2025
+        map: /light-rail-relay-25/
+        distance_mi: 36
+      highlight-image: /img/lrr25/og-banner.jpg
 
 - date: "2025-10-04"
   plan:
