@@ -867,6 +867,23 @@
         "transit": "Light Rail to Federal Way Downtown Station stop",
         "reachability": 2
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.32289469524316,
+          47.76415293018663
+        ]
+      },
+      "properties": {
+        "id": "ShoreNorth",
+        "name": "Shoreline North Station",
+        "maps_url": "https://maps.app.goo.gl/4hJgjTgCoM4uCKz19",
+        "transit": "Light Rail to Shoreline North Station stop",
+        "reachability": 2
+      }
     }
   ]
 }
