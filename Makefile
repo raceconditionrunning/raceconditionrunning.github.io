@@ -1,79 +1,89 @@
-ROUTE_RAW_GPX_FILES = $(wildcard routes/_gpx/*.gpx)
-ROUTE_GEOJSON_FILES = $(patsubst routes/_gpx/%.gpx, routes/geojson/%.geojson, $(ROUTE_RAW_GPX_FILES))
-ROUTES_GPX_NORMALIZED = $(patsubst routes/_gpx/%.gpx, routes/gpx/%.gpx, $(ROUTE_RAW_GPX_FILES))
-AGGREGATE_GEOJSON_FILES = routes/geojson/routes.geojson
+# Makefile for the Race Condition Running website
+
+# key directories
+DATA   = _data
+ROUTES = routes
+
+# route files and derived versions (normalized GPX and GeoJSON)
+ROUTES_RAW_GPX = $(wildcard $(ROUTES)/_gpx/*.gpx)
+ROUTES_NORMGPX = $(patsubst $(ROUTES)/_gpx/%.gpx, $(ROUTES)/gpx/%.gpx,         $(ROUTES_RAW_GPX))
+ROUTES_GEOJSON = $(patsubst $(ROUTES)/_gpx/%.gpx, $(ROUTES)/geojson/%.geojson, $(ROUTES_RAW_GPX))
+
+# single GeoJSON file with all routes
+ALL_ROUTES_GEOJSON = $(ROUTES)/geojson/routes.geojson
 
 TRANSIT_DATA = routes/transit_data
 TRANSIT_DATA_CSV = $(wildcard routes/transit_data/*.csv)
 
-DATA = _data
 ROUTES_YML = $(DATA)/routes.yml
 SCHEDULE = $(DATA)/schedule.yml
 
-JEKYLL_FLAGS ?=
+JEKYLL_FLAGS  ?=
 URL_BASE_PATH ?=
 
 
-.PHONY: all build check check-html check-javascript check-schedules clean update-locations normalize-routes serve
+###########################################################################
+# BUILDING AND SERVING THE SITE
+###########################################################################
 
-all: $(ROUTES_GPX_NORMALIZED) $(ROUTE_GEOJSON_FILES) $(AGGREGATE_GEOJSON_FILES) $(ROUTES_YML) check-schedules rcc.ics build
+# default target: build everything
+.PHONY: all
+all: $(ROUTES_NORMGPX) \
+     $(ROUTES_GEOJSON) \
+     $(ALL_ROUTES_GEOJSON) \
+     $(ROUTES_YML) \
+     check-schedules \
+     rcc.ics \
+		 build
 
-$(ROUTES_YML): _bin/make_routes_table.py $(ROUTES_GPX_NORMALIZED)
-	uv run python3 $< $(ROUTES_GPX_NORMALIZED) $@
+# build the site
+.PHONY: build
+build: rcc.ics \
+       $(ROUTES_YML) \
+       $(ROUTES_GEOJSON) \
+       $(ALL_ROUTES_GEOJSON)
+	bundle exec jekyll build $(JEKYLL_FLAGS)
 
-
-routes/geojson/%.geojson: _bin/gpx_to_geojson.py routes/_gpx/%.gpx
-	@mkdir -p $(@D)
-	uv run python3 $< --input routes/_gpx/$*.gpx --output $@
-
-# Batch convert; use when building from scratch (e.g. CI)
-convert-routes:
-	@mkdir -p routes/geojson
-	uv run python3 _bin/gpx_to_geojson.py --input $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(raw))\
-	 	--output $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(patsubst %.gpx, routes/geojson/%.geojson, $(notdir $(raw))))
-
-
-# All routes in one file
-routes/geojson/routes.geojson: _bin/merge_geojson.py $(ROUTE_GEOJSON_FILES)
-	uv run python3 $< $(ROUTE_GEOJSON_FILES) $@
-
-routes/gpx/%.gpx: _bin/normalize_gpx.py routes/_gpx/%.gpx
-	@mkdir -p $(@D)
-	uv run python3 $< --input routes/_gpx/$*.gpx --output routes/gpx/$*.gpx
-
-# Batch normalize; use when building from scratch (e.g. CI)
-normalize-routes:
-	@mkdir -p routes/gpx
-	uv run python3 _bin/normalize_gpx.py --input $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(raw))\
-		--output $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(patsubst routes/_gpx/%, routes/gpx/%,$(raw)))
-
-# Use this to standardize format when adding a new route or updating an existing one
-normalize-routes-in-place:
-	@mkdir -p routes/gpx
-	uv run python3 _bin/normalize_gpx.py --input $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(raw))\
-		--output $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(raw))
-
-# Use this when adding a new GPX that doesn't have elevation data
-replace-route-elevations:
-	uv run python3 _bin/replace_route_elevations.py --input $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(raw))\
-                                                    		--output $(foreach raw, $(ROUTE_RAW_GPX_FILES),$(raw))
-
-$(TRANSIT_DATA):
-	_bin/fetch_transit_data.sh
-
-update-locations: _bin/update_location_transit.py $(TRANSIT_DATA_CSV) $(TRANSIT_DATA)
-	uv run python3 $<
-
-# also generates rcc_weekends.ics
+# generate ical from schedule YAML, also generates rcc_weekends.ics
 rcc.ics: _bin/mkical.py $(ROUTES_YML)
 	uv run python3 $<
 
-build: rcc.ics $(ROUTES_YML) $(ROUTE_GEOJSON_FILES) $(AGGREGATE_GEOJSON_FILES)
-	bundle exec jekyll build $(JEKYLL_FLAGS)
+# build main "routes database" YAML file from all normalized route GPX files
+$(ROUTES_YML): _bin/make_routes_table.py $(ROUTES_NORMGPX)
+	uv run python3 $< $(ROUTES_NORMGPX) $@
 
+# serve the site locally with auto-rebuild on changes
+.PHONY: serve
+serve: rcc.ics \
+       $(ROUTES_YML) \
+       $(ROUTES_GEOJSON) \
+       $(ALL_ROUTES_GEOJSON)
+	ls _config.yml | entr -r bundle exec jekyll serve --watch --drafts --host=0.0.0.0 $(JEKYLL_FLAGS)
+
+
+###########################################################################
+# LINTING
+###########################################################################
+
+# run all checks
+.PHONY: check
+check: check-schedules \
+       check-images \
+       check-html \
+       check-javascript
+
+# check that schedule file is valid
+.PHONY: check-schedules
+check-schedules:
+	uv run python3 _bin/check-schedules.py
+
+# check that no images are too big
+.PHONY: check-images
 check-images: _bin/check_images.sh
 	$< ./_site
 
+# use htmlproofer to check for broken links, etc
+.PHONY: check-html
 check-html:
 	bundle exec htmlproofer ./_site \
 	  --only-4xx \
@@ -84,20 +94,74 @@ check-html:
 	  --swap-urls "https?\:\/\/raceconditionrunning\.com:,^$(URL_BASE_PATH):" \
 	  --cache '{ "timeframe": { "external": "30d" } }'
 
+# check that JavaScript files pass linting
+.PHONY: check-javascript
 check-javascript:
 	uv run python3 _bin/check_javascript.py _site
 
-check-schedules: $(SCHEDULE)
-	uv run python3 _bin/check-schedules.py
 
-check: check-images check-html check-javascript check-schedules
 
-route-previews-check:
-	_bin/manage_route_preview_cache.sh
+###########################################################################
+# ROUTE MUNGING
+###########################################################################
 
+# normalize individual GPX files
+routes/gpx/%.gpx: _bin/normalize_gpx.py routes/_gpx/%.gpx
+	@mkdir -p $(@D)
+	uv run python3 $< \
+	  --input  routes/_gpx/$*.gpx \
+	  --output routes/gpx/$*.gpx
+
+# convert individual GPX files to GeoJSON
+routes/geojson/%.geojson: _bin/gpx_to_geojson.py routes/_gpx/%.gpx
+	@mkdir -p $(@D)
+	uv run python3 $< \
+	  --input routes/_gpx/$*.gpx \
+	  --output $@
+
+# batch convert all raw GPX routes to GeoJSON (used in Github Actions)
+.PHONY: convert-routes
+convert-routes:
+	@mkdir -p routes/geojson
+	uv run python3 _bin/gpx_to_geojson.py \
+	  --input  $(foreach raw, $(ROUTES_RAW_GPX),$(raw)) \
+	  --output $(foreach raw, $(ROUTES_RAW_GPX),$(patsubst %.gpx, routes/geojson/%.geojson, $(notdir $(raw))))
+
+# batch normalize all raw GPX routes (used in Github Actions)
+.PHONY: normalize-routes
+normalize-routes:
+	@mkdir -p routes/gpx
+	uv run python3 _bin/normalize_gpx.py \
+	  --input  $(foreach raw, $(ROUTES_RAW_GPX),$(raw)) \
+		--output $(foreach raw, $(ROUTES_RAW_GPX),$(patsubst routes/_gpx/%, routes/gpx/%,$(raw)))
+
+# All routes in one file
+$(ALL_ROUTES_GEOJSON): _bin/merge_geojson.py $(ROUTES_GEOJSON)
+	uv run python3 $< $(ROUTES_GEOJSON) $@
+
+# Use this to standardize format when adding a new route or updating an existing one
+normalize-routes-in-place:
+	@mkdir -p routes/gpx
+	uv run python3 _bin/normalize_gpx.py \
+	  --input  $(foreach raw, $(ROUTES_RAW_GPX),$(raw)) \
+	  --output $(foreach raw, $(ROUTES_RAW_GPX),$(raw))
+
+# Use this when adding a new GPX that doesn't have elevation data
+replace-route-elevations:
+	uv run python3 _bin/replace_route_elevations.py \
+	  --input  $(foreach raw, $(ROUTES_RAW_GPX),$(raw)) \
+	  --output $(foreach raw, $(ROUTES_RAW_GPX),$(raw))
+
+
+###########################################################################
+# ROUTE PREVIEW IMAGE MANAGEMENT
+###########################################################################
+
+.PHONY: route-previews-generate
 route-previews-generate:
 	uv run python _bin/generate_route_images.py $(if $(URL_BASE_PATH),--base-path $(URL_BASE_PATH),)
 
+.PHONY: route-previews-generate-incremental
 route-previews-generate-incremental:
 	@if [ -f .route-preview-cache-changed-files ] && [ -s .route-preview-cache-changed-files ]; then \
 		echo "Generating images for changed routes only..."; \
@@ -107,12 +171,32 @@ route-previews-generate-incremental:
 		echo "No changed routes found, skipping image generation"; \
 	fi
 
+# check that route preview images are up to date
+.PHONY: route-previews-check
+route-previews-check:
+	_bin/manage_route_preview_cache.sh
 
-serve: rcc.ics $(ROUTES_YML) $(ROUTE_GEOJSON_FILES) $(AGGREGATE_GEOJSON_FILES)
-	ls _config.yml | entr -r bundle exec jekyll serve --watch --drafts --host=0.0.0.0 $(JEKYLL_FLAGS)
 
+###########################################################################
+# TRANSIT AND LOCATIONS MUNGING
+###########################################################################
+
+$(TRANSIT_DATA):
+	_bin/fetch_transit_data.sh
+
+.PHONY: update-locations
+update-locations: _bin/update_location_transit.py $(TRANSIT_DATA_CSV) $(TRANSIT_DATA)
+	uv run python3 $<
+
+
+###########################################################################
+# CLEANUP
+###########################################################################
+
+.PHONY: clean
 clean:
+	rm -rf $(ROUTES)/gpx/
+	rm -rf $(ROUTES)/geojson/
 	rm -f $(ROUTES_YML)
-	rm -rf routes/geojson/ routes/gpx/
 	rm -f rcc.ics rcc_weekends.ics
 	rm -rf _site/ .jekyll-cache/
