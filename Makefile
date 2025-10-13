@@ -105,52 +105,54 @@ check-javascript:
 # ROUTE MUNGING
 ###########################################################################
 
-# normalize individual GPX files
+# normalize individual raw GPX route files
 routes/gpx/%.gpx: _bin/normalize_gpx.py routes/_gpx/%.gpx
-	@mkdir -p $(@D)
+	@mkdir -p routes/gpx
 	uv run python3 $< \
 	  --input  routes/_gpx/$*.gpx \
 	  --output routes/gpx/$*.gpx
 
-# convert individual GPX files to GeoJSON
-routes/geojson/%.geojson: _bin/gpx_to_geojson.py routes/_gpx/%.gpx
-	@mkdir -p $(@D)
-	uv run python3 $< \
-	  --input routes/_gpx/$*.gpx \
-	  --output $@
-
-# batch convert all raw GPX routes to GeoJSON (used in Github Actions)
-.PHONY: convert-routes
-convert-routes:
-	@mkdir -p routes/geojson
-	uv run python3 _bin/gpx_to_geojson.py \
-	  --input  $(foreach raw, $(ROUTES_RAW_GPX),$(raw)) \
-	  --output $(foreach raw, $(ROUTES_RAW_GPX),$(patsubst %.gpx, routes/geojson/%.geojson, $(notdir $(raw))))
-
-# batch normalize all raw GPX routes (used in Github Actions)
+# batch normalize all raw GPX route files (used in Github Actions)
 .PHONY: normalize-routes
-normalize-routes:
+normalize-routes: _bin/normalize_gpx.py
 	@mkdir -p routes/gpx
-	uv run python3 _bin/normalize_gpx.py \
-	  --input  $(foreach raw, $(ROUTES_RAW_GPX),$(raw)) \
-		--output $(foreach raw, $(ROUTES_RAW_GPX),$(patsubst routes/_gpx/%, routes/gpx/%,$(raw)))
+	uv run python3 $< \
+	  --input  $(foreach raw, $(ROUTES_RAW_GPX), $(raw)) \
+	  --output $(foreach raw, $(ROUTES_RAW_GPX), $(patsubst routes/_gpx/%, routes/gpx/%, $(raw)))
+
+# convert individual raw GPX route files to GeoJSON
+routes/geojson/%.geojson: _bin/gpx_to_geojson.py routes/_gpx/%.gpx
+	@mkdir -p routes/geojson
+	uv run python3 $< \
+	  --input  routes/_gpx/$*.gpx \
+	  --output routes/geojson/$*.geojson
+
+# batch convert all raw GPX route files to GeoJSON (used in Github Actions)
+.PHONY: convert-routes
+convert-routes: _bin/gpx_to_geojson.py
+	@mkdir -p routes/geojson
+	uv run python3 $< \
+	  --input  $(foreach raw, $(ROUTES_RAW_GPX), $(raw)) \
+	  --output $(foreach raw, $(ROUTES_RAW_GPX), $(patsubst %.gpx, routes/geojson/%.geojson, $(notdir $(raw))))
 
 # All routes in one file
 $(ALL_ROUTES_GEOJSON): _bin/merge_geojson.py $(ROUTES_GEOJSON)
-	uv run python3 $< $(ROUTES_GEOJSON) $@
+	@mkdir -p routes/geojson
+	uv run python3 $< \
+	  $(ROUTES_GEOJSON) \
+	  $@
 
 # Use this to standardize format when adding a new route or updating an existing one
-normalize-routes-in-place:
-	@mkdir -p routes/gpx
-	uv run python3 _bin/normalize_gpx.py \
-	  --input  $(foreach raw, $(ROUTES_RAW_GPX),$(raw)) \
-	  --output $(foreach raw, $(ROUTES_RAW_GPX),$(raw))
+normalize-routes-in-place: _bin/normalize_gpx.py
+	uv run python3 $< \
+	  --input  $(foreach raw, $(ROUTES_RAW_GPX), $(raw)) \
+	  --output $(foreach raw, $(ROUTES_RAW_GPX), $(raw))
 
 # Use this when adding a new GPX that doesn't have elevation data
-replace-route-elevations:
-	uv run python3 _bin/replace_route_elevations.py \
-	  --input  $(foreach raw, $(ROUTES_RAW_GPX),$(raw)) \
-	  --output $(foreach raw, $(ROUTES_RAW_GPX),$(raw))
+replace-route-elevations: _bin/replace_route_elevations.py
+	uv run python3 $< \
+	  --input  $(foreach raw, $(ROUTES_RAW_GPX), $(raw)) \
+	  --output $(foreach raw, $(ROUTES_RAW_GPX), $(raw))
 
 
 ###########################################################################
