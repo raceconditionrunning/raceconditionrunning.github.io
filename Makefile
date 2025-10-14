@@ -135,12 +135,12 @@ convert-routes: _bin/gpx_to_geojson.py
 	  --input  $(foreach raw, $(ROUTES_RAW_GPX), $(raw)) \
 	  --output $(foreach raw, $(ROUTES_RAW_GPX), $(patsubst %.gpx, routes/geojson/%.geojson, $(notdir $(raw))))
 
-# All routes in one file
+# combine all individual route GeoJSON files into a single GeoJSON file
 $(ALL_ROUTES_GEOJSON): _bin/merge_geojson.py $(ROUTES_GEOJSON)
 	@mkdir -p routes/geojson
 	uv run python3 $< \
-	  $(ROUTES_GEOJSON) \
-	  $@
+	  --inputs $(ROUTES_GEOJSON) \
+	  --output $(ALL_ROUTES_GEOJSON)
 
 # Use this to standardize format when adding a new route or updating an existing one
 normalize-routes-in-place: _bin/normalize_gpx.py
