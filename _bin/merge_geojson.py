@@ -72,10 +72,10 @@ def merge_feature_collections(paths: Iterable[Path]) -> dict:
 
 
 def write_geojson(data: dict, destination: Path) -> None:
-    """Write GeoJSON ``data`` to ``destination`` with indentation."""
+    """Write GeoJSON ``data`` to ``destination`` with minimal whitespace."""
     destination.parent.mkdir(parents=True, exist_ok=True)
     with destination.open("w", encoding="utf-8") as fh:
-        json.dump(data, fh, indent=2)
+        json.dump(data, fh, indent=None, separators=(",", ":"))
         fh.write("\n")
 
 
