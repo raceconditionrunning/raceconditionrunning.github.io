@@ -10,7 +10,7 @@ ROUTES_NORMGPX = $(patsubst $(ROUTES)/_gpx/%.gpx, $(ROUTES)/gpx/%.gpx,         $
 ROUTES_GEOJSON = $(patsubst $(ROUTES)/_gpx/%.gpx, $(ROUTES)/geojson/%.geojson, $(ROUTES_RAW_GPX))
 
 # single GeoJSON file with all routes
-ALL_ROUTES_GEOJSON = $(ROUTES)/geojson/routes.geojson
+AGG_ALL_ROUTES_GEOJSON = $(ROUTES)/geojson/routes.geojson
 
 TRANSIT_DATA = routes/transit_data
 TRANSIT_DATA_CSV = $(wildcard routes/transit_data/*.csv)
@@ -28,36 +28,32 @@ URL_BASE_PATH ?=
 
 # default target: build everything
 .PHONY: all
-all: $(ROUTES_NORMGPX) \
-     $(ROUTES_GEOJSON) \
-     $(ALL_ROUTES_GEOJSON) \
-     $(ROUTES_YML) \
-     check-schedules \
-     rcc.ics \
-		 build
+all: check-schedules build
 
 # build the site
 .PHONY: build
-build: rcc.ics \
-       $(ROUTES_YML) \
+build: $(ROUTES_NORMGPX) \
        $(ROUTES_GEOJSON) \
-       $(ALL_ROUTES_GEOJSON)
+       $(ROUTES_YML) \
+       rcc.ics \
+       $(AGG_ALL_ROUTES_GEOJSON)
 	bundle exec jekyll build $(JEKYLL_FLAGS)
-
-# generate ical from schedule YAML, also generates rcc_weekends.ics
-rcc.ics: _bin/mkical.py $(ROUTES_YML)
-	uv run python3 $<
 
 # build main "routes database" YAML file from all normalized route GPX files
 $(ROUTES_YML): _bin/make_routes_table.py $(ROUTES_NORMGPX)
 	uv run python3 $< $(ROUTES_NORMGPX) $@
 
+# generate ical from schedule YAML, also generates rcc_weekends.ics
+rcc.ics: _bin/mkical.py $(ROUTES_YML)
+	uv run python3 $<
+
 # serve the site locally with auto-rebuild on changes
 .PHONY: serve
-serve: rcc.ics \
-       $(ROUTES_YML) \
+serve: $(ROUTES_NORMGPX) \
        $(ROUTES_GEOJSON) \
-       $(ALL_ROUTES_GEOJSON)
+       $(ROUTES_YML) \
+       rcc.ics \
+       $(AGG_ALL_ROUTES_GEOJSON)
 	ls _config.yml | entr -r bundle exec jekyll serve --watch --drafts --host=0.0.0.0 $(JEKYLL_FLAGS)
 
 
@@ -135,12 +131,12 @@ convert-routes: _bin/gpx_to_geojson.py
 	  --input  $(foreach raw, $(ROUTES_RAW_GPX), $(raw)) \
 	  --output $(foreach raw, $(ROUTES_RAW_GPX), $(patsubst %.gpx, routes/geojson/%.geojson, $(notdir $(raw))))
 
-# All routes in one file
-$(ALL_ROUTES_GEOJSON): _bin/merge_geojson.py $(ROUTES_GEOJSON)
+# combine all individual route GeoJSON files into a single GeoJSON file
+$(AGG_ALL_ROUTES_GEOJSON): _bin/merge_geojson.py $(ROUTES_GEOJSON)
 	@mkdir -p routes/geojson
 	uv run python3 $< \
-	  $(ROUTES_GEOJSON) \
-	  $@
+	  --inputs $(ROUTES_GEOJSON) \
+	  --output $(AGG_ALL_ROUTES_GEOJSON)
 
 # Use this to standardize format when adding a new route or updating an existing one
 normalize-routes-in-place: _bin/normalize_gpx.py
