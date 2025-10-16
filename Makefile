@@ -9,17 +9,13 @@ ROUTES_RAW_GPX = $(wildcard $(ROUTES)/_gpx/*.gpx)
 ROUTES_NORMGPX = $(patsubst $(ROUTES)/_gpx/%.gpx, $(ROUTES)/gpx/%.gpx,         $(ROUTES_RAW_GPX))
 ROUTES_GEOJSON = $(patsubst $(ROUTES)/_gpx/%.gpx, $(ROUTES)/geojson/%.geojson, $(ROUTES_RAW_GPX))
 
-# all quarterly schedule files
+# all quarter schedule files
 SCHEDULES = $(wildcard $(DATA)/schedules/*.yml)
 
-# directory for aggregated GeoJSON files
-AGG_GEOJSON = $(ROUTES)/geojson/aggregates
-
-# GeoJSON files with all routes for each quarter
-AGG_QUARTER_ROUTES_GEOJSON = $(patsubst $(DATA)/schedules/%.yml, $(AGG_GEOJSON)/%.geojson, $(SCHEDULES))
-
-# single GeoJSON file with ALL routes
-AGG_ALL_ROUTES_GEOJSON = $(AGG_GEOJSON)/routes.geojson
+# aggregate GeoJSON files (all routes for each quarter, and all routes overall)
+AGG_GEOJSON_DIR        = $(ROUTES)/geojson/aggregates
+AGG_GEOJSON_ROUTES_QTR = $(patsubst $(DATA)/schedules/%.yml, $(AGG_GEOJSON_DIR)/%.geojson, $(SCHEDULES))
+AGG_GEOJSON_ROUTES_ALL = $(AGG_GEOJSON_DIR)/routes.geojson
 
 TRANSIT_DATA = routes/transit_data
 TRANSIT_DATA_CSV = $(wildcard routes/transit_data/*.csv)
@@ -45,8 +41,8 @@ build: $(ROUTES_NORMGPX) \
        $(ROUTES_GEOJSON) \
        $(ROUTES_YML) \
        rcc.ics \
-			 $(AGG_QUARTER_ROUTES_GEOJSON) \
-       $(AGG_ALL_ROUTES_GEOJSON)
+       $(AGG_GEOJSON_ROUTES_QTR) \
+       $(AGG_GEOJSON_ROUTES_ALL)
 	bundle exec jekyll build $(JEKYLL_FLAGS)
 
 # build main "routes database" YAML file from all normalized route GPX files
@@ -63,8 +59,8 @@ serve: $(ROUTES_NORMGPX) \
        $(ROUTES_GEOJSON) \
        $(ROUTES_YML) \
        rcc.ics \
-			 $(AGG_QUARTER_ROUTES_GEOJSON) \
-       $(AGG_ALL_ROUTES_GEOJSON)
+       $(AGG_GEOJSON_ROUTES_QTR) \
+       $(AGG_GEOJSON_ROUTES_ALL)
 	ls _config.yml | entr -r bundle exec jekyll serve --watch --drafts --host=0.0.0.0 $(JEKYLL_FLAGS)
 
 
@@ -107,7 +103,6 @@ check-javascript:
 	uv run python3 _bin/check_javascript.py _site
 
 
-
 ###########################################################################
 # ROUTE MUNGING
 ###########################################################################
@@ -142,19 +137,31 @@ convert-routes: _bin/gpx_to_geojson.py
 	  --input  $(foreach raw, $(ROUTES_RAW_GPX), $(raw)) \
 	  --output $(foreach raw, $(ROUTES_RAW_GPX), $(patsubst %.gpx, routes/geojson/%.geojson, $(notdir $(raw))))
 
-# combine individual route GeoJSON files into a single GeoJSON file for each quarter
-$(AGG_GEOJSON)/%.geojson: _bin/make_quarter_geojson.py $(DATA)/schedules/%.yml
-	@mkdir -p $(AGG_GEOJSON)
+# Building the quarter aggregate GeoJSON files works in two steps:
+# 1) build a list of route IDs for each quarter schedule
+# 2) combine all the individual route GeoJSON files into a single GeoJSON file for each quarter
+
+# build a route ID list for each quarter schedule
+$(AGG_GEOJSON_DIR)/%.txt: _bin/extract_schedule_route_ids.py $(DATA)/schedules/%.yml
+	@mkdir -p $(AGG_GEOJSON_DIR)
 	uv run python3 $< \
 	  --input  $(DATA)/schedules/$*.yml \
-	  --output $(AGG_GEOJSON)/$*.geojson
+	  --output $(AGG_GEOJSON_DIR)/$*.txt
 
-# combine all individual route GeoJSON files into a single GeoJSON file
-$(AGG_ALL_ROUTES_GEOJSON): _bin/merge_geojson.py $(ROUTES_GEOJSON)
-	@mkdir -p $(AGG_GEOJSON)
+# combine individual route GeoJSON files into a single GeoJSON file for each quarter
+$(AGG_GEOJSON_DIR)/%.geojson: _bin/merge_geojson.py $(AGG_GEOJSON_DIR)/%.txt $(ROUTES_GEOJSON)
+	@mkdir -p $(AGG_GEOJSON_DIR)
+	uv run python3 $< \
+	  --route-id-file $(AGG_GEOJSON_DIR)/$*.txt \
+	  --geojson-dir $(ROUTES)/geojson \
+	  --output $(AGG_GEOJSON_DIR)/$*.geojson
+
+# combine ALL (gloabl) individual route GeoJSON files into a single GeoJSON file
+$(AGG_GEOJSON_ROUTES_ALL): _bin/merge_geojson.py $(ROUTES_GEOJSON)
+	@mkdir -p $(AGG_GEOJSON_DIR)
 	uv run python3 $< \
 	  --inputs $(ROUTES_GEOJSON) \
-	  --output $(AGG_ALL_ROUTES_GEOJSON)
+	  --output $(AGG_GEOJSON_ROUTES_ALL)
 
 # Use this to standardize format when adding a new route or updating an existing one
 normalize-routes-in-place: _bin/normalize_gpx.py
