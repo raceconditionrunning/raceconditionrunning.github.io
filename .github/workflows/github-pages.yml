@@ -54,6 +54,12 @@ jobs:
       - name: Build Calendar
         run: make rcc.ics
 
+      - name: Aggregate Quarter Routes GeoJSON
+        run: make aggregate-quarter-routes
+
+      - name: Aggregate All Routes GeoJSON
+        run: make aggregate-all-routes
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:

@@ -156,12 +156,38 @@ $(AGG_GEOJSON_DIR)/%.geojson: _bin/merge_geojson.py $(AGG_GEOJSON_DIR)/%.txt $(R
 	  --geojson-dir $(ROUTES)/geojson \
 	  --output $(AGG_GEOJSON_DIR)/$*.geojson
 
+# batch regenerate all quarter aggregate GeoJSON files
+.PHONY: aggregate-quarter-routes
+aggregate-quarter-routes: _bin/extract_schedule_route_ids.py _bin/merge_geojson.py $(SCHEDULES) $(ROUTES_GEOJSON)
+	@mkdir -p $(AGG_GEOJSON_DIR)
+	@set -e; \
+	for schedule in $(SCHEDULES); do \
+		stem=$$(basename $$schedule .yml); \
+		echo "Extracting route IDs for schedule $$stem"; \
+		uv run python3 _bin/extract_schedule_route_ids.py \
+		  --input  $$schedule \
+		  --output $(AGG_GEOJSON_DIR)/$$stem.txt; \
+	done
+	@set -e; \
+	for schedule in $(SCHEDULES); do \
+		stem=$$(basename $$schedule .yml); \
+		echo "Aggregating GeoJSON for schedule $$stem"; \
+		uv run python3 _bin/merge_geojson.py \
+		  --route-id-file $(AGG_GEOJSON_DIR)/$$stem.txt \
+		  --geojson-dir $(ROUTES)/geojson \
+		  --output $(AGG_GEOJSON_DIR)/$$stem.geojson; \
+	done
+
 # combine ALL (global) individual route GeoJSON files into a single GeoJSON file
 $(AGG_GEOJSON_ROUTES_ALL): _bin/merge_geojson.py $(ROUTES_GEOJSON)
 	@mkdir -p $(AGG_GEOJSON_DIR)
 	uv run python3 $< \
 	  --inputs $(ROUTES_GEOJSON) \
 	  --output $(AGG_GEOJSON_ROUTES_ALL)
+
+# alias to regenerate the overall aggregate GeoJSON file
+.PHONY: aggregate-all-routes
+aggregate-all-routes: $(AGG_GEOJSON_ROUTES_ALL)
 
 # Use this to standardize format when adding a new route or updating an existing one
 normalize-routes-in-place: _bin/normalize_gpx.py
