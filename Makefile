@@ -9,8 +9,17 @@ ROUTES_RAW_GPX = $(wildcard $(ROUTES)/_gpx/*.gpx)
 ROUTES_NORMGPX = $(patsubst $(ROUTES)/_gpx/%.gpx, $(ROUTES)/gpx/%.gpx,         $(ROUTES_RAW_GPX))
 ROUTES_GEOJSON = $(patsubst $(ROUTES)/_gpx/%.gpx, $(ROUTES)/geojson/%.geojson, $(ROUTES_RAW_GPX))
 
-# single GeoJSON file with all routes
-AGG_ALL_ROUTES_GEOJSON = $(ROUTES)/geojson/routes.geojson
+# all quarterly schedule files
+SCHEDULES = $(wildcard $(DATA)/schedules/*.yml)
+
+# directory for aggregated GeoJSON files
+AGG_GEOJSON = $(ROUTES)/geojson/aggregates
+
+# GeoJSON files with all routes for each quarter
+AGG_QUARTER_ROUTES_GEOJSON = $(patsubst $(DATA)/schedules/%.yml, $(AGG_GEOJSON)/%.geojson, $(SCHEDULES))
+
+# single GeoJSON file with ALL routes
+AGG_ALL_ROUTES_GEOJSON = $(AGG_GEOJSON)/routes.geojson
 
 TRANSIT_DATA = routes/transit_data
 TRANSIT_DATA_CSV = $(wildcard routes/transit_data/*.csv)
@@ -36,6 +45,7 @@ build: $(ROUTES_NORMGPX) \
        $(ROUTES_GEOJSON) \
        $(ROUTES_YML) \
        rcc.ics \
+			 $(AGG_QUARTER_ROUTES_GEOJSON) \
        $(AGG_ALL_ROUTES_GEOJSON)
 	bundle exec jekyll build $(JEKYLL_FLAGS)
 
@@ -53,6 +63,7 @@ serve: $(ROUTES_NORMGPX) \
        $(ROUTES_GEOJSON) \
        $(ROUTES_YML) \
        rcc.ics \
+			 $(AGG_QUARTER_ROUTES_GEOJSON) \
        $(AGG_ALL_ROUTES_GEOJSON)
 	ls _config.yml | entr -r bundle exec jekyll serve --watch --drafts --host=0.0.0.0 $(JEKYLL_FLAGS)
 
@@ -131,9 +142,16 @@ convert-routes: _bin/gpx_to_geojson.py
 	  --input  $(foreach raw, $(ROUTES_RAW_GPX), $(raw)) \
 	  --output $(foreach raw, $(ROUTES_RAW_GPX), $(patsubst %.gpx, routes/geojson/%.geojson, $(notdir $(raw))))
 
+# combine individual route GeoJSON files into a single GeoJSON file for each quarter
+$(AGG_GEOJSON)/%.geojson: _bin/make_quarter_geojson.py $(DATA)/schedules/%.yml
+	@mkdir -p $(AGG_GEOJSON)
+	uv run python3 $< \
+	  --input  $(DATA)/schedules/$*.yml \
+	  --output $(AGG_GEOJSON)/$*.geojson
+
 # combine all individual route GeoJSON files into a single GeoJSON file
 $(AGG_ALL_ROUTES_GEOJSON): _bin/merge_geojson.py $(ROUTES_GEOJSON)
-	@mkdir -p routes/geojson
+	@mkdir -p $(AGG_GEOJSON)
 	uv run python3 $< \
 	  --inputs $(ROUTES_GEOJSON) \
 	  --output $(AGG_ALL_ROUTES_GEOJSON)
