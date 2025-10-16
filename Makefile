@@ -156,7 +156,7 @@ $(AGG_GEOJSON_DIR)/%.geojson: _bin/merge_geojson.py $(AGG_GEOJSON_DIR)/%.txt $(R
 	  --geojson-dir $(ROUTES)/geojson \
 	  --output $(AGG_GEOJSON_DIR)/$*.geojson
 
-# combine ALL (gloabl) individual route GeoJSON files into a single GeoJSON file
+# combine ALL (global) individual route GeoJSON files into a single GeoJSON file
 $(AGG_GEOJSON_ROUTES_ALL): _bin/merge_geojson.py $(ROUTES_GEOJSON)
 	@mkdir -p $(AGG_GEOJSON_DIR)
 	uv run python3 $< \
