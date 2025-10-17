@@ -70,10 +70,8 @@ layout: base
   <div><b>Changelog:</b>
     <ol class="list-unstyled ms-4">
       {% for change in page.changelog %}
-      <li><b>{{ change.date }}:</b> {{ change.note | markdownify | remove: '<p>' | remove: '</p>' }}
-    </ol>
-    </li>
-    {% endfor %}
+      <li><b>{{ change.date }}:</b> {{ change.note | markdownify | remove: '<p>' | remove: '</p>' }}</li>
+      {% endfor %}
     </ol>
   </div>
   {% endif %}
