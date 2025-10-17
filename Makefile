@@ -163,19 +163,18 @@ aggregate-quarter-routes: _bin/extract_schedule_route_ids.py _bin/merge_geojson.
 	@set -e; \
 	for schedule in $(SCHEDULES); do \
 		stem=$$(basename $$schedule .yml); \
-		echo "Extracting route IDs for schedule $$stem"; \
+		\
+		echo "Extracting route IDs : $$stem"; \
 		uv run python3 _bin/extract_schedule_route_ids.py \
 		  --input  $$schedule \
 		  --output $(AGG_GEOJSON_DIR)/$$stem.txt; \
-	done
-	@set -e; \
-	for schedule in $(SCHEDULES); do \
-		stem=$$(basename $$schedule .yml); \
-		echo "Aggregating GeoJSON for schedule $$stem"; \
+		\
+		echo "Aggregating GeoJSON  : $$stem"; \
 		uv run python3 _bin/merge_geojson.py \
 		  --route-id-file $(AGG_GEOJSON_DIR)/$$stem.txt \
 		  --geojson-dir $(ROUTES)/geojson \
 		  --output $(AGG_GEOJSON_DIR)/$$stem.geojson; \
+		echo ""; \
 	done
 
 # combine ALL (global) individual route GeoJSON files into a single GeoJSON file
