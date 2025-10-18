@@ -54,32 +54,72 @@ layout: base
     {% endfor %}
   </div>
 
-  <div><b>Last run:</b>
-    {% if page.dates_run.size == 0 %}
-    Never
-    {% endif %}
-    {% for date_run in page.dates_run reversed %}
-    {% comment %}Gross hash after slash due to how our permalinks and redirects are set up {% endcomment %}
-    <a href="{{ site.baseurl }}/lore/#{{ date_run }}">{{ date_run }}</a>{% if forloop.last == false %}, {% endif %}
-    {% endfor %}
+
+  {%- comment -%}
+  ========================================================================
+  LAST RUN
+  ========================================================================
+  {%- endcomment -%}
+  <div>
+    <b>Last run:</b>&nbsp;
+    {%- if page.dates_run and page.dates_run.size > 0 -%}
+      {%- for date_run in page.dates_run reversed -%}
+        {%- comment -%}
+          Gross hash after slash due to our permalink/redirect setup
+        {%- endcomment -%}
+        {%- unless forloop.first %}, {% endunless %}
+        <a href="{{ site.baseurl }}/lore/#{{ date_run }}">{{ date_run }}</a>
+      {%- endfor -%}
+    {%- else -%}
+      Never
+    {%- endif %}
   </div>
-  {% if page.notes %}
-  <div><b>Notes:</b> {{ page.notes | markdownify | remove: '<p>' | remove: '</p>'}}</div>
-  {% endif %}
-  {% if page.changelog and page.changelog.size > 0 %}
-  <div><b>Changelog:</b>
+
+
+  {%- comment -%}
+  ========================================================================
+  NOTES
+  ========================================================================
+  {%- endcomment -%}
+  {%- if page.notes -%}
+  <div>
+    <b>Notes:</b>
+    {{ page.notes | markdownify | remove: '<p>' | remove: '</p>'}}
+  </div>
+  {%- endif -%}
+
+
+  {%- comment -%}
+  ========================================================================
+  CHANGELOG
+  ========================================================================
+  {%- endcomment -%}
+  {%- if page.changelog and page.changelog.size > 0 -%}
+  <div>
+    <b>Changelog:</b>
     <ol class="list-unstyled ms-4">
-      {% for change in page.changelog %}
-      <li><b>{{ change.date }}:</b> {{ change.note | markdownify | remove: '<p>' | remove: '</p>' }}</li>
-      {% endfor %}
+      {%- for change in page.changelog -%}
+      <li>
+        <b>{{ change.date }}:</b>
+        {{ change.note | markdownify | remove: '<p>' | remove: '</p>' }}
+      </li>
+      {%- endfor -%}
     </ol>
   </div>
-  {% endif %}
-  {% if page.last_updated %}
-  <div><b>Last updated:</b>
+  {%- endif -%}
+
+
+  {%- comment -%}
+  ========================================================================
+  LAST UPDATED
+  ========================================================================
+  {%- endcomment -%}
+  {%- if page.last_updated -%}
+  <div>
+    <b>Last updated:</b>
     <time datetime="{{ page.last_updated }}">{{ page.last_updated }}</time>
   </div>
-  {% endif %}
+  {%- endif -%}
 
 
   {%- comment -%}
@@ -135,15 +175,15 @@ layout: base
 
     <div class="d-flex flex-wrap gap-3 small text-muted">
       <div class="d-flex flex-wrap gap-2">
-        {%- if street_pct > 0 -%}
+        {% if street_pct > 0 -%}
         <span><span class="badge bg-warning opacity-50 me-1"></span>Street {{ street_pct }}%</span>
-        {%- endif -%}
-        {%- if trail_pct > 0 -%}
+        {%- endif %}
+        {% if trail_pct > 0 -%}
         <span><span class="badge bg-success opacity-50 me-1"></span>Ped/Bike Path {{ trail_pct }}%</span>
-        {%- endif -%}
-        {%- if sidewalk_pct > 0 -%}
+        {%- endif %}
+        {% if sidewalk_pct > 0 -%}
         <span><span class="badge bg-info opacity-50 me-1"></span>Sidewalk {{ sidewalk_pct }}%</span>
-        {%- endif -%}
+        {%- endif %}
       </div>
     </div>
   </div>
@@ -178,12 +218,12 @@ layout: base
 
     <div class="d-flex flex-wrap gap-3 small text-muted">
       <div class="d-flex flex-wrap gap-2">
-        {%- if paved_pct > 0 -%}
+        {% if paved_pct > 0 -%}
         <span><span class="badge bg-info opacity-50 me-1"></span>Paved {{ paved_pct }}%</span>
-        {%- endif -%}
-        {%- if unpaved_pct > 0 -%}
+        {%- endif %}
+        {% if unpaved_pct > 0 -%}
         <span><span class="badge bg-success opacity-50 me-1"></span>Unpaved {{ unpaved_pct }}%</span>
-        {%- endif -%}
+        {%- endif %}
       </div>
     </div>
   </div>
