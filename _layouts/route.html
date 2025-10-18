@@ -48,9 +48,20 @@ layout: base
     {% endif %}
     {% endfor %}
   </div>
-  <div><b>Neighborhoods:</b>
-    {% for neighborhood in page.neighborhoods %}
-      <a href="{{ '/routes/?q=neighborhood:"' | append: neighborhood | append: '"' | relative_url }}" title="See other routes that go through {{ neighborhood }}">{{ neighborhood }}</a>{% unless forloop.last %}, {% endunless %}
+
+
+  {%- comment -%}
+  ========================================================================
+  NEIGHBORHOODS
+  ========================================================================
+  {%- endcomment -%}
+  <div>
+    <b>Neighborhoods:</b>
+    {% for nbhd in page.neighborhoods %}
+      <a href="{{ '/routes/?q=neighborhood:"' | append: nbhd | append: '"' | relative_url }}"
+         title="See other routes that go through {{ nbhd }}">
+        {{ nbhd }}
+      </a>{% unless forloop.last %}, {% endunless %}
     {% endfor %}
   </div>
 
