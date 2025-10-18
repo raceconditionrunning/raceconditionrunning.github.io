@@ -176,13 +176,22 @@ layout: base
     <div class="d-flex flex-wrap gap-3 small text-muted">
       <div class="d-flex flex-wrap gap-2">
         {% if street_pct > 0 -%}
-        <span><span class="badge bg-warning opacity-50 me-1"></span>Street {{ street_pct }}%</span>
+        <span>                                                   {{- "" -}}
+          <span class="badge bg-warning opacity-50 me-1"></span> {{- "" -}}
+          Street {{ street_pct }}%                               {{- "" -}}
+        </span>
         {%- endif %}
         {% if trail_pct > 0 -%}
-        <span><span class="badge bg-success opacity-50 me-1"></span>Ped/Bike Path {{ trail_pct }}%</span>
+        <span>                                                   {{- "" -}}
+          <span class="badge bg-success opacity-50 me-1"></span> {{- "" -}}
+          Ped/Bike Path {{ trail_pct }}%                         {{- "" -}}
+        </span>
         {%- endif %}
         {% if sidewalk_pct > 0 -%}
-        <span><span class="badge bg-info opacity-50 me-1"></span>Sidewalk {{ sidewalk_pct }}%</span>
+        <span>                                                   {{- "" -}}
+            <span class="badge bg-info opacity-50 me-1"></span>  {{- "" -}}
+            Sidewalk {{ sidewalk_pct }}%                         {{- "" -}}
+        </span>
         {%- endif %}
       </div>
     </div>
@@ -219,10 +228,16 @@ layout: base
     <div class="d-flex flex-wrap gap-3 small text-muted">
       <div class="d-flex flex-wrap gap-2">
         {% if paved_pct > 0 -%}
-        <span><span class="badge bg-info opacity-50 me-1"></span>Paved {{ paved_pct }}%</span>
+        <span>                                                   {{- "" -}}
+          <span class="badge bg-info opacity-50 me-1"></span>    {{- "" -}}
+          Paved {{ paved_pct }}%                                 {{- "" -}}
+        </span>
         {%- endif %}
         {% if unpaved_pct > 0 -%}
-        <span><span class="badge bg-success opacity-50 me-1"></span>Unpaved {{ unpaved_pct }}%</span>
+        <span>                                                   {{- "" -}}
+          <span class="badge bg-success opacity-50 me-1"></span> {{- "" -}}
+          Unpaved {{ unpaved_pct }}%                             {{- "" -}}
+        </span>
         {%- endif %}
       </div>
     </div>
