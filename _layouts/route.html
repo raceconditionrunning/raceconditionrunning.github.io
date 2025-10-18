@@ -80,19 +80,29 @@ layout: base
     <time datetime="{{ page.last_updated }}">{{ page.last_updated }}</time>
   </div>
   {% endif %}
-    {% if page.stairs %}
 
-        <div>
-          <b>Stairs:</b> {% if page.stairs > 0 %}Yes (for {{ page.stairs | times: page.distance_mi | times: 5280 | round }}ft){% else %}No{% endif %}
-        </div>
-      {% endif %}
+
+  {%- comment -%}
+  ========================================================================
+  STAIRS
+  ========================================================================
+  {%- endcomment -%}
+  {%- if page.stairs -%}
+  {%- assign stairs_distance_ft = page.stairs | times: page.distance_mi | times: 5280 | round -%}
+  <div>
+    <b>Stairs:</b>
+    {%- if page.stairs > 0 -%}
+      Yes (for {{ stairs_distance_ft }}ft)
+    {%- else -%}
+      No
+    {%- endif -%}
+  </div>
+  {%- endif -%}
 
 
   {%- comment -%}
   ========================================================================
   PATH BREAKDOWN
-
-  Show street / trail / sidewalk percents if any values are present.
   ========================================================================
   {%- endcomment -%}
   {%- if page.street or page.trail or page.sidewalk -%}
@@ -143,8 +153,6 @@ layout: base
   {%- comment -%}
   ========================================================================
   SURFACE BREAKDOWN
-
-  Show paved / unpaved percents if any values are present.
   ========================================================================
   {%- endcomment -%}
   {%- if page.paved or page.unpaved -%}
