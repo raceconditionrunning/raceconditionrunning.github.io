@@ -87,59 +87,100 @@ layout: base
         </div>
       {% endif %}
 
-  {% if page.street or page.trail or page.sidewalk %}
+
+  {%- comment -%}
+  ========================================================================
+  PATH BREAKDOWN
+
+  Show street / trail / sidewalk percents if any values are present.
+  ========================================================================
+  {%- endcomment -%}
+  {%- if page.street or page.trail or page.sidewalk -%}
+  {%- assign street_pct   = page.street   | default: 0 | times: 100 -%}
+  {%- assign trail_pct    = page.trail    | default: 0 | times: 100 -%}
+  {%- assign sidewalk_pct = page.sidewalk | default: 0 | times: 100 -%}
   <div class="mt-3">
     <div class="mb-2"><b>Path breakdown:</b></div>
+
     <div class="progress mb-2" style="height: 20px;">
-      {% if page.street and page.street > 0 %}
-        <div class="progress-bar bg-warning opacity-50" role="progressbar" style="width: {{ page.street | times: 100 }}%" title="Street: {{ page.street | times: 100 | round: 1 }}%"></div>
-      {% endif %}
-      {% if page.trail and page.trail > 0 %}
-        <div class="progress-bar bg-success opacity-50" role="progressbar" style="width: {{ page.trail | times: 100 }}%" title="Ped/Bike Path: {{ page.trail | times: 100 | round: 1 }}%"></div>
-      {% endif %}
-      {% if page.sidewalk and page.sidewalk > 0 %}
-        <div class="progress-bar bg-info opacity-50" role="progressbar" style="width: {{ page.sidewalk | times: 100 }}%" title="Sidewalk: {{ page.sidewalk | times: 100 | round: 1 }}%"></div>
-      {% endif %}
+      {%- if street_pct > 0 -%}
+        <div class="progress-bar bg-warning opacity-50"
+             role="progressbar"
+             style="width: {{ street_pct }}%"
+             title="Street: {{ street_pct | round: 1 }}%"></div>
+      {%- endif -%}
+      {%- if trail_pct > 0 -%}
+        <div class="progress-bar bg-success opacity-50"
+             role="progressbar"
+             style="width: {{ trail_pct }}%"
+             title="Ped/Bike Path: {{ trail_pct | round: 1 }}%"></div>
+      {%- endif -%}
+      {%- if sidewalk_pct > 0 -%}
+        <div class="progress-bar bg-info opacity-50"
+             role="progressbar"
+             style="width: {{ sidewalk_pct }}%"
+             title="Sidewalk: {{ sidewalk_pct | round: 1 }}%"></div>
+      {%- endif -%}
     </div>
+
     <div class="d-flex flex-wrap gap-3 small text-muted">
       <div class="d-flex flex-wrap gap-2">
-        {% if page.street and page.street > 0 %}
-          <span><span class="badge bg-warning opacity-50 me-1"> </span>Street {{ page.street | times: 100 | round: 1 }}%</span>
-        {% endif %}
-        {% if page.trail and page.trail > 0 %}
-          <span><span class="badge bg-success opacity-50 me-1"> </span>Ped/Bike Path {{ page.trail | times: 100 | round: 1 }}%</span>
-        {% endif %}
-        {% if page.sidewalk and page.sidewalk > 0 %}
-          <span><span class="badge bg-info opacity-50 me-1"> </span>Sidewalk {{ page.sidewalk | times: 100 | round: 1 }}%</span>
-        {% endif %}
+        {%- if street_pct > 0 -%}
+          <span><span class="badge bg-warning opacity-50 me-1"></span>Street {{ street_pct | round: 1 }}%</span>
+        {%- endif -%}
+        {%- if trail_pct > 0 -%}
+          <span><span class="badge bg-success opacity-50 me-1"></span>Ped/Bike Path {{ trail_pct | round: 1 }}%</span>
+        {%- endif -%}
+        {%- if sidewalk_pct > 0 -%}
+          <span><span class="badge bg-info opacity-50 me-1"></span>Sidewalk {{ sidewalk_pct | round: 1 }}%</span>
+        {%- endif -%}
       </div>
-
     </div>
   </div>
-  {% endif %}
-  {% if page.paved or page.unpaved %}
+  {%- endif -%}
+
+
+  {%- comment -%}
+  ========================================================================
+  SURFACE BREAKDOWN
+
+  Show paved / unpaved percents if any values are present.
+  ========================================================================
+  {%- endcomment -%}
+  {%- if page.paved or page.unpaved -%}
+  {%- assign paved_pct   = page.paved   | default: 0 | times: 100 -%}
+  {%- assign unpaved_pct = page.unpaved | default: 0 | times: 100 -%}
   <div class="mt-3">
     <div class="mb-2"><b>Surface breakdown:</b></div>
+
     <div class="progress mb-2" style="height: 20px;">
-      {% if page.paved and page.paved > 0 %}
-        <div class="progress-bar bg-info opacity-50" role="progressbar" style="width: {{ page.paved | times: 100 }}%" title="Paved: {{ page.paved | times: 100 | round: 1 }}%"></div>
-      {% endif %}
-      {% if page.unpaved and page.unpaved > 0 %}
-        <div class="progress-bar bg-success opacity-50" role="progressbar" style="width: {{ page.unpaved | times: 100 }}%" title="Unpaved: {{ page.unpaved | times: 100 | round: 1 }}%"></div>
-      {% endif %}
+      {%- if paved_pct > 0 -%}
+        <div class="progress-bar bg-info opacity-50"
+             role="progressbar"
+             style="width: {{ paved_pct }}%"
+             title="Paved: {{ paved_pct | round: 1 }}%"></div>
+      {%- endif -%}
+      {%- if unpaved_pct > 0 -%}
+        <div class="progress-bar bg-success opacity-50"
+             role="progressbar"
+             style="width: {{ unpaved_pct }}%"
+             title="Unpaved: {{ unpaved_pct | round: 1 }}%"></div>
+      {%- endif -%}
     </div>
+
     <div class="d-flex flex-wrap gap-3 small text-muted">
       <div class="d-flex flex-wrap gap-2">
-        {% if page.paved and page.paved > 0 %}
-          <span><span class="badge bg-info opacity-50 me-1"> </span>Paved {{ page.paved | times: 100 | round: 1 }}%</span>
-        {% endif %}
-        {% if page.unpaved and page.unpaved > 0 %}
-          <span><span class="badge bg-success opacity-50 me-1"> </span>Unpaved {{ page.unpaved | times: 100 | round: 1 }}%</span>
-        {% endif %}
+        {%- if paved_pct > 0 -%}
+          <span><span class="badge bg-info opacity-50 me-1"></span>Paved {{ paved_pct | round: 1 }}%</span>
+        {%- endif -%}
+        {%- if unpaved_pct > 0 -%}
+          <span><span class="badge bg-success opacity-50 me-1"></span>Unpaved {{ unpaved_pct | round: 1 }}%</span>
+        {%- endif -%}
       </div>
     </div>
   </div>
-  {% endif %}
+  {%- endif -%}
+
 </div>
 
 <style>
