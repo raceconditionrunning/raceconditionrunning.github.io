@@ -5,24 +5,103 @@ layout: base
 
 <div class="route container">
   <h1 title="{{ page.id }}" class="mb-0 h2">{{ page.title }}</h1>
-  {% assign ascent_ft = page.ascent_m | times: 3.28084 %}
-  {% assign descent_ft = page.descent_m | times: 3.28084 %}
-  {% capture stats %}<span title="{{ page.distance_mi | times: 1.609 | round: 1}}km" class="route-stats-distance text-decoration-dashed">{{ page.distance_mi | round: 1}}mi</span>
-  <span class="route-stats-elevation">↑<span title="{{ page.ascent_m}}m" class="text-decoration-dashed">{{ascent_ft | round}}ft</span> ↓<span
-          title="{{ page.descent_m}}m" class="text-decoration-dashed">{{descent_ft | round}}ft</span></span>{% if page.surface %}{% if page.paved or page.unpaved %}{% assign paved_pct = page.paved | times: 100 %}{% assign unpaved_pct = page.unpaved | times: 100 %}{% capture surface_tooltip %}Surface: {{ paved_pct | round: 1 }}% paved, {{ unpaved_pct | round: 1 }}% unpaved{% endcapture %}{% endif %}{% if page.surface == "Road" %}{% assign surface_query = "surface:road" %}{% assign border_class = "primary" %}{% elsif page.surface == "Trail" %}{% assign border_class = "success" %}{% assign surface_query = "surface:trail" %}{% elsif page.surface == "Mixed" %}{% assign border_class = "secondary" %}{% assign surface_query = "surface:mixed" %}{% endif %} <a href="{{ '/routes/?q=' | append: surface_query | relative_url }}" class="badge border border-{{border_class}} ms-2 text-decoration-none fw-semibold" title="{{ surface_tooltip }}">{{ page.surface }}</a>{% endif %} {% if page.deprecated %} <span
-        class="text-warning mx-2 route-stats-deprecated" title="We no longer schedule this route">Deprecated</span>{%
-  endif%}{% endcapture %}
+
+  {%- comment -%}
+  ========================================================================
+  ROUTE STATS
+  ========================================================================
+  {%- endcomment -%}
+  {%- assign ascent_ft  = page.ascent_m  | times: 3.28084 -%}
+  {%- assign descent_ft = page.descent_m | times: 3.28084 -%}
+
+  {%- assign surface_tooltip = '' -%}
+  {%- if page.surface -%}
+    {%- if page.paved or page.unpaved -%}
+      {%- assign paved_pct   = page.paved   | times: 100 -%}
+      {%- assign unpaved_pct = page.unpaved | times: 100 -%}
+      {%- capture surface_tooltip -%}
+        Surface: {{ paved_pct | round: 1 }}% paved, {{ unpaved_pct | round: 1 }}% unpaved
+      {%- endcapture -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- assign surface_query = '' -%}
+  {%- assign border_class  = '' -%}
+  {%- if page.surface == "Road" -%}
+    {%- assign surface_query = "surface:road" -%}
+    {%- assign border_class  = "primary" -%}
+  {%- elsif page.surface == "Trail" -%}
+    {%- assign surface_query = "surface:trail" -%}
+    {%- assign border_class  = "success" -%}
+  {%- elsif page.surface == "Mixed" -%}
+    {%- assign surface_query = "surface:mixed" -%}
+    {%- assign border_class  = "secondary" -%}
+  {%- endif -%}
+
+  {%- capture stats -%}
+  <span title="{{ page.distance_mi | times: 1.609 | round: 1 }}km"
+        class="route-stats-distance text-decoration-dashed">
+    {{- page.distance_mi | round: 1 -}}mi
+  </span>
+  <span class="route-stats-elevation">
+    ↑<span title="{{ page.ascent_m }}m" class="text-decoration-dashed">
+      {{- ascent_ft | round -}}ft
+    </span>
+    ↓<span title="{{ page.descent_m }}m" class="text-decoration-dashed">
+      {{- descent_ft | round -}}ft
+    </span>
+  </span>
+  {%- if page.surface -%}
+    <a href="{{ '/routes/?q=' | append: surface_query | relative_url }}"
+       class="badge border border-{{ border_class }} ms-2 text-decoration-none fw-semibold"
+       title="{{ surface_tooltip }}">
+      {{- page.surface -}}
+    </a>
+  {%- endif -%}
+  {%- if page.deprecated -%}
+    <span class="text-warning mx-2 route-stats-deprecated"
+          title="We no longer schedule this route">
+      {{- "Deprecated" -}}
+    </span>
+  {%- endif -%}
+  {%- endcapture -%}
   <h3 class="h5">{{ stats }}</h3>
+
+
+  {%- comment -%}
+  ========================================================================
+  DOWNLOADS, EXTERNAL MAPS
+  ========================================================================
+  {%- endcomment -%}
   <div class="mb-4">
-    <a class="btn btn-sm btn-outline-primary" href="{{ page.gpx | relative_url }}"
-       data-goatcounter-click="download-{{ page.id }}">Download GPX</a> {% if page.map %}<a
-          class="btn btn-sm btn-outline-primary" href="{{page.map}}" data-goatcounter-click="ext-map-{{ page.id }}">OnTheGoMap</a>{%
-    endif %}
+    <a class="btn btn-sm btn-outline-primary"
+       href="{{ page.gpx | relative_url }}"
+       data-goatcounter-click="download-{{ page.id }}">
+      Download GPX
+    </a>
+    {% if page.map -%}
+    <a class="btn btn-sm btn-outline-primary"
+       href="{{page.map}}"
+       data-goatcounter-click="ext-map-{{ page.id }}">
+       OnTheGoMap
+    </a>
+    {%- endif %}
   </div>
+
+
+  {%- comment -%}
+  ========================================================================
+  ROUTE MAP AND ELEVATION PROFILE
+  ========================================================================
+  {%- endcomment -%}
   <h2 class="visually-hidden">Map</h2>
   <div id="route-map" class="mb-3 w-100">
     <div id="map" class="w-100"></div>
-    <!-- These are restyled as overlays when rendering route preview images (class `preview-mode` on route-map div). -->
+    <!--
+      By default, elevation is rendedered below the map and the stats are hidden.
+      They both get restyled as map overlays when rendering preview images.
+      See class `preview-mode` on route-map div in the CSS below.
+    -->
     <elevation-profile class="w-100"></elevation-profile>
     <div class="stats d-none">{{ stats }}</div>
   </div>
