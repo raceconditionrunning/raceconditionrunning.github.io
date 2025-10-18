@@ -27,25 +27,61 @@ layout: base
     <div class="stats d-none">{{ stats }}</div>
   </div>
 
-  <div><b>Start:</b> <a href="{{ '/routes/?q=start:' | append: page.start | relative_url }}" title="See other routes that start at {{ page.start }}">{{ page.start }}</a> {% for location in site.data.locations.features %}
-    {% if location.properties.id == page.start and location.properties.meeting_point_desc %}
-    <span class="text-secondary ms-1">{{ location.properties.meeting_point_desc }}</span>
-    <ul class="list d-flex gap-4 mb-0">
-      <li>
-        <a href="https://google.com/maps/dir/?api=1&destination={{location.geometry.coordinates[1]}},{{location.geometry.coordinates[0]}}"
-           class="link-secondary">Google Maps</a></li>
-      <li>
-        <a href="https://maps.apple.com/?daddr={{location.geometry.coordinates[1]}},{{location.geometry.coordinates[0]}}}"
-           class="link-secondary">Apple Maps</a></li>
-    </ul>
-    {% endif %}
+
+  {%- comment -%}
+  ========================================================================
+  START
+  ========================================================================
+  {%- endcomment -%}
+  <div>
+    <b>Start:</b>
+    <a href="{{ '/routes/?q=start:' | append: page.start | relative_url }}"
+       title="See other routes that start at {{ page.start }}">
+      {{ page.start }}
+    </a>
+    {% for loc in site.data.locations.features %}
+      {% if loc.properties.id == page.start and loc.properties.meeting_point_desc %}
+        {% assign long = loc.geometry.coordinates[0] %}
+        {% assign lat  = loc.geometry.coordinates[1] %}
+        <span class="text-secondary ms-1">
+          {{ loc.properties.meeting_point_desc }}
+        </span>
+        <ul class="list d-flex gap-4 mb-0">
+          <li>
+            <a href="https://google.com/maps/dir/?api=1&destination={{ lat }},{{ long }}"
+               class="link-secondary">
+              Google Maps
+            </a>
+          </li>
+          <li>
+            <a href="https://maps.apple.com/?daddr={{ lat }},{{ long }}"
+               class="link-secondary">
+              Apple Maps
+            </a>
+          </li>
+        </ul>
+      {% endif %}
     {% endfor %}
   </div>
-  <div><b>End:</b> <a href="{{ '/routes/?q=end:' | append: page.end | relative_url }}" title="See other routes that end at {{ page.end }}">{{ page.end }}</a>
-    {% for location in site.data.locations.features %}
-    {% if location.properties.id == page.end and location.properties.meeting_point_desc %}
-    <span class="text-secondary ms-1">{{ location.properties.meeting_point_desc }}</span>
-    {% endif %}
+
+
+  {%- comment -%}
+  ========================================================================
+  END
+  ========================================================================
+  {%- endcomment -%}
+  <div>
+    <b>End:</b>
+    <a href="{{ '/routes/?q=end:' | append: page.end | relative_url }}"
+       title="See other routes that end at {{ page.end }}">
+      {{ page.end }}
+    </a>
+    {% for loc in site.data.locations.features %}
+      {% if loc.properties.id == page.end and loc.properties.meeting_point_desc %}
+        <span class="text-secondary ms-1">
+          {{ loc.properties.meeting_point_desc }}
+        </span>
+      {% endif %}
     {% endfor %}
   </div>
 
