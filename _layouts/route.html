@@ -96,43 +96,43 @@ layout: base
   ========================================================================
   {%- endcomment -%}
   {%- if page.street or page.trail or page.sidewalk -%}
-  {%- assign street_pct   = page.street   | default: 0 | times: 100 -%}
-  {%- assign trail_pct    = page.trail    | default: 0 | times: 100 -%}
-  {%- assign sidewalk_pct = page.sidewalk | default: 0 | times: 100 -%}
+  {%- assign street_pct   = page.street   | default: 0 | times: 100 | round: 1 -%}
+  {%- assign trail_pct    = page.trail    | default: 0 | times: 100 | round: 1 -%}
+  {%- assign sidewalk_pct = page.sidewalk | default: 0 | times: 100 | round: 1 -%}
   <div class="mt-3">
     <div class="mb-2"><b>Path breakdown:</b></div>
 
     <div class="progress mb-2" style="height: 20px;">
       {%- if street_pct > 0 -%}
-        <div class="progress-bar bg-warning opacity-50"
-             role="progressbar"
-             style="width: {{ street_pct }}%"
-             title="Street: {{ street_pct | round: 1 }}%"></div>
+      <div class="progress-bar bg-warning opacity-50"
+           role="progressbar"
+           style="--width: {{ street_pct }}"
+           title="Street: {{ street_pct }}%"></div>
       {%- endif -%}
       {%- if trail_pct > 0 -%}
-        <div class="progress-bar bg-success opacity-50"
-             role="progressbar"
-             style="width: {{ trail_pct }}%"
-             title="Ped/Bike Path: {{ trail_pct | round: 1 }}%"></div>
+      <div class="progress-bar bg-success opacity-50"
+           role="progressbar"
+           style="--width: {{ trail_pct }}"
+           title="Ped/Bike Path: {{ trail_pct }}%"></div>
       {%- endif -%}
       {%- if sidewalk_pct > 0 -%}
-        <div class="progress-bar bg-info opacity-50"
-             role="progressbar"
-             style="width: {{ sidewalk_pct }}%"
-             title="Sidewalk: {{ sidewalk_pct | round: 1 }}%"></div>
+      <div class="progress-bar bg-info opacity-50"
+           role="progressbar"
+           style="--width: {{ sidewalk_pct }}"
+           title="Sidewalk: {{ sidewalk_pct }}%"></div>
       {%- endif -%}
     </div>
 
     <div class="d-flex flex-wrap gap-3 small text-muted">
       <div class="d-flex flex-wrap gap-2">
         {%- if street_pct > 0 -%}
-          <span><span class="badge bg-warning opacity-50 me-1"></span>Street {{ street_pct | round: 1 }}%</span>
+        <span><span class="badge bg-warning opacity-50 me-1"></span>Street {{ street_pct }}%</span>
         {%- endif -%}
         {%- if trail_pct > 0 -%}
-          <span><span class="badge bg-success opacity-50 me-1"></span>Ped/Bike Path {{ trail_pct | round: 1 }}%</span>
+        <span><span class="badge bg-success opacity-50 me-1"></span>Ped/Bike Path {{ trail_pct }}%</span>
         {%- endif -%}
         {%- if sidewalk_pct > 0 -%}
-          <span><span class="badge bg-info opacity-50 me-1"></span>Sidewalk {{ sidewalk_pct | round: 1 }}%</span>
+        <span><span class="badge bg-info opacity-50 me-1"></span>Sidewalk {{ sidewalk_pct }}%</span>
         {%- endif -%}
       </div>
     </div>
@@ -148,33 +148,33 @@ layout: base
   ========================================================================
   {%- endcomment -%}
   {%- if page.paved or page.unpaved -%}
-  {%- assign paved_pct   = page.paved   | default: 0 | times: 100 -%}
-  {%- assign unpaved_pct = page.unpaved | default: 0 | times: 100 -%}
+  {%- assign paved_pct   = page.paved   | default: 0 | times: 100 | round: 1 -%}
+  {%- assign unpaved_pct = page.unpaved | default: 0 | times: 100 | round: 1 -%}
   <div class="mt-3">
     <div class="mb-2"><b>Surface breakdown:</b></div>
 
     <div class="progress mb-2" style="height: 20px;">
       {%- if paved_pct > 0 -%}
-        <div class="progress-bar bg-info opacity-50"
-             role="progressbar"
-             style="width: {{ paved_pct }}%"
-             title="Paved: {{ paved_pct | round: 1 }}%"></div>
+      <div class="progress-bar bg-info opacity-50"
+           role="progressbar"
+           style="--width: {{ paved_pct }}"
+           title="Paved: {{ paved_pct }}%"></div>
       {%- endif -%}
       {%- if unpaved_pct > 0 -%}
-        <div class="progress-bar bg-success opacity-50"
-             role="progressbar"
-             style="width: {{ unpaved_pct }}%"
-             title="Unpaved: {{ unpaved_pct | round: 1 }}%"></div>
+      <div class="progress-bar bg-success opacity-50"
+           role="progressbar"
+           style="--width: {{ unpaved_pct }}"
+           title="Unpaved: {{ unpaved_pct }}%"></div>
       {%- endif -%}
     </div>
 
     <div class="d-flex flex-wrap gap-3 small text-muted">
       <div class="d-flex flex-wrap gap-2">
         {%- if paved_pct > 0 -%}
-          <span><span class="badge bg-info opacity-50 me-1"></span>Paved {{ paved_pct | round: 1 }}%</span>
+        <span><span class="badge bg-info opacity-50 me-1"></span>Paved {{ paved_pct }}%</span>
         {%- endif -%}
         {%- if unpaved_pct > 0 -%}
-          <span><span class="badge bg-success opacity-50 me-1"></span>Unpaved {{ unpaved_pct | round: 1 }}%</span>
+        <span><span class="badge bg-success opacity-50 me-1"></span>Unpaved {{ unpaved_pct }}%</span>
         {%- endif -%}
       </div>
     </div>
@@ -187,6 +187,9 @@ layout: base
     #map {
         height: 60vh;
         min-height: 500px;
+    }
+    .progress-bar {
+        width: calc(var(--width) * 1%);
     }
     elevation-profile {
         --ep-fill-color: darkgray;
