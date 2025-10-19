@@ -5,17 +5,24 @@ DATA   = _data
 ROUTES = routes
 
 # route files and derived versions (normalized GPX and GeoJSON)
-ROUTES_RAW_GPX = $(wildcard $(ROUTES)/_gpx/*.gpx)
-ROUTES_NORMGPX = $(patsubst $(ROUTES)/_gpx/%.gpx, $(ROUTES)/gpx/%.gpx,         $(ROUTES_RAW_GPX))
-ROUTES_GEOJSON = $(patsubst $(ROUTES)/_gpx/%.gpx, $(ROUTES)/geojson/%.geojson, $(ROUTES_RAW_GPX))
+ROUTES_RAW_GPX := $(wildcard $(ROUTES)/_gpx/*.gpx)
+ROUTES_NORMGPX := $(patsubst $(ROUTES)/_gpx/%.gpx, $(ROUTES)/gpx/%.gpx,         $(ROUTES_RAW_GPX))
+ROUTES_GEOJSON := $(patsubst $(ROUTES)/_gpx/%.gpx, $(ROUTES)/geojson/%.geojson, $(ROUTES_RAW_GPX))
 
 # all quarter schedule files
 SCHEDULES = $(wildcard $(DATA)/schedules/*.yml)
 
 # aggregate GeoJSON files (all routes for each quarter, and all routes overall)
-AGG_GEOJSON_DIR        = $(ROUTES)/geojson/aggregates
-AGG_GEOJSON_ROUTES_QTR = $(patsubst $(DATA)/schedules/%.yml, $(AGG_GEOJSON_DIR)/%.geojson, $(SCHEDULES))
-AGG_GEOJSON_ROUTES_ALL = $(AGG_GEOJSON_DIR)/routes.geojson
+AGG_GEOJSON_DIR        := $(ROUTES)/geojson/aggregates
+AGG_GEOJSON_ROUTES_QTR := $(patsubst $(DATA)/schedules/%.yml, $(AGG_GEOJSON_DIR)/%.geojson, $(SCHEDULES))
+AGG_GEOJSON_ROUTES_ALL := $(AGG_GEOJSON_DIR)/routes.geojson
+
+# all munged routes
+MUNGED_ROUTES := \
+	$(ROUTES_NORMGPX) \
+	$(ROUTES_GEOJSON) \
+	$(AGG_GEOJSON_ROUTES_QTR) \
+	$(AGG_GEOJSON_ROUTES_ALL)
 
 TRANSIT_DATA = routes/transit_data
 TRANSIT_DATA_CSV = $(wildcard routes/transit_data/*.csv)
@@ -37,12 +44,9 @@ all: check-schedules build
 
 # build the site
 .PHONY: build
-build: $(ROUTES_NORMGPX) \
-       $(ROUTES_GEOJSON) \
+build: $(MUNGED_ROUTES) \
        $(ROUTES_YML) \
-       rcc.ics \
-       $(AGG_GEOJSON_ROUTES_QTR) \
-       $(AGG_GEOJSON_ROUTES_ALL)
+       rcc.ics
 	bundle exec jekyll build $(JEKYLL_FLAGS)
 
 # build main "routes database" YAML file from all normalized route GPX files
@@ -62,12 +66,9 @@ all-with-previews: all route-previews-generate
 
 # serve the site locally with auto-rebuild on changes
 .PHONY: serve
-serve: $(ROUTES_NORMGPX) \
-       $(ROUTES_GEOJSON) \
+serve: $(MUNGED_ROUTES) \
        $(ROUTES_YML) \
-       rcc.ics \
-       $(AGG_GEOJSON_ROUTES_QTR) \
-       $(AGG_GEOJSON_ROUTES_ALL)
+       rcc.ics
 	ls _config.yml | entr -r bundle exec jekyll serve --watch --drafts --host=0.0.0.0 $(JEKYLL_FLAGS)
 
 
