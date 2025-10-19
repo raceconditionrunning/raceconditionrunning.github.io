@@ -55,7 +55,10 @@ jobs:
         run: make aggregate-all-routes
 
       - name: Make Routes Table
-        run: make _data/routes.yml
+        run: make routes-yml
+
+      - name: Make Schedules Table
+        run: make schedules-yml
 
       - name: Build Calendar
         run: make rcc.ics

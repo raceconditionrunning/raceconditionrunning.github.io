@@ -4,13 +4,13 @@
 DATA   = _data
 ROUTES = routes
 
+# all quarter schedule files
+SCHEDULES = $(wildcard $(DATA)/schedules/*.yml)
+
 # route files and derived versions (normalized GPX and GeoJSON)
 ROUTES_RAW_GPX := $(wildcard $(ROUTES)/_gpx/*.gpx)
 ROUTES_NORMGPX := $(patsubst $(ROUTES)/_gpx/%.gpx, $(ROUTES)/gpx/%.gpx,         $(ROUTES_RAW_GPX))
 ROUTES_GEOJSON := $(patsubst $(ROUTES)/_gpx/%.gpx, $(ROUTES)/geojson/%.geojson, $(ROUTES_RAW_GPX))
-
-# all quarter schedule files
-SCHEDULES = $(wildcard $(DATA)/schedules/*.yml)
 
 # aggregate GeoJSON files (all routes for each quarter, and all routes overall)
 AGG_GEOJSON_DIR        := $(ROUTES)/geojson/aggregates
@@ -24,11 +24,17 @@ MUNGED_ROUTES := \
 	$(AGG_GEOJSON_ROUTES_QTR) \
 	$(AGG_GEOJSON_ROUTES_ALL)
 
+# tables for page generation from Jekyll templates
+ROUTES_YML    := $(DATA)/routes.yml
+SCHEDULES_YML := $(DATA)/schedules.yml
+
+# all tables for page generation from Jekyll templates
+PAGE_TABLES := \
+	$(ROUTES_YML) \
+	$(SCHEDULES_YML)
+
 TRANSIT_DATA = routes/transit_data
 TRANSIT_DATA_CSV = $(wildcard routes/transit_data/*.csv)
-
-ROUTES_YML = $(DATA)/routes.yml
-SCHEDULE = $(DATA)/schedule.yml
 
 JEKYLL_FLAGS  ?=
 URL_BASE_PATH ?=
@@ -44,14 +50,27 @@ all: check-schedules build
 
 # build the site
 .PHONY: build
-build: $(MUNGED_ROUTES) \
-       $(ROUTES_YML) \
-       rcc.ics
+build: $(MUNGED_ROUTES) $(PAGE_TABLES) rcc.ics
 	bundle exec jekyll build $(JEKYLL_FLAGS)
 
 # build main "routes database" YAML file from all normalized route GPX files
 $(ROUTES_YML): _bin/make_routes_table.py $(ROUTES_NORMGPX)
 	uv run python3 $< $(ROUTES_NORMGPX) $@
+
+# alias to make routes YAML
+.PHONY: routes-yml
+routes-yml: $(ROUTES_YML)
+
+# build main "schedules database" YAML file from all quarter schedule files
+$(SCHEDULES_YML): _bin/make_schedules_table.py $(AGG_GEOJSON_ROUTES_QTR)
+	uv run python3 $< \
+	  --schedules-dir $(DATA)/schedules \
+	  --aggregates-dir $(AGG_GEOJSON_DIR) \
+	  --output $@
+
+# alias to make schedules YAML
+.PHONY: schedules-yml
+schedules-yml: $(SCHEDULES_YML)
 
 # generate ical from schedule YAML, also generates rcc_weekends.ics
 rcc.ics: _bin/mkical.py $(ROUTES_YML)
@@ -66,9 +85,7 @@ all-with-previews: all route-previews-generate
 
 # serve the site locally with auto-rebuild on changes
 .PHONY: serve
-serve: $(MUNGED_ROUTES) \
-       $(ROUTES_YML) \
-       rcc.ics
+serve: $(MUNGED_ROUTES) $(PAGE_TABLES) rcc.ics
 	ls _config.yml | entr -r bundle exec jekyll serve --watch --drafts --host=0.0.0.0 $(JEKYLL_FLAGS)
 
 

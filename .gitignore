@@ -4,6 +4,7 @@ _site/
 
 # generated from route db and gpx files
 _data/routes.yml
+_data/schedules.yml
 routes/geojson/*.geojson
 routes/_transit_data
 
