@@ -1,0 +1,305 @@
+---
+layout: base
+---
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.5.0/dist/maplibre-gl.css" crossorigin="anonymous">
+
+<div class="schedule container">
+  <h1 class="mb-0 h2">{{ page.label }}</h1>
+
+  {%- comment -%}
+  ========================================================================
+  OVERVIEW
+  ========================================================================
+  {%- endcomment -%}
+  <div class="text-muted mb-3">
+    <span class="me-3">
+      {{ page.start_date }} &rarr; {{ page.end_date }}
+    </span>
+    <span class="me-3">
+      {{ page.event_count }} events
+    </span>
+    <span class="me-3">
+      {{ page.route_count }} planned routes
+    </span>
+    <span>
+      {{ page.manual_route_count }} manual runs
+    </span>
+  </div>
+
+  {%- comment -%}
+  ========================================================================
+  MAP
+  ========================================================================
+  {%- endcomment -%}
+  <h2 class="visually-hidden">Quarter route map</h2>
+  <div id="schedule-map" class="mb-3 w-100">
+    <div id="map" class="w-100"></div>
+  </div>
+
+  {%- comment -%}
+  ========================================================================
+  NAVIGATION
+  ========================================================================
+  {%- endcomment -%}
+  {%- assign all_schedules = site.data.schedules_overview -%}
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    {%- if page.previous_id -%}
+      {%- assign prev_label = page.previous_id -%}
+      {%- if all_schedules -%}
+        {%- assign prev_schedule = all_schedules | where: "id", page.previous_id | first -%}
+        {%- if prev_schedule and prev_schedule.label -%}
+          {%- assign prev_label = prev_schedule.label -%}
+        {%- endif -%}
+      {%- endif -%}
+      <a class="btn btn-outline-secondary"
+         href="{{ '/schedules/' | append: page.previous_id | append: '/' | relative_url }}">
+        &larr; {{ prev_label }}
+      </a>
+    {%- else -%}
+      <span></span>
+    {%- endif -%}
+    {%- if page.next_id -%}
+      {%- assign next_label = page.next_id -%}
+      {%- if all_schedules -%}
+        {%- assign next_schedule = all_schedules | where: "id", page.next_id | first -%}
+        {%- if next_schedule and next_schedule.label -%}
+          {%- assign next_label = next_schedule.label -%}
+        {%- endif -%}
+      {%- endif -%}
+      <a class="btn btn-outline-secondary"
+         href="{{ '/schedules/' | append: page.next_id | append: '/' | relative_url }}">
+        {{ next_label }} &rarr;
+      </a>
+    {%- else -%}
+      <span></span>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%}
+  ========================================================================
+  SCHEDULE DETAILS
+  ========================================================================
+  {%- endcomment -%}
+  {%- assign quarter_entries = site.data.schedules[page.id] -%}
+  {%- if quarter_entries and quarter_entries.size > 0 -%}
+  <div class="mt-4">
+    <h2 class="h4">Schedule</h2>
+    <div class="list-group list-group-flush">
+      {%- for entry in quarter_entries -%}
+        <div class="list-group-item px-0">
+          <div class="fw-semibold">{{ entry.date }}</div>
+          <ul class="list-unstyled mb-0 ms-3 small">
+            {%- for phase in entry.plan -%}
+              <li class="mb-1">
+                {%- if phase.time -%}
+                  <span class="text-muted">{{ phase.time }}</span>
+                {%- endif -%}
+                {%- if phase.cancelled -%}
+                  <span class="text-muted fst-italic ms-2">Cancelled</span>
+                {%- elsif phase.route_id -%}
+                  {%- assign route_item = site.data.routes | where: "id", phase.route_id | first -%}
+                  <span class="ms-2">
+                    <a href="{{ '/routes/' | append: phase.route_id | append: '/' | relative_url }}">
+                      {%- if route_item and route_item.name -%}
+                        {{ route_item.name }}
+                      {%- else -%}
+                        {{ phase.route_id }}
+                      {%- endif -%}
+                    </a>
+                  </span>
+                {%- elsif phase.route -%}
+                  <span class="ms-2">
+                    {{ phase.route.name }}
+                    {%- if phase.route.distance_mi -%}
+                      ({{ phase.route.distance_mi }}&nbsp;mi)
+                    {%- endif -%}
+                  </span>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+  {%- endif -%}
+</div>
+
+<style>
+  #map {
+    height: 60vh;
+    min-height: 450px;
+  }
+</style>
+
+<script type="module">
+  import 'maplibre-gl';
+  import {Protocol} from 'pmtiles';
+  import {FrameControl} from "{{site.baseurl}}/js/FrameControl.js";
+  import Protobuf from 'https://unpkg.com/pbf@4.0.1/index.js';
+  import {VectorTile} from 'https://esm.run/@mapbox/vector-tile@2.0.3/index.js';
+  import tileToProtobuf from 'https://esm.run/vt-pbf@3.1.3/index.js';
+
+  const geojsonUrl = '{{ page.aggregate_geojson | relative_url }}';
+
+  const pmtilesProtocol = new Protocol();
+  maplibregl.addProtocol("pmtiles", pmtilesProtocol.tile);
+
+  // Add custom protocol for street name abbreviations (shared with route pages).
+  const abbrevProtocol = 'street-abbrev';
+  maplibregl.addProtocol(abbrevProtocol, (request) => {
+      const url = request.url.replace(abbrevProtocol + '://', '');
+      const replacements = [
+          [/\bNortheast\b/g, 'NE'],
+          [/\bNorthwest\b/g, 'NW'],
+          [/\bSoutheast\b/g, 'SE'],
+          [/\bSouthwest\b/g, 'SW'],
+          [/\bNorth\b/g, 'N'],
+          [/\bSouth\b/g, 'S'],
+          [/\bEast\b/g, 'E'],
+          [/\bWest\b/g, 'W'],
+          [/\bStreet\b/g, 'St'],
+          [/\bAvenue\b/g, 'Ave'],
+          [/\bBoulevard\b/g, 'Blvd'],
+          [/\bRoad\b/g, 'Rd'],
+          [/\bLane\b/g, 'Ln'],
+          [/\bDrive\b/g, 'Dr'],
+          [/\bCourt\b/g, 'Ct'],
+          [/\bPlace\b/g, 'Pl']
+      ];
+
+      const abbreviateText = (text) => {
+          if (typeof text !== 'string') return text;
+          return replacements.reduce(
+              (result, [pattern, replacement]) => result.replace(pattern, replacement),
+              text
+          );
+      };
+
+      return fetch(url)
+          .then((response) => response.arrayBuffer())
+          .then((data) => new VectorTile(new Protobuf(data)))
+          .then((tile) => ({
+              layers: Object.entries(tile.layers).reduce((acc, [layerId, layer]) => ({
+                  ...acc,
+                  [layerId]: {
+                      ...layer,
+                      feature: (index) => {
+                          const feature = layer.feature(index);
+                          if (layerId === 'transportation_name' && feature.properties) {
+                              const nameProps = ['name', 'name_en', 'name:latin', 'name:nonlatin'];
+                              for (const prop of nameProps) {
+                                  if (typeof feature.properties[prop] === 'string') {
+                                      feature.properties[prop] = abbreviateText(feature.properties[prop]);
+                                  }
+                              }
+                          }
+                          return feature;
+                      }
+                  }
+              }), {})
+          }))
+          .then((tile) => tileToProtobuf(tile).buffer)
+          .then((data) => ({ data }));
+  });
+
+  function extendBounds(bounds, coordinates) {
+      for (const coord of coordinates) {
+          bounds.extend([coord[0], coord[1]]);
+      }
+  }
+
+  function accumulateGeometry(bounds, geometry) {
+      if (!geometry) return;
+      const {type, coordinates} = geometry;
+      switch (type) {
+          case 'Point':
+              bounds.extend([coordinates[0], coordinates[1]]);
+              break;
+          case 'MultiPoint':
+          case 'LineString':
+              extendBounds(bounds, coordinates);
+              break;
+          case 'MultiLineString':
+          case 'Polygon':
+              coordinates.forEach(part => extendBounds(bounds, part));
+              break;
+          case 'MultiPolygon':
+              coordinates.forEach(polygon => {
+                  polygon.forEach(ring => extendBounds(bounds, ring));
+              });
+              break;
+          case 'GeometryCollection':
+              geometry.geometries.forEach((geom) => accumulateGeometry(bounds, geom));
+              break;
+          default:
+              break;
+      }
+  }
+
+  function computeBounds(featureCollection) {
+      const bounds = new maplibregl.LngLatBounds();
+      let hasCoordinates = false;
+
+      if (featureCollection.type === 'FeatureCollection' && Array.isArray(featureCollection.features)) {
+          featureCollection.features.forEach((feature) => {
+              accumulateGeometry(bounds, feature.geometry);
+              hasCoordinates = true;
+          });
+      } else if (featureCollection.type === 'Feature') {
+          accumulateGeometry(bounds, featureCollection.geometry);
+          hasCoordinates = true;
+      }
+
+      return hasCoordinates ? bounds : null;
+  }
+
+  async function initializeMap() {
+      const response = await fetch(geojsonUrl);
+      const data = await response.json();
+
+      const map = new maplibregl.Map({
+          style: "{{ '/maps/route-map-style.json' | relative_url }}",
+          container: 'map',
+          zoom: 9.5,
+          center: [-122.3321, 47.6062],
+      });
+
+      map.setTransformRequest((url, resourceType) => {
+          if (resourceType === 'Tile' && url.includes('openfreemap')) {
+              return { url: abbrevProtocol + '://' + url };
+          }
+          return undefined;
+      });
+
+      map.on('load', () => {
+          map.addSource('quarter-routes', {
+              type: 'geojson',
+              data
+          });
+
+          map.addLayer({
+              id: 'quarter-routes-line',
+              type: 'line',
+              source: 'quarter-routes',
+              paint: {
+                  'line-color': '#0066ff',
+                  'line-width': 3,
+                  'line-opacity': 0.75
+              }
+          });
+
+          const bounds = computeBounds(data);
+          if (bounds) {
+              map.fitBounds(bounds, {padding: 50, animate: false});
+              const frameControl = new FrameControl({bounds, padding: 50});
+              map.addControl(frameControl);
+          }
+
+          map.addControl(new maplibregl.FullscreenControl());
+          map.addControl(new maplibregl.NavigationControl({showCompass: false}));
+      });
+  }
+
+  document.addEventListener('DOMContentLoaded', initializeMap);
+</script>

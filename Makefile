@@ -26,7 +26,7 @@ MUNGED_ROUTES := \
 
 # tables for page generation from Jekyll templates
 ROUTES_YML    := $(DATA)/routes.yml
-SCHEDULES_YML := $(DATA)/schedules.yml
+SCHEDULES_YML := $(DATA)/schedules_overview.yml
 
 # all tables for page generation from Jekyll templates
 PAGE_TABLES := \

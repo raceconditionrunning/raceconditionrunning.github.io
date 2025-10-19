@@ -24,6 +24,11 @@ page_gen:
     name: 'id'
     title: 'name'
     dir: 'routes'
+  - data: 'schedules_overview'
+    template: 'schedule'
+    name: 'id'
+    title: 'label'
+    dir: 'schedules'
 
 jekyll_tidy:
   exclude:
