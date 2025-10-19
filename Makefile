@@ -31,7 +31,7 @@ URL_BASE_PATH ?=
 # BUILDING AND SERVING THE SITE
 ###########################################################################
 
-# default target: build everything
+# default target: build everything except route preview images
 .PHONY: all
 all: check-schedules build
 
@@ -52,6 +52,13 @@ $(ROUTES_YML): _bin/make_routes_table.py $(ROUTES_NORMGPX)
 # generate ical from schedule YAML, also generates rcc_weekends.ics
 rcc.ics: _bin/mkical.py $(ROUTES_YML)
 	uv run python3 $<
+
+# build everything, including all route preview images
+#  - depends on built site: previews are rendered route pages
+#  - can be slow (~ 15 min), so separate from default "all" target
+#  - requires additional dependencies, install with `uv sync --all-extras`
+.PHONY: all-with-previews
+all-with-previews: all route-previews-generate
 
 # serve the site locally with auto-rebuild on changes
 .PHONY: serve
