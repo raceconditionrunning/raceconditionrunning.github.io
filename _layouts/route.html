@@ -5,147 +5,380 @@ layout: base
 
 <div class="route container">
   <h1 title="{{ page.id }}" class="mb-0 h2">{{ page.title }}</h1>
-  {% assign ascent_ft = page.ascent_m | times: 3.28084 %}
-  {% assign descent_ft = page.descent_m | times: 3.28084 %}
-  {% capture stats %}<span title="{{ page.distance_mi | times: 1.609 | round: 1}}km" class="route-stats-distance text-decoration-dashed">{{ page.distance_mi | round: 1}}mi</span>
-  <span class="route-stats-elevation">↑<span title="{{ page.ascent_m}}m" class="text-decoration-dashed">{{ascent_ft | round}}ft</span> ↓<span
-          title="{{ page.descent_m}}m" class="text-decoration-dashed">{{descent_ft | round}}ft</span></span>{% if page.surface %}{% if page.paved or page.unpaved %}{% assign paved_pct = page.paved | times: 100 %}{% assign unpaved_pct = page.unpaved | times: 100 %}{% capture surface_tooltip %}Surface: {{ paved_pct | round: 1 }}% paved, {{ unpaved_pct | round: 1 }}% unpaved{% endcapture %}{% endif %}{% if page.surface == "Road" %}{% assign surface_query = "surface:road" %}{% assign border_class = "primary" %}{% elsif page.surface == "Trail" %}{% assign border_class = "success" %}{% assign surface_query = "surface:trail" %}{% elsif page.surface == "Mixed" %}{% assign border_class = "secondary" %}{% assign surface_query = "surface:mixed" %}{% endif %} <a href="{{ '/routes/?q=' | append: surface_query | relative_url }}" class="badge border border-{{border_class}} ms-2 text-decoration-none fw-semibold" title="{{ surface_tooltip }}">{{ page.surface }}</a>{% endif %} {% if page.deprecated %} <span
-        class="text-warning mx-2 route-stats-deprecated" title="We no longer schedule this route">Deprecated</span>{%
-  endif%}{% endcapture %}
+
+  {%- comment -%}
+  ========================================================================
+  ROUTE STATS
+  ========================================================================
+  {%- endcomment -%}
+  {%- assign ascent_ft  = page.ascent_m  | times: 3.28084 -%}
+  {%- assign descent_ft = page.descent_m | times: 3.28084 -%}
+
+  {%- assign surface_tooltip = '' -%}
+  {%- if page.surface -%}
+    {%- if page.paved or page.unpaved -%}
+      {%- assign paved_pct   = page.paved   | times: 100 -%}
+      {%- assign unpaved_pct = page.unpaved | times: 100 -%}
+      {%- capture surface_tooltip -%}
+        Surface: {{ paved_pct | round: 1 }}% paved, {{ unpaved_pct | round: 1 }}% unpaved
+      {%- endcapture -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- assign surface_query = '' -%}
+  {%- assign border_class  = '' -%}
+  {%- if page.surface == "Road" -%}
+    {%- assign surface_query = "surface:road" -%}
+    {%- assign border_class  = "primary" -%}
+  {%- elsif page.surface == "Trail" -%}
+    {%- assign surface_query = "surface:trail" -%}
+    {%- assign border_class  = "success" -%}
+  {%- elsif page.surface == "Mixed" -%}
+    {%- assign surface_query = "surface:mixed" -%}
+    {%- assign border_class  = "secondary" -%}
+  {%- endif -%}
+
+  {%- capture stats -%}
+  <span title="{{ page.distance_mi | times: 1.609 | round: 1 }}km"
+        class="route-stats-distance text-decoration-dashed">
+    {{- page.distance_mi | round: 1 -}}mi
+  </span>
+  <span class="route-stats-elevation">
+    ↑<span title="{{ page.ascent_m }}m" class="text-decoration-dashed">
+      {{- ascent_ft | round -}}ft
+    </span>
+    ↓<span title="{{ page.descent_m }}m" class="text-decoration-dashed">
+      {{- descent_ft | round -}}ft
+    </span>
+  </span>
+  {%- if page.surface -%}
+    <a href="{{ '/routes/?q=' | append: surface_query | relative_url }}"
+       class="badge border border-{{ border_class }} ms-2 text-decoration-none fw-semibold"
+       title="{{ surface_tooltip }}">
+      {{- page.surface -}}
+    </a>
+  {%- endif -%}
+  {%- if page.deprecated -%}
+    <span class="text-warning mx-2 route-stats-deprecated"
+          title="We no longer schedule this route">
+      {{- "Deprecated" -}}
+    </span>
+  {%- endif -%}
+  {%- endcapture -%}
   <h3 class="h5">{{ stats }}</h3>
+
+
+  {%- comment -%}
+  ========================================================================
+  DOWNLOADS, EXTERNAL MAPS
+  ========================================================================
+  {%- endcomment -%}
   <div class="mb-4">
-    <a class="btn btn-sm btn-outline-primary" href="{{ page.gpx | relative_url }}"
-       data-goatcounter-click="download-{{ page.id }}">Download GPX</a> {% if page.map %}<a
-          class="btn btn-sm btn-outline-primary" href="{{page.map}}" data-goatcounter-click="ext-map-{{ page.id }}">OnTheGoMap</a>{%
-    endif %}
+    <a class="btn btn-sm btn-outline-primary"
+       href="{{ page.gpx | relative_url }}"
+       data-goatcounter-click="download-{{ page.id }}">
+      Download GPX
+    </a>
+    {% if page.map -%}
+    <a class="btn btn-sm btn-outline-primary"
+       href="{{page.map}}"
+       data-goatcounter-click="ext-map-{{ page.id }}">
+       OnTheGoMap
+    </a>
+    {%- endif %}
   </div>
+
+
+  {%- comment -%}
+  ========================================================================
+  ROUTE MAP AND ELEVATION PROFILE
+  ========================================================================
+  {%- endcomment -%}
   <h2 class="visually-hidden">Map</h2>
   <div id="route-map" class="mb-3 w-100">
     <div id="map" class="w-100"></div>
-    <!-- These are restyled as overlays when rendering route preview images (class `preview-mode` on route-map div). -->
+    <!--
+      By default, elevation is rendered below the map and the stats are hidden.
+      They both get restyled as map overlays when rendering preview images.
+      See class `preview-mode` on route-map div in the CSS below.
+    -->
     <elevation-profile class="w-100"></elevation-profile>
     <div class="stats d-none">{{ stats }}</div>
   </div>
 
-  <div><b>Start:</b> <a href="{{ '/routes/?q=start:' | append: page.start | relative_url }}" title="See other routes that start at {{ page.start }}">{{ page.start }}</a> {% for location in site.data.locations.features %}
-    {% if location.properties.id == page.start and location.properties.meeting_point_desc %}
-    <span class="text-secondary ms-1">{{ location.properties.meeting_point_desc }}</span>
-    <ul class="list d-flex gap-4 mb-0">
-      <li>
-        <a href="https://google.com/maps/dir/?api=1&destination={{location.geometry.coordinates[1]}},{{location.geometry.coordinates[0]}}"
-           class="link-secondary">Google Maps</a></li>
-      <li>
-        <a href="https://maps.apple.com/?daddr={{location.geometry.coordinates[1]}},{{location.geometry.coordinates[0]}}}"
-           class="link-secondary">Apple Maps</a></li>
-    </ul>
-    {% endif %}
-    {% endfor %}
-  </div>
-  <div><b>End:</b> <a href="{{ '/routes/?q=end:' | append: page.end | relative_url }}" title="See other routes that end at {{ page.end }}">{{ page.end }}</a>
-    {% for location in site.data.locations.features %}
-    {% if location.properties.id == page.end and location.properties.meeting_point_desc %}
-    <span class="text-secondary ms-1">{{ location.properties.meeting_point_desc }}</span>
-    {% endif %}
-    {% endfor %}
-  </div>
-  <div><b>Neighborhoods:</b>
-    {% for neighborhood in page.neighborhoods %}
-      <a href="{{ '/routes/?q=neighborhood:"' | append: neighborhood | append: '"' | relative_url }}" title="See other routes that go through {{ neighborhood }}">{{ neighborhood }}</a>{% unless forloop.last %}, {% endunless %}
+
+  {%- comment -%}
+  ========================================================================
+  START
+  ========================================================================
+  {%- endcomment -%}
+  <div>
+    <b>Start:</b>
+    <a href="{{ '/routes/?q=start:' | append: page.start | relative_url }}"
+       title="See other routes that start at {{ page.start }}">
+      {{ page.start }}
+    </a>
+    {% for loc in site.data.locations.features %}
+      {% if loc.properties.id == page.start and loc.properties.meeting_point_desc %}
+        {% assign long = loc.geometry.coordinates[0] %}
+        {% assign lat  = loc.geometry.coordinates[1] %}
+        <span class="text-secondary ms-1">
+          {{ loc.properties.meeting_point_desc }}
+        </span>
+        <ul class="list d-flex gap-4 mb-0">
+          <li>
+            <a href="https://google.com/maps/dir/?api=1&destination={{ lat }},{{ long }}"
+               class="link-secondary">
+              Google Maps
+            </a>
+          </li>
+          <li>
+            <a href="https://maps.apple.com/?daddr={{ lat }},{{ long }}"
+               class="link-secondary">
+              Apple Maps
+            </a>
+          </li>
+        </ul>
+      {% endif %}
     {% endfor %}
   </div>
 
-  <div><b>Last run:</b>
-    {% if page.dates_run.size == 0 %}
-    Never
-    {% endif %}
-    {% for date_run in page.dates_run reversed %}
-    {% comment %}Gross hash after slash due to how our permalinks and redirects are set up {% endcomment %}
-    <a href="{{ site.baseurl }}/lore/#{{ date_run }}">{{ date_run }}</a>{% if forloop.last == false %}, {% endif %}
+
+  {%- comment -%}
+  ========================================================================
+  END
+  ========================================================================
+  {%- endcomment -%}
+  <div>
+    <b>End:</b>
+    <a href="{{ '/routes/?q=end:' | append: page.end | relative_url }}"
+       title="See other routes that end at {{ page.end }}">
+      {{ page.end }}
+    </a>
+    {% for loc in site.data.locations.features %}
+      {% if loc.properties.id == page.end and loc.properties.meeting_point_desc %}
+        <span class="text-secondary ms-1">
+          {{ loc.properties.meeting_point_desc }}
+        </span>
+      {% endif %}
     {% endfor %}
   </div>
-  {% if page.notes %}
-  <div><b>Notes:</b> {{ page.notes | markdownify | remove: '<p>' | remove: '</p>'}}</div>
-  {% endif %}
-  {% if page.changelog and page.changelog.size > 0 %}
-  <div><b>Changelog:</b>
+
+
+  {%- comment -%}
+  ========================================================================
+  NEIGHBORHOODS
+  ========================================================================
+  {%- endcomment -%}
+  <div>
+    <b>Neighborhoods:</b>
+    {% for nbhd in page.neighborhoods %}
+      <a href="{{ '/routes/?q=neighborhood:"' | append: nbhd | append: '"' | relative_url }}"
+         title="See other routes that go through {{ nbhd }}">
+        {{ nbhd }}
+      </a>{% unless forloop.last %}, {% endunless %}
+    {% endfor %}
+  </div>
+
+
+  {%- comment -%}
+  ========================================================================
+  LAST RUN
+  ========================================================================
+  {%- endcomment -%}
+  <div>
+    <b>Last run:</b>&nbsp;
+    {%- if page.dates_run and page.dates_run.size > 0 -%}
+      {%- for date_run in page.dates_run reversed -%}
+        {%- comment -%}
+          Gross hash after slash due to our permalink/redirect setup
+        {%- endcomment -%}
+        {%- unless forloop.first %}, {% endunless %}
+        <a href="{{ site.baseurl }}/lore/#{{ date_run }}">{{ date_run }}</a>
+      {%- endfor -%}
+    {%- else -%}
+      Never
+    {%- endif %}
+  </div>
+
+
+  {%- comment -%}
+  ========================================================================
+  NOTES
+  ========================================================================
+  {%- endcomment -%}
+  {%- if page.notes -%}
+  <div>
+    <b>Notes:</b>
+    {{ page.notes | markdownify | remove: '<p>' | remove: '</p>'}}
+  </div>
+  {%- endif -%}
+
+
+  {%- comment -%}
+  ========================================================================
+  CHANGELOG
+  ========================================================================
+  {%- endcomment -%}
+  {%- if page.changelog and page.changelog.size > 0 -%}
+  <div>
+    <b>Changelog:</b>
     <ol class="list-unstyled ms-4">
-      {% for change in page.changelog %}
-      <li><b>{{ change.date }}:</b> {{ change.note | markdownify | remove: '<p>' | remove: '</p>' }}</li>
-      {% endfor %}
+      {%- for change in page.changelog -%}
+      <li>
+        <b>{{ change.date }}:</b>
+        {{ change.note | markdownify | remove: '<p>' | remove: '</p>' }}
+      </li>
+      {%- endfor -%}
     </ol>
   </div>
-  {% endif %}
-  {% if page.last_updated %}
-  <div><b>Last updated:</b>
+  {%- endif -%}
+
+
+  {%- comment -%}
+  ========================================================================
+  LAST UPDATED
+  ========================================================================
+  {%- endcomment -%}
+  {%- if page.last_updated -%}
+  <div>
+    <b>Last updated:</b>
     <time datetime="{{ page.last_updated }}">{{ page.last_updated }}</time>
   </div>
-  {% endif %}
-    {% if page.stairs %}
+  {%- endif -%}
 
-        <div>
-          <b>Stairs:</b> {% if page.stairs > 0 %}Yes (for {{ page.stairs | times: page.distance_mi | times: 5280 | round }}ft){% else %}No{% endif %}
-        </div>
-      {% endif %}
 
-  {% if page.street or page.trail or page.sidewalk %}
+  {%- comment -%}
+  ========================================================================
+  STAIRS
+  ========================================================================
+  {%- endcomment -%}
+  {%- if page.stairs -%}
+  {%- assign stairs_distance_ft = page.stairs | times: page.distance_mi | times: 5280 | round -%}
+  <div>
+    <b>Stairs:</b>
+    {%- if page.stairs > 0 -%}
+      Yes (for {{ stairs_distance_ft }}ft)
+    {%- else -%}
+      No
+    {%- endif -%}
+  </div>
+  {%- endif -%}
+
+
+  {%- comment -%}
+  ========================================================================
+  PATH BREAKDOWN
+  ========================================================================
+  {%- endcomment -%}
+  {%- if page.street or page.trail or page.sidewalk -%}
+  {%- assign street_pct   = page.street   | default: 0 | times: 100 | round: 1 -%}
+  {%- assign trail_pct    = page.trail    | default: 0 | times: 100 | round: 1 -%}
+  {%- assign sidewalk_pct = page.sidewalk | default: 0 | times: 100 | round: 1 -%}
   <div class="mt-3">
     <div class="mb-2"><b>Path breakdown:</b></div>
+
     <div class="progress mb-2" style="height: 20px;">
-      {% if page.street and page.street > 0 %}
-        <div class="progress-bar bg-warning opacity-50" role="progressbar" style="width: {{ page.street | times: 100 }}%" title="Street: {{ page.street | times: 100 | round: 1 }}%"></div>
-      {% endif %}
-      {% if page.trail and page.trail > 0 %}
-        <div class="progress-bar bg-success opacity-50" role="progressbar" style="width: {{ page.trail | times: 100 }}%" title="Ped/Bike Path: {{ page.trail | times: 100 | round: 1 }}%"></div>
-      {% endif %}
-      {% if page.sidewalk and page.sidewalk > 0 %}
-        <div class="progress-bar bg-info opacity-50" role="progressbar" style="width: {{ page.sidewalk | times: 100 }}%" title="Sidewalk: {{ page.sidewalk | times: 100 | round: 1 }}%"></div>
-      {% endif %}
+      {%- if street_pct > 0 -%}
+      <div class="progress-bar bg-warning opacity-50"
+           role="progressbar"
+           style="--width: {{ street_pct }}"
+           title="Street: {{ street_pct }}%"></div>
+      {%- endif -%}
+      {%- if trail_pct > 0 -%}
+      <div class="progress-bar bg-success opacity-50"
+           role="progressbar"
+           style="--width: {{ trail_pct }}"
+           title="Ped/Bike Path: {{ trail_pct }}%"></div>
+      {%- endif -%}
+      {%- if sidewalk_pct > 0 -%}
+      <div class="progress-bar bg-info opacity-50"
+           role="progressbar"
+           style="--width: {{ sidewalk_pct }}"
+           title="Sidewalk: {{ sidewalk_pct }}%"></div>
+      {%- endif -%}
     </div>
+
     <div class="d-flex flex-wrap gap-3 small text-muted">
       <div class="d-flex flex-wrap gap-2">
-        {% if page.street and page.street > 0 %}
-          <span><span class="badge bg-warning opacity-50 me-1"> </span>Street {{ page.street | times: 100 | round: 1 }}%</span>
-        {% endif %}
-        {% if page.trail and page.trail > 0 %}
-          <span><span class="badge bg-success opacity-50 me-1"> </span>Ped/Bike Path {{ page.trail | times: 100 | round: 1 }}%</span>
-        {% endif %}
-        {% if page.sidewalk and page.sidewalk > 0 %}
-          <span><span class="badge bg-info opacity-50 me-1"> </span>Sidewalk {{ page.sidewalk | times: 100 | round: 1 }}%</span>
-        {% endif %}
+        {% if street_pct > 0 -%}
+        <span>                                                   {{- "" -}}
+          <span class="badge bg-warning opacity-50 me-1"></span> {{- "" -}}
+          Street {{ street_pct }}%                               {{- "" -}}
+        </span>
+        {%- endif %}
+        {% if trail_pct > 0 -%}
+        <span>                                                   {{- "" -}}
+          <span class="badge bg-success opacity-50 me-1"></span> {{- "" -}}
+          Ped/Bike Path {{ trail_pct }}%                         {{- "" -}}
+        </span>
+        {%- endif %}
+        {% if sidewalk_pct > 0 -%}
+        <span>                                                   {{- "" -}}
+            <span class="badge bg-info opacity-50 me-1"></span>  {{- "" -}}
+            Sidewalk {{ sidewalk_pct }}%                         {{- "" -}}
+        </span>
+        {%- endif %}
       </div>
-
     </div>
   </div>
-  {% endif %}
-  {% if page.paved or page.unpaved %}
+  {%- endif -%}
+
+
+  {%- comment -%}
+  ========================================================================
+  SURFACE BREAKDOWN
+  ========================================================================
+  {%- endcomment -%}
+  {%- if page.paved or page.unpaved -%}
+  {%- assign paved_pct   = page.paved   | default: 0 | times: 100 | round: 1 -%}
+  {%- assign unpaved_pct = page.unpaved | default: 0 | times: 100 | round: 1 -%}
   <div class="mt-3">
     <div class="mb-2"><b>Surface breakdown:</b></div>
+
     <div class="progress mb-2" style="height: 20px;">
-      {% if page.paved and page.paved > 0 %}
-        <div class="progress-bar bg-info opacity-50" role="progressbar" style="width: {{ page.paved | times: 100 }}%" title="Paved: {{ page.paved | times: 100 | round: 1 }}%"></div>
-      {% endif %}
-      {% if page.unpaved and page.unpaved > 0 %}
-        <div class="progress-bar bg-success opacity-50" role="progressbar" style="width: {{ page.unpaved | times: 100 }}%" title="Unpaved: {{ page.unpaved | times: 100 | round: 1 }}%"></div>
-      {% endif %}
+      {%- if paved_pct > 0 -%}
+      <div class="progress-bar bg-info opacity-50"
+           role="progressbar"
+           style="--width: {{ paved_pct }}"
+           title="Paved: {{ paved_pct }}%"></div>
+      {%- endif -%}
+      {%- if unpaved_pct > 0 -%}
+      <div class="progress-bar bg-success opacity-50"
+           role="progressbar"
+           style="--width: {{ unpaved_pct }}"
+           title="Unpaved: {{ unpaved_pct }}%"></div>
+      {%- endif -%}
     </div>
+
     <div class="d-flex flex-wrap gap-3 small text-muted">
       <div class="d-flex flex-wrap gap-2">
-        {% if page.paved and page.paved > 0 %}
-          <span><span class="badge bg-info opacity-50 me-1"> </span>Paved {{ page.paved | times: 100 | round: 1 }}%</span>
-        {% endif %}
-        {% if page.unpaved and page.unpaved > 0 %}
-          <span><span class="badge bg-success opacity-50 me-1"> </span>Unpaved {{ page.unpaved | times: 100 | round: 1 }}%</span>
-        {% endif %}
+        {% if paved_pct > 0 -%}
+        <span>                                                   {{- "" -}}
+          <span class="badge bg-info opacity-50 me-1"></span>    {{- "" -}}
+          Paved {{ paved_pct }}%                                 {{- "" -}}
+        </span>
+        {%- endif %}
+        {% if unpaved_pct > 0 -%}
+        <span>                                                   {{- "" -}}
+          <span class="badge bg-success opacity-50 me-1"></span> {{- "" -}}
+          Unpaved {{ unpaved_pct }}%                             {{- "" -}}
+        </span>
+        {%- endif %}
       </div>
     </div>
   </div>
-  {% endif %}
+  {%- endif -%}
+
 </div>
 
 <style>
     #map {
         height: 60vh;
         min-height: 500px;
+    }
+    .progress-bar {
+        width: calc(var(--width) * 1%);
     }
     elevation-profile {
         --ep-fill-color: darkgray;

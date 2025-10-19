@@ -39,6 +39,9 @@ exclude:
   - requirements.txt
   - venv
 
+keep_files:
+  - img/routes
+
 sass:
   style: :compressed
 
