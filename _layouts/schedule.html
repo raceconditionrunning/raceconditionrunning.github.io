@@ -42,7 +42,7 @@ layout: base
   ========================================================================
   {%- endcomment -%}
   {%- assign all_schedules = site.data.schedules_overview -%}
-  <div class="d-flex justify-content-between align-items-center mb-4">
+  <div class="d-flex justify-content-between align-items-center gap-3 mb-4 flex-wrap">
     {%- if page.previous_id -%}
       {%- assign prev_label = page.previous_id -%}
       {%- if all_schedules -%}
@@ -58,6 +58,19 @@ layout: base
     {%- else -%}
       <span></span>
     {%- endif -%}
+    <div class="flex-grow-1 text-center" style="max-width: 320px;">
+      <label class="form-label visually-hidden" for="schedule-selector">Jump to schedule</label>
+      <select id="schedule-selector" class="form-select form-select-sm d-inline-block" style="max-width: 100%;">
+        {%- assign schedule_list = site.data.schedules_overview | sort: 'start_date' -%}
+        {%- for sched in schedule_list -%}
+          <option value="{{ '/schedules/' | append: sched.id | append: '/' | relative_url }}"
+                  {% if sched.id == page.id %}selected{% endif %}>
+            {{ sched.label }}
+          </option>
+        {%- endfor -%}
+      </select>
+    </div>
+
     {%- if page.next_id -%}
       {%- assign next_label = page.next_id -%}
       {%- if all_schedules -%}
@@ -300,6 +313,17 @@ layout: base
           map.addControl(new maplibregl.NavigationControl({showCompass: false}));
       });
   }
+  document.addEventListener('DOMContentLoaded', () => {
+      const selector = document.getElementById('schedule-selector');
+      if (!selector) return;
+
+      selector.addEventListener('change', (event) => {
+          const target = event.target;
+          if (target && target.value) {
+              window.location.href = target.value;
+          }
+      });
+  });
 
   document.addEventListener('DOMContentLoaded', initializeMap);
 </script>
