@@ -6,8 +6,10 @@ layout: default
 add_h1: true
 ---
 
-{% comment %}We want the schedules to appear in the correct quarter order, which Jekyll can't do unless we
-     mark the ordering into the schedule files{% endcomment %}
+{% comment %}
+  We want the schedules to appear in the correct quarter order, which
+  Jekyll can't do unless we mark the ordering into the schedule files.
+{% endcomment %}
 {% assign current_year =  site.time | date: '%y' %}
 
 
@@ -21,7 +23,14 @@ add_h1: true
       {% endif %}
       {% assign quarter_schedule = site.data.schedules[quarter_schedule_key]%}
       {% assign schedule_name = quarter | append: " '" | append: year | capitalize %}
-<h3 id="{{quarter_schedule_key}}" class="mt-2">{{ schedule_name }} <a href="#{{quarter_schedule_key}}" class="anchor-link" aria-label="Link to this section. {{ schedule_name }}"></a></h3>
+<h3 id="{{quarter_schedule_key}}" class="mt-2">{{ schedule_name }}
+  <a href="{{ '/schedules/' | append: quarter_schedule_key | append: '/' | relative_url }}"
+     class="ms-2 text-decoration-none"
+     aria-label="Open map view for {{ schedule_name }}">🗺️</a>
+  <a href="#{{quarter_schedule_key}}"
+     class="anchor-link"
+     aria-label="Link to this section. {{ schedule_name }}"></a>
+</h3>
       {% assign quarter_schedule = site.data.schedules[quarter_schedule_key] | reverse %}
       {% include schedule_table.html schedule=quarter_schedule show_header=needs_header%}
       {% if needs_header %}
