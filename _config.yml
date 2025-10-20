@@ -24,7 +24,7 @@ page_gen:
     name: 'id'
     title: 'name'
     dir: 'routes'
-  - data: 'schedules_overview'
+  - data: 'schedules_table'
     template: 'schedule'
     name: 'id'
     title: 'label'

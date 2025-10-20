@@ -41,7 +41,7 @@ layout: base
   NAVIGATION
   ========================================================================
   {%- endcomment -%}
-  {%- assign all_schedules = site.data.schedules_overview -%}
+  {%- assign all_schedules = site.data.schedules_table -%}
   <div class="d-flex justify-content-between align-items-center gap-3 mb-4 flex-wrap">
     {%- if page.previous_id -%}
       {%- assign prev_label = page.previous_id -%}
@@ -61,7 +61,7 @@ layout: base
     <div class="flex-grow-1 text-center" style="max-width: 320px;">
       <label class="form-label visually-hidden" for="schedule-selector">Jump to schedule</label>
       <select id="schedule-selector" class="form-select form-select-sm d-inline-block" style="max-width: 100%;">
-        {%- assign schedule_list = site.data.schedules_overview | sort: 'start_date' -%}
+        {%- assign schedule_list = site.data.schedules_table | sort: 'start_date' -%}
         {%- for sched in schedule_list -%}
           <option value="{{ '/schedules/' | append: sched.id | append: '/' | relative_url }}"
                   {% if sched.id == page.id %}selected{% endif %}>
@@ -313,6 +313,7 @@ layout: base
           map.addControl(new maplibregl.NavigationControl({showCompass: false}));
       });
   }
+
   document.addEventListener('DOMContentLoaded', () => {
       const selector = document.getElementById('schedule-selector');
       if (!selector) return;

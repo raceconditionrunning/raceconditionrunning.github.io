@@ -25,13 +25,13 @@ MUNGED_ROUTES := \
 	$(AGG_GEOJSON_ROUTES_ALL)
 
 # tables for page generation from Jekyll templates
-ROUTES_YML    := $(DATA)/routes.yml
-SCHEDULES_YML := $(DATA)/schedules_overview.yml
+ROUTES_YML := $(DATA)/routes.yml
+SCHEDS_YML := $(DATA)/schedules_table.yml
 
 # all tables for page generation from Jekyll templates
 PAGE_TABLES := \
 	$(ROUTES_YML) \
-	$(SCHEDULES_YML)
+	$(SCHEDS_YML)
 
 TRANSIT_DATA = routes/transit_data
 TRANSIT_DATA_CSV = $(wildcard routes/transit_data/*.csv)
@@ -62,7 +62,7 @@ $(ROUTES_YML): _bin/make_routes_table.py $(ROUTES_NORMGPX)
 routes-yml: $(ROUTES_YML)
 
 # build main "schedules database" YAML file from all quarter schedule files
-$(SCHEDULES_YML): _bin/make_schedules_table.py $(AGG_GEOJSON_ROUTES_QTR)
+$(SCHEDS_YML): _bin/make_schedules_table.py $(AGG_GEOJSON_ROUTES_QTR)
 	uv run python3 $< \
 	  --schedules-dir $(DATA)/schedules \
 	  --aggregates-dir $(AGG_GEOJSON_DIR) \
@@ -70,7 +70,7 @@ $(SCHEDULES_YML): _bin/make_schedules_table.py $(AGG_GEOJSON_ROUTES_QTR)
 
 # alias to make schedules YAML
 .PHONY: schedules-yml
-schedules-yml: $(SCHEDULES_YML)
+schedules-yml: $(SCHEDS_YML)
 
 # generate ical from schedule YAML, also generates rcc_weekends.ics
 rcc.ics: _bin/mkical.py $(ROUTES_YML)
