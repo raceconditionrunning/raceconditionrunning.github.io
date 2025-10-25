@@ -140,13 +140,14 @@ tr:has(+ tr) td {
 }
 
 .route-map-popover img {
-  max-width: 80vw;
+  max-width: 75vw;
+  max-height: 50vh;
   height: auto;
   display: block;
 }
 
 .schedule-table .route-map-popover img {
-  max-width: min(36rem, 80vw);
+  max-width: min(36rem, 75vw);
 }
 
 :target {
