@@ -136,6 +136,7 @@ add_h1: true
                         const container = document.createElement("div");
                         container.innerHTML = `
       <a href="${route.id}/"
+         class="route-preview-map-link"
          title="${route.id}"
          popovertarget="${popoverId}">
         ${value}
@@ -143,17 +144,12 @@ add_h1: true
       <div id="${popoverId}"
            class="route-map-popover"
            popover>
-        <img src="{{ '/img/routes/' | absolute_url }}${route.id}.jpg"
+        <img src="{{ '/img/routes/' | relative_url }}${route.id}.jpg"
              alt="${route.name} map"
              class="route-image"
              loading="lazy" />
       </div>
     `;
-                        const link = container.querySelector('a');
-                        const popover = container.querySelector('.route-map-popover');
-                        link.addEventListener('mouseover', () => popover.showPopover());
-                        link.addEventListener('mouseout', () => popover.hidePopover());
-
                         return container;
                     }
                 },

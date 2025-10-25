@@ -127,21 +127,52 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.bundle.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-    // Schedule table popovers on homepage and lore page
-    document.addEventListener("DOMContentLoaded", function() {
-        const popover = document.querySelectorAll("[popovertarget]");
+    (function() {
+        const GUTTER = 8;
 
-        popover.forEach((e) => {
-            const target = document.querySelector("#" + e.getAttribute("popovertarget"));
-            e.addEventListener("mouseover",()=>{
-                target.showPopover();
-            });
+        function getTarget(trigger) {
+            const targetId = trigger.getAttribute("popovertarget");
+            if (!targetId) {
+                return null;
+            }
+            return document.getElementById(targetId);
+        }
 
-            e.addEventListener("mouseout",()=>{
-                target.hidePopover();
-            });
-        });
-    });
+        function positionPopover(trigger, popover) {
+            const rect = trigger.getBoundingClientRect();
+            const left = Math.max(GUTTER, Math.min(rect.left, window.innerWidth - GUTTER));
+            popover.style.left = `${left}px`;
+            popover.style.top = `${rect.bottom + GUTTER}px`;
+        }
+
+        function handleMouseOver(event) {
+            const trigger = event.target.closest("[popovertarget]");
+            if (!trigger || trigger.contains(event.relatedTarget)) {
+                return;
+            }
+            const popover = getTarget(trigger);
+            if (!popover) {
+                return;
+            }
+            positionPopover(trigger, popover);
+            popover.showPopover();
+        }
+
+        function handleMouseOut(event) {
+            const trigger = event.target.closest("[popovertarget]");
+            if (!trigger || trigger.contains(event.relatedTarget)) {
+                return;
+            }
+            const popover = getTarget(trigger);
+            if (!popover) {
+                return;
+            }
+            popover.hidePopover();
+        }
+
+        document.addEventListener("mouseover", handleMouseOver);
+        document.addEventListener("mouseout", handleMouseOut);
+    })();
 </script>
 </body>
 </html>

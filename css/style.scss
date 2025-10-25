@@ -125,13 +125,28 @@ tr:has(+ tr) td {
   padding-bottom: .25rem;
 }
 
-:popover-open {
-  position: absolute;
+.route-map-popover {
+  pointer-events: none;
+}
+
+.route-map-popover:popover-open {
+  position: fixed;
   inset: unset;
   border: 1px solid gray;
+  background-color: var(--bs-body-bg);
+  padding: .25rem;
+  z-index: 1000;
+  box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,.35);
 }
-:popover-open img {
+
+.route-map-popover img {
   max-width: 80vw;
+  height: auto;
+  display: block;
+}
+
+.schedule-table .route-map-popover img {
+  max-width: min(36rem, 80vw);
 }
 
 :target {

@@ -45,7 +45,10 @@
         {% endif %}
         <td class="{{part-cancelled-class}}">
             {% if plan.route_id %}
-            <a href="{{site.baseurl}}/routes/{{ plan.route_id }}/" title="{{ plan.route_id }}" popovertarget="map-popover-{{run.date | slugify}}-part-{{ forloop.index}}">{{route.name}}</a>
+            <a href="{{site.baseurl}}/routes/{{ plan.route_id }}/"
+               class="route-preview-map-link"
+               title="{{ plan.route_id }}"
+               popovertarget="map-popover-{{run.date | slugify}}-part-{{ forloop.index}}">{{route.name}}</a>
             <div id="map-popover-{{run.date | slugify}}-part-{{ forloop.index}}" class="route-map-popover" popover>
                 <img src="{{ '/img/routes/' | append: plan.route_id | append: '.jpg' | relative_url }}" alt="{{ route.name }} map" class="route-image" loading="lazy"/>
             </div>
