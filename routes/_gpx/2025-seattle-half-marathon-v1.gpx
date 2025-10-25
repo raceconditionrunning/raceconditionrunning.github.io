@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running" xmlns:rcr="http://raceconditionrunning.com/extensions">
   <metadata>
-    <name>2025-seattle-half-marathon</name>
-    <desc>2025 Seattle Half Marathon (13.1 mi)</desc>
+    <name>2025-seattle-half-marathon v1</name>
+    <desc>2025 Seattle Half Marathon v1 (13.1 mi)</desc>
     <link href="https://raceconditionrunning.com/routes/2025-seattle-half-marathon">
-      <text>Race Condition Running: 2025 Seattle Half Marathon</text>
+      <text>2025 Seattle Half Marathon (v1)</text>
     </link>
     <author>
       <name>Race Condition Running</name>
@@ -22,8 +22,8 @@
     </extensions>
   </metadata>
   <trk>
-    <name>2025-seattle-half-marathon</name>
-    <desc>2025 Seattle Half Marathon (13.1 mi)</desc>
+    <name>2025-seattle-half-marathon-v1</name>
+    <desc>2025 Seattle Half Marathon v1 (13.1 mi)</desc>
     <trkseg>
       <trkpt lat="47.62207" lon="-122.34782"><ele>31.22</ele></trkpt>
       <trkpt lat="47.62207" lon="-122.34588"><ele>29.49</ele></trkpt>
