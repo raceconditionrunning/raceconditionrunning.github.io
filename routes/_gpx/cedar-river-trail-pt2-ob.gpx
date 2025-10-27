@@ -2,9 +2,9 @@
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running" xmlns:rcr="http://raceconditionrunning.com/extensions">
   <metadata>
     <name>cedar-river-trail-pt2-ob</name>
-    <desc>Cedar River Trail Odyssey Part 2 (12.3 mi)</desc>
+    <desc>OB: Cedar River Trail Odyssey Part 2 (12.3 mi)</desc>
     <link href="https://raceconditionrunning.com/routes/cedar-river-trail-pt2-ob">
-      <text>Race Condition Running: Cedar River Trail Odyssey Part 2</text>
+      <text>Race Condition Running: OB: Cedar River Trail Odyssey Part 2</text>
     </link>
     <author>
       <name>Race Condition Running</name>
@@ -20,7 +20,7 @@
   </metadata>
   <trk>
     <name>cedar-river-trail-pt2-ob</name>
-    <desc>Cedar River Trail Odyssey Part 2 (12.3 mi)</desc>
+    <desc>OB: Cedar River Trail Odyssey Part 2 (12.3 mi)</desc>
     <trkseg>
       <trkpt lat="47.46557" lon="-122.13815"><ele>32.63</ele></trkpt>
       <trkpt lat="47.46557" lon="-122.13809"><ele>32.48</ele></trkpt>
