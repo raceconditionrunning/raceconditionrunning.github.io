@@ -884,6 +884,53 @@
         "transit": "Light Rail to Shoreline North Station stop",
         "reachability": 2
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.13110723362486,
+          47.68063949598396
+        ]
+      },
+      "properties": {
+        "id": "RedCommCtr",
+        "name": "Redmond Senior & Community Center",
+        "maps_url": "https://maps.app.goo.gl/yaQYeeT7AuTLMg8d7"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.1185709041739,
+          47.671939756771145
+        ]
+      },
+      "properties": {
+        "id": "RedDowntown",
+        "name": "Downtown Redmond Station",
+        "maps_url": "https://maps.app.goo.gl/fiaAzikhrv1Yjt8p9",
+        "transit": "Light Rail to Downtown Redmond Station",
+        "reachability": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.05979530415675,
+          47.55296726925926
+        ]
+      },
+      "properties": {
+        "id": "SammamishSoccer",
+        "name": "Lake Sammamish Soccer Fields",
+        "maps_url": "https://maps.app.goo.gl/wK62PE3aHQfmXwfN7"
+      }
     }
   ]
 }

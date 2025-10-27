@@ -48,9 +48,9 @@
 
 - date: "2026-03-07"
   plan:
-    - time: "8:30"
-      route:
-        name: TBD
+    - time: "7:30"
+      route_id: 2026-lake-sammamish-half
+      notes: "https://www.orcarunning.com/lake-sammamish-half/"
 
 - date: "2026-03-14"
   plan:
