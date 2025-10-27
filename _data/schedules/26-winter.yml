@@ -60,9 +60,9 @@
 
 - date: "2026-03-21"
   plan:
-    - time: "8:30"
-      route:
-        name: TBD
+    - time: "9:30"
+      route_id: cedar-river-trail-pt2-ob
+      notes: "Car pool to start from Rainier Beach station at 9:00am"
 
 - date: "2026-03-28"
   plan:

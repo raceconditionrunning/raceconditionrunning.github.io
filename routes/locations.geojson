@@ -931,6 +931,21 @@
         "name": "Lake Sammamish Soccer Fields",
         "maps_url": "https://maps.app.goo.gl/wK62PE3aHQfmXwfN7"
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.13820688033718,
+          47.465557173579114
+        ]
+      },
+      "properties": {
+        "id": "ElliotCRT",
+        "name": "Cedar River Trail Odyssey - Point Elliott",
+        "maps_url": "https://maps.app.goo.gl/CtU3opajMTjFKQ2X7"
+      }
     }
   ]
 }
