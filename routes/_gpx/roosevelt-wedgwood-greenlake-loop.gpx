@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running" xmlns:rcr="http://raceconditionrunning.com/extensions">
   <metadata>
-    <name>roosevelt-wedgwood-greenlake</name>
-    <desc>Roosevelt, Wedgwood, Greenlake (6.8 mi)</desc>
-    <link href="https://raceconditionrunning.com/routes/roosevelt-wedgwood-greenlake">
+    <name>roosevelt-wedgwood-greenlake-loop</name>
+    <desc>Roosevelt, Wedgwood, Greenlake Loop (6.8 mi)</desc>
+    <link href="https://raceconditionrunning.com/routes/roosevelt-wedgwood-greenlake-loop">
       <text>Race Condition Running: Roosevelt, Wedgwood, Greenlake</text>
     </link>
     <author>
@@ -20,8 +20,8 @@
     </extensions>
   </metadata>
   <trk>
-    <name>roosevelt-wedgwood-greenlake</name>
-    <desc>Roosevelt, Wedgwood, Greenlake (6.8 mi)</desc>
+    <name>roosevelt-wedgwood-greenlake-loop</name>
+    <desc>Roosevelt, Wedgwood, Greenlake Loop (6.8 mi)</desc>
     <trkseg>
       <trkpt lat="47.67602" lon="-122.31578">
         <ele>66.5</ele>

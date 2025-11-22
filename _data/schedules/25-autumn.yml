@@ -73,10 +73,9 @@
 - date: "2025-11-22"
   plan:
     - time: "9:45"
-      route_id: roosevelt-wedgwood-greenlake
+      route_id: roosevelt-wedgwood-greenlake-loop
       notes: "Some RCR members may join SGLRG for their 7:45am run at Green Lake beforehand"
       
-
 - date: "2025-11-29"
   plan:
     - time: "10:30"
