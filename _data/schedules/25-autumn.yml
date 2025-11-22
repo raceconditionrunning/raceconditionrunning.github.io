@@ -73,10 +73,7 @@
 - date: "2025-11-22"
   plan:
     - time: "9:45"
-      route:
-        name: Roosevelt, Wedgwood Rock, Green Lake Loop
-        map: https://onthegomap.com/s/u6lmhb0b
-        distance_mi: 6.8
+      route_id: roosevelt-wedgwood-greenlake
       notes: "Some RCR members may join SGLRG for their 7:45am run at Green Lake beforehand"
       
 
