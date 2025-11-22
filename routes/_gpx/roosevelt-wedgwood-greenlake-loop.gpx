@@ -14,7 +14,6 @@
     </author>
     <extensions>
       <rcr:ascent>430</rcr:ascent>
-      <rcr:deprecated>true</rcr:deprecated>
       <rcr:map>https://onthegomap.com/s/u6lmhb0b</rcr:map>
       <rcr:last_updated>2025-11-22</rcr:last_updated>
     </extensions>
