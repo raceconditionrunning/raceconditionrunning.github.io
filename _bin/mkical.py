@@ -59,6 +59,8 @@ def main():
     for run in sched:
         date = datetime.strptime(run['date'], '%Y-%m-%d')
         phases = run['plan']
+        # Maybe something here?
+        # total_dist = 0
         if 'cancelled' in run.keys():
             continue
         for i in range(len(phases)):
