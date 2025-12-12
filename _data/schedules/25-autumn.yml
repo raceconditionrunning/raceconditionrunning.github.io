@@ -100,4 +100,6 @@
   plan:
     - time: "9:30"
       route_id: cedar-river-trail-10-ob
-      notes: "Car pool to start from Rainier Beach station at 9:00am"
+      cancelled: "Early Thursday morning, the Cedar River exceeded its all-time major flooding record, reaching 17.22 feet, surpassing its previous 1990 record of 17.1 feet"
+    - time: "9:00"
+      route_id: gas-works-kotkins-pier-salmon-bay-loop
