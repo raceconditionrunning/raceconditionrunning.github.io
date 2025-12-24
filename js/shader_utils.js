@@ -155,3 +155,95 @@ float simplex_noise(vec2 v) {
   return 130.0 * dot(m, g);
 }
 `;
+
+
+export const noise_1 = /* glsl */ `
+//mini
+float noise1(float seed1,float seed2){
+    return(
+    fract(seed1+12.34567*
+          fract(100.*(abs(seed1*0.91)+seed2+94.68)*
+                fract((abs(seed2*0.41)+45.46)*
+                      fract((abs(seed2)+757.21)*
+                            fract(seed1*0.0171))))))
+    * 1.0038 - 0.00185;
+}`
+export const noise_2 = /* glsl */ `
+//2 seeds
+float noise2(float seed1,float seed2){
+    float buff1 = abs(seed1+100.94) + 1000.;
+    float buff2 = abs(seed2+100.73) + 1000.;
+    buff1 = (buff1*fract(buff2*fract(buff1*fract(buff2*0.63))));
+    buff2 = (buff2*fract(buff2*fract(buff1+buff2*fract(seed1*0.79))));
+    buff1 = noise1(buff1, buff2);
+    return(buff1 * 1.0038 - 0.00185);
+}
+`
+
+export const noise_3 = /* glsl */ `
+//3 seeds
+float noise2(float seed1,float seed2,float seed3){
+    float buff1 = abs(seed1+100.81) + 1000.3;
+    float buff2 = abs(seed2+100.45) + 1000.2;
+    float buff3 = abs(noise1(seed1, seed2)+seed3) + 1000.1;
+    buff1 = (buff3*fract(buff2*fract(buff1*fract(buff2*0.146))));
+    buff2 = (buff2*fract(buff2*fract(buff1+buff2*fract(buff3*0.52))));
+    buff1 = noise1(buff1, buff2);
+    return(buff1);
+}
+
+//3 seeds hard
+float noise3(float seed1,float seed2,float seed3){
+    float buff1 = abs(seed1+100.813) + 1000.314;
+    float buff2 = abs(seed2+100.453) + 1000.213;
+    float buff3 = abs(noise1(buff2, buff1)+seed3) + 1000.17;
+    buff1 = (buff3*fract(buff2*fract(buff1*fract(buff2*0.14619))));
+    buff2 = (buff2*fract(buff2*fract(buff1+buff2*fract(buff3*0.5215))));
+    buff1 = noise2(noise1(seed2,buff1), noise1(seed1,buff2), noise1(seed3,buff3));
+    return(buff1);
+}
+`
+
+export const DEFAULT_VERTEX_SHADER = /* glsl */ `#version 300 es
+
+in vec3 aPosition;
+
+void main() {
+  vec4 positionVec4 = vec4(aPosition, 1.0);
+  positionVec4.xy = positionVec4.xy * 2.0 - 1.0;
+  gl_Position = positionVec4;
+}`;
+
+// Debug shaders to test coordinate systems
+export const DEBUG_FRAG_UV = /* glsl */ `#version 300 es
+precision mediump float;
+uniform vec2 resolution;
+out vec4 outColor;
+
+void main() {
+  vec2 uv = gl_FragCoord.xy / resolution.xy;
+  // Red-green gradient based on UV coordinates
+  // Bottom-left should be black, bottom-right red, top-left green, top-right yellow
+  outColor = vec4(uv.x, uv.y, 0.0, 1.0);
+}`;
+
+export const DEBUG_FRAG_CHECKER = /* glsl */ `#version 300 es
+precision mediump float;
+uniform vec2 resolution;
+out vec4 outColor;
+
+void main() {
+  vec2 uv = gl_FragCoord.xy / resolution.xy;
+  // 8x8 checkerboard pattern
+  float checker = mod(floor(uv.x * 8.0) + floor(uv.y * 8.0), 2.0);
+  outColor = vec4(vec3(checker), 1.0);
+}`;
+
+export const DEBUG_FRAG_SOLID = /* glsl */ `#version 300 es
+precision mediump float;
+out vec4 outColor;
+
+void main() {
+  // Just a solid cyan to confirm shader is running
+  outColor = vec4(0.0, 1.0, 1.0, 1.0);
+}`;

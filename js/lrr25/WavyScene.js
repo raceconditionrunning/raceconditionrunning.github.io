@@ -2,17 +2,7 @@
  * Originally By Alex Harri (https://alexharri.com/blog/webgl-gradients)
  * Shamelessly stolen and tweaked.
  */
-import { noiseUtils, simplex_noise } from "../shader_utils.js";
-
-const DEFAULT_VERTEX_SHADER = /* glsl */ `#version 300 es
-
-in vec3 aPosition;
-
-void main() {
-  vec4 positionVec4 = vec4(aPosition, 1.0);
-  positionVec4.xy = positionVec4.xy * 2.0 - 1.0;
-  gl_Position = positionVec4;
-}`;
+import { noiseUtils, simplex_noise, DEFAULT_VERTEX_SHADER } from "../shader_utils.js";
 
 const createFragmentShader = (options) => {
     const {
@@ -235,15 +225,15 @@ export let WavyScene = gradientColors => p => {
         waveShader = p.createShader(DEFAULT_VERTEX_SHADER, shader['shader']);
         // First call builds the shader program
         p.shader(waveShader);
-        
+
         // Start with canvas invisible for fade-in effect
         canvas.elt.style.opacity = '0';
         canvas.elt.style.transition = 'opacity 0.8s ease-in-out';
-        
+
         // Set up intersection observer to pause when not visible
         setupVisibilityObserver();
     }
-    
+
     function setupVisibilityObserver() {
         if ('IntersectionObserver' in window) {
             observer = new IntersectionObserver((entries) => {
@@ -258,7 +248,7 @@ export let WavyScene = gradientColors => p => {
             }, {
                 threshold: 0.1 // Trigger when 10% of element is visible
             });
-            
+
             observer.observe(p._userNode);
         }
     }
@@ -279,7 +269,7 @@ export let WavyScene = gradientColors => p => {
 
         p.clear();
         p.image(outBuffer, 0, 0, p._userNode.offsetWidth, -p._userNode.offsetHeight);
-        
+
         // Fade in after first successful render
         if (!hasRenderedFirstFrame) {
             hasRenderedFirstFrame = true;
@@ -293,7 +283,7 @@ export let WavyScene = gradientColors => p => {
         p.resizeCanvas(width, height, true);
         outBuffer.resize(width, height);
     }
-    
+
     // Cleanup when p5 instance is removed
     p.remove = function() {
         if (observer) {

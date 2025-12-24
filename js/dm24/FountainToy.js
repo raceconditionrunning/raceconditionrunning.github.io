@@ -1,3 +1,5 @@
+import {DEFAULT_VERTEX_SHADER, noise_1, noise_2, noise_3, simplex_noise, noiseUtils} from "../shader_utils.js";
+
 class AudioSprite {
     constructor(settingsObj) {
         this.src = settingsObj.src;
@@ -32,6 +34,138 @@ class AudioSprite {
         return sampleSource
     }
 }
+
+function createWaveFragmentShader(options) {
+    let uniforms = {};
+    let ripple_frag = /* glsl */ `#version 300 es
+
+precision mediump float;
+uniform sampler2D previous;
+uniform sampler2D jets;
+uniform float radius;
+uniform float dampening;
+uniform float interactionRadius;
+uniform vec2 resolution;
+uniform vec3 mouse;
+uniform float time;
+
+out vec4 outColor;
+
+${noiseUtils}
+${simplex_noise}
+${noise_1}
+${noise_2}
+${noise_3}
+
+
+
+// Remixed from shadertoy: https://www.shadertoy.com/view/XsKGzK
+float jetNoise(vec2 xy) { return 0.7 * simplex_noise(vec3(xy, 0.003*time)); }
+float turbulentNoise(vec2 xy) { return 0.7 * simplex_noise(vec3(xy, 0.3*time)); }
+void main() {
+
+    vec2 uv = gl_FragCoord.xy / resolution.xy;
+
+    float pressure = texture(previous, uv).x;
+    float pVel = texture(previous, uv).y;
+
+    float up = texture(previous, uv + vec2(0, -1.0 / resolution.y)).r;
+    float down = texture(previous, uv + vec2(0, 1.0 / resolution.y)).r;
+    float left = texture(previous, uv + vec2(-1.0 / resolution.x, 0)).r;
+    float right = texture(previous, uv + vec2(1.0 / resolution.x, 0)).r;
+
+    // Circular fountain boundary
+    if (length(uv - vec2(0.5,0.5)) > radius / resolution.x) {
+        //outColor = vec4(uv, 0.0,0.0);
+        outColor = vec4(0.0);
+        return;
+    }
+
+    // Apply horizontal wave function
+    pVel += dampening * (-2.0 * pressure + right + left) / 4.0;
+    // Apply vertical wave function (these could just as easily have been one line)
+    pVel += dampening * (-2.0 * pressure + up + down) / 4.0;
+
+    // Change pressure by pressure velocity
+    pressure += dampening * pVel;
+
+    // "Spring" motion. This makes the waves look more like water waves and less like sound waves.
+    pVel -= 0.005 * dampening * pressure;
+
+    // Velocity damping so things eventually calm down
+    pVel *= dampening;
+
+    // Pressure damping to prevent it from building up forever.
+    pressure *= dampening;
+
+    // Jet turbulence
+    float jetsValue = texture(jets, vec2(uv.x, uv.y)).w;
+    if (jetsValue > 0.0) {
+        vec2 step = vec2(1.3, 1.7);
+        // Can't have large low frequency components or we'll get pressure pulses across the jet map
+        float n = jetNoise(uv * 10.0);
+        n += 0.5 * jetNoise(uv * 2.0 - step);
+        pressure += 0.1 * jetsValue * n;
+        pVel += 0.1 * jetsValue * n;
+    } else {
+        float n = turbulentNoise(uv * 40.0);
+        pressure += 0.05 * n;
+        //pVel += 0.005 * n;
+    }
+
+    // Make ripples while mouse is down
+    if (mouse.z > 0.0) {
+        // Use smoothstep to interpolate the pressure, just for pixels 0.0-0.005 away from click
+        pressure += 1.0 - smoothstep(0.0, interactionRadius, distance(uv, mouse.xy));
+    }
+
+    //x = pressure. y = pressure velocity. Z and W = X and Y gradient
+    outColor = vec4(pressure, pVel, (right - left) / 2.0, (up - down) / 2.0);
+
+    //outColor = vec4(uv.xy, 1.0, 1.0);
+    //outColor = vec4(texture(jets, uv).xyzw);
+    //outColor = vec4(mouse.xyz, 0.5);
+    //outColor = vec4(texture(previous, uv).r, texture(previous, uv).g, texture(previous, uv).b, dampening);
+    //outColor = vec4(current, current, current, 1.0);
+}
+`;
+    return {shader: ripple_frag, uniforms: {}};
+}
+
+function createGlintFragmentShader(options) {
+    let uniforms = {};
+    let glint_frag = /* glsl */ `#version 300 es
+
+precision mediump float;
+uniform sampler2D data;
+uniform vec2 resolution;
+uniform float radius; //pixels
+out vec4 outColor;
+
+void main() {
+    vec2 uv = gl_FragCoord.xy / resolution.xy;
+
+    vec4 datum = texture(data, uv);
+    // Sunlight glint
+    vec3 normal = normalize(vec3(-datum.z, 0.2, -datum.w));
+    outColor = vec4(1) * pow(max(0.0, dot(normal, normalize(vec3(-3, 20, 3)))), 1.0);
+    outColor = 1.0 - outColor;
+    // Circular fountain boundary
+    if (length(uv - vec2(0.5,0.5)) > radius / resolution.x) {
+        //outColor = vec4(uv, 0.0,0.0);
+        outColor = vec4(0);
+        return;
+    }
+    //outColor = vec4(0.0,0.0,uv);
+    //outColor[3] = 1.0;
+    //outColor = datum;
+}
+
+`;
+    return {shader: glint_frag, uniforms: {}};
+}
+
+
 
 export let FountainToy = rootUrl => p => {
     let width;
@@ -72,8 +206,12 @@ export let FountainToy = rootUrl => p => {
         });
         jetsTexture = await p.loadImage(`${rootUrl}/img/dm24/jets.png`)
         startStamp = Date.now() / 1000.0
-        rippleShader = await p.loadShader(`${rootUrl}/js/dm24/ripple.vert`, `${rootUrl}/js/dm24/ripple.frag`);
-        glintShader = await p.loadShader(`${rootUrl}/js/dm24/ripple.vert`, `${rootUrl}/js/dm24/glint.frag`);
+
+        const waveFragShader = createWaveFragmentShader({});
+        rippleShader = p.createShader(DEFAULT_VERTEX_SHADER, waveFragShader['shader']);
+        const glintFragShader = createGlintFragmentShader({});
+        glintShader = p.createShader(DEFAULT_VERTEX_SHADER, glintFragShader['shader']);
+
         //baseWaterShader = p.loadShader(`${rootUrl}/js/fountain/ripple.vert`, `${rootUrl}/js/fountain/flowNoise.frag`);
 
         width = p._userNode.offsetWidth;
@@ -86,13 +224,13 @@ export let FountainToy = rootUrl => p => {
         // https://stackoverflow.com/questions/28827511/webgl-ios-render-to-floating-point-texture
 
         // We ping-pong these to run sim forward from previous state
-        bufferA = p.createFramebuffer({format: p.HALF_FLOAT, width: simRes, height: simRes, density: 1, depth: false})
-        bufferB = p.createFramebuffer({format: p.HALF_FLOAT, width: simRes, height: simRes, density: 1, depth: false})
+        bufferA = p.createFramebuffer({format: p.HALF_FLOAT, width: simRes, height: simRes, density: 1, depth: false, antialias: false});
+        bufferB = p.createFramebuffer({format: p.HALF_FLOAT, width: simRes, height: simRes, density: 1, depth: false, antialias: false});
         activeBuffer = bufferA
         inactiveBuffer = bufferB
         // Table of supported texture types: https://webgl2fundamentals.org/webgl/lessons/webgl-data-textures.html
         // Mobile targets usually can't render float textures. This buffer's shader needs to process to RGBA
-        outBuffer = p.createFramebuffer({format: p.UNSIGNED_BYTE, width: simRes, height: simRes, density: 1, depth: false})
+        outBuffer = p.createFramebuffer({format: p.UNSIGNED_BYTE, width: simRes, height: simRes, density: 1, depth: false, antialias: false});
         p.imageMode(p.CENTER)
         //testImage = p.loadImage("/img/rcc-logo.png")
         p.noStroke();
@@ -217,7 +355,7 @@ export let FountainToy = rootUrl => p => {
         } else {
             rippleShader.setUniform("mouse", [0, 0, false])
         }
-        p.rect(0, 0, simRes, -simRes);
+        p.rect(0, 0, simRes, simRes);
         activeBuffer.end()
 
 
@@ -227,11 +365,12 @@ export let FountainToy = rootUrl => p => {
         glintShader.setUniform("data", activeBuffer);
         glintShader.setUniform("resolution", [simRes, simRes]);
         glintShader.setUniform("radius", simRes * radiusPercentage)
-        p.rect(0, 0, simRes, -simRes)
+        p.rect(0, 0, simRes, simRes)
         outBuffer.end()
 
+        p.resetShader()
         p.clear()
-        p.image(outBuffer, 0, 0, p._userNode.offsetWidth, -p._userNode.offsetHeight)
+        p.image(outBuffer, 0, 0, p._userNode.offsetWidth, p._userNode.offsetHeight)
 
     }
 
