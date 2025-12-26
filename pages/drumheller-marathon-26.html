@@ -1,0 +1,1516 @@
+---
+title: Drumheller Marathon 2026
+description: Marathon at the University of Washington's iconic Drumheller Fountain on June 6th, 2026. Choose from 219 laps for the marathon or 109 laps for the half
+permalink: drumheller-marathon-26/
+redirect_from:
+- /dhm/
+- /drumheller-half/
+- /dm/
+- /drumheller-marathon/
+- /dm26/
+registration_link: https://forms.gle/uEAhyLzrcbKWSaRv7
+shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
+---
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ page.title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ page.description }}">
+    <link rel="canonical" href="{{ page.url | absolute_url }}" />
+    <meta property="og:image" content="{{ '/img/dm26/og-banner.jpg' | absolute_url }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ page.url | absolute_url }}">
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:description" content="{{ page.description }}">
+    <link href="{{ site.baseurl }}/img/dm24/favicon.png" rel="icon" type="image/png"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@0,100..900;1,100..900&family=Prompt:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator.min.css" integrity="sha256-pG2AUZRMdFyuinl2tPudk9iU0gh2pFIcxPbwNc/vUuo=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator_bootstrap5.min.css" integrity="sha256-H1gQqBIR3L9enXuoNfFASj+QdGSEQIAloT7c4FXjNzc=" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe-dynamic-caption-plugin/1.2.7/photoswipe-dynamic-caption-plugin.min.css" integrity="sha512-x20LXbTUxAMuniBAuSyDGScWaoCxvZJ8m0tbJCRtpPkvPgsb2kStG9ZhDQKHj5mDWaKFOP7TadAZ4KVAyFJwNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Event",
+            "name": "{{ page.title }}",
+            "startDate": "2026-06-06T05:30:00-07:00",
+            "endDate": "2026-06-06T11:00:00-07:00",
+            "location": {
+                "@type": "Place",
+                "name": "Drumheller Fountain, University of Washington",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Seattle",
+                    "addressRegion": "WA",
+                    "postalCode": "98195",
+                    "addressCountry": "US"
+                }
+            },
+            "description": "{{ page.description }}",
+            "image": {
+                "@type": "ImageObject",
+                "url": "{{ '/img/dm26/og-banner.jpg' | absolute_url }}",
+                "height": "630",
+                "width": "1200"
+            },
+            "url": "{{ page.url | absolute_url }}",
+            "eventStatus": "https://schema.org/EventScheduled",
+            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+            "organizer": {
+                "@type": "Organization",
+                "name": "{{ site.title }}",
+                "url": "{{ site.url }}"
+            }
+        }
+    </script>
+    <script type="importmap">
+        {
+          "imports": {
+            "bootstrap": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.esm.min.js",
+            "d3": "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm",
+            "lit": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
+            "lit-html": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
+            "lit-element": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
+            "p5": "https://cdn.jsdelivr.net/npm/p5@2.1.2/lib/p5.esm.min.js",
+            "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
+            "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
+            "photoswipe-dynamic-caption": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe-dynamic-caption-plugin/1.2.7/photoswipe-dynamic-caption-plugin.esm.min.js",
+            "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js",
+            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.3.0/js/tabulator_esm.min.js"
+          }
+        }
+    </script>
+    {% include analytics.html %}
+    <style>
+        :root {
+            --branding-color: #3CB6BF;
+            --branding-color-light: #aedce6;
+            --branding-color-complement: #BD81C6;
+            --branding-color-complement-light: #dface6;
+            --branding-secondary-color: #777;
+            --branding-secondary-color-light: #444;
+            /*--bs-body-font-size: 18px; This is 1rem by default */
+            --bs-body-line-height: 32px;
+            --bs-border-radius: 1.5rem;
+            font-size: 18px;
+        }
+        body {
+            margin: 0;
+            --bs-body-color: #eee;
+            --bs-link-color-rgb: 235, 235, 235;
+            --bs-link-hover-color-rgb: 195, 195, 195;
+            --bs-body-bg: #000; /* Off-black renders too bright in Safari */
+            --bs-body-font-family: 'Petrona', 'Yrsa', serif;
+            font-size-adjust: 0.5;
+            --bs-body-font-weight: 400;
+            font-optical-sizing: auto;
+            --sans-font-family: "Avenir Next", "Prompt", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        }
+
+        ::selection {
+            background: var(--branding-secondary-color);
+        }
+
+        hr {
+            width: 6rem;
+            margin: 4rem auto;
+            display: block;
+            border: 1px solid #DDD;
+        }
+
+        ul, ol {
+            /* Don't jam bullet at edge of screen on mobile */
+            padding-left: 1rem
+        }
+
+        @media screen and (min-width: 700px) {
+            ul:not(.no-hanging) {
+                padding-left: 0;
+            }
+        }
+
+        figure {
+            max-width: 1200px;
+            margin: 0 auto 2rem auto;
+        }
+
+        figure img {
+            width: 100%;
+        }
+
+        .grayscale {
+            filter: brightness(95%) grayscale(90%) contrast(115%);
+            transition: filter 0.3s;
+        }
+        .grayscale:hover {
+            filter: brightness(100%) grayscale(70%) contrast(115%);
+        }
+
+        .full-width {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 1rem
+        }
+
+        header {
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        section {
+            margin-bottom: 5rem;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--sans-font-family);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            font-family: var(--bs-body-font-family);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        a {
+            transition: text-shadow .3s, color .3s;
+        }
+        a:hover {
+            text-shadow: 0 0 1rem rgba(225, 131, 0, 1.0)
+        }
+
+        a.disabled {
+            color: gray;
+            pointer-events: none;
+        }
+
+        .duck-ramp::after {
+            content: "";
+            background-image: url("{{ site.baseurl }}/img/dm24/duck-icon.svg");
+            background-position: center center;
+            background-size: 1.75ex 1.75ex;
+            background-repeat: no-repeat;
+            display: inline;
+            margin-top: .2ex;
+            margin-left: 2px;
+            padding-left: 1.75ex;
+            vertical-align: middle;
+        }
+        .anchor-link {
+            padding: 0 .175rem;
+            font-weight: 400;
+            color: var(--branding-secondary-color);
+            text-decoration: none;
+            opacity: 0;
+            transition: color 0.15s ease-in-out,opacity 0.15s ease-in-out;
+        }
+
+        .anchor-link::after {
+            content: "#";
+        }
+
+        .anchor-link:focus, .anchor-link:hover, :hover > .anchor-link, :target .anchor-link {
+            text-decoration: none;
+            opacity: 1;
+        }
+
+        /* HERO */
+
+        #hero .display-text, #hero #overview {
+            opacity: 0;
+            animation: fade-in 1s ease forwards;
+            animation-delay: 3.4s;
+            color: #fff;
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Full screen mode */
+        html, body {
+            height: 100%;
+        }
+        #hero {
+            margin-bottom: 0;
+            overflow: hidden;
+            font-family: var(--sans-font-family);
+        }
+        #hero-mechanism {
+            width: 200px;
+            opacity: 1.0;
+        }
+        #hero .hero-container {
+            max-width: 80rem;
+            margin: 0 auto auto auto;
+            padding: clamp(.75rem,min(5vh, 10vw),3rem) 1rem;
+            overflow-x: clip; /* Allow underlay gradient to spill out */
+
+        }
+
+        #hero h1 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: clamp(.75rem,min(8vh, 8vw),20rem);
+            line-height: 0.8;
+        }
+
+        #hero {
+            height: 100%;
+            position: relative;
+        }
+
+        #hero-toy {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #020202;
+            z-index: -1;
+            animation: fade-in 1s ease forwards;
+            opacity: 0;
+            animation-delay: 1s;
+        }
+
+        #overlay {
+
+        }
+
+        #hero-toy::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%; /* Adjust to your element size */
+            height: 100%; /* Adjust to your element size */
+            background: radial-gradient(circle, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 1) 98%), linear-gradient(transparent 95%, black);
+            pointer-events: none; /* Ensures it doesn't block interaction with underlying content */
+        }
+
+        /* Interactive fountain */
+
+
+        /* Suppress loading text shown when p5.js is used with a preload */
+        #p5_loading {
+            display: none;
+        }
+
+        .display-text {
+            font-size: clamp(.75rem,min(4vh, 4vw),8rem);
+            line-height: 1.3;
+            font-weight: 300;
+            --shadow: black;
+            text-shadow: .25px .25px 0 var(--shadow), .5px .5px 0 var(--shadow), .75px .75px 0 var(--shadow), 1px 1px 0 var(--shadow),
+            1.25px 1.25px 0 var(--shadow), 1.5px 1.5px 0 var(--shadow), 1.75px 1.75px 0 var(--shadow), 2px 2px 0 var(--shadow),
+            2.25px 2.25px 0 var(--shadow), 2.5px 2.5px 0 var(--shadow), 2.75px 2.75px 0 var(--shadow), 3px 3px 0 var(--shadow),
+            3.25px 3.25px 0 var(--shadow), 3.5px 3.5px 0 var(--shadow), 3.75px 3.75px 0 var(--shadow), 4px 4px 0 var(--shadow),
+            4.25px 4.25px 0 var(--shadow), 4.5px 4.5px 0 var(--shadow), 4.75px 4.75px 0 var(--shadow), 5px 5px 0 var(--shadow),
+            5.25px 5.25px 0 var(--shadow), 5.5px 5.5px 0 var(--shadow), 5.75px 5.75px 0 var(--shadow), 6px 6px 0 var(--shadow),
+            6.25px 6.25px 0 var(--shadow), 6.5px 6.5px 0 var(--shadow), 6.75px 6.75px 0 var(--shadow), 7px 7px 0 var(--shadow),
+            7.25px 3.25px 0 var(--shadow), 7.5px 7.5px 0 var(--shadow), 7.75px 7.75px 0 var(--shadow), 8px 8px 0 var(--shadow);
+        }
+        .display-text a {
+            color: #ddd;
+            transition: text-shadow .3s;
+            --shadow: black;
+            text-shadow: .25px .25px 0 var(--shadow), .5px .5px 0 var(--shadow), .75px .75px 0 var(--shadow), 1px 1px 0 var(--shadow);
+        }
+        .display-text a:hover {
+            --shadow: rgba(30, 30, 30, 1.0);
+            text-shadow: 1px 1px 0 var(--shadow), 2px 2px 0 var(--shadow);
+        }
+
+        .wavy-button, .wave-button:hover, .wave-button:visited, .wave-button:active {
+            color: white;
+        }
+        .wavy-button {
+            text-decoration-thickness: .5px;
+            text-decoration-style: wavy;
+            text-decoration-color: rgba(255,255,255,.3);
+            text-underline-offset: 2px;
+            transition: text-shadow .3s, text-decoration .3s, font-weight .3s;
+            text-shadow: 1px 1px 0px rgba(0, 0, 0, 0);
+        }
+
+        .wavy-button:hover {
+            text-shadow: .25px .25px 0px rgb(0, 239, 255, 0.5), .5px .5px 0px rgb(0, 239, 255, 0.5),.75px .75px 0px rgb(0, 239, 255, 0.5), 1px 1px 0px rgb(0, 239, 255, 0.5);
+        }
+
+        .wavy-button.complement-color:hover {
+            text-shadow: .25px .25px 0px rgb(224, 0, 255), .5px .5px 0px rgb(224, 0, 255), .75px .75px 0px rgb(224, 0, 255), 1px 1px 0px rgb(224, 0, 255);
+        }
+
+        .wavy-button.disabled {
+            text-decoration-color: var(--branding-color-light);
+        }
+
+        /* Section specific */
+
+
+        .imprint {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .imprint a {
+            text-decoration: none;
+            color: #333;
+            transition: .3s;
+        }
+
+        .imprint a:hover {
+            color: #bbb;
+        }
+
+        .imprint img {
+            width: 100px;
+            opacity: .5;
+            filter: invert();
+            transition: .3s;
+        }
+
+        .imprint:hover img {
+            opacity: .8;
+        }
+
+        #overview {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .lede {
+            font-style: italic;
+        }
+
+        #course-map {
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 1rem;
+            max-height: 95vh;
+            /* Max height works fine in FF, but Safari will
+       draw a full width white background box. Setting contain gets rid of the visible box, but the element
+       box remains too big and the border radius won't render...
+     */
+
+            object-fit: contain;
+        }
+
+        .accordion {
+            --bs-accordion-btn-focus-border-color: #bbb;
+            --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem var(--branding-secondary-color);
+            --bs-accordion-border-radius: .5rem;
+            --bs-accordion-inner-border-radius: .5rem;
+            --bs-accordion-body-padding-x: 1rem;
+            --bs-accordion-body-padding-y: .75rem;
+            --bs-accordion-btn-padding-x: 1rem;
+            --bs-accordion-btn-padding-y: .75rem;
+            --bs-accordion-bg: var(--bs-body-bg);
+            --bs-accordion-color: var(--bs-body-color);
+            --bs-accordion-active-color: var(--bs-emphasis-color);
+            --bs-accordion-active-bg: var(--branding-secondary-color-light);
+            --bs-accordion-btn-icon-width: 1rem;
+            --bs-accordion-border-color: #555;
+        }
+
+        .accordion-header button {
+            font-size: 21px;
+            font-family: var(--bs-body-font-family);
+            font-weight: 600;
+        }
+
+        .accordion-button::after {
+            filter: saturate(0%);
+        }
+
+
+        .blockquote {
+            font-style: italic;
+        }
+
+        .normal {
+            font-size: 1rem;
+        }
+
+        .blockquote-footer {
+            color: #888;
+        }
+
+        #epilogue {
+            margin-top: 4rem;
+            padding-top: 4rem;
+        }
+
+        #epilogue .container {
+            margin-bottom: 2rem;
+        }
+
+        #epilogue h1 {
+            margin-bottom: 2rem;
+        }
+
+        figure a img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            background-color: var(--bs-tertiary-bg);
+        }
+
+        /* Certs */
+
+        .cert-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+
+        .usatf-certificate {
+            font-size: .77rem;
+            font-family: var(--sans-font-family);
+            border: 2px solid var(--bs-secondary-color);
+            border-radius: .75rem;
+            display: inline-flex;
+            gap: 1rem;
+            line-height: 1.5;
+            flex-direction: row;
+            justify-content: center;
+            margin-bottom: 0;
+            padding: .75rem .75rem;
+            text-decoration: none;
+            color: var(--bs-secondary-color);
+            transition: .3s;
+        }
+
+        .usatf-certificate:hover {
+            color: var(--bs-body-color);
+            border: 2px solid var(--bs-body-color);
+            box-shadow: 0 0 10px var(--bs-secondary-color);
+        }
+
+        .usatf-certificate.full:hover {
+            border: 2px solid var(--branding-color);
+            box-shadow: 0 0 10px var(--branding-color);
+        }
+
+        .usatf-certificate.half:hover {
+            border: 2px solid var(--branding-color-complement);
+            box-shadow: 0 0 10px var(--branding-color-complement);
+        }
+
+        .usatf-certificate:hover img {
+            opacity: 1;
+        }
+
+        .usatf-certificate img {
+            height: 4rem;
+            opacity: .6;
+            transition: .3s;
+        }
+
+        .usatf-certificate .details {
+            align-self: center;
+        }
+
+        .usatf-certificate h2,
+        .usatf-certificate p {
+            font-size: inherit;
+            margin-bottom: 0;
+        }
+
+        /* Results */
+
+        .table {
+            background: transparent;
+            width: auto;
+            min-width: 200px;
+            line-height: 36px;
+            --bs-table-bg: var(--bs-dark-bg-subtle);
+        }
+
+        .table th {
+
+        }
+
+        .table tr td {
+            border-bottom-width: 0;
+        }
+
+        .table thead {
+            border-bottom-width: 1px;
+        }
+
+        .result-detail {
+            padding: 1rem;
+        }
+
+        lap-pace-chart {
+            width: 100%
+        }
+
+        lap-pace-chart rect {
+            transition: .15s;
+        }
+
+        lap-pace-chart .tick line {
+            color: white;
+            opacity: .5;
+        }
+
+        lap-pace-chart .minor {
+            opacity: .4;
+            color: white
+        }
+
+        lap-pace-chart .horizontal-grid {
+            color: white;
+            opacity: .5;
+        }
+
+        lap-pace-chart .data-bar {
+            fill: #777;
+            opacity: .9;
+            stroke: #aaa;
+            stroke-width: .5px;
+        }
+
+        lap-pace-chart .data-bar.extra {
+            fill: #555
+        }
+
+        lap-pace-chart .data-bar.highlighted {
+            fill: #999;
+        }
+
+        lap-pace-chart #flaglines line {
+            stroke: #ccc;
+            stroke-width: 1px
+        }
+
+        lap-pace-chart .finish-flag[data-lap-target='110'] line {
+            stroke: #BD81C6;
+        }
+
+        lap-pace-chart .finish-flag[data-lap-target='110'] polygon {
+            fill: #BD81C6;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10mi"] line {
+            stroke: #dc0000;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10mi"] polygon {
+            fill: #dc0000;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10k"] line {
+            stroke: #dc8400;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10k"] polygon {
+            fill: #dc8400;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="5k"] line {
+            stroke: #65b900;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="5k"] polygon {
+            fill: #65b900;
+        }
+
+        lap-pace-chart .finish-flag text {
+            font-family: var(--sans-font-family);
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .tabulator {
+            font-size: 1rem;
+        }
+
+        .tabulator,
+        .tabulator .tabulator-header .tabulator-col,
+        .tabulator .tabulator-header,
+        .tabulator .tabulator-tableholder .tabulator-table,
+        .tabulator .tabulator-footer {
+            background-color: transparent;
+        }
+
+        .tabulator-row.tabulator-group {
+            background-color: rgba(255, 255, 255, 0.075) !important;
+        }
+
+        .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs {
+            background-color: transparent !important;
+        }
+
+        .tabulator-row, .tabulator-row.tabulator-row-even {
+            background-color: transparent;
+        }
+
+        .tabulator-row.details-opened.tabulator-selectable,
+        .tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
+            transition: .2s;
+        }
+
+        .tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+            background-color: rgba(255, 255, 255, .3);
+        }
+
+        .tabulator-row.tabulator-selectable:hover {
+            background-color: rgba(255, 255, 255, .3);
+        }
+
+        .tabulator-row.details-opened.tabulator-selectable,
+        .tabulator-row.details-opened.tabulator-selectable:hover {
+            background-color: #111;
+        }
+
+        .tabulator .tabulator-header {
+            border-top: none;
+        }
+
+        .laps-table {
+            padding: 1rem;
+        }
+
+        .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-bottom {
+            border-top: 2px solid #999;
+        }
+
+        .laps-table.tabulator .tabulator-header {
+            border-bottom: 1px dashed #999;
+        }
+
+        .laps-table .tabulator-row {
+            border-bottom: 1px dashed #999;
+        }
+
+        .laps-table .tabulator-row .tabulator-cell {
+            padding: 4px;
+        }
+        .laps-table.tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-bottom {
+            border-top: 1px dashed #999;
+            border-bottom: none;
+        }
+
+        .tabulator-row.tabulator-group {
+            border-top: 1px dashed #999;
+            border-right: none;
+        }
+
+        .tabulator-row.tabulator-group:first-of-type {
+            /* Hide the "official laps" header */
+            display: none;
+        }
+
+        .laps-table .tabulator-footer {
+            border-top: 1px dashed #999;
+            border-bottom: none;
+        }
+
+        .tabulator-tableholder, .tabulator-table {
+            max-width: 100%;
+        }
+
+
+        .bib {
+            font-weight: 600;
+            background-color: black;
+            color: white;
+            font-family: var(--sans-font-family);
+            border-radius: .25rem;
+            display: inline-block;
+            padding: 0 .25rem;
+            font-size: .75rem;
+        }
+        .bib.full, .full.form-check-input:checked {
+            background-color: var(--branding-color);
+        }
+        .bib.half, .half.form-check-input:checked {
+            background-color: var(--branding-color-complement);
+        }
+
+        .full.form-check-input:checked {
+            background-color: var(--branding-color);
+            border-color: var(--branding-color)
+        }
+        .half.form-check-input:checked {
+            background-color: var(--branding-color-complement);
+            border-color: var(--branding-color-complement)
+        }
+
+        .full.form-check-input:focus {
+            border-color: var(--branding-color);
+            box-shadow: 0 0 0 .25rem var(--branding-color-light);
+        }
+
+        .half.form-check-input:focus {
+            border-color: var(--branding-color-complement);
+            box-shadow: 0 0 0 .25rem var(--branding-color-complement-light);
+        }
+
+        .form-control:focus {
+            border-color: var(--branding-color);
+            outline: 0;
+            box-shadow: 0 0 0 .25rem var(--branding-color-light);
+        }
+
+        .input-group-text {
+            background-color: var(--bs-gray-400);
+        }
+        .beta-badge {
+            font-size: .66rem;
+            vertical-align: top;
+            font-weight: 400;
+            border-radius: .25rem;
+        }
+
+        /* Results */
+
+        lap-pace-chart {
+            width: 100%
+        }
+
+        lap-pace-chart rect {
+            transition: .15s;
+        }
+
+        lap-pace-chart .tick line {
+            color: white;
+            opacity: .5;
+        }
+
+        lap-pace-chart .minor {
+            opacity: .4;
+            color: white
+        }
+
+        lap-pace-chart .horizontal-grid {
+            color: white;
+            opacity: .5;
+        }
+
+        lap-pace-chart .data-bar {
+            fill: #888;
+            opacity: .9;
+            stroke: #aaa;
+            stroke-width: .5px;
+        }
+
+        lap-pace-chart .data-bar.extra {
+            fill: #bbb
+        }
+
+        lap-pace-chart .data-bar.highlighted {
+            fill: #999;
+        }
+
+        lap-pace-chart #flaglines line {
+            stroke: #ccc;
+            stroke-width: 1px
+        }
+
+        lap-pace-chart .finish-flag[data-goal="26_2mi"] line {
+            stroke: var(--branding-color);
+        }
+
+        lap-pace-chart .finish-flag[data-goal="26_2mi"] polygon {
+            fill: var(--branding-color);
+        }
+
+        lap-pace-chart .finish-flag[data-goal="13_1mi"] line {
+            stroke: var(--branding-color-complement);
+        }
+
+        lap-pace-chart .finish-flag[data-goal="13_1mi"] polygon {
+            fill: var(--branding-color-complement);
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10mi"] line {
+            stroke: #dc0000;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10mi"] polygon {
+            fill: #dc0000;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10k"] line {
+            stroke: #dc8400;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10k"] polygon {
+            fill: #dc8400;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="5k"] line {
+            stroke: #65b900;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="5k"] polygon {
+            fill: #65b900;
+        }
+
+        lap-pace-chart .finish-flag text {
+            font-family: var(--sans-font-family);
+            font-weight: bold;
+            font-size: 16px;
+        }
+        /* Gallery */
+        .pswp-caption-content, .pswp__dynamic-caption {
+            font-weight: 300;
+        }
+    </style>
+</head>
+
+<body>
+
+<header id="hero" class="text-center d-flex justify-content-center flex-column">
+    <div id="overlay" class="d-flex w-100 h-100 position-absolute justify-content-center align-content-center">
+        <img id="hero-mechanism" src="{{ site.baseurl }}/img/dm24/jets.svg"/>
+    </div>
+    <div id="hero-toy">
+    </div>
+
+
+
+    <div class="hero-container">
+        <div class="display-text mb-4 mt-4">The <a href="{{ site.baseurl }}/" class="text-decoration-none">Race Condition Running</a> <h1>Drumheller Marathon</h1></div>
+    </div>
+    <div class="info-container">
+        <div id="overview">
+            <!--div class="col-12">
+                <p class="lede">Join us for laps around UW's historic fountain</p>
+            </div-->
+
+            <div class="gap-2 row justify-content-center mb-4">
+
+                <div>June&nbsp;6th,&nbsp;2026</div>
+
+                <div class="col-auto">
+                    <a class="wavy-button" href="{{ page.registration_link }}" data-goatcounter-click="dm26-apply-full">Apply for Full</a>
+                    <div class="small">5:30AM</div>
+                </div>
+                <div class="col-auto">
+                    <a class="wavy-button complement-color" href="{{ page.registration_link }}" data-goatcounter-click="dm26-register-half">Register for Half</a>
+                    <div class="small">8:00AM</div>
+                </div>
+
+
+                <!--div class="col-auto">
+                    <a class="wavy-button" href="#results" data-goatcounter-click="dm26-results">Results</a>
+                </div-->
+                <!--div class="col-auto">
+                    <a class="wavy-button" href="#epilogue" data-goatcounter-click="dm26-epilogue">Epilogue</a>
+                </div-->
+
+
+
+            </div>
+            <!--div class="row justify-content-center">
+                <div class="col-auto">
+                    <a class="wavy-button" href="{{ page.shirt_order_link }}">Order a Shirt</a>
+                </div>
+            </div-->
+        </div>
+    </div>
+</header>
+
+
+<section id="course" class="mt-5">
+    <div class="container">
+        <h2>Course <a href="#course" class="anchor-link" aria-label="Link to this section. Course"></a></h2>
+        <p>The course consists of a short segment down the upper vista followed by laps around Drumheller Fountain and the <a href="https://facilities.uw.edu/blog/posts/2016/04/05/drumheller-duckling-debut">duck ramp <span class="duck-ramp inline-icon"/></a>.  The marathon comprises 219 laps and the half marathon consists of 109 laps. Both events will start at different times and locations. Participants aiming for fewer laps should start with the half marathoners.</p>
+
+        <p>The
+            direction will flip periodically, and you must change directions only by rounding the marker placed
+            at the edge of the finish line. We cannot provide you an official time unless you follow these instructions and complete the necessary number of laps.</p>
+
+        <p class="mb-4">While campus activity is reduced on weekends, expect to navigate around fountain-admirers, passers-by and
+            cyclists. The course is not closed.</p>
+
+        <h3>Etiquette</h3>
+
+        <ul class="no-hanging">
+            <li>Run in the inner lane along the curb</li>
+            <li>Do not run more than two wide</li>
+            <li>Pass on the outside unless the other runner yields</li>
+            <li>Walk or stop along the outside of the loop only</li>
+        </ul>
+
+
+        <div class="map-item">
+            <img id="course-map" src="{{ site.baseurl }}/img/dm25/dm-course-map-alt.svg"
+                 alt="A map of the course showing the full start line 129.17m north of the fountain and the half start line 65.97m north of the fountain, followed by 219 or 109 laps of the 192.37m fountain loop." class="rounded-5">
+
+            <div class="d-flex justify-content-center gap-2 gap-md-4 flex-wrap">
+                <div class="cert-wrapper">
+                    <a class="usatf-certificate full" href="https://certifiedroadraces.com/certificate/?type=m&id=3255">
+                        <img src="{{ site.baseurl }}/img/dhm23/usatf-certified-course-white.svg" alt=""/>
+                        <div class="details">
+                            <h2>USATF Certificate</h2>
+                            <span>WA24018RMB</span>
+                            <p><b>Effective</b>: 4/17/24<br/>
+                                <b>Through</b>: 12/31/34</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="cert-wrapper">
+                    <a class="usatf-certificate half" href="https://certifiedroadraces.com/certificate/?type=m&id=3253">
+                        <img src="{{ site.baseurl }}/img/dhm23/usatf-certified-course-white.svg" alt=""/>
+                        <div class="details">
+                            <h2>USATF Certificate</h2>
+                            <span>WA24016RMB</span>
+                            <p><b>Effective</b>: 4/17/24<br/>
+                                <b>Through</b>: 12/31/34</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section>
+    <div id="travel" class="container">
+        <h2>Travel <a href="#travel" class="anchor-link" aria-label="Link to this section. Travel"></a></h2>
+        <p>The course is served by the <a href="https://www.soundtransit.org/ride-with-us/stops-stations/university-washington-station?route_tab=arrivals">University of Washington light rail station</a>. <a href="https://seattletransitmap.com/app/">Many buses</a> stop at UW or the nearby U District station.</p>
+        <p>Central Plaza Garage (CPG) beneath Red Square is the closest parking. See the <a href="https://transportation.uw.edu/park/visitor/self-serve">University's page</a> for rates and instructions. Check the <a href="https://transportation.uw.edu/park/events/calendar">parking calendar</a> for any disruptions and leave yourself extra time for getting lost and paying.</p>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <h2 id="race-day">Race Day <a href="#race-day" class="anchor-link" aria-label="Link to this section. Race Day"></a></h2>
+        <ul>
+            <li>Bring a water bottle</li>
+            <li>Be at the start line 10 minutes early for course instructions and a photo</li>
+        </ul>
+        <h3>Schedule</h3>
+        <ul>
+            <li>5:30AM: Full start ↻</li>
+            <li>6:00AM: Early Half start (target 7:40/mi or 4:45/km pace) ↺</li>
+            <li>8:00AM: Half start ↺</li>
+            <li><i>20 minutes after last Full finisher</i>: Full awards and photo</li>
+            <li>11:00AM: Course closes, group photo</li>
+        </ul>
+
+
+        <h3>Marathon Start List <a href="#marathon-start-list" class="anchor-link" aria-label="Link to this section. Marathon Start List"></a></h3>
+        <span class="text-body-tertiary">Updated 5/30/25</span>
+
+
+        <table class="table table-sm">
+            <thead><tr><th scope="col">Name</th><th scope="col">Goal</th></tr></thead>
+            <tbody>
+            <tr><td>Emma Favier</td> <td>4:00</td></tr>
+            <tr><td>Benjamin Han</td> <td>3:30</td></tr>
+            <tr><td>Ethan Ancell</td> <td>4:00</td></tr>
+            <tr><td><s>Margaret Li</s></td> <td>3:45</td></tr>
+            <tr><td><s>Zachary Tatlock</s></td> <td>4:00</td></tr>
+            <tr><td><s>Julien Luebbers</s></td> <td>3:00</td></tr>
+            <tr><td><s>Dylan Hull</s></td> <td>3:00</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Emails</h3>
+
+        <p>Everything important is above, but participants should have also received the following by email:</p>
+        <accordion-group class="accordion accordion-flush" id="briefs">
+            <accordion-item>
+                <accordion-header>Live tracking and safety - 6/02/25</accordion-header>
+                <accordion-body>
+                    <p>Hello Drumheller runners,</p>
+
+                    <p>The schedule is posted and our FAQ has never been more comprehensive. Please take a read. Two safety related items:</p>
+
+                    <p>1. If you are running faster than 7:40/mi (4:45/km) pace over your chosen distance, let me know and plan to start in the early half marathon section. You'll have an easier time and we'll avoid collisions.</p>
+
+                    <p>2. Bring a cup/bottle. We'll have water tanks out so you can refill, but no vessels.</p>
+
+                    <p>We are again providing a phone-based lap counting service. The attached QR code is your unique live tracking credential, which is also available with instructions at <a href="#">your private link</a>. There is some setup required, so take a look at your page and the <a href="https://lappy.raceconditionrunning.com/">overview on the site</a>. Use it as a backup, and test <i>before</i> the race.</p>
+
+                    <p>[unique participant QR code]</p>
+
+                    <p>Lastly, if you won't be running, please fill out the registration with the same account and mark withdraw. Otherwise, you'll keep getting emails.</p>
+
+                    <p>Forecast is looking good for mountain-gazing, so keep your fingers crossed.</p>
+
+                    <p>--Nick Walker</p>
+
+                </accordion-body>
+            </accordion-item>
+
+        </accordion-group>
+    </div>
+
+</section>
+
+<section>
+    <div class="container-xxl">
+        <h2 class="mb-4" id="results">Results <a href="#results" class="anchor-link" aria-label="Link to this section. Results"></a></h2>
+
+
+        <h3 class="d-inline" >Marathon</h3><span class="count"></span>
+        <div id="results-marathon" class="mb-5"></div>
+
+        <h3 class="d-inline">Half Marathon</h3><span class="count"></span>
+        <div id="results-half-official" class="mb-3"></div>
+        <hr>
+        <h3 class="d-inline">Unofficial</h3><span class="count"></span>
+        <div id="results-half-unofficial" class="mb-2"></div>
+    </div>
+
+</section>
+
+<section>
+    <figure class="gallery lightbox-gallery">
+        {% assign img_name = site.baseurl | append: "/img/dm24/5.avif" %}
+        <a href="{{img_name}}">
+            <img src="{{img_name}}" class="rounded mb-4 grayscale" {% imagesize img_name:props %}>
+        </a>
+    </figure>
+    <div id="faq" class="container">
+        <h2>FAQ <a href="#faq" class="anchor-link" aria-label="Link to this section. FAQ"></a></h2>
+
+        <accordion-group id="faq-accordion" faq>
+            <accordion-item>
+                <accordion-header>What's the start time?</accordion-header>
+                <accordion-body>
+                    <p>Different distances will start at different times between 5-10AM. Participants running the full or a faster half will run earlier. The schedule will be posted in mid-April based on registrations.</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>Do I have to run the whole thing?</accordion-header>
+                <accordion-body>
+                    <p>No. Anyone running or walking fewer than 109 laps is welcome to join for the last start time. Here are some lap counts for common distances. Add a lap if not starting at the official start line.</p>
+                    <table class="table table-sm ms-2 mt-2 mb-4">
+                        <thead><tr><th scope="col">Distance</th><th scope="col">Laps</th></tr></thead>
+                        <tbody>
+                        <tr><td>5k</td> <td>26</td></tr>
+                        <tr><td>10k</td> <td>52</td></tr>
+                        <tr><td>10mi</td><td>83</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p>Excepting pacers, <i>full marathon</i> participants must intend to complete the full distance.</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>How fast do I need to run?</accordion-header>
+                <accordion-body><p>The cutoff times and corresponding average paces are:</p>
+                    <table class="table table-sm ms-2 mt-2 mb-4">
+                        <thead><tr><th>Distance</th><th>Time</th><th>min/mi</th> <th>min/km</th></tr></thead>
+                        <tbody>
+                        <tr><td>Marathon</td> <td>4:30:00</td> <td>10:18</td> <td>6:24</td></tr>
+                        <tr><td>Half Marathon</td> <td>3:00:00</td> <td>13:43</td> <td>8:31</td></tr>
+                        </tbody>
+                    </table>
+                </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>What's the weather like?</accordion-header>
+                <accordion-body>
+
+                    <blockquote class="blockquote normal">On June 7, the temperature in Seattle typically ranges from 54°F to 67°F and is rarely below 49°F or above 77°F.
+                        [...]
+                        The coolest time of the day is from 1:00 AM to 8:15 AM, with the coldest at 5:30 AM, at which time the temperature is below 56°F three days out of four, and below 58°F nine days out of ten.
+                        [...]
+                        The cloudiest time of day is around 6:30 AM, at which time the chance of overcast or mostly cloudy conditions is 57%.
+                    </blockquote>
+                    <p class="blockquote-footer"><a href="https://weatherspark.com/d/913/6/7/Average-Weather-on-June-7-in-Seattle-Washington-United-States#Figures-Temperature">June 7 Weather in Seattle, Weather Spark</a></p>
+                </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>Is there gear check?</accordion-header>
+                <accordion-body><p>You can stash a bag near the aid station. You'll have line of sight the whole race, but they won't be attended.</p>
+                </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>How do we keep track of distance?</accordion-header>
+                <accordion-body><p>Use a running watch to mark laps if you're wearing one, though you should check that it can handle 100+ laps. GPS will clip the curve, so don't rely on it for more than a couple
+                    laps at a
+                    time.
+                    We'll have <a href="https://en.wikipedia.org/wiki/Tally_counter">tally counters</a> available if
+                    you
+                    prefer an analog counting aide.</p>
+
+                    <p>Our <a href="https://lappy.raceconditionrunning.com">experimental phone-based lap-counting service</a> will also be available for all registered runners. We recommended using it as a backup for another method of counting.</p>
+
+                    <p>Counting without assistance is not recommended.</p>
+                </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>Which direction do we run?</accordion-header>
+                <accordion-body>
+                    <p>The race will begin counterclockwise and alternate directions every 30 minutes to help balance the strain across your legs. Change directions only at the end of a lap and only by rounding the finish line marker.</p>
+                </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>How is the event being timed?</accordion-header>
+                <accordion-body>
+                    <p>Official times will be determined using a recorded video. It is critical that you run at least the required number of laps so we can provide you an official time.</p>
+                    <p>Finalizing the results can take weeks. Please use the <a href="https://lappy.raceconditionrunning.com">live tracking system</a> so you'll have an unofficial time immediately, and to make it easier for us to mark times.</p>
+                </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>Why do I have to apply for the marathon?</accordion-header>
+                <accordion-body>
+                    <p>We need information about your plans and preparedness in order to assess whether we can accommodate you. The spread of goal times determines our maximum field size and start times. Later applications will be judged for compatibility with the existing field. You will be contacted to discuss compromises if we cannot immediately accept your application.</p>
+                    <p>The event has a minimum field size of 3. It is <em>extremely</em> unlikely, but should we have fewer than 3 registrations on April 1st, we will notify registered runners to make alternative plans.</p>
+
+                </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>Is it okay if I've never run a full marathon before?</accordion-header>
+                <accordion-body>
+                    <p>Maybe. The answer will depend on your background, so please discuss with the organizers first if you would like to plan on Drumheller being your first marathon. Note that we require evidence of a half marathon time commensurate with your marathon goal time.</p>
+
+                </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>Are pacers allowed?</accordion-header>
+                <accordion-body>
+                    <p>Yes. Runners intending to use pacers must submit a pacing plan with their application, and pacers must also register. Only a single pacer per time goal will be allowed on the course at a time, so you may be asked to coordinate with other runners. Unlike most road races, we allow rotating/non-starting pacers, however official times will only be given to participants who run the complete course.</p>
+                </accordion-body>
+            </accordion-item>
+
+
+            <accordion-item>
+                <accordion-header>Can I take breaks?</accordion-header>
+                <accordion-body>
+                    <p>Yes. In addition to the aid station there are benches surrounding the course. You must continue running the lap in the same direction as when you stopped or the lap will not count. We recommend you start and stop only on at the lap finish line so you can begin the next lap in either direction.</p>
+                </accordion-body>
+            </accordion-item>
+
+            <!--accordion-item>
+                <accordion-header>Why is the marathon start time so early?</accordion-header>
+                <accordion-body>
+                    <p>The half marathon field is larger and includes a broader range of paces, so we are scheduling to minimize the overlap between the two events. We plan under the assumption that the day will be warm with clear skies (the odds of this are something like 30%). We cannot start the half marathon much later than 8:00AM as we want those runners (many running their first half) to wrap up before the heat and sun pick up around 10:30AM. We may shift the start times if the forecast for the day is favorable. Note that the <a href="https://www.soundtransit.org/sites/default/files/documents/schedule-link-1-line.pdf">first trains start arriving</a> to University of Washington Link station around 5:00AM on Saturdays.</p>
+                </accordion-body>
+            </accordion-item-->
+
+            <accordion-item>
+                <accordion-header>Is this a Boston Qualifying race?</accordion-header>
+                <accordion-body>
+                    <p>Yes, the full marathon will meet the B.A.A. criteria for a qualifying race (see <a href="https://www.baa.org/sites/default/files/2024-08/Boston_Marathon_Rules_and_Policies%20August%2021%202024.pdf">Rules and Policies</a> pp.5-6 &sect;2.2.1).</p>
+                </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>Isn't running a continuous curve going to slow me down?</accordion-header>
+                <accordion-body>
+                    <p>Yes, but not substantially. You will need to supply an additional centripetal force due to the curve, but the effect of this is <a
+                            href="https://blog.stryd.com/2020/01/09/how-much-time-do-you-lose-due-to-curves-and-turns/">likely less than 1% when running at world record marathon pace on a 30m radius</a>. Because the force increases in the square of velocity, the effect is negligible for recreational runners. There are individual differences in running technique and physiology that may make the effect more or less pronounced for you. Consider practicing on the course or a track.</p>
+                </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>Will running a continuous curve for dozens of laps injure me?</accordion-header>
+                <accordion-body>
+                    <p>Unlikely. Many athletes train and race on smaller radius tracks without issue during indoor track season. There <i>is</i> <a href="https://doi.org/10.1097/00042752-200010000-00004">evidence</a> that consistently running the same direction on small indoor tracks over time leads to strength asymmetries which likely cause injuries. Alternating directions is probably sufficient to avoid acute issues for most runners.</p>
+
+                    <p>You may also take comfort from knowing that <a href="https://www.outsideonline.com/health/running/inside-bizarre-world-indoor-marathons/">indoor track marathons have been held for years without problems</a>.</p>
+                </accordion-body>
+            </accordion-item>
+
+            <accordion-item>
+                <accordion-header>What if I'm late?</accordion-header>
+                <accordion-body><p>Run from the start line and join us! You must enter the course from "behind" the finish line in the direction that the field is running. So, if we're running counterclockwise, start your first loop by crossing the line from the east, and otherwise from the west. Note that this event is <a href="https://www.runnersworld.com/training/a20793329/chip-time-vs-gun-time/">gun time</a> only.</p>
+
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>I have a different question.</accordion-header>
+                <accordion-body>
+                    <p><a href="mailto:drumheller@nickwalker.us">Ask over email.</a></p>
+                </accordion-body>
+            </accordion-item>
+        </accordion-group>
+    </div>
+</section>
+
+
+<section id="history">
+    <figure class="gallery lightbox-gallery">
+        {% assign img_name = site.baseurl | append: "/img/dm25/uw42568.webp" %}
+        <a href="{{img_name}}" data-pswp-width="3420" data-pswp-height="3160">
+            <img src="{{img_name}}"
+                 alt="Silhouette of couple in front of Drumheller Fountain at night between 1968 and 1972"
+                 class="w-100 shadow-1-strong rounded" {% imagesize img_name:props %}/>
+        </a>
+        <figcaption class="pswp-caption-content">Silhouette of couple in front of Drumheller Fountain at night between 1968 and 1972. Scan retouched
+            to remove damage from the original negative. <cite>University of Washington Libraries, Special Collections, Joseph Karpen, photographer, UW42568</cite></figcaption>
+    </figure>
+
+    <figure class="container">
+        <blockquote class="blockquote"> Davis is replacing one of twelve 500-watt bulbs that ring the center of the fountain. He eases the large bulb into a solid brass housing. &#8220;Many of the lights had gone out since the last maintenance,&#8221; Davis explains. &#8220;Over time, water gets into the housings, turns to steam, and eventually the bulb goes boom!&#8221;
+        </blockquote>
+        <figcaption class="blockquote-footer">Chris Davis, speaking to Kenneth Bogle of the Daily. <a href="https://www.dailyuw.com/news/draining-drumheller/article_026fac41-b067-5967-a523-95b6da88be9e.html"><cite class="fst-normal">"Draining Drumheller"</cite></a>, September&nbsp;29,&nbsp;1997
+        </figcaption>
+    </figure>
+
+</section>
+
+
+<footer class="py-5">
+    <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg" alt="A happy piece of toast who is running"/></a></p>
+
+    <ul class="list-unstyled d-flex justify-content-center gap-3 opacity-50 font-weight-light small">
+        {% include drumheller_years.html %}
+    </ul>
+</footer>
+
+
+<script type="module">
+    import {LonelyRunnerToy} from "{{ site.baseurl }}/js/LonelyRunnerToy.js";
+    import {ResultsTable} from "{{ site.baseurl }}/js/ResultsTable.js";
+    import {durationToSeconds, prepareImagesForPhotoswipe} from "{{ site.baseurl }}/js/common.js";
+    import PhotoSwipeLightbox from 'photoswipe-lightbox';
+    import PhotoSwipeDynamicCaption from 'photoswipe-dynamic-caption';
+    import {Tooltip} from 'bootstrap'
+    import p5 from 'p5'
+    import * as d3 from 'd3';
+
+    import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
+    import {Tabulator, ColumnCalcsModule, GroupRowsModule, FormatModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule, ReactiveDataModule, FilterModule} from 'tabulator-tables';
+
+    Tabulator.registerModule([ColumnCalcsModule, FormatModule, GroupRowsModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, ResponsiveLayoutModule, SortModule, SelectRowModule, ReactiveDataModule, FilterModule]);
+
+
+    function initialize() {
+
+
+
+        // Friendly errors have a performance penalty.
+        p5.disableFriendlyErrors = true;
+        new p5(LonelyRunnerToy("{{site.baseurl}}"), document.querySelector("#hero-toy"));
+
+        // Tooltips for sign-up deadlines
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
+
+        fetch('{{ site.baseurl }}/results/dm25.json')
+                .then(res => res.json())
+                .then(resultsData => {
+                    const results = resultsData.results
+                    const goalLapsByEvent = resultsData.config.goals
+                    // Sort each event's goals to be ascending by lap count
+                    for (let event in goalLapsByEvent) {
+                        goalLapsByEvent[event] = Object.fromEntries(Object.entries(goalLapsByEvent[event]).sort((a, b) => a[1] - b[1]))
+                    }
+                    let videoStartTime = function () {
+                        // Video assumed to start at moment of earliest start
+                        let earliestStart = Infinity
+                        for (let startName in resultsData.config.starts) {
+                            let start = resultsData.config.starts[startName]
+                            let startSeconds = durationToSeconds(start.time)
+                            if (startSeconds < earliestStart) {
+                                earliestStart = startSeconds
+                            }
+                        }
+                        return earliestStart
+                    }()
+                    const lapDistance = resultsData.config.lapDistance
+                    const starts = resultsData.config.starts
+                    const directionChanges = resultsData.config.directionStarts.map((start) => durationToSeconds(start))
+                    let officialResults = []
+                    let unofficialResults = []
+                    let marathonResults = []
+                    for (let i = 0; i < results.length; i++) {
+                        let entry = results[i]
+                        let startDistance = Number("NaN")
+                        let startTime = Number("NaN")
+                        let cumulativeWallclock = Number("NaN")
+                        for (let startName in starts) {
+                            const start = starts[startName]
+                            if (start.hasOwnProperty("bibRange")) {
+                                if (start.bibRange[0] <= entry.id && entry.id <= start.bibRange[1]) {
+                                    startDistance = start.startDistance
+                                    startTime = start.time
+                                    entry.startTime = startTime
+                                    entry.event = startName.includes("half") ? "half" : (startName.includes("marathon") ?  "marathon" : "half")
+                                    cumulativeWallclock = durationToSeconds(startTime)
+                                    break
+                                }
+                            } else if (start.hasOwnProperty("bibs")) {
+                                if (start.bibs.includes(entry.id)) {
+                                    startDistance = start.startDistance
+                                    startTime = start.time
+                                    entry.startTime = startTime
+                                    entry.event = startName.includes("half") ? "half" : (startName.includes("marathon") ?  "marathon" : "half");
+                                    cumulativeWallclock = durationToSeconds(startTime)
+                                    break
+                                }
+                            } else {
+                                console.warn("Unknown start type for", startName, start)
+                            }
+                        }
+
+                        let finished = false
+                        let entranceAdjustment = resultsData.config.firstLapIsEntrance ? 1: 0;
+                        let lapsGoal = entry.event === "marathon" ? goalLapsByEvent["marathon"]["26_2mi"] : goalLapsByEvent["half"]["13_1mi"]
+                        let runnerGoals = goalLapsByEvent[entry.event]
+                        let lapsRun = entry.lapTimes.length - entranceAdjustment
+                        if (lapsRun >= lapsGoal) {
+                            finished = true
+                        }
+
+                        if (finished) {
+                            entry["finishTime"] = entry.lapTimes.slice(0, lapsGoal + entranceAdjustment).reduce((a, b) => a + b, 0)
+                        } else {
+                            entry["finishTime"] = Infinity
+                        }
+                        for (let goalName in runnerGoals) {
+                            let goal = runnerGoals[goalName]
+                            entry[goalName + "Time"] = lapsRun >= goal ? entry.lapTimes.slice(0, goal + entranceAdjustment).reduce((a, b) => a + b, 0) : Infinity
+                        }
+                        entry["nLaps"] = lapsRun
+
+                        let lapObjects = []
+                        let lapsCompleted = 0
+                        let timeElapsed = 0
+                        let distanceElapsed = 0
+                        let directionIndex = -1
+
+                        let lapTarget = Object.values(runnerGoals)[Math.max(d3.bisectRight(Object.values(runnerGoals), lapsRun) - 1, 0)]
+                        entry["goalLaps"] = lapTarget
+                        entry["goalName"] = Object.keys(runnerGoals).find(key => runnerGoals[key] === lapTarget)
+                        for (let i = 0; i < entry.lapTimes.length; i++) {
+                            let lapStartTime = timeElapsed
+                            timeElapsed += entry.lapTimes[i]
+                            cumulativeWallclock += entry.lapTimes[i]
+                            while (cumulativeWallclock > directionChanges[directionIndex + 1]) {
+                                directionIndex += 1
+                            }
+                            let runnerLapDistance = lapDistance
+                            let direction = resultsData.config.directions[directionIndex]
+                            if (i === 0 && resultsData.config.firstLapIsEntrance) {
+                                // 0th lap is entrance from upper vista, not a real lap
+                                runnerLapDistance = startDistance
+                                direction = null
+                            } else {
+                                lapsCompleted += 1
+                            }
+                            distanceElapsed += runnerLapDistance
+                            lapObjects.push({
+                                "index": i,
+                                "lapNumber": resultsData.config.firstLapIsEntrance && i === 0 ? null : lapsCompleted,
+                                "timestamp": cumulativeWallclock,
+                                "duration": entry.lapTimes[i],
+                                "distance": runnerLapDistance,
+                                "distanceElapsed": distanceElapsed,
+                                "timeElapsed": timeElapsed,
+                                "extra": i > lapTarget,
+                                "direction": direction
+                            })
+
+                        }
+
+                        entry["lapDetails"] = lapObjects
+                        if (entry.event === "marathon") {
+                            marathonResults.push(entry)
+                        } else {
+                            if (entry.finishTime === Infinity) {
+                                unofficialResults.push(entry)
+                            } else {
+                                officialResults.push(entry)
+                            }
+                        }
+                    }
+
+                    let table = new ResultsTable(marathonResults)
+
+                    document.querySelector("#results-marathon").append(table)
+                    // Look for preceding .count span, populate with num results
+                    document.querySelector(".count:has(+ #results-marathon)").textContent = ` (${marathonResults.length})`
+                    let fullGoals = Object.fromEntries(Object.entries(goalLapsByEvent["marathon"]).filter(([key, value]) => value < goalLapsByEvent["marathon"]["26_2mi"]))
+                    table.initialize(marathonResults, fullGoals, {videoLink: resultsData.config.finishVideo, videoStartTime: videoStartTime})
+
+                    table = new ResultsTable(officialResults)
+
+                    let halfGoals = Object.fromEntries(Object.entries(goalLapsByEvent["half"]).filter(([key, value]) => value < goalLapsByEvent["half"]["13_1mi"]))
+                    document.querySelector("#results-half-official").append(table)
+                    document.querySelector(".count:has(+ #results-half-official)").textContent = ` (${officialResults.length})`
+                    table.initialize(officialResults, halfGoals, {videoLink: resultsData.config.finishVideo, videoStartTime: videoStartTime})
+
+                    table = new ResultsTable(unofficialResults)
+
+                    document.querySelector("#results-half-unofficial").append(table)
+                    document.querySelector(".count:has(+ #results-half-unofficial)").textContent = ` (${unofficialResults.length})`
+                    table.initialize(unofficialResults, halfGoals, {videoLink: resultsData.config.finishVideo, videoStartTime: videoStartTime})
+                })
+
+
+
+    }
+
+
+    function setupLightboxes() {
+        prepareImagesForPhotoswipe(document.querySelectorAll(".lightbox-gallery a")).then(() => {
+            const lightbox = new PhotoSwipeLightbox({
+                gallery: '.lightbox-gallery',
+                children: 'a',
+                showHideAnimationType: 'zoom',
+                showAnimationDuration: 200,
+                hideAnimationDuration: 200,
+                pswpModule: () =>  import("photoswipe")
+            });
+            const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
+                type: 'auto',
+                captionContent: (slide) => {
+                    const caption = slide.data.element.parentElement.querySelector("figcaption")
+                    return caption ? caption.innerHTML : "";
+                }
+            });
+
+            lightbox.init();
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initialize)
+        document.addEventListener('DOMContentLoaded', e => setupLightboxes)
+    } else {
+        initialize()
+        setupLightboxes()
+    }
+</script>
+
+</body>
+</html>
