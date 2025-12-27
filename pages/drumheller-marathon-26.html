@@ -24,7 +24,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
     <meta property="og:url" content="{{ page.url | absolute_url }}">
     <meta property="og:title" content="{{ page.title }}">
     <meta property="og:description" content="{{ page.description }}">
-    <link href="{{ site.baseurl }}/img/dm24/favicon.png" rel="icon" type="image/png"/>
+    <link href="{{ site.baseurl }}/img/dm26/favicon.png" rel="icon" type="image/png"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@0,100..900;1,100..900&family=Prompt:wght@400;700&display=swap" rel="stylesheet">
@@ -195,7 +195,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             transition: text-shadow .3s, color .3s;
         }
         a:hover {
-            text-shadow: 0 0 1rem rgba(225, 131, 0, 1.0)
+            //text-shadow: 0 0 1rem rgba(225, 131, 0, 1.0)
         }
 
         a.disabled {
@@ -263,13 +263,13 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
         #hero-mechanism {
             width: 200px;
             opacity: 1.0;
+            pointer-events: none;
         }
         #hero .hero-container {
             max-width: 80rem;
             margin: 0 auto auto auto;
             padding: clamp(.75rem,min(5vh, 10vw),3rem) 1rem;
             overflow-x: clip; /* Allow underlay gradient to spill out */
-
         }
 
         #hero h1 {
@@ -277,11 +277,25 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             text-transform: uppercase;
             font-size: clamp(.75rem,min(8vh, 8vw),20rem);
             line-height: 0.8;
+            letter-spacing: 0.2rem;
         }
 
         #hero {
             height: 100%;
             position: relative;
+            --shadow: black;
+            text-shadow: .25px .25px 0 var(--shadow), .5px .5px 0 var(--shadow), .75px .75px 0 var(--shadow), 1px 1px 0 var(--shadow),
+            1.25px 1.25px 0 var(--shadow), 1.5px 1.5px 0 var(--shadow), 1.75px 1.75px 0 var(--shadow), 2px 2px 0 var(--shadow),
+            2.25px 2.25px 0 var(--shadow), 2.5px 2.5px 0 var(--shadow), 2.75px 2.75px 0 var(--shadow), 3px 3px 0 var(--shadow),
+            3.25px 3.25px 0 var(--shadow), 3.5px 3.5px 0 var(--shadow), 3.75px 3.75px 0 var(--shadow), 4px 4px 0 var(--shadow),
+            4.25px 4.25px 0 var(--shadow), 4.5px 4.5px 0 var(--shadow), 4.75px 4.75px 0 var(--shadow), 5px 5px 0 var(--shadow),
+            5.25px 5.25px 0 var(--shadow), 5.5px 5.5px 0 var(--shadow), 5.75px 5.75px 0 var(--shadow), 6px 6px 0 var(--shadow),
+            6.25px 6.25px 0 var(--shadow), 6.5px 6.5px 0 var(--shadow), 6.75px 6.75px 0 var(--shadow), 7px 7px 0 var(--shadow),
+            7.25px 7.25px 0 var(--shadow), 7.5px 7.5px 0 var(--shadow), 7.75px 7.75px 0 var(--shadow), 8px 8px 0 var(--shadow),
+            8.25px 8.25px 0 var(--shadow), 8.5px 8.5px 0 var(--shadow), 8.75px 8.75px 0 var(--shadow), 9px 9px 0 var(--shadow),
+            9.25px 9.25px 0 var(--shadow), 9.5px 9.5px 0 var(--shadow), 9.75px 9.75px 0 var(--shadow), 10px 10px 0 var(--shadow),
+            10.25px 10.25px 0 var(--shadow), 10.5px 10.5px 0 var(--shadow), 10.75px 10.75px 0 var(--shadow), 11px 11px 0 var(--shadow),
+            11.25px 11.25px 0 var(--shadow), 11.5px 11.5px 0 var(--shadow), 11.75px 11.75px 0 var(--shadow), 12px 12px 0 var(--shadow);
         }
 
         #hero-toy {
@@ -325,24 +339,15 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             line-height: 1.3;
             font-weight: 300;
             --shadow: black;
-            text-shadow: .25px .25px 0 var(--shadow), .5px .5px 0 var(--shadow), .75px .75px 0 var(--shadow), 1px 1px 0 var(--shadow),
-            1.25px 1.25px 0 var(--shadow), 1.5px 1.5px 0 var(--shadow), 1.75px 1.75px 0 var(--shadow), 2px 2px 0 var(--shadow),
-            2.25px 2.25px 0 var(--shadow), 2.5px 2.5px 0 var(--shadow), 2.75px 2.75px 0 var(--shadow), 3px 3px 0 var(--shadow),
-            3.25px 3.25px 0 var(--shadow), 3.5px 3.5px 0 var(--shadow), 3.75px 3.75px 0 var(--shadow), 4px 4px 0 var(--shadow),
-            4.25px 4.25px 0 var(--shadow), 4.5px 4.5px 0 var(--shadow), 4.75px 4.75px 0 var(--shadow), 5px 5px 0 var(--shadow),
-            5.25px 5.25px 0 var(--shadow), 5.5px 5.5px 0 var(--shadow), 5.75px 5.75px 0 var(--shadow), 6px 6px 0 var(--shadow),
-            6.25px 6.25px 0 var(--shadow), 6.5px 6.5px 0 var(--shadow), 6.75px 6.75px 0 var(--shadow), 7px 7px 0 var(--shadow),
-            7.25px 3.25px 0 var(--shadow), 7.5px 7.5px 0 var(--shadow), 7.75px 7.75px 0 var(--shadow), 8px 8px 0 var(--shadow);
+
         }
         .display-text a {
             color: #ddd;
             transition: text-shadow .3s;
             --shadow: black;
-            text-shadow: .25px .25px 0 var(--shadow), .5px .5px 0 var(--shadow), .75px .75px 0 var(--shadow), 1px 1px 0 var(--shadow);
         }
         .display-text a:hover {
             --shadow: rgba(30, 30, 30, 1.0);
-            text-shadow: 1px 1px 0 var(--shadow), 2px 2px 0 var(--shadow);
         }
 
         .wavy-button, .wave-button:hover, .wave-button:visited, .wave-button:active {
@@ -350,19 +355,17 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
         }
         .wavy-button {
             text-decoration-thickness: .5px;
-            text-decoration-style: wavy;
             text-decoration-color: rgba(255,255,255,.3);
             text-underline-offset: 2px;
             transition: text-shadow .3s, text-decoration .3s, font-weight .3s;
-            text-shadow: 1px 1px 0px rgba(0, 0, 0, 0);
         }
 
         .wavy-button:hover {
-            text-shadow: .25px .25px 0px rgb(0, 239, 255, 0.5), .5px .5px 0px rgb(0, 239, 255, 0.5),.75px .75px 0px rgb(0, 239, 255, 0.5), 1px 1px 0px rgb(0, 239, 255, 0.5);
+            --shadow: rgb(0, 239, 255, 0.5);
         }
 
         .wavy-button.complement-color:hover {
-            text-shadow: .25px .25px 0px rgb(224, 0, 255), .5px .5px 0px rgb(224, 0, 255), .75px .75px 0px rgb(224, 0, 255), 1px 1px 0px rgb(224, 0, 255);
+            --shadow: rgb(224, 0, 255);
         }
 
         .wavy-button.disabled {
@@ -893,6 +896,8 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
 <header id="hero" class="text-center d-flex justify-content-center flex-column">
     <div id="overlay" class="d-flex w-100 h-100 position-absolute justify-content-center align-content-center">
+        <!--img id="hero-mechanism" src="{{ site.baseurl }}/img/dm26/fountain-icon.svg"/-->
+        <!--img id="hero-mechanism" src="{{ site.baseurl }}/img/dm24/jets-grad.svg"/-->
         <img id="hero-mechanism" src="{{ site.baseurl }}/img/dm24/jets.svg"/>
     </div>
     <div id="hero-toy">
@@ -901,8 +906,14 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
 
     <div class="hero-container">
-        <div class="display-text mb-4 mt-4">The <a href="{{ site.baseurl }}/" class="text-decoration-none">Race Condition Running</a> <h1>Drumheller Marathon</h1></div>
+        <div class="display-text mb-4 mt-4"><span class="mb-4">The <a href="{{ site.baseurl }}/" class="text-decoration-none">Race Condition Running</a></span>  <h1>Drumheller<br/>Marathon</h1></div>
     </div>
+    
+    <div id="lonely-counter" class="position-absolute bottom-0 end-0 p-3 mb-2 me-3 text-white text-end" style="z-index: 10; font-family: var(--sans-font-family); opacity: 0; transition: opacity 1s ease 2s;">
+        <span id="lonely-count">0</span> / <span id="total-runners">0</span>
+        <button id="mute-toy" class="btn btn-link btn-sm text-white p-0 ms-2" style="text-decoration: none; font-size: 0.8rem; vertical-align: baseline;">Unmute</button>
+    </div>
+
     <div class="info-container">
         <div id="overview">
             <!--div class="col-12">
@@ -933,11 +944,6 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
 
             </div>
-            <!--div class="row justify-content-center">
-                <div class="col-auto">
-                    <a class="wavy-button" href="{{ page.shirt_order_link }}">Order a Shirt</a>
-                </div>
-            </div-->
         </div>
     </div>
 </header>
@@ -1006,74 +1012,8 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
     </div>
 </section>
 
-<section>
-    <div class="container">
-        <h2 id="race-day">Race Day <a href="#race-day" class="anchor-link" aria-label="Link to this section. Race Day"></a></h2>
-        <ul>
-            <li>Bring a water bottle</li>
-            <li>Be at the start line 10 minutes early for course instructions and a photo</li>
-        </ul>
-        <h3>Schedule</h3>
-        <ul>
-            <li>5:30AM: Full start ↻</li>
-            <li>6:00AM: Early Half start (target 7:40/mi or 4:45/km pace) ↺</li>
-            <li>8:00AM: Half start ↺</li>
-            <li><i>20 minutes after last Full finisher</i>: Full awards and photo</li>
-            <li>11:00AM: Course closes, group photo</li>
-        </ul>
 
-
-        <h3>Marathon Start List <a href="#marathon-start-list" class="anchor-link" aria-label="Link to this section. Marathon Start List"></a></h3>
-        <span class="text-body-tertiary">Updated 5/30/25</span>
-
-
-        <table class="table table-sm">
-            <thead><tr><th scope="col">Name</th><th scope="col">Goal</th></tr></thead>
-            <tbody>
-            <tr><td>Emma Favier</td> <td>4:00</td></tr>
-            <tr><td>Benjamin Han</td> <td>3:30</td></tr>
-            <tr><td>Ethan Ancell</td> <td>4:00</td></tr>
-            <tr><td><s>Margaret Li</s></td> <td>3:45</td></tr>
-            <tr><td><s>Zachary Tatlock</s></td> <td>4:00</td></tr>
-            <tr><td><s>Julien Luebbers</s></td> <td>3:00</td></tr>
-            <tr><td><s>Dylan Hull</s></td> <td>3:00</td></tr>
-            </tbody>
-        </table>
-
-        <h3>Emails</h3>
-
-        <p>Everything important is above, but participants should have also received the following by email:</p>
-        <accordion-group class="accordion accordion-flush" id="briefs">
-            <accordion-item>
-                <accordion-header>Live tracking and safety - 6/02/25</accordion-header>
-                <accordion-body>
-                    <p>Hello Drumheller runners,</p>
-
-                    <p>The schedule is posted and our FAQ has never been more comprehensive. Please take a read. Two safety related items:</p>
-
-                    <p>1. If you are running faster than 7:40/mi (4:45/km) pace over your chosen distance, let me know and plan to start in the early half marathon section. You'll have an easier time and we'll avoid collisions.</p>
-
-                    <p>2. Bring a cup/bottle. We'll have water tanks out so you can refill, but no vessels.</p>
-
-                    <p>We are again providing a phone-based lap counting service. The attached QR code is your unique live tracking credential, which is also available with instructions at <a href="#">your private link</a>. There is some setup required, so take a look at your page and the <a href="https://lappy.raceconditionrunning.com/">overview on the site</a>. Use it as a backup, and test <i>before</i> the race.</p>
-
-                    <p>[unique participant QR code]</p>
-
-                    <p>Lastly, if you won't be running, please fill out the registration with the same account and mark withdraw. Otherwise, you'll keep getting emails.</p>
-
-                    <p>Forecast is looking good for mountain-gazing, so keep your fingers crossed.</p>
-
-                    <p>--Nick Walker</p>
-
-                </accordion-body>
-            </accordion-item>
-
-        </accordion-group>
-    </div>
-
-</section>
-
-<section>
+<!--section>
     <div class="container-xxl">
         <h2 class="mb-4" id="results">Results <a href="#results" class="anchor-link" aria-label="Link to this section. Results"></a></h2>
 
@@ -1088,7 +1028,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
         <div id="results-half-unofficial" class="mb-2"></div>
     </div>
 
-</section>
+</section-->
 
 <section>
     <figure class="gallery lightbox-gallery">
@@ -1314,18 +1254,14 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
 
     function initialize() {
-
-
-
+        const toy = new p5(LonelyRunnerToy("{{site.baseurl}}"), document.querySelector("#hero-toy"));
         // Friendly errors have a performance penalty.
-        p5.disableFriendlyErrors = true;
-        new p5(LonelyRunnerToy("{{site.baseurl}}"), document.querySelector("#hero-toy"));
-
+        toy.disableFriendlyErrors = true;
         // Tooltips for sign-up deadlines
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
 
-        fetch('{{ site.baseurl }}/results/dm25.json')
+        fetch('{{ site.baseurl }}/results/dm26.json')
                 .then(res => res.json())
                 .then(resultsData => {
                     const results = resultsData.results

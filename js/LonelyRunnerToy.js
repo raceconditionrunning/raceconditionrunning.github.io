@@ -4,61 +4,66 @@ import {DEFAULT_VERTEX_SHADER} from "./shader_utils.js";
 const RING_THICKNESS_PX = 10;
 const RING_SPACING_PX = 20;
 const INNER_RADIUS_PX = 200;
-const NUM_RINGS = 15;
-const USE_DISTINCT_COLORS = false; // Toggle for color vs B&W mode
-const HIGHLIGHT_LONELY = true;    // Toggle opacity based on loneliness
+const NUM_RINGS = 20;
+const ANIMATION_SPEED = 0.1;      // Global speed multiplier (lower = slower)
+const SHOW_CENTER_DOTS = false;
 
-// Generate colors (HSL to RGB conversion helper or just simple generation)
-function hslToRgb(h, s, l) {
-    let r, g, b;
-    if (s === 0) {
-        r = g = b = l; // achromatic
-    } else {
-        const hue2rgb = (p, q, t) => {
-            if (t < 0) t += 1;
-            if (t > 1) t -= 1;
-            if (t < 1 / 6) return p + (q - p) * 6 * t;
-            if (t < 1 / 2) return q;
-            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-            return p;
-        };
-        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-        const p = 2 * l - q;
-        r = hue2rgb(p, q, h + 1 / 3);
-        g = hue2rgb(p, q, h);
-        b = hue2rgb(p, q, h - 1 / 3);
-    }
-    return [r, g, b];
-}
+// Audio configuration
+const DRONE_BASE_FREQ = 92.50; // Gb2
+// G-flat major scale
+// Gb, Ab, Bb, Cb, Db, Eb, F
+const DRONE_SCALE = [1, 9/8, 5/4, 4/3, 3/2, 5/3, 15/8]; // Just intonation ratios
+
 
 function generateRingConfigs(numRings) {
     const configs = [];
-    // Start with 3 runners on the inner ring?
-    // Or just distinct velocities for each ring?
-    // Let's assume standard Lonely Runner setup: N runners with velocities 1..N
-    // But we have multiple rings.
-    // Let's give Ring i -> (i + 3) runners with velocities 1..(i+3)
-    // Colors generated rainbow-like across the rings.
-    
+    const innerRadius = INNER_RADIUS_PX;
+
     for (let i = 0; i < numRings; i++) {
         const numRunners = i + 3;
         const velocities = [];
         const colors = [];
-        
-        for (let j = 0; j < numRunners; j++) {
-            // Velocities: 1, 2, 3 ...
-            velocities.push(j + 1.0);
-            
-            // Color: Vary Hue based on velocity index and ring index
-            // Global rainbow?
-            const hue = (j / numRunners + i / numRings) % 1.0;
-            const rgb = hslToRgb(hue, 0.7, 0.6);
-            colors.push(rgb);
+
+        // Calculate this ring's radius
+        const ringRadius = innerRadius + i * RING_SPACING_PX;
+
+        // Scale factor to maintain constant apparent speed across rings
+        // Outer rings move slower in angular velocity to match arc speed
+        const radiusScale = innerRadius / ringRadius;
+
+        // Create array of half branding-color-light and half branding-color-complement-light
+        const brandingColorLight = 0xAEDCE6; // #aedce6
+        const brandingColorComplementLight = 0xDFACE6; // #dface6
+
+        // Create array with half of each color
+        const colorPool = [];
+        for (let j = 0; j < Math.ceil(numRunners / 2); j++) {
+            colorPool.push(brandingColorLight);
         }
-        
+        for (let j = 0; j < Math.floor(numRunners / 2); j++) {
+            colorPool.push(brandingColorComplementLight);
+        }
+        // Shuffle the color pool
+        for (let j = colorPool.length - 1; j > 0; j--) {
+            const k = Math.floor(Math.random() * (j + 1));
+            [colorPool[j], colorPool[k]] = [colorPool[k], colorPool[j]];
+        }
+
+        for (let j = 0; j < numRunners; j++) {
+            // Random base velocity between 0.5 and 3.0
+            const baseVelocity = 0.5 + Math.random() * 2.5;
+
+            // Scale by radius to maintain constant apparent speed
+            velocities.push(baseVelocity * radiusScale);
+
+            // Assign color from shuffled pool
+            colors.push(colorPool[j]);
+        }
+
         configs.push({
             velocities: velocities,
-            colors: colors
+            colors: colors,
+            lonelyThreshold: Math.PI / numRunners
         });
     }
     return configs;
@@ -71,15 +76,16 @@ function createRunnerRingFragmentShader(ringConfigs) {
     // Generate uniform declarations
     let uniforms = ``;
     uniforms += `uniform vec3 u_geom_params;\n`; // x: thickness_norm, y: spacing_norm, z: inner_radius_norm
-    uniforms += `uniform bool u_use_colors;\n`;
-    uniforms += `uniform bool u_highlight_lonely;\n`;
+    uniforms += `uniform bool u_show_center_dots;\n`;
+    uniforms += `uniform sampler2D u_color_texture;\n`;
+    uniforms += `uniform vec2 u_texture_size;\n`;
     
     for (let i = 0; i < ringConfigs.length; i++) {
         const n = ringConfigs[i].velocities.length;
-        // Optimization: Pass pre-computed positions and buffer sizes
-        uniforms += `uniform vec3 colors_${i}[${n}];\n`;
-        uniforms += `uniform float positions_${i}[${n}];\n`; 
+        uniforms += `uniform float positions_${i}[${n}];\n`;
         uniforms += `uniform float loneliness_${i}[${n}];\n`;
+        uniforms += `uniform int hasBeenLonely_${i}[${n}];\n`; // Track if runner has ever been lonely (0 or 1)
+        uniforms += `uniform float lonelyThreshold_${i};\n`; // TAU/(2*N) for this ring
     }
 
     // Generate the logic for each ring
@@ -111,36 +117,40 @@ function createRunnerRingFragmentShader(ringConfigs) {
                 
                 vec3 finalRingColor =  vec3(0.0); // Base track color
                 float minSd = 1000.0;
-                vec3 nearestRunnerColor = vec3(0.0);
                 float nearestLoneliness = 0.0;
-                
+
+                // Track which runner is nearest and whether it has been lonely
+                int nearestRunnerIndex = 0;
+                int nearestRunnerHasBeenLonely = 0;
+
                 // Check all runners to find the closest segment shape
                 for (int j = 0; j < ${n}; j++) {
                     // Polar-ish coordinates
                     // X: Arc length along the ring relative to runner center
                     float distArc = angularDist(angle, positions_${i}[j]) * trackRadius;
                     // Y: Radial distance from center of ring
-                    float distRadial = distToTrackCenter; 
-                    
+                    float distRadial = distToTrackCenter;
+
                     // Capsule (Segment) Logic
                     float halfArcLength = loneliness_${i}[j] * trackRadius;
-                    
+
                     // Add a small buffer/gap between segments so they don't touch
-                    float gap = 0.005; 
+                    float gap = 0.005;
 
                     // The "straight" segment length is the total length minus the rounded caps and the gap.
                     // Each cap has radius 'trackHalfWidth'.
                     float segLen = max(0.0, halfArcLength - trackHalfWidth - gap);
-                    
+
                     // SDF for a 2D segment on the X-axis from -segLen to +segLen
                     // with radius 'trackHalfWidth'.
                     vec2 pSeg = vec2(max(abs(distArc) - segLen, 0.0), distRadial);
                     float sd = length(pSeg) - trackHalfWidth;
-                    
+
                     if (sd < minSd) {
                         minSd = sd;
-                        nearestRunnerColor = u_use_colors ? colors_${i}[j] : vec3(1.0);
                         nearestLoneliness = loneliness_${i}[j];
+                        nearestRunnerIndex = j;
+                        nearestRunnerHasBeenLonely = hasBeenLonely_${i}[j];
                     }
                 }
                 
@@ -150,25 +160,66 @@ function createRunnerRingFragmentShader(ringConfigs) {
                 float aaWidth = 0.002; 
                 float runnerAlpha = 1.0 - smoothstep(0.0, aaWidth, minSd);
                 
-                // Highlight lonely runners
+                // Highlight lonely runners with smooth color transition
                 float opacity = 1.0;
-                if (u_highlight_lonely) {
-                    // Map loneliness (angular half-distance) to opacity
-                    // Non-linear ramp to make "lonely" state pop massively
-                    // loneliness is radians.
-                    // 0.05 rad is crowded. 0.5 rad is lonely.
-                    float normL = smoothstep(0.05, 0.5, nearestLoneliness);
-                    // Power curve to compress the low end and pop the high end
-                    opacity = 0.1 + 0.9 * pow(normL, 8.0);
-                }
+                vec2 texCoord = vec2(
+                    (float(nearestRunnerIndex) + 0.5) / u_texture_size.x,
+                    (float(${i}) + 0.5) / u_texture_size.y
+                );
+                vec3 targetColor = texture(u_color_texture, texCoord).rgb;
+                vec3 whiteColor = vec3(1.0);
+                vec3 finalRunnerColor = whiteColor;
+
+                // Only fade in very close to the actual lonely threshold
+                // Start at 95% of threshold, full brightness at threshold
+                float fadeStart = lonelyThreshold_${i} * 0.95;
+                float fadeEnd = lonelyThreshold_${i};
+                float normL = smoothstep(fadeStart, fadeEnd, nearestLoneliness);
+
+                // Opacity transition
+                opacity = 0.1 + 0.9 * pow(normL, 2.0);
+
+                // Smooth color transition from white to assigned color
+                // Base color depends on whether runner has been lonely before
+                vec3 baseColor = (nearestRunnerHasBeenLonely != 0) ? targetColor : whiteColor;
+                finalRunnerColor = mix(baseColor, targetColor, normL);
                 
-                finalRingColor = mix(finalRingColor, nearestRunnerColor, runnerAlpha * opacity);
-                
+
+                finalRingColor = mix(finalRingColor, finalRunnerColor, runnerAlpha * opacity);
+
                 // Output alpha
                 //float trackAlpha = 1.0 - smoothstep(trackHalfWidth - aaWidth, trackHalfWidth, distToTrackCenter);
                 float trackAlpha = 0.0;
                 float finalAlpha = max(trackAlpha, runnerAlpha * opacity * 0.9);
-                
+
+                // Draw center dots if enabled
+                if (u_show_center_dots) {
+                    for (int j = 0; j < ${n}; j++) {
+                        // Calculate position of this runner's center on the ring
+                        float runnerAngle = positions_${i}[j];
+
+                        // Convert to cartesian coordinates for the dot center
+                        vec2 dotCenter = vec2(cos(runnerAngle), sin(runnerAngle)) * trackRadius;
+
+                        // Distance from current pixel to dot center
+                        float dotDist = length(uv - dotCenter);
+
+                        // Dot has radius = trackHalfWidth
+                        float dotRadius = trackHalfWidth;
+                        float dotSd = dotDist - dotRadius;
+
+                        // Render dot with anti-aliasing
+                        float dotAlpha = 1.0 - smoothstep(0.0, aaWidth, dotSd);
+
+                        if (dotAlpha > 0.0) {
+                            // Black dot color
+                            vec3 dotColor = vec3(0.0);
+                            finalRingColor = mix(finalRingColor, dotColor, dotAlpha);
+                            finalAlpha = max(finalAlpha, dotAlpha * 0.9);
+                        }
+                    }
+                }
+
                 outColor = vec4(finalRingColor, finalAlpha);
                 return;
             }
@@ -221,82 +272,544 @@ export let LonelyRunnerToy = rootUrl => p => {
     let height;
     let runnerShader;
     let startStamp;
+    let colorTexture;
+
+    const TAU = Math.PI * 2;
+
+    // Interaction state
+    let draggingRunner = null;
+    let lastMouseAngle = 0;
+
+    // Track which runners have been lonely at least once
+    let hasBeenLonely = []; // Array of arrays (per ring, per runner)
+    // Track manual position offsets for runners
+    let runnerOffsets = []; // Array of arrays (per ring, per runner)
+    
+    // UI elements
+    let lonelyCountEl = null;
+    let totalRunnersEl = null;
+    let lonelyCounterContainer = null;
+    let muteButtonEl = null;
+    let isMuted = true;
+    let hasUserInteractedWithCanvas = false;
+
+    function toggleMute(targetState) {
+        if (typeof targetState !== 'undefined') {
+            isMuted = targetState;
+        } else {
+            isMuted = !isMuted;
+        }
+        
+        if (masterGain) {
+            const now = audioContext.currentTime;
+            masterGain.gain.cancelScheduledValues(now);
+            masterGain.gain.setValueAtTime(masterGain.gain.value, now);
+            // Ramp to a very small value instead of 0 to avoid issues with exponential ramps elsewhere if any
+            masterGain.gain.linearRampToValueAtTime(isMuted ? 0.0001 : 1.0, now + 0.1);
+        }
+        if (muteButtonEl) {
+            muteButtonEl.textContent = isMuted ? 'Unmute' : 'Mute';
+        }
+    }
+
+    // Helper: Calculate positions for a ring at a given time
+    function getPositionsAtTime(ringIndex, time) {
+        return RING_CONFIGS[ringIndex].velocities.map((v, i) => {
+            const offset = (runnerOffsets[ringIndex] && runnerOffsets[ringIndex][i]) || 0;
+            return ((time * v * 0.5 * ANIMATION_SPEED) + offset) % TAU;
+        });
+    }
+
+    // Helper: Check if a runner is lonely (min distance to others >= TAU/N)
+    function isRunnerLonely(ringIndex, runnerIndex, time) {
+        const positions = getPositionsAtTime(ringIndex, time);
+        const N = positions.length;
+        const lonelyThreshold = TAU / N;
+        const runnerPos = positions[runnerIndex];
+
+        let minDist = TAU;
+        for (let i = 0; i < N; i++) {
+            if (i === runnerIndex) continue;
+            const d = Math.abs(runnerPos - positions[i]);
+            const dist = Math.min(d, TAU - d);
+            if (dist < minDist) minDist = dist;
+        }
+
+        return minDist >= lonelyThreshold;
+    }
+
+    // Helper: Calculate mouse angle relative to center
+    function getMouseAngle(mouseX, mouseY) {
+        const dx = mouseX - width / 2;
+        // Flip Y for standard cartesian (Up is +Y), matching shader logic/view
+        const dy = -(mouseY - height / 2);
+        let angle = Math.atan2(dy, dx);
+        if (angle < 0) angle += TAU;
+        return angle;
+    }
+
+    // Helper: Detect which runner (if any) was clicked
+    // Returns {ringIndex, runnerIndex} or null
+    function getClickedRunner(mouseX, mouseY, time) {
+        // Convert mouse coordinates to UV space (same as shader)
+        const minDim = Math.min(width, height);
+        const uvScale = 2.0 / minDim;
+
+        // p5 WEBGL mode has origin at center, so adjust
+        const uvX = (mouseX - width / 2) * uvScale;
+        const uvY = -(mouseY - height / 2) * uvScale; // Flip Y for WebGL
+
+        // Convert to polar
+        const dist = Math.sqrt(uvX * uvX + uvY * uvY);
+        let angle = Math.atan2(uvY, uvX);
+        if (angle < 0) angle += TAU;
+
+        // Calculate geometry parameters
+        const thicknessNorm = RING_THICKNESS_PX * uvScale;
+        const spacingNorm = RING_SPACING_PX * uvScale;
+        const innerRadiusNorm = INNER_RADIUS_PX * uvScale;
+
+        // Find which ring (if any)
+        for (let ringIndex = 0; ringIndex < RING_CONFIGS.length; ringIndex++) {
+            const trackRadius = innerRadiusNorm + ringIndex * spacingNorm;
+            const trackHalfWidth = thicknessNorm * 0.5;
+
+            if (Math.abs(dist - trackRadius) <= trackHalfWidth) {
+                // On this ring! Now find which runner
+                const positions = getPositionsAtTime(ringIndex, time);
+
+                for (let runnerIndex = 0; runnerIndex < positions.length; runnerIndex++) {
+                    const runnerAngle = positions[runnerIndex];
+
+                    // Calculate angular distance
+                    const d = Math.abs(angle - runnerAngle);
+                    const angularDist = Math.min(d, TAU - d);
+
+                    // Calculate loneliness for this runner
+                    const N = positions.length;
+                    let minDistToOthers = TAU;
+                    for (let i = 0; i < N; i++) {
+                        if (i === runnerIndex) continue;
+                        const d = Math.abs(positions[runnerIndex] - positions[i]);
+                        const dist = Math.min(d, TAU - d);
+                        if (dist < minDistToOthers) minDistToOthers = dist;
+                    }
+                    const halfLoneliness = minDistToOthers * 0.5;
+
+                    // Check if click is within this runner's segment
+                    if (angularDist <= halfLoneliness) {
+                        return {ringIndex, runnerIndex};
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    // Audio system - continuous drones per ring
+
+    let audioContext = null;
+    let masterGain = null; // Master gain for gentle overall fade-in
+    let reverbNode = null; // Convolver for frozen reverb
+    let reverbGain = null; // Wet signal gain
+    let ringOscillators = []; // {osc1, osc2, osc3, gainNode, filterNode} per ring
+    let ringLonelyCounts = []; // number of lonely runners per ring
+    let audioJustInitialized = false; // Flag for gentle first startup
+
+    // Generate a long, lush impulse response for frozen reverb
+    function createReverbImpulse(duration, decay, reverse = false) {
+        const sampleRate = audioContext.sampleRate;
+        const length = sampleRate * duration;
+        const impulse = audioContext.createBuffer(2, length, sampleRate);
+        const left = impulse.getChannelData(0);
+        const right = impulse.getChannelData(1);
+
+        for (let i = 0; i < length; i++) {
+            const n = reverse ? length - i : i;
+            // Exponential decay with some randomness for natural sound
+            const t = n / length;
+            const envelope = Math.pow(1 - t, decay);
+
+            // White noise with exponential decay
+            left[i] = (Math.random() * 2 - 1) * envelope;
+            right[i] = (Math.random() * 2 - 1) * envelope;
+        }
+
+        return impulse;
+    }
+
+    function initAudio() {
+        if (audioContext) return;
+
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        audioJustInitialized = true;
+
+        // Create master gain node for overall volume control
+        masterGain = audioContext.createGain();
+        masterGain.connect(audioContext.destination);
+
+        // Start master gain at very low level
+        masterGain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+        // Gentle fade-in over 10 seconds, but only if not muted
+        const targetGain = isMuted ? 0.0001 : 1.0;
+        masterGain.gain.exponentialRampToValueAtTime(targetGain, audioContext.currentTime + 7.0);
+
+        // Create frozen reverb
+        reverbNode = audioContext.createConvolver();
+        // Long reverb tail (8 seconds) with slow decay (1.2 = very slow)
+        reverbNode.buffer = createReverbImpulse(8.0, 1.2);
+
+        reverbGain = audioContext.createGain();
+        reverbGain.gain.value = 0.5; // 50% wet signal
+
+        // Create a feedback delay for the "frozen" effect
+        const feedbackDelay = audioContext.createDelay(5.0);
+        feedbackDelay.delayTime.value = 0.3; // 300ms delay
+
+        const feedbackGain = audioContext.createGain();
+        feedbackGain.gain.value = 0.7; // High feedback for frozen effect
+
+        const reverbFilter = audioContext.createBiquadFilter();
+        reverbFilter.type = 'lowpass';
+        reverbFilter.frequency.value = 3000; // Darken the reverb tail
+
+        // Reverb signal path: reverb -> filter -> delay -> feedback -> master
+        reverbNode.connect(reverbFilter);
+        reverbFilter.connect(feedbackDelay);
+        feedbackDelay.connect(feedbackGain);
+        feedbackGain.connect(feedbackDelay); // Feedback loop
+        feedbackDelay.connect(reverbGain);
+        reverbGain.connect(masterGain);
+
+        // Create persistent oscillator + gain for each ring
+        RING_CONFIGS.forEach((config, ringIndex) => {
+            // Use configurable scale
+            const scaleIndex = ringIndex % DRONE_SCALE.length;
+            const freq = DRONE_BASE_FREQ * DRONE_SCALE[scaleIndex] * Math.pow(2, Math.floor(ringIndex / DRONE_SCALE.length));
+
+            // Create three detuned oscillators for texture
+            const osc1 = audioContext.createOscillator();
+            const osc2 = audioContext.createOscillator();
+            const osc3 = audioContext.createOscillator();
+
+            // Low-pass filter for warmth
+            const filterNode = audioContext.createBiquadFilter();
+            filterNode.type = 'lowpass';
+            filterNode.frequency.value = 800;
+            filterNode.Q.value = 0.5;
+
+            const gainNode = audioContext.createGain();
+
+            // Mix of waveforms for richness
+            osc1.type = 'sawtooth';
+            osc2.type = 'triangle';
+            osc3.type = 'sine';
+
+            // Slight detuning for chorus effect
+            osc1.frequency.value = freq;
+            osc2.frequency.value = freq * 1.003; // +3 cents
+            osc3.frequency.value = freq * 0.997; // -3 cents
+
+            // Connect: oscillators -> filter -> gain -> (dry: master, wet: reverb)
+            osc1.connect(filterNode);
+            osc2.connect(filterNode);
+            osc3.connect(filterNode);
+            filterNode.connect(gainNode);
+
+            // Dry signal to master
+            gainNode.connect(masterGain);
+            // Wet signal to reverb
+            gainNode.connect(reverbNode);
+
+            // Start at minimum audible level (exponentialRamp can't start from 0)
+            gainNode.gain.setValueAtTime(0.001, audioContext.currentTime);
+
+            osc1.start();
+            osc2.start();
+            osc3.start();
+
+            ringOscillators.push({osc1, osc2, osc3, gainNode, filterNode});
+            ringLonelyCounts.push(0);
+        });
+    }
+
+    function updateRingDrone(ringIndex, lonelyCount) {
+        if (!audioContext) return; // Don't update if audio not initialized yet
+
+        const prevCount = ringLonelyCounts[ringIndex];
+        if (lonelyCount === prevCount) return; // No change
+
+        const {gainNode} = ringOscillators[ringIndex];
+        const now = audioContext.currentTime;
+
+        // Calculate target volume based on number of lonely runners
+        // Volume scales with count: 0 lonely = silent, max lonely = max volume
+        const N = RING_CONFIGS[ringIndex].velocities.length;
+        const volumeScale = lonelyCount / N; // 0 to 1
+        const maxVolume = 0.06; // Max volume per ring
+        const targetVolume = lonelyCount > 0 ? 0.001 + (volumeScale * maxVolume) : 0.001;
+
+        // Determine fade time
+        const fadeTime = audioJustInitialized ? 8.0 :
+                        (lonelyCount > prevCount ? 2.0 : 3.0); // Faster fade in, slower fade out
+
+        gainNode.gain.cancelScheduledValues(now);
+        gainNode.gain.setValueAtTime(gainNode.gain.value, now);
+        gainNode.gain.exponentialRampToValueAtTime(targetVolume, now + fadeTime);
+
+        ringLonelyCounts[ringIndex] = lonelyCount;
+    }
 
     p.setup = async () => {
-        startStamp = Date.now() / 1000.0;
+        // Offset so we start with an interesting configuration
+        startStamp = Date.now() / 1000.0 + 36000;
 
         width = p._userNode.offsetWidth;
         height = p._userNode.offsetHeight;
-        
+
         // Initialize canvas
         p.createCanvas(width, height, p.WEBGL);
         p.imageMode(p.CENTER);
-        p.rectMode(p.CENTER); // Ensure quads are drawn from center
+        p.rectMode(p.CENTER);
         p.noStroke();
 
         // Create Shader
         const shaderData = createRunnerRingFragmentShader(RING_CONFIGS);
         runnerShader = p.createShader(DEFAULT_VERTEX_SHADER, shaderData.shader);
         p.shader(runnerShader);
-        
-        // Set static uniforms for each ring (colors)
-        RING_CONFIGS.forEach((config, index) => {
-            // Velocities not needed in shader anymore
-            runnerShader.setUniform(`colors_${index}`, config.colors.flat());
+
+        // Set constant uniforms once
+        RING_CONFIGS.forEach((config, i) => {
+            runnerShader.setUniform(`lonelyThreshold_${i}`, config.lonelyThreshold);
         });
+
+        // Create color texture
+        const maxRunners = Math.max(...RING_CONFIGS.map(c => c.velocities.length));
+        const numRings = RING_CONFIGS.length;
+        
+        // p5 Graphics acts as a texture
+        colorTexture = p.createGraphics(maxRunners, numRings);
+        colorTexture.pixelDensity(1);
+        colorTexture.loadPixels();
+        
+        for (let i = 0; i < numRings; i++) {
+            const config = RING_CONFIGS[i];
+            for (let j = 0; j < config.colors.length; j++) {
+                const c = config.colors[j];
+                const r = (c >> 16) & 0xFF;
+                const g = (c >> 8) & 0xFF;
+                const b = c & 0xFF;
+                
+                // Index in pixels array: 4 * (y * width + x)
+                const idx = 4 * (i * maxRunners + j);
+                
+                colorTexture.pixels[idx] = r;
+                colorTexture.pixels[idx + 1] = g;
+                colorTexture.pixels[idx + 2] = b;
+                colorTexture.pixels[idx + 3] = 255;
+            }
+        }
+        colorTexture.updatePixels();
+
+        // Initialize/Reset state tracking
+        hasBeenLonely = [];
+        runnerOffsets = [];
+        let totalRunners = 0;
+        RING_CONFIGS.forEach((config) => {
+            hasBeenLonely.push(new Array(config.velocities.length).fill(false));
+            runnerOffsets.push(new Array(config.velocities.length).fill(0.0));
+            totalRunners += config.velocities.length;
+        });
+        
+        // Setup UI
+        lonelyCountEl = document.getElementById('lonely-count');
+        totalRunnersEl = document.getElementById('total-runners');
+        lonelyCounterContainer = document.getElementById('lonely-counter');
+        muteButtonEl = document.getElementById('mute-toy');
+
+        if (muteButtonEl) {
+            muteButtonEl.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!audioContext) {
+                    initAudio();
+                }
+                if (!hasUserInteractedWithCanvas) {
+                    hasUserInteractedWithCanvas = true;
+                }
+                toggleMute();
+            });
+        }
+        
+        if (totalRunnersEl) {
+            totalRunnersEl.textContent = totalRunners;
+        }
+        if (lonelyCounterContainer) {
+            lonelyCounterContainer.style.opacity = 1;
+        }
     }
+
+
+    p.mousePressed = function () {
+        // Initialize audio on first interaction
+        if (!audioContext) {
+            initAudio();
+        }
+
+        hasUserInteractedWithCanvas = true;
+
+        const time = Date.now() / 1000.0 - startStamp;
+        const clicked = getClickedRunner(p.mouseX, p.mouseY, time);
+
+        if (clicked) {
+            const {ringIndex, runnerIndex} = clicked;
+            // Start dragging
+            draggingRunner = {ringIndex, runnerIndex};
+            lastMouseAngle = getMouseAngle(p.mouseX, p.mouseY);
+        }
+    }
+
+    p.mouseDragged = function() {
+        if (draggingRunner) {
+            const currentMouseAngle = getMouseAngle(p.mouseX, p.mouseY);
+            let dAngle = currentMouseAngle - lastMouseAngle;
+
+            // Handle wrapping
+            if (dAngle > Math.PI) dAngle -= TAU;
+            if (dAngle < -Math.PI) dAngle += TAU;
+
+            const {ringIndex, runnerIndex} = draggingRunner;
+            runnerOffsets[ringIndex][runnerIndex] += dAngle;
+
+            lastMouseAngle = currentMouseAngle;
+        }
+        return false; // Prevent default
+    }
+
+    p.mouseReleased = function() {
+        draggingRunner = null;
+    }
+
+    // Support touch events for mobile
+    p.touchStarted = function() {
+        // Initialize audio on first interaction
+        if (!audioContext) {
+            initAudio();
+        }
+
+        hasUserInteractedWithCanvas = true;
+
+        if (p.touches.length === 1) {
+            // Simulate mouse press with first touch
+            const touch = p.touches[0];
+            p.mouseX = touch.x;
+            p.mouseY = touch.y;
+            p.mousePressed();
+            return false; // Prevent default
+        }
+    }
+
+    p.touchMoved = function() {
+        if (p.touches.length === 1) {
+            const touch = p.touches[0];
+            p.mouseX = touch.x;
+            p.mouseY = touch.y;
+            p.mouseDragged();
+            return false;
+        }
+    }
+
+    p.touchEnded = function() {
+        p.mouseReleased();
+        return false;
+    }
+
 
     p.draw = function () {
         p.clear();
-        
+
+        // Calculate current time (continuous animation)
+        const time = Date.now() / 1000.0 - startStamp;
+
         // Calculate geometry parameters in Normalized Device Coordinates (UV space)
-        // UV space goes from -1 to 1 along the shortest dimension.
-        // So 1 unit = min(width, height) / 2 pixels.
         const minDim = Math.min(width, height);
-        const uvScale = 2.0 / minDim; // 1 pixel = uvScale units
-        
+        const uvScale = 2.0 / minDim;
+
         const thicknessNorm = RING_THICKNESS_PX * uvScale;
         const spacingNorm = RING_SPACING_PX * uvScale;
         const innerRadiusNorm = INNER_RADIUS_PX * uvScale;
-        
+
         // Pass dynamic uniforms
-        const time = (Date.now() / 10000.0 - startStamp);
         runnerShader.setUniform("time", time);
-        // Fix for high-DPI displays: pass physical resolution
         runnerShader.setUniform("resolution", [width * p.pixelDensity(), height * p.pixelDensity()]);
-        
-        // Pass geometry params
         runnerShader.setUniform("u_geom_params", [thicknessNorm, spacingNorm, innerRadiusNorm]);
-        runnerShader.setUniform("u_use_colors", USE_DISTINCT_COLORS);
-        runnerShader.setUniform("u_highlight_lonely", HIGHLIGHT_LONELY);
+        runnerShader.setUniform("u_show_center_dots", SHOW_CENTER_DOTS);
         
-        const TAU = Math.PI * 2;
+        // Bind color texture
+        runnerShader.setUniform("u_color_texture", colorTexture);
+        runnerShader.setUniform("u_texture_size", [colorTexture.width, colorTexture.height]);
+
+        let totalLonely = 0;
 
         RING_CONFIGS.forEach((config, i) => {
             // 1. Calculate all positions for this ring
-            const currentPositions = config.velocities.map(v => (time * v * 0.5) % TAU);
-            
+            const currentPositions = config.velocities.map((v, j) => {
+                const offset = runnerOffsets[i][j];
+                return ((time * v * 0.5 * ANIMATION_SPEED) + offset) % TAU;
+            });
+
             // 2. Calculate loneliness (buffer size) for each runner
             const loneliness = currentPositions.map((pos1, j) => {
                 let minDist = TAU;
                 currentPositions.forEach((pos2, k) => {
                     if (j === k) return;
                     let d = Math.abs(pos1 - pos2);
-                    // Handle wrap-around distance
                     let dist = Math.min(d, TAU - d);
                     if (dist < minDist) minDist = dist;
                 });
-                // Territory is half the distance to the nearest neighbor
-                return minDist * 0.5; 
+                return minDist * 0.5;
             });
 
-            // 3. Update uniforms
-            // Use Float32Array for safe WebGL uniform passing
+            // 3. Count lonely runners in this ring and track first-time loneliness
+            let lonelyCount = 0;
+            for (let j = 0; j < config.velocities.length; j++) {
+                const isLonely = isRunnerLonely(i, j, time);
+                if (isLonely) {
+                    lonelyCount++;
+                    // Mark this runner as having been lonely
+                    if (!hasBeenLonely[i][j]) {
+                        hasBeenLonely[i][j] = true;
+                    }
+                }
+                
+                if (hasBeenLonely[i][j]) {
+                    totalLonely++;
+                }
+            }
+
+            // Update drone for this ring based on lonely count
+            updateRingDrone(i, lonelyCount);
+
+            // 4. Update uniforms
+            const N = config.velocities.length;
+            
             runnerShader.setUniform(`positions_${i}`, new Float32Array(currentPositions));
             runnerShader.setUniform(`loneliness_${i}`, new Float32Array(loneliness));
+            // Convert boolean array to integer array for WebGL
+            runnerShader.setUniform(`hasBeenLonely_${i}`, hasBeenLonely[i].map(b => b ? 1 : 0));
         });
         
-        // Draw a rect covering the screen to run the shader
+        // Update UI counter
+        if (lonelyCountEl) {
+            lonelyCountEl.textContent = totalLonely;
+        }
+
+        // After first update cycle, disable the extra-gentle fade-in
+        if (audioJustInitialized) {
+            audioJustInitialized = false;
+        }
+
+        // Draw
         p.rect(0, 0, width, height);
     }
 
