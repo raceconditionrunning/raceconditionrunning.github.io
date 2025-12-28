@@ -6,10 +6,9 @@ const RING_SPACING_PX = 20;
 const INNER_RADIUS_PX = 200;
 const NUM_RINGS = 20;
 const ANIMATION_SPEED = 0.1;      // Global speed multiplier (lower = slower)
-const SHOW_CENTER_DOTS = false;
 
 // Audio configuration
-const DRONE_BASE_FREQ = 92.50; // Gb2
+const DRONE_BASE_FREQ = 185.0; // Gb3
 // G-flat major scale
 // Gb, Ab, Bb, Cb, Db, Eb, F
 const DRONE_SCALE = [1, 9/8, 5/4, 4/3, 3/2, 5/3, 15/8]; // Just intonation ratios
@@ -69,34 +68,75 @@ function generateRingConfigs(numRings) {
     return configs;
 }
 
+// Debug: Generate equidistant runner configuration
+function generateEquidistantRingConfigs(numRings) {
+    const configs = [];
+    const innerRadius = INNER_RADIUS_PX;
+
+    for (let i = 0; i < numRings; i++) {
+        const numRunners = i + 3;
+        const velocities = [];
+        const colors = [];
+
+        // Calculate this ring's radius
+        const ringRadius = innerRadius + i * RING_SPACING_PX;
+        const radiusScale = innerRadius / ringRadius;
+
+        for (let j = 0; j < numRunners; j++) {
+            // All same velocity = equidistant
+            velocities.push(radiusScale);
+            // Assign color from pool (no shuffle for predictability)
+            colors.push(0xFF0000);
+        }
+
+        configs.push({
+            velocities: velocities,
+            colors: colors,
+            lonelyThreshold: Math.PI / numRunners
+        });
+    }
+    return configs;
+}
+
 const RING_CONFIGS = generateRingConfigs(NUM_RINGS);
+
+// For debugging:
+//const RING_CONFIGS = generateEquidistantRingConfigs(NUM_RINGS);
 
 function createRunnerRingFragmentShader(ringConfigs) {
     
     // Generate uniform declarations
     let uniforms = ``;
     uniforms += `uniform vec3 u_geom_params;\n`; // x: thickness_norm, y: spacing_norm, z: inner_radius_norm
-    uniforms += `uniform bool u_show_center_dots;\n`;
     uniforms += `uniform sampler2D u_color_texture;\n`;
     uniforms += `uniform vec2 u_texture_size;\n`;
-    
+    uniforms += `uniform sampler2D u_runner_data_texture;\n`; // Packed runner data (position, loneliness, hasBeenLonely)
+    uniforms += `uniform vec2 u_runner_texture_size;\n`; // Size of runner data texture
+
     for (let i = 0; i < ringConfigs.length; i++) {
-        const n = ringConfigs[i].velocities.length;
-        uniforms += `uniform float positions_${i}[${n}];\n`;
-        uniforms += `uniform float loneliness_${i}[${n}];\n`;
-        uniforms += `uniform int hasBeenLonely_${i}[${n}];\n`; // Track if runner has ever been lonely (0 or 1)
         uniforms += `uniform float lonelyThreshold_${i};\n`; // TAU/(2*N) for this ring
     }
 
+    // Helper function to read runner data from float texture
+    const unpackRunnerData = `
+    // Returns: vec3(position, loneliness, hasBeenLonely)
+    vec3 unpackRunnerData(int ringIndex, int runnerIndex) {
+        // texelFetch uses integer pixel coords with no filtering
+        ivec2 pixelCoord = ivec2(runnerIndex, ringIndex);
+        vec4 data = texelFetch(u_runner_data_texture, pixelCoord, 0);
+        return vec3(data.r, data.g, data.b);
+    }
+    `;
+
     // Generate the logic for each ring
     let ringLogic = ``;
-    
+
     // We build the rings dynamically in the shader using the uniforms
     // Ring i radius = inner + i * spacing
-    
+
     for (let i = 0; i < ringConfigs.length; i++) {
         const n = ringConfigs[i].velocities.length;
-        
+
         // Logic block for Ring i
         ringLogic += `
         {
@@ -105,16 +145,16 @@ function createRunnerRingFragmentShader(ringConfigs) {
             float trackWidth = u_geom_params.x;
             float spacing = u_geom_params.y;
             float innerRadius = u_geom_params.z;
-            
+
             float trackRadius = innerRadius + float(${i}) * spacing;
             float trackHalfWidth = trackWidth * 0.5;
-            
+
             float distToTrackCenter = abs(dist - trackRadius);
-            
+
             // Optimization: Only compute precise SDF if we are somewhat close to the track
             // Relaxed check to allow for corner radius overflow slightly
             if (distToTrackCenter < trackHalfWidth + 0.02) { // 0.02 is arbitrary margin
-                
+
                 vec3 finalRingColor =  vec3(0.0); // Base track color
                 float minSd = 1000.0;
                 float nearestLoneliness = 0.0;
@@ -125,14 +165,20 @@ function createRunnerRingFragmentShader(ringConfigs) {
 
                 // Check all runners to find the closest segment shape
                 for (int j = 0; j < ${n}; j++) {
+                    // Unpack runner data from texture
+                    vec3 runnerData = unpackRunnerData(${i}, j);
+                    float runnerPosition = runnerData.x;
+                    float runnerLoneliness = runnerData.y;
+                    float runnerHasBeenLonely = runnerData.z;
+
                     // Polar-ish coordinates
                     // X: Arc length along the ring relative to runner center
-                    float distArc = angularDist(angle, positions_${i}[j]) * trackRadius;
+                    float distArc = angularDist(angle, runnerPosition) * trackRadius;
                     // Y: Radial distance from center of ring
                     float distRadial = distToTrackCenter;
 
                     // Capsule (Segment) Logic
-                    float halfArcLength = loneliness_${i}[j] * trackRadius;
+                    float halfArcLength = runnerLoneliness * trackRadius;
 
                     // Add a small buffer/gap between segments so they don't touch
                     float gap = 0.005;
@@ -148,9 +194,9 @@ function createRunnerRingFragmentShader(ringConfigs) {
 
                     if (sd < minSd) {
                         minSd = sd;
-                        nearestLoneliness = loneliness_${i}[j];
+                        nearestLoneliness = runnerLoneliness;
                         nearestRunnerIndex = j;
-                        nearestRunnerHasBeenLonely = hasBeenLonely_${i}[j];
+                        nearestRunnerHasBeenLonely = int(runnerHasBeenLonely);
                     }
                 }
                 
@@ -162,11 +208,9 @@ function createRunnerRingFragmentShader(ringConfigs) {
                 
                 // Highlight lonely runners with smooth color transition
                 float opacity = 1.0;
-                vec2 texCoord = vec2(
-                    (float(nearestRunnerIndex) + 0.5) / u_texture_size.x,
-                    (float(${i}) + 0.5) / u_texture_size.y
-                );
-                vec3 targetColor = texture(u_color_texture, texCoord).rgb;
+                // Use texelFetch for discrete color lookup (no filtering)
+                ivec2 colorCoord = ivec2(nearestRunnerIndex, ${i});
+                vec3 targetColor = texelFetch(u_color_texture, colorCoord, 0).rgb;
                 vec3 whiteColor = vec3(1.0);
                 vec3 finalRunnerColor = whiteColor;
 
@@ -192,34 +236,6 @@ function createRunnerRingFragmentShader(ringConfigs) {
                 float trackAlpha = 0.0;
                 float finalAlpha = max(trackAlpha, runnerAlpha * opacity * 0.9);
 
-                // Draw center dots if enabled
-                if (u_show_center_dots) {
-                    for (int j = 0; j < ${n}; j++) {
-                        // Calculate position of this runner's center on the ring
-                        float runnerAngle = positions_${i}[j];
-
-                        // Convert to cartesian coordinates for the dot center
-                        vec2 dotCenter = vec2(cos(runnerAngle), sin(runnerAngle)) * trackRadius;
-
-                        // Distance from current pixel to dot center
-                        float dotDist = length(uv - dotCenter);
-
-                        // Dot has radius = trackHalfWidth
-                        float dotRadius = trackHalfWidth;
-                        float dotSd = dotDist - dotRadius;
-
-                        // Render dot with anti-aliasing
-                        float dotAlpha = 1.0 - smoothstep(0.0, aaWidth, dotSd);
-
-                        if (dotAlpha > 0.0) {
-                            // Black dot color
-                            vec3 dotColor = vec3(0.0);
-                            finalRingColor = mix(finalRingColor, dotColor, dotAlpha);
-                            finalAlpha = max(finalAlpha, dotAlpha * 0.9);
-                        }
-                    }
-                }
-
                 outColor = vec4(finalRingColor, finalAlpha);
                 return;
             }
@@ -229,11 +245,11 @@ function createRunnerRingFragmentShader(ringConfigs) {
 
 
     const frag = /* glsl */ `#version 300 es
-    precision mediump float;
+    precision lowp float;
 
     uniform vec2 resolution;
     uniform float time;
-    
+
     ${uniforms}
 
     out vec4 outColor;
@@ -247,6 +263,8 @@ function createRunnerRingFragmentShader(ringConfigs) {
         // Robust modular distance
         return abs(mod(diff + PI, TAU) - PI);
     }
+
+    ${unpackRunnerData}
 
     void main() {
         // Normalize coordinates to [-1, 1], correcting for aspect ratio
@@ -273,6 +291,7 @@ export let LonelyRunnerToy = rootUrl => p => {
     let runnerShader;
     let startStamp;
     let colorTexture;
+    let runnerDataTexture;
 
     const TAU = Math.PI * 2;
 
@@ -563,7 +582,7 @@ export let LonelyRunnerToy = rootUrl => p => {
 
     p.setup = async () => {
         // Offset so we start with an interesting configuration
-        startStamp = Date.now() / 1000.0 + 36000;
+        startStamp = Date.now() / 1000.0 - 36000;
 
         width = p._userNode.offsetWidth;
         height = p._userNode.offsetHeight;
@@ -612,13 +631,27 @@ export let LonelyRunnerToy = rootUrl => p => {
         }
         colorTexture.updatePixels();
 
+        // Create runner data texture (stores positions, loneliness, hasBeenLonely)
+        runnerDataTexture = p.createFramebuffer({
+            width: maxRunners,
+            height: numRings,
+            format: p.FLOAT,  // Use floating point texture
+            textureFiltering: p.NEAREST,
+            density: 1,
+            antialias: false,
+            depth: false
+        });
+
         // Initialize/Reset state tracking
         hasBeenLonely = [];
         runnerOffsets = [];
         let totalRunners = 0;
-        RING_CONFIGS.forEach((config) => {
+        RING_CONFIGS.forEach((config, ringIndex) => {
             hasBeenLonely.push(new Array(config.velocities.length).fill(false));
             runnerOffsets.push(new Array(config.velocities.length).fill(0.0));
+            // DEBUG: set equally around ring
+            //runnerOffsets.push(config.velocities.map((_, j) => (TAU / config.velocities.length) * j));
+
             totalRunners += config.velocities.length;
         });
         
@@ -743,11 +776,13 @@ export let LonelyRunnerToy = rootUrl => p => {
         runnerShader.setUniform("time", time);
         runnerShader.setUniform("resolution", [width * p.pixelDensity(), height * p.pixelDensity()]);
         runnerShader.setUniform("u_geom_params", [thicknessNorm, spacingNorm, innerRadiusNorm]);
-        runnerShader.setUniform("u_show_center_dots", SHOW_CENTER_DOTS);
-        
+
         // Bind color texture
         runnerShader.setUniform("u_color_texture", colorTexture);
         runnerShader.setUniform("u_texture_size", [colorTexture.width, colorTexture.height]);
+
+        // Update runner data texture with bit-packed data
+        runnerDataTexture.loadPixels();
 
         let totalLonely = 0;
 
@@ -781,7 +816,7 @@ export let LonelyRunnerToy = rootUrl => p => {
                         hasBeenLonely[i][j] = true;
                     }
                 }
-                
+
                 if (hasBeenLonely[i][j]) {
                     totalLonely++;
                 }
@@ -790,14 +825,25 @@ export let LonelyRunnerToy = rootUrl => p => {
             // Update drone for this ring based on lonely count
             updateRingDrone(i, lonelyCount);
 
-            // 4. Update uniforms
-            const N = config.velocities.length;
-            
-            runnerShader.setUniform(`positions_${i}`, new Float32Array(currentPositions));
-            runnerShader.setUniform(`loneliness_${i}`, new Float32Array(loneliness));
-            // Convert boolean array to integer array for WebGL
-            runnerShader.setUniform(`hasBeenLonely_${i}`, hasBeenLonely[i].map(b => b ? 1 : 0));
+            // 4. Write runner data to float texture
+            for (let j = 0; j < config.velocities.length; j++) {
+                const position = currentPositions[j];
+                const lonelyValue = loneliness[j];
+                const hasBeenLonelyValue = hasBeenLonely[i][j] ? 1.0 : 0.0;
+
+                const idx = 4 * (i * runnerDataTexture.width + j);
+                runnerDataTexture.pixels[idx] = position;          // R: position (radians)
+                runnerDataTexture.pixels[idx + 1] = lonelyValue;   // G: loneliness (radians)
+                runnerDataTexture.pixels[idx + 2] = hasBeenLonelyValue; // B: hasBeenLonely (0.0 or 1.0)
+                runnerDataTexture.pixels[idx + 3] = 1.0;            // A: unused
+            }
         });
+
+        runnerDataTexture.updatePixels();
+
+        // Bind runner data texture
+        runnerShader.setUniform("u_runner_data_texture", runnerDataTexture);
+        runnerShader.setUniform("u_runner_texture_size", [runnerDataTexture.width, runnerDataTexture.height]);
         
         // Update UI counter
         if (lonelyCountEl) {
@@ -808,7 +854,7 @@ export let LonelyRunnerToy = rootUrl => p => {
         if (audioJustInitialized) {
             audioJustInitialized = false;
         }
-
+        //console.log(p.frameRate())
         // Draw
         p.rect(0, 0, width, height);
     }
