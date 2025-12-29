@@ -285,7 +285,7 @@ function createRunnerRingFragmentShader(ringConfigs) {
     return { shader: frag };
 }
 
-export let LonelyRunnerToy = rootUrl => p => {
+export let LonelyRunnerToy = () => p => {
     let width;
     let height;
     let runnerShader;
