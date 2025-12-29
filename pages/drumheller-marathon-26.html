@@ -8,8 +8,8 @@ redirect_from:
 - /dm/
 - /drumheller-marathon/
 - /dm26/
-registration_link: https://forms.gle/uEAhyLzrcbKWSaRv7
-shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
+registration_link: https://forms.gle/CxxHZRKnc4garkg98
+shirt_order_link: ""
 ---
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
@@ -192,10 +192,15 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
         }
 
         a {
-            transition: text-shadow .3s, color .3s;
+            transition:color .3s;
         }
         a:hover {
-            //text-shadow: 0 0 1rem rgba(225, 131, 0, 1.0)
+            text-decoration: none;
+            color: currentColor;
+            --shadow: #666;
+            text-shadow: .25px .25px 0 var(--shadow), .5px .5px 0 var(--shadow), .75px .75px 0 var(--shadow), 1px 1px 0 var(--shadow),
+            1.25px 1.25px 0 var(--shadow), 1.5px 1.5px 0 var(--shadow), 1.75px 1.75px 0 var(--shadow), 2px 2px 0 var(--shadow),
+            2.25px 2.25px 0 var(--shadow), 2.5px 2.5px 0 var(--shadow), 2.75px 2.75px 0 var(--shadow), 3px 3px 0 var(--shadow)
         }
 
         a.disabled {
@@ -287,15 +292,8 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             text-shadow: .25px .25px 0 var(--shadow), .5px .5px 0 var(--shadow), .75px .75px 0 var(--shadow), 1px 1px 0 var(--shadow),
             1.25px 1.25px 0 var(--shadow), 1.5px 1.5px 0 var(--shadow), 1.75px 1.75px 0 var(--shadow), 2px 2px 0 var(--shadow),
             2.25px 2.25px 0 var(--shadow), 2.5px 2.5px 0 var(--shadow), 2.75px 2.75px 0 var(--shadow), 3px 3px 0 var(--shadow),
-            3.25px 3.25px 0 var(--shadow), 3.5px 3.5px 0 var(--shadow), 3.75px 3.75px 0 var(--shadow), 4px 4px 0 var(--shadow),
-            4.25px 4.25px 0 var(--shadow), 4.5px 4.5px 0 var(--shadow), 4.75px 4.75px 0 var(--shadow), 5px 5px 0 var(--shadow),
-            5.25px 5.25px 0 var(--shadow), 5.5px 5.5px 0 var(--shadow), 5.75px 5.75px 0 var(--shadow), 6px 6px 0 var(--shadow),
-            6.25px 6.25px 0 var(--shadow), 6.5px 6.5px 0 var(--shadow), 6.75px 6.75px 0 var(--shadow), 7px 7px 0 var(--shadow),
-            7.25px 7.25px 0 var(--shadow), 7.5px 7.5px 0 var(--shadow), 7.75px 7.75px 0 var(--shadow), 8px 8px 0 var(--shadow),
-            8.25px 8.25px 0 var(--shadow), 8.5px 8.5px 0 var(--shadow), 8.75px 8.75px 0 var(--shadow), 9px 9px 0 var(--shadow),
-            9.25px 9.25px 0 var(--shadow), 9.5px 9.5px 0 var(--shadow), 9.75px 9.75px 0 var(--shadow), 10px 10px 0 var(--shadow),
-            10.25px 10.25px 0 var(--shadow), 10.5px 10.5px 0 var(--shadow), 10.75px 10.75px 0 var(--shadow), 11px 11px 0 var(--shadow),
-            11.25px 11.25px 0 var(--shadow), 11.5px 11.5px 0 var(--shadow), 11.75px 11.75px 0 var(--shadow), 12px 12px 0 var(--shadow);
+            3.25px 3.25px 0 var(--shadow), 3.5px 3.5px 0 var(--shadow), 3.75px 3.75px 0 var(--shadow), 4px 4px 0 var(--shadow)
+
         }
 
         #hero-toy {
@@ -337,8 +335,20 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
         .display-text {
             font-size: clamp(.75rem,min(4vh, 4vw),8rem);
             line-height: 1.3;
-            font-weight: 300;
+            font-weight: 400;
             --shadow: black;
+            text-shadow: .25px .25px 0 var(--shadow), .5px .5px 0 var(--shadow), .75px .75px 0 var(--shadow), 1px 1px 0 var(--shadow),
+            1.25px 1.25px 0 var(--shadow), 1.5px 1.5px 0 var(--shadow), 1.75px 1.75px 0 var(--shadow), 2px 2px 0 var(--shadow),
+            2.25px 2.25px 0 var(--shadow), 2.5px 2.5px 0 var(--shadow), 2.75px 2.75px 0 var(--shadow), 3px 3px 0 var(--shadow),
+            3.25px 3.25px 0 var(--shadow), 3.5px 3.5px 0 var(--shadow), 3.75px 3.75px 0 var(--shadow), 4px 4px 0 var(--shadow),
+            4.25px 4.25px 0 var(--shadow), 4.5px 4.5px 0 var(--shadow), 4.75px 4.75px 0 var(--shadow), 5px 5px 0 var(--shadow),
+            5.25px 5.25px 0 var(--shadow), 5.5px 5.5px 0 var(--shadow), 5.75px 5.75px 0 var(--shadow), 6px 6px 0 var(--shadow),
+            6.25px 6.25px 0 var(--shadow), 6.5px 6.5px 0 var(--shadow), 6.75px 6.75px 0 var(--shadow), 7px 7px 0 var(--shadow),
+            7.25px 7.25px 0 var(--shadow), 7.5px 7.5px 0 var(--shadow), 7.75px 7.75px 0 var(--shadow), 8px 8px 0 var(--shadow),
+            8.25px 8.25px 0 var(--shadow), 8.5px 8.5px 0 var(--shadow), 8.75px 8.75px 0 var(--shadow), 9px 9px 0 var(--shadow),
+            9.25px 9.25px 0 var(--shadow), 9.5px 9.5px 0 var(--shadow), 9.75px 9.75px 0 var(--shadow), 10px 10px 0 var(--shadow),
+            10.25px 10.25px 0 var(--shadow), 10.5px 10.5px 0 var(--shadow), 10.75px 10.75px 0 var(--shadow), 11px 11px 0 var(--shadow),
+            11.25px 11.25px 0 var(--shadow), 11.5px 11.5px 0 var(--shadow), 11.75px 11.75px 0 var(--shadow), 12px 12px 0 var(--shadow);
 
         }
         .display-text a {
@@ -348,20 +358,35 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
         }
         .display-text a:hover {
             --shadow: rgba(30, 30, 30, 1.0);
+            text-shadow: .25px .25px 0 var(--shadow), .5px .5px 0 var(--shadow), .75px .75px 0 var(--shadow), 1px 1px 0 var(--shadow),
+            1.25px 1.25px 0 var(--shadow), 1.5px 1.5px 0 var(--shadow), 1.75px 1.75px 0 var(--shadow), 2px 2px 0 var(--shadow),
+            2.25px 2.25px 0 var(--shadow), 2.5px 2.5px 0 var(--shadow), 2.75px 2.75px 0 var(--shadow), 3px 3px 0 var(--shadow),
+            3.25px 3.25px 0 var(--shadow), 3.5px 3.5px 0 var(--shadow), 3.75px 3.75px 0 var(--shadow), 4px 4px 0 var(--shadow),
+            4.25px 4.25px 0 var(--shadow), 4.5px 4.5px 0 var(--shadow), 4.75px 4.75px 0 var(--shadow), 5px 5px 0 var(--shadow),
+            5.25px 5.25px 0 var(--shadow), 5.5px 5.5px 0 var(--shadow), 5.75px 5.75px 0 var(--shadow), 6px 6px 0 var(--shadow),
+            6.25px 6.25px 0 var(--shadow), 6.5px 6.5px 0 var(--shadow), 6.75px 6.75px 0 var(--shadow), 7px 7px 0 var(--shadow),
+            7.25px 7.25px 0 var(--shadow), 7.5px 7.5px 0 var(--shadow), 7.75px 7.75px 0 var(--shadow), 8px 8px 0 var(--shadow),
+            8.25px 8.25px 0 var(--shadow), 8.5px 8.5px 0 var(--shadow), 8.75px 8.75px 0 var(--shadow), 9px 9px 0 var(--shadow),
+            9.25px 9.25px 0 var(--shadow), 9.5px 9.5px 0 var(--shadow), 9.75px 9.75px 0 var(--shadow), 10px 10px 0 var(--shadow),
+            10.25px 10.25px 0 var(--shadow), 10.5px 10.5px 0 var(--shadow), 10.75px 10.75px 0 var(--shadow), 11px 11px 0 var(--shadow),
+            11.25px 11.25px 0 var(--shadow), 11.5px 11.5px 0 var(--shadow), 11.75px 11.75px 0 var(--shadow), 12px 12px 0 var(--shadow);
         }
 
         .wavy-button, .wave-button:hover, .wave-button:visited, .wave-button:active {
             color: white;
         }
         .wavy-button {
-            text-decoration-thickness: .5px;
-            text-decoration-color: rgba(255,255,255,.3);
-            text-underline-offset: 2px;
-            transition: text-shadow .3s, text-decoration .3s, font-weight .3s;
+            text-decoration: none;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));
+            background-size: 100% 1px;
+            background-position: 0 100%;
+            background-repeat: no-repeat;
+            transition: text-shadow .3s;
         }
 
         .wavy-button:hover {
-            --shadow: rgb(0, 239, 255, 0.5);
+            --shadow: rgb(0, 167, 179);
+            text-decoration: none;
         }
 
         .wavy-button.complement-color:hover {
@@ -508,22 +533,36 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             text-decoration: none;
             color: var(--bs-secondary-color);
             transition: .3s;
+            --shadow: transparent;
+            --long-shadow: .25px .25px 0 var(--shadow), .5px .5px 0 var(--shadow), .75px .75px 0 var(--shadow), 1px 1px 0 var(--shadow),
+            1.25px 1.25px 0 var(--shadow), 1.5px 1.5px 0 var(--shadow), 1.75px 1.75px 0 var(--shadow), 2px 2px 0 var(--shadow),
+            2.25px 2.25px 0 var(--shadow), 2.5px 2.5px 0 var(--shadow), 2.75px 2.75px 0 var(--shadow), 3px 3px 0 var(--shadow),
+            3.25px 3.25px 0 var(--shadow), 3.5px 3.5px 0 var(--shadow), 3.75px 3.75px 0 var(--shadow), 4px 4px 0 var(--shadow),
+            4.25px 4.25px 0 var(--shadow), 4.5px 4.5px 0 var(--shadow), 4.75px 4.75px 0 var(--shadow), 5px 5px 0 var(--shadow),
+            5.25px 5.25px 0 var(--shadow), 5.5px 5.5px 0 var(--shadow), 5.75px 5.75px 0 var(--shadow), 6px 6px 0 var(--shadow);
+            box-shadow: var(--long-shadow);
         }
 
         .usatf-certificate:hover {
             color: var(--bs-body-color);
             border: 2px solid var(--bs-body-color);
-            box-shadow: 0 0 10px var(--bs-secondary-color);
+            --shadow: var(--bs-secondary-color);
         }
 
         .usatf-certificate.full:hover {
             border: 2px solid var(--branding-color);
-            box-shadow: 0 0 10px var(--branding-color);
+            --shadow: var(--branding-color);
         }
 
         .usatf-certificate.half:hover {
             border: 2px solid var(--branding-color-complement);
-            box-shadow: 0 0 10px var(--branding-color-complement);
+            --shadow: var(--branding-color-complement);
+        }
+
+        .usatf-certificate h2,
+        .usatf-certificate p,
+        .usatf-certificate span {
+            text-shadow: none !important;
         }
 
         .usatf-certificate:hover img {
@@ -952,7 +991,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 <section id="course" class="mt-5">
     <div class="container">
         <h2>Course <a href="#course" class="anchor-link" aria-label="Link to this section. Course"></a></h2>
-        <p>The course consists of a short segment down the upper vista followed by laps around Drumheller Fountain and the <a href="https://facilities.uw.edu/blog/posts/2016/04/05/drumheller-duckling-debut">duck ramp <span class="duck-ramp inline-icon"/></a>.  The marathon comprises 219 laps and the half marathon consists of 109 laps. Both events will start at different times and locations. Participants aiming for fewer laps should start with the half marathoners.</p>
+        <p>From the upper vista, loop around Drumheller Fountain and the <a href="https://facilities.uw.edu/blog/posts/2016/04/05/drumheller-duckling-debut">duck ramp <span class="duck-ramp inline-icon"/></a>—219 laps for the marathon, 109 for the half. Both events will start at different times and locations. Participants aiming for fewer laps should start with the half marathoners.</p>
 
         <p>The
             direction will flip periodically, and you must change directions only by rounding the marker placed
@@ -1042,12 +1081,6 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
         <accordion-group id="faq-accordion" faq>
             <accordion-item>
-                <accordion-header>What's the start time?</accordion-header>
-                <accordion-body>
-                    <p>Different distances will start at different times between 5-10AM. Participants running the full or a faster half will run earlier. The schedule will be posted in mid-April based on registrations.</p>
-                </accordion-body>
-            </accordion-item>
-            <accordion-item>
                 <accordion-header>Do I have to run the whole thing?</accordion-header>
                 <accordion-body>
                     <p>No. Anyone running or walking fewer than 109 laps is welcome to join for the last start time. Here are some lap counts for common distances. Add a lap if not starting at the official start line.</p>
@@ -1065,7 +1098,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             </accordion-item>
             <accordion-item>
                 <accordion-header>How fast do I need to run?</accordion-header>
-                <accordion-body><p>The cutoff times and corresponding average paces are:</p>
+                <accordion-body><p>The course does not close, but we may not be able to provide an official time past these cutoffs:</p>
                     <table class="table table-sm ms-2 mt-2 mb-4">
                         <thead><tr><th>Distance</th><th>Time</th><th>min/mi</th> <th>min/km</th></tr></thead>
                         <tbody>
@@ -1080,13 +1113,13 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
                 <accordion-header>What's the weather like?</accordion-header>
                 <accordion-body>
 
-                    <blockquote class="blockquote normal">On June 7, the temperature in Seattle typically ranges from 54°F to 67°F and is rarely below 49°F or above 77°F.
+                    <blockquote class="blockquote normal">On June 6, the temperature in Seattle typically ranges from 52°F to 66°F and is rarely below 48°F or above 77°F.
                         [...]
-                        The coolest time of the day is from 1:00 AM to 8:15 AM, with the coldest at 5:30 AM, at which time the temperature is below 56°F three days out of four, and below 58°F nine days out of ten.
+                        The coolest time of the day is from 1:00 AM to 8:15 AM, with the coldest at 5:30 AM, at which time the temperature is below 54°F three days out of four, and below 57°F nine days out of ten.
                         [...]
-                        The cloudiest time of day is around 6:30 AM, at which time the chance of overcast or mostly cloudy conditions is 57%.
+                        The cloudiest time of day is around 5:30 AM, at which time the chance of overcast or mostly cloudy conditions is 59%.
                     </blockquote>
-                    <p class="blockquote-footer"><a href="https://weatherspark.com/d/913/6/7/Average-Weather-on-June-7-in-Seattle-Washington-United-States#Figures-Temperature">June 7 Weather in Seattle, Weather Spark</a></p>
+                    <p class="blockquote-footer"><a href="https://weatherspark.com/d/145236/6/6/Average-Weather-on-June-6-at-Seattle-Tacoma-International-Airport-Washington-United-States">June 6 Weather in Seattle, Weather Spark</a></p>
                 </accordion-body>
             </accordion-item>
 
@@ -1129,7 +1162,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             <accordion-item>
                 <accordion-header>Why do I have to apply for the marathon?</accordion-header>
                 <accordion-body>
-                    <p>We need information about your plans and preparedness in order to assess whether we can accommodate you. The spread of goal times determines our maximum field size and start times. Later applications will be judged for compatibility with the existing field. You will be contacted to discuss compromises if we cannot immediately accept your application.</p>
+                    <p>We need information about your plans and preparedness in order to assess whether we can accommodate you.</p>
                     <p>The event has a minimum field size of 3. It is <em>extremely</em> unlikely, but should we have fewer than 3 registrations on April 1st, we will notify registered runners to make alternative plans.</p>
 
                 </accordion-body>
@@ -1138,7 +1171,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             <accordion-item>
                 <accordion-header>Is it okay if I've never run a full marathon before?</accordion-header>
                 <accordion-body>
-                    <p>Maybe. The answer will depend on your background, so please discuss with the organizers first if you would like to plan on Drumheller being your first marathon. Note that we require evidence of a half marathon time commensurate with your marathon goal time.</p>
+                    <p>The timing cutoffs are the primary constraint; we do not want you to run a full marathon that we cannot provide you an official time for. We ask for evidence of a half marathon time commensurate with your marathon goal time so we can have confidence that won't happen.</p>
 
                 </accordion-body>
             </accordion-item>
@@ -1208,20 +1241,20 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
 <section id="history">
     <figure class="gallery lightbox-gallery">
-        {% assign img_name = site.baseurl | append: "/img/dm25/uw42568.webp" %}
-        <a href="{{img_name}}" data-pswp-width="3420" data-pswp-height="3160">
+        {% assign img_name = site.baseurl | append: "/img/dm26/uwc9544.avif" %}
+        <a href="{{img_name}}" data-pswp-width="{% imagesize img_name:width %}" data-pswp-height="{% imagesize img_name:height %}">
             <img src="{{img_name}}"
-                 alt="Silhouette of couple in front of Drumheller Fountain at night between 1968 and 1972"
+                 alt="Campus life scene showing students sitting on edge of Drumheller Fountain"
                  class="w-100 shadow-1-strong rounded" {% imagesize img_name:props %}/>
         </a>
-        <figcaption class="pswp-caption-content">Silhouette of couple in front of Drumheller Fountain at night between 1968 and 1972. Scan retouched
-            to remove damage from the original negative. <cite>University of Washington Libraries, Special Collections, Joseph Karpen, photographer, UW42568</cite></figcaption>
+        <figcaption class="pswp-caption-content">Campus life scene showing students sitting on edge of Drumheller Fountain (then Frosh Pond), June 6, 1949.<cite> University of Washington Libraries, Special Collections, James O. Sneddon, photographer, UWC9544</cite></figcaption>
     </figure>
 
     <figure class="container">
-        <blockquote class="blockquote"> Davis is replacing one of twelve 500-watt bulbs that ring the center of the fountain. He eases the large bulb into a solid brass housing. &#8220;Many of the lights had gone out since the last maintenance,&#8221; Davis explains. &#8220;Over time, water gets into the housings, turns to steam, and eventually the bulb goes boom!&#8221;
+        <blockquote class="blockquote"> The Drumheller Fountain has been a source of enjoyment and pleasure
+            to me, my family, and my friends. One evening during the hot weather, for example, I sat with three visitors on the rim of the fountain, surrounded by the rose garden, cooled by the spray, watching and hearing the plumes of water as they rose and then fell into the pool.
         </blockquote>
-        <figcaption class="blockquote-footer">Chris Davis, speaking to Kenneth Bogle of the Daily. <a href="https://www.dailyuw.com/news/draining-drumheller/article_026fac41-b067-5967-a523-95b6da88be9e.html"><cite class="fst-normal">"Draining Drumheller"</cite></a>, September&nbsp;29,&nbsp;1997
+        <figcaption class="blockquote-footer">Richard F. Wilkie, Assoc. Prof. Germanic Studies, in a letter to Joseph Drumheller. August 7th, 1962.
         </figcaption>
     </figure>
 
@@ -1254,7 +1287,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
 
     function initialize() {
-        const toy = new p5(LonelyRunnerToy("{{site.baseurl}}"), document.querySelector("#hero-toy"));
+        const toy = new p5(LonelyRunnerToy(), document.querySelector("#hero-toy"));
         // Friendly errors have a performance penalty.
         toy.disableFriendlyErrors = true;
         // Tooltips for sign-up deadlines
