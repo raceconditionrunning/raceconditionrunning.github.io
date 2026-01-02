@@ -58,8 +58,12 @@ export class TransitVehicleTracker {
     extractVehicleData(data) {
         const trips = data.data.list;
         const tripMap = new Map(data.data.references.trips.map(trip => [trip.id, trip.tripHeadsign]));
-        const vehicles = trips.map(trip => {
+        const vehicles = trips.flatMap(trip => {
             const status = trip.status;
+            if (!trip.status) {
+                console.warn(`Trip ID "${trip.id}" status not found.`);
+                return null;
+            }
             const tripHeadsign = tripMap.get(status.activeTripId);
             let tripIdAbbr = abbreviateTripId(status.activeTripId, status.status);
             return {
