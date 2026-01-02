@@ -1,85 +1,70 @@
 - date: "2026-01-10"
   plan:
     - time: "8:30"
-      route:
-        name: cse-nature-hawthorne-bryant-loop
+      route_id: cse-nature-hawthorne-bryant-loop
     - time: "9:40"
-      route:
-        name: cse-portage-bay-loop 
+      route_id: cse-portage-bay-loop 
 
 - date: "2026-01-17"
   plan:
     - time: "8:30"
-      route:
-        name: westlake-sculpture-marina-ob
+      route_id: westlake-sculpture-marina-ob
 
 - date: "2026-01-24"
   plan:
     - time: "8:30"
-      route:
-        name: northgate-carkeek-roosevelt
+      route_id: northgate-carkeek-roosevelt
     - time: "9:50"
-      route:
-        name: roosevelt-green-lake-loop
+      route_id: roosevelt-green-lake-loop
 
 - date: "2026-01-31"
   plan:
     - time: "8:30"
-      route:
-        name: cse-arb-lwb-seward-cc
+      route_id: cse-arb-lwb-seward-cc
     - time: "10:20"
-      route:
-        name: cc-chief-sealth-cc-center
+      route_id: cc-chief-sealth-cc-center
     
 
 - date: "2026-02-07"
   plan:
     - time: "8:30"
-      route:
-        name: locks-discovery-magnolia-discovery-ob
+      route_id: locks-discovery-magnolia-discovery-ob
     - time: "10:10"
-      route:
-        name: locks-golden-gardens-ob
+      route_id: locks-golden-gardens-ob
 
 
 - date: "2026-02-14"
   plan:
     - time: "8:30"
-      route:
-        name: TBD
+      route_id: green-lake-loop
 
 - date: "2026-02-21"
   plan:
     - time: "8:30"
-      route:
-        name: cap-hill-i90-trail-lwb-arborlaken-loop
+      route_id: cap-hill-i90-trail-lwb-arborlaken-loop
     - time: "10:10"
-      route:
-        name: cap-hill-volunteer-park-westlake
+      route_id: cap-hill-volunteer-park-westlake
 
 - date: "2026-02-28"
   plan:
     - time: "8:30"
-      route:
-        name: northgate-interurban-lynnwood
+      route_id: northgate-interurban-lynnwood
     - time: "10:10"
-      route:
-        name: lynnwood-interurban-ashway-ob
+      route_id: lynnwood-interurban-ashway-ob
 
 - date: "2026-03-07"
   plan:
     - time: "7:30"
       route_id: 2026-lake-sammamish-half
       notes: "https://www.orcarunning.com/lake-sammamish-half/"
+      distance_mi: 13.1
 
 - date: "2026-03-14"
   plan:
     - time: "8:30"
-      route:
-        name: beacon-hill-mlk-tukwila-p2p
+      route_id: beacon-hill-mlk-tukwila-p2p
     - time: "10:10"
-      route:
-        name: tukwila-sunset-park-botanical-gardens-loop
+      route_id: tukwila-sunset-park-botanical-gardens-loop
 
 - date: "2026-03-21"
   plan:
@@ -90,5 +75,4 @@
 - date: "2026-03-28"
   plan:
     - time: "8:30"
-      route:
-        name: TBD
+      route_id: green-lake-loop
