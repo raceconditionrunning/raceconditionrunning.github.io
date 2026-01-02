@@ -14,17 +14,31 @@ const DRONE_BASE_FREQ = 185.0; // Gb3
 const DRONE_SCALE = [1, 9/8, 5/4, 4/3, 3/2, 5/3, 15/8]; // Just intonation ratios
 
 
-function generateRingConfigs(numRings) {
+// Simple seeded PRNG (Mulberry32)
+function mulberry32(a) {
+    return function() {
+      var t = a += 0x6D2B79F5;
+      t = Math.imul(t ^ t >>> 15, t | 1);
+      t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    }
+}
+
+function generateRingConfigs(numRings, seed) {
     const configs = [];
     const innerRadius = INNER_RADIUS_PX;
+    const trackHalfWidth = RING_THICKNESS_PX * 0.5;
+
+    // Use seeded random if seed is provided, else Math.random
+    const random = seed ? mulberry32(seed) : Math.random;
 
     for (let i = 0; i < numRings; i++) {
         const numRunners = i + 3;
         const velocities = [];
         const colors = [];
 
-        // Calculate this ring's radius
-        const ringRadius = innerRadius + i * RING_SPACING_PX;
+        // Calculate this ring's radius (centered in the track)
+        const ringRadius = innerRadius + trackHalfWidth + i * RING_SPACING_PX;
 
         // Scale factor to maintain constant apparent speed across rings
         // Outer rings move slower in angular velocity to match arc speed
@@ -44,13 +58,13 @@ function generateRingConfigs(numRings) {
         }
         // Shuffle the color pool
         for (let j = colorPool.length - 1; j > 0; j--) {
-            const k = Math.floor(Math.random() * (j + 1));
+            const k = Math.floor(random() * (j + 1));
             [colorPool[j], colorPool[k]] = [colorPool[k], colorPool[j]];
         }
 
         for (let j = 0; j < numRunners; j++) {
             // Random base velocity between 0.5 and 3.0
-            const baseVelocity = 0.5 + Math.random() * 2.5;
+            const baseVelocity = 0.5 + random() * 2.5;
 
             // Scale by radius to maintain constant apparent speed
             velocities.push(baseVelocity * radiusScale);
@@ -98,7 +112,10 @@ function generateEquidistantRingConfigs(numRings) {
     return configs;
 }
 
-const RING_CONFIGS = generateRingConfigs(NUM_RINGS);
+const RING_CONFIGS = generateRingConfigs(NUM_RINGS, Math.floor(Date.now() / 1000));
+
+// For debugging:
+//const RING_CONFIGS = generateEquidistantRingConfigs(NUM_RINGS);
 
 // For debugging:
 //const RING_CONFIGS = generateEquidistantRingConfigs(NUM_RINGS);
@@ -112,21 +129,11 @@ function createRunnerRingFragmentShader(ringConfigs) {
     uniforms += `uniform vec2 u_texture_size;\n`;
     uniforms += `uniform sampler2D u_runner_data_texture;\n`; // Packed runner data (position, loneliness, hasBeenLonely)
     uniforms += `uniform vec2 u_runner_texture_size;\n`; // Size of runner data texture
+    uniforms += `uniform sampler2D u_flash_texture;\n`; // Flash intensity per ring
 
     for (let i = 0; i < ringConfigs.length; i++) {
         uniforms += `uniform float lonelyThreshold_${i};\n`; // TAU/(2*N) for this ring
     }
-
-    // Helper function to read runner data from float texture
-    const unpackRunnerData = `
-    // Returns: vec3(position, loneliness, hasBeenLonely)
-    vec3 unpackRunnerData(int ringIndex, int runnerIndex) {
-        // texelFetch uses integer pixel coords with no filtering
-        ivec2 pixelCoord = ivec2(runnerIndex, ringIndex);
-        vec4 data = texelFetch(u_runner_data_texture, pixelCoord, 0);
-        return vec3(data.r, data.g, data.b);
-    }
-    `;
 
     // Generate the logic for each ring
     let ringLogic = ``;
@@ -142,20 +149,13 @@ function createRunnerRingFragmentShader(ringConfigs) {
         {
             // --- RING ${i} ---
             // Calculate geometry in UV space based on uniforms
-            float trackWidth = u_geom_params.x;
-            float spacing = u_geom_params.y;
-            float innerRadius = u_geom_params.z;
-
             float trackRadius = innerRadius + float(${i}) * spacing;
-            float trackHalfWidth = trackWidth * 0.5;
+            float distToTrackCenter = dist - trackRadius;
 
-            float distToTrackCenter = abs(dist - trackRadius);
-
-            // Optimization: Only compute precise SDF if we are somewhat close to the track
-            // Relaxed check to allow for corner radius overflow slightly
-            if (distToTrackCenter < trackHalfWidth + 0.02) { // 0.02 is arbitrary margin
-
-                vec3 finalRingColor =  vec3(0.0); // Base track color
+            if (abs(distToTrackCenter) < trackWidth) {
+                // Read flash intensity for this ring
+                float flashIntensity = texelFetch(u_flash_texture, ivec2(${i}, 0), 0).r;
+                vec3 finalRingColor = vec3(flashIntensity * 0.4); // Initialize with flash glow
                 float minSd = 1000.0;
                 float nearestLoneliness = 0.0;
 
@@ -166,7 +166,8 @@ function createRunnerRingFragmentShader(ringConfigs) {
                 // Check all runners to find the closest segment shape
                 for (int j = 0; j < ${n}; j++) {
                     // Unpack runner data from texture
-                    vec3 runnerData = unpackRunnerData(${i}, j);
+                    ivec2 pixelCoord = ivec2(j, ${i});
+                    vec4 runnerData = texelFetch(u_runner_data_texture, pixelCoord, 0);
                     float runnerPosition = runnerData.x;
                     float runnerLoneliness = runnerData.y;
                     float runnerHasBeenLonely = runnerData.z;
@@ -184,13 +185,13 @@ function createRunnerRingFragmentShader(ringConfigs) {
                     float gap = 0.005;
 
                     // The "straight" segment length is the total length minus the rounded caps and the gap.
-                    // Each cap has radius 'trackHalfWidth'.
-                    float segLen = max(0.0, halfArcLength - trackHalfWidth - gap);
+                    // Each cap has radius 'runnerWidth'.
+                    float segLen = max(0.0, halfArcLength - runnerWidth - gap);
 
                     // SDF for a 2D segment on the X-axis from -segLen to +segLen
-                    // with radius 'trackHalfWidth'.
+                    // with radius 'runnerWidth'.
                     vec2 pSeg = vec2(max(abs(distArc) - segLen, 0.0), distRadial);
-                    float sd = length(pSeg) - trackHalfWidth;
+                    float sd = length(pSeg) - runnerWidth;
 
                     if (sd < minSd) {
                         minSd = sd;
@@ -227,14 +228,15 @@ function createRunnerRingFragmentShader(ringConfigs) {
                 // Base color depends on whether runner has been lonely before
                 vec3 baseColor = (nearestRunnerHasBeenLonely != 0) ? targetColor : whiteColor;
                 finalRunnerColor = mix(baseColor, targetColor, normL);
-                
-
+            
                 finalRingColor = mix(finalRingColor, finalRunnerColor, runnerAlpha * opacity);
 
                 // Output alpha
-                //float trackAlpha = 1.0 - smoothstep(trackHalfWidth - aaWidth, trackHalfWidth, distToTrackCenter);
                 float trackAlpha = 0.0;
                 float finalAlpha = max(trackAlpha, runnerAlpha * opacity * 0.9);
+
+                // Increase alpha slightly if flashing
+                finalAlpha = max(finalAlpha, flashIntensity * 0.3);
 
                 outColor = vec4(finalRingColor, finalAlpha);
                 return;
@@ -264,8 +266,6 @@ function createRunnerRingFragmentShader(ringConfigs) {
         return abs(mod(diff + PI, TAU) - PI);
     }
 
-    ${unpackRunnerData}
-
     void main() {
         // Normalize coordinates to [-1, 1], correcting for aspect ratio
         vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);
@@ -277,6 +277,12 @@ function createRunnerRingFragmentShader(ringConfigs) {
 
         // Default Background
         outColor = vec4(0.0, 0.0, 0.0, 0.0); 
+        
+       float trackWidth = u_geom_params.x;
+        float spacing = u_geom_params.y;
+        float innerRadius = u_geom_params.z;
+        float trackHalfWidth = trackWidth * 0.5;
+        float runnerWidth = trackWidth * 0.45;
 
         // Generated Ring Logic
         ${ringLogic}
@@ -303,7 +309,15 @@ export let LonelyRunnerToy = () => p => {
     let hasBeenLonely = []; // Array of arrays (per ring, per runner)
     // Track manual position offsets for runners
     let runnerOffsets = []; // Array of arrays (per ring, per runner)
-    
+
+    // Ring flash state for visual feedback
+    let ringFlashStates = []; // Array of {intensity, startTime}
+    let flashTexture = null;
+
+    // Center mechanism pulse state
+    let isPulsing = false;
+    let infinitePulseHandle = null; // Handle to the infinite pulse sequence when all runners have been lonely
+
     // UI elements
     let lonelyCountEl = null;
     let totalRunnersEl = null;
@@ -311,6 +325,7 @@ export let LonelyRunnerToy = () => p => {
     let muteButtonEl = null;
     let isMuted = true;
     let hasUserInteractedWithCanvas = false;
+    let totalRunners = 0;
 
     function toggleMute(targetState) {
         if (typeof targetState !== 'undefined') {
@@ -318,16 +333,16 @@ export let LonelyRunnerToy = () => p => {
         } else {
             isMuted = !isMuted;
         }
-        
-        if (masterGain) {
+
+        if (muteGain) {
             const now = audioContext.currentTime;
-            masterGain.gain.cancelScheduledValues(now);
-            masterGain.gain.setValueAtTime(masterGain.gain.value, now);
+            muteGain.gain.cancelScheduledValues(now);
+            muteGain.gain.setValueAtTime(muteGain.gain.value, now);
             // Ramp to a very small value instead of 0 to avoid issues with exponential ramps elsewhere if any
-            masterGain.gain.linearRampToValueAtTime(isMuted ? 0.0001 : 1.0, now + 0.1);
+            muteGain.gain.linearRampToValueAtTime(isMuted ? 0.0001 : 1.0, now + 0.1);
         }
         if (muteButtonEl) {
-            muteButtonEl.textContent = isMuted ? 'Unmute' : 'Mute';
+            muteButtonEl.classList.toggle('muted', isMuted);
         }
     }
 
@@ -367,10 +382,8 @@ export let LonelyRunnerToy = () => p => {
         return angle;
     }
 
-    // Helper: Detect which runner (if any) was clicked
-    // Returns {ringIndex, runnerIndex} or null
-    function getClickedRunner(mouseX, mouseY, time) {
-        // Convert mouse coordinates to UV space (same as shader)
+    // Helper: Get mouse position in polar coordinates relative to center (UV space)
+    function getMousePolar(mouseX, mouseY) {
         const minDim = Math.min(width, height);
         const uvScale = 2.0 / minDim;
 
@@ -378,58 +391,167 @@ export let LonelyRunnerToy = () => p => {
         const uvX = (mouseX - width / 2) * uvScale;
         const uvY = -(mouseY - height / 2) * uvScale; // Flip Y for WebGL
 
-        // Convert to polar
         const dist = Math.sqrt(uvX * uvX + uvY * uvY);
         let angle = Math.atan2(uvY, uvX);
         if (angle < 0) angle += TAU;
 
+        return { dist, angle, uvScale };
+    }
+
+    // Helper: Identify ring index from normalized distance
+    function getRingIndexFromDist(dist, uvScale) {
         // Calculate geometry parameters
         const thicknessNorm = RING_THICKNESS_PX * uvScale;
         const spacingNorm = RING_SPACING_PX * uvScale;
         const innerRadiusNorm = INNER_RADIUS_PX * uvScale;
+        const trackHalfWidth = thicknessNorm * 0.5;
+
+        // Check if click is in center mechanism
+        if (dist < innerRadiusNorm - thicknessNorm) {
+            return -1;
+        }
 
         // Find which ring (if any)
         for (let ringIndex = 0; ringIndex < RING_CONFIGS.length; ringIndex++) {
             const trackRadius = innerRadiusNorm + ringIndex * spacingNorm;
-            const trackHalfWidth = thicknessNorm * 0.5;
 
-            if (Math.abs(dist - trackRadius) <= trackHalfWidth) {
-                // On this ring! Now find which runner
-                const positions = getPositionsAtTime(ringIndex, time);
+            if (Math.abs(dist - trackRadius) <= thicknessNorm) {
+                return ringIndex;
+            }
+        }
+        return null;
+    }
 
-                for (let runnerIndex = 0; runnerIndex < positions.length; runnerIndex++) {
-                    const runnerAngle = positions[runnerIndex];
+    // Helper: Detect which ring was clicked
+    // Returns ring index (0+), -1 for center mechanism, or null for outside all rings
+    function getClickedRing(mouseX, mouseY) {
+        const { dist, uvScale } = getMousePolar(mouseX, mouseY);
+        return getRingIndexFromDist(dist, uvScale);
+    }
 
-                    // Calculate angular distance
-                    const d = Math.abs(angle - runnerAngle);
-                    const angularDist = Math.min(d, TAU - d);
+    // Helper: Detect which runner (if any) was clicked
+    // Returns {ringIndex, runnerIndex} or null
+    function getClickedRunner(mouseX, mouseY, time) {
+        const { angle, dist, uvScale } = getMousePolar(mouseX, mouseY);
+        const ringIndex = getRingIndexFromDist(dist, uvScale);
 
-                    // Calculate loneliness for this runner
-                    const N = positions.length;
-                    let minDistToOthers = TAU;
-                    for (let i = 0; i < N; i++) {
-                        if (i === runnerIndex) continue;
-                        const d = Math.abs(positions[runnerIndex] - positions[i]);
-                        const dist = Math.min(d, TAU - d);
-                        if (dist < minDistToOthers) minDistToOthers = dist;
-                    }
-                    const halfLoneliness = minDistToOthers * 0.5;
+        if (ringIndex === null) return null;
 
-                    // Check if click is within this runner's segment
-                    if (angularDist <= halfLoneliness) {
-                        return {ringIndex, runnerIndex};
-                    }
-                }
+        // On this ring! Now find which runner
+        const positions = getPositionsAtTime(ringIndex, time);
+
+        for (let runnerIndex = 0; runnerIndex < positions.length; runnerIndex++) {
+            const runnerAngle = positions[runnerIndex];
+
+            // Calculate angular distance
+            const d = Math.abs(angle - runnerAngle);
+            const angularDist = Math.min(d, TAU - d);
+
+            // Calculate loneliness for this runner
+            const N = positions.length;
+            let minDistToOthers = TAU;
+            for (let i = 0; i < N; i++) {
+                if (i === runnerIndex) continue;
+                const d = Math.abs(positions[runnerIndex] - positions[i]);
+                const dist = Math.min(d, TAU - d);
+                if (dist < minDistToOthers) minDistToOthers = dist;
+            }
+            const halfLoneliness = minDistToOthers * 0.5;
+
+            // Check if click is within this runner's segment
+            if (angularDist <= halfLoneliness) {
+                return {ringIndex, runnerIndex};
             }
         }
 
         return null;
     }
 
+    // Helper: Trigger visual flash for a ring
+    function flashRing(ringIndex) {
+        ringFlashStates[ringIndex] = {
+            intensity: 1.0,
+            startTime: Date.now() / 1000.0 - startStamp
+        };
+    }
+
+    // Helper: Play percussive note for a ring
+    function playRingNote(ringIndex) {
+        if (!audioContext) return;
+
+        // Calculate frequency same as the drone for this ring
+        const scaleIndex = ringIndex % DRONE_SCALE.length;
+        const freq = DRONE_BASE_FREQ * DRONE_SCALE[scaleIndex] * Math.pow(2, Math.floor(ringIndex / DRONE_SCALE.length));
+
+        // Create one-shot oscillator
+        const osc = audioContext.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+
+        // Create gain for envelope
+        const noteGain = audioContext.createGain();
+        const now = audioContext.currentTime;
+
+        // Percussive envelope: fast attack, medium decay
+        noteGain.gain.setValueAtTime(0, now);
+        noteGain.gain.linearRampToValueAtTime(0.25, now + 0.005); // 5ms attack
+        noteGain.gain.exponentialRampToValueAtTime(0.001, now + 0.80); // 800ms decay
+
+        // Connect: oscillator -> gain -> reverb + mute
+        osc.connect(noteGain);
+        noteGain.connect(muteGain);
+        noteGain.connect(reverbNode); // Add reverb for atmosphere
+
+        // Start and stop
+        osc.start(now);
+        osc.stop(now + 1.0); // Stop after 300ms
+    }
+
+    // Helper: Pulse rings in sequence, skipping those with no lonely runners
+    function pulseRingsWithLonely(pulseHandle = null) {
+        const isInfinitePulse = pulseHandle === infinitePulseHandle && infinitePulseHandle !== null;
+
+        if (isPulsing && !isInfinitePulse) return; // Already pulsing (unless this is the infinite pulse)
+        isPulsing = true;
+
+        // Find all rings with lonely runners
+        const ringsWithLonely = [];
+        ringLonelyCounts.forEach((count, ringIndex) => {
+            if (count > 0) {
+                ringsWithLonely.push(ringIndex);
+            }
+        });
+
+        // Pulse each ring in sequence with delays
+        ringsWithLonely.forEach((ringIndex, sequenceIndex) => {
+            setTimeout(() => {
+                flashRing(ringIndex);
+                playRingNote(ringIndex);
+
+                // Reset isPulsing flag after the last ring
+                if (sequenceIndex === ringsWithLonely.length - 1) {
+                    setTimeout(() => {
+                        isPulsing = false;
+                        // If this is the infinite pulse, immediately trigger the next cycle
+                        if (isInfinitePulse) {
+                            pulseRingsWithLonely(pulseHandle);
+                        }
+                    }, 400); // Small delay after last pulse
+                }
+            }, sequenceIndex * 200); // 200ms between each ring pulse
+        });
+
+        // If no rings have lonely runners, reset immediately
+        if (ringsWithLonely.length === 0) {
+            isPulsing = false;
+        }
+    }
+
     // Audio system - continuous drones per ring
 
     let audioContext = null;
     let masterGain = null; // Master gain for gentle overall fade-in
+    let muteGain = null; // Separate gain for muting without affecting fade-in
     let reverbNode = null; // Convolver for frozen reverb
     let reverbGain = null; // Wet signal gain
     let ringOscillators = []; // {osc1, osc2, osc3, gainNode, filterNode} per ring
@@ -464,15 +586,21 @@ export let LonelyRunnerToy = () => p => {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
         audioJustInitialized = true;
 
-        // Create master gain node for overall volume control
+        // Create master gain node for overall volume control and fade-in
         masterGain = audioContext.createGain();
         masterGain.connect(audioContext.destination);
 
-        // Start master gain at very low level
+        // Create separate mute gain node
+        muteGain = audioContext.createGain();
+        muteGain.connect(masterGain);
+
+        // Start master gain at very low level for gentle fade-in
         masterGain.gain.setValueAtTime(0.0001, audioContext.currentTime);
-        // Gentle fade-in over 10 seconds, but only if not muted
-        const targetGain = isMuted ? 0.0001 : 1.0;
-        masterGain.gain.exponentialRampToValueAtTime(targetGain, audioContext.currentTime + 7.0);
+        // Gentle fade-in over 8 seconds to match reverb tail build-up
+        masterGain.gain.exponentialRampToValueAtTime(1.0, audioContext.currentTime + 8.0);
+
+        // Initialize mute gain based on mute state
+        muteGain.gain.value = isMuted ? 0.0001 : 1.0;
 
         // Create frozen reverb
         reverbNode = audioContext.createConvolver();
@@ -493,13 +621,13 @@ export let LonelyRunnerToy = () => p => {
         reverbFilter.type = 'lowpass';
         reverbFilter.frequency.value = 3000; // Darken the reverb tail
 
-        // Reverb signal path: reverb -> filter -> delay -> feedback -> master
+        // Reverb signal path: reverb -> filter -> delay -> feedback -> mute -> master
         reverbNode.connect(reverbFilter);
         reverbFilter.connect(feedbackDelay);
         feedbackDelay.connect(feedbackGain);
         feedbackGain.connect(feedbackDelay); // Feedback loop
         feedbackDelay.connect(reverbGain);
-        reverbGain.connect(masterGain);
+        reverbGain.connect(muteGain);
 
         // Create persistent oscillator + gain for each ring
         RING_CONFIGS.forEach((config, ringIndex) => {
@@ -530,14 +658,14 @@ export let LonelyRunnerToy = () => p => {
             osc2.frequency.value = freq * 1.003; // +3 cents
             osc3.frequency.value = freq * 0.997; // -3 cents
 
-            // Connect: oscillators -> filter -> gain -> (dry: master, wet: reverb)
+            // Connect: oscillators -> filter -> gain -> (dry: mute, wet: reverb)
             osc1.connect(filterNode);
             osc2.connect(filterNode);
             osc3.connect(filterNode);
             filterNode.connect(gainNode);
 
-            // Dry signal to master
-            gainNode.connect(masterGain);
+            // Dry signal to mute gain
+            gainNode.connect(muteGain);
             // Wet signal to reverb
             gainNode.connect(reverbNode);
 
@@ -642,19 +770,32 @@ export let LonelyRunnerToy = () => p => {
             depth: false
         });
 
+        // Create flash texture (stores flash intensity per ring)
+        flashTexture = p.createFramebuffer({
+            width: numRings,
+            height: 1,
+            format: p.FLOAT,
+            textureFiltering: p.NEAREST,
+            density: 1,
+            antialias: false,
+            depth: false
+        });
+
         // Initialize/Reset state tracking
         hasBeenLonely = [];
         runnerOffsets = [];
-        let totalRunners = 0;
+        ringFlashStates = [];
+        totalRunners = 0;
         RING_CONFIGS.forEach((config, ringIndex) => {
             hasBeenLonely.push(new Array(config.velocities.length).fill(false));
             runnerOffsets.push(new Array(config.velocities.length).fill(0.0));
             // DEBUG: set equally around ring
             //runnerOffsets.push(config.velocities.map((_, j) => (TAU / config.velocities.length) * j));
 
+            ringFlashStates.push({intensity: 0.0, startTime: 0.0});
             totalRunners += config.velocities.length;
         });
-        
+
         // Setup UI
         lonelyCountEl = document.getElementById('lonely-count');
         totalRunnersEl = document.getElementById('total-runners');
@@ -673,7 +814,7 @@ export let LonelyRunnerToy = () => p => {
                 toggleMute();
             });
         }
-        
+
         if (totalRunnersEl) {
             totalRunnersEl.textContent = totalRunners;
         }
@@ -692,13 +833,39 @@ export let LonelyRunnerToy = () => p => {
         hasUserInteractedWithCanvas = true;
 
         const time = Date.now() / 1000.0 - startStamp;
-        const clicked = getClickedRunner(p.mouseX, p.mouseY, time);
 
-        if (clicked) {
-            const {ringIndex, runnerIndex} = clicked;
+        // Check which area was clicked
+        const clickedRing = getClickedRing(p.mouseX, p.mouseY);
+
+        // Check if user clicked in the center mechanism
+        if (clickedRing === -1) {
+            if (p.keyIsDown(p.SHIFT)) {
+                if (infinitePulseHandle) {
+                    // Cancel infinite pulse
+                    infinitePulseHandle = null;
+                } else {
+                    // Start infinite pulse
+                    infinitePulseHandle = Symbol('infinite-pulse');
+                    pulseRingsWithLonely(infinitePulseHandle);
+                }
+            } else {
+                // Regular click triggers manual pulse
+                pulseRingsWithLonely();
+            }
+            return;
+        }
+
+        const clickedRunner = getClickedRunner(p.mouseX, p.mouseY, time);
+
+        if (clickedRunner) {
+            const {ringIndex, runnerIndex} = clickedRunner;
             // Start dragging
             draggingRunner = {ringIndex, runnerIndex};
             lastMouseAngle = getMouseAngle(p.mouseX, p.mouseY);
+        } else if (clickedRing !== null) {
+            // User clicked on a ring (but not on a runner)
+            flashRing(clickedRing);
+            playRingNote(clickedRing);
         }
     }
 
@@ -844,10 +1011,41 @@ export let LonelyRunnerToy = () => p => {
         // Bind runner data texture
         runnerShader.setUniform("u_runner_data_texture", runnerDataTexture);
         runnerShader.setUniform("u_runner_texture_size", [runnerDataTexture.width, runnerDataTexture.height]);
-        
-        // Update UI counter
+
+        // Update flash intensities and flash texture
+        flashTexture.loadPixels();
+        const flashDuration = 0.6;
+        ringFlashStates.forEach((state, ringIndex) => {
+            const elapsed = time - state.startTime;
+            const t = elapsed / flashDuration;
+
+            // Ease-out quadratic: (1 - t)^2
+            if (t < 1.0 && t >= 0.0) {
+                state.intensity = (1 - t) * (1 - t);
+            } else if (t >= 1.0) {
+                state.intensity = 0.0;
+            }
+
+            // Write to flash texture (R channel only)
+            const idx = ringIndex * 4;
+            flashTexture.pixels[idx] = state.intensity;
+            flashTexture.pixels[idx + 1] = 0.0;  // G: unused
+            flashTexture.pixels[idx + 2] = 0.0;  // B: unused
+            flashTexture.pixels[idx + 3] = 1.0;  // A: unused
+        });
+        flashTexture.updatePixels();
+
+        // Bind flash texture
+        runnerShader.setUniform("u_flash_texture", flashTexture);
+
+        // Update UI counter with fraction
         if (lonelyCountEl) {
             lonelyCountEl.textContent = totalLonely;
+        }
+
+        if (infinitePulseHandle === null && totalLonely === totalRunners && totalRunners > 0) {
+            infinitePulseHandle = Symbol('infinite-pulse');
+            pulseRingsWithLonely(infinitePulseHandle);
         }
 
         // After first update cycle, disable the extra-gentle fade-in
