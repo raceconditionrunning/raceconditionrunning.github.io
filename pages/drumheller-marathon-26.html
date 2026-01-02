@@ -264,6 +264,7 @@ shirt_order_link: ""
             margin-bottom: 0;
             overflow: hidden;
             font-family: var(--sans-font-family);
+            user-select: none;
         }
         #hero-mechanism {
             width: 200px;
@@ -283,6 +284,18 @@ shirt_order_link: ""
             font-size: clamp(.75rem,min(8vh, 8vw),20rem);
             line-height: 0.8;
             letter-spacing: 0.2rem;
+            text-shadow: .25px .25px 0 var(--shadow), .5px .5px 0 var(--shadow), .75px .75px 0 var(--shadow), 1px 1px 0 var(--shadow),
+            1.25px 1.25px 0 var(--shadow), 1.5px 1.5px 0 var(--shadow), 1.75px 1.75px 0 var(--shadow), 2px 2px 0 var(--shadow),
+            2.25px 2.25px 0 var(--shadow), 2.5px 2.5px 0 var(--shadow), 2.75px 2.75px 0 var(--shadow), 3px 3px 0 var(--shadow),
+            3.25px 3.25px 0 var(--shadow), 3.5px 3.5px 0 var(--shadow), 3.75px 3.75px 0 var(--shadow), 4px 4px 0 var(--shadow),
+            4.25px 4.25px 0 var(--shadow), 4.5px 4.5px 0 var(--shadow), 4.75px 4.75px 0 var(--shadow), 5px 5px 0 var(--shadow),
+            5.25px 5.25px 0 var(--shadow), 5.5px 5.5px 0 var(--shadow), 5.75px 5.75px 0 var(--shadow), 6px 6px 0 var(--shadow),
+            6.25px 6.25px 0 var(--shadow), 6.5px 6.5px 0 var(--shadow), 6.75px 6.75px 0 var(--shadow), 7px 7px 0 var(--shadow),
+            7.25px 7.25px 0 var(--shadow), 7.5px 7.5px 0 var(--shadow), 7.75px 7.75px 0 var(--shadow), 8px 8px 0 var(--shadow),
+            8.25px 8.25px 0 var(--shadow), 8.5px 8.5px 0 var(--shadow), 8.75px 8.75px 0 var(--shadow), 9px 9px 0 var(--shadow),
+            9.25px 9.25px 0 var(--shadow), 9.5px 9.5px 0 var(--shadow), 9.75px 9.75px 0 var(--shadow), 10px 10px 0 var(--shadow),
+            10.25px 10.25px 0 var(--shadow), 10.5px 10.5px 0 var(--shadow), 10.75px 10.75px 0 var(--shadow), 11px 11px 0 var(--shadow),
+            11.25px 11.25px 0 var(--shadow), 11.5px 11.5px 0 var(--shadow), 11.75px 11.75px 0 var(--shadow), 12px 12px 0 var(--shadow);
         }
 
         #hero {
@@ -344,11 +357,7 @@ shirt_order_link: ""
             4.25px 4.25px 0 var(--shadow), 4.5px 4.5px 0 var(--shadow), 4.75px 4.75px 0 var(--shadow), 5px 5px 0 var(--shadow),
             5.25px 5.25px 0 var(--shadow), 5.5px 5.5px 0 var(--shadow), 5.75px 5.75px 0 var(--shadow), 6px 6px 0 var(--shadow),
             6.25px 6.25px 0 var(--shadow), 6.5px 6.5px 0 var(--shadow), 6.75px 6.75px 0 var(--shadow), 7px 7px 0 var(--shadow),
-            7.25px 7.25px 0 var(--shadow), 7.5px 7.5px 0 var(--shadow), 7.75px 7.75px 0 var(--shadow), 8px 8px 0 var(--shadow),
-            8.25px 8.25px 0 var(--shadow), 8.5px 8.5px 0 var(--shadow), 8.75px 8.75px 0 var(--shadow), 9px 9px 0 var(--shadow),
-            9.25px 9.25px 0 var(--shadow), 9.5px 9.5px 0 var(--shadow), 9.75px 9.75px 0 var(--shadow), 10px 10px 0 var(--shadow),
-            10.25px 10.25px 0 var(--shadow), 10.5px 10.5px 0 var(--shadow), 10.75px 10.75px 0 var(--shadow), 11px 11px 0 var(--shadow),
-            11.25px 11.25px 0 var(--shadow), 11.5px 11.5px 0 var(--shadow), 11.75px 11.75px 0 var(--shadow), 12px 12px 0 var(--shadow);
+            7.25px 7.25px 0 var(--shadow), 7.5px 7.5px 0 var(--shadow), 7.75px 7.75px 0 var(--shadow), 8px 8px 0 var(--shadow);
 
         }
         .display-text a {
@@ -928,6 +937,14 @@ shirt_order_link: ""
         .pswp-caption-content, .pswp__dynamic-caption {
             font-weight: 300;
         }
+
+        /* Mute button icons */
+        #mute-toy.muted .mute-icon {
+            display: none;
+        }
+        #mute-toy:not(.muted) .unmute-icon {
+            display: none;
+        }
     </style>
 </head>
 
@@ -942,15 +959,26 @@ shirt_order_link: ""
     <div id="hero-toy">
     </div>
 
-
-
     <div class="hero-container">
         <div class="display-text mb-4 mt-4"><span class="mb-4">The <a href="{{ site.baseurl }}/" class="text-decoration-none">Race Condition Running</a></span>  <h1>Drumheller<br/>Marathon</h1></div>
     </div>
     
-    <div id="lonely-counter" class="position-absolute bottom-0 end-0 p-3 mb-2 me-3 text-white text-end" style="z-index: 10; font-family: var(--sans-font-family); opacity: 0; transition: opacity 1s ease 2s;">
-        <span id="lonely-count">0</span> / <span id="total-runners">0</span>
-        <button id="mute-toy" class="btn btn-link btn-sm text-white p-0 ms-2" style="text-decoration: none; font-size: 0.8rem; vertical-align: baseline;">Unmute</button>
+    <div id="lonely-counter" class="d-flex position-absolute bottom-0 end-0 p-3 mb-2 me-3 text-white text-end" style="z-index: 10; font-family: var(--sans-font-family); opacity: 0; transition: opacity 1s ease 2s;">
+        <div style="display: inline-block; position: relative; vertical-align: middle; font-weight: 400; text-shadow: none; font-size: 0.8rem;">
+            <span style="font-variant-numeric: tabular-nums; line-height: 1;">
+                <sup id="lonely-count">0</sup>/<sub id="total-runners">0</sub>
+            </span>
+        </div>
+        <button id="mute-toy" class="btn btn-link btn-sm text-white p-0 ms-2 muted">
+            <svg class="mute-icon" width="24" height="24" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: baseline;">
+                <path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/>
+                <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z"/>
+                <path d="M8.707 11.182A4.486 4.486 0 0 0 10.025 8a4.486 4.486 0 0 0-1.318-3.182L8 5.525A3.489 3.489 0 0 1 9.025 8 3.49 3.49 0 0 1 8 10.475l.707.707zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z"/>
+            </svg>
+            <svg class="unmute-icon" width="24" height="24" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: baseline;">
+                <path d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06zm7.137 2.096a.5.5 0 0 1 0 .708L12.207 8l1.647 1.646a.5.5 0 0 1-.708.708L11.5 8.707l-1.646 1.647a.5.5 0 0 1-.708-.708L10.793 8 9.146 6.354a.5.5 0 1 1 .708-.708L11.5 7.293l1.646-1.647a.5.5 0 0 1 .708 0z"/>
+            </svg>
+        </button>
     </div>
 
     <div class="info-container">
@@ -1254,7 +1282,7 @@ shirt_order_link: ""
         <blockquote class="blockquote"> The Drumheller Fountain has been a source of enjoyment and pleasure
             to me, my family, and my friends. One evening during the hot weather, for example, I sat with three visitors on the rim of the fountain, surrounded by the rose garden, cooled by the spray, watching and hearing the plumes of water as they rose and then fell into the pool.
         </blockquote>
-        <figcaption class="blockquote-footer">Richard F. Wilkie, Assoc. Prof. Germanic Studies, in a letter to Joseph Drumheller. August 7th, 1962.
+        <figcaption class="blockquote-footer">Richard F. Wilkie in a letter to Joseph Drumheller. August 7th, 1962.
         </figcaption>
     </figure>
 
