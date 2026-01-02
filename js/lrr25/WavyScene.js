@@ -14,7 +14,7 @@ const createFragmentShader = (options) => {
     const uniforms = {};
 
     const shader = /* glsl */ `#version 300 es
-precision mediump float;
+precision lowp float;
 
     uniform float u_time; // Time in seconds
     uniform float u_h;
@@ -189,7 +189,6 @@ function createGradientTexture(p, colors) {
 export let WavyScene = gradientColors => p => {
     let width;
     let height;
-    let outBuffer;
     let waveShader;
     let canvas;
     let gradientTexture;
@@ -202,29 +201,18 @@ export let WavyScene = gradientColors => p => {
         height = p._userNode.offsetHeight;
         canvas = p.createCanvas(width, height, p.WEBGL);
 
-        // Check available webgl features if something isn't working
-        // const ctx = canvas.elt.getContext("webgl2")
-        // console.log(ctx.getSupportedExtensions())
-
-        // Table of supported texture types: https://webgl2fundamentals.org/webgl/lessons/webgl-data-textures.html
-        // Mobile targets usually can't render float textures. This buffer's shader needs to process to RGBA
-        outBuffer = p.createFramebuffer({
-            format: p.UNSIGNED_BYTE,
-            width: width,
-            height: height,
-            density: 1,
-            depth: false
-        });
-
         p.imageMode(p.CENTER);
         p.noStroke();
-
 
         gradientTexture = createGradientTexture(p, gradientColors);
         const shader = createFragmentShader({});
         waveShader = p.createShader(DEFAULT_VERTEX_SHADER, shader['shader']);
-        // First call builds the shader program
         p.shader(waveShader);
+
+        // Set constant uniforms once
+        waveShader.setUniform('u_h', height);
+        waveShader.setUniform('u_w', width);
+        waveShader.setUniform('u_gradient', gradientTexture);
 
         // Start with canvas invisible for fade-in effect
         canvas.elt.style.opacity = '0';
@@ -254,21 +242,12 @@ export let WavyScene = gradientColors => p => {
     }
 
     p.draw = () => {
-        outBuffer.begin();
         p.clear();
-        p.shader(waveShader);
 
-        // Set uniforms
+        // Only update time uniform (others are set once in setup)
         waveShader.setUniform('u_time', p.millis() / 1000.0);
-        waveShader.setUniform('u_h', height);
-        waveShader.setUniform('u_w', width);
-        waveShader.setUniform('u_gradient', gradientTexture);
 
         p.rect(0, 0, width, -height);
-        outBuffer.end();
-
-        p.clear();
-        p.image(outBuffer, 0, 0, p._userNode.offsetWidth, -p._userNode.offsetHeight);
 
         // Fade in after first successful render
         if (!hasRenderedFirstFrame) {
@@ -281,7 +260,10 @@ export let WavyScene = gradientColors => p => {
         width = p._userNode.offsetWidth;
         height = p._userNode.offsetHeight;
         p.resizeCanvas(width, height, true);
-        outBuffer.resize(width, height);
+
+        // Update size-dependent uniforms
+        waveShader.setUniform('u_h', height);
+        waveShader.setUniform('u_w', width);
     }
 
     // Cleanup when p5 instance is removed
