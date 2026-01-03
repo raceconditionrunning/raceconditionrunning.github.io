@@ -1,71 +1,82 @@
 - date: "2026-01-10"
   plan:
     - time: "8:30"
-      route:
-        name: TBD
+      route_id: cse-nature-hawthorne-bryant-loop
+    - time: "9:40"
+      route_id: cse-portage-bay-loop 
 
 - date: "2026-01-17"
   plan:
     - time: "8:30"
-      route:
-        name: TBD
+      route_id: westlake-sculpture-marina-ob
 
 - date: "2026-01-24"
   plan:
     - time: "8:30"
-      route:
-        name: TBD
+      route_id: northgate-carkeek-roosevelt
+    - time: "9:50"
+      route_id: roosevelt-green-lake-loop
 
 - date: "2026-01-31"
   plan:
     - time: "8:30"
-      route:
-        name: TBD
+      route_id: cse-arb-lwb-seward-cc
+    - time: "10:20"
+      route_id: cc-chief-sealth-cc-center
+    
 
 - date: "2026-02-07"
   plan:
     - time: "8:30"
-      route:
-        name: TBD
+      route_id: locks-discovery-magnolia-discovery-ob
+    - time: "10:10"
+      route_id: locks-golden-gardens-ob
+
 
 - date: "2026-02-14"
   plan:
     - time: "8:30"
-      route:
-        name: TBD
+      route_id: sodo-alki-beach-little-liberty-ob
+    - time: "10:30"
+      route_id: sodo-4th-ave-airport-way-industrial-loop
 
 - date: "2026-02-21"
   plan:
     - time: "8:30"
-      route:
-        name: TBD
+      route_id: cap-hill-i90-trail-lwb-arborlaken-loop
+    - time: "10:10"
+      route_id: cap-hill-volunteer-park-westlake
 
 - date: "2026-02-28"
   plan:
     - time: "8:30"
-      route:
-        name: TBD
+      route_id: northgate-interurban-lynnwood
+    - time: "10:10"
+      route_id: lynnwood-interurban-ashway-ob
 
 - date: "2026-03-07"
   plan:
     - time: "7:30"
       route_id: 2026-lake-sammamish-half
       notes: "https://www.orcarunning.com/lake-sammamish-half/"
+      distance_mi: 13.1
 
 - date: "2026-03-14"
   plan:
     - time: "8:30"
-      route:
-        name: TBD
+      route_id: beacon-hill-mlk-tukwila-p2p
+    - time: "10:10"
+      route_id: tukwila-sunset-park-botanical-gardens-loop
 
 - date: "2026-03-21"
   plan:
     - time: "9:30"
-      route_id: cedar-river-trail-pt2-ob
+      route_id: cedar-river-trail-10-ob
       notes: "Car pool to start from Rainier Beach station at 9:00am"
 
 - date: "2026-03-28"
   plan:
     - time: "8:30"
       route:
-        name: TBD
+        name: Drumheller Half Marathon SE
+        distance_mi: 13.1
