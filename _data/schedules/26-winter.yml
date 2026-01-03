@@ -36,7 +36,9 @@
 - date: "2026-02-14"
   plan:
     - time: "8:30"
-      route_id: green-lake-loop
+      route_id: sodo-alki-beach-little-liberty-ob
+    - time: "10:30"
+      route_id: sodo-4th-ave-airport-way-industrial-loop
 
 - date: "2026-02-21"
   plan:
@@ -75,4 +77,6 @@
 - date: "2026-03-28"
   plan:
     - time: "8:30"
-      route_id: green-lake-loop
+      route:
+        name: Drumheller Half Marathon SE
+        distance_mi: 13.1
