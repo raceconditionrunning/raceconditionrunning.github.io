@@ -112,13 +112,6 @@ function generateEquidistantRingConfigs(numRings) {
     return configs;
 }
 
-const RING_CONFIGS = generateRingConfigs(NUM_RINGS, Math.floor(Date.now() / 1000));
-
-// For debugging:
-//const RING_CONFIGS = generateEquidistantRingConfigs(NUM_RINGS);
-
-// For debugging:
-//const RING_CONFIGS = generateEquidistantRingConfigs(NUM_RINGS);
 
 function createRunnerRingFragmentShader(ringConfigs) {
     
@@ -291,7 +284,10 @@ function createRunnerRingFragmentShader(ringConfigs) {
     return { shader: frag };
 }
 
-export let LonelyRunnerToy = () => p => {
+export let LonelyRunnerToy = (numRings = NUM_RINGS) => p => {
+    const ringConfigs = generateRingConfigs(numRings, Math.floor(Date.now() / 1000));
+    // For debugging:
+    //const ringConfigs = generateEquidistantRingConfigs(NUM_RINGS);
     let width;
     let height;
     let runnerShader;
@@ -300,6 +296,10 @@ export let LonelyRunnerToy = () => p => {
     let runnerDataTexture;
 
     const TAU = Math.PI * 2;
+
+    // Visibility tracking
+    let isVisible = true;
+    let observer = null;
 
     // Interaction state
     let draggingRunner = null;
@@ -344,11 +344,20 @@ export let LonelyRunnerToy = () => p => {
         if (muteButtonEl) {
             muteButtonEl.classList.toggle('muted', isMuted);
         }
+
+        // Suspend audio context when muted to save battery
+        if (audioContext) {
+            if (isMuted && audioContext.state === 'running') {
+                audioContext.suspend();
+            } else if (!isMuted && audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+        }
     }
 
     // Helper: Calculate positions for a ring at a given time
     function getPositionsAtTime(ringIndex, time) {
-        return RING_CONFIGS[ringIndex].velocities.map((v, i) => {
+        return ringConfigs[ringIndex].velocities.map((v, i) => {
             const offset = (runnerOffsets[ringIndex] && runnerOffsets[ringIndex][i]) || 0;
             return ((time * v * 0.5 * ANIMATION_SPEED) + offset) % TAU;
         });
@@ -412,7 +421,7 @@ export let LonelyRunnerToy = () => p => {
         }
 
         // Find which ring (if any)
-        for (let ringIndex = 0; ringIndex < RING_CONFIGS.length; ringIndex++) {
+        for (let ringIndex = 0; ringIndex < ringConfigs.length; ringIndex++) {
             const trackRadius = innerRadiusNorm + ringIndex * spacingNorm;
 
             if (Math.abs(dist - trackRadius) <= thicknessNorm) {
@@ -435,7 +444,7 @@ export let LonelyRunnerToy = () => p => {
         const { angle, dist, uvScale } = getMousePolar(mouseX, mouseY);
         const ringIndex = getRingIndexFromDist(dist, uvScale);
 
-        if (ringIndex === null) return null;
+        if (ringIndex === null || ringIndex === -1) return null;
 
         // On this ring! Now find which runner
         const positions = getPositionsAtTime(ringIndex, time);
@@ -630,7 +639,7 @@ export let LonelyRunnerToy = () => p => {
         reverbGain.connect(muteGain);
 
         // Create persistent oscillator + gain for each ring
-        RING_CONFIGS.forEach((config, ringIndex) => {
+        ringConfigs.forEach((config, ringIndex) => {
             // Use configurable scale
             const scaleIndex = ringIndex % DRONE_SCALE.length;
             const freq = DRONE_BASE_FREQ * DRONE_SCALE[scaleIndex] * Math.pow(2, Math.floor(ringIndex / DRONE_SCALE.length));
@@ -692,7 +701,7 @@ export let LonelyRunnerToy = () => p => {
 
         // Calculate target volume based on number of lonely runners
         // Volume scales with count: 0 lonely = silent, max lonely = max volume
-        const N = RING_CONFIGS[ringIndex].velocities.length;
+        const N = ringConfigs[ringIndex].velocities.length;
         const volumeScale = lonelyCount / N; // 0 to 1
         const maxVolume = 0.06; // Max volume per ring
         const targetVolume = lonelyCount > 0 ? 0.001 + (volumeScale * maxVolume) : 0.001;
@@ -722,18 +731,18 @@ export let LonelyRunnerToy = () => p => {
         p.noStroke();
 
         // Create Shader
-        const shaderData = createRunnerRingFragmentShader(RING_CONFIGS);
+        const shaderData = createRunnerRingFragmentShader(ringConfigs);
         runnerShader = p.createShader(DEFAULT_VERTEX_SHADER, shaderData.shader);
         p.shader(runnerShader);
 
         // Set constant uniforms once
-        RING_CONFIGS.forEach((config, i) => {
+        ringConfigs.forEach((config, i) => {
             runnerShader.setUniform(`lonelyThreshold_${i}`, config.lonelyThreshold);
         });
 
         // Create color texture
-        const maxRunners = Math.max(...RING_CONFIGS.map(c => c.velocities.length));
-        const numRings = RING_CONFIGS.length;
+        const maxRunners = Math.max(...ringConfigs.map(c => c.velocities.length));
+        const numRings = ringConfigs.length;
         
         // p5 Graphics acts as a texture
         colorTexture = p.createGraphics(maxRunners, numRings);
@@ -741,7 +750,7 @@ export let LonelyRunnerToy = () => p => {
         colorTexture.loadPixels();
         
         for (let i = 0; i < numRings; i++) {
-            const config = RING_CONFIGS[i];
+            const config = ringConfigs[i];
             for (let j = 0; j < config.colors.length; j++) {
                 const c = config.colors[j];
                 const r = (c >> 16) & 0xFF;
@@ -786,7 +795,7 @@ export let LonelyRunnerToy = () => p => {
         runnerOffsets = [];
         ringFlashStates = [];
         totalRunners = 0;
-        RING_CONFIGS.forEach((config, ringIndex) => {
+        ringConfigs.forEach((config, ringIndex) => {
             hasBeenLonely.push(new Array(config.velocities.length).fill(false));
             runnerOffsets.push(new Array(config.velocities.length).fill(0.0));
             // DEBUG: set equally around ring
@@ -821,8 +830,29 @@ export let LonelyRunnerToy = () => p => {
         if (lonelyCounterContainer) {
             lonelyCounterContainer.style.opacity = 1;
         }
+
+        // Set up intersection observer to pause when not visible
+        setupVisibilityObserver();
     }
 
+    function setupVisibilityObserver() {
+        if ('IntersectionObserver' in window) {
+            observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isVisible = entry.isIntersecting;
+                    // Resume audio context if scrolling back and user has unmuted
+                    if (isVisible && audioContext && audioContext.state === 'suspended' && !isMuted) {
+                        audioContext.resume();
+                    }
+                    // Note: We don't call p.noLoop() - instead we skip rendering in draw() when !isVisible
+                });
+            }, {
+                threshold: 0.01 // Trigger when 1% of element is visible
+            });
+
+            observer.observe(p._userNode);
+        }
+    }
 
     p.mousePressed = function () {
         // Initialize audio on first interaction
@@ -953,7 +983,7 @@ export let LonelyRunnerToy = () => p => {
 
         let totalLonely = 0;
 
-        RING_CONFIGS.forEach((config, i) => {
+        ringConfigs.forEach((config, i) => {
             // 1. Calculate all positions for this ring
             const currentPositions = config.velocities.map((v, j) => {
                 const offset = runnerOffsets[i][j];
@@ -1008,6 +1038,28 @@ export let LonelyRunnerToy = () => p => {
 
         runnerDataTexture.updatePixels();
 
+
+        // Update UI counter with fraction
+        if (lonelyCountEl) {
+            lonelyCountEl.textContent = totalLonely;
+        }
+
+        if (infinitePulseHandle === null && totalLonely === totalRunners && totalRunners > 0) {
+            infinitePulseHandle = Symbol('infinite-pulse');
+            pulseRingsWithLonely(infinitePulseHandle);
+        }
+
+        // After first update cycle, disable the extra-gentle fade-in
+        if (audioJustInitialized) {
+            audioJustInitialized = false;
+        }
+
+        // Skip rendering if not visible (but keep simulation + audio running)
+        if (!isVisible) {
+            return;
+        }
+
+
         // Bind runner data texture
         runnerShader.setUniform("u_runner_data_texture", runnerDataTexture);
         runnerShader.setUniform("u_runner_texture_size", [runnerDataTexture.width, runnerDataTexture.height]);
@@ -1038,20 +1090,18 @@ export let LonelyRunnerToy = () => p => {
         // Bind flash texture
         runnerShader.setUniform("u_flash_texture", flashTexture);
 
-        // Update UI counter with fraction
-        if (lonelyCountEl) {
-            lonelyCountEl.textContent = totalLonely;
+        // Cursor logic
+        if (draggingRunner) {
+            p.cursor('grabbing');
+        } else {
+            const hoveredRunner = getClickedRunner(p.mouseX, p.mouseY, time);
+            if (hoveredRunner) {
+                p.cursor('grab');
+            } else {
+                p.cursor('pointer');
+            }
         }
 
-        if (infinitePulseHandle === null && totalLonely === totalRunners && totalRunners > 0) {
-            infinitePulseHandle = Symbol('infinite-pulse');
-            pulseRingsWithLonely(infinitePulseHandle);
-        }
-
-        // After first update cycle, disable the extra-gentle fade-in
-        if (audioJustInitialized) {
-            audioJustInitialized = false;
-        }
         //console.log(p.frameRate())
         // Draw
         p.rect(0, 0, width, height);
@@ -1061,5 +1111,13 @@ export let LonelyRunnerToy = () => p => {
         width = p._userNode.offsetWidth;
         height = p._userNode.offsetHeight;
         p.resizeCanvas(width, height, true);
+    }
+
+    // Cleanup when p5 instance is removed
+    p.remove = function() {
+        if (observer) {
+            observer.disconnect();
+            observer = null;
+        }
     }
 }
