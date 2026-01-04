@@ -193,6 +193,11 @@ export let FountainToy = rootUrl => p => {
     let lastMouseVel = null
     let lastWaterContactVec = null
 
+    // Visibility tracking
+    let isVisible = true
+    let observer = null
+    let pauseTimeout = null
+
     p.setup = async () => {
         sounds = new AudioSprite({
             src: [`${rootUrl}/img/dm24/la-fille-aux-cheveux-de-lin.mp3`],
@@ -237,6 +242,50 @@ export let FountainToy = rootUrl => p => {
         // First call builds the shader
         p.shader(glintShader);
         p.shader(rippleShader);
+
+        // Set constant uniforms once for rippleShader
+        rippleShader.setUniform("jets", jetsTexture);
+        rippleShader.setUniform("dampening", dampening);
+        rippleShader.setUniform("resolution", [simRes, simRes]);
+        rippleShader.setUniform("radius", simRes * radiusPercentage);
+        rippleShader.setUniform("interactionRadius", p.lerp(0.012, .005, p.constrain((p.windowWidth - 800) / 400, 0.0, 1.0)));
+
+        // Set constant uniforms once for glintShader
+        glintShader.setUniform("resolution", [simRes, simRes]);
+        glintShader.setUniform("radius", simRes * radiusPercentage);
+
+        // Set up intersection observer to pause when not visible (with delay)
+        setupVisibilityObserver();
+    }
+
+    function setupVisibilityObserver() {
+        if ('IntersectionObserver' in window) {
+            observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isVisible = entry.isIntersecting;
+                    if (isVisible) {
+                        // Cancel any pending pause and resume immediately
+                        if (pauseTimeout) {
+                            clearTimeout(pauseTimeout);
+                            pauseTimeout = null;
+                        }
+                        p.loop();
+                    } else {
+                        // When not visible, wait 5 seconds before pausing to let ripples disperse
+                        if (!pauseTimeout) {
+                            pauseTimeout = setTimeout(() => {
+                                p.noLoop();
+                                pauseTimeout = null;
+                            }, 5000);
+                        }
+                    }
+                });
+            }, {
+                threshold: 0 // Trigger when 0% of element is visible
+            });
+
+            observer.observe(p._userNode);
+        }
     }
 
     p.mousePressed = () => {
@@ -342,14 +391,9 @@ export let FountainToy = rootUrl => p => {
         activeBuffer.begin()
         p.clear()
         p.shader(rippleShader);
+        // Only set dynamic uniforms that change every frame
         rippleShader.setUniform("previous", inactiveBuffer);
-        rippleShader.setUniform("jets", jetsTexture);
         rippleShader.setUniform("time", Date.now() / 1000.0 - startStamp);
-        rippleShader.setUniform("dampening", dampening);
-        rippleShader.setUniform("resolution", [simRes, simRes]);
-        rippleShader.setUniform("radius", simRes * radiusPercentage);
-        // Match ripple radius to the apparent size of the fountain. Makes ripples on mobile feel right
-        rippleShader.setUniform("interactionRadius", p.lerp( 0.012, .005, p.constrain((p.windowWidth - 800) / 400, 0.0, 1.0)));
         if (lastWaterContactVec) {
             rippleShader.setUniform("mouse", [lastWaterContactVec.x / width,lastWaterContactVec.y / height, true])
         } else {
@@ -362,9 +406,8 @@ export let FountainToy = rootUrl => p => {
         outBuffer.begin()
         p.clear()
         p.shader(glintShader)
+        // Only set dynamic uniform that changes every frame
         glintShader.setUniform("data", activeBuffer);
-        glintShader.setUniform("resolution", [simRes, simRes]);
-        glintShader.setUniform("radius", simRes * radiusPercentage)
         p.rect(0, 0, simRes, simRes)
         outBuffer.end()
 
@@ -379,6 +422,20 @@ export let FountainToy = rootUrl => p => {
         height = p._userNode.offsetHeight;
         p.resizeCanvas(width, height, true);
 
+        // Update window-size-dependent uniform
+        rippleShader.setUniform("interactionRadius", p.lerp(0.012, .005, p.constrain((p.windowWidth - 800) / 400, 0.0, 1.0)));
+    }
+
+    // Cleanup when p5 instance is removed
+    p.remove = function() {
+        if (pauseTimeout) {
+            clearTimeout(pauseTimeout);
+            pauseTimeout = null;
+        }
+        if (observer) {
+            observer.disconnect();
+            observer = null;
+        }
     }
 
 }

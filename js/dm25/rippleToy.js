@@ -357,6 +357,10 @@ export let RippleToy = rootUrl => p => {
     let musicHasPlayed = false
     let notesPlayed = []
 
+    // Visibility tracking
+    let isVisible = true
+    let observer = null
+
 
     p.setup = async () =>{
 
@@ -397,6 +401,36 @@ export let RippleToy = rootUrl => p => {
         p.noStroke();
         // First call builds the shader program
         p.shader(rippleShader);
+
+        // Set constant uniforms once
+        rippleShader.setUniform("dampening", dampening);
+        rippleShader.setUniform("ripples", 1.0);
+
+        // Set resolution-dependent uniforms
+        rippleShader.setUniform("resolution", [width, height]);
+        rippleShader.setUniform("interactionRadius", p.lerp(0.012, .005, p.constrain((p.windowWidth - 800) / 400, 0.0, 1.0)));
+
+        // Set up intersection observer to pause when not visible
+        setupVisibilityObserver();
+    }
+
+    function setupVisibilityObserver() {
+        if ('IntersectionObserver' in window) {
+            observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isVisible = entry.isIntersecting;
+                    if (isVisible) {
+                        p.loop();
+                    } else {
+                        p.noLoop();
+                    }
+                });
+            }, {
+                threshold: 0 // Trigger when any % of element is visible
+            });
+
+            observer.observe(p._userNode);
+        }
     }
 
     p.startAmbiance = () => {
@@ -527,12 +561,8 @@ export let RippleToy = rootUrl => p => {
         }
         p.clear()
         p.shader(rippleShader);
+        // Only set dynamic uniforms that change every frame
         rippleShader.setUniform("time", Date.now() / 1000.0 - startStamp);
-        rippleShader.setUniform("dampening", dampening);
-        rippleShader.setUniform("ripples", 1.0);
-        rippleShader.setUniform("resolution", [width, height]);
-        // Match ripple radius to the apparent size of the fountain. Makes ripples on mobile feel right
-        rippleShader.setUniform("interactionRadius", p.lerp( 0.012, .005, p.constrain((p.windowWidth - 800) / 400, 0.0, 1.0)));
         if (currentMouseVec) {
             rippleShader.setUniform("mouse", [currentMouseVec.x / width, 1.0 - (currentMouseVec.y / height), true])
         } else {
@@ -546,6 +576,18 @@ export let RippleToy = rootUrl => p => {
         width = p._userNode.offsetWidth;
         height = p._userNode.offsetHeight;
         p.resizeCanvas(width, height, true);
+
+        // Update resolution-dependent uniforms
+        rippleShader.setUniform("resolution", [width, height]);
+        rippleShader.setUniform("interactionRadius", p.lerp(0.012, .005, p.constrain((p.windowWidth - 800) / 400, 0.0, 1.0)));
+    }
+
+    // Cleanup when p5 instance is removed
+    p.remove = function() {
+        if (observer) {
+            observer.disconnect();
+            observer = null;
+        }
     }
 
 }

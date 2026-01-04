@@ -186,7 +186,7 @@ function createGradientTexture(p, colors) {
     return texture;
 }
 
-export let WavyScene = gradientColors => p => {
+export let WavyScene = (gradientColors, options = {}) => p => {
     let width;
     let height;
     let waveShader;
@@ -196,16 +196,33 @@ export let WavyScene = gradientColors => p => {
     let isVisible = true;
     let observer;
 
+    const {
+        pixelDensity = null,
+        blurQuality = 6,
+        blurAmount = 345,
+        blurExponentRange = [0.9, 1.2]
+    } = options;
+
     p.setup = async () => {
         width = p._userNode.offsetWidth;
         height = p._userNode.offsetHeight;
         canvas = p.createCanvas(width, height, p.WEBGL);
 
+        // Override pixel density for performance on mobile
+        // Mobile devices default to 2-3x, setting to 1 reduces pixel count significantly
+        if (pixelDensity !== null) {
+            p.pixelDensity(pixelDensity);
+        }
+
         p.imageMode(p.CENTER);
         p.noStroke();
 
         gradientTexture = createGradientTexture(p, gradientColors);
-        const shader = createFragmentShader({});
+        const shader = createFragmentShader({
+            blurQuality,
+            blurAmount,
+            blurExponentRange
+        });
         waveShader = p.createShader(DEFAULT_VERTEX_SHADER, shader['shader']);
         p.shader(waveShader);
 

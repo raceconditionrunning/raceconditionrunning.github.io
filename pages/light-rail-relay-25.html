@@ -960,7 +960,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             <accordion-item>
                 <accordion-header>Why doesn't this include the 2 Line?</accordion-header>
                 <accordion-body>
-                    <p>The 2 Line (and the <a href="https://en.wikipedia.org/wiki/T_Line_(Sound_Transit)">T Line</a>) don't yet connect to the 1 Line, so we'd need to start the event in multiple locations without an easy connection between. We've decided to focus on the longest line for now, but you can expect changes <a href="link-expansion.lukecreative.com">as the system continues to expand and connect</a>.</p>
+                    <p>The 2 Line (and the <a href="https://en.wikipedia.org/wiki/T_Line_(Sound_Transit)">T Line</a>) don't yet connect to the 1 Line, so we'd need to start the event in multiple locations without an easy connection between. We've decided to focus on the longest line for now, but you can expect changes <a href="https://link-expansion.lukecreative.com">as the system continues to expand and connect</a>.</p>
                 </accordion-body>
             </accordion-item>
             <accordion-item>
@@ -1424,7 +1424,16 @@ Lynnwood      2:00 PM    75°F (24°C)    Clear sky</pre>
             //[255, 139, 0],
             //[0, 184, 244]
         ];
-        const wavyBg = new p5(WavyScene(greenGradient), document.querySelector("#title .gradient-background"));
+
+        // Detect mobile/smaller screens and reduce quality for performance
+        const isMobile = window.innerWidth < 768;
+        const shaderOptions = isMobile ? {
+            blurQuality: 3,
+            pixelDensity: 1,
+            blurAmount: 200
+        } : {};
+
+        const wavyBg = new p5(WavyScene(greenGradient, shaderOptions), document.querySelector("#title .gradient-background"));
         prepareImagesForPhotoswipe(document.querySelectorAll(".lightbox-gallery a")).then(() => {
             const lightbox = new PhotoSwipeLightbox({
                 gallery: '.lightbox-gallery',
