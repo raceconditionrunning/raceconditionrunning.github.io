@@ -1315,7 +1315,13 @@ shirt_order_link: ""
 
 
     function initialize() {
-        const toy = new p5(LonelyRunnerToy(), document.querySelector("#hero-toy"));
+        const getNumRings = () => {
+            const width = window.screen.width;
+            if (width < 500) return 7;
+            if (width < 700) return 14;
+            return 21;
+        };
+        const toy = new p5(LonelyRunnerToy(getNumRings()), document.querySelector("#hero-toy"));
         // Friendly errors have a performance penalty.
         toy.disableFriendlyErrors = true;
         // Tooltips for sign-up deadlines
