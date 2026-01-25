@@ -962,7 +962,7 @@ shirt_order_link: ""
     <div class="hero-container">
         <div class="display-text mb-4 mt-4"><span class="mb-4">The <a href="{{ site.baseurl }}/" class="text-decoration-none">Race Condition Running</a></span>  <h1>Drumheller<br/>Marathon</h1></div>
     </div>
-    
+
     <div id="lonely-counter" class="d-flex position-absolute bottom-0 end-0 p-3 mb-2 me-3 text-white text-end" style="z-index: 10; font-family: var(--sans-font-family); opacity: 0; transition: opacity 1s ease 2s;">
         <div style="display: inline-block; position: relative; vertical-align: middle; font-weight: 400; text-shadow: none; font-size: 0.8rem;">
             <span style="font-variant-numeric: tabular-nums; line-height: 1;">
@@ -1109,9 +1109,15 @@ shirt_order_link: ""
 
         <accordion-group id="faq-accordion" faq>
             <accordion-item>
+                <accordion-header>Who can participate?</accordion-header>
+                <accordion-body>
+                    <p>Half marathon: members of the UW community and invited guests. Marathon: anyone.</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
                 <accordion-header>Do I have to run the whole thing?</accordion-header>
                 <accordion-body>
-                    <p>No. Anyone running or walking fewer than 109 laps is welcome to join for the last start time. Here are some lap counts for common distances. Add a lap if not starting at the official start line.</p>
+                    <p>No. Participants running or walking fewer than 109 laps are welcome to join for the last start time. Here are some lap counts for common distances. Add a lap if not starting at the official start line.</p>
                     <table class="table table-sm ms-2 mt-2 mb-4">
                         <thead><tr><th scope="col">Distance</th><th scope="col">Laps</th></tr></thead>
                         <tbody>
@@ -1199,7 +1205,7 @@ shirt_order_link: ""
             <accordion-item>
                 <accordion-header>Is it okay if I've never run a full marathon before?</accordion-header>
                 <accordion-body>
-                    <p>The timing cutoffs are the primary constraint; we do not want you to run a full marathon that we cannot provide you an official time for. We ask for evidence of a half marathon time commensurate with your marathon goal time so we can have confidence that won't happen.</p>
+                    <p>The timing cutoffs are the primary constraint; we do not want you to run a full marathon that we cannot provide you an official time for. We ask for evidence of a half marathon time commensurate with your marathon goal time to make this unlikely.</p>
 
                 </accordion-body>
             </accordion-item>
@@ -1247,6 +1253,13 @@ shirt_order_link: ""
                     <p>Unlikely. Many athletes train and race on smaller radius tracks without issue during indoor track season. There <i>is</i> <a href="https://doi.org/10.1097/00042752-200010000-00004">evidence</a> that consistently running the same direction on small indoor tracks over time leads to strength asymmetries which likely cause injuries. Alternating directions is probably sufficient to avoid acute issues for most runners.</p>
 
                     <p>You may also take comfort from knowing that <a href="https://www.outsideonline.com/health/running/inside-bizarre-world-indoor-marathons/">indoor track marathons have been held for years without problems</a>.</p>
+
+                    <figure>
+                        <img src="{{site.baseurl}}/img/dm26/dimensions_comparison.svg" />
+                        <figcaption class="text-secondary">
+                            Drumheller's turn radius is slightly tighter than that of a 400m track, and greater than that of a typical indoor track.
+                        </figcaption>
+                    </figure>
                 </accordion-body>
             </accordion-item>
 
