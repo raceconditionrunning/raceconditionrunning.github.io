@@ -2,9 +2,9 @@
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running" xmlns:rcr="http://raceconditionrunning.com/extensions">
   <metadata>
     <name>lynnwood-interurban-ashway-ob</name>
-    <desc>OB: Lynwood, Interurban Trail, Ash Way (4.5 mi)</desc>
+    <desc>OB: Lynnwood, Interurban Trail, Ash Way (4.5 mi)</desc>
     <link href="https://raceconditionrunning.com/routes/lynnwood-interurban-ashway-ob">
-      <text>Race Condition Running: OB: Lynwood, Interurban Trail, Ash Way</text>
+      <text>Race Condition Running: OB: Lynnwood, Interurban Trail, Ash Way</text>
     </link>
     <author>
       <name>Race Condition Running</name>
@@ -19,7 +19,7 @@
   </metadata>
   <trk>
     <name>lynnwood-interurban-ashway-ob</name>
-    <desc>OB: Lynwood, Interurban Trail, Ash Way (4.5 mi)</desc>
+    <desc>OB: Lynnwood, Interurban Trail, Ash Way (4.5 mi)</desc>
     <trkseg>
       <trkpt lat="47.81585" lon="-122.29442"><ele>110.04</ele></trkpt>
       <trkpt lat="47.81584" lon="-122.29441"><ele>110.00</ele></trkpt>

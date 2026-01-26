@@ -2,9 +2,9 @@
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="Race Condition Running" xmlns:rcr="http://raceconditionrunning.com/extensions">
   <metadata>
     <name>lynnwood-scriber-lake-ob</name>
-    <desc>OB: Lynwood, Scriber Lake (2.1 mi)</desc>
+    <desc>OB: Lynnwood, Scriber Lake (2.1 mi)</desc>
     <link href="https://raceconditionrunning.com/routes/lynnwood-scriber-lake-ob">
-      <text>Race Condition Running: OB: Lynwood, Scriber Lake</text>
+      <text>Race Condition Running: OB: Lynnwood, Scriber Lake</text>
     </link>
     <author>
       <name>Race Condition Running</name>
@@ -19,7 +19,7 @@
   </metadata>
   <trk>
     <name>lynnwood-scriber-lake-ob</name>
-    <desc>OB: Lynwood, Scriber Lake (2.1 mi)</desc>
+    <desc>OB: Lynnwood, Scriber Lake (2.1 mi)</desc>
     <trkseg>
       <trkpt lat="47.81507" lon="-122.29574"><ele>105.59</ele></trkpt>
       <trkpt lat="47.81473" lon="-122.29631"><ele>103.50</ele></trkpt>
