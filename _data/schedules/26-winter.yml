@@ -43,9 +43,9 @@
 - date: "2026-02-21"
   plan:
     - time: "8:30"
-      route_id: cap-hill-i90-trail-lwb-arborlaken-loop
-    - time: "10:10"
-      route_id: cap-hill-volunteer-park-westlake
+      route_id: beacon-jefferson-park-chief-sealth-new-holly-ob
+    - time: "9:45"
+      route_id: beacon-i90-trail-cap-hill
 
 - date: "2026-02-28"
   plan:
@@ -64,9 +64,9 @@
 - date: "2026-03-14"
   plan:
     - time: "8:30"
-      route_id: beacon-hill-mlk-tukwila-p2p
+      route_id: locks-discovery-magnolia-discovery-ob
     - time: "10:10"
-      route_id: tukwila-sunset-park-botanical-gardens-loop
+      route_id: locks-golden-gardens-ob
 
 - date: "2026-03-21"
   plan:
