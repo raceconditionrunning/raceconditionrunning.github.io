@@ -64,11 +64,13 @@
 - date: "2026-03-14"
   plan:
     - time: "8:30"
-      route_id: Locks, Interbay, Queen Anne, Fremont Loop
-      notes: "https://onthegomap.com/s/spc1gaa2"
+      route:
+        name: Locks, Interbay, Queen Anne, Fremont Loop
+        notes: "https://onthegomap.com/s/spc1gaa2"
     - time: "10:10"
-      route_id: Locks, Golden Gardens OB
-      notes: "https://onthegomap.com/s/071u8nke"
+      route:
+        name: Locks, Golden Gardens OB
+        notes: "https://onthegomap.com/s/071u8nke"
 
 - date: "2026-03-21"
   plan:
