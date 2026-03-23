@@ -1,0 +1,77 @@
+- date: '2026-04-04'
+  plan:
+    - time: '8:30'
+      route_id: TODO
+    - time: TODO
+      route_id: TODO
+
+- date: '2026-04-11'
+  plan:
+    - time: '8:30'
+      route_id: TODO
+    - time: TODO
+      route_id: TODO
+
+- date: '2026-04-18'
+  plan:
+    - time: '8:30'
+      route_id: TODO
+    - time: TODO
+      route_id: TODO
+
+- date: '2026-04-25'
+  plan:
+    - time: '8:30'
+      route_id: TODO
+    - time: TODO
+      route_id: TODO
+
+- date: '2026-05-02'
+  plan:
+    - time: '8:30'
+      route_id: TODO
+    - time: TODO
+      route_id: TODO
+
+- date: '2026-05-09'
+  plan:
+    - time: '8:30'
+      route_id: TODO
+    - time: TODO
+      route_id: TODO
+
+- date: '2026-05-16'
+  plan:
+    - time: '8:30'
+      route_id: TODO
+    - time: TODO
+      route_id: TODO
+
+- date: '2026-05-23'
+  plan:
+    - time: '8:30'
+      route_id: TODO
+    - time: TODO
+      route_id: TODO
+
+- date: '2026-05-30'
+  plan:
+    - time: '8:30'
+      route_id: TODO
+    - time: TODO
+      route_id: TODO
+
+- date: '2026-06-06'
+  organized-event: true
+  plan:
+    - time: '8:00'
+      route:
+        name: Drumheller Marathon and Half-marathon
+        map: /drumheller-marathon-26/
+        distance_mi: 26.2
+      highlight-image: /img/dm26/og-banner.jpg
+
+- date: '2026-06-13'
+  plan:
+    - time: '8:30'
+      route_id: TODO
