@@ -128,6 +128,7 @@ Here are the concrete steps for making and adding routes to the repo:
       * track `desc`
 
 5. Run `./_bin/gpx-inplace-fixup.sh routes/_gpx/recently-added-route.gpx` to add elevation data to the route. Make sure you have python installed since this script invokes other python scripts.
+    * Running the script with `--wait SECONDS` may be helpful if the API frequently times out.
 
 6. Follow the instructions for `Building and Developing Locally`. Then run `make serve` to check that it works locally and the site looks right.
 
