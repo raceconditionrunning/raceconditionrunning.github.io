@@ -46,7 +46,7 @@ if [[ "$GPX_FILE" != *.gpx ]]; then
 fi
 
 # inject the elevation data into the GPX file
-uv run python3 ${SDIR}/replace_route_elevations.py ${WAIT:+--wait "$WAIT"} --input "$GPX_FILE" --output "$GPX_FILE"
+uv run python3 ${SDIR}/replace_route_elevations.py ${WAIT:+--wait "$WAIT"} --normalize-after --input "$GPX_FILE" --output "$GPX_FILE"
 
 # add surface metadata to the GPX file
 uv run python3 ${SDIR}/add_surface_to_gpx.py --input "$GPX_FILE" --output "$GPX_FILE"
