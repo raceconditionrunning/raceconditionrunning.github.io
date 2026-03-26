@@ -1,11 +1,11 @@
-<div class="table-responsive">
+<div class="table-responsive schedule-table-wrapper" data-unit="mi">
 <table class='schedule-table table'>
     {% if include.show_header %}
     <thead>
     <tr>
         <th>Date</th>
         <th class="text-end">Time</th>
-        <th><div class="d-flex justify-content-between">Routes<span>Distance (mi)</span></div></th>
+        <th><div class="d-flex justify-content-between">Routes<span>Distance (<button class="dist-unit-toggle" title="For the enlightened..." style="background:none;border:none;padding:0;font:inherit;text-decoration:underline dotted;cursor:pointer;">mi</button>)</span></div></th>
     </tr>
     </thead>
     {% endif %}
@@ -74,7 +74,7 @@
                     &nbsp; <a href="{{ route.gpx }}" class="gpx-link" title="Download GPX" data-goatcounter-click="download-{{ route.id }}">&#8986;</a>
                 {% endif %}
                 </span>
-                {% if route.distance_mi %}<span class="text-end text-nowrap" title="{{ route.distance_mi | times: 1.609 | round: 1 }}km">{{ route.distance_mi | round: 1 }}</span>{% endif %}
+                {% if route.distance_mi %}<span class="dist-value text-end text-nowrap" data-mi="{{ route.distance_mi | round: 1 }}" data-km="{{ route.distance_mi | times: 1.609 | round: 1 }}">{{ route.distance_mi | round: 1 }}</span>{% endif %}
             </div>
         </td>
     </tr>
@@ -108,7 +108,7 @@
     {% if total_dist > 0 and run.plan.size > 1 %}
     <tr class="total-dist-row">
         <td></td><td></td>
-        <td class="text-end border-top fw-semibold">{{ total_dist | round: 1 }}</td>
+        <td class="text-end fw-semibold"><hr class="my-1" style="border-top-width: 2px;"/><span class="dist-value" data-mi="{{ total_dist | round: 1 }}" data-km="{{ total_dist | times: 1.609 | round: 1 }}">{{ total_dist | round: 1 }}</span></td>
     </tr>
     {% endif %}
     {% if run.cancelled and plan.cancelled != "" %}
@@ -123,3 +123,22 @@
     <tfoot id="schedule-finished" style="display: none"><tr><td colspan="3">A new schedule is coming! <a href="https://github.com/raceconditionrunning/raceconditionrunning.github.io">Contribute on GitHub</a></td></tr></tfoot>
 </table>
 </div>
+<script>
+if (!window.__distToggleInit) {
+    // For switching between miles and kilometers.
+    window.__distToggleInit = true;
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.dist-unit-toggle');
+        if (!btn) {
+            return;
+        }
+        const wrapper = btn.closest('.schedule-table-wrapper');
+        const newUnit = wrapper.dataset.unit === 'km' ? 'mi' : 'km';
+        wrapper.dataset.unit = newUnit;
+        btn.textContent = newUnit;
+        wrapper.querySelectorAll('.dist-value').forEach((span) => {
+            span.textContent = span.dataset[newUnit];
+        });
+    });
+}
+</script>
