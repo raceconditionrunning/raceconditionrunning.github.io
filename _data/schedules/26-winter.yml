@@ -73,9 +73,8 @@
 
 - date: "2026-03-21"
   plan:
-    - time: "9:30"
-      route_id: cedar-river-trail-10-ob
-      notes: "Car pool to start from Rainier Beach station at 9:00am"
+    - time: "8:30"
+      route_id: beacon-cheasty-lwb-seward-loop-cc
 
 - date: "2026-03-28"
   plan:

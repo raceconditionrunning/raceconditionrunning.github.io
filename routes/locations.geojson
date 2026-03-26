@@ -547,6 +547,24 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          -122.13892210367231,
+          47.6363123016285
+        ]
+      },
+      "properties": {
+        "id": "OverlakeVillage",
+        "name": "Overlake Village Station",
+        "maps_url": "https://maps.app.goo.gl/uuznoyJLGv1ndwjq8",
+        "meeting_point_desc": null,
+        "transit": "Light Rail to Overlake Village stop",
+        "reachability": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           -122.05146,
           47.69694
         ]
