@@ -5,8 +5,7 @@
     <tr>
         <th>Date</th>
         <th class="text-end">Time</th>
-        <th>Routes (miles)</th>
-        <th>Total distance (miles)</th>
+        <th><div class="d-flex justify-content-between">Routes<span>Distance (mi)</span></div></th>
     </tr>
     </thead>
     {% endif %}
@@ -56,31 +55,33 @@
         {% endunless %}
         {% endif %}
         <td class="{{part-cancelled-class}}">
-            {% if plan.route_id %}
-            <a href="{{site.baseurl}}/routes/{{ plan.route_id }}/"
-               class="route-preview-map-link"
-               title="{{ plan.route_id }}"
-               popovertarget="map-popover-{{run.date | slugify}}-part-{{ forloop.index}}">{{route.name}}</a>
-            <div id="map-popover-{{run.date | slugify}}-part-{{ forloop.index}}" class="route-map-popover" popover>
-                <img src="{{ '/img/routes/' | append: plan.route_id | append: '.jpg' | relative_url }}" alt="{{ route.name }} map" class="route-image" loading="lazy"/>
+            <div class="d-flex justify-content-between align-items-baseline gap-2">
+                <span>
+                {% if plan.route_id %}
+                <a href="{{site.baseurl}}/routes/{{ plan.route_id }}/"
+                   class="route-preview-map-link"
+                   title="{{ plan.route_id }}"
+                   popovertarget="map-popover-{{run.date | slugify}}-part-{{ forloop.index}}">{{route.name}}</a>
+                <div id="map-popover-{{run.date | slugify}}-part-{{ forloop.index}}" class="route-map-popover" popover>
+                    <img src="{{ '/img/routes/' | append: plan.route_id | append: '.jpg' | relative_url }}" alt="{{ route.name }} map" class="route-image" loading="lazy"/>
+                </div>
+                {% elsif route.map %}
+                <a target="_blank" href="{{ route.map }}">{{route.name}}</a>
+                {% else %}
+                {{route.name}}
+                {% endif %}
+                {% if route.gpx and include.link_gpx %}
+                    &nbsp; <a href="{{ route.gpx }}" class="gpx-link" title="Download GPX" data-goatcounter-click="download-{{ route.id }}">&#8986;</a>
+                {% endif %}
+                </span>
+                {% if route.distance_mi %}<span class="text-end text-nowrap" title="{{ route.distance_mi | times: 1.609 | round: 1 }}km">{{ route.distance_mi | round: 1 }}</span>{% endif %}
             </div>
-            {% elsif route.map %}
-            <a target="_blank" href="{{ route.map }}">{{route.name}}</a>
-            {% else %}
-            {{route.name}}
-            {% endif %}
-            {% if route.distance_mi %}&nbsp; (<span title="{{ route.distance_mi | times: 1.609 | round: 1}}km" class="text-decoration-dashed">{{ route.distance_mi | round: 1}})</span>{% endif %}
-            {% if route.gpx and include.link_gpx %}
-                &nbsp; <a href="{{ route.gpx }}" class="gpx-link" title="Download GPX" data-goatcounter-click="download-{{ route.id }}">&#8986;</a>
-            {% endif %}
         </td>
-        <td class="total-dist">{% if forloop.last %}{{ total_dist | round: 1 }}{% endif %}</td>
     </tr>
     {% if plan.notes %}
     <tr>
         <td></td><td></td>
         <td>{{ plan.notes }}</td>
-        <td></td>
     </tr>
     {% endif %}
     {% if plan.cancelled and plan.cancelled != "" %}
@@ -88,7 +89,6 @@
         <td></td>
         <td></td>
         <td>{{ plan.cancelled }}</td>
-        <td></td>
     </tr>
     {% endif %}
 
@@ -101,21 +101,25 @@
         <img src="{{ plan.highlight-image | relative_url }}" />
             </a>
         </td>
-        <td></td>
     </tr>
     {% endif %}
 
     {% endfor %}
+    {% if total_dist > 0 and run.plan.size > 1 %}
+    <tr class="total-dist-row">
+        <td></td><td></td>
+        <td class="text-end border-top fw-semibold">{{ total_dist | round: 1 }}</td>
+    </tr>
+    {% endif %}
     {% if run.cancelled and plan.cancelled != "" %}
     <tr class="cancellation-note">
         <td></td>
         <td></td>
         <td>{{ run.cancelled }}</td>
-        <td></td>
     </tr>
     {% endif %}
     </tbody>
     {% endfor %}
-    <tfoot id="schedule-finished" style="display: none"><tr><td colspan="4">A new schedule is coming! <a href="https://github.com/raceconditionrunning/raceconditionrunning.github.io">Contribute on GitHub</a></td></tr></tfoot>
+    <tfoot id="schedule-finished" style="display: none"><tr><td colspan="3">A new schedule is coming! <a href="https://github.com/raceconditionrunning/raceconditionrunning.github.io">Contribute on GitHub</a></td></tr></tfoot>
 </table>
 </div>
