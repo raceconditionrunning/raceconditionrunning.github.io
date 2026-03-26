@@ -6,7 +6,7 @@
         <th>Date</th>
         <th class="text-end">Time</th>
         <th>Routes (miles)</th>
-        <th>Total mileage</th>
+        <th>Total distance (miles)</th>
     </tr>
     </thead>
     {% endif %}
@@ -16,6 +16,17 @@
     {% else %}
     {% assign cancelled-class = "" %}
     {% endif %}
+    {% assign total_dist = 0.0 %}
+    {% for _phase in run.plan %}
+      {% unless _phase.cancelled %}
+        {% if _phase.route_id %}
+          {% assign _r = site.data.routes | where: 'id', _phase.route_id | first %}
+          {% if _r.distance_mi %}{% assign total_dist = total_dist | plus: _r.distance_mi %}{% endif %}
+        {% elsif _phase.route.distance_mi %}
+          {% assign total_dist = total_dist | plus: _phase.route.distance_mi %}
+        {% endif %}
+      {% endunless %}
+    {% endfor %}
     <tbody class="run" data-date="{{ run.date }}">
     {% for plan in run.plan %}
     {% if plan.cancelled %}
@@ -62,15 +73,14 @@
             {% if route.gpx and include.link_gpx %}
                 &nbsp; <a href="{{ route.gpx }}" class="gpx-link" title="Download GPX" data-goatcounter-click="download-{{ route.id }}">&#8986;</a>
             {% endif %}
-            {% if forloop.last %}
-            <td>TODO: fill in total mileage</td>
-            {% endif %}
         </td>
+        <td class="total-dist">{% if forloop.last %}{{ total_dist | round: 1 }}{% endif %}</td>
     </tr>
     {% if plan.notes %}
     <tr>
         <td></td><td></td>
         <td>{{ plan.notes }}</td>
+        <td></td>
     </tr>
     {% endif %}
     {% if plan.cancelled and plan.cancelled != "" %}
@@ -78,6 +88,7 @@
         <td></td>
         <td></td>
         <td>{{ plan.cancelled }}</td>
+        <td></td>
     </tr>
     {% endif %}
 
@@ -90,6 +101,7 @@
         <img src="{{ plan.highlight-image | relative_url }}" />
             </a>
         </td>
+        <td></td>
     </tr>
     {% endif %}
 
@@ -99,10 +111,11 @@
         <td></td>
         <td></td>
         <td>{{ run.cancelled }}</td>
+        <td></td>
     </tr>
     {% endif %}
     </tbody>
     {% endfor %}
-    <tfoot id="schedule-finished" style="display: none"><tr><td colspan="3">A new schedule is coming! <a href="https://github.com/raceconditionrunning/raceconditionrunning.github.io">Contribute on GitHub</a></td></tr></tfoot>
+    <tfoot id="schedule-finished" style="display: none"><tr><td colspan="4">A new schedule is coming! <a href="https://github.com/raceconditionrunning/raceconditionrunning.github.io">Contribute on GitHub</a></td></tr></tfoot>
 </table>
 </div>

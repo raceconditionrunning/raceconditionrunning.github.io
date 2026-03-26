@@ -59,10 +59,9 @@ def main():
     for run in sched:
         date = datetime.strptime(run['date'], '%Y-%m-%d')
         phases = run['plan']
-        # Maybe something here?
-        # total_dist = 0
         if 'cancelled' in run.keys():
             continue
+        total_dist = 0
         for i in range(len(phases)):
             phase = phases[i]
             if 'cancelled' in phase.keys():
@@ -75,6 +74,8 @@ def main():
             name = route['name']
             gmap = route['map'] if 'map' in route else ''
             dist = route['distance_mi'] if 'distance_mi' in route else None
+            if dist:
+                total_dist += dist
 
             event_name = f'{name} ({dist}mi)' if dist else name
 
