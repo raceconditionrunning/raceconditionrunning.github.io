@@ -14,6 +14,11 @@
     </author>
     <extensions>
       <rcr:ascent>125</rcr:ascent>
+      <rcr:surface_paved>0.975</rcr:surface_paved>
+      <rcr:surface_unpaved>0.018</rcr:surface_unpaved>
+      <rcr:surface_street>0.016</rcr:surface_street>
+      <rcr:surface_sidewalk>0.016</rcr:surface_sidewalk>
+      <rcr:surface_trail>0.961</rcr:surface_trail>
       <rcr:map>https://onthegomap.com/s/9au7h17i</rcr:map>
       <rcr:last_updated>2024-02-25</rcr:last_updated>
     </extensions>

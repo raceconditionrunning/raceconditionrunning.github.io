@@ -11,7 +11,7 @@
     "starts": {
       "half": {
         "time": "08:00:00;00",
-        "bibs": [
+        "bibRange": [
           0,
           160
         ],

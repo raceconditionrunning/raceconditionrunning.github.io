@@ -3,8 +3,6 @@ title: Light Rail Relay 2024
 description: Join Seattle’s premier urban relay on September 28, 2024. Run solo or with a team, covering 38 miles along Link Light Rail from Angle Lake to Lynnwood.
 permalink: light-rail-relay-24/
 redirect_from:
-- /lrr/
-- /light-rail-relay/
 - /lrr24/
 team_registration_link: https://forms.gle/9DLctNws7jWC3WyU6
 registration_link: https://forms.gle/qW7xTJui9zkUAsDKA
@@ -26,15 +24,14 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
     <meta property="og:description" content="{{ page.description }}">
 
     <link rel="manifest" href="{{ site.baseurl }}/maps/lrr-24-manifest.json">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.15.0/dist/maplibre-gl.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.1/dist/css/tabulator.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.1/dist/css/tabulator_bootstrap5.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css" integrity="sha512-qveKnGrvOChbSzAdtSs8p69eoLegyh+1hwOMbmpCViIwj7rn4oJjdmMvWOuyQlTOZgTlZA0N2PXA7iA8/2TUYA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator.min.css" integrity="sha256-pG2AUZRMdFyuinl2tPudk9iU0gh2pFIcxPbwNc/vUuo=" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator_bootstrap5.min.css" integrity="sha256-H1gQqBIR3L9enXuoNfFASj+QdGSEQIAloT7c4FXjNzc=" crossorigin="anonymous">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" integrity="sha256-V2sIX92Uh6ZaGSFTKMHghsB85b9toJtmazgG09AI2uk=" crossorigin="anonymous">
+
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -74,17 +71,21 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
     <script type="importmap">
         {
           "imports": {
+            "bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.esm.min.js",
             "d3": "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm",
-            "maplibre-gl": "https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js",
+            "lit": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
+            "lit-html": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
+            "lit-html/directives/map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/map.js",
+            "lit-html/directives/repeat.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/repeat.js",
+            "maplibre-gl": "https://cdn.jsdelivr.net/npm/maplibre-gl@5.15.0/+esm",
             "masonry-layout": "https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js",
             "noUiSlider": "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.mjs",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
             "pmtiles": "https://cdn.jsdelivr.net/npm/pmtiles@4.0.1/+esm",
-            "tabulator-tables": "https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/js/tabulator_esm.js",
+            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.3.1/js/tabulator_esm.min.js",
             "@turf": "https://cdn.jsdelivr.net/npm/@turf/turf@7.1.0/+esm",
-            "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js",
-            "bootstrap": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.esm.min.js"
+            "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js"
           }
         }
     </script>
@@ -109,12 +110,41 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             line-height: 1.5;
         }
 
+        .text-decoration-dashed {
+            text-decoration-line: underline;
+            text-decoration-style: dashed;
+            text-decoration-color: rgba(from currentcolor r g b / 0.5);
+        }
+
+      @media (pointer: coarse), (hover: none) {
+          :not(.maplibregl-ctrl) > [title] {
+              position: relative;
+          }
+
+          :not(.maplibregl-ctrl) > [title]:hover::after {
+              content: attr(title);
+              position: absolute;
+              top: 90%;
+              color: var(--bs-body-color);
+              background-color: var(--bs-secondary-bg-subtle);
+              border: 1px solid;
+              width: fit-content;
+              padding: 3px;
+              z-index: 10;
+          }
+        }
+
         ::selection {
             background: var(--theme-primary-color-subdued);
         }
 
         #title ::selection {
             background: #333;
+        }
+
+
+        .container {
+            max-width: 700px;
         }
 
         a {
@@ -160,13 +190,6 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             filter: invert();
         }
 
-        #map-container {
-            height: 100%;
-        }
-        #map {
-            height: 70vh;
-        }
-
         dt {
             font-weight: bold;
         }
@@ -200,6 +223,97 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             --bs-btn-focus-shadow-rgb: 255, 255, 255
         }
 
+        #countdown .container {
+            max-width: none;
+        }
+
+        figure {
+            max-width: 1200px;
+            margin: 0 auto 2rem auto;
+        }
+
+        figure a img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            background-color: var(--bs-secondary-bg);
+        }
+
+        hr {
+            width: 8rem;
+            margin: 4rem auto;
+            display: block;
+            border: 1px solid var(--bs-secondary-color);
+        }
+
+        header {
+            margin: 0 auto;
+
+        }
+
+        .one-bg {
+            background-color: var(--theme-primary-color);
+            background: linear-gradient(rgba(0,0,0,.1), transparent, rgba(0,0,0,.1)), var(--theme-primary-color);
+        }
+        header img {
+            flex: 1;
+            max-width: 100%;
+            max-height: 6.5rem;
+            margin: 0 auto;
+            padding: 1rem .5rem;
+            display: block;
+        }
+
+        .subheader p, .subheader p a {
+            color: grey;
+        }
+
+        /* Accordion */
+
+        .accordion-item ul {
+            padding-left: 1rem;
+        }
+
+        .accordion {
+            --bs-accordion-btn-focus-border-color: var(--theme-primary-color-subdued);
+            --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem var(--theme-primary-color-subdued);
+            --bs-accordion-bg: #111;
+            --bs-accordion-active-color: var(--bs-emphasis-color);
+            --bs-accordion-active-bg: #333;
+        }
+        .accordion-item {
+            border-bottom: 1px solid #666;
+        }
+
+        .accordion-button::after {
+            filter: saturate(0%);
+        }
+
+        /* RELAY MAP */
+
+        .map-container {
+            height: 100%;
+        }
+        #map {
+            height: 70vh;
+            position: relative;
+        }
+
+         .map-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         .maplibregl-map {
             font-family: var(--bs-font-sans-serif);
             font-size: 1rem;
@@ -225,7 +339,6 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             margin-top: 0;
             margin-bottom: .5rem;
         }
-
         .maplibregl-popup-content
         {
             background-color: rgba(255, 255, 255, 0.6);
@@ -291,223 +404,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             outline: none;
             box-shadow: 0 0 0 0.25rem var(--theme-primary-color-subdued);
         }
-
-        footer {
-            margin: 6rem 0 6rem 0;
-        }
-
-        .container {
-            max-width: 700px;
-        }
-
-        #finish-row td {
-            font-weight: bold;
-        }
-
-        #countdown .container {
-            max-width: none;
-        }
-
-        figure {
-            max-width: 1200px;
-            margin: 0 auto 2rem auto;
-        }
-
-        figure a img {
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-            background-color: var(--bs-secondary-bg);
-        }
-
-        hr {
-            width: 8rem;
-            margin: 4rem auto;
-            display: block;
-            border: 1px solid var(--bs-secondary-color);
-        }
-
-        header {
-            margin: 0 auto;
-
-        }
-
-        .one-bg {
-            background-color: var(--theme-primary-color);
-            background: linear-gradient(rgba(0,0,0,.1), transparent, rgba(0,0,0,.1)), var(--theme-primary-color);
-        }
-        header img {
-            flex: 1;
-            max-width: 100%;
-            max-height: 6.5rem;
-            margin: 0 auto;
-            padding: 1rem .5rem;
-            display: block;
-        }
-
-        .subheader p, .subheader p a {
-            color: grey;
-        }
-
-        .accordion-item ul {
-            padding-left: 1rem;
-        }
-
-        .accordion {
-            --bs-accordion-btn-focus-border-color: var(--theme-primary-color-subdued);
-            --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem var(--theme-primary-color-subdued);
-            --bs-accordion-bg: #111;
-            --bs-accordion-active-color: var(--bs-emphasis-color);
-            --bs-accordion-active-bg: #333;
-        }
-        .accordion-item {
-            border-bottom: 1px solid #666;
-        }
-
-        .accordion-button::after {
-            filter: saturate(0%);
-        }
-
-        .tabulator,
-        .tabulator .tabulator-header .tabulator-col,
-        .tabulator .tabulator-header,
-        .tabulator .tabulator-tableholder .tabulator-table,
-        .tabulator .tabulator-footer,
-        .tabulator .tabulator-footer .tabulator-calcs-holder,
-        .tabulator .tabulator-footer .tabulator-calcs-holder .tabulator-row,
-        .tabulator.table,
-        .tabulator-row, .tabulator-row.tabulator-row-even,
-        .tabulator.table .tabulator-row{
-            background-color: transparent;
-        }
-
-        .tabulator.table:not(.thead-light) .tabulator-header, .tabulator.table:not(.thead-light) .tabulator-header .tabulator-col {
-            background-color: var(--bs-table-bg);
-        }
-
-        .tabulator.table .tabulator-row,
-        .tabulator.table .tabulator-tableholder,
-        .tabulator.table:not(.thead-light) .tabulator-header, .tabulator.table:not(.thead-light) .tabulator-header .tabulator-col {
-            color: var(--bs-body-color);
-        }
-
-        .tabulator-row.tabulator-group {
-            background-color: rgba(255, 255, 255, 0.075) !important;
-        }
-
-        .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs {
-            background-color: transparent !important;
-        }
-
-        .tabulator.table .tabulator-row:hover,
-        .tabulator.table .tabulator-row:hover .tabulator-cell,
-        .tabulator-row.tabulator-selectable:hover,
-        .tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover{
-            background-color: var(--bs-table-hover-bg);
-        }
-
-        .tabulator-row,
-        .tabulator .tabulator-header {
-            border: none;
-        }
-
-        .tabulator-row .tabulator-responsive-collapse {
-            border-top: 0px;
-            padding-bottom: 1rem;
-            white-space: normal;
-        }
-        .tabulator-responsive-collapse strong {
-            font-weight: 500;
-        }
-
-        .tabulator .tabulator-footer {
-            border: none !important;
-        }
-
-        .tabulator .tabulator-footer .tabulator-calcs-holder {
-            border: none;
-            border-top: 1px solid #AAA;
-        }
-
-        .leg-leader {
-            font-weight: 700;
-        }
-
-        .first-leg {
-            text-decoration: underline;
-        }
-        #leg-details-table h6, #leg-details-table .leg-number {
-            color: var(--bs-secondary-color);
-        }
-        #leg-details-table h5 a {
-            color: var(--bs-body-color);
-            text-decoration-color: var(--theme-primary-color);
-        }
-
-        #leg-calculator {
-            border: 1px solid #111;
-        }
-
-        #leg-calculator elevation-profile path {
-            fill: #333
-        }
-
-        .noUi-connect {
-            background-color: var(--theme-primary-color);
-        }
-        .noUi-value {
-            display: none; /* No tick labels */
-        }
-        .noUi-target {
-            background: #333;
-            border-radius: 0;
-            border: 1px solid var(--bs-dark-border-subtle);
-            box-shadow: none;
-        }
-
-        .noUi-handle {
-            box-shadow: none;
-        }
-
-        .noUi-marker-large {
-            background-color: #555;
-        }
-        .noUi-tooltip {
-            width: 2rem;
-            height: 2rem;
-            border-radius: 1rem;
-            padding: 3px 0 0 0;
-        }
-
-        .noUi-horizontal .noUi-tooltip {
-            bottom: 130%;
-        }
-
-        masonry-image-gallery {
-            --placeholder-bg: var(--bs-secondary-bg);
-            --placeholder-border-color: #222;
-        }
-
-        .imprint {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            font-style: italic;
-            font-weight: 300;
-        }
-
-        .imprint a {
-            text-decoration: none;
-            color: #666;
-        }
-
-        .imprint img {
-            width: 100px;
-            opacity: .5;
-        }
-
-        /*.gradient-background {
-            background: radial-gradient(circle at 20% -10%,var(--theme-primary-color),rgba(255,0,0,0) 30%),radial-gradient(circle at 93.3% 10%,var(--two-line-color),rgba(0,255,0,0) 30%),radial-gradient(circle at 6.7% 20%,var(--t-line-color),rgba(0,0,255,0) 30%) !important;
-        }*/
+        /* Relay Map - Arrivals Popup */
 
         .arrivals-popup {
             background-color: rgba(0, 0, 0, 0.6);
@@ -526,9 +423,6 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             padding-bottom: .25rem;
         }
 
-        .arrivals-popup.fade-out {
-            opacity: 0;
-        }
         .arrivals-popup .maplibregl-popup-tip {
             display: none;
         }
@@ -554,6 +448,9 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             font-size: .8rem;
             font-weight: 300;
             color: #888;
+        }
+        .line-marker {
+            font-weight: bold;
         }
         .line-40_100479 {
             background-color: var(--theme-primary-color);
@@ -607,6 +504,198 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             height: 100%;
             width: 100%;
         }
+
+        /* Epilogue */
+        masonry-image-gallery {
+            --placeholder-bg: var(--bs-secondary-bg);
+            --placeholder-border-color: #222;
+        }
+
+        .imprint {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .imprint a {
+            text-decoration: none;
+            color: #666;
+        }
+
+        .imprint img {
+            width: 100px;
+            opacity: .5;
+        }
+
+        footer {
+            margin: 6rem 0 6rem 0;
+        }
+
+
+        #finish-row td {
+            font-weight: bold;
+        }
+
+
+        /* RESULTS */
+
+        .tabulator,
+        .tabulator .tabulator-header .tabulator-col,
+        .tabulator .tabulator-header,
+        .tabulator .tabulator-tableholder .tabulator-table,
+        .tabulator .tabulator-footer,
+        .tabulator .tabulator-footer .tabulator-calcs-holder,
+        .tabulator .tabulator-footer .tabulator-calcs-holder .tabulator-row,
+        .tabulator.table,
+        .tabulator-row, .tabulator-row.tabulator-row-even,
+        .tabulator.table .tabulator-row{
+            background-color: transparent;
+        }
+
+        .tabulator-row .tabulator-cell.tabulator-frozen {
+            background-color: var(--bs-body-bg);
+        }
+
+        .tabulator.table:not(.thead-light) .tabulator-header, .tabulator.table:not(.thead-light) .tabulator-header .tabulator-col {
+            background-color: var(--bs-table-bg);
+        }
+
+        .tabulator.table .tabulator-row,
+        .tabulator.table .tabulator-tableholder,
+        .tabulator.table:not(.thead-light) .tabulator-header, .tabulator.table:not(.thead-light) .tabulator-header .tabulator-col {
+            color: var(--bs-body-color);
+        }
+
+        .tabulator.table:not(.thead-light) .tabulator-header, .tabulator.table:not(.thead-light) .tabulator-header .tabulator-col,
+        .tabulator-row .tabulator-cell.tabulator-frozen.tabulator-frozen-left{
+            border-color: var(--bs-secondary);
+        }
+
+        .tabulator-row.tabulator-group {
+            background-color: rgba(255, 255, 255, 0.075) !important;
+        }
+
+        .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs {
+            background-color: transparent !important;
+        }
+
+        .tabulator.table .tabulator-row:hover,
+        .tabulator.table .tabulator-row:hover .tabulator-cell,
+        .tabulator-row.tabulator-selectable:hover,
+        .tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover{
+            background-color: var(--bs-table-hover-bg);
+        }
+
+        .tabulator.table .tabulator-row:hover .tabulator-cell.tabulator-frozen {
+            background-color: var(--bs-body-bg);
+        }
+
+        .tabulator-row,
+        .tabulator .tabulator-header {
+            border: none;
+        }
+
+        .tabulator-row .tabulator-responsive-collapse {
+            border-top: 0px;
+            padding-bottom: 1rem;
+            white-space: normal;
+        }
+        .tabulator-responsive-collapse strong {
+            font-weight: 500;
+        }
+
+        .tabulator .tabulator-footer {
+            border: none !important;
+        }
+
+        .tabulator .tabulator-footer .tabulator-calcs-holder {
+            border: none;
+            border-top: 1px solid #AAA;
+        }
+
+        /* Segment Calculator Slider */
+
+        #leg-calculator {
+            border: 1px solid #111;
+        }
+
+        #leg-calculator elevation-profile path {
+            fill: #333
+        }
+
+        .noUi-connect {
+            background-color: var(--theme-primary-color);
+        }
+        .noUi-value {
+            display: none; /* No tick labels */
+        }
+        .noUi-target {
+            background: #333;
+            border-radius: 0;
+            border: 1px solid var(--bs-dark-border-subtle);
+            box-shadow: none;
+        }
+
+        .noUi-handle {
+            box-shadow: none;
+        }
+
+        .noUi-marker-large {
+            background-color: #555;
+        }
+        .noUi-tooltip {
+            background-color: transparent;
+            border: none;
+        }
+
+        .noUi-horizontal .noUi-tooltip {
+            bottom: 130%;
+        }
+
+        #leg-details-table h6, #leg-details-table .leg-number {
+            color: var(--bs-secondary-color);
+        }
+        #leg-details-table h5 a {
+            color: var(--bs-body-color);
+            text-decoration-color: var(--theme-primary-color);
+        }
+        .link-station-label {
+            display: flex;
+            border-radius: 1rem;
+            height: 2rem;
+            font-weight: 500;
+            line-height: 1.5;
+            align-items: center;
+            justify-content: center;
+            padding: 0 3px;
+
+        }
+        .link-station-label.link-station-label-dark {
+            color: white;
+            background-color: rgba(0, 0, 0, 0.85);
+            border: 1px solid #CCC;
+
+        }
+        .link-station-label .line-name {
+            display: inline-block;
+            width: 1.5rem;
+            height: 1.5rem;
+            font-weight: 700;
+            border-radius: .75rem;
+            margin-right: 3px;
+        }
+
+        .link-station-label .line-name.line-name-1 {
+            background-color: var(--theme-primary-color);
+            color: white;
+        }
+        .link-station-label .link-station-code {
+            padding-right: 3px;
+            font-stretch: condensed;
+            font-width: condensed;
+        }
+
     </style>
 </head>
 
@@ -642,8 +731,6 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                         <a href="#results" class="btn btn-outline btn-outline-primary btn-lg" data-goatcounter-click="lrr24-results">Results</a>
                         <a href="#epilogue" class="btn btn-outline btn-outline-primary btn-lg" data-goatcounter-click="lrr24-epilogue">Epilogue</a>
 
-
-
                 </div>
             </div>
 
@@ -657,14 +744,18 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
     <relay-map id="relay-map"
                center="[-122.32747,47.60640]"
                max-bounds="[[-123.90236, 46.63422], [-120.20263, 49.85310]]"
-               style-href="{{ site.baseurl }}/maps/lrr24-map-style.json"></relay-map>
+               style-href="{{ site.baseurl }}/maps/lrr24-map-style.json"
+               use-station-codes="true"
+               img-base-path="{{ site.baseurl }}/img/lrr24/"
+               loading
+    ></relay-map>
 
 </section>
 
 <section>
     <div class="container pb-4 mb-4">
         <div class="alert alert-secondary" role="alert">
-            Interested in running the next LRR? <a href="{{ page.email_list_link }}">Register for an email</a>.
+            This event took place in 2024. Looking for <a href="{{ site.baseurl }}/lrr/">a more recent Light Rail Relay</a>?
         </div>
         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-baseline">
             <h2 id="route">Route <a href="#route" class="anchor-link" aria-label="Link to this section. Route"></a></h2>
@@ -1043,11 +1134,10 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
     <div class="container-xxl">
         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-baseline">
             <h2 id="results">Results <a href="#results" class="anchor-link" aria-label="Link to this section. Results"></a></h2>
-            <a href="https://forms.gle/GBAd4JjGyNRvTWaBA" class="btn btn-outline-primary mb-3 m-sm-0">Upload Photos</a>
+            <!--a href="https://forms.gle/GBAd4JjGyNRvTWaBA" class="btn btn-outline-primary mb-3 m-sm-0">Upload Photos</a-->
         </div>
 
         <div id="results-table"></div>
-        <p class="text-body-tertiary">Updated 11/17/24</p>
         <div class="container">
 
         <p class="text-body-tertiary"><b>Blanks in your results?</b> Some images were missing time information, maybe because they passed through an application that strips metadata. You can read more about EXIF metadata and test whether the "DateTimeOriginal" field is present on your image files on <a href="https://hturan.com/writing/exploring-exif">this page</a>. You're welcome to resubmit just the missing images.</p>
@@ -1175,7 +1265,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 <script type="module">
     import { relayToGPX, download, createCountdown, processRelayGeoJSON, prepareImagesForPhotoswipe} from "../js/common.js";
     import { createLegDetailsTable} from "{{ site.baseurl }}/js/tables.js";
-    import "maplibre-gl";
+    import maplibregl from 'maplibre-gl';
     import PhotoSwipeLightbox from 'photoswipe-lightbox';
     import { MasonryImageGallery} from "{{ site.baseurl }}/js/MasonryImageGallery.js";
     import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
@@ -1205,14 +1295,14 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             "type": "FeatureCollection",
             "features": vehiclesGeojson}
 
-        document.querySelector("#relay-map").addTrains(vehiclesGeojson)
+        document.querySelector("#relay-map").trains = vehiclesGeojson
     });
 
     let routeData = fetch("{{ site.baseurl }}/maps/lrr24.geojson").then(res => res.json())
     let futureRouteData = fetch("{{ site.baseurl }}/maps/lrr-future.geojson").then(res => res.json())
     let railData = fetch("{{ site.baseurl }}/maps/link-light-rail.geojson").then(res => res.json())
     railData.then((railLines) => {
-        document.querySelector("#relay-map").addLines(railLines)
+        document.querySelector("#relay-map").railLines = railLines
     })
     let processedRouteData = routeData.then((relay) => {
         let [legs, exchanges] = processRelayGeoJSON(relay)
@@ -1232,8 +1322,20 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         return [exchanges, exchangeNames]
     })
 
+    processedRouteData.then(([legs, exchanges, exchangeNames]) => {
+        let legsData = legs.features
+        let exchangeInfo = exchanges.features.reduce((acc, exchange) => {
+            acc[exchange.properties.id] = exchange.properties
+            // NOTE: Interlined stations still have two stop IDs in the GTFS, which we reflect
+            // in our exchange data as well. Here we only present one line at a time.
+            acc[exchange.properties.id].line = Math.floor(exchange.properties.id / 100)
+            acc[exchange.properties.id].stationCode = exchange.properties.id % 100
+            return acc
+        }, {})
+        document.getElementById("leg-calculator").setLegs(legs.features, exchangeInfo)
+        createLegDetailsTable(document.getElementById("leg-details-table"), legsData, exchanges.features)
+    });
     Promise.all([processedRouteData, processedFutureData]).then(([[legs, exchanges, exchangeNames], future],) => {
-
         let legsData = legs.features
         createLegDetailsTable(document.getElementById("leg-details-table"), legsData, exchanges.features)
         const downloadRouteButton = document.getElementById("download-route-gpx-btn")
@@ -1250,17 +1352,21 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         exchangeNames = {...future[1], ...exchangeNames}
         // Get colors from css vars
         let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-primary-color')
-        document.querySelector("#relay-map").addRelayLine(legs, allExchanges, exchangeNames, true, [primaryColor], "{{ site.baseurl }}/img/lrr24/")
+        let map = document.querySelector("#relay-map")
+        legs.features = legs.features.map(leg => {
+            leg.properties.lineColor = primaryColor
+            return leg
+        })
+        map.exchanges = allExchanges
+        map.exchangeNames = exchangeNames
+        map.legs = legs
+        map.loading = false
         document.querySelector("#relay-map").registerLiveArrivalsSource(allExchanges, vehicleMonitor.getArrivalsForStop.bind(vehicleMonitor))
     })
 
     let startTime = new Date("Sept 28, 2024 8:30:00")
 
     createCountdown(startTime.getTime(), "countdown-ended")
-
-    processedRouteData.then( ([legs, exchanges, exchangeNames]) => {
-        document.getElementById("leg-calculator").setLegs(legs.features, exchangeNames)
-    })
 
     // Tooltips for sign-up deadlines
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
@@ -1273,9 +1379,14 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             result.index = index
 
         })
-        const relayResultsTable = new RelayResultsTable(results.results)
+        const relayResultsTable = new RelayResultsTable(results)
 
-        relayResultsTable.initialize(results.results, exchangeNames)
+        // Reverse the order of the exchangeNames object so that exchanges are listed from last to first
+        let exchangeColumns = []
+        Object.keys(exchangeNames).reverse().forEach(key => {
+            exchangeColumns.push([key, exchangeNames[key]])
+        })
+        relayResultsTable.initialize(results, exchangeColumns)
         document.getElementById("results-table").appendChild(relayResultsTable)
     })
 

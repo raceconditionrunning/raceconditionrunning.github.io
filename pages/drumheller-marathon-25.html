@@ -77,8 +77,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             "lit": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
             "lit-html": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
             "lit-element": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
-            "p5": "https://cdn.jsdelivr.net/npm/p5@2.0.1/+esm",
-            "p5": "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/p5.min.js",
+            "p5": "https://cdn.jsdelivr.net/npm/p5@2.1.2/lib/p5.esm.min.js",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
             "photoswipe-dynamic-caption": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe-dynamic-caption-plugin/1.2.7/photoswipe-dynamic-caption-plugin.esm.min.js",
@@ -572,7 +571,8 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             background: transparent;
             width: auto;
             min-width: 200px;
-            font-size: 1rem;
+            line-height: 36px;
+            --bs-table-bg: var(--bs-dark-bg-subtle);
         }
 
         .table th {
@@ -591,15 +591,85 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             padding: 1rem;
         }
 
-        .pswp-caption-content, .pswp__dynamic-caption {
-            font-weight: 300;
+        lap-pace-chart {
+            width: 100%
         }
 
-        track-map {
-            display: block;
-            margin: 0 auto;
-            max-width: 100%;
-            height: min(max(50vh, 300px), 400px);
+        lap-pace-chart rect {
+            transition: .15s;
+        }
+
+        lap-pace-chart .tick line {
+            color: white;
+            opacity: .5;
+        }
+
+        lap-pace-chart .minor {
+            opacity: .4;
+            color: white
+        }
+
+        lap-pace-chart .horizontal-grid {
+            color: white;
+            opacity: .5;
+        }
+
+        lap-pace-chart .data-bar {
+            fill: #777;
+            opacity: .9;
+            stroke: #aaa;
+            stroke-width: .5px;
+        }
+
+        lap-pace-chart .data-bar.extra {
+            fill: #555
+        }
+
+        lap-pace-chart .data-bar.highlighted {
+            fill: #999;
+        }
+
+        lap-pace-chart #flaglines line {
+            stroke: #ccc;
+            stroke-width: 1px
+        }
+
+        lap-pace-chart .finish-flag[data-lap-target='110'] line {
+            stroke: #BD81C6;
+        }
+
+        lap-pace-chart .finish-flag[data-lap-target='110'] polygon {
+            fill: #BD81C6;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10mi"] line {
+            stroke: #dc0000;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10mi"] polygon {
+            fill: #dc0000;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10k"] line {
+            stroke: #dc8400;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="10k"] polygon {
+            fill: #dc8400;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="5k"] line {
+            stroke: #65b900;
+        }
+
+        lap-pace-chart .finish-flag[data-goal="5k"] polygon {
+            fill: #65b900;
+        }
+
+        lap-pace-chart .finish-flag text {
+            font-family: var(--sans-font-family);
+            font-weight: bold;
+            font-size: 16px;
         }
 
         .tabulator {
@@ -615,7 +685,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
         }
 
         .tabulator-row.tabulator-group {
-            //background-color: rgba(255, 255, 255, 0.075) !important;
+            background-color: rgba(255, 255, 255, 0.075) !important;
         }
 
         .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs {
@@ -641,7 +711,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
         .tabulator-row.details-opened.tabulator-selectable,
         .tabulator-row.details-opened.tabulator-selectable:hover {
-            background-color: #E0E0E0;
+            background-color: #111;
         }
 
         .tabulator .tabulator-header {
@@ -656,10 +726,6 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             border-top: 2px solid #999;
         }
 
-        .tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-top {
-            border-bottom: 2px solid #999;
-        }
-
         .laps-table.tabulator .tabulator-header {
             border-bottom: 1px dashed #999;
         }
@@ -672,12 +738,8 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             padding: 4px;
         }
         .laps-table.tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-bottom {
-            border-top: 1px solid #999;
+            border-top: 1px dashed #999;
             border-bottom: none;
-        }
-        .laps-table.tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-calcs.tabulator-calcs-top {
-            border-bottom: 1px solid #999;
-            border-top: none;
         }
 
         .tabulator-row.tabulator-group {
@@ -698,6 +760,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
         .tabulator-tableholder, .tabulator-table {
             max-width: 100%;
         }
+
 
         .bib {
             font-weight: 600;
@@ -841,6 +904,10 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             font-weight: bold;
             font-size: 16px;
         }
+        /* Gallery */
+        .pswp-caption-content, .pswp__dynamic-caption {
+            font-weight: 300;
+        }
     </style>
 </head>
 
@@ -875,31 +942,39 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
         <div class="gap-2 row justify-content-center mb-4">
 
-        <div class="col-auto">
+        <!--div class="col-auto">
             <a class="wavy-button" href="{{ page.registration_link }}" data-goatcounter-click="dm25-apply-full">Apply for Full</a>
             <div class="small">5:30AM</div>
         </div>
         <div class="col-auto">
             <a class="wavy-button complement-color" href="{{ page.registration_link }}" data-goatcounter-click="dm25-register-half">Register for Half</a>
             <div class="small">8:00AM</div>
-        </div>
-
-
-            <!--<a class="btn btn-lg hero-button" href="#epilogue">Read Epilogue</a>-->
-
-        </div>
-        <!--div class="row justify-content-center">
-            <div class="col-auto">
-                <a class="wavy-button" href="{{ page.shirt_order_link }}">Order a Shirt</a>
-            </div>
         </div-->
+
+
+        <div class="col-auto">
+            <a class="wavy-button" href="#results" data-goatcounter-click="dm25-results">Results</a>
+        </div>
+        <!--div class="col-auto">
+            <a class="wavy-button" href="#epilogue" data-goatcounter-click="dm25-epilogue">Epilogue</a>
+        </div-->
+
+
+
+        </div>
+
     </div>
     </div>
 </header>
 
 
 <section id="course" class="mt-5">
+
     <div class="container">
+
+        <div class="alert alert-dark mt-3 text-center" role="alert" style="">
+            This event took place in 2025. Looking for <a href="/dm/">a more recent Drumheller Marathon</a>?
+        </div>
         <h2>Course <a href="#course" class="anchor-link" aria-label="Link to this section. Course"></a></h2>
         <p>The course consists of a short segment down the upper vista followed by laps around Drumheller Fountain and the <a href="https://facilities.uw.edu/blog/posts/2016/04/05/drumheller-duckling-debut">duck ramp <span class="duck-ramp inline-icon"/></a>.  The marathon comprises 219 laps and the half marathon consists of 109 laps. Both events will start at different times and locations. Participants aiming for fewer laps should start with the half marathoners.</p>
 
@@ -978,7 +1053,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
         </ul>
 
 
-        <h3>Marathon Start List <a href="#marathon-start-list" class="anchor-link" aria-label="Link to this section. Marathon Start List"></a></h2>
+        <h3>Marathon Start List <a href="#marathon-start-list" class="anchor-link" aria-label="Link to this section. Marathon Start List"></a></h3>
         <span class="text-body-tertiary">Updated 5/30/25</span>
 
 
@@ -994,7 +1069,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             <tr><td><s>Dylan Hull</s></td> <td>3:00</td></tr>
             </tbody>
         </table>
-    
+
         <h3>Emails</h3>
 
         <p>Everything important is above, but participants should have also received the following by email:</p>
@@ -1005,19 +1080,19 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
                     <p>Hello Drumheller runners,</p>
 
                     <p>The schedule is posted and our FAQ has never been more comprehensive. Please take a read. Two safety related items:</p>
-                    
+
                     <p>1. If you are running faster than 7:40/mi (4:45/km) pace over your chosen distance, let me know and plan to start in the early half marathon section. You'll have an easier time and we'll avoid collisions.</p>
-                    
+
                     <p>2. Bring a cup/bottle. We'll have water tanks out so you can refill, but no vessels.</p>
-                    
+
                     <p>We are again providing a phone-based lap counting service. The attached QR code is your unique live tracking credential, which is also available with instructions at <a href="#">your private link</a>. There is some setup required, so take a look at your page and the <a href="https://lappy.raceconditionrunning.com/">overview on the site</a>. Use it as a backup, and test <i>before</i> the race.</p>
-                    
+
                     <p>[unique participant QR code]</p>
-                    
+
                     <p>Lastly, if you won't be running, please fill out the registration with the same account and mark withdraw. Otherwise, you'll keep getting emails.</p>
-                    
+
                     <p>Forecast is looking good for mountain-gazing, so keep your fingers crossed.</p>
-                    
+
                     <p>--Nick Walker</p>
 
                 </accordion-body>
@@ -1028,8 +1103,22 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
 
 </section>
 
+<section>
+    <div class="container-xxl">
+        <h2 class="mb-4" id="results">Results <a href="#results" class="anchor-link" aria-label="Link to this section. Results"></a></h2>
 
 
+        <h3 class="d-inline" >Marathon</h3><span class="count"></span>
+        <div id="results-marathon" class="mb-5"></div>
+
+        <h3 class="d-inline">Half Marathon</h3><span class="count"></span>
+        <div id="results-half-official" class="mb-3"></div>
+        <hr>
+        <h3 class="d-inline">Unofficial</h3><span class="count"></span>
+        <div id="results-half-unofficial" class="mb-2"></div>
+    </div>
+
+</section>
 
 <section>
     <figure class="gallery lightbox-gallery">
@@ -1245,7 +1334,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
     import PhotoSwipeLightbox from 'photoswipe-lightbox';
     import PhotoSwipeDynamicCaption from 'photoswipe-dynamic-caption';
     import {Tooltip} from 'bootstrap'
-    import {} from 'p5'
+    import p5 from 'p5'
     import * as d3 from 'd3';
 
     import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
@@ -1290,13 +1379,15 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
                 event: true,
             });
         });
+        // Friendly errors have a performance penalty.
+        p5.disableFriendlyErrors = true;
         new p5(RippleToy("{{site.baseurl}}"), document.querySelector("#hero-toy"));
 
         // Tooltips for sign-up deadlines
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
 
-        /*fetch('{{ site.baseurl }}/results/dm25.json')
+        fetch('{{ site.baseurl }}/results/dm25.json')
                 .then(res => res.json())
                 .then(resultsData => {
                     const results = resultsData.results
@@ -1330,13 +1421,26 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
                         let cumulativeWallclock = Number("NaN")
                         for (let startName in starts) {
                             const start = starts[startName]
-                            if (start.bibs[0] <= entry.id && entry.id <= start.bibs[1]) {
-                                startDistance = start.startDistance
-                                startTime = start.time
-                                entry.startTime = startTime
-                                entry.event = startName.includes("half") ? "half" : "marathon"
-                                cumulativeWallclock = durationToSeconds(startTime)
-                                break
+                            if (start.hasOwnProperty("bibRange")) {
+                                if (start.bibRange[0] <= entry.id && entry.id <= start.bibRange[1]) {
+                                    startDistance = start.startDistance
+                                    startTime = start.time
+                                    entry.startTime = startTime
+                                    entry.event = startName.includes("half") ? "half" : (startName.includes("marathon") ?  "marathon" : "half")
+                                    cumulativeWallclock = durationToSeconds(startTime)
+                                    break
+                                }
+                            } else if (start.hasOwnProperty("bibs")) {
+                                if (start.bibs.includes(entry.id)) {
+                                    startDistance = start.startDistance
+                                    startTime = start.time
+                                    entry.startTime = startTime
+                                    entry.event = startName.includes("half") ? "half" : (startName.includes("marathon") ?  "marathon" : "half");
+                                    cumulativeWallclock = durationToSeconds(startTime)
+                                    break
+                                }
+                            } else {
+                                console.warn("Unknown start type for", startName, start)
                             }
                         }
 
@@ -1434,7 +1538,7 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
                     table.initialize(unofficialResults, halfGoals, {videoLink: resultsData.config.finishVideo, videoStartTime: videoStartTime})
                 })
 
-         */
+
 
     }
 

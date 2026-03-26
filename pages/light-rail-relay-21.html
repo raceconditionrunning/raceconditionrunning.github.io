@@ -609,14 +609,11 @@ redirect_from:
             map.on('blur', () => map.scrollWheelZoom.disable());
 
             // load a tile layer
-            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                maxZoom: 18,
+            L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                maxZoom: 19,
                 minZoom: 11,
-                id: 'nickswalker/cktf8e9eo31cd18pcj0o5v11w',
-                tileSize: 512,
-                zoomOffset: -1,
-                accessToken: 'pk.eyJ1Ijoibmlja3N3YWxrZXIiLCJhIjoiY2t0ZjgyenE4MDR1YjJ1cno0N3hxYzI4YSJ9.ivPdsoEtV9TaLGbOOfFXKA'
+                subdomains: 'abcd'
             }).addTo(map);
             L.control.locate({keepCurrentZoomLevel: true, flyTo: true}).addTo(map);
 

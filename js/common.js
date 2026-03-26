@@ -10,6 +10,7 @@ export function formatPace(seconds, unit = " /mi") {
     return pace + unit
 }
 
+// FIXME: This API is terrible. Use an options object, fix all usages
 export function formatDuration(seconds, includeHours = true, includeMilliseconds = false, trimLeadingZeros = false) {
     if (!Number.isFinite(seconds)) {
         // Don't render Infinity, NaN, etc.
@@ -46,6 +47,12 @@ export function formatDuration(seconds, includeHours = true, includeMilliseconds
     let result = date.toISOString().substring(start, end)
     if (trimLeadingZeros) {
         result = result.replace(/^0+/, '')
+        // FIXME: Only handles two leading zeros. Consider modifying API to be more specific about how many to trim
+        //   (what if it's all zeros?)
+        // Remove leading colon if it exists
+        if (result.startsWith(":")) {
+            result = result.substring(1)
+        }
     }
     return result
 }
@@ -55,12 +62,17 @@ export function durationToSeconds(duration) {
     return hours * 3600 + minutes * 60 + seconds
 }
 
-export function formatLegDescription(startStation, endStation, leg, includeLegNumber=false, linkStations=false, coords=null){
+export function formatLegDescription(startStation, endStation, leg){
     let legNumber = ""
-    if (includeLegNumber) legNumber = `<span class="leg-number">${leg.id}:</span> `
+    let { id, coordinates, notes, distance_mi, ascent_ft, descent_ft } = leg
+    if (id) legNumber = `<span class="leg-number">${id}:</span> `
+    let profileSummary = ""
+    if (ascent_ft && descent_ft) {
+        profileSummary = `<h6><span class="text-decoration-dashed" title="${(distance_mi * 1.609).toFixed(2)}km">${distance_mi.toFixed(2)}mi</span>  ↑<span class="text-decoration-dashed" title="${(ascent_ft / 3.28).toFixed(0)}m">${ascent_ft.toFixed(0)}ft</span> ↓<span class="text-decoration-dashed" title="${(descent_ft / 3.28).toFixed(0)}m">${descent_ft.toFixed(0)}ft</span></h6>`
+    }
     let profile = ""
-    if (coords) profile = "<elevation-profile></elevation-profile>"
-    return `<h5 class="mb-1">${legNumber}${startStation} to ${endStation}</h5><h6>${leg.distance_mi.toFixed(2)}mi ↑${leg.ascent_ft.toFixed(0)}ft ↓${leg.descent_ft.toFixed(0)}ft</h6>${profile}<p class="mb-0">${leg.notes}</p>`
+    if (coordinates && coordinates.length > 0) profile = "<elevation-profile></elevation-profile>"
+    return `<h5 class="mb-1">${legNumber}${startStation} to ${endStation}</h5>${profileSummary}${profile}<p class="mb-0">${notes}</p>`
 }
 
 export function download(content, mimeType, filename) {
@@ -76,7 +88,16 @@ export function relayToGPX(trackName, legs, exchanges, options = {}) {
     const { eventName, permalink, year = new Date().getFullYear() } = options;
 
     let points = "";
+    let latestTimestamp = null;
+
     for (let leg of legs) {
+        if (leg.properties && leg.properties.time) {
+            const legTime = new Date(leg.properties.time);
+            if (!latestTimestamp || legTime > latestTimestamp) {
+                latestTimestamp = legTime;
+            }
+        }
+
         let coords = leg.geometry.coordinates;
         for (let coord of coords) {
             if (coord.length === 3) {
@@ -93,6 +114,8 @@ export function relayToGPX(trackName, legs, exchanges, options = {}) {
         waypoints += `    <wpt lat="${coords[1]}" lon="${coords[0]}"><name>${exchange.properties.name}</name></wpt>\n`;
     }
 
+    const timestamp = latestTimestamp ? latestTimestamp.toISOString() : new Date().toISOString();
+
     return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <gpx version="1.1" creator="https://raceconditionrunning.com" xmlns="http://www.topografix.com/GPX/1/1">
   <metadata>
@@ -100,7 +123,7 @@ export function relayToGPX(trackName, legs, exchanges, options = {}) {
     ${permalink ? `<link href="${permalink}">
       <text>${eventName || ""}</text>
     </link>` : ""}
-    <time>${new Date().toISOString()}</time>
+    <time>${timestamp}</time>
     <copyright author="OpenStreetMap Contributors">
       <year>${year}</year>
     </copyright>
@@ -221,11 +244,19 @@ export function createCountdown(countDownDate, unhideOnCompletion) {
 export function processRelayGeoJSON(relay) {
     let legs = []
     let exchanges = []
+    let pois = []
+
     for (let feature of relay.features) {
         if (feature.geometry.type === "LineString") {
             legs.push(feature)
         } else if (feature.geometry.type === "Point") {
-            exchanges.push(feature)
+            // Check if this is a POI or an exchange
+            if (feature.properties.feature_type === 'poi' ||
+                (feature.properties.symbol && !feature.properties.id)) {
+                pois.push(feature)
+            } else {
+                exchanges.push(feature)
+            }
         }
     }
 
@@ -237,6 +268,9 @@ export function processRelayGeoJSON(relay) {
     }
     exchanges.sort((a, b) => a.properties.id - b.properties.id)
 
+    // Sort POIs by leg sequence if available
+    pois.sort((a, b) => (a.properties.leg_sequence || 0) - (b.properties.leg_sequence || 0))
+
     legs = {
         type: "FeatureCollection",
         features: legs
@@ -245,8 +279,12 @@ export function processRelayGeoJSON(relay) {
         type: "FeatureCollection",
         features: exchanges
     }
+    pois = {
+        type: "FeatureCollection",
+        features: pois
+    }
 
-    return [legs, exchanges]
+    return [legs, exchanges, pois]
 }
 
 

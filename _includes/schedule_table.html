@@ -46,7 +46,10 @@
         {% endif %}
         <td class="{{part-cancelled-class}}">
             {% if plan.route_id %}
-            <a href="{{site.baseurl}}/routes/{{ plan.route_id }}/" title="{{ plan.route_id }}" popovertarget="map-popover-{{run.date | slugify}}-part-{{ forloop.index}}">{{route.name}}</a>
+            <a href="{{site.baseurl}}/routes/{{ plan.route_id }}/"
+               class="route-preview-map-link"
+               title="{{ plan.route_id }}"
+               popovertarget="map-popover-{{run.date | slugify}}-part-{{ forloop.index}}">{{route.name}}</a>
             <div id="map-popover-{{run.date | slugify}}-part-{{ forloop.index}}" class="route-map-popover" popover>
                 <img src="{{ '/img/routes/' | append: plan.route_id | append: '.jpg' | relative_url }}" alt="{{ route.name }} map" class="route-image" loading="lazy"/>
             </div>
@@ -55,8 +58,8 @@
             {% else %}
             {{route.name}}
             {% endif %}
-            {% if route.distance_mi %}&nbsp; (<span title="{{ route.distance_mi | times: 1.609 | round: 1}}km">{{ route.distance_mi | round: 1}})</span>{% endif %}
-            {% if route.gpx %}
+            {% if route.distance_mi %}&nbsp; (<span title="{{ route.distance_mi | times: 1.609 | round: 1}}km" class="text-decoration-dashed">{{ route.distance_mi | round: 1}})</span>{% endif %}
+            {% if route.gpx and include.link_gpx %}
                 &nbsp; <a href="{{ route.gpx }}" class="gpx-link" title="Download GPX" data-goatcounter-click="download-{{ route.id }}">&#8986;</a>
             {% endif %}
             {% if forloop.last %}

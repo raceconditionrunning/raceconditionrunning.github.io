@@ -39,6 +39,9 @@ export class LapTable extends HTMLElement {
         if (videoLink) {
             this.videoLink = videoLink
         }
+        if (videoLink && !videoStartTime || videoStartTime && !videoLink) {
+            throw new Error("Both videoLink and videoStartTime must be provided if one is provided.");
+        }
         let view
 
         this.swappableColumns = {"pace": {
@@ -106,7 +109,7 @@ export class LapTable extends HTMLElement {
                     {
                         title: "Time", field: "timestamp", formatter: (cell) => {
                             if (this.videoLink) {
-                                return `<a href='${this.videoLink}${Math.floor(cell.getValue() - videoStartTime ?? 0)}'>${formatDuration(cell.getValue(), true, false)}</a>`
+                                return `<a href='${this.videoLink}&t=${Math.floor(cell.getValue() - videoStartTime ?? 0)}'>${formatDuration(cell.getValue(), true, false)}</a>`
                             } else {
                                 return formatDuration(cell.getValue(), true, false)
                             }

@@ -5,6 +5,7 @@
 body {
   margin: 1rem auto;
 }
+
 @view-transition {
   navigation: auto;
 }
@@ -18,6 +19,30 @@ h1 {
 
 a {
   text-decoration: none;
+}
+
+.text-decoration-dashed {
+    text-decoration-line: underline;
+    text-decoration-style: dashed;
+    text-decoration-color: rgba(from currentcolor r g b / 0.5);
+}
+
+@media (pointer: coarse), (hover: none) {
+  :not(.maplibregl-ctrl) > [title] {
+      position: relative;
+  }
+
+  :not(.maplibregl-ctrl) > [title]:hover::after {
+      content: attr(title);
+      position: absolute;
+      top: 90%;
+      color: var(--bs-body-color);
+      background-color: var(--bs-secondary-bg-subtle);
+      border: 1px solid;
+      width: fit-content;
+      padding: 3px;
+      z-index: 10;
+  }
 }
 
 dt {
@@ -69,6 +94,17 @@ tbody tr:last-child td {
   font-style: italic;
 }
 
+@media (max-width: 600px) {
+    .schedule-table {
+        //font-size: .875em;
+        }
+  .schedule-table tr > td:first-of-type  {
+    text-orientation: upright;
+    writing-mode: sideways-lr;
+    font-stretch: condensed;
+  }
+}
+
 .schedule-table img {
   max-height: 200px;
   max-width: 100%;
@@ -89,13 +125,29 @@ tr:has(+ tr) td {
   padding-bottom: .25rem;
 }
 
-:popover-open {
-  position: absolute;
+.route-map-popover {
+  pointer-events: none;
+}
+
+.route-map-popover:popover-open {
+  position: fixed;
   inset: unset;
   border: 1px solid gray;
+  background-color: var(--bs-body-bg);
+  padding: .25rem;
+  z-index: 1000;
+  box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,.35);
 }
-:popover-open img {
-  max-width: 80vw;
+
+.route-map-popover img {
+  max-width: 75vw;
+  max-height: 50vh;
+  height: auto;
+  display: block;
+}
+
+.schedule-table .route-map-popover img {
+  max-width: min(36rem, 75vw);
 }
 
 :target {

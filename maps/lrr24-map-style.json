@@ -13,33 +13,80 @@
       "tileSize": 512
     },
     "planet": {
-      "url": "pmtiles://https://static.raceconditionrunning.com/seattle_24.pmtiles",
+      "url": "pmtiles://https://static.raceconditionrunning.com/seattle_25.pmtiles",
       "attribution": "<a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">&copy; OpenStreetMap contributors</a>",
       "type": "vector"
     },
     "legs": {
       "type": "geojson",
       "promoteId": "id",
-      "data": {}
+      "data": {
+        "type": "FeatureCollection",
+        "features": []
+      }
     },
     "leg-labels": {
       "type": "geojson",
       "promoteId": "id",
-      "data": {}
+      "data": {
+        "type": "FeatureCollection",
+        "features": []
+      }
+    },
+    "leg-splits": {
+      "type": "geojson",
+      "promoteId": "id",
+      "data": {
+        "type": "FeatureCollection",
+        "features": []
+      }
+    },
+    "overall-splits": {
+      "type": "geojson",
+      "promoteId": "id",
+      "data": {
+        "type": "FeatureCollection",
+        "features": []
+      }
     },
     "exchanges": {
       "type": "geojson",
       "promoteId": "id",
-      "data": {}
+      "data": {
+        "type": "FeatureCollection",
+        "features": []
+      }
       },
       "trains": {
         "type": "geojson",
-        "data": {}
+        "data": {
+        "type": "FeatureCollection",
+        "features": []
+      }
       },
     "rail-lines" : {
         "type": "geojson",
-        "data": {}
+        "data": {
+        "type": "FeatureCollection",
+        "features": []
+      }
+    },
+      "pois" : {
+        "type": "geojson",
+        "data": {
+        "type": "FeatureCollection",
+        "features": []
+      }
     }
+  },
+  "state": {
+    "selectedLeg": {"default": null},
+    "selectedExchange": {"default": null},
+    "selectedTrain": {"default": null},
+    "showLegs": {"default": true},
+    "showExchanges": {"default": true},
+    "showTrains": {"default": true},
+    "showRailLines": {"default": true}
   },
   "sprite": "https://api.maptiler.com/maps/7a6c1614-9502-4770-b503-f7551c1bdfe4/sprite",
   "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=YvNrcU9QI9xFBf4H4cam",
@@ -3108,7 +3155,15 @@
         "line-cap": "round"
       },
       "paint": {
-        "line-color": ["case", ["boolean", ["feature-state", "selected"], false], ["interpolate-lab", ["linear"], 0.5, 0, "#000", 1, ["get", "lineColor"]], ["get", "lineColor"]],
+        "line-color": ["case",
+          ["boolean",
+            ["all",
+              ["!=",["global-state", "selectedLeg"], null],
+              ["==", ["feature-state", "selected"], false]
+            ]
+          , false],
+          ["interpolate-lab", ["linear"], 0.5, 0, "#000000", 1, ["get", "lineColor"]],
+          ["get", "lineColor"]],
         "line-width": {
           "stops": [
             [10, 3],
@@ -3121,13 +3176,85 @@
       }
     },
     {
+      "id": "overall-splits",
+      "type": "symbol",
+      "source": "overall-splits",
+      "filter": [
+        "all",
+        ["==", ["global-state", "selectedLeg"], null],
+        [
+          ">=",
+          ["zoom"],
+          ["-",17,["get", "importance"]]
+        ]
+      ],
+        "minzoom": 13,
+      "layout": {
+        "text-field": ["to-string",  ["get", "distance"]],
+        "text-font": ["Noto Sans Bold"],
+        "text-size": {
+          "stops": [
+            [9, 8],
+            [10, 8],
+            [16, 16]
+          ]
+        },
+        "text-padding": 4,
+        "text-justify": "center",
+        "icon-image": "roundrect",
+        "icon-text-fit": "both",
+
+        "icon-text-fit-padding": [2, 2, 2, 2]
+      },
+      "paint": {
+        "text-color": "#000",
+        "icon-opacity": 0.75
+      }
+    },
+    {
+      "id": "leg-splits",
+      "type": "symbol",
+      "source": "leg-splits",
+      "filter": [
+        "all",
+        ["!=", ["global-state", "selectedLeg"], null],
+        [
+          ">=",
+          ["zoom"],
+          ["-",17,["get", "importance"]]
+        ]
+      ],
+      "minzoom": 13,
+      "layout": {
+        "text-field": ["to-string",  ["get", "distance"]],
+        "text-font": ["Noto Sans Bold"],
+        "text-size": {
+          "stops": [
+            [9, 8],
+            [10, 8],
+            [16, 16]
+          ]
+        },
+        "text-padding": 4,
+        "text-justify": "center",
+        "icon-image": "roundrect",
+        "icon-text-fit": "both",
+
+        "icon-text-fit-padding": [2, 2, 2, 2]
+      },
+      "paint": {
+        "text-color": "#000",
+        "icon-opacity": 0.75
+      }
+    },
+    {
       "id": "leg-labels",
       "type": "symbol",
       "source": "leg-labels",
       "minzoom": 9,
       "layout": {
         "text-field": ["to-string", ["+", ["at", 0, ["get", "sequence"]], 1]],
-        "text-font": ["Open Sans Bold"],
+        "text-font": ["Noto Sans Bold"],
         "text-size": {
           "stops": [
             [9, 10],
@@ -3145,37 +3272,85 @@
       }
     },
     {
-        "id": "train-circle",
-      "source": "trains",
-      "type": "circle",
-      "paint": {
-        "circle-radius": {
-          "stops": [
-            [6, 1],
-            [9, 2],
-            [12, 4],
-            [16, 12],
-            [18, 21]
-          ]
-        },
-        "circle-opacity": {
-          "stops": [
-            [6, 0.85],
-            [9, 1]
-          ]
-        },
-        "circle-color": ["case", ["get", "realtime"], "#DDD", "#888"]
-      }
-    },
-    {
       "id": "train",
       "type": "symbol",
       "source": "trains",
-      "minzoom": 14,
       "layout": {
         "text-field": [
           "step",
           ["zoom"],
+          ["format", ""],
+          14,
+          ["case", ["has", "id"], ["concat", " #", ["get", "id"]], ""],
+          16,
+          ["case", ["has", "id"], ["concat", " #", ["get", "id"], ""], ""]
+        ],
+        "text-anchor": "center",
+        "text-offset": [
+          "case",
+          ["all",
+            [">", ["abs", ["get", "bearing"]], 120],
+            ["<", ["abs", ["get", "bearing"]], 290]
+          ],
+          ["literal",[0.25, 0]],
+          ["literal",[-0.25, 0]]
+        ],
+        "text-size": {
+          "stops": [
+            [14, 8],
+            [18, 21]
+          ]
+        },
+        "icon-image": "lrv",
+        "icon-rotate": ["-", ["get", "bearing"]],
+        "text-rotate": [
+          "case",
+          ["all",
+            [">", ["abs", ["get", "bearing"]], 120],
+            ["<", ["abs", ["get", "bearing"]], 290]
+            ],
+          ["+", ["-", ["get", "bearing"]], 180],
+          ["-", ["get", "bearing"]]
+        ],
+        "text-font": ["Roboto Condensed Regular"],
+        "icon-size": {
+          "stops": [
+            [8, 0.05],
+            [10, 0.125],
+            [14, 0.25],
+            [18, 0.85]
+          ]
+        },
+        "text-overlap": "always",
+        "icon-overlap": "always",
+        "icon-rotation-alignment": "map",
+        "icon-pitch-alignment": "map",
+        "text-pitch-alignment": "map",
+        "text-rotation-alignment": "map"
+      },
+      "paint": {
+        "text-color": "#333",
+        "text-opacity": 0.9,
+        "text-halo-color": "rgba(255, 255, 255, 0.6)",
+        "icon-color": "#EEE",
+        "icon-opacity": [
+          "case",
+          ["boolean", ["get", "realtime"], false],
+          0.9,
+          0.5
+        ]
+      }
+    },
+    {
+      "id": "train-headsign",
+      "type": "symbol",
+      "source": "trains",
+      "layout": {
+        "text-field": [
+          "step",
+          ["zoom"],
+          ["format", ""],
+          14,
           [
             "format",
             "To ",
@@ -3183,7 +3358,7 @@
             ["get", "headsign"],
             {"font-scale": 1.0}
           ],
-          12,
+          16,
           [
             "format",
             "To ",
@@ -3193,19 +3368,46 @@
             "\n",
             {},
             ["case", ["get", "realtime"], "", "Scheduled"],
-            {"font-scale": 1.0, "text-font": ["literal", ["Open Sans Italic"]]},
-            ["case", ["has", "id"], ["concat", " #", ["get", "id"]], ""]
+            {"font-scale": 1.0, "text-font": ["literal", ["Noto Sans Italic"]]}
+          ]
+        ],
+        "text-offset": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          14, [
+            "case",
+            [
+              "any",
+              ["<=", ["abs", ["get", "bearing"]], 40],
+              [">=", ["abs", ["get", "bearing"]], 320],
+              [
+                "all",
+                [">=", ["abs", ["get", "bearing"]], 140],
+                ["<=", ["abs", ["get", "bearing"]], 220]
+              ]
+            ],
+            ["literal", [2.25, 0]],
+            ["literal", [1.5, 0]]
+          ],
+          18, [
+            "case",
+            [
+              "any",
+              ["<=", ["abs", ["get", "bearing"]], 30],
+              [">=", ["abs", ["get", "bearing"]], 330],
+              [
+                "all",
+                [">=", ["abs", ["get", "bearing"]], 150],
+                ["<=", ["abs", ["get", "bearing"]], 210]
+              ]
+            ],
+            ["literal", [4, 0]],
+            ["literal", [2, 0]]
           ]
         ],
         "text-anchor": "left",
         "text-justify": "left",
-        "text-offset": {
-          "stops": [
-            [12, [1, 0]],
-            [16, [1.5, 0]],
-            [18, [2, 0]]
-          ]
-        },
         "text-size": {
           "stops": [
             [10, 11],
@@ -3213,54 +3415,34 @@
             [18, 14]
           ]
         },
-        "icon-image": "train",
-        "icon-size": {
-          "stops": [
-            [12, 0.25],
-            [16, 0.5],
-            [18, 0.85]
-          ]
-        }
+
+        "text-overlap": "always",
+        "icon-overlap": "always"
       },
       "paint": {
         "text-color": "#FFF",
-        "text-opacity": 0.7,
         "text-halo-color": "rgba(0, 0, 0, 0.6)"
       }
     },
     {
-      "id": "exchange-circle",
-      "type": "circle",
+      "id": "exchange-circle-current",
+      "type": "symbol",
       "source": "exchanges",
-      "paint": {
-        "circle-radius": {
-          "stops": [
-            [6, 1.5],
-            [9, 3],
-            [12, 6]
-          ]
-        },
-        "circle-color": "#fff",
-        "circle-opacity": [
-          "case",
-          ["boolean", ["get", "future"], false],
-          0.1,
-          1.0
-        ],
-        "circle-stroke-opacity": [
-          "case",
-          ["boolean", ["get", "future"], false],
-          0.1,
-          1.0
-        ],
-        "circle-stroke-color": "#000",
-        "circle-stroke-width": {
-          "stops": [
-            [6, 0.5],
-            [9, 1],
-            [12, 2]
-          ]
-        }
+      "filter": ["!=", ["get", "future"], true],
+      "layout": {
+        "icon-image": ["concat", ["slice", ["to-string", ["get", "id"]], 0, 1], "stationcodesmall"]
+      }
+    },
+    {
+      "id": "exchange-circle-future",
+      "type": "symbol",
+      "source": "exchanges",
+      "filter": ["==", ["get", "future"], true],
+      "maxzoom": 15,
+      "layout": {
+        "icon-image": ["concat", ["slice", ["to-string", ["get", "id"]], 0, 1], "stationcodesmall"]
+      }, "paint": {
+        "icon-opacity": 0.25
       }
     },
     {
@@ -3271,7 +3453,7 @@
       "filter": ["!=", "future", true],
       "layout": {
         "text-field": ["slice", ["to-string", ["get", "id"]], 1, 3],
-        "text-font": ["Open Sans Semibold"],
+        "text-font": ["Roboto Condensed Bold"],
         "text-size": {
           "stops": [
             [12, 12],
@@ -3280,16 +3462,22 @@
         },
         "icon-size": {
           "stops": [
-            [12, 1],
-            [16, 1.1]
+            [12, 1.2],
+            [16, 1.8]
           ]
         },
         "text-padding": 0,
-        "text-justify": "right",
+        "text-justify": "center",
         "icon-image": ["concat", ["slice", ["to-string", ["get", "id"]], 0, 1], "stationcode"],
-        "icon-text-fit": "width",
+        "icon-text-fit": "none",
+        "icon-text-fit-padding": [0, 0, 0, 0],
         "icon-overlap": "always",
-        "text-overlap": "always"
+        "text-overlap": "always",
+        "icon-offset": [0, -1.0],
+        "text-offset": [0, 0.55]
+      },
+      "paint": {
+        "text-color": "#FFF"
       }
     },
     {
@@ -3299,7 +3487,7 @@
       "minzoom": 9,
       "layout": {
         "text-field": ["to-string", ["get", "id"]],
-        "text-font": ["Open Sans Semibold"],
+        "text-font": ["Roboto Regular"],
         "text-size": {
           "stops": [
             [8, 8],
@@ -3308,6 +3496,9 @@
         },
         "text-justify": "center",
         "text-anchor": "center"
+      },
+      "paint": {
+        "text-color": "#FFF"
       }
     },
     {
@@ -3322,9 +3513,9 @@
           ["zoom"],
           ["format", ["get", "name"], { "font-scale": 1.0 }],
           14,
-          ["format", ["get", "name"], { "font-scale": 1.0 }, "\n", {}, ["get", "landmark"], { "font-scale": 0.8, "text-font": ["literal", ["Open Sans Regular"]] }]
+          ["format", ["get", "name"], { "font-scale": 1.0 }, "\n", {}, ["get", "landmark"], { "font-scale": 0.8, "text-font": ["literal", ["Roboto Condensed Regular"]] }]
         ],
-        "text-font": ["Open Sans Semibold"],
+        "text-font": ["Roboto Regular"],
         "text-size": {
           "stops": [
             [12, 14],
@@ -3357,7 +3548,7 @@
       "filter": ["==", "future", true],
       "layout": {
         "text-field": ["slice", ["to-string", ["get", "id"]], 1, 3],
-        "text-font": ["Open Sans Semibold"],
+        "text-font": ["Roboto Condensed Bold"],
         "text-size": {
           "stops": [
             [12, 12],
@@ -3366,19 +3557,23 @@
         },
         "icon-size": {
           "stops": [
-            [12, 1],
-            [16, 1.1]
+            [12, 1.2],
+            [16, 1.8]
           ]
         },
         "text-padding": 0,
         "text-justify": "right",
         "icon-image": ["concat", ["slice", ["to-string", ["get", "id"]], 0, 1], "stationcode"],
-        "icon-text-fit": "width",
+        "icon-text-fit": "none",
         "icon-overlap": "always",
-        "text-overlap": "always"
+        "text-overlap": "always",
+        "icon-offset": [0, -1.0],
+        "text-offset": [0, 0.55]
       },
       "paint": {
-        "icon-opacity": 0.5
+        "icon-opacity": 0.5,
+        "text-color": "#FFF",
+        "text-opacity": 0.5
       }
     },
     {
@@ -3393,9 +3588,9 @@
           ["zoom"],
           ["format", ["get", "name"], { "font-scale": 1.0 }],
           14,
-          ["format", ["get", "name"], { "font-scale": 1.0 }, "\n", {}, ["get", "open"], { "font-scale": 0.8, "text-font": ["literal", ["Open Sans Regular"]] }]
+          ["format", ["get", "name"], { "font-scale": 1.0 }, "\n", {}, ["get", "open"], { "font-scale": 0.8, "text-font": ["literal", ["Roboto Regular"]] }]
         ],
-        "text-font": ["Open Sans Semibold"],
+        "text-font": ["Roboto Regular"],
         "text-size": {
           "stops": [
             [12, 14],
@@ -3420,7 +3615,76 @@
         "text-color": "#CCC",
         "text-opacity": 0.6
       }
+    },
+  {
+    "id": "pois",
+    "type": "circle",
+    "source": "pois",
+    "filter": ["has", "feature_type"],
+    "minzoom": 9,
+    "paint": {
+      "circle-radius": [
+        "step",
+        ["zoom"],
+        4,
+        15,
+        6,
+        17,
+        8
+      ],
+      "circle-color": [
+        "case",
+        ["==", ["get", "symbol"], "Alert"], "#ff6b6b",
+        ["==", ["get", "symbol"], "Construction"], "#ffd93d",
+        ["==", ["get", "symbol"], "Info"], "#4ecdc4",
+        "#4ecdc4"
+      ],
+      "circle-stroke-color": "#ffffff",
+      "circle-stroke-width": [
+        "step",
+        ["zoom"],
+        1,
+        15,
+        1.5,
+        17,
+        2
+      ],
+      "circle-opacity": 0.9
     }
+  },
+  {
+    "id": "pois-labels",
+    "type": "symbol",
+    "source": "pois",
+    "minzoom": 15,
+    "layout": {
+              "text-field": [
+          "step",
+          ["zoom"],
+          ["format", ["get", "name"], { "font-scale": 1.0 }],
+          17,
+          ["format", ["get", "name"], { "font-scale": 1.0 }, "\n", {}, ["get", "description"], { "font-scale": 0.8, "text-font": ["literal", ["Roboto Condensed Regular"]] }]
+        ],
+      "text-font": ["Robot Regular"],
+      "text-size": {
+          "stops": [
+            [12, 11],
+            [16, 14],
+            [20, 20]
+          ]
+        },
+        "text-justify": "left",
+      "text-offset": [0, 1.0],
+      "text-anchor": "top",
+      "text-max-width": 8
+    },
+    "paint": {
+      "text-color": "#ffffff",
+      "text-halo-color": "#000000",
+      "text-halo-width": 1
+    }
+  }
+
   ],
 
   "projection": {"type": "globe"},

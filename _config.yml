@@ -24,6 +24,11 @@ page_gen:
     name: 'id'
     title: 'name'
     dir: 'routes'
+  - data: 'schedules_table'
+    template: 'schedule'
+    name: 'id'
+    title: 'label'
+    dir: 'schedules'
 
 jekyll_tidy:
   exclude:
@@ -38,6 +43,9 @@ exclude:
   - Gemfile.lock
   - requirements.txt
   - venv
+
+keep_files:
+  - img/routes
 
 sass:
   style: :compressed

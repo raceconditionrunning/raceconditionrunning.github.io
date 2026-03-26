@@ -4,6 +4,7 @@ _site/
 
 # generated from route db and gpx files
 _data/routes.yml
+_data/schedules_table.yml
 routes/geojson/*.geojson
 routes/_transit_data
 
@@ -18,11 +19,13 @@ rcc_weekends.ics
 # misc files
 .DS_Store
 .vscode
-ztatlock-notes
 
 # python virtual environment and caches
 .venv
 _bin/__pycache__
+
+# Route preview image generation cache files
+.route-preview-cache-*
 
 # Bundler
 .bundle/

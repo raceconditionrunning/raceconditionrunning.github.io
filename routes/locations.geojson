@@ -680,6 +680,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          -122.2887506,
+          47.4640449
+        ]
+      },
+      "properties": {
+        "id": "Tukwila",
+        "name": "Tukwila International Blvd Station",
+        "maps_url": "https://maps.app.goo.gl/CZbKP5REmV97Zt8p7",
+        "meeting_point_desc": "Street-level, 'Soundings' banjo-esque sculpture"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           -122.29417,
           47.6280587
         ]
@@ -731,6 +747,204 @@
         "meeting_point_desc": null,
         "transit": "Bus to 140th Ave NE & NE 175th St stop",
         "reachability": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.29732238196833,
+          47.42439993684268
+        ]
+      },
+      "properties": {
+        "id": "AngleLake",
+        "name": "Angle Lake Station",
+        "maps_url": "https://maps.app.goo.gl/Xg1iKohM6gtNr84k9",
+        "meeting_point_desc": null,
+        "transit": "Light Rail to Angle Lake stop",
+        "reachability": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.31479193192045,
+          47.7850791251942
+        ]
+      },
+      "properties": {
+        "id": "MtlkTerr",
+        "name": "Mountlake Terrace Station",
+        "maps_url": "https://maps.app.goo.gl/gqBWxHiBcG5jeCrk6",
+        "meeting_point_desc": null,
+        "transit": "Light Rail to Mountlake Terrace stop",
+        "reachability": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.34750561535375,
+          47.62222803092812
+        ]
+      },
+      "properties": {
+        "id": "HarrFifth",
+        "name": "Harrison Street and 5th Avenue N",
+        "maps_url": "https://maps.app.goo.gl/aXKLZLXfEwF91ND47",
+        "meeting_point_desc": "North side of the MoPop",
+        "transit": "Take Monorail from Westlake to Seattle Center"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.34961894009183,
+          47.61188405383856
+        ]
+      },
+      "properties": {
+        "id": "Pier66",
+        "name": "Seattle Pier 66",
+        "maps_url": "https://maps.app.goo.gl/96cLWWopRCYXQZQs7",
+        "meeting_point_desc": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.2815472308949,
+          47.53822016086776
+        ]
+      },
+      "properties": {
+        "id": "Othello",
+        "name": "Othello Station",
+        "maps_url": "https://maps.app.goo.gl/Q5vz5fbuv5PRzLNt5",
+        "meeting_point_desc": null,
+        "transit": "Light Rail to Othello Station stop",
+        "reachability": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.21355245973314,
+          47.49575751653726
+        ]
+      },
+      "properties": {
+        "id": "CRTPark",
+        "name": "Cedar River Trail Park",
+        "maps_url": "https://maps.app.goo.gl/35aLvKjyyjogpqy86"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.30386319659321,
+          47.3163886181274
+        ]
+      },
+      "properties": {
+        "id": "FedWay",
+        "name": "Federal Way Downtown Station",
+        "maps_url": "https://maps.app.goo.gl/rXFRnmNW3VpPe5Dg6",
+        "transit": "Light Rail to Federal Way Downtown Station stop",
+        "reachability": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.32289469524316,
+          47.76415293018663
+        ]
+      },
+      "properties": {
+        "id": "ShoreNorth",
+        "name": "Shoreline North Station",
+        "maps_url": "https://maps.app.goo.gl/4hJgjTgCoM4uCKz19",
+        "transit": "Light Rail to Shoreline North Station stop",
+        "reachability": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.13110723362486,
+          47.68063949598396
+        ]
+      },
+      "properties": {
+        "id": "RedCommCtr",
+        "name": "Redmond Senior & Community Center",
+        "maps_url": "https://maps.app.goo.gl/yaQYeeT7AuTLMg8d7"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.1185709041739,
+          47.671939756771145
+        ]
+      },
+      "properties": {
+        "id": "RedDowntown",
+        "name": "Downtown Redmond Station",
+        "maps_url": "https://maps.app.goo.gl/fiaAzikhrv1Yjt8p9",
+        "transit": "Light Rail to Downtown Redmond Station",
+        "reachability": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.05979530415675,
+          47.55296726925926
+        ]
+      },
+      "properties": {
+        "id": "SammamishSoccer",
+        "name": "Lake Sammamish Soccer Fields",
+        "maps_url": "https://maps.app.goo.gl/wK62PE3aHQfmXwfN7"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.13820688033718,
+          47.465557173579114
+        ]
+      },
+      "properties": {
+        "id": "ElliotCRT",
+        "name": "Cedar River Trail Odyssey - Point Elliott",
+        "maps_url": "https://maps.app.goo.gl/CtU3opajMTjFKQ2X7"
       }
     }
   ]

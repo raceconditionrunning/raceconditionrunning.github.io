@@ -64,8 +64,14 @@ export function createScheduleTable(container, schedule, startTime) {
 export function createLegDetailsTable(container, legsGeojson, exchangesGeoJson) {
     let legDescriptions = ""
 
-    function formatLegDescription(startExchange, endExchange, leg) {
+    function formatLegDescription(startExchange, endExchange, leg, options = {showEndLandmark: false}) {
         let legNumber = `<span class="leg-number">${leg.id}:</span> `;
+
+        let landmarkImg = startExchange.image_url ? `<img src="${startExchange.image_url}" class="w-100 mb-2" style="max-width:100%;object-fit: cover;" loading="lazy">` : "";
+        let landmark = landmarkImg ? `<figure class="mb-2 col-md-4" >${landmarkImg} <figcaption class="text-muted small lh-1" style="max-width:100%;max-height:180px">Start: ${startExchange.landmark}</figcaption></figure>` : `<i>Start: ${startExchange.landmark}</i>`;
+
+        let endLandmarkImg = options.showEndLandmark && endExchange.image_url ? `<img src="${endExchange.image_url}" class="w-100 mb-2" style="max-width:100%;object-fit: cover;" loading="lazy">` : "";
+        let endLandmark = options.showEndLandmark && landmarkImg ? `<figure class="mb-2 col-md-4" >${endLandmarkImg} <figcaption class="text-muted small lh-1" style="max-width:100%;">End: ${endExchange.landmark}</figcaption></figure>` : (options.showEndLandmark ? `<i>End: ${endExchange.landmark}</i>` : "");
 
         let startLink = startExchange.stationInfo
             ? `<a href="${startExchange.stationInfo}" target="_new">${startExchange.name}</a>`
@@ -77,16 +83,17 @@ export function createLegDetailsTable(container, legsGeojson, exchangesGeoJson) 
 
         let legName = `${legNumber}${startLink} to ${endLink}`;
 
-        return `<div class="d-flex flex-column flex-lg-row justify-content-between align-items-baseline"><h5>${legName}</h5><h6>${leg.distance_mi.toFixed(2)}mi ↑${leg.ascent_ft.toFixed(0)}ft ↓${leg.descent_ft.toFixed(0)}ft</h6></div><i>Landmark: ${startExchange.landmark}</i><p class="mb-0">${leg.notes ?? ""}</p>`;
+        return `<div class="d-flex flex-column flex-lg-row justify-content-between align-items-baseline"><h5>${legName}</h5><h6><span class="text-decoration-dashed" title="${(leg.distance_mi * 1.60934).toFixed(2)}km">${leg.distance_mi.toFixed(2)}mi</span> ↑<span title="${(leg.ascent_ft / 3.28).toFixed(0)}m" class="text-decoration-dashed">${leg.ascent_ft.toFixed(0)}ft</span> ↓<span title="${(leg.descent_ft / 3.28).toFixed(0)}m" class="text-decoration-dashed">${leg.descent_ft.toFixed(0)}ft</span></h6></div><div class="row w-100">${landmark}<p class="mb-0 col">${leg.notes ?? ""}</p>${endLandmark}</div>`;
     }
     // Copy the legsGeojson array so we can modify it
     legsGeojson = JSON.parse(JSON.stringify(legsGeojson))
+    const lastLeg = legsGeojson[legsGeojson.length - 1].properties.sequence[0] + 1
     for (let leg of legsGeojson) {
         let legData = leg.properties
-        legData.id += 1
+        legData.id = legData.sequence[0] + 1
         let startExchange = exchangesGeoJson.filter(exchange => exchange.properties.id === legData.start_exchange)[0].properties
         let endExchange = exchangesGeoJson.filter(exchange => exchange.properties.id === legData.end_exchange)[0].properties
-        legDescriptions += `<div class="mb-4">${formatLegDescription(startExchange, endExchange, legData)}</div>`
+        legDescriptions += `<div class="mb-4 overflow-auto">${formatLegDescription(startExchange, endExchange, legData, {showEndLandmark: legData.id === lastLeg})}</div>`
     }
     container.innerHTML = legDescriptions
 
