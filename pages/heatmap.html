@@ -1,0 +1,265 @@
+---
+title: Heatmap
+description: Route heatmap for Race Condition Running routes across Seattle
+permalink: heatmap/
+layout: base
+---
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.15.0/dist/maplibre-gl.css" crossorigin="anonymous">
+
+<style>
+  #heatmap-page {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 160px);
+    min-height: 500px;
+  }
+
+  #heatmap-controls {
+    flex: 0 0 auto;
+    padding: 0.5rem 0 0.75rem;
+  }
+
+  #map {
+    flex: 1 1 auto;
+    border-radius: 0.375rem;
+    overflow: hidden;
+  }
+
+  .schedule-selector-label {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  .maplibregl-ctrl-attrib {
+    font-size: 10px;
+  }
+
+  #heatmap-legend {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .legend-swatch {
+    width: 28px;
+    height: 4px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+</style>
+
+<div id="heatmap-page" class="container-fluid constrain-width px-2 px-sm-3">
+  <div id="heatmap-controls" class="row g-2 align-items-center">
+    <div class="col-auto d-flex align-items-center gap-2">
+      <span class="schedule-selector-label" id="color-a" style="background: #fc4c02;"></span>
+      <select class="form-select form-select-sm" id="schedule-a" style="max-width: 200px;">
+        <option value="">— None —</option>
+        <option value="all">All schedules</option>
+        {% for schedule in site.data.schedules_table reversed %}
+        <option value="{{ schedule.id }}" data-geojson="{{ schedule.aggregate_geojson }}"
+          {% if forloop.first %}selected{% endif %}>
+          {{ schedule.label }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-auto d-flex align-items-center gap-2">
+      <span class="schedule-selector-label" id="color-b" style="background: #4fc3f7;"></span>
+      <select class="form-select form-select-sm" id="schedule-b" style="max-width: 200px;">
+        <option value="" selected>— None —</option>
+        <option value="all">All schedules</option>
+        {% for schedule in site.data.schedules_table reversed %}
+        <option value="{{ schedule.id }}" data-geojson="{{ schedule.aggregate_geojson }}">
+          {{ schedule.label }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div style="position: relative; flex: 1 1 auto; display: flex; flex-direction: column;">
+    <div id="map"></div>
+    <div id="heatmap-legend" class="card text-bg-dark border-secondary px-2 py-1 d-none">
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import 'maplibre-gl';
+
+  const COLORS = {
+    a: '#fc4c02',  // Strava orange
+    b: '#4fc3f7',  // cool blue
+  };
+
+  // Schedule data from Jekyll
+  const scheduleGeojsonMap = {
+    {% for schedule in site.data.schedules_table %}
+    "{{ schedule.id }}": "{{ schedule.aggregate_geojson | relative_url }}",
+    {% endfor %}
+    "all": "{{ '/routes/geojson/aggregates/routes.geojson' | relative_url }}"
+  };
+
+  const scheduleLabels = {
+    {% for schedule in site.data.schedules_table %}
+    "{{ schedule.id }}": "{{ schedule.label }}",
+    {% endfor %}
+    "all": "All schedules"
+  };
+
+  const DARK_BASEMAP = {
+    version: 8,
+    glyphs: 'https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf',
+    sources: {
+      'carto-dark': {
+        type: 'raster',
+        tiles: ['https://a.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}@2x.png',
+                'https://b.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}@2x.png',
+                'https://c.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}@2x.png'],
+        tileSize: 512,
+        maxzoom: 19,
+        attribution: 'Data from <a href="https://openfreemap.org">OpenFreeMap</a> and <a href="https://carto.com">Carto</a>',
+      },
+    },
+    layers: [{ id: 'carto-dark-layer', type: 'raster', source: 'carto-dark' }],
+  };
+
+  const map = new maplibregl.Map({
+    container: 'map',
+    style: DARK_BASEMAP,
+    center: [-122.335, 47.62],
+    zoom: 11,
+    attributionControl: { compact: true },
+  });
+
+  map.addControl(new maplibregl.NavigationControl(), 'top-right');
+  map.addControl(new maplibregl.FullscreenControl(), 'top-right');
+
+  function layerIds(slot) {
+    return [`routes-${slot}-glow`, `routes-${slot}-outer`, `routes-${slot}-line`];
+  }
+
+  function removeLayers(slot) {
+    for (const id of layerIds(slot)) {
+      if (map.getLayer(id)) map.removeLayer(id);
+    }
+    if (map.getSource(`routes-${slot}`)) map.removeSource(`routes-${slot}`);
+  }
+
+  async function loadSchedule(slot, scheduleId) {
+    removeLayers(slot);
+    if (!scheduleId) {
+      updateLegend();
+      return;
+    }
+
+    const url = scheduleGeojsonMap[scheduleId];
+    if (!url) return;
+
+    const color = COLORS[slot];
+
+    map.addSource(`routes-${slot}`, {
+      type: 'geojson',
+      data: url,
+    });
+
+    // Glow layer – wide, very transparent, blurred
+    map.addLayer({
+      id: `routes-${slot}-glow`,
+      type: 'line',
+      source: `routes-${slot}`,
+      paint: {
+        'line-color': color,
+        'line-width': 14,
+        'line-opacity': 0.12,
+        'line-blur': 8,
+      },
+    });
+
+    // Mid glow
+    map.addLayer({
+      id: `routes-${slot}-outer`,
+      type: 'line',
+      source: `routes-${slot}`,
+      paint: {
+        'line-color': color,
+        'line-width': 5,
+        'line-opacity': 0.35,
+        'line-blur': 2,
+      },
+    });
+
+    // Sharp inner line
+    map.addLayer({
+      id: `routes-${slot}-line`,
+      type: 'line',
+      source: `routes-${slot}`,
+      paint: {
+        'line-color': color,
+        'line-width': 1.5,
+        'line-opacity': 0.85,
+      },
+    });
+
+    updateLegend();
+  }
+
+  function updateLegend() {
+    const legend = document.getElementById('heatmap-legend');
+    const items = [];
+
+    for (const slot of ['a', 'b']) {
+      const sel = document.getElementById(`schedule-${slot}`);
+      const val = sel.value;
+      if (val && scheduleLabels[val]) {
+        items.push({ color: COLORS[slot], label: scheduleLabels[val] });
+      }
+    }
+
+    if (items.length === 0) {
+      legend.classList.add('d-none');
+      return;
+    }
+
+    legend.classList.remove('d-none');
+    legend.innerHTML = items.map(({ color, label }) => `
+      <div class="legend-item">
+        <span class="legend-swatch" style="background:${color};box-shadow:0 0 6px ${color};"></span>
+        <span class="text-truncate">${label}</span>
+      </div>
+    `).join('');
+  }
+
+  map.on('load', () => {
+    // Load initial selections
+    const selA = document.getElementById('schedule-a').value;
+    const selB = document.getElementById('schedule-b').value;
+    loadSchedule('a', selA);
+    loadSchedule('b', selB);
+  });
+
+  document.getElementById('schedule-a').addEventListener('change', e => {
+    loadSchedule('a', e.target.value);
+  });
+
+  document.getElementById('schedule-b').addEventListener('change', e => {
+    loadSchedule('b', e.target.value);
+  });
+</script>
