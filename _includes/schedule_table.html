@@ -1,11 +1,11 @@
-<div class="table-responsive">
+<div class="table-responsive schedule-table-wrapper" data-unit="mi">
 <table class='schedule-table table'>
     {% if include.show_header %}
     <thead>
     <tr>
         <th>Date</th>
         <th class="text-end">Time</th>
-        <th>Route (miles)</th>
+        <th><div class="d-flex justify-content-between">Routes<span>Distance (<button class="dist-unit-toggle" title="For the enlightened..." style="background:none;border:none;padding:0;font:inherit;text-decoration:underline dotted;cursor:pointer;">mi</button>)</span></div></th>
     </tr>
     </thead>
     {% endif %}
@@ -15,6 +15,17 @@
     {% else %}
     {% assign cancelled-class = "" %}
     {% endif %}
+    {% assign total_dist = 0.0 %}
+    {% for _phase in run.plan %}
+      {% unless _phase.cancelled %}
+        {% if _phase.route_id %}
+          {% assign _r = site.data.routes | where: 'id', _phase.route_id | first %}
+          {% if _r.distance_mi %}{% assign total_dist = total_dist | plus: _r.distance_mi %}{% endif %}
+        {% elsif _phase.route.distance_mi %}
+          {% assign total_dist = total_dist | plus: _phase.route.distance_mi %}
+        {% endif %}
+      {% endunless %}
+    {% endfor %}
     <tbody class="run" data-date="{{ run.date }}">
     {% for plan in run.plan %}
     {% if plan.cancelled %}
@@ -44,23 +55,27 @@
         {% endunless %}
         {% endif %}
         <td class="{{part-cancelled-class}}">
-            {% if plan.route_id %}
-            <a href="{{site.baseurl}}/routes/{{ plan.route_id }}/"
-               class="route-preview-map-link"
-               title="{{ plan.route_id }}"
-               popovertarget="map-popover-{{run.date | slugify}}-part-{{ forloop.index}}">{{route.name}}</a>
-            <div id="map-popover-{{run.date | slugify}}-part-{{ forloop.index}}" class="route-map-popover" popover>
-                <img src="{{ '/img/routes/' | append: plan.route_id | append: '.jpg' | relative_url }}" alt="{{ route.name }} map" class="route-image" loading="lazy"/>
+            <div class="d-flex justify-content-between align-items-baseline gap-2">
+                <span>
+                {% if plan.route_id %}
+                <a href="{{site.baseurl}}/routes/{{ plan.route_id }}/"
+                   class="route-preview-map-link"
+                   title="{{ plan.route_id }}"
+                   popovertarget="map-popover-{{run.date | slugify}}-part-{{ forloop.index}}">{{route.name}}</a>
+                <div id="map-popover-{{run.date | slugify}}-part-{{ forloop.index}}" class="route-map-popover" popover>
+                    <img src="{{ '/img/routes/' | append: plan.route_id | append: '.jpg' | relative_url }}" alt="{{ route.name }} map" class="route-image" loading="lazy"/>
+                </div>
+                {% elsif route.map %}
+                <a target="_blank" href="{{ route.map }}">{{route.name}}</a>
+                {% else %}
+                {{route.name}}
+                {% endif %}
+                {% if route.gpx and include.link_gpx %}
+                    &nbsp; <a href="{{ route.gpx }}" class="gpx-link" title="Download GPX" data-goatcounter-click="download-{{ route.id }}">&#8986;</a>
+                {% endif %}
+                </span>
+                {% if route.distance_mi %}<span class="dist-value text-end text-nowrap" data-mi="{{ route.distance_mi | round: 1 }}" data-km="{{ route.distance_mi | times: 1.609 | round: 1 }}">{{ route.distance_mi | round: 1 }}</span>{% endif %}
             </div>
-            {% elsif route.map %}
-            <a target="_blank" href="{{ route.map }}">{{route.name}}</a>
-            {% else %}
-            {{route.name}}
-            {% endif %}
-            {% if route.distance_mi %}&nbsp; (<span title="{{ route.distance_mi | times: 1.609 | round: 1}}km" class="text-decoration-dashed">{{ route.distance_mi | round: 1}})</span>{% endif %}
-            {% if route.gpx and include.link_gpx %}
-                &nbsp; <a href="{{ route.gpx }}" class="gpx-link" title="Download GPX" data-goatcounter-click="download-{{ route.id }}">&#8986;</a>
-            {% endif %}
         </td>
     </tr>
     {% if plan.notes %}
@@ -90,6 +105,12 @@
     {% endif %}
 
     {% endfor %}
+    {% if total_dist > 0 and run.plan.size > 1 %}
+    <tr class="total-dist-row">
+        <td></td><td></td>
+        <td class="text-end fw-semibold"><hr class="my-1" style="border-top-width: 2px;"/><span class="dist-value" data-mi="{{ total_dist | round: 1 }}" data-km="{{ total_dist | times: 1.609 | round: 1 }}">{{ total_dist | round: 1 }}</span></td>
+    </tr>
+    {% endif %}
     {% if run.cancelled and plan.cancelled != "" %}
     <tr class="cancellation-note">
         <td></td>
@@ -102,3 +123,22 @@
     <tfoot id="schedule-finished" style="display: none"><tr><td colspan="3">A new schedule is coming! <a href="https://github.com/raceconditionrunning/raceconditionrunning.github.io">Contribute on GitHub</a></td></tr></tfoot>
 </table>
 </div>
+<script>
+if (!window.__distToggleInit) {
+    // For switching between miles and kilometers.
+    window.__distToggleInit = true;
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.dist-unit-toggle');
+        if (!btn) {
+            return;
+        }
+        const wrapper = btn.closest('.schedule-table-wrapper');
+        const newUnit = wrapper.dataset.unit === 'km' ? 'mi' : 'km';
+        wrapper.dataset.unit = newUnit;
+        btn.textContent = newUnit;
+        wrapper.querySelectorAll('.dist-value').forEach((span) => {
+            span.textContent = span.dataset[newUnit];
+        });
+    });
+}
+</script>
