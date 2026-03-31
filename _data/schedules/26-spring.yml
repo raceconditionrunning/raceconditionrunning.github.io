@@ -15,16 +15,16 @@
 - date: '2026-04-18'
   plan:
     - time: '8:30'
-      route_id: westlake-sculpture-interbay-queen-anne-loop
-    - time: '10:20'
-      route_id: westlake-waterfront-cranes-sodo
+      route_id: cse-magnuson-ob
+    - time: '9:50'
+      route_id: cse-520-bell-dtwn
 
 - date: '2026-04-25'
   plan:
     - time: '8:30'
-      route_id: cse-magnuson-ob
-    - time: '9:50'
-      route_id: cse-520-bell-dtwn
+      route_id: westlake-sculpture-interbay-queen-anne-loop
+    - time: '10:20'
+      route_id: westlake-waterfront-cranes-sodo
 
 - date: '2026-05-02'
   plan:
