@@ -36,6 +36,14 @@ The live site is built and deployed by a GitHub action and served by GitHub page
 
 Schedules are YAML files stored in the `_data/schedules/` directory. Each schedule contains a list of **plans**. Check out the [long-run scheduler](https://github.com/raceconditionrunning/run-scheduler) if you'd like to automatically generate a schedule.
 
+The current schedule is whatever is symlinked from `_data/schedule.yml`.
+To update the symlink (e.g., whenever a new quarter schedule is published),
+  run:
+
+```sh
+% ln -sf <path_to_new_schedule> _data/schedule.yml
+```
+
 #### Plans
 
 A **plan** represents a long run that may be broken into multiple legs. While uncommon, there can be multiple distinct plans on the same day.
