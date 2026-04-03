@@ -1,9 +1,9 @@
 - date: '2026-04-04'
   plan:
     - time: '8:30'
-      route_id: northgate-interurban-shoreline-north
-    - time: '9:50'
-      route_id: shoreline-north-richmond-beach-saltwater-park-ob
+      route_id: beacon-i90-bridge-cap-hill
+    - time: '10:10'
+      route_id: cap-hill-volunteer-park-westlake
 
 - date: '2026-04-11'
   plan:
