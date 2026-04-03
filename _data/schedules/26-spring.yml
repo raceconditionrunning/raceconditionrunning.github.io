@@ -1,0 +1,74 @@
+- date: '2026-04-04'
+  plan:
+    - time: '8:30'
+      route_id: gas-works-locks-salmon-bay-loop
+    - time: '9:50'
+      route_id: gas-works-lake-union-loop
+
+- date: '2026-04-11'
+  plan:
+    - time: '8:30'
+      route_id: westlake-sculpture-interbay-queen-anne-loop
+    - time: '10:20'
+      route_id: westlake-waterfront-cranes-sodo
+
+- date: '2026-04-18'
+  plan:
+    - time: '8:30'
+      route_id: cse-magnuson-ob
+    - time: '9:50'
+      route_id: cse-520-bell-dtwn
+
+- date: '2026-04-25'
+  plan:
+    - time: '8:30'
+      route_id: cse-520-overlake-village
+    - time: '9:10'
+      route_id: overlake-village-redmond-technology-marymoor-village-downtown-redmond
+
+- date: '2026-05-02'
+  plan:
+    - time: '8:30'
+      route_id: beacon-i90-luther-burbank-ob
+    - time: '10:40'
+      route_id: othello-chief-sealth-jefferson-park-beacon
+      notes: "We are running this route in REVERSE"
+
+- date: '2026-05-09'
+  plan:
+    - time: '8:30'
+      route_id: locks-magnolia-ferry-terminal
+    - time: '9:50'
+      route_id: ferry-terminal-cranes-water-taxi
+
+- date: '2026-05-16'
+  plan:
+    - time: '8:30'
+      route_id: roosevelt-carkeek-golden-gardens-roses-loop
+    - time: '11:00'
+      route_id: roosevelt-green-lake-loop
+
+- date: '2026-05-23'
+  plan:
+    - time: '8:30'
+      route_id: cse-jays-cafe
+
+- date: '2026-05-30'
+  plan:
+    - time: '8:30'
+      route_id: gas-works-kotkins-pier-salmon-bay-loop
+
+- date: '2026-06-06'
+  organized-event: true
+  plan:
+    - time: '8:00'
+      route:
+        name: Drumheller Marathon and Half-marathon
+        map: /drumheller-marathon-26/
+        distance_mi: 26.2
+      highlight-image: /img/dm26/og-banner.jpg
+
+- date: '2026-06-13'
+  plan:
+    - time: '8:30'
+      route_id: cc-genessee-lwb-rainier-loop
