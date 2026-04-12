@@ -17,7 +17,7 @@
     - time: '8:30'
       route_id: cse-magnuson-ob
     - time: '9:50'
-      route_id: cse-520-bell-dtwn
+      route_id: cse-green-lake-roosevelt
 
 - date: '2026-04-25'
   plan:
