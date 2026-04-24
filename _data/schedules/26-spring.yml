@@ -22,9 +22,9 @@
 - date: '2026-04-25'
   plan:
     - time: '8:30'
-      route_id: cse-520-overlake-village
-    - time: '9:10'
-      route_id: overlake-village-redmond-technology-marymoor-village-downtown-redmond
+      route_id: cse-burke-salmon-bay-ship-canal-ob
+    - time: '10:10'
+      route_id: cse-lake-union-loop
 
 - date: '2026-05-02'
   plan:
