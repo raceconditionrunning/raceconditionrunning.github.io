@@ -31,8 +31,7 @@
     - time: '8:30'
       route_id: beacon-i90-luther-burbank-ob
     - time: '10:40'
-      route_id: othello-chief-sealth-jefferson-park-beacon
-      notes: "We are running this route in REVERSE"
+      route_id: beacon-cheasty-lwb-genessee-cc
 
 - date: '2026-05-09'
   plan:
@@ -51,7 +50,9 @@
 - date: '2026-05-23'
   plan:
     - time: '8:30'
-      route_id: cse-jays-cafe
+      route_id: cse-520-overlake-village
+    - time: '9:10'
+      route_id: overlake-village-redmond-technology-marymoor-village-downtown-redmond
 
 - date: '2026-05-30'
   plan:
