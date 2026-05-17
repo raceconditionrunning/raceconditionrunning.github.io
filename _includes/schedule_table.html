@@ -1,11 +1,11 @@
-<div class="table-responsive schedule-table-wrapper" data-unit="mi">
+<div class="table-responsive schedule-table-wrapper">
 <table class='schedule-table table'>
     {% if include.show_header %}
     <thead>
     <tr>
         <th>Date</th>
         <th class="text-end">Time</th>
-        <th><div class="d-flex justify-content-between">Routes<span>Distance (<button class="dist-unit-toggle" title="For the enlightened..." style="background:none;border:none;padding:0;font:inherit;text-decoration:underline dotted;cursor:pointer;">mi</button>)</span></div></th>
+        <th><div class="d-flex justify-content-between">Routes<span>Distance (<button type="button" class="dist-unit-toggle unit-toggle" title="For the enlightened...">mi</button>)</span></div></th>
     </tr>
     </thead>
     {% endif %}
@@ -123,22 +123,3 @@
     <tfoot id="schedule-finished" style="display: none"><tr><td colspan="3">A new schedule is coming! <a href="https://github.com/raceconditionrunning/raceconditionrunning.github.io">Contribute on GitHub</a></td></tr></tfoot>
 </table>
 </div>
-<script>
-if (!window.__distToggleInit) {
-    // For switching between miles and kilometers.
-    window.__distToggleInit = true;
-    document.addEventListener('click', (e) => {
-        const btn = e.target.closest('.dist-unit-toggle');
-        if (!btn) {
-            return;
-        }
-        const wrapper = btn.closest('.schedule-table-wrapper');
-        const newUnit = wrapper.dataset.unit === 'km' ? 'mi' : 'km';
-        wrapper.dataset.unit = newUnit;
-        btn.textContent = newUnit;
-        wrapper.querySelectorAll('.dist-value').forEach((span) => {
-            span.textContent = span.dataset[newUnit];
-        });
-    });
-}
-</script>
