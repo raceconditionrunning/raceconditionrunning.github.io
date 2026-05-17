@@ -39,17 +39,15 @@ layout: base
   {%- endif -%}
 
   {%- capture stats -%}
-  <span title="{{ page.distance_mi | times: 1.609 | round: 1 }}km"
-        class="route-stats-distance text-decoration-dashed">
-    {{- page.distance_mi | round: 1 -}}mi
+  <span class="route-stats-distance">
+    <span data-mi="{{ page.distance_mi | round: 1 }}"
+          data-km="{{ page.distance_mi | times: 1.609 | round: 1 }}">{{- page.distance_mi | round: 1 -}}</span><button type="button" class="dist-unit-toggle unit-toggle" title="For the enlightened...">mi</button>
   </span>
   <span class="route-stats-elevation">
-    ↑<span title="{{ page.ascent_m }}m" class="text-decoration-dashed">
-      {{- ascent_ft | round -}}ft
-    </span>
-    ↓<span title="{{ page.descent_m }}m" class="text-decoration-dashed">
-      {{- descent_ft | round -}}ft
-    </span>
+    ↑<span data-ft="{{ ascent_ft | round }}"
+           data-m="{{ page.ascent_m | round }}">{{- ascent_ft | round -}}</span><button type="button" class="elev-unit-toggle unit-toggle" title="For the enlightened...">ft</button>
+    ↓<span data-ft="{{ descent_ft | round }}"
+           data-m="{{ page.descent_m | round }}">{{- descent_ft | round -}}</span><button type="button" class="elev-unit-toggle unit-toggle" title="For the enlightened...">ft</button>
   </span>
   {%- if page.surface -%}
     <a href="{{ '/routes/?q=' | append: surface_query | relative_url }}"
