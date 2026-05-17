@@ -91,11 +91,12 @@ dd {
 }
 
 
-.past, .past a, .past a:visited {
-  color: #ccc;
+.past {
+  opacity: .5;
 }
-.next, .next a, .next a:visited {
-  font-weight: bold;
+
+.next > td, tbody.next td {
+  background-color: var(--bs-tertiary-bg);
 }
 
 .cancelled {

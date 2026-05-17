@@ -81,7 +81,7 @@
     {% if plan.notes %}
     <tr>
         <td></td><td></td>
-        <td>{{ plan.notes }}</td>
+        <td class="text-secondary">{{ plan.notes }}</td>
     </tr>
     {% endif %}
     {% if plan.cancelled and plan.cancelled != "" %}
@@ -108,7 +108,7 @@
     {% if total_dist > 0 and run.plan.size > 1 %}
     <tr class="total-dist-row">
         <td></td><td></td>
-        <td class="text-end fw-semibold"><hr class="my-1" style="border-top-width: 2px;"/><span class="dist-value" data-mi="{{ total_dist | round: 1 }}" data-km="{{ total_dist | times: 1.609 | round: 1 }}">{{ total_dist | round: 1 }}</span></td>
+        <td class="text-end text-secondary pt-0"><div class="d-inline-block"><hr class="my-0 mb-1"/><span class="dist-value" data-mi="{{ total_dist | round: 1 }}" data-km="{{ total_dist | times: 1.609 | round: 1 }}" title="Total distance">{{ total_dist | round: 1 }}</span></div></td>
     </tr>
     {% endif %}
     {% if run.cancelled and plan.cancelled != "" %}
