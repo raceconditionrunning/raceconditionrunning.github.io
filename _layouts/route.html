@@ -1,7 +1,7 @@
 ---
 layout: base
 ---
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.15.0/dist/maplibre-gl.css" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@6.0.0-9/dist/maplibre-gl.css" crossorigin="anonymous">
 
 <div class="route container">
   <h1 title="{{ page.id }}" class="mb-0 h2">{{ page.title }}</h1>
@@ -488,7 +488,7 @@ layout: base
 </style>
 
 <script type="module">
-    import 'maplibre-gl';
+    import * as maplibregl from 'maplibre-gl'
     import {distance, point, nearestPointOnLine, lineString} from '@turf';
     import {Protocol} from 'pmtiles';
     import {ElevationProfile} from '{{site.baseurl}}/js/ElevationProfile.js';
