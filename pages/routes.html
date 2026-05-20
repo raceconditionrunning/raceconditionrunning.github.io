@@ -125,6 +125,8 @@ add_h1: true
 
       Tabulator.registerModule([EditModule, FormatModule, InteractionModule, MutatorModule, ResizeColumnsModule, ResizeTableModule, SortModule, SelectRowModule, FilterModule]);
 
+      const KmPerMi = 1.609
+      const MPerFeet = 3.28084 
       let searched = false
       document.addEventListener("DOMContentLoaded", () => {
         let table = new Tabulator("#routes table", {
@@ -163,7 +165,7 @@ add_h1: true
                       const mi = cell.getValue();
                       if (typeof mi !== 'number') return '';
                       const unit = (localStorage.getItem('rcr-dist-unit') === 'km') ? 'km' : 'mi';
-                      return (unit === 'km' ? mi * 1.609 : mi).toFixed(1);
+                      return (unit === 'km' ? mi * KmPerMi : mi).toFixed(1);
                   }},
                     {title: "Ascent",
                      titleFormatter: () => {
@@ -175,7 +177,7 @@ add_h1: true
                          const m = cell.getValue();
                          if (typeof m !== 'number') return '';
                          const unit = (localStorage.getItem('rcr-elev-unit') === 'm') ? 'm' : 'ft';
-                         return Math.round(unit === 'm' ? m : m * 3.28084);
+                         return Math.round(unit === 'm' ? m : m * MPerFeet);
                      }},
                     {title: "Descent",
                      titleFormatter: () => {
@@ -187,7 +189,7 @@ add_h1: true
                          const m = cell.getValue();
                          if (typeof m !== 'number') return '';
                          const unit = (localStorage.getItem('rcr-elev-unit') === 'm') ? 'm' : 'ft';
-                         return Math.round(unit === 'm' ? m : m * 3.28084);
+                         return Math.round(unit === 'm' ? m : m * MPerFeet);
                      }},
                     {title: "Surface", field: "surface_type",
                         mutator: function(value, data) {
