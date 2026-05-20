@@ -29,8 +29,9 @@
     },
     "terrain_rgb": {
       "type": "raster-dem",
-      "url": "pmtiles://https://static.raceconditionrunning.com/seattle_dem.pmtiles",
-      "tileSize": 512
+      "url": "https://tiles.mapterhorn.com/tilejson.json",
+      "tileSize": 512,
+      "encoding": "terrarium"
     },
     "distance-labels": {
       "type": "geojson",

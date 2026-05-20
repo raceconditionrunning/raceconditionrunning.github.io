@@ -8,9 +8,10 @@
   "terrain": {"source": "terrain_rgb", "exaggeration": 2.0},
   "sources": {
     "terrain_rgb": {
-      "url": "pmtiles://https://static.raceconditionrunning.com/seattle_dem.pmtiles",
+      "url": "https://tiles.mapterhorn.com/tilejson.json",
       "type": "raster-dem",
-      "tileSize": 512
+      "tileSize": 512,
+      "encoding": "terrarium"
     },
     "planet": {
       "url": "pmtiles://https://static.raceconditionrunning.com/seattle_25.pmtiles",
