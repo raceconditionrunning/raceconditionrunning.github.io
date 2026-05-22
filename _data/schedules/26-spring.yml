@@ -52,9 +52,11 @@
 - date: '2026-05-23'
   plan:
     - time: '8:30'
-      route_id: cse-520-overlake-village
-    - time: '9:10'
-      route_id: overlake-village-redmond-technology-marymoor-village-downtown-redmond
+      route:
+        name: CSE -> Magnuson Park OB
+        map: https://raceconditionrunning.com/routes/cse-magnuson-ob/
+        notes: 3-4 laps of the park
+        distance_mi: 13.0
 
 - date: '2026-05-30'
   plan:
