@@ -54,7 +54,6 @@
     - time: '8:30'
       route:
         name: CSE -> Magnuson Park OB
-        map: https://raceconditionrunning.com/routes/cse-magnuson-ob/
         notes: 3-4 laps of the park
         distance_mi: 13.0
 
