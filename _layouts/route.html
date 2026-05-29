@@ -1,7 +1,7 @@
 ---
 layout: base
 ---
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@6.0.0-9/dist/maplibre-gl.css" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@6.0.0-11/dist/maplibre-gl.css" crossorigin="anonymous">
 
 <div class="route container">
   <h1 title="{{ page.id }}" class="mb-0 h2">{{ page.title }}</h1>
@@ -493,9 +493,9 @@ layout: base
     import {Protocol} from 'pmtiles';
     import {ElevationProfile} from '{{site.baseurl}}/js/ElevationProfile.js';
     import {FrameControl} from "{{site.baseurl}}/js/FrameControl.js";
-    import Protobuf from 'https://unpkg.com/pbf@4.0.1/index.js';
-    import {VectorTile} from 'https://esm.run/@mapbox/vector-tile@2.0.3/index.js';
-    import tileToProtobuf from 'https://esm.run/vt-pbf@3.1.3/index.js';
+    import Protobuf from 'pbf';
+    import {VectorTile} from '@mapbox/vector-tile';
+    import {fromVectorTileJs as tileToProtobuf} from 'vt-pbf';
 
     let pmtilesProtocol = new Protocol();
     maplibregl.addProtocol("pmtiles", pmtilesProtocol.tile);
