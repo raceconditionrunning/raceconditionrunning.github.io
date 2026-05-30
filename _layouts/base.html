@@ -2,7 +2,12 @@
 <html lang="en" data-bs-theme="dark">
 <head>
   <meta charset="UTF-8">
-  {% capture title %}{{ page.title | default: site.title | escape }}{% endcapture %}
+  {% if page.aggregate_geojson and page.season and page.year %}
+    {% assign schedule_title = page.season | append: " '" | append: page.year | capitalize | append: " Schedule" %}
+    {% capture title %}{{ schedule_title | escape }}{% endcapture %}
+  {% else %}
+    {% capture title %}{{ page.title | default: site.title | escape }}{% endcapture %}
+  {% endif %}
   {% capture type %}{% if page.type == "OB" %}out-and-back{% elsif page.type == "Loop" %}loop{% elsif page.type == "P2P" %}point-to-point{% endif %}{% endcapture %}
   {% if page.distance_mi  %}
     {% if page.start_neighborhood == page.end_neighborhood %}
@@ -16,6 +21,9 @@
     {% else %}
       {% capture description %}{{ page.distance_mi }} mile {{type}} running/walking route from {{page.start_neighborhood}} to {{page.end_neighborhood}} via {% for neighborhood in page.neighborhoods limit:3 %}{{neighborhood}}{% unless forloop.last%}, {%endunless%}{%endfor%}.{% endcapture %}
     {% endif %}
+  {% elsif page.aggregate_geojson and page.season and page.year %}
+    {% assign schedule_description_label = page.season | append: " '" | append: page.year | capitalize %}
+    {% capture description %}Race Condition Running schedule for {{ schedule_description_label }}, covering {{ page.start_date }} to {{ page.end_date }} with {{ page.event_count }} events and {{ page.route_count }} planned routes.{% endcapture %}
   {% else %}
     {% capture description %}{{ page.excerpt | default: page.description | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}{% endcapture %}
   {% endif %}

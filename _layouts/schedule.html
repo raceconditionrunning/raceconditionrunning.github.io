@@ -4,16 +4,17 @@ layout: base
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@6.0.0-11/dist/maplibre-gl.css" crossorigin="anonymous">
 
 <div class="schedule container">
-  <h1 class="mb-0 h2">{{ page.label }}</h1>
+  {%- assign schedule_label = page.season | append: " '" | append: page.year | capitalize -%}
+  <h1 class="mb-0 h2">{{ schedule_label }}</h1>
 
   {%- comment -%}
   ========================================================================
   OVERVIEW
   ========================================================================
   {%- endcomment -%}
-  <div class="text-muted mb-3">
+  <div class="mb-3">
     <span class="me-3">
-      {{ page.start_date }} &rarr; {{ page.end_date }}
+      {{ page.start_date }} to {{ page.end_date }}
     </span>
     <span class="me-3">
       {{ page.event_count }} events
@@ -47,11 +48,13 @@ layout: base
       {%- assign prev_label = page.previous_id -%}
       {%- if all_schedules -%}
         {%- assign prev_schedule = all_schedules | where: "id", page.previous_id | first -%}
-        {%- if prev_schedule and prev_schedule.label -%}
+        {%- if prev_schedule and prev_schedule.season and prev_schedule.year -%}
+          {%- assign prev_label = prev_schedule.season | append: " '" | append: prev_schedule.year | capitalize -%}
+        {%- elsif prev_schedule and prev_schedule.label -%}
           {%- assign prev_label = prev_schedule.label -%}
         {%- endif -%}
       {%- endif -%}
-      <a class="btn btn-outline-secondary"
+      <a class="text-muted text-decoration-none fw-medium"
          href="{{ '/schedules/' | append: page.previous_id | append: '/' | relative_url }}">
         &larr; {{ prev_label }}
       </a>
@@ -63,9 +66,10 @@ layout: base
       <select id="schedule-selector" class="form-select form-select-sm d-inline-block" style="max-width: 100%;">
         {%- assign schedule_list = site.data.schedules_table | sort: 'start_date' -%}
         {%- for sched in schedule_list -%}
+          {%- assign sched_label = sched.season | append: " '" | append: sched.year | capitalize -%}
           <option value="{{ '/schedules/' | append: sched.id | append: '/' | relative_url }}"
                   {% if sched.id == page.id %}selected{% endif %}>
-            {{ sched.label }}
+            {{ sched_label }}
           </option>
         {%- endfor -%}
       </select>
@@ -75,11 +79,13 @@ layout: base
       {%- assign next_label = page.next_id -%}
       {%- if all_schedules -%}
         {%- assign next_schedule = all_schedules | where: "id", page.next_id | first -%}
-        {%- if next_schedule and next_schedule.label -%}
+        {%- if next_schedule and next_schedule.season and next_schedule.year -%}
+          {%- assign next_label = next_schedule.season | append: " '" | append: next_schedule.year | capitalize -%}
+        {%- elsif next_schedule and next_schedule.label -%}
           {%- assign next_label = next_schedule.label -%}
         {%- endif -%}
       {%- endif -%}
-      <a class="btn btn-outline-secondary"
+      <a class="text-muted text-decoration-none fw-medium"
          href="{{ '/schedules/' | append: page.next_id | append: '/' | relative_url }}">
         {{ next_label }} &rarr;
       </a>
@@ -97,43 +103,7 @@ layout: base
   {%- if quarter_entries and quarter_entries.size > 0 -%}
   <div class="mt-4">
     <h2 class="h4">Schedule</h2>
-    <div class="list-group list-group-flush">
-      {%- for entry in quarter_entries -%}
-        <div class="list-group-item px-0">
-          <div class="fw-semibold">{{ entry.date }}</div>
-          <ul class="list-unstyled mb-0 ms-3 small">
-            {%- for phase in entry.plan -%}
-              <li class="mb-1">
-                {%- if phase.time -%}
-                  <span class="text-muted">{{ phase.time }}</span>
-                {%- endif -%}
-                {%- if phase.cancelled -%}
-                  <span class="text-muted fst-italic ms-2">Cancelled</span>
-                {%- elsif phase.route_id -%}
-                  {%- assign route_item = site.data.routes | where: "id", phase.route_id | first -%}
-                  <span class="ms-2">
-                    <a href="{{ '/routes/' | append: phase.route_id | append: '/' | relative_url }}">
-                      {%- if route_item and route_item.name -%}
-                        {{ route_item.name }}
-                      {%- else -%}
-                        {{ phase.route_id }}
-                      {%- endif -%}
-                    </a>
-                  </span>
-                {%- elsif phase.route -%}
-                  <span class="ms-2">
-                    {{ phase.route.name }}
-                    {%- if phase.route.distance_mi -%}
-                      ({{ phase.route.distance_mi }}&nbsp;mi)
-                    {%- endif -%}
-                  </span>
-                {%- endif -%}
-              </li>
-            {%- endfor -%}
-          </ul>
-        </div>
-      {%- endfor -%}
-    </div>
+    {% include schedule_table.html schedule=quarter_entries show_header=true %}
   </div>
   {%- endif -%}
 </div>
