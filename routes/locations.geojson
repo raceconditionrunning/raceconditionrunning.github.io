@@ -964,6 +964,25 @@
         "name": "Cedar River Trail Odyssey - Point Elliott",
         "maps_url": "https://maps.app.goo.gl/CtU3opajMTjFKQ2X7"
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.23325,
+          47.58741
+        ]
+      },
+      "properties": {
+        "id": "MercerIsland",
+        "name": "Mercer Island Light Rail Station",
+        "maps_url": "https://www.google.com/maps/place/47.587410,+-122.233250/@47.587410,-122.233250",
+        "meeting_point_desc": null,
+        "transit": "Light Rail to Mercer Island Stop",
+        "reachability": 3,
+        "neighborhood": null
+      }
     }
   ]
 }
