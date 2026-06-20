@@ -1,0 +1,128 @@
+- date: "2026-06-20"
+  plan:
+    - time: "8:30"
+      route_id: northgate-interurban-shoreline-north
+    - time: "9:45"
+      route_id: northgate-interurban-shoreline-north
+      notes: Second leg is RUN IN REVERSE. Leaves from Shoreline North.
+
+- date: "2026-06-27"
+  plan:
+    - time: "8:30"
+      route_id: cse-lwb-cc
+      notes: RUN IN REVERSE. Leaves from Columbia City.
+    - time: "10:05"
+      route_id: cse-lake-union-westlake
+
+- date: "2026-07-04"
+  plan:
+    - time: "8:30"
+      route_id: federal-way-angle-lake-p2p
+    - time: "10:10"
+      route_id: angle-lake-des-moines-beach-loop
+
+- date: "2026-07-11"
+  plan:
+    - time: "8:30"
+      route_id: cse-520-trail-redmond-tech-center
+    - time: "10:10"
+      route:
+        name: Redmond Tech to Redmond
+      notes: "Exact Route TBA"
+
+- date: "2026-07-18"
+  plan:
+    - time: "8:30"
+      route_id: cse-sobel-mercer-island
+    - time: "10:45"
+      route_id: mercer-id-p2p
+
+- date: "2026-07-25"
+  plan:
+    - time: "8:30"
+      route_id: sodo-luna-pier-ob
+    - time: "10:10"
+      route_id: westlake-waterfront-cranes-sodo
+      notes: Second leg is RUN IN REVERSE. Leaves SODO at 10:00.
+
+- date: "2026-08-01"
+  plan:
+    - time: "8:30"
+      route_id: gas-works-kotkins-pier-salmon-bay-loop
+    - time: "10:20"
+      route_id: gas-works-lake-union-loop
+
+- date: "2026-08-08"
+  plan:
+    - time: "7:45"
+      route_id: bainbridge-coast-to-coast-loop
+      notes: "Take the 7:55 ferry from the terminal https://maps.app.goo.gl/ZtprmndPHd2rGWrGA"
+
+- date: "2026-08-15"
+  plan:
+    - time: "8:30"
+      route:
+        name: "Westlake, Elliot Bay, Discovery, Ship Canal, South Lake Union Loop"
+        map: https://onthegomap.com/s/t5lt2fln
+        distance_mi: 15.8
+
+- date: "2026-08-22"
+  plan:
+    - time: "8:30"
+      route_id: cse-jays-cafe
+    - time: "10:30"
+      route_id: jays-cafe-woodinville-cafe
+
+- date: "2026-08-29"
+  plan:
+    - time: "8:30"
+      route:
+        name: Angle Lake to Othello (LRR)
+        distance_mi: 9.27
+    - time: "10:15"
+      route:
+        name: Othello to SODO (LRR)
+        distance_mi: 5.09
+      notes: "Exact Route TBA"
+
+- date: "2026-09-05"
+  plan:
+    - time: "8:30"
+      route:
+        name: Redmond to ID (Line 2 full run)
+        distance_mi: 20.0
+      notes: "Exact Route TBA"
+
+- date: "2026-09-12"
+  plan:
+    - time: "8:30"
+      route:
+        name: Beacon Hill to Roosevelt (LRR)
+        distance_mi: 10.62
+      notes: "Exact Route TBA"
+    - time: "10:15"
+      route_id: roosevelt-green-lake-loop
+
+- date: "2026-09-19"
+  plan:
+    - time: "8:30"
+      route:
+        name: Westlake to Shoreline North (LRR)
+        distance_mi: 13.20
+    - time: "10:50"
+      route:
+        name: Shoreline North to Lynnwood (LRR)
+        distance_mi: 5.16
+      notes: "Exact Route TBA"
+
+- date: "2026-09-26"
+  plan:
+    - time: "8:30"
+      route_id: cedar-river-trail-10-ob
+
+- date: "2026-10-03"
+  organized-event: true
+  plan:
+    - time: "8:30"
+      route:
+        name: Light Rail Relay
