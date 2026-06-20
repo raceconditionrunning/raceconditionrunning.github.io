@@ -96,7 +96,7 @@ def main():
                           })
 
             # add brunch after other phases
-            if i == len(phases) - 1 and dist > 0:
+            if i == len(phases) - 1 and dist and dist > 0:
                 bstart = end
                 bend = bstart + timedelta(0, 90 * 60)
                 buid = str(bstart) + '@raceconditionrunning.com'
