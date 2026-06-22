@@ -28,7 +28,8 @@
     - time: "10:10"
       route:
         name: Redmond Tech to Redmond
-      notes: "Exact Route TBA"
+        map: https://onthegomap.com/s/5jir1pp2
+        distance_mi: 4.5
 
 - date: "2026-07-18"
   plan:
@@ -78,28 +79,30 @@
     - time: "8:30"
       route:
         name: Angle Lake to Othello (LRR)
-        distance_mi: 9.27
+        map: https://onthegomap.com/s/usshs825
+        distance_mi: 9.14
     - time: "10:15"
       route:
         name: Othello to SODO (LRR)
-        distance_mi: 5.09
-      notes: "Exact Route TBA"
+        map: https://onthegomap.com/s/5mmjh1fs
+        distance_mi: 4.95
 
 - date: "2026-09-05"
   plan:
     - time: "8:30"
       route:
         name: Redmond to ID (Line 2 full run)
-        distance_mi: 20.0
-      notes: "Exact Route TBA"
+        map: https://onthegomap.com/s/5jir1pp2
+        distance_mi: 19.6
+      notes:
 
 - date: "2026-09-12"
   plan:
     - time: "8:30"
       route:
         name: Beacon Hill to Roosevelt (LRR)
-        distance_mi: 10.62
-      notes: "Exact Route TBA"
+        map: https://onthegomap.com/s/e5mca9p3
+        distance_mi: 9.73
     - time: "10:15"
       route_id: roosevelt-green-lake-loop
 
@@ -108,10 +111,12 @@
     - time: "8:30"
       route:
         name: Westlake to Shoreline North (LRR)
+        map: https://onthegomap.com/s/7rt5e4c0
         distance_mi: 13.20
     - time: "10:50"
       route:
         name: Shoreline North to Lynnwood (LRR)
+        map: https://onthegomap.com/s/hsp6t05p
         distance_mi: 5.16
       notes: "Exact Route TBA"
 
