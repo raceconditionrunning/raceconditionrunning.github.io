@@ -28,7 +28,7 @@
     - time: "10:10"
       route:
         name: Redmond Tech to Redmond
-        map: https://onthegomap.com/s/5jir1pp2
+        map: https://onthegomap.com/s/td5qshfr
         distance_mi: 4.5
 
 - date: "2026-07-18"
