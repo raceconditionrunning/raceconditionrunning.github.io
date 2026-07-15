@@ -15,6 +15,10 @@ You should use virtual environments to isolate dependencies for Python.
 1. Install [`uv`](https://github.com/astral-sh/uv). Run `uv help` to make sure
 your installation was successful.
 2. Run: `uv sync` and `bundle install`.
+   The site needs Ruby 3.4 (see `.ruby-version`); newer Ruby cannot build
+   the pinned dependencies. On macOS: `brew install ruby@3.4` and put it
+   first on your `PATH` (it is keg-only), or use any version manager that
+   honors `.ruby-version`.
 3. Install [`entr`](https://github.com/eradman/entr), either via running:
 `brew install entr` (for macOS) or `sudo apt install entr`.
 
