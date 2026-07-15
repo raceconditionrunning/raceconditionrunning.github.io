@@ -27,10 +27,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.x'
           cache: pip
@@ -72,7 +72,7 @@ jobs:
       # Needed for deploying under user namespaces (username.github.io/repository/)
       - name: Set up Pages
         id: pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v6
 
       - name: Set up Jekyll configuration
         run: |
@@ -97,7 +97,7 @@ jobs:
 
       # Cache the route OpenGraph images and manifest
       - name: Restore OpenGraph route images from cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         id: cache-route-images
         with:
           path: |
@@ -126,7 +126,7 @@ jobs:
 
       - name: Save OpenGraph route images to cache
         if: steps.check-route-images.outputs.needs_generation == 'true'
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: |
             _site/img/routes/
@@ -135,7 +135,7 @@ jobs:
 
       - name: Cache HTMLProofer
         id: cache-htmlproofer
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: tmp/.htmlproofer
           key: ${{ runner.os }}-htmlproofer
@@ -148,7 +148,7 @@ jobs:
 
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
 
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -160,4 +160,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
