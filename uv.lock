@@ -480,7 +480,6 @@ dependencies = [
 [package.optional-dependencies]
 gis = [
     { name = "geopandas" },
-    { name = "osmnx" },
     { name = "shapely" },
 ]
 route-images = [
@@ -496,7 +495,6 @@ requires-dist = [
     { name = "icalendar" },
     { name = "joblib" },
     { name = "osmnx", specifier = ">=2.0.6" },
-    { name = "osmnx", marker = "extra == 'gis'" },
     { name = "pillow", marker = "extra == 'route-images'" },
     { name = "playwright", marker = "extra == 'route-images'" },
     { name = "pyyaml" },
