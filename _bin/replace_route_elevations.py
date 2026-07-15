@@ -95,11 +95,13 @@ def main():
     parser.add_argument("--output", required=True, nargs="+", help="Output GPX file(s).")
     parser.add_argument("--overwrite", action="store_true", help="Replace any existing elevation data")
     parser.add_argument("--wait", type=float, default=0.25, help="Wait time between elevation queries (seconds)")
+    parser.add_argument("--normalize-after", action="store_true", help="Suppress the normalization reminder (caller will run normalize_gpx.py)")
     args = parser.parse_args()
-    print("Resulting GPX files will be denormalized. Use `normalize_gpx.py` to fix them before committing.")
 
     if len(args.input) != len(args.output):
         raise ValueError("The number of inputs must match the number of outputs.")
+
+    is_gpx_modified = False
 
     for inpath, outpath in zip(args.input, args.output):
         # Load GPX
@@ -110,14 +112,20 @@ def main():
                 for point in tqdm.tqdm(segment.points):
                     if not point.elevation or args.overwrite:
                         point.elevation = query_usgs_elevation(point.latitude, point.longitude, wait_time=args.wait)
+                        is_gpx_modified = True
+
         # Iterate over all waypoints (pois)
         for waypoint in route.waypoints:
             if not waypoint.elevation or args.overwrite:
                 waypoint.elevation = query_usgs_elevation(waypoint.latitude, waypoint.longitude, wait_time=args.wait)
+                is_gpx_modified = True
 
         # Save GPX
         with open(outpath, 'w') as f:
             f.write(route.to_xml())
+
+    if is_gpx_modified and not args.normalize_after:
+        print("Resulting GPX files will be denormalized. Use `normalize_gpx.py` to fix them before committing.")
 
 if __name__ == '__main__':
     main()
