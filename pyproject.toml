@@ -9,7 +9,7 @@ dependencies = [
     "haversine",
     "icalendar",
     "joblib",
-    "osmnx>=2.0.6",
+    "osmnx>=2.1.1",
     "pyyaml",
     "requests",
     "tqdm",
