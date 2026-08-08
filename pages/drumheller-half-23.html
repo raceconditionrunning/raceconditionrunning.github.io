@@ -23,8 +23,8 @@ redirect_from:
     <link href="https://fonts.googleapis.com/css2?family=Yrsa:ital,wght@0,300..700;1,300..700&family=Prompt:wght@400;700&display=swap"
           rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator.min.css" integrity="sha256-pG2AUZRMdFyuinl2tPudk9iU0gh2pFIcxPbwNc/vUuo=" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator_bootstrap5.min.css" integrity="sha256-H1gQqBIR3L9enXuoNfFASj+QdGSEQIAloT7c4FXjNzc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.5.0/dist/css/tabulator.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.5.0/dist/css/tabulator_bootstrap5.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     {% include analytics.html %}
     <script type="importmap">
@@ -35,7 +35,7 @@ redirect_from:
             "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
-            "tabulator-tables": "https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/+esm"
+            "tabulator-tables": "https://cdn.jsdelivr.net/npm/tabulator-tables@6.5.0/dist/js/tabulator_esm.min.js"
           }
         }
     </script>
@@ -230,9 +230,9 @@ redirect_from:
             animation: fade-in 10s ease, rotating 600s reverse linear infinite;
         }
 
-        @media (prefers-reduced-motion) {
+        @media (prefers-reduced-motion: reduce) {
             /* styles to apply if a user's device settings are set to reduced motion */
-            .rotating,.rotating.ccw, #hero .imprint, #hero .date {
+            .rotating,.rotating.ccw {
                 animation: none;
             }
         }

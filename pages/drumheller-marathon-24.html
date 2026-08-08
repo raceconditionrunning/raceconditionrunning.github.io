@@ -28,8 +28,8 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
     <link href="https://fonts.googleapis.com/css2?family=Yrsa:ital,wght@0,300..700;1,300..700&family=Prompt:wght@400;700&display=swap"
           rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator.min.css" integrity="sha256-pG2AUZRMdFyuinl2tPudk9iU0gh2pFIcxPbwNc/vUuo=" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator_bootstrap5.min.css" integrity="sha256-H1gQqBIR3L9enXuoNfFASj+QdGSEQIAloT7c4FXjNzc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.5.0/dist/css/tabulator.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.5.0/dist/css/tabulator_bootstrap5.min.css" crossorigin="anonymous">
 
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -77,13 +77,12 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             "lit": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
             "lit-html": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
             "lit-element": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
-            "maplibre-gl": "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.3.2/maplibre-gl.min.js",
             "p5": "https://cdn.jsdelivr.net/npm/p5@2.1.2/lib/p5.esm.min.js",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
             "photoswipe-dynamic-caption": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe-dynamic-caption-plugin/1.2.7/photoswipe-dynamic-caption-plugin.esm.min.js",
             "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js",
-            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.3.0/js/tabulator_esm.min.js"
+            "tabulator-tables": "https://cdn.jsdelivr.net/npm/tabulator-tables@6.5.0/dist/js/tabulator_esm.min.js"
           }
         }
     </script>
@@ -242,17 +241,6 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
             100% {transform: rotate(360deg);}
         }
 
-        @media (prefers-reduced-motion) {
-            /* styles to apply if a user's device settings are set to reduced motion */
-            #hero .imprint, #hero .date {
-                animation: none;
-            }
-            .orbit {
-                animation: none;
-            }
-        }
-
-
         #hero {
             max-width: 80rem;
             margin: 0 auto;
@@ -387,6 +375,13 @@ shirt_order_link: https://forms.gle/GroYX6gFR88b4rqb6
         .orbit.four {
             animation: fade-in 1s ease forwards, orbit 59s linear infinite;
             animation-delay: 2.7s, 0s;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            /* styles to apply if a user's device settings are set to reduced motion */
+            .orbit, .orbit.one, .orbit.two, .orbit.three, .orbit.four {
+                animation: none;
+            }
         }
 
         .rotation-offset {
