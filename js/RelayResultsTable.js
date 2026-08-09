@@ -16,6 +16,23 @@ export class RelayResultsTable extends HTMLElement {
         this.splitColumns = []
     }
 
+    /**
+     * The name cell's badge: the runner count, outlined in light gray for a Competitive-format
+     *  team, or "Solo" for solo runners.
+     */
+    static formatNameCell(cell) {
+        let row = cell.getRow().getData()
+        let teamSize = ""
+        if (row.teamSize && row.category === "Competitive") {
+            teamSize = ` <span class="badge bg-secondary-subtle team-size-badge fw-normal border border-2 text-secondary" style="border-color: #ccc;" title="Competitive format team">${row.teamSize}</span>`
+        } else if (row.category === "Solo") {
+            teamSize = ` <span class="badge bg-secondary-subtle team-size-badge fw-normal text-secondary" title="Solo Runner">Solo</span>`
+        } else if (row.teamSize) {
+            teamSize = ` <span class="badge bg-secondary-subtle team-size-badge fw-normal text-secondary" title="Team Size">${row.teamSize}</span>`
+        }
+        return `<span class="runner-name">${cell.getValue()}</span> ${teamSize}`
+    }
+
     initialize(data, exchangeColumnEntries){
         this._data = data
         this.lastUpdated = data.lastUpdated
@@ -135,20 +152,7 @@ export class RelayResultsTable extends HTMLElement {
                 responsiveLayout: false,
                 initialSort: [{column: "name", dir: "asc"}],
                 columns: [
-                    {title: "Name", field: "name", resizable: false, frozen: true, formatter: cell => {
-                            let row = cell.getRow().getData()
-                            let teamSize = ""
-                            if (row.teamSize && row.category === "Competitive") {
-                                teamSize = ` <span class="badge bg-secondary-subtle team-size-badge fw-normal border border-2 border-primary text-secondary" title="Competitive format team">${row.teamSize}</span>`
-                            } else if (row.category === "Solo") {
-                                teamSize = ` <span class="badge bg-secondary-subtle team-size-badge fw-normal border border-2 border-success text-secondary" title="Solo Runner">Solo</span>`
-                            } else if (row.teamSize) {
-                                teamSize = ` <span class="badge bg-secondary-subtle team-size-badge fw-normal text-secondary" title="Team Size">${row.teamSize}</span>`
-                            }
-                            let out = `<span class="runner-name">${cell.getValue()}</span> ${teamSize}`
-                            return out
-                        }
-                    },
+                    {title: "Name", field: "name", resizable: false, frozen: true, formatter: RelayResultsTable.formatNameCell},
                     ...this.cumulativeColumns
                 ]
             })
@@ -195,19 +199,7 @@ export class RelayResultsTable extends HTMLElement {
                 field: "name",
                 resizable: false,
                 frozen: true,
-                formatter: cell => {
-                    let row = cell.getRow().getData()
-                    let teamSize = ""
-                    if (row.teamSize && row.category === "Competitive") {
-                        teamSize = ` <span class="badge bg-secondary-subtle team-size-badge fw-normal border border-2 border-primary text-secondary" title="Competitive format team">${row.teamSize}</span>`
-                    } else if (row.category === "Solo") {
-                        teamSize = ` <span class="badge bg-secondary-subtle team-size-badge fw-normal border border-2 border-success text-secondary" title="Solo Runner">Solo</span>`
-                    } else if (row.teamSize) {
-                        teamSize = ` <span class="badge bg-secondary-subtle team-size-badge fw-normal text-secondary" title="Team Size">${row.teamSize}</span>`
-                    }
-                    let out = `<span class="runner-name">${cell.getValue()}</span> ${teamSize}`
-                    return out
-                }
+                formatter: RelayResultsTable.formatNameCell
             }
 
             const columns = enabled ?

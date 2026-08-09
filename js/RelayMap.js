@@ -1,11 +1,19 @@
 import { LitElement, html, css } from 'lit';
-import { formatLegDescription } from "./common.js";
+import { formatLegDescription, legsForLine, exchangeStationCode, exchangeLineCode } from "./common.js";
 import { FrameControl } from "./FrameControl.js";
 import { ElevationProfile } from "./ElevationProfile.js";
 import { Protocol } from 'pmtiles';
-import maplibregl from 'maplibre-gl';
+import * as maplibregl from 'maplibre-gl';
 import { along, distance, point, nearestPointOnLine, lineString } from '@turf';
 
+//  maps OBA's route id to the single digit that train's own line badge uses elsewhere on the page.
+const ARRIVAL_ROUTE_LINE_CODES = {
+    "40_100479": "1",
+    "40_2LINE": "2",
+};
+
+// layer ids that draw from the "rail-lines" source, so they can all be brought forward
+const RAIL_LINE_LAYERS = ['tunnel_lightrail', 'lightrail', 'lightrail_hatching', 'bridge_lightrail', 'bridge_lightrail_hatching'];
 
 function queryNearestDistanceAlongLegs(queryPoint, legs) {
     let totalDistance = 0;
@@ -22,6 +30,19 @@ function queryNearestDistanceAlongLegs(queryPoint, legs) {
     }
 
     return [totalDistance, { lng: nearest.geometry.coordinates[0], lat: nearest.geometry.coordinates[1] }];
+}
+
+/**
+ * Wash a line's colour most of the way to white: enough of a tinge to tell two leg numbers apart, not so
+ * much that the label stops reading as white text on the map.
+ */
+function tintTowardsWhite(color, weight = 0.6) {
+    const match = /^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i.exec(color ?? '');
+    if (!match) return '#ffffff';
+    const channels = match.slice(1)
+        .map(hex => Math.round(parseInt(hex, 16) * (1 - weight) + 255 * weight))
+        .map(value => value.toString(16).padStart(2, '0'));
+    return `#${channels.join('')}`;
 }
 
 const calcSplitImportance = (distance) => {
@@ -114,6 +135,11 @@ export class RelayMap extends LitElement {
         this.imgBasePath = '';
         this.pointCollections = {};
         this.pois = null;
+        this.currentPOIs = null;
+        this.activeLines = new Set();
+        this.availableLines = [];
+        this.exchangeLines = new Map();
+        this.stationCodeImages = new Set();
         this.loading = true;
         this.liveArrivalsSetup = false;
 
@@ -127,6 +153,8 @@ export class RelayMap extends LitElement {
         this.frameControl = null;
         this.popupStore = new Map();
         this.landmarkMarkers = new Map();
+        this.lineFilterControl = null;
+        this.poiInteractionsSetup = false;
     }
 
     render() {
@@ -149,64 +177,64 @@ export class RelayMap extends LitElement {
 
     firstUpdated() {
         this.initializeMap();
-        if (this.useStationCodes) {
-            const stationImages = ['1', '2', '3', '4', 'T'];
-            for (const code of stationImages) {
-                if (this.map.hasImage(`${code}stationcode`)) continue;
-                try {
-                    this.map.loadImage(`${this.imgBasePath}${code}_station_code_vertical_dark.png`).then((image) => {
-                        if (!image || !image.data) {
-                            console.warn(`Image for ${code} not found or invalid.`);
-                            return;
-                        }
-                        this.map.addImage(`${code}stationcode`, image.data, { pixelRatio: 4 });
-                    })
-                    this.map.loadImage(`${this.imgBasePath}${code}_station_code_vertical_dark_small.png`).then((image) => {
-                        if (!image || !image.data) {
-                            console.warn(`Image for ${code} not found or invalid.`);
-                            return;
-                        }
-                        this.map.addImage(`${code}stationcodesmall`, image.data, { pixelRatio: 3 });
 
-                    })
-                } catch (e) {
-                    console.warn(`Failed to load station code image for ${code}:`, e);
-                }
-            }
-            // Generate a roundrect texture
-            const canvas = document.createElement('canvas');
-            canvas.width = 108;
-            canvas.height = 72;
-            const radius = 12;
-            const padding = 8;
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#ffffff';
-            ctx.beginPath();
-            ctx.roundRect(0, 0, canvas.width, canvas.height, radius);
-            ctx.fill();
-            // FIXME: The corners are visibly stretched for short mile markers. Are the stretch regions correct?
-            this.map.addImage('roundrect', {
-                width: canvas.width,
-                height: canvas.height,
-                data: ctx.getImageData(0, 0, canvas.width, canvas.height).data,
-                stretchX: [radius + 1, canvas.width - radius - 1],
-                stretchY: [radius + 1, canvas.height - radius - 1],
-                content: [radius + 1 + padding, radius + 1 + padding, canvas.width - radius - 1 - padding, canvas.height - radius - 1 - padding],
-                pixelRatio: 3,
-                sdf: true
+        // Generate a roundrect texture
+        const roundrectCanvas = document.createElement('canvas');
+        roundrectCanvas.width = 108;
+        roundrectCanvas.height = 72;
+        const radius = 12;
+        const padding = 8;
+        const roundrectCtx = roundrectCanvas.getContext('2d');
+        roundrectCtx.fillStyle = '#ffffff';
+        roundrectCtx.beginPath();
+        roundrectCtx.roundRect(0, 0, roundrectCanvas.width, roundrectCanvas.height, radius);
+        roundrectCtx.fill();
+        // FIXME: The corners are visibly stretched for short mile markers. Are the stretch regions correct?
+        this.map.addImage('roundrect', {
+            width: roundrectCanvas.width,
+            height: roundrectCanvas.height,
+            data: roundrectCtx.getImageData(0, 0, roundrectCanvas.width, roundrectCanvas.height).data,
+            stretchX: [radius + 1, roundrectCanvas.width - radius - 1],
+            stretchY: [radius + 1, roundrectCanvas.height - radius - 1],
+            content: [radius + 1 + padding, radius + 1 + padding, roundrectCanvas.width - radius - 1 - padding, roundrectCanvas.height - radius - 1 - padding],
+            pixelRatio: 3,
+            sdf: true
+        });
+
+        if (!this.useStationCodes) {
+            // Relays from before station codes existed (LRR23) marked each exchange with a plain numbered
+            // dot rather than a line-code badge. Draw that dot so those pages keep their original look.
+            const dotCanvas = document.createElement('canvas');
+            const size = 24;
+            dotCanvas.width = size;
+            dotCanvas.height = size;
+            const dotCtx = dotCanvas.getContext('2d');
+            dotCtx.fillStyle = '#000000';
+            dotCtx.beginPath();
+            dotCtx.arc(size / 2, size / 2, size / 2, 0, 2 * Math.PI);
+            dotCtx.fill();
+            dotCtx.fillStyle = '#FFFFFF';
+            dotCtx.beginPath();
+            dotCtx.arc(size / 2, size / 2, size / 2 - 1, 0, 2 * Math.PI);
+            dotCtx.fill();
+            this.map.addImage('legacy-exchange-circle', {
+                width: dotCanvas.width,
+                height: dotCanvas.height,
+                data: dotCtx.getImageData(0, 0, dotCanvas.width, dotCanvas.height).data,
+                pixelRatio: 4
             });
-
-
         }
     }
 
     updated(changedProperties) {
         this.mapReady.then(() => {
             if (changedProperties.has('legs') && this.legs) {
+                this.updateAvailableLines();
                 this.updateLegs();
             }
 
             if (changedProperties.has('exchanges') && this.exchanges) {
+                this.updateAvailableLines();
                 this.updateExchanges();
             }
 
@@ -223,9 +251,232 @@ export class RelayMap extends LitElement {
             }
 
             if (changedProperties.has('pois') && this.pois) {
+                this.updateAvailableLines();
                 this.updatePOIs();
             }
         });
+    }
+
+    isLineActive(line) {
+        return this.activeLines.has(line);
+    }
+
+    toggleLine(line) {
+        if (this.activeLines.has(line)) {
+            this.activeLines.delete(line);
+        } else {
+            this.activeLines.add(line);
+        }
+        if (this.refreshLegColors()) this.map.getSource('legs')?.setData(this.legs);
+        this.refreshLegLabels();
+        this.updateFeatureVisibility();
+        this.updateLineFilterControl();
+        this.updateLandmarkImages();
+        this.clearArrivalPopups();
+    }
+
+    updateAvailableLines() {
+        const lines = new Set();
+        [this.legs, this.pois].forEach(collection => {
+            (collection?.features || []).forEach(feature => {
+                (feature.properties?.lines || []).forEach(line => lines.add(line));
+            });
+        });
+        const nextLines = [...lines].sort((a, b) => String(a).localeCompare(String(b), undefined, { numeric: true }));
+        if (nextLines.join('|') !== this.availableLines.join('|')) {
+            this.availableLines = nextLines;
+            // Newly-seen lines start visible; lines that have disappeared drop out of the active set.
+            nextLines.forEach(line => this.activeLines.add(line));
+            [...this.activeLines].forEach(line => {
+                if (!lines.has(line)) this.activeLines.delete(line);
+            });
+            this.updateLineFilterControl();
+        }
+        this.updateFeatureVisibility();
+    }
+
+    /**
+     * The digit (or letter) a line's key is known by elsewhere on the page, e.g. "lrr_1line" -> "1".
+     */
+    lineDigit(line) {
+        return String(line).match(/\d+/)?.[0] ?? line;
+    }
+
+    updateLineFilterControl() {
+        if (!this.map) return;
+        const mapContainer = this.renderRoot.querySelector('.map-container');
+        if (!mapContainer) return;
+
+        if (this.availableLines.length <= 1) {
+            this.lineFilterControl?.remove();
+            this.lineFilterControl = null;
+            return;
+        }
+
+        if (!this.lineFilterControl) {
+            this.lineFilterControl = document.createElement('div');
+            this.lineFilterControl.className = 'map-line-filter';
+            this.lineFilterControl.setAttribute('role', 'group');
+            this.lineFilterControl.setAttribute('aria-label', 'Line filter');
+            // Top left is taken by the navigation, fullscreen and geolocate controls
+            this.lineFilterControl.style.position = 'absolute';
+            this.lineFilterControl.style.top = '0.75rem';
+            this.lineFilterControl.style.right = '0.75rem';
+            this.lineFilterControl.style.zIndex = '2';
+            mapContainer.appendChild(this.lineFilterControl);
+        }
+
+        this.lineFilterControl.replaceChildren();
+        this.availableLines.forEach(line => {
+            const active = this.isLineActive(line);
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = `map-line-filter-btn${active ? '' : ' map-line-filter-btn-inactive'}`;
+            button.setAttribute('aria-pressed', String(active));
+            button.setAttribute('aria-label', `Toggle line ${this.lineDigit(line)}`);
+
+            const number = document.createElement('span');
+            number.className = 'map-line-filter-number';
+            number.style.backgroundColor = this.lineColors?.[line] ?? '#888';
+            number.textContent = this.lineDigit(line);
+            button.appendChild(number);
+
+            button.addEventListener('click', () => this.toggleLine(line));
+            this.lineFilterControl.appendChild(button);
+        });
+    }
+
+    /**
+     * The lines a feature belongs to, or undefined if it doesn't claim any. Legs and POIs carry their own
+     * `lines`; exchanges inherit theirs from the legs that meet there.
+     */
+    linesForFeature(feature) {
+        return feature.properties?.lines ?? this.exchangeLines.get(feature.properties?.id);
+    }
+
+    /**
+     * Filtering hides features whose lines are all toggled off. Features with no line at all — future
+     * exchanges, everything in a single-route relay — always stay put.
+     */
+    featureLineVisible(feature) {
+        const lines = this.linesForFeature(feature);
+        return !lines?.length || lines.some(line => this.isLineActive(line));
+    }
+
+    /**
+     * Cumulative mileage is measured from the start of a line, so with more than one line shown there is
+     * no meaningful "overall" distance until exactly one is toggled on.
+     */
+    overallSplitVisible(feature) {
+        const lines = feature.properties?.lines;
+        if (!lines?.length) return true;
+        return this.activeLines.size === 1 && lines.some(line => this.isLineActive(line));
+    }
+
+    getLineVisibilityExpression(visibleValue = 1, hiddenValue = 0) {
+        return [
+            'case',
+            ['boolean', ['feature-state', 'lineVisible'], true],
+            visibleValue,
+            hiddenValue
+        ];
+    }
+
+    setLayerPaintProperty(layerId, property, value) {
+        if (this.map.getLayer(layerId)) {
+            this.map.setPaintProperty(layerId, property, value);
+        }
+    }
+
+    /**
+     * With every relay line toggled off there's no coloured route left on the map, so bring the physical
+     * rail lines forward — darker and a bit wider — instead of leaving the map looking empty. Reverts back
+     * to the style's own dim treatment as soon as any line is showing.
+     */
+    updateRailLineSalience() {
+        const salient = this.activeLines.size === 0;
+        this.railLineDefaults = this.railLineDefaults ?? new Map();
+        RAIL_LINE_LAYERS.forEach(layerId => {
+            const layer = this.map.getLayer(layerId);
+            if (!layer) return;
+            if (!this.railLineDefaults.has(layerId)) {
+                this.railLineDefaults.set(layerId, {
+                    color: this.map.getPaintProperty(layerId, 'line-color'),
+                    width: this.map.getPaintProperty(layerId, 'line-width'),
+                    // The wider "salient" width is pre-scaled and baked into the style's layer metadata,
+                    // since a "zoom" expression (as line-width is here) can't be nested inside a runtime
+                    // ["*", width, factor] expression — it's only legal as top-level step/interpolate input.
+                    salientWidth: layer.metadata?.['salient-line-width']
+                });
+            }
+            const { color, width, salientWidth } = this.railLineDefaults.get(layerId);
+            this.map.setPaintProperty(layerId, 'line-color', salient ? '#eee' : color);
+            this.map.setPaintProperty(layerId, 'line-width', salient ? salientWidth ?? width : width);
+        });
+    }
+
+    updateLineVisibilityState(sourceId, collection, visible = feature => this.featureLineVisible(feature)) {
+        if (!collection || !this.map.getSource(sourceId)) return;
+        (collection.features || []).forEach(feature => {
+            const id = feature.id ?? feature.properties?.id;
+            if (id == null) return;
+            this.map.setFeatureState(
+                { source: sourceId, id },
+                { lineVisible: visible(feature) }
+            );
+        });
+    }
+
+    updateFeatureVisibility() {
+        if (!this.map) return;
+        this.updateRailLineSalience();
+        this.updateLineVisibilityState('legs', this.legs);
+        this.updateLineVisibilityState('leg-labels', this.currentLegLabels);
+        this.updateLineVisibilityState('overall-splits', this.currentOverallSplits, feature => this.overallSplitVisible(feature));
+        this.updateLineVisibilityState('leg-splits', this.currentLegSplits);
+        this.updateLineVisibilityState('exchanges', this.exchanges);
+        this.updateLineVisibilityState('pois', this.currentPOIs);
+
+        // The route fades out as the streets underneath come into view. That fade is line-layer-opacity
+        // rather than line-opacity so the layer is composited once — a translucent line drawn per segment
+        // blends with itself and turns solid at every kink. line-opacity is left to the line filter, which
+        // is per feature and so can't live on the layer.
+        ['legs', 'legs-secondary'].forEach(layerId => {
+            this.setLayerPaintProperty(layerId, 'line-opacity', this.getLineVisibilityExpression(1));
+            this.setLayerPaintProperty(layerId, 'line-layer-opacity', [
+                'interpolate', ['linear'], ['zoom'],
+                14, 1,
+                15, 0.6,
+                16, 0.45
+            ]);
+        });
+
+        ['overall-splits', 'leg-splits'].forEach(layerId => {
+            this.setLayerPaintProperty(layerId, 'icon-opacity', this.getLineVisibilityExpression(0.75));
+            this.setLayerPaintProperty(layerId, 'text-opacity', this.getLineVisibilityExpression(1));
+        });
+        this.setLayerPaintProperty('leg-labels', 'text-opacity', this.getLineVisibilityExpression(1));
+
+        this.setLayerPaintProperty('exchange-circle-current', 'icon-opacity', this.getLineVisibilityExpression(1));
+        this.setLayerPaintProperty('exchange-circle-future', 'icon-opacity', this.getLineVisibilityExpression(0.25));
+        this.setLayerPaintProperty('exchange-station-code', 'icon-opacity', this.getLineVisibilityExpression(1));
+        this.setLayerPaintProperty('exchange-station-code', 'text-opacity', this.getLineVisibilityExpression(1));
+        this.setLayerPaintProperty('exchange-id', 'text-opacity', this.getLineVisibilityExpression(1));
+        this.setLayerPaintProperty('exchange-name', 'text-opacity', this.getLineVisibilityExpression(1));
+        this.setLayerPaintProperty('exchange-station-code-future', 'icon-opacity', this.getLineVisibilityExpression(0.5));
+        this.setLayerPaintProperty('exchange-station-code-future', 'text-opacity', this.getLineVisibilityExpression(0.5));
+        this.setLayerPaintProperty('exchange-name-future', 'text-opacity', this.getLineVisibilityExpression(0.6));
+
+        this.setLayerPaintProperty('pois', 'circle-opacity', this.getLineVisibilityExpression(0.9));
+        this.setLayerPaintProperty('pois-labels', 'text-opacity', this.getLineVisibilityExpression(1));
+    }
+
+    clearArrivalPopups() {
+        this.popupStore.forEach(({ popup, intervalId }) => {
+            clearInterval(intervalId);
+            this.fadeOutAndRemovePopup(popup);
+        });
+        this.popupStore.clear();
     }
 
     initializeMap() {
@@ -321,6 +572,7 @@ export class RelayMap extends LitElement {
 
         const legsData = this.legs.features;
 
+        this.refreshLegColors();
         this.map.getSource('legs').setData(this.legs);
 
         // Update bounds
@@ -338,6 +590,8 @@ export class RelayMap extends LitElement {
             this.map.fitBounds(relayBounds, {padding: 32});
         }
 
+        this.updateExchangeLines(legsData);
+
         // Numeric leg numbers
         const labels = legsData.map((leg) => {
             const coordinates = leg.geometry.coordinates;
@@ -354,45 +608,187 @@ export class RelayMap extends LitElement {
                 },
                 properties: {
                     id: leg.properties.id,
-                    sequence: leg.properties.sequence
+                    sequence: leg.properties.sequence,
+                    lines: leg.properties.lines,
+                    ...this.legLabelProperties(leg)
                 }
             };
         });
 
-
-        this.map.getSource('leg-labels').setData({
+        this.currentLegLabels = {
             type: 'FeatureCollection',
             features: labels
-        });
+        };
+        this.map.getSource('leg-labels').setData(this.currentLegLabels);
 
-        const overallSplits = placeSplits(lineString(legsData.flatMap(leg => leg.geometry.coordinates)), 0.25, 'miles');
-
-        this.map.getSource('overall-splits').setData({
+        this.currentOverallSplits = {
             "type": "FeatureCollection",
-            "features": overallSplits
-        })
+            "features": this.buildOverallSplits(legsData)
+        };
+        this.map.getSource('overall-splits').setData(this.currentOverallSplits)
 
         const allLegSplits = legsData.flatMap(leg => {
             const legSplits = placeSplits(leg, 0.25, 'miles')
-            legSplits.forEach(splits => {
+            legSplits.forEach((splits, index) => {
+                splits.properties.id = `leg-${leg.properties.id}-split-${index}`;
                 splits.properties.legId = leg.properties.id;
+                splits.properties.lines = leg.properties.lines;
             })
             return legSplits
         })
 
-        this.map.getSource('leg-splits').setData({
+        this.currentLegSplits = {
             "type": "FeatureCollection",
             "features": allLegSplits
-        });
+        };
+        this.map.getSource('leg-splits').setData(this.currentLegSplits);
+        this.updateFeatureVisibility();
 
         this.setupLegInteractions(legsData);
 
     }
 
+    /**
+     * An exchange belongs to whichever lines pass through it, which only the legs know.
+     */
+    updateExchangeLines(legsData) {
+        this.exchangeLines = new Map();
+        legsData.forEach(leg => {
+            const { lines = [], start_exchange, end_exchange } = leg.properties;
+            if (!lines.length) return;
+            [start_exchange, end_exchange].forEach(exchangeId => {
+                if (exchangeId == null) return;
+                const known = this.exchangeLines.get(exchangeId) ?? [];
+                this.exchangeLines.set(exchangeId, [...new Set([...known, ...lines])]);
+            });
+        });
+    }
+
+    /**
+     * A leg's position is stated per line, so a leg shared by two lines has two numbers. Show the number for
+     * whichever of its lines are currently toggled on — one if only one is, both if both are. Ordered to
+     * match legColors, so the numbers and the colours they're tinged with pair up.
+     */
+    legNumbering(leg) {
+        const { sequence = [], lines = [] } = leg.properties;
+        if (!lines.length) return sequence.map(position => ({ number: String(position + 1) }));
+        const shown = lines.filter(line => this.isLineActive(line));
+        return shown.map(line => ({
+            number: String(sequence[lines.indexOf(line)] + 1),
+            color: this.lineColors?.[line]
+        }));
+    }
+
+    legSequenceLabel(leg) {
+        return this.legNumbering(leg).map(entry => entry.number).join('/');
+    }
+
+    /**
+     * The label layer draws each number as its own section, so they arrive as separate properties.
+     */
+    legLabelProperties(leg) {
+        const [primary, secondary] = this.legNumbering(leg);
+        return {
+            label: primary?.number ?? '',
+            labelColor: tintTowardsWhite(primary?.color),
+            labelSecondary: secondary?.number,
+            labelSecondaryColor: secondary && tintTowardsWhite(secondary.color)
+        };
+    }
+
+    /**
+     * The colours a leg is drawn in, most important first, limited to whichever of its lines are currently
+     * toggled on. A leg shared by two lines that are both showing gets both, drawn as a parallel pair;
+     * turning one off collapses it back down to a single colour.
+     */
+    legColors(leg) {
+        const lines = leg.properties.lines || [];
+        return lines.filter(line => this.isLineActive(line)).map(line => this.lineColors?.[line]).filter(Boolean);
+    }
+
+    refreshLegColors() {
+        if (!this.legs) return false;
+        let changed = false;
+        this.legs.features.forEach(leg => {
+            const [color, secondary] = this.legColors(leg);
+            if (!color) return;
+            // Only a leg that is drawn as a pair carries a second colour; the style keys off its presence
+            const next = { lineColor: color, lineColorSecondary: secondary };
+            for (const [key, value] of Object.entries(next)) {
+                if (leg.properties[key] === value) continue;
+                changed = true;
+                if (value === undefined) delete leg.properties[key];
+                else leg.properties[key] = value;
+            }
+        });
+        return changed;
+    }
+
+    refreshLegLabels() {
+        if (!this.currentLegLabels || !this.legs) return;
+        const byId = new Map(this.legs.features.map(leg => [leg.properties.id, this.legLabelProperties(leg)]));
+        this.currentLegLabels.features.forEach(label => {
+            for (const [key, value] of Object.entries(byId.get(label.properties.id) ?? {})) {
+                if (value === undefined) delete label.properties[key];
+                else label.properties[key] = value;
+            }
+        });
+        this.map.getSource('leg-labels')?.setData(this.currentLegLabels);
+    }
+
+    /**
+     * Cumulative mile markers run from the start of each line, so a relay with several lines gets several
+     * chains of them. Legs are ordered along the line they're being measured on, not by leg id.
+     */
+    buildOverallSplits(legsData) {
+        const lines = [...new Set(legsData.flatMap(leg => leg.properties.lines || []))];
+        const chains = lines.length
+            ? lines.map(line => [line, legsForLine(legsData, line)])
+            : [[null, legsData]];
+
+        return chains.flatMap(([line, chainLegs]) => {
+            const splits = placeSplits(lineString(chainLegs.flatMap(leg => leg.geometry.coordinates)), 0.25, 'miles');
+            splits.forEach((split, index) => {
+                split.properties.id = `overall-${line ?? 'route'}-${index}`;
+                if (line) split.properties.lines = [line];
+            });
+            return splits;
+        });
+    }
+
+    /**
+     * The chain of legs a distance along the route should be measured against: whichever of the leg's lines
+     * is currently toggled on, or failing that, whichever line the leg under the cursor runs on.
+     */
+    lineChainFor(leg) {
+        const legsData = this.legs?.features ?? [];
+        const lines = leg?.properties?.lines || [];
+        const line = lines.find(line => this.isLineActive(line)) ?? lines[0];
+        return line ? legsForLine(legsData, line) : legsData;
+    }
+
     updateExchanges() {
         if (!this.exchanges) return;
 
-        this.map.getSource('exchanges').setData(this.exchanges);
+        // The station code and line badge live in the exchange id rather than in properties of their own
+        this.currentExchanges = {
+            type: 'FeatureCollection',
+            features: this.exchanges.features.map(exchange => ({
+                ...exchange,
+                properties: {
+                    ...exchange.properties,
+                    station_code: exchangeStationCode(exchange.properties.id),
+                    line_code: exchangeLineCode(exchange.properties.id)
+                }
+            }))
+        };
+
+        this.map.getSource('exchanges').setData(this.currentExchanges);
+        this.loadStationCodeImages(this.currentExchanges.features);
+        this.updateShortStationNames();
+        // Trains may have arrived before the stations that name their destinations
+        if (this.trains) this.updateTrains();
+        this.updateFeatureVisibility();
 
         if (this.useStationCodes) {
             this.map.setLayoutProperty("exchange-id", 'visibility', 'none');
@@ -400,16 +796,73 @@ export class RelayMap extends LitElement {
         } else {
             this.map.setLayoutProperty('exchange-station-code', 'visibility', 'none');
             this.map.setLayoutProperty("exchange-id", 'visibility', 'visible');
+            // Without station codes there's no line badge to draw on the circle layers, so point them at
+            // the plain numbered dot instead of the (never-loaded) line-code icon.
+            ['exchange-circle-current', 'exchange-circle-future'].forEach(layerId => {
+                this.map.setLayoutProperty(layerId, 'icon-image', 'legacy-exchange-circle');
+                this.map.setLayoutProperty(layerId, 'icon-size', { stops: [[6, 0.25], [9, 0.5], [12, 1]] });
+                this.map.setLayoutProperty(layerId, 'icon-allow-overlap', true);
+                this.map.setLayoutProperty(layerId, 'icon-ignore-placement', true);
+            });
         }
 
         this.setupExchangeInteractions();
         this.updateLandmarkImages();
     }
 
+    /**
+     * Load a badge image per line code present in the data. An exchange shared by two lines carries both
+     * digits ("12"), and so needs its own combined badge.
+     */
+    loadStationCodeImages(exchanges) {
+        if (!this.useStationCodes) return;
+
+        const codes = new Set(exchanges.map(exchange => exchange.properties.line_code).filter(Boolean));
+        for (const code of codes) {
+            if (this.stationCodeImages.has(code)) continue;
+            this.stationCodeImages.add(code);
+
+            const load = (suffix, name, pixelRatio) =>
+                this.map.loadImage(`${this.imgBasePath}${code}_station_code_vertical_dark${suffix}.png`)
+                    .then(image => {
+                        if (!image?.data) throw new Error('no image data');
+                        if (!this.map.hasImage(name)) this.map.addImage(name, image.data, { pixelRatio });
+                    })
+                    .catch(e => console.warn(`Failed to load station code image for line ${code}:`, e));
+
+            load('', `${code}stationcode`, 4);
+            load('_small', `${code}stationcodesmall`, 3);
+        }
+    }
+
+    /**
+     * Some stations state a shorter name to be known by in passing — on a headsign or an arrivals board,
+     * where "International District/Chinatown" is more than the space deserves.
+     */
+    shortStationName(name) {
+        return this.shortStationNames?.get(name);
+    }
+
+    updateShortStationNames() {
+        this.shortStationNames = new Map(
+            (this.exchanges?.features || [])
+                .filter(exchange => exchange.properties.short_name)
+                .map(exchange => [exchange.properties.name, exchange.properties.short_name])
+        );
+    }
+
     updateTrains() {
         if (!this.trains) return;
-        this.map.getSource("trains").setData(this.trains);
 
+        // Headsigns are long enough to crowd the map, so prefer the station's short name where there is one
+        this.map.getSource("trains").setData({
+            ...this.trains,
+            features: (this.trains.features || []).map(train => {
+                const short = this.shortStationName(train.properties?.headsign);
+                if (!short) return train;
+                return { ...train, properties: { ...train.properties, headsignShort: short } };
+            })
+        });
     }
 
     updateRailLines() {
@@ -449,6 +902,7 @@ export class RelayMap extends LitElement {
             type: 'FeatureCollection',
             features: poisFeatures
         };
+        this.currentPOIs = poiCollection;
 
         // Update or create POI source
         if (this.map.getSource('pois')) {
@@ -461,11 +915,15 @@ export class RelayMap extends LitElement {
         }
 
         this.setupPOIInteractions();
+        this.updateFeatureVisibility();
     }
 
     setupPOIInteractions() {
+        if (this.poiInteractionsSetup) return;
+        this.poiInteractionsSetup = true;
+
         const updatePOICursor = (e) => {
-            this.map.getCanvas().style.cursor = 'pointer';
+            this.map.getCanvas().style.cursor = e.features.some(feature => this.featureLineVisible(feature)) ? 'pointer' : '';
         };
 
         const removePOICursor = () => {
@@ -479,7 +937,8 @@ export class RelayMap extends LitElement {
             this.map.on('click', layerId, {
                 // Zoom to POI on click
                 zoomToExchange: (e) => {
-                    const poi = e.features[0];
+                    const poi = e.features.find(feature => this.featureLineVisible(feature));
+                    if (!poi) return;
                     const coordinates = poi.geometry.coordinates;
                     const bounds = new maplibregl.LngLatBounds(coordinates, coordinates);
                     this.map.fitBounds(bounds, {
@@ -492,7 +951,10 @@ export class RelayMap extends LitElement {
     }
 
     _legClickHandler(legsData, e) {
-        const leg = legsData.find(l => l.properties.id === e.features[0].id);
+        const feature = e.features.find(feature => this.featureLineVisible(feature));
+        if (!feature) return;
+        const leg = legsData.find(l => l.properties.id === feature.id);
+        if (!leg) return;
         const coordinates = leg.geometry.coordinates;
         const bounds = coordinates.reduce((bounds, coord) => {
             return bounds.extend(coord);
@@ -501,7 +963,7 @@ export class RelayMap extends LitElement {
         const legDetails = {
             ...leg.properties
         }
-        legDetails.id += 1; // Convert to 1-based index for display
+        legDetails.id = this.legSequenceLabel(leg); // Legs are identified by their position on the line
         legDetails.coordinates = coordinates; // Store the coordinates for elevation profile
         this.currentLegPopup = new maplibregl.Popup({
             anchor: "bottom-left",
@@ -557,15 +1019,22 @@ export class RelayMap extends LitElement {
         });
 
         const updateDistancePopup = (e) => {
+            const feature = e.features.find(feature => this.featureLineVisible(feature));
+            if (!feature) {
+                this.map.getCanvas().style.cursor = '';
+                distancePopup.remove();
+                return;
+            }
             this.map.getCanvas().style.cursor = 'pointer';
             const coordinates = [e.lngLat.lng, e.lngLat.lat];
-            const leg = legsData.filter(l => l.properties.id === e.features[0].id);
-            const [distanceAlongLine, _] = queryNearestDistanceAlongLegs(point(coordinates), legsData);
-            const [distanceAlongLeg, nearestPoint] = queryNearestDistanceAlongLegs(point(coordinates), leg);
+            const leg = legsData.find(l => l.properties.id === feature.id);
+            if (!leg) return;
+            const [distanceAlongLine, _] = queryNearestDistanceAlongLegs(point(coordinates), this.lineChainFor(leg));
+            const [distanceAlongLeg, nearestPoint] = queryNearestDistanceAlongLegs(point(coordinates), [leg]);
 
             distancePopup
                 .setLngLat(nearestPoint)
-                .setHTML(`${(distanceAlongLine / 1609.34).toFixed(2)}mi <br><span class="leg-dist">${e.features[0].id + 1}: ${(distanceAlongLeg / 1609.34).toFixed(2)}mi</span>`)
+                .setHTML(`${(distanceAlongLine / 1609.34).toFixed(2)}mi <br><span class="leg-dist">${this.legSequenceLabel(leg)}: ${(distanceAlongLeg / 1609.34).toFixed(2)}mi</span>`)
                 .addTo(this.map);
         };
         const removeDistancePopup = () => {
@@ -585,11 +1054,12 @@ export class RelayMap extends LitElement {
 
     setupExchangeInteractions() {
         const updateExchangeCursor = (e) => {
-            this.map.getCanvas().style.cursor = 'pointer';
+            this.map.getCanvas().style.cursor = e.features.some(feature => this.featureLineVisible(feature)) ? 'pointer' : '';
         };
 
         const zoomToExchange = (e) => {
-            const exchange = e.features[0];
+            const exchange = e.features.find(feature => this.featureLineVisible(feature));
+            if (!exchange) return;
             const coordinates = exchange.geometry.coordinates;
             const bounds = new maplibregl.LngLatBounds(coordinates, coordinates);
             this.map.fitBounds(bounds, {
@@ -638,7 +1108,7 @@ export class RelayMap extends LitElement {
             const coords = exchange.geometry.coordinates;
             const hasImage = exchange.properties.image_url;
             const isVisible = bounds.contains(coords);
-            return hasImage && isVisible;
+            return hasImage && isVisible && this.featureLineVisible(exchange);
         });
 
         // Remove markers that are no longer needed
@@ -748,6 +1218,8 @@ export class RelayMap extends LitElement {
 
 
     registerLiveArrivalsSource(exchanges, endpoint) {
+        const exchangeIdByName = new Map(exchanges.features.map(exchange => [exchange.properties.name, exchange.properties.id]));
+
         this.mapReady.then(() => {
             try {
                 if (!this.map.hasImage(`${this.imgBasePath}lrv.png`)) {
@@ -762,23 +1234,26 @@ export class RelayMap extends LitElement {
             } catch (e) {
                 console.warn('Failed to load LRV icon:', e);
             }
-            const updateArrivals = async (popup, stopCodeNorth, stopCodeSouth) => {
+            const updateArrivals = async (popup, stops) => {
                 try {
-                    const [northboundArrivals, southboundArrivals] = await Promise.all([
-                        endpoint(stopCodeNorth),
-                        endpoint(stopCodeSouth)
-                    ]);
+                    const arrivalLists = await Promise.all(
+                        stops.flatMap(({ north, south }) => [
+                            north ? endpoint(north) : Promise.resolve([]),
+                            south ? endpoint(south) : Promise.resolve([])
+                        ])
+                    );
 
                     const currentTime = new Date();
+                    // A narrow popup, so give the destination its short name where the station has one
+                    const destination = (arrival) => this.shortStationName(arrival.headsign) ?? arrival.headsign;
 
                     function formatArrival(arrival) {
                         const arrivalTime = arrival.predictedArrivalTime || arrival.scheduledArrivalTime;
                         const isRealtime = arrival.predictedArrivalTime !== null;
-                        const minutesUntilArrival = Math.round((new Date(arrivalTime) - currentTime) / 60000);
-                        let duration = `${minutesUntilArrival} min`;
-                        if (minutesUntilArrival === 0) {
-                            duration = 'now';
-                        }
+                        const secondsUntilArrival = Math.round((new Date(arrivalTime) - currentTime) / 1000);
+                        const minutesUntilArrival = Math.round(secondsUntilArrival / 60);
+                        const isImminent = secondsUntilArrival < 30;
+                        let duration = isImminent ? '<span class="trip-now">Now</span>' : `${minutesUntilArrival} min`;
                         let realtimeSymbol = '';
                         if (isRealtime) {
                             realtimeSymbol = '<span class="realtime-symbol"></span>';
@@ -787,17 +1262,23 @@ export class RelayMap extends LitElement {
                         if (arrival.tripId) {
                             tripId = "#" + arrival.tripId.substring(arrival.tripId.length - 4);
                         }
+                        const destinationId = exchangeIdByName.get(arrival.headsign);
+                        const stationCode = exchangeStationCode(destinationId);
+                        const lineCode = ARRIVAL_ROUTE_LINE_CODES[arrival.routeId];
+                        const lineBadge = (stationCode && lineCode)
+                            ? `<span class="link-station-label link-station-label-dark"><span class="line-name line-name-${lineCode}">${lineCode}</span><span class="link-station-code">${stationCode}</span></span>`
+                            : `<span class="line-marker line-${arrival.routeId}"></span>`;
                         return {
                             ...arrival,
                             time: new Date(arrivalTime),
                             realtime: isRealtime,
                             minutesUntilArrival: minutesUntilArrival,
-                            html: `<tr><td><span class="line-marker line-${arrival.routeId}"></span></td><td class="trip-destination"> ${arrival.headsign} <span class="trip-id">${tripId}</span></td><td class="trip-eta text-end" nowrap="true">${realtimeSymbol}${duration}</td></tr>`
+                            html: `<tr><td>${lineBadge}</td><td class="trip-destination"> ${destination(arrival)} <span class="trip-id">${tripId}</span></td><td class="trip-eta text-end" nowrap="true">${realtimeSymbol}${duration}</td></tr>`
                         };
                     }
 
                     // Combine and sort arrivals by time
-                    let combinedArrivals = [...northboundArrivals, ...southboundArrivals];
+                    let combinedArrivals = arrivalLists.flat();
 
                     // Remove duplicate trip IDs
                     const seenTripIds = new Set();
@@ -879,8 +1360,10 @@ export class RelayMap extends LitElement {
                 }
 
                 // Clear out-of-bounds popups
+                const exchangeById = new Map(exchanges.features.map(exchange => [exchange.properties.id, exchange]));
                 this.popupStore.forEach(({ popup, intervalId }, exchangeId) => {
-                    if (!bounds.contains(popup.getLngLat())) {
+                    const exchange = exchangeById.get(exchangeId);
+                    if (!bounds.contains(popup.getLngLat()) || !exchange || !this.featureLineVisible(exchange)) {
                         clearInterval(intervalId);
                         this.fadeOutAndRemovePopup(popup);
                         this.popupStore.delete(exchangeId);
@@ -890,11 +1373,16 @@ export class RelayMap extends LitElement {
                 for (const exchange of exchanges.features) {
                     const exchangeCoords = exchange.geometry.coordinates;
                     const exchangeId = exchange.properties.id;
-                    const { stopCodeNorth, stopCodeSouth } = exchange.properties;
+                    const props = exchange.properties;
+                    // A station is one stop per direction, named on the exchange itself
+                    const stops = props.stopCodeNorth || props.stopCodeSouth
+                        ? [{ north: props.stopCodeNorth, south: props.stopCodeSouth }]
+                        : [];
 
                     if (this.popupStore.has(exchangeId) ||
                         !bounds.contains(exchangeCoords) ||
-                        !(stopCodeNorth && stopCodeSouth)) {
+                        !this.featureLineVisible(exchange) ||
+                        stops.length === 0) {
                         continue;
                     }
 
@@ -905,18 +1393,18 @@ export class RelayMap extends LitElement {
                         className: 'arrivals-popup',
                         closeOnClick: false,
                         focusAfterOpen: false,
-                        maxWidth: '260px'
+                        maxWidth: '320px'
                     })
                         .setLngLat(exchangeCoords)
                         .setHTML('Loading...')
                         .addTo(this.map);
 
                     // Initial update call
-                    await updateArrivals(popup, stopCodeNorth, stopCodeSouth);
+                    await updateArrivals(popup, stops);
 
                     // Store the popup and start the update interval
                     const intervalId = setInterval(() => {
-                        updateArrivals(popup, stopCodeNorth, stopCodeSouth);
+                        updateArrivals(popup, stops);
                     }, 20000); // Refresh every 20 seconds
 
                     this.popupStore.set(exchangeId, { popup, intervalId });

@@ -87,14 +87,13 @@ export function createLegDetailsTable(container, legsGeojson, exchangesGeoJson) 
     }
     // Copy the legsGeojson array so we can modify it
     legsGeojson = JSON.parse(JSON.stringify(legsGeojson))
-    const lastLeg = legsGeojson[legsGeojson.length - 1].properties.sequence[0] + 1
-    for (let leg of legsGeojson) {
+    legsGeojson.forEach((leg, index) => {
         let legData = leg.properties
-        legData.id = legData.sequence[0] + 1
+        legData.id = index + 1
         let startExchange = exchangesGeoJson.filter(exchange => exchange.properties.id === legData.start_exchange)[0].properties
         let endExchange = exchangesGeoJson.filter(exchange => exchange.properties.id === legData.end_exchange)[0].properties
-        legDescriptions += `<div class="mb-4 overflow-auto">${formatLegDescription(startExchange, endExchange, legData, {showEndLandmark: legData.id === lastLeg})}</div>`
-    }
+        legDescriptions += `<div class="mb-4 overflow-auto">${formatLegDescription(startExchange, endExchange, legData, {showEndLandmark: index === legsGeojson.length - 1})}</div>`
+    })
     container.innerHTML = legDescriptions
 
 }

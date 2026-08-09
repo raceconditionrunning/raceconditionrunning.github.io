@@ -26,7 +26,11 @@ export class LegCalculator extends HTMLElement {
 
   setLegs(legs, exchangeInfo) {
       this.style.display = "block"
-      let valuesSlider = document.getElementById('leg-calculator-slider');
+      // Scoped to this element so a page can host a calculator per line
+      let valuesSlider = this.querySelector('.leg-range-input');
+      if (valuesSlider.noUiSlider) {
+          valuesSlider.noUiSlider.destroy()
+      }
       let cumulativeDistances = [0]
       let cumulativeAscents = [0]
       let cumulativeDescents = [0]
@@ -52,21 +56,25 @@ export class LegCalculator extends HTMLElement {
       }
       steppedRange["min"] = 0
       steppedRange["max"] = cumulativeDistances[cumulativeDistances.length - 1]
+      // Open on a mid-length segment, or as much of the route as there is on a short one
+      let rightValue = Math.min(12, legs.length)
+      let leftValue = Math.max(0, Math.min(4, rightValue - 1))
+
       let slider = noUiSlider.create(valuesSlider, {
-          start: ["4", "12"],
+          start: [String(leftValue), String(rightValue)],
           range: steppedRange,
           margin: .5,
           tooltips: // tooltip with manual formatting
               { to: (value) => {
-                let index = bisectLeft(cumulativeDistances, value)
-                      let exchange = this._legToExchangeId[index]
-                      if (exchangeInfo[exchange].line) {
-                          const lineCode = exchangeInfo[exchange].line
-                          //FIXME: Hardcoded theming here
-                          return `<span class="link-station-label link-station-label-dark" title="${exchangeInfo[exchange].name}"><span class="line-name line-name-${String(lineCode).toLowerCase()}">${lineCode}</span><span class='link-station-code'>${exchangeInfo[exchange].stationCode}</span></span>`
-                      }
-                        return `<span class="link-station-label link-station-label-dark" title="${exchangeInfo[exchange].name}">${exchangeInfo[exchange].stationCode}</span>`;
-                      }
+                  let index = bisectLeft(cumulativeDistances, value)
+                  let exchange = this._legToExchangeId[index]
+                  if (exchangeInfo[exchange].line_code) {
+                      const lineCode = exchangeInfo[exchange].line_code
+                      //FIXME: Hardcoded theming here
+                      return `<span class="link-station-label link-station-label-dark" title="${exchangeInfo[exchange].name}"><span class="line-name line-name-${String(lineCode).toLowerCase()}">${lineCode}</span><span class='link-station-code'>${exchangeInfo[exchange].station_code}</span></span>`
+                  }
+                  return `<span class="link-station-label link-station-label-dark" title="${exchangeInfo[exchange].name}">${exchangeInfo[exchange].station_code}</span>`;
+              }
               },
           snap: true,
           connect: true,
@@ -79,10 +87,8 @@ export class LegCalculator extends HTMLElement {
       });
 
 
-      let leftValue = 4
-      let rightValue = 12
       let container = this
-      slider.set(['4', '12']);
+      slider.set([String(leftValue), String(rightValue)]);
       slider.on('update', (values, handle, unencoded)=> {
           let oldLeft = leftValue
           let oldRight = rightValue
@@ -126,7 +132,7 @@ export class LegCalculator extends HTMLElement {
     ${segmentLegDesc}
 </div>
 </div>`
-          container.querySelector("#leg-calculator-description").innerHTML = segmentDesc
+          container.querySelector(".leg-calculator-description").innerHTML = segmentDesc
       });
 
       let profile = container.querySelector("elevation-profile")
