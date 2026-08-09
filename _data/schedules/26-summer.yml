@@ -130,4 +130,7 @@
   plan:
     - time: "8:30"
       route:
-        name: Light Rail Relay
+        name: Light Rail Relay 2026
+        map: /light-rail-relay-26/
+        distance_mi: 45
+      highlight-image: /img/lrr26/og-banner.jpg
