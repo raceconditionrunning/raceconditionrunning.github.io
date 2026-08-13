@@ -30,7 +30,44 @@ export class RelayResultsTable extends HTMLElement {
         } else if (row.teamSize) {
             teamSize = ` <span class="badge bg-secondary-subtle team-size-badge fw-normal text-secondary" title="Team Size">${row.teamSize}</span>`
         }
-        return `<span class="runner-name">${cell.getValue()}</span> ${teamSize}`
+        const name = cell.getValue()
+        const link = row.link
+        const nameHtml = link
+            ? `<a class="runner-name text-decoration-dashed" href="${link}" target="_blank" rel="noopener" title="${name}">${name}</a>`
+            : `<span class="runner-name" title="${name}">${name}</span>`
+        return `${nameHtml} ${teamSize}`
+    }
+
+    /**
+     * True if `exchangeCode` is the exchange immediately after `row.dnfAt` in course order --
+     *  i.e. the one the runner never reached. Used to render a DNF marker in that cell instead
+     *  of an empty one.
+     */
+    isExchangeAfterDnf(row, exchangeCode) {
+        if (!row.dnfAt) return false
+        const dnfIndex = this.exchangeOrder.indexOf(row.dnfAt)
+        const thisIndex = this.exchangeOrder.indexOf(exchangeCode)
+        return dnfIndex !== -1 && thisIndex === dnfIndex + 1
+    }
+
+    static NAME_COLUMN_BREAKPOINT = 700
+    static NAME_COLUMN_NARROW_WIDTH = 150
+
+    nameColumnWidth() {
+        return window.innerWidth < RelayResultsTable.NAME_COLUMN_BREAKPOINT
+            ? RelayResultsTable.NAME_COLUMN_NARROW_WIDTH
+            : undefined
+    }
+
+    buildNameColumn() {
+        return {
+            title: "Name",
+            field: "name",
+            resizable: false,
+            frozen: true,
+            width: this.nameColumnWidth(),
+            formatter: RelayResultsTable.formatNameCell
+        }
     }
 
     initialize(data, exchangeColumnEntries){
@@ -88,6 +125,9 @@ export class RelayResultsTable extends HTMLElement {
                         if (exchangeCode === this.exchangeOrder[0]) {
                             return "<span class='text-secondary'>DNS</span>"
                         }
+                        if (this.isExchangeAfterDnf(cell.getRow().getData(), exchangeCode)) {
+                            return "<span class='text-secondary'>DNF</span>"
+                        }
                         return ""
                     }
                     return formatDuration(value, true, false, true)
@@ -117,6 +157,9 @@ export class RelayResultsTable extends HTMLElement {
                 formatter: cell => {
                     const value = cell.getValue()
                     if (value === undefined) {
+                        if (this.isExchangeAfterDnf(cell.getRow().getData(), exchangeCode)) {
+                            return "<span class='text-secondary'>DNF</span>"
+                        }
                         return ""
                     }
                     const isFirst = exchangeCode === this.exchangeOrder[0]
@@ -152,7 +195,7 @@ export class RelayResultsTable extends HTMLElement {
                 responsiveLayout: false,
                 initialSort: [{column: "name", dir: "asc"}],
                 columns: [
-                    {title: "Name", field: "name", resizable: false, frozen: true, formatter: RelayResultsTable.formatNameCell},
+                    this.buildNameColumn(),
                     ...this.cumulativeColumns
                 ]
             })
@@ -163,6 +206,12 @@ export class RelayResultsTable extends HTMLElement {
             const switchElement = this.querySelector('#splitModeSwitch')
             switchElement.addEventListener('change', (e) => {
                 this.setSplitMode(e.target.checked)
+            })
+
+            let resizeTimeout
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout)
+                resizeTimeout = setTimeout(() => this.setSplitMode(this.mode === 'splits'), 150)
             })
 
             // Show last updated date if available
@@ -194,13 +243,7 @@ export class RelayResultsTable extends HTMLElement {
     setSplitMode(enabled) {
         this.mode = enabled ? 'splits' : 'cumulative'
         if (this.table) {
-            const nameColumn = {
-                title: "Name",
-                field: "name",
-                resizable: false,
-                frozen: true,
-                formatter: RelayResultsTable.formatNameCell
-            }
+            const nameColumn = this.buildNameColumn()
 
             const columns = enabled ?
                 [nameColumn, ...this.splitColumns] :

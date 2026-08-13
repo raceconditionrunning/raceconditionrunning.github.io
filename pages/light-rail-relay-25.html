@@ -568,6 +568,14 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             font-weight: 500;
         }
 
+        /* Name column is fixed-width (see RelayResultsTable.js) so it doesn't crowd out the
+           exchange columns on narrow screens; long names get an ellipsis instead of wrapping. */
+        .tabulator-cell[tabulator-field="name"] {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
         .tabulator .tabulator-footer {
             border: none !important;
         }
@@ -987,7 +995,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
 <section>
     <div class="container">
-        <h2 id="event-records">Event Records <a href="#event-records" class="anchor-link" aria-label="Link to this section. Event Records"></a></h2>
+        <h2 id="event-records">Event Records (2024) <a href="#event-records" class="anchor-link" aria-label="Link to this section. Event Records"></a></h2>
         <div class="row g-4 mt-1">
 
             <div class="col-lg-4 col-md-6">

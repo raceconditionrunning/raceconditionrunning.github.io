@@ -124,11 +124,12 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         }
 
         ::selection {
-            background: var(--theme-primary-color-subdued);
+            background: #bbb;
+            color: #111;
         }
 
         #title ::selection {
-            background: #333;
+            background: rgba(255, 255, 255, 0.25);
         }
 
         .container {
@@ -179,7 +180,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         .anchor-link {
             padding: 0 .175rem;
             font-weight: 400;
-            color: var(--theme-primary-color-bright);
+            color: #999;
             text-decoration: none;
             opacity: 0;
             transition: color 0.15s ease-in-out,opacity 0.15s ease-in-out;
@@ -321,8 +322,8 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         }
 
         .accordion {
-            --bs-accordion-btn-focus-border-color: var(--theme-primary-color-subdued);
-            --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem var(--theme-primary-color-subdued);
+            --bs-accordion-btn-focus-border-color: #eee;
+            --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem #eee;
             --bs-accordion-bg: #111;
             --bs-accordion-active-color: var(--bs-emphasis-color);
             --bs-accordion-active-bg: #333;
@@ -728,6 +729,14 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             font-weight: 500;
         }
 
+        /* Name column is fixed-width (see RelayResultsTable.js) so it doesn't crowd out the
+           exchange columns on narrow screens; long names get an ellipsis instead of wrapping. */
+        .tabulator-cell[tabulator-field="name"] {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
         .tabulator .tabulator-footer {
             border: none !important;
         }
@@ -873,7 +882,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             <div class="col-12">
                 <h2 class="d-none">Race Overview</h2>
                 <p class="lead mb-5">
-                    <span class="line-gradient-bg fw-bold p-1">Light Rail Relay</span> is an unsanctioned urban relay along Sound Transit's 1 Line and 2 Line. Teams of runners and walkers make the journey from Angle Lake to Lynnwood. The event is held annually in late September.
+                    <span class="line-gradient-bg fw-bold p-1">Light Rail Relay</span> is an unsanctioned urban relay along Sound Transit's 1 Line and 2 Line. Teams of runners and walkers make the journey from Federal Way/Redmond to Lynnwood. The event is held annually in early Autumn.
                 </p>
             </div>
         </div>
@@ -1066,7 +1075,9 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             <accordion-item>
                 <accordion-header>Can our team do both lines at the same time?</accordion-header>
                 <accordion-body>
-                    <p>Yes. When creating a team you may select either or both lines. If you register for both, your team will be expected to begin from Federal Way Downtown and Redmond Downtown stations at 08:30. Where the lines share tracks (International District/Chinatown through Lynwood City Center), you only need to have a single runner complete the leg. For results purposes, your team's time will be reported separately for the lines.</p>
+                    <p>Yes. When creating a team you may select either or both lines. If you register for both, your team will be expected to begin from both Federal Way Downtown and Redmond Downtown stations at 08:30. Where the lines share tracks (International District/Chinatown through Lynwood City Center), you only need to have a single runner complete the leg.</p>
+
+                    <p>Dual-line teams' result time will be calculated as the <i>maximum</i> of the durations of the line prefixes plus the duration of the shared portion. This means its best to try to have the two branches reach International District/Chinatown at the same time.</p>
                 </accordion-body>
             </accordion-item>
             <accordion-item>
@@ -1080,7 +1091,6 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                 <accordion-header>Who can participate?</accordion-header>
                 <accordion-body>
                     <p>Anyone can form a team to complete the relay. See the instructions below for making a team.</p>
-                    <p>Anyone in the UW CSE community is welcome to run as part of the Race Condition Running team. Look for information in the UW CSE Slack.</p>
                 </accordion-body>
             </accordion-item>
             <accordion-item>
@@ -1089,8 +1099,8 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                     <p>Decide which format you'd like to participate in. There are three categories for results purposes: <b>Competitive</b> for teams of six, <b>Solo</b> for teams of one, and <b>Open</b> for all other formats. All teams will:</p>
                     <ul>
                         <li>Register their members.</li>
-                        <li>Have a runner present at the Angle Lake Station platform at 08:30 on the morning of the event to receive their baton.</li>
-                        <li>Carry their baton through all 23 stations.</li>
+                        <li>Have a runner present at the Federal Way Downtown or/and Redmond Downtown platform at 08:30 on the morning of the event to receive their baton.</li>
+                        <li>Carry their baton through all 26 or 25 stations.</li>
                         <li>Document station visits with photos.</li>
                         <li>Gather and submit station photos after the event.</li>
                     </ul>
@@ -1150,7 +1160,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                     <h5>Small teams (4-10 runners)</h5>
                     <p>You're likely to only have one person running each leg, so it's easiest if the folks who aren't running ride the train together to the next handoff. The train is your <a href="https://runragnar.com/">Ragnar</a> van.</p>
                     <h5>Large teams (>10 runners)</h5>
-                    <p>Our experience with a team of 20+ and multiple runners assigned to each leg is that a shared schedule spreadsheet helps a lot. You can see RCR's from <a href="https://docs.google.com/spreadsheets/d/1rd9Si3BcPgqt3fWxoHnuUB0rnN00XLtziMaHSPpQt14/edit#gid=0">2022</a> and <a href="https://docs.google.com/spreadsheets/d/1f6813y3qSEZf9UtAaosDixreD4fjyMbx-jMlCBcRQjc/edit?usp=sharing">2023</a> as examples.</p>
+                    <p>Our experience with a team of 20+ and multiple runners assigned to each leg is that a shared schedule spreadsheet helps a lot.</p>
                     <h5>Solo runners</h5>
                     <p>It's possible to run the routes unsupported. Otherwise, there are many shops along the way for supplies (zoom into the map to see data from OpenStreetMap). Here are some within 100ft of the 1 Line route:</p>
                     <ul>
@@ -1196,10 +1206,11 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
 </section>
 
-{% comment %}
 <section>
     <div class="container">
         <h2 id="event-records">Event Records <a href="#event-records" class="anchor-link" aria-label="Link to this section. Event Records"></a></h2>
+
+        <h5 class="mb-0 mt-4">1 Line</h5>
         <div class="row g-4 mt-1">
 
             <div class="col-lg-4 col-md-6">
@@ -1207,8 +1218,8 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                 <hr class="qa-divider">
 
                 <div class="qa-body">
-                     <p class="display-6">5:23:13</p>
-                    <p>Seattle Green Line Running Group <span class="text-muted">&bullet; 6 members, 2024</span></p></div>
+                     <p class="display-6">4:35:27*</p>
+                    <p>Seattle Green Line Running Group <span class="text-muted">&bullet; 7 members, 2025</span></p></div>
                 </div>
 
             <div class="col-lg-4 col-md-6">
@@ -1216,8 +1227,8 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                 <hr class="qa-divider">
 
                 <div class="qa-body">
-                     <p class="display-6">5:34:28</p>
-                    <p class="">RBRC Local #7 <span class="text-muted"> &bullet; <u title="Competitive team size was increased to 6 members in 2025 to match international road relay formats.">4 members</u>, mixed, 2024</span></p></div>
+                     <p class="display-6">4:50:05*</p>
+                    <p class="">Mobility Oriented Organisms <span class="text-muted"> &bullet; 6 members, mixed, 2025</span></p></div>
                 </div>
 
             <div class="col-lg-4 col-md-6">
@@ -1225,8 +1236,8 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                 <hr class="qa-divider">
 
                 <div class="qa-body">
-                    <p class="display-6">5:21:22</p>
-                    <p>Nick Walker <span class="text-muted">&bullet; 2024</span></p></div>
+                    <p class="display-6">5:15:07*</p>
+                    <p>Nick Walker <span class="text-muted">&bullet; 2025</span></p></div>
             </div>
 
             <div class="col-lg-4 col-md-6">
@@ -1245,13 +1256,27 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                 <hr class="qa-divider">
 
                 <div class="qa-body">
-                    <p class="display-6">1:14:00</p>
-                    <p>Sound Transit <span class="text-muted">&bullet; 2024</span></p></div>
+                    <p class="display-6">1:27:00</p>
+                    <p>Sound Transit <span class="text-muted">&bullet; 2026</span></p></div>
+            </div>
+        </div>
+
+        <p class="text-muted small mt-3 mb-0">*Set on the 2025 course, which was Angle Lake to Lynnwood (9.4 miles shorter).</p>
+
+        <h5 class="mb-0 mt-5">2 Line</h5>
+        <div class="row g-4 mt-1">
+
+            <div class="col-lg-4 col-md-6">
+                <div class="h6">Fastest Train</div>
+                <hr class="qa-divider">
+
+                <div class="qa-body">
+                    <p class="display-6">1:25:00</p>
+                    <p>Sound Transit <span class="text-muted">&bullet; 2026</span></p></div>
             </div>
         </div>
     </div>
 </section>
-{% endcomment %}
 
 <!--section>
     <div class="container">
