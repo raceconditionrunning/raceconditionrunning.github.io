@@ -62,10 +62,9 @@
 - date: "2026-08-15"
   plan:
     - time: "8:30"
-      route:
-        name: "Westlake, Elliot Bay, Discovery, Ship Canal, South Lake Union Loop"
-        map: https://onthegomap.com/s/t5lt2fln
-        distance_mi: 15.8
+      route_id: westlake-elliot-bay-tracks-ship-canal-dexter-loop
+    - time: "10:45"
+      route_id: westlake-waterfront-cranes-sodo
 
 - date: "2026-08-22"
   plan:
