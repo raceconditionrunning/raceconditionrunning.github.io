@@ -709,7 +709,15 @@ shirt_order_link: ""
         .tabulator .tabulator-header .tabulator-col,
         .tabulator .tabulator-header,
         .tabulator .tabulator-tableholder .tabulator-table,
-        .tabulator .tabulator-footer {
+        .tabulator .tabulator-footer,
+        html[data-bs-theme="dark"] .tabulator,
+        html[data-bs-theme="dark"] .tabulator:not(.thead-light) .tabulator-header,
+        html[data-bs-theme="dark"] .tabulator:not(.thead-light) .tabulator-header,
+        html[data-bs-theme="dark"] .tabulator:not(.thead-light) .tabulator-header .tabulator-col,
+        html[data-bs-theme="dark"] .tabulator .tabulator-row,
+        html[data-bs-theme="dark"] .tabulator .tabulator-cell,
+        html[data-bs-theme="dark"] .tabulator .tabulator-row:hover .tabulator-cell
+        {
             background-color: transparent;
         }
 
@@ -738,7 +746,7 @@ shirt_order_link: ""
             background-color: rgba(255, 255, 255, .3);
         }
 
-        .tabulator-row.details-opened.tabulator-selectable,
+        .result-detail,
         .tabulator-row.details-opened.tabulator-selectable:hover {
             background-color: #111;
         }
@@ -1155,7 +1163,7 @@ shirt_order_link: ""
 </section>
 
 
-<!--section>
+<section>
     <div class="container-xxl">
         <h2 class="mb-4" id="results">Results <a href="#results" class="anchor-link" aria-label="Link to this section. Results"></a></h2>
 
@@ -1170,7 +1178,7 @@ shirt_order_link: ""
         <div id="results-half-unofficial" class="mb-2"></div>
     </div>
 
-</section-->
+</section>
 
 <section>
     <figure class="gallery lightbox-gallery">

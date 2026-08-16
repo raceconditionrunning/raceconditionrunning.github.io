@@ -502,7 +502,15 @@ redirect_from:
         .tabulator .tabulator-header .tabulator-col,
         .tabulator .tabulator-header,
         .tabulator .tabulator-tableholder .tabulator-table,
-        .tabulator .tabulator-footer {
+        .tabulator .tabulator-footer,
+        html[data-bs-theme="dark"] .tabulator,
+        html[data-bs-theme="dark"] .tabulator:not(.thead-light) .tabulator-header,
+        html[data-bs-theme="dark"] .tabulator:not(.thead-light) .tabulator-header,
+        html[data-bs-theme="dark"] .tabulator:not(.thead-light) .tabulator-header .tabulator-col,
+        html[data-bs-theme="dark"] .tabulator .tabulator-row,
+        html[data-bs-theme="dark"] .tabulator .tabulator-cell,
+        html[data-bs-theme="dark"] .tabulator .tabulator-row:hover .tabulator-cell
+        {
             background-color: transparent;
         }
 
@@ -531,7 +539,7 @@ redirect_from:
             background-color: rgba(255, 255, 255, .3);
         }
 
-        .tabulator-row.details-opened.tabulator-selectable,
+        .result-detail,
         .tabulator-row.details-opened.tabulator-selectable:hover {
             background-color: #111;
         }
