@@ -93,7 +93,7 @@
         name: Redmond to ID (Line 2 full run)
         map: https://onthegomap.com/s/5jir1pp2
         distance_mi: 19.6
-      notes:
+      notes: The route is split into 2 legs of 11.9 mi and 7.7 mi. Leg 2 begins from Spring District station at 10:45AM, or when Leg 1 completes.
 
 - date: "2026-09-12"
   plan:
@@ -117,7 +117,6 @@
         name: Shoreline North to Lynnwood (LRR)
         map: https://onthegomap.com/s/hsp6t05p
         distance_mi: 5.16
-      notes: "Exact Route TBA"
 
 - date: "2026-09-26"
   plan:
