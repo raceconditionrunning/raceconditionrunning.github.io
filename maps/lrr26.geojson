@@ -1132,6 +1132,7 @@
             "name": "Kent/Des Moines",
             "landmark": "\"Inheritance\" steel house sculpture",
             "id": 166,
+            "image_url": "/img/lrr26/kent_des_moines.jpeg",
             "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/kent-des-moines-station",
             "stopCodeNorth": "40_S03-T1",
             "stopCodeSouth": "40_S03-T2"
@@ -1143,6 +1144,7 @@
             "name": "Star Lake",
             "landmark": "\"Pollination\" light mural",
             "id": 167,
+            "image_url": "/img/lrr26/star_lake.jpeg",
             "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/star-lake-station",
             "stopCodeNorth": "40_S05-T1",
             "stopCodeSouth": "40_S05-T2"
@@ -1276,6 +1278,7 @@
             "name": "Marymoor Village",
             "landmark": "\"Point of Connection\" mural along entrance to garage",
             "id": 264,
+            "image_url": "/img/lrr26/marymoor_village.png",
             "stationInfo": "https://www.soundtransit.org/ride-with-us/stops-stations/marymoor-village-station",
             "stopCodeNorth": "40_E29-T2",
             "stopCodeSouth": "40_E29-T1"
