@@ -90,10 +90,14 @@
   plan:
     - time: "8:30"
       route:
-        name: Redmond to ID (Line 2 full run)
-        map: https://onthegomap.com/s/5jir1pp2
-        distance_mi: 19.6
-      notes: The route is split into 2 legs of 11.9 mi and 7.7 mi. Leg 2 begins from Spring District station at 10:45AM, or when Leg 1 completes.
+        name: Redmond to South Bellevue Station (LRR)
+        map: https://onthegomap.com/s/nf263ppl
+        distance_mi: 11.2
+    - time: "10:40"
+      route:
+        name: South Bellevue to ID Station (LRR)
+        map: https://onthegomap.com/?route=01a01300-3eac-7e05-b52e-394df638d00e&context=share
+        distance_mi: 7.7
 
 - date: "2026-09-12"
   plan:
