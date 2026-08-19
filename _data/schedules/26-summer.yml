@@ -68,10 +68,11 @@
 
 - date: "2026-08-22"
   plan:
-    - time: "8:30"
+    - time: "7:30"
       route_id: cse-jays-cafe
-    - time: "10:30"
+    - time: "9:30"
       route_id: jays-cafe-woodinville-cafe
+      notes: Both parts shifted to start an hour earlier than usual!
 
 - date: "2026-08-29"
   plan:
