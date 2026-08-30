@@ -123,6 +123,21 @@
     {
       "type": "Feature",
       "properties": {
+        "name": "Pinehurst",
+        "id": 1244,
+        "stationInfo": "https://www.soundtransit.org/system-expansion/ne-130th-st-infill-station",
+        "open": 2026},
+      "geometry": {
+        "coordinates": [
+          -122.323782,
+          47.723649
+        ],
+        "type": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "name": "Ballard",
         "id": 144,
         "stationInfo": "https://www.soundtransit.org/system-expansion/ballard-link-extension",
