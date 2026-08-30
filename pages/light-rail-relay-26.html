@@ -301,6 +301,12 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             background: linear-gradient(rgba(0,0,0,.1), transparent, rgba(0,0,0,.1)), linear-gradient(30deg, var(--theme-primary-color), var(--two-line-color));
         }
 
+        .line-gradient-border {
+            border: 2px solid transparent;
+            background: linear-gradient(var(--bs-card-bg), var(--bs-card-bg)) padding-box,
+                        linear-gradient(30deg, var(--theme-primary-color), var(--two-line-color)) border-box;
+        }
+
         header img {
             flex: 0 1 auto;
             height: 100%; /* Safari flexbox renders the element really wide unless we have an actual height... */
@@ -853,21 +859,20 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             <img src="{{ site.baseurl }}/img/lrr25/logo.svg" alt="Light Rail Relay" class="p-0 p-md-1"/>
             <div class="subheader d-flex flex-column align-items-start align-items-md-end px-md-5 mb-4 justify-content-md-end text-md-end">
                 <p><span class="h3">Ultra relay along Seattle's Light Rail</span><br/> by <a href="{{ site.baseurl }}/" class="fst-italic text-decoration-none text-light">Race Condition Running</a>. 08:30 October 3rd</p>
-                <p class="text-muted">Registration opening soon</p>
                 {% comment %}
-
                 <span class="stats-text d-none">• <span class="stats-all-formats">-</span> teams registered</span>
+                {% endcomment %}
                 <div class="gap-2 d-flex flex-wrap">
                     <a class="btn btn-outline-light btn-lg" role="button" data-bs-title=""  data-bs-placement="bottom" href="{{ page.registration_link }}" data-goatcounter-click="ext-join-team-hero" >Join Team
                         </a>
-                    <a class="btn btn-outline-light btn-lg disabled" role="button" data-bs-title="by 9-25"  data-bs-placement="bottom" href="{{ page.team_registration_link }}" data-goatcounter-click="ext-add-team-hero">Add Team</a>
-                    <a class="btn btn-outline-light btn-lg disabled" role="button" data-bs-title="by 9-25"  data-bs-placement="bottom" href="{{ page.solo_registration_link }}" data-goatcounter-click="ext-enter-solo-hero" >Enter Solo</a>
+                    <a class="btn btn-outline-light btn-lg" role="button" data-bs-title="by 10-01"  data-bs-placement="bottom" href="{{ page.team_registration_link }}" data-goatcounter-click="ext-add-team-hero">Add Team</a>
+                    <a class="btn btn-outline-light btn-lg" role="button" data-bs-title="by 10-01"  data-bs-placement="bottom" href="{{ page.solo_registration_link }}" data-goatcounter-click="ext-enter-solo-hero" >Enter Solo</a>
 
                     <!--a href="#results" class="btn btn-outline-light btn-lg" data-goatcounter-click="lrr25-results">Results</a>
                     <a href="#epilogue" class="btn btn-outline-light btn-lg" data-goatcounter-click="lrr25-epilogue">Epilogue</a-->
 
                 </div>
-                {% endcomment %}
+
             </div>
 
         </header>
@@ -1004,58 +1009,55 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         <div class="d-flex flex-column  justify-content-between align-items-baseline mb-3">
         <h2 id="registration">Registration <a href="#registration" class="anchor-link" aria-label="Link to this section. Registration"></a></h2>
         </div>
-        <div class="alert alert-secondary" role="alert">
-            Registration is opening soon. Check back here for details.
-        </div>
         {% comment %}
         <span class="stats-text fw-light text-muted d-none">
             <span class="stats-teams">-</span> teams, <span class="stats-solos">-</span> ultra runners are confirmed. That's <span class="stats-members">-</span> people! <span class="stats-thinking-about-it">-</span> are thinking about it.
         </span>
+        {% endcomment %}
         <p>
-          We are using <a href="https://panto.raceconditionrunning.com">Pantograph</a> for registration this year. Pantograph was tailor-made for team relays, and also lets your team upload exchange photos for timing purposes.
+          We are using <a href="https://panto.raceconditionrunning.com">Pantograph</a> and to enable teams to upload exchange photos for timing.
         </p>
         <div class="row justify-content-center">
             <div class="col-md-4 mb-4">
-                <div class="card h-100 text-center">
+                <div class="card h-100 text-center line-gradient-border">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Join Team</h5>
                         <p class="card-text flex-grow-1">Join an existing team.</p>
                       <div class="mb-3">
-                        <span class="h4 text-primary">Free</span>
+                        <span class="h4 text-light">Free</span>
                       </div>
                       <div class="p-4"></div>
-                        <a href="{{ page.registration_link}}" class="btn btn-primary" data-goatcounter-click="ext-join-team">Join Team</a>
+                        <a href="{{ page.registration_link}}" class="btn btn-light" data-goatcounter-click="ext-join-team">Join Team</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 mb-4">
-                <div class="card h-100 text-center">
+                <div class="card h-100 text-center line-gradient-border">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Create Team</h5>
                         <p class="card-text flex-grow-1">Create a new team and invite others to join.</p>
                         <div class="mb-3">
-                            <span class="h4 text-primary">$16*</span>
-                            <small class="text-muted d-block">*Free if you use your baton from past years</small>
+                            <span class="h4 text-light">$16*</span>
+                            <div class="small text-secondary">$32 for Interline</div>
                         </div>
-                        <a href="{{ page.team_registration_link}}" class="btn btn-primary" data-goatcounter-click="ext-add-team">Add Team</a>
+                        <a href="{{ page.team_registration_link}}" class="btn btn-light" data-goatcounter-click="ext-add-team">Add Team</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 mb-4">
-                <div class="card h-100 text-center">
+                <div class="card h-100 text-center line-gradient-border">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Enter Solo</h5>
                         <p class="card-text flex-grow-1">Team of one. Save the fare, just run the whole way.</p>
                         <div class="mb-3">
-                            <span class="h4 text-primary">$16*</span>
-                            <small class="text-muted d-block">*Free if you use your baton from past years</small>
+                            <span class="h4 text-light">$16*</span>
                         </div>
-                        <a href="{{ page.solo_registration_link}}" class="btn btn-primary" data-goatcounter-click="ext-enter-solo">Enter Solo</a>
+                        <a href="{{ page.solo_registration_link}}" class="btn btn-light" data-goatcounter-click="ext-enter-solo">Enter Solo</a>
                     </div>
                 </div>
             </div>
         </div>
-        {% endcomment %}
+        <small class="text-muted d-block">*Free if you use your baton from past years</small>
     </div>
 </section>
 
@@ -1075,9 +1077,9 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             <accordion-item>
                 <accordion-header>Can our team do both lines at the same time?</accordion-header>
                 <accordion-body>
-                    <p>Yes. When creating a team you may select either or both lines. If you register for both, your team will be expected to begin from both Federal Way Downtown and Redmond Downtown stations at 08:30. Where the lines share tracks (International District/Chinatown through Lynwood City Center), you only need to have a single runner complete the leg.</p>
+                    <p>Yes. When creating a team you may select 1 Line, 2 Line or <a href="https://www.youtube.com/watch?v=cP1JAmIhQSs">Interline</a> (both). Interline teams will be expected to begin from both Federal Way Downtown and Redmond Downtown stations at 08:30. Where the trains <i>interline</i>, or share tracks (International District/Chinatown through Lynwood City Center), you only need to have a single runner complete the leg.</p>
 
-                    <p>Dual-line teams' result time will be calculated as the <i>maximum</i> of the durations of the line prefixes plus the duration of the shared portion. This means its best to try to have the two branches reach International District/Chinatown at the same time.</p>
+                    <p>An interline teams' finish time is the sum of the <i>maximum</i> of the durations of the separate parts and the duration of the shared portion. This means its best if the two branches of the team reach International District/Chinatown at the same time.</p>
                 </accordion-body>
             </accordion-item>
             <accordion-item>
@@ -1119,7 +1121,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             <accordion-item>
                 <accordion-header>How does timing work?</accordion-header>
                 <accordion-body>
-                    <p>If you want an <i>official</i> time, your team will need to upload 23 station photos with time metadata on <a href="https://panto.raceconditionrunning.com">Pantograph</a>. We'll verify the photos and post the results. The photos you share will not be posted.</p>
+                    <p>If you want an <i>official</i> time, your team will need to upload station photos with time metadata on <a href="https://panto.raceconditionrunning.com">Pantograph</a>. We'll verify the photos and post the results. The photos you share will not be posted.</p>
                 </accordion-body>
             </accordion-item>
             <accordion-item>
@@ -1191,6 +1193,13 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                     <h5>All teams</h5>
                     <p>Exchanges: The easiest way is to meet at the exact points marked on the route. We've placed the markers next to <a href="https://www.soundtransit.org/sites/default/files/2016_start-on-link-map.pdf">station art</a>, signage or other landmarks. Zoom into the map to see our recommended exchange landmarks.</p>
                     <p>Getting around: conveniently, exchanges are accessible via light rail and <a href="https://pbs.twimg.com/media/GXtkizfXkAADR3F.png:large">bus</a>. See <a href="https://seattletransitblog.com/seattle-for-visitors/">Seattle Transit Blog's page</a> for a refresher on how to get around using transit, and check the <a href="https://support.myorca.com/hc/en-us/articles/10743519362317-Visitor-s-Guide-to-Using-Public-Transit-in-the-Seattle-area">ORCA site</a> for recommendations on how to purchase fares. UW students can ride for free using their Husky IDs.</p>
+                </accordion-body>
+            </accordion-item>
+            <accordion-item>
+                <accordion-header>What's the weather/emergency/cancellation plan?</accordion-header>
+                <accordion-body>
+                    <p>We reserve the right to cancel the event if conditions would be dangerous (e.g. lightning near the course, AQI >200, NWS storm/flood/heat warnings). We know the <a href="https://www.soundtransit.org/blog/platform/link-reliability-improving-we-have-more-work-ahead">Link has its share of service disruptions</a>. In the event of a disruption affecting teams' ability to reach the start, we may slightly delay the start, or arrange for late arriving teams to receive batons. </p>
+                    <p>We make the batons (the only element of the event we charge for) a couple weeks before the event, and are happy to refund your purchase up until that point. See the date in the payment details during registration. After that, we don't offer refunds but are happy to make arrangements to get your baton to you.</p>
                 </accordion-body>
             </accordion-item>
             <accordion-item>
