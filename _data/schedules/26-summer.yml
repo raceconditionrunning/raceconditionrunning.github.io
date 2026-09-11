@@ -109,6 +109,7 @@
         distance_mi: 9.73
     - time: "10:15"
       route_id: roosevelt-green-lake-loop
+  cancelled: "RCR mostly out of town. Visit another run!"
 
 - date: "2026-09-19"
   plan:
@@ -126,7 +127,9 @@
 - date: "2026-09-26"
   plan:
     - time: "8:30"
-      route_id: cedar-river-trail-10-ob
+      route_id: beacon-cheasty-lwb-seward-loop-cc
+    - time: "10:35"
+      route_id: cc-chief-sealth-south-6-ob
 
 - date: "2026-10-03"
   organized-event: true
