@@ -117,7 +117,7 @@
             "descent_ft": 55.68,
             "start_exchange": 263,
             "end_exchange": 262,
-            "notes": "This segment gets onto the 520 bike trail, which is separated from road. Watch out for bikes!",
+            "notes": "This segment starts with the really cool RTS Pedestrian bridge to reach the 520 bike trail, which is separated from road. Watch out for bikes!",
             "start_name": "Redmond Technology",
             "end_name": "Overlake Village",
             "attributes": [],
@@ -340,7 +340,7 @@
             "descent_ft": 86.22,
             "start_exchange": 259,
             "end_exchange": 258,
-            "notes": "The intersections can be very busy here. Be careful at crossings! Sidewalks can be quite busy with other pedestrians as well.",
+            "notes": "The intersections can be very busy here. Be careful at crossings! Sidewalks can be quite crowded with other pedestrians as well. Our recommended route detours to NE 10th for safety. You can choose to remain on NE 8th and brave the NE 8th / I-405 exits multi-way intersections, but exercise caution. The downtown area will have lots of refueling options.",
             "start_name": "Wilburton",
             "end_name": "Bellevue Downtown",
             "attributes": [],
@@ -406,7 +406,7 @@
             "descent_ft": 57.84,
             "start_exchange": 258,
             "end_exchange": 257,
-            "notes": "Sidewalks here are well maintained but busy with other pedestrians. Watch out for fast and inattentive cars at intersections and at parking garages.",
+            "notes": "Dense downtown area with lots of food and aid options. Sidewalks here are well maintained but busy with other pedestrians. Watch out for fast and inattentive cars at intersections and at parking garages.",
             "start_name": "Bellevue Downtown",
             "end_name": "East Main",
             "attributes": [],
@@ -1310,8 +1310,10 @@
         "type": "Feature",
         "properties": {
             "name": "Pinehurst",
+            "landmark": "Romson Bustillo's tile mosaic",
+            "image_url": "/img/lrr26/pinehurst.png",
             "id": 1244,
-            "stationInfo": "https://www.soundtransit.org/system-expansion/ne-130th-st-infill-station"
+            "stationInfo": "https://www.soundtransit.org/system-expansion/pinehurst-station"
         }, "geometry":{"type":"Point","coordinates":[-122.323782,47.723649]}
     },
     {
