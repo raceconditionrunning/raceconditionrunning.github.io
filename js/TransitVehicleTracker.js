@@ -1,6 +1,12 @@
-const TRIP_ID_REGEX = /.*_(\d+)(?:_[^_]*)?$/; // Regex to extract the last number group from trip IDs like "routeId_12345_67890_DUP"
+const TRIP_ID_REGEX = /.*_([^_]+)$/; // Extract the final token from OBA trip IDs.
+const ROUTE_COLORS = {
+    "40_100479": "#3DAE2B",
+    "40_2LINE": "rgb(0, 160, 223)",
+    "40_TLINE": "rgb(243, 139, 0)"
+};
 
 function abbreviateTripId(tripId, status= "SCHEDULED") {
+    if (!tripId) return '';
     let abbr = tripId.match(TRIP_ID_REGEX);
     if (!abbr) {
         console.warn(`Trip ID "${tripId}" does not match expected format. Using full ID.`);
@@ -57,17 +63,23 @@ export class TransitVehicleTracker {
 
     extractVehicleData(data) {
         const trips = data.data.list;
-        const tripMap = new Map(data.data.references.trips.map(trip => [trip.id, trip.tripHeadsign]));
+        const tripMap = new Map(data.data.references.trips.map(trip => [trip.id, trip]));
         const vehicles = trips.flatMap(trip => {
             const status = trip.status;
-            if (!trip.status) {
-                console.warn(`Trip ID "${trip.id}" status not found.`);
-                return null;
+            if (!status?.activeTripId || !status.position) {
+                return [];
             }
-            const tripHeadsign = tripMap.get(status.activeTripId);
+            const activeTrip = tripMap.get(status.activeTripId);
+            const tripHeadsign = activeTrip?.tripHeadsign ?? trip.tripHeadsign;
+            const routeId = activeTrip?.routeId ?? trip.routeId ?? this.routeId;
             let tripIdAbbr = abbreviateTripId(status.activeTripId, status.status);
             return {
                 id: tripIdAbbr,
+                vehicleId: status.vehicleId,
+                activeTripId: status.activeTripId,
+                routeId,
+                pollingRouteId: this.routeId,
+                lineColor: ROUTE_COLORS[routeId] ?? "#888",
                 lat: status.position.lat,
                 lon: status.position.lon,
                 bearing: status.orientation,
@@ -81,7 +93,7 @@ export class TransitVehicleTracker {
     }
 
     emitVehicleData(vehicles) {
-        const event = new CustomEvent('vehicleDataUpdated', { detail: vehicles });
+        const event = new CustomEvent('vehicleDataUpdated', { detail: { routeId: this.routeId, vehicles } });
         document.dispatchEvent(event);
     }
 
@@ -101,7 +113,7 @@ export class TransitVehicleTracker {
             const arrivals = data.data.entry.arrivalsAndDepartures.map(arrival => {
                 const trip = trips.find(trip => trip.id === arrival.tripId);
                 return {
-                    tripId: abbreviateTripId(trip.id, arrival.status),
+                    tripId: abbreviateTripId(arrival.tripId, arrival.status),
                     routeId: arrival.routeId,
                     scheduledArrivalTime: new Date(arrival.scheduledArrivalTime),
                     predictedArrivalTime: arrival.predictedArrivalTime ? new Date(arrival.predictedArrivalTime) : null,

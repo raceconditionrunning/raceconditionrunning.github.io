@@ -19,7 +19,8 @@
       <rcr:surface_sidewalk>0.265</rcr:surface_sidewalk>
       <rcr:surface_trail>0.552</rcr:surface_trail>
       <rcr:stairs>0.004</rcr:stairs>
-      <rcr:last_updated>2026-02-17</rcr:last_updated>
+      <rcr:map>https://onthegomap.com/s/9ej3i63r</rcr:map>
+      <rcr:last_updated>2026-09-11</rcr:last_updated>
     </extensions>
   </metadata>
   <trk>

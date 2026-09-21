@@ -55,10 +55,7 @@ export class ResultsTable extends HTMLElement {
             })
             detail.classList.add("initialized")
         }
-        let useFinishTimes = false
-        if (data.length > 0) {
-            useFinishTimes = data[0].finishTime && Number.isFinite(data[0].finishTime)
-        }
+        let useFinishTimes = data.some(entry => Number.isFinite(entry.finishTime))
         let sortConfig = useFinishTimes ? {column: "finishTime", dir: "asc"} : {column: "nLaps", dir: "desc"}
         let rowClicked = (e, row) => {
             if (!(e.target.classList.contains("tabulator-row") || e.target.classList.contains("tabulator-cell"))) {

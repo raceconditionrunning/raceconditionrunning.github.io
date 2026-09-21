@@ -263,7 +263,8 @@ export function processRelayGeoJSON(relay) {
     if (legs[0].properties.sequence !== undefined) {
         legs.sort((a, b) => a.properties.sequence[0] - b.properties.sequence[0])
     } else {
-        legs.sort((a, b) => a.properties.start_exchange - b.properties.start_exchange)
+        // Some stations start with a letter
+        legs.sort((a, b) => String(a.properties.start_exchange).localeCompare(String(b.properties.start_exchange)))
 
     }
     exchanges.sort((a, b) => a.properties.id - b.properties.id)
@@ -287,6 +288,66 @@ export function processRelayGeoJSON(relay) {
     return [legs, exchanges, pois]
 }
 
+
+function sequenceOnLine(leg, line) {
+    return leg.properties.sequence[leg.properties.lines.indexOf(line)]
+}
+
+/**
+ * A relay may describe several overlapping routes ("lines"). Each leg carries a `lines` array and a
+ * parallel `sequence` array giving its position along each of those lines, so a leg shared by two lines
+ * sits at a different index on each. Pull out the legs belonging to one line, ordered along it.
+ */
+export function legsForLine(legs, line) {
+    return legs
+        .filter(leg => (leg.properties.lines || []).includes(line))
+        .sort((a, b) => sequenceOnLine(a, line) - sequenceOnLine(b, line))
+}
+
+/**
+ * The exchange features a chain of legs passes through, in order: every leg's start, plus the last leg's end.
+ */
+export function exchangesForLegs(legs, exchanges) {
+    const byId = new Map(exchanges.map(exchange => [exchange.properties.id, exchange]))
+    const ids = legs.map(leg => leg.properties.start_exchange)
+    ids.push(legs[legs.length - 1].properties.end_exchange)
+    return ids.map(id => byId.get(id)).filter(Boolean)
+}
+
+/**
+ * An exchange id encodes the lines it serves and its station number: the last two characters are the
+ * station number and everything before them names the lines, one character each. 1240 is station 40 served
+ * by the 1 and 2 Lines, 165 is station 65 on the 1 Line alone, and "T72" is station 72 on the T Line.
+ */
+export function exchangeStationCode(id) {
+    const text = String(id ?? "")
+    return text.length < 2 ? undefined : text.slice(-2)
+}
+
+/**
+ * The line badge for an exchange id: everything ahead of the station number, kept together so an exchange
+ * shared by two lines reads as one code ("12"). See {@link exchangeStationCode}.
+ */
+export function exchangeLineCode(id) {
+    const text = String(id ?? "")
+    return text.length <= 2 ? undefined : text.slice(0, -2)
+}
+
+/**
+ * Build the exchange lookup that LegCalculator expects, deriving the station code that the relay data no
+ * longer states outright. The badge depends on which line we're presenting the exchange as part of, so it
+ * comes from the caller rather than from the id.
+ */
+export function exchangeInfoForLine(exchanges, lineCode) {
+    return exchanges.reduce((acc, exchange) => {
+        acc[exchange.properties.id] = {
+            ...exchange.properties,
+            station_code: exchangeStationCode(exchange.properties.id),
+            line_code: lineCode
+        }
+        return acc
+    }, {})
+}
 
 export async function prepareImagesForPhotoswipe(galleryElements) {
     // PhotoSwipe (lightbox) expects the width and height of each image to be set in the DOM. This function

@@ -24,10 +24,10 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
     <meta property="og:description" content="{{ page.description }}">
 
     <link rel="manifest" href="{{ site.baseurl }}/maps/lrr-24-manifest.json">
-    <link href="https://cdn.jsdelivr.net/npm/maplibre-gl@5.15.0/dist/maplibre-gl.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/maplibre-gl@6.2.0/dist/maplibre-gl.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.1/dist/css/tabulator.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.1/dist/css/tabulator_bootstrap5.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.5.0/dist/css/tabulator.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.5.0/dist/css/tabulator_bootstrap5.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css" integrity="sha512-qveKnGrvOChbSzAdtSs8p69eoLegyh+1hwOMbmpCViIwj7rn4oJjdmMvWOuyQlTOZgTlZA0N2PXA7iA8/2TUYA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css" integrity="sha512-LFWtdAXHQuwUGH9cImO9blA3a3GfQNkpF2uRlhaOpSbDevNyK1rmAjs13mtpjvWyi+flP7zYWboqY+8Mkd42xA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -77,13 +77,13 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             "lit-html": "https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js",
             "lit-html/directives/map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/map.js",
             "lit-html/directives/repeat.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/repeat.js",
-            "maplibre-gl": "https://cdn.jsdelivr.net/npm/maplibre-gl@5.15.0/+esm",
+            "maplibre-gl": "https://cdn.jsdelivr.net/npm/maplibre-gl@6.2.0/dist/maplibre-gl.mjs",
             "masonry-layout": "https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js",
             "noUiSlider": "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.mjs",
             "photoswipe": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js",
             "photoswipe-lightbox": "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js",
             "pmtiles": "https://cdn.jsdelivr.net/npm/pmtiles@4.0.1/+esm",
-            "tabulator-tables": "https://cdnjs.cloudflare.com/ajax/libs/tabulator-tables/6.3.1/js/tabulator_esm.min.js",
+            "tabulator-tables": "https://cdn.jsdelivr.net/npm/tabulator-tables@6.5.0/dist/js/tabulator_esm.min.js",
             "@turf": "https://cdn.jsdelivr.net/npm/@turf/turf@7.1.0/+esm",
             "@popperjs/core": "https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/esm/popper.min.js"
           }
@@ -404,106 +404,6 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             outline: none;
             box-shadow: 0 0 0 0.25rem var(--theme-primary-color-subdued);
         }
-        /* Relay Map - Arrivals Popup */
-
-        .arrivals-popup {
-            background-color: rgba(0, 0, 0, 0.6);
-            -webkit-backdrop-filter: blur(4px);
-            backdrop-filter: blur(4px);
-            vertical-align: top;
-            transition: opacity 0.4s ease-out;
-            opacity: 1;
-        }
-
-        .arrivals-popup tr {
-            line-height: 1;
-            vertical-align: top;
-        }
-        .arrivals-popup tr:not(:last-child) td {
-            padding-bottom: .25rem;
-        }
-
-        .arrivals-popup .maplibregl-popup-tip {
-            display: none;
-        }
-        .arrivals-popup .maplibregl-popup-content {
-            background: none;
-            color: white;
-            padding: 1rem;
-        }
-        .arrivals-popup .trip-destination {
-            font-weight: 600;
-        }
-        .arrivals-popup .maplibregl-popup-close-button {
-            color: #888;
-        }
-        .arrivals-popup .realtime-symbol {
-            /* Inline SVG of two radio waves going up and to the right */
-            background: url("data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20id%3D%22Layer_1%22%20data-name%3D%22Layer%201%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cdefs%3E%3Cstyle%3E%20%20%20%20%20%20.cls-1%20%7B%20%20%20%20%20%20%20%20fill%3A%20none%3B%20%20%20%20%20%20%20%20stroke%3A%20%23fff%3B%20%20%20%20%20%20%20%20stroke-width%3A%203px%3B%20%20%20%20%20%20%7D%20%20%20%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M3.6%2C5.6c7.9%2C0%2C14.2%2C6.4%2C14.2%2C14.2%22%2F%3E%3Cpath%20class%3D%22cls-1%22%20d%3D%22M3.6%2C11.5c4.6%2C0%2C8.3%2C3.7%2C8.3%2C8.3%22%2F%3E%3C%2Fsvg%3E") no-repeat;
-            display: inline-block;
-            width: .9rem;
-            height: .9rem;
-        }
-        .trip-id {
-            font-size: .8rem;
-            font-weight: 300;
-            color: #888;
-        }
-        .line-marker {
-            font-weight: bold;
-        }
-        .line-40_100479 {
-            background-color: var(--theme-primary-color);
-            width: .9rem;
-            height: .9rem;
-            font-size: .9rem;
-            border-radius: .5rem;
-            display: inline-block;
-        }
-        .line-40_100479::before {
-            content: "1";
-            /* Horizontally and vertically center the number */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            width: 100%;
-        }
-        .line-40_2LINE {
-            background-color: rgb(0, 160, 223);
-            width: .9rem;
-            height: .9rem;
-            font-size: .9rem;
-            border-radius: .5rem;
-            display: inline-block;
-        }
-        .line-40_2LINE::before {
-            content: "2";
-            /* Horizontally and vertically center the number */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            width: 100%;
-        }
-        .line-40_TLINE {
-            background-color: rgb(243, 139, 0);
-            width: .9rem;
-            height: .9rem;
-            font-size: .8rem;
-            border-radius: .5rem;
-            display: inline-block;
-        }
-        .line-40_TLINE::before {
-            content: "T";
-            color: black;
-            /* Horizontally and vertically center the number */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            width: 100%;
-        }
 
         /* Epilogue */
         masonry-image-gallery {
@@ -767,7 +667,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
         <leg-calculator id="leg-calculator" class="mb-3 p-2 p-lg-4" style="display: none">
             <h6 class="text-secondary">Segment Calculator</h6>
-            <div id="leg-calculator-description"></div>
+            <div class="leg-calculator-description"></div>
             <div class="mx-3">
                 <div class="leg-range-input mt-5 mb-5" id="leg-calculator-slider"></div>
             </div>
@@ -1263,43 +1163,17 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
     </ul>
 </footer>
 <script type="module">
-    import { relayToGPX, download, createCountdown, processRelayGeoJSON, prepareImagesForPhotoswipe} from "../js/common.js";
+    import { relayToGPX, download, createCountdown, processRelayGeoJSON, prepareImagesForPhotoswipe, exchangeInfoForLine} from "../js/common.js";
     import { createLegDetailsTable} from "{{ site.baseurl }}/js/tables.js";
-    import maplibregl from 'maplibre-gl';
     import PhotoSwipeLightbox from 'photoswipe-lightbox';
     import { MasonryImageGallery} from "{{ site.baseurl }}/js/MasonryImageGallery.js";
     import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
     import {RelayMap} from '{{ site.baseurl }}/js/RelayMap.js';
     import {LegCalculator} from '{{ site.baseurl }}/js/LegCalculator.js';
     import {RelayResultsTable} from "../js/RelayResultsTable.js";
-    import {TransitVehicleTracker} from '{{ site.baseurl }}/js/TransitVehicleTracker.js';
-
-    const apiBaseUrl = "https://api.pugetsound.onebusaway.org/api"
-    const routeId = "40_100479"
-    const key = "OBAKEY"
-    const vehicleMonitor = new TransitVehicleTracker(apiBaseUrl, routeId, key);
-    vehicleMonitor.startPolling();
-
-    document.addEventListener('vehicleDataUpdated', event => {
-        let vehiclesGeojson = event.detail.map(vehicle => {
-            return {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [vehicle.lon, vehicle.lat]
-                },
-                "properties": vehicle
-            }
-        });
-        vehiclesGeojson = {
-            "type": "FeatureCollection",
-            "features": vehiclesGeojson}
-
-        document.querySelector("#relay-map").trains = vehiclesGeojson
-    });
 
     let routeData = fetch("{{ site.baseurl }}/maps/lrr24.geojson").then(res => res.json())
-    let futureRouteData = fetch("{{ site.baseurl }}/maps/lrr-future.geojson").then(res => res.json())
+    let futureRouteData = fetch("{{ site.baseurl }}/maps/lrr24-future.geojson").then(res => res.json())
     let railData = fetch("{{ site.baseurl }}/maps/link-light-rail.geojson").then(res => res.json())
     railData.then((railLines) => {
         document.querySelector("#relay-map").railLines = railLines
@@ -1307,10 +1181,12 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
     let processedRouteData = routeData.then((relay) => {
         let [legs, exchanges] = processRelayGeoJSON(relay)
         let exchangeNames = {};
+        let resultExchangeNames = {};
         for (let exchange of exchanges.features) {
             exchangeNames[exchange.properties.id] = exchange.properties.name
+            resultExchangeNames[exchange.properties.id] = exchange.properties.name
         }
-        return [legs, exchanges, exchangeNames]
+        return [legs, exchanges, exchangeNames, resultExchangeNames]
     })
     let processedFutureData = futureRouteData.then((futureRelay) => {
         let exchanges = futureRelay.features.filter(feature => feature.geometry.type === "Point")
@@ -1324,14 +1200,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
     processedRouteData.then(([legs, exchanges, exchangeNames]) => {
         let legsData = legs.features
-        let exchangeInfo = exchanges.features.reduce((acc, exchange) => {
-            acc[exchange.properties.id] = exchange.properties
-            // NOTE: Interlined stations still have two stop IDs in the GTFS, which we reflect
-            // in our exchange data as well. Here we only present one line at a time.
-            acc[exchange.properties.id].line = Math.floor(exchange.properties.id / 100)
-            acc[exchange.properties.id].stationCode = exchange.properties.id % 100
-            return acc
-        }, {})
+        let exchangeInfo = exchangeInfoForLine(exchanges.features, "1")
         document.getElementById("leg-calculator").setLegs(legs.features, exchangeInfo)
         createLegDetailsTable(document.getElementById("leg-details-table"), legsData, exchanges.features)
     });
@@ -1361,7 +1230,6 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         map.exchangeNames = exchangeNames
         map.legs = legs
         map.loading = false
-        document.querySelector("#relay-map").registerLiveArrivalsSource(allExchanges, vehicleMonitor.getArrivalsForStop.bind(vehicleMonitor))
     })
 
     let startTime = new Date("Sept 28, 2024 8:30:00")
@@ -1374,7 +1242,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
 
-    Promise.all([fetch('{{ site.baseurl }}/results/lrr24.json').then(res => res.json()), processedRouteData]).then(([results, [legs, exchanges, exchangeNames]]) => {
+    Promise.all([fetch('{{ site.baseurl }}/results/lrr24.json').then(res => res.json()), processedRouteData]).then(([results, [legs, exchanges, exchangeNames, resultExchangeNames]]) => {
         results.results.forEach((result, index) => {
             result.index = index
 
@@ -1383,8 +1251,8 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
         // Reverse the order of the exchangeNames object so that exchanges are listed from last to first
         let exchangeColumns = []
-        Object.keys(exchangeNames).reverse().forEach(key => {
-            exchangeColumns.push([key, exchangeNames[key]])
+        Object.keys(resultExchangeNames).reverse().forEach(key => {
+            exchangeColumns.push([key, resultExchangeNames[key]])
         })
         relayResultsTable.initialize(results, exchangeColumns)
         document.getElementById("results-table").appendChild(relayResultsTable)

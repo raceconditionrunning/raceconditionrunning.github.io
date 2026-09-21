@@ -5,7 +5,7 @@
   "zoom": 10,
   "bearing": 0,
   "pitch": 0,
-  "terrain": {"source": "terrain_rgb", "exaggeration": 2.0},
+  "terrain": {"source": "terrain_rgb", "exaggeration": 2},
   "sources": {
     "terrain_rgb": {
       "url": "https://tiles.mapterhorn.com/tilejson.json",
@@ -18,66 +18,49 @@
       "attribution": "<a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">&copy; OpenStreetMap contributors</a>",
       "type": "vector"
     },
+    "world-ocean": {
+      "type": "vector",
+      "tiles": ["https://klokantech.github.io/naturalearthtiles/tiles/natural_earth.vector/{z}/{x}/{y}.pbf"],
+      "maxzoom": 7,
+      "attribution": "Made with <a href=\"https://www.naturalearthdata.com/\" target=\"_blank\">Natural Earth</a>"
+    },
     "legs": {
       "type": "geojson",
       "promoteId": "id",
-      "data": {
-        "type": "FeatureCollection",
-        "features": []
-      }
+      "data": {"type": "FeatureCollection", "features": []}
     },
     "leg-labels": {
       "type": "geojson",
       "promoteId": "id",
-      "data": {
-        "type": "FeatureCollection",
-        "features": []
-      }
+      "data": {"type": "FeatureCollection", "features": []}
     },
     "leg-splits": {
       "type": "geojson",
       "promoteId": "id",
-      "data": {
-        "type": "FeatureCollection",
-        "features": []
-      }
+      "data": {"type": "FeatureCollection", "features": []}
     },
     "overall-splits": {
       "type": "geojson",
       "promoteId": "id",
-      "data": {
-        "type": "FeatureCollection",
-        "features": []
-      }
+      "data": {"type": "FeatureCollection", "features": []}
     },
     "exchanges": {
       "type": "geojson",
       "promoteId": "id",
-      "data": {
-        "type": "FeatureCollection",
-        "features": []
-      }
-      },
-      "trains": {
-        "type": "geojson",
-        "data": {
-        "type": "FeatureCollection",
-        "features": []
-      }
-      },
-    "rail-lines" : {
-        "type": "geojson",
-        "data": {
-        "type": "FeatureCollection",
-        "features": []
-      }
+      "data": {"type": "FeatureCollection", "features": []}
     },
-      "pois" : {
-        "type": "geojson",
-        "data": {
-        "type": "FeatureCollection",
-        "features": []
-      }
+    "trains": {
+      "type": "geojson",
+      "data": {"type": "FeatureCollection", "features": []}
+    },
+    "rail-lines": {
+      "type": "geojson",
+      "data": {"type": "FeatureCollection", "features": []}
+    },
+    "pois": {
+      "type": "geojson",
+      "data": {"type": "FeatureCollection", "features": []},
+      "promoteId": "id"
     }
   },
   "state": {
@@ -97,6 +80,14 @@
       "type": "background",
       "layout": {"visibility": "visible"},
       "paint": {"background-color": "hsl(0, 0%, 15%)"}
+    },
+    {
+      "id": "world-ocean",
+      "type": "fill",
+      "source": "world-ocean",
+      "source-layer": "water",
+      "maxzoom": 8,
+      "paint": {"fill-color": "hsl(0, 0%, 5%)"}
     },
     {
       "id": "landcover_green",
@@ -369,11 +360,21 @@
       "id": "tunnel_lightrail",
       "type": "line",
       "source": "rail-lines",
-      "filter": [
-        "all",
-        ["==", ["get", "tunnel"], "yes"]
-      ],
+      "filter": ["all", ["==", ["get", "tunnel"], "yes"]],
       "layout": {},
+      "metadata": {
+        "salient-line-width": [
+          "interpolate",
+          ["exponential", 1.4],
+          ["zoom"],
+          14,
+          0.64,
+          15,
+          1.2,
+          20,
+          3.2
+        ]
+      },
       "paint": {
         "line-color": "hsl(0, 0%, 50%)",
         "line-width": [
@@ -388,11 +389,7 @@
           2
         ],
         "line-dasharray": {
-          "stops": [
-            [10, [1000, 0]],
-            [14, [8, 4]],
-            [20, [4, 2]]
-          ]
+          "stops": [[10, [1000, 0]], [14, [8, 4]], [20, [4, 2]]]
         }
       }
     },
@@ -936,7 +933,13 @@
       "filter": [
         "all",
         ["match", ["get", "class"], ["service", "track"], true, false],
-        ["match", ["get", "service"], ["parking_aisle", "driveway"], false, true],
+        [
+          "match",
+          ["get", "service"],
+          ["parking_aisle", "driveway"],
+          false,
+          true
+        ],
         ["match", ["get", "brunnel"], ["bridge", "tunnel"], false, true]
       ],
       "layout": {"line-join": "round", "line-cap": "round"},
@@ -966,7 +969,13 @@
       "filter": [
         "all",
         ["match", ["get", "class"], ["service", "track"], true, false],
-        ["match", ["get", "service"], ["parking_aisle", "driveway"], true, false],
+        [
+          "match",
+          ["get", "service"],
+          ["parking_aisle", "driveway"],
+          true,
+          false
+        ],
         ["match", ["get", "brunnel"], ["bridge", "tunnel"], true, true]
       ],
       "layout": {"line-join": "round", "line-cap": "round"},
@@ -1075,10 +1084,14 @@
           "interpolate",
           ["linear"],
           ["zoom"],
-          8, ["case", ["==", ["get", "class"], "tertiary"], 0, 1],
-          9, ["case", ["==", ["get", "class"], "tertiary"], 1, 1],
-          11, ["case", ["==", ["get", "class"], "tertiary"], 0, 1],
-          12, ["case", ["==", ["get", "class"], "tertiary"], 1, 1]
+          8,
+          ["case", ["==", ["get", "class"], "tertiary"], 0, 1],
+          9,
+          ["case", ["==", ["get", "class"], "tertiary"], 1, 1],
+          11,
+          ["case", ["==", ["get", "class"], "tertiary"], 0, 1],
+          12,
+          ["case", ["==", ["get", "class"], "tertiary"], 1, 1]
         ]
       }
     },
@@ -1191,13 +1204,7 @@
           true,
           false
         ],
-        [
-          "match",
-          ["get", "subclass"],
-          ["light_rail"],
-          false,
-          true
-        ],
+        ["match", ["get", "subclass"], ["light_rail"], false, true],
         ["match", ["get", "brunnel"], ["bridge", "tunnel"], false, true]
       ],
       "layout": {},
@@ -1232,13 +1239,7 @@
           true,
           false
         ],
-        [
-          "match",
-          ["get", "subclass"],
-          ["light_rail"],
-          false,
-          true
-        ],
+        ["match", ["get", "subclass"], ["light_rail"], false, true],
         ["match", ["get", "brunnel"], ["bridge", "tunnel"], false, true]
       ],
       "layout": {},
@@ -1269,6 +1270,19 @@
         ["match", ["get", "tunnel"], ["yes"], false, true]
       ],
       "layout": {},
+      "metadata": {
+        "salient-line-width": [
+          "interpolate",
+          ["exponential", 1.4],
+          ["zoom"],
+          14,
+          0.64,
+          15,
+          1.2,
+          20,
+          3.2
+        ]
+      },
       "paint": {
         "line-color": "hsl(0, 0%, 55%)",
         "line-width": [
@@ -1295,6 +1309,19 @@
         ["match", ["get", "tunnel"], ["yes"], false, true]
       ],
       "layout": {},
+      "metadata": {
+        "salient-line-width": [
+          "interpolate",
+          ["exponential", 1.4],
+          ["zoom"],
+          14,
+          1.6,
+          15,
+          4.8,
+          20,
+          12.8
+        ]
+      },
       "paint": {
         "line-color": "hsl(0, 0%, 55%)",
         "line-width": [
@@ -2102,13 +2129,7 @@
           true,
           false
         ],
-        [
-          "match",
-          ["get", "subclass"],
-          ["light_rail"],
-          false,
-          true
-        ],
+        ["match", ["get", "subclass"], ["light_rail"], false, true],
         ["==", ["get", "brunnel"], "bridge"]
       ],
       "layout": {},
@@ -2142,13 +2163,7 @@
           true,
           false
         ],
-        [
-          "match",
-          ["get", "subclass"],
-          ["light_rail"],
-          false,
-          true
-        ],
+        ["match", ["get", "subclass"], ["light_rail"], false, true],
         ["==", ["get", "brunnel"], "bridge"]
       ],
       "layout": {},
@@ -2172,11 +2187,21 @@
       "id": "bridge_lightrail",
       "type": "line",
       "source": "rail-lines",
-      "filter": [
-        "all",
-        ["==", ["get", "bridge"], "yes"]
-      ],
+      "filter": ["all", ["==", ["get", "bridge"], "yes"]],
       "layout": {},
+      "metadata": {
+        "salient-line-width": [
+          "interpolate",
+          ["exponential", 1.4],
+          ["zoom"],
+          14,
+          0.64,
+          15,
+          1.2,
+          20,
+          3.2
+        ]
+      },
       "paint": {
         "line-color": "hsl(0, 0%, 55%)",
         "line-width": [
@@ -2197,11 +2222,21 @@
       "type": "line",
       "source": "rail-lines",
       "minzoom": 14,
-      "filter": [
-        "all",
-        ["==", ["get", "bridge"], "yes"]
-      ],
+      "filter": ["all", ["==", ["get", "bridge"], "yes"]],
       "layout": {},
+      "metadata": {
+        "salient-line-width": [
+          "interpolate",
+          ["exponential", 1.4],
+          ["zoom"],
+          14,
+          1.6,
+          15,
+          4.8,
+          20,
+          12.8
+        ]
+      },
       "paint": {
         "line-color": "hsl(0, 0%, 55%)",
         "line-width": [
@@ -2364,7 +2399,15 @@
           [
             "match",
             ["get", "class"],
-            ["motorway", "trunk", "primary", "secondary", "tertiary", "minor", "path"],
+            [
+              "motorway",
+              "trunk",
+              "primary",
+              "secondary",
+              "tertiary",
+              "minor",
+              "path"
+            ],
             10,
             9
           ],
@@ -2533,7 +2576,7 @@
       "type": "symbol",
       "source": "planet",
       "source-layer": "poi",
-        "minzoom": 16,
+      "minzoom": 16,
       "filter": ["all", ["==", ["get", "class"], "park"]],
       "layout": {
         "icon-image": "{class}",
@@ -2541,7 +2584,7 @@
         "text-field": "{name_en}",
         "text-font": ["Roboto Condensed Italic"],
         "text-max-width": 9,
-        "text-offset": [0.0, 0.8],
+        "text-offset": [0, 0.8],
         "text-size": 12
       },
       "paint": {
@@ -2561,7 +2604,7 @@
       "source": "planet",
       "source-layer": "poi",
       "minzoom": 16,
-      "filter": ["all", ["in", "class","entrance"]],
+      "filter": ["all", ["in", "class", "entrance"]],
       "layout": {
         "icon-image": "{class}",
         "text-anchor": "left",
@@ -2588,9 +2631,15 @@
       "source": "planet",
       "source-layer": "poi",
       "minzoom": 16,
-      "filter": ["any",
+      "filter": [
+        "any",
         ["in", "class", "bus", "rail", "airport"],
-        ["all", ["==", "class", "amenity"], ["==", "subclass", "ferry_terminal"]]],
+        [
+          "all",
+          ["==", "class", "amenity"],
+          ["==", "subclass", "ferry_terminal"]
+        ]
+      ],
       "layout": {
         "icon-image": "{subclass}",
         "text-anchor": "left",
@@ -2612,7 +2661,6 @@
         "icon-halo-blur": 0.5
       }
     },
-
     {
       "id": "poi_runner_supply",
       "type": "symbol",
@@ -2622,7 +2670,8 @@
       "filter": [
         "all",
         ["in", ["geometry-type"], ["literal", ["Point", "MultiPoint"]]],
-        ["any",
+        [
+          "any",
           ["match", ["get", "class"], ["grocery"], true, false],
           ["match", ["get", "subclass"], ["convenience"], true, false]
         ],
@@ -2642,7 +2691,13 @@
           ["get", "class"],
           "grocery",
           "grocery",
-          ["match", ["get", "subclass"], "convenience", "convenience", ["get", "class"]]
+          [
+            "match",
+            ["get", "subclass"],
+            "convenience",
+            "convenience",
+            ["get", "class"]
+          ]
         ],
         "text-anchor": "top",
         "text-field": [
@@ -2687,27 +2742,9 @@
       "filter": [
         "all",
         ["in", ["geometry-type"], ["literal", ["Point", "MultiPoint"]]],
-        [
-          "match",
-          ["get", "class"],
-          ["art_gallery"],
-          true,
-          false
-        ],
-        [
-          "match",
-          ["get", "subclass"],
-          ["artwork"],
-          true,
-          false
-        ],
-        [
-          "match",
-          ["get", "name_en"],
-          [""],
-          false,
-          true
-        ],
+        ["match", ["get", "class"], ["art_gallery"], true, false],
+        ["match", ["get", "subclass"], ["artwork"], true, false],
+        ["match", ["get", "name_en"], [""], false, true],
         [
           "case",
           [">=", ["zoom"], 17],
@@ -2804,7 +2841,8 @@
         "icon-color": [
           "match",
           ["get", "subclass"],
-          "drinking_water", "hsl(190, 80%, 60%)",
+          "drinking_water",
+          "hsl(190, 80%, 60%)",
           "hsl(0, 0%, 50%)"
         ],
         "icon-halo-color": "#000",
@@ -3067,7 +3105,7 @@
       "source": "planet",
       "source-layer": "place",
       "minzoom": 5,
-      "filter": ["any", ["==", ["get","class"], "city"]],
+      "filter": ["any", ["==", ["get", "class"], "city"]],
       "layout": {
         "icon-image": {"base": 1, "stops": [[0, "dot_9"], [8, ""]]},
         "text-anchor": "bottom",
@@ -3113,8 +3151,10 @@
           "interpolate",
           ["linear"],
           ["zoom"],
-          12, ["*", ["case", ["==", ["get", "class"], "town"], 1.6, 1.2], 9],
-          15, ["*", ["case", ["==", ["get", "class"], "town"], 1.6, 1.2], 12]
+          12,
+          ["*", ["case", ["==", ["get", "class"], "town"], 1.6, 1.2], 9],
+          15,
+          ["*", ["case", ["==", ["get", "class"], "town"], 1.6, 1.2], 12]
         ],
         "text-transform": "uppercase"
       },
@@ -3130,50 +3170,131 @@
       "source": "planet",
       "source-layer": "mountain_peak",
       "layout": {"text-field": "{name_en}\n{ele_ft}ft", "text-size": 12},
-      "paint": {"text-color": "hsl(0,0%,40%)", "text-halo-color": "black", "text-halo-width": 1},
+      "paint": {
+        "text-color": "hsl(0,0%,40%)",
+        "text-halo-color": "black",
+        "text-halo-width": 1
+      },
       "minzoom": 12
     },
     {
       "id": "legs-hover-region",
       "type": "line",
       "source": "legs",
-      "layout": {
-        "line-join": "round",
-        "line-cap": "round"
-      },
-      "paint": {
-        "line-color": "#FF0000",
-        "line-width": 8,
-        "line-opacity": 0
-      }
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {"line-color": "#FF0000", "line-width": 8, "line-opacity": 0}
     },
     {
       "id": "legs",
       "type": "line",
       "source": "legs",
-      "layout": {
-        "line-join": "round",
-        "line-cap": "round"
-      },
+      "layout": {"line-join": "round", "line-cap": "round"},
       "paint": {
-        "line-color": ["case",
-          ["boolean",
-            ["all",
-              ["!=",["global-state", "selectedLeg"], null],
+        "line-color": [
+          "case",
+          [
+            "boolean",
+            [
+              "all",
+              ["!=", ["global-state", "selectedLeg"], null],
               ["==", ["feature-state", "selected"], false]
-            ]
-          , false],
-          ["interpolate-lab", ["linear"], 0.5, 0, "#000000", 1, ["get", "lineColor"]],
-          ["get", "lineColor"]],
-        "line-width": {
-          "stops": [
-            [10, 3],
-            [12, 4],
-            [14, 5],
-            [20, 6]
-          ]
-        },
-        "line-opacity": ["interpolate", ["linear"],["zoom"], 14, 1.0, 15, 0.6, 16, 0.45]
+            ],
+            false
+          ],
+          [
+            "interpolate-lab",
+            ["linear"],
+            0.5,
+            0,
+            "#000000",
+            1,
+            ["get", "lineColor"]
+          ],
+          ["get", "lineColor"]
+        ],
+        "line-width": {"stops": [[10, 3], [12, 4], [14, 5], [20, 6]]},
+        "line-opacity": 1,
+        "line-offset": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          10,
+          ["case", ["has", "lineColorSecondary"], -3, 0],
+          12,
+          ["case", ["has", "lineColorSecondary"], -3.5, 0],
+          14,
+          ["case", ["has", "lineColorSecondary"], -4, 0],
+          20,
+          ["case", ["has", "lineColorSecondary"], -4.5, 0]
+        ],
+        "line-layer-opacity": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          14,
+          1,
+          15,
+          0.6,
+          16,
+          0.45
+        ]
+      }
+    },
+    {
+      "id": "legs-secondary",
+      "type": "line",
+      "source": "legs",
+      "filter": ["has", "lineColorSecondary"],
+      "layout": {"line-join": "round", "line-cap": "round"},
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "boolean",
+            [
+              "all",
+              ["!=", ["global-state", "selectedLeg"], null],
+              ["==", ["feature-state", "selected"], false]
+            ],
+            false
+          ],
+          [
+            "interpolate-lab",
+            ["linear"],
+            0.5,
+            0,
+            "#000000",
+            1,
+            ["get", "lineColorSecondary"]
+          ],
+          ["get", "lineColorSecondary"]
+        ],
+        "line-width": {"stops": [[10, 3], [12, 4], [14, 5], [20, 6]]},
+        "line-offset": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          10,
+          2.25,
+          12,
+          3,
+          14,
+          3.75,
+          20,
+          4.5
+        ],
+        "line-opacity": 1,
+        "line-layer-opacity": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          14,
+          1,
+          15,
+          0.6,
+          16,
+          0.45
+        ]
       }
     },
     {
@@ -3183,34 +3304,20 @@
       "filter": [
         "all",
         ["==", ["global-state", "selectedLeg"], null],
-        [
-          ">=",
-          ["zoom"],
-          ["-",17,["get", "importance"]]
-        ]
+        [">=", ["zoom"], ["-", 17, ["get", "importance"]]]
       ],
-        "minzoom": 13,
+      "minzoom": 13,
       "layout": {
-        "text-field": ["to-string",  ["get", "distance"]],
+        "text-field": ["to-string", ["get", "distance"]],
         "text-font": ["Noto Sans Bold"],
-        "text-size": {
-          "stops": [
-            [9, 8],
-            [10, 8],
-            [16, 16]
-          ]
-        },
+        "text-size": {"stops": [[9, 8], [10, 8], [16, 16]]},
         "text-padding": 4,
         "text-justify": "center",
         "icon-image": "roundrect",
         "icon-text-fit": "both",
-
         "icon-text-fit-padding": [2, 2, 2, 2]
       },
-      "paint": {
-        "text-color": "#000",
-        "icon-opacity": 0.75
-      }
+      "paint": {"text-color": "#000", "icon-opacity": 0.75}
     },
     {
       "id": "leg-splits",
@@ -3219,34 +3326,20 @@
       "filter": [
         "all",
         ["!=", ["global-state", "selectedLeg"], null],
-        [
-          ">=",
-          ["zoom"],
-          ["-",17,["get", "importance"]]
-        ]
+        [">=", ["zoom"], ["-", 17, ["get", "importance"]]]
       ],
       "minzoom": 13,
       "layout": {
-        "text-field": ["to-string",  ["get", "distance"]],
+        "text-field": ["to-string", ["get", "distance"]],
         "text-font": ["Noto Sans Bold"],
-        "text-size": {
-          "stops": [
-            [9, 8],
-            [10, 8],
-            [16, 16]
-          ]
-        },
+        "text-size": {"stops": [[9, 8], [10, 8], [16, 16]]},
         "text-padding": 4,
         "text-justify": "center",
         "icon-image": "roundrect",
         "icon-text-fit": "both",
-
         "icon-text-fit-padding": [2, 2, 2, 2]
       },
-      "paint": {
-        "text-color": "#000",
-        "icon-opacity": 0.75
-      }
+      "paint": {"text-color": "#000", "icon-opacity": 0.75}
     },
     {
       "id": "leg-labels",
@@ -3254,15 +3347,26 @@
       "source": "leg-labels",
       "minzoom": 9,
       "layout": {
-        "text-field": ["to-string", ["+", ["at", 0, ["get", "sequence"]], 1]],
-        "text-font": ["Noto Sans Bold"],
-        "text-size": {
-          "stops": [
-            [9, 10],
-            [10, 12],
-            [16, 21]
+        "text-field": [
+          "case",
+          ["has", "labelSecondary"],
+          [
+            "format",
+            ["get", "label"],
+            {"text-color": ["to-color", ["get", "labelColor"]]},
+            " ",
+            {},
+            ["get", "labelSecondary"],
+            {"text-color": ["to-color", ["get", "labelSecondaryColor"]]}
+          ],
+          [
+            "format",
+            ["get", "label"],
+            {"text-color": ["to-color", ["get", "labelColor"]]}
           ]
-        },
+        ],
+        "text-font": ["Noto Sans Bold"],
+        "text-size": {"stops": [[9, 10], [10, 12], [16, 21]]},
         "text-padding": 4,
         "text-justify": "center"
       },
@@ -3289,38 +3393,30 @@
         "text-anchor": "center",
         "text-offset": [
           "case",
-          ["all",
+          [
+            "all",
             [">", ["abs", ["get", "bearing"]], 120],
             ["<", ["abs", ["get", "bearing"]], 290]
           ],
-          ["literal",[0.25, 0]],
-          ["literal",[-0.25, 0]]
+          ["literal", [0.25, 0]],
+          ["literal", [-0.25, 0]]
         ],
-        "text-size": {
-          "stops": [
-            [14, 8],
-            [18, 21]
-          ]
-        },
+        "text-size": {"stops": [[14, 8], [18, 21]]},
         "icon-image": "lrv",
         "icon-rotate": ["-", ["get", "bearing"]],
         "text-rotate": [
           "case",
-          ["all",
+          [
+            "all",
             [">", ["abs", ["get", "bearing"]], 120],
             ["<", ["abs", ["get", "bearing"]], 290]
-            ],
+          ],
           ["+", ["-", ["get", "bearing"]], 180],
           ["-", ["get", "bearing"]]
         ],
         "text-font": ["Roboto Condensed Regular"],
         "icon-size": {
-          "stops": [
-            [8, 0.05],
-            [10, 0.125],
-            [14, 0.25],
-            [18, 0.85]
-          ]
+          "stops": [[8, 0.05], [10, 0.125], [14, 0.25], [18, 0.85]]
         },
         "text-overlap": "always",
         "icon-overlap": "always",
@@ -3333,7 +3429,83 @@
         "text-color": "#333",
         "text-opacity": 0.9,
         "text-halo-color": "rgba(255, 255, 255, 0.6)",
-        "icon-color": "#EEE",
+        "icon-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          12,
+          [
+            "interpolate-lab",
+            ["linear"],
+            0.35,
+            0,
+            "#EEEEEE",
+            1,
+            [
+              "coalesce",
+              ["get", "lineColor"],
+              [
+                "match",
+                ["get", "routeId"],
+                "40_100479",
+                "#3DAE2B",
+                "40_2LINE",
+                "rgb(0, 160, 223)",
+                "40_TLINE",
+                "rgb(243, 139, 0)",
+                "#888"
+              ]
+            ]
+          ],
+          14,
+          [
+            "interpolate-lab",
+            ["linear"],
+            0.45,
+            0,
+            "#EEEEEE",
+            1,
+            [
+              "coalesce",
+              ["get", "lineColor"],
+              [
+                "match",
+                ["get", "routeId"],
+                "40_100479",
+                "#3DAE2B",
+                "40_2LINE",
+                "rgb(0, 160, 223)",
+                "40_TLINE",
+                "rgb(243, 139, 0)",
+                "#888"
+              ]
+            ]
+          ],
+          18,
+          [
+            "interpolate-lab",
+            ["linear"],
+            0.65,
+            0,
+            "#EEEEEE",
+            1,
+            [
+              "coalesce",
+              ["get", "lineColor"],
+              [
+                "match",
+                ["get", "routeId"],
+                "40_100479",
+                "#3DAE2B",
+                "40_2LINE",
+                "rgb(0, 160, 223)",
+                "40_TLINE",
+                "rgb(243, 139, 0)",
+                "#888"
+              ]
+            ]
+          ]
+        ],
         "icon-opacity": [
           "case",
           ["boolean", ["get", "realtime"], false],
@@ -3355,28 +3527,29 @@
           [
             "format",
             "To ",
-            {"font-scale": 1.0},
-            ["get", "headsign"],
-            {"font-scale": 1.0}
+            {"font-scale": 1},
+            ["coalesce", ["get", "headsignShort"], ["get", "headsign"]],
+            {"font-scale": 1}
           ],
           16,
           [
             "format",
             "To ",
-            {"font-scale": 1.0},
-            ["get", "headsign"],
-            {"font-scale": 1.0},
+            {"font-scale": 1},
+            ["coalesce", ["get", "headsignShort"], ["get", "headsign"]],
+            {"font-scale": 1},
             "\n",
             {},
             ["case", ["get", "realtime"], "", "Scheduled"],
-            {"font-scale": 1.0, "text-font": ["literal", ["Noto Sans Italic"]]}
+            {"font-scale": 1, "text-font": ["literal", ["Noto Sans Italic"]]}
           ]
         ],
         "text-offset": [
           "interpolate",
           ["linear"],
           ["zoom"],
-          14, [
+          14,
+          [
             "case",
             [
               "any",
@@ -3391,7 +3564,8 @@
             ["literal", [2.25, 0]],
             ["literal", [1.5, 0]]
           ],
-          18, [
+          18,
+          [
             "case",
             [
               "any",
@@ -3409,42 +3583,31 @@
         ],
         "text-anchor": "left",
         "text-justify": "left",
-        "text-size": {
-          "stops": [
-            [10, 11],
-            [16, 12],
-            [18, 14]
-          ]
-        },
-
+        "text-size": {"stops": [[10, 11], [16, 12], [18, 14]]},
         "text-overlap": "always",
         "icon-overlap": "always"
       },
-      "paint": {
-        "text-color": "#FFF",
-        "text-halo-color": "rgba(0, 0, 0, 0.6)"
-      }
+      "paint": {"text-color": "#FFF", "text-halo-color": "rgba(0, 0, 0, 0.6)"}
     },
     {
       "id": "exchange-circle-current",
       "type": "symbol",
       "source": "exchanges",
-      "filter": ["!=", ["get", "future"], true],
+      "filter": ["!=", "future", true],
       "layout": {
-        "icon-image": ["concat", ["slice", ["to-string", ["get", "id"]], 0, 1], "stationcodesmall"]
+        "icon-image": ["concat", ["get", "line_code"], "stationcodesmall"]
       }
     },
     {
       "id": "exchange-circle-future",
       "type": "symbol",
       "source": "exchanges",
-      "filter": ["==", ["get", "future"], true],
+      "filter": ["==", "future", true],
       "maxzoom": 15,
       "layout": {
-        "icon-image": ["concat", ["slice", ["to-string", ["get", "id"]], 0, 1], "stationcodesmall"]
-      }, "paint": {
-        "icon-opacity": 0.25
-      }
+        "icon-image": ["concat", ["get", "line_code"], "stationcodesmall"]
+      },
+      "paint": {"icon-opacity": 0.25}
     },
     {
       "id": "exchange-station-code",
@@ -3453,33 +3616,26 @@
       "minzoom": 12,
       "filter": ["!=", "future", true],
       "layout": {
-        "text-field": ["slice", ["to-string", ["get", "id"]], 1, 3],
+        "text-field": ["get", "station_code"],
         "text-font": ["Roboto Condensed Bold"],
-        "text-size": {
-          "stops": [
-            [12, 12],
-            [16, 18]
-          ]
-        },
-        "icon-size": {
-          "stops": [
-            [12, 1.2],
-            [16, 1.8]
-          ]
-        },
+        "text-size": {"stops": [[12, 12], [16, 18]]},
+        "icon-size": {"stops": [[12, 1.2], [16, 1.8]]},
         "text-padding": 0,
         "text-justify": "center",
-        "icon-image": ["concat", ["slice", ["to-string", ["get", "id"]], 0, 1], "stationcode"],
+        "icon-image": ["concat", ["get", "line_code"], "stationcode"],
         "icon-text-fit": "none",
         "icon-text-fit-padding": [0, 0, 0, 0],
         "icon-overlap": "always",
         "text-overlap": "always",
-        "icon-offset": [0, -1.0],
-        "text-offset": [0, 0.55]
+        "icon-offset": [0, -1],
+        "text-offset": [
+          "case",
+          [">=", ["length", ["to-string", ["get", "line_code"]]], 2],
+          ["literal", [0, 1.2875]],
+          ["literal", [0, 0.55]]
+        ]
       },
-      "paint": {
-        "text-color": "#FFF"
-      }
+      "paint": {"text-color": "#FFF"}
     },
     {
       "id": "exchange-id",
@@ -3489,18 +3645,11 @@
       "layout": {
         "text-field": ["to-string", ["get", "id"]],
         "text-font": ["Roboto Regular"],
-        "text-size": {
-          "stops": [
-            [8, 8],
-            [12, 12]
-          ]
-        },
+        "text-size": {"stops": [[8, 8], [12, 12]]},
         "text-justify": "center",
         "text-anchor": "center"
       },
-      "paint": {
-        "text-color": "#FFF"
-      }
+      "paint": {"text-color": "#000"}
     },
     {
       "id": "exchange-name",
@@ -3512,25 +3661,26 @@
         "text-field": [
           "step",
           ["zoom"],
-          ["format", ["get", "name"], { "font-scale": 1.0 }],
+          ["format", ["get", "name"], {"font-scale": 1}],
           14,
-          ["format", ["get", "name"], { "font-scale": 1.0 }, "\n", {}, ["get", "landmark"], { "font-scale": 0.8, "text-font": ["literal", ["Roboto Condensed Regular"]] }]
+          [
+            "format",
+            ["get", "name"],
+            {"font-scale": 1},
+            "\n",
+            {},
+            ["get", "landmark"],
+            {
+              "font-scale": 0.8,
+              "text-font": ["literal", ["Roboto Condensed Regular"]]
+            }
+          ]
         ],
         "text-font": ["Roboto Regular"],
-        "text-size": {
-          "stops": [
-            [12, 14],
-            [16, 16],
-            [20, 20]
-          ]
-        },
+        "text-size": {"stops": [[12, 14], [16, 16], [20, 20]]},
         "text-justify": "left",
         "text-offset": {
-          "stops": [
-            [12, [1.2, 0]],
-            [16, [1.4, 0]],
-            [20, [1.6, 0]]
-          ]
+          "stops": [[12, [1.2, 0]], [16, [1.4, 0]], [20, [1.6, 0]]]
         },
         "text-anchor": "left"
       },
@@ -3548,34 +3698,25 @@
       "minzoom": 15,
       "filter": ["==", "future", true],
       "layout": {
-        "text-field": ["slice", ["to-string", ["get", "id"]], 1, 3],
+        "text-field": ["get", "station_code"],
         "text-font": ["Roboto Condensed Bold"],
-        "text-size": {
-          "stops": [
-            [12, 12],
-            [16, 18]
-          ]
-        },
-        "icon-size": {
-          "stops": [
-            [12, 1.2],
-            [16, 1.8]
-          ]
-        },
+        "text-size": {"stops": [[12, 12], [16, 18]]},
+        "icon-size": {"stops": [[12, 1.2], [16, 1.8]]},
         "text-padding": 0,
         "text-justify": "right",
-        "icon-image": ["concat", ["slice", ["to-string", ["get", "id"]], 0, 1], "stationcode"],
+        "icon-image": ["concat", ["get", "line_code"], "stationcode"],
         "icon-text-fit": "none",
         "icon-overlap": "always",
         "text-overlap": "always",
-        "icon-offset": [0, -1.0],
-        "text-offset": [0, 0.55]
+        "icon-offset": [0, -1],
+        "text-offset": [
+          "case",
+          [">=", ["length", ["to-string", ["get", "line_code"]]], 2],
+          ["literal", [0, 1.2875]],
+          ["literal", [0, 0.55]]
+        ]
       },
-      "paint": {
-        "icon-opacity": 0.5,
-        "text-color": "#FFF",
-        "text-opacity": 0.5
-      }
+      "paint": {"icon-opacity": 0.5, "text-color": "#FFF", "text-opacity": 0.5}
     },
     {
       "id": "exchange-name-future",
@@ -3587,25 +3728,23 @@
         "text-field": [
           "step",
           ["zoom"],
-          ["format", ["get", "name"], { "font-scale": 1.0 }],
+          ["format", ["get", "name"], {"font-scale": 1}],
           14,
-          ["format", ["get", "name"], { "font-scale": 1.0 }, "\n", {}, ["get", "open"], { "font-scale": 0.8, "text-font": ["literal", ["Roboto Regular"]] }]
+          [
+            "format",
+            ["get", "name"],
+            {"font-scale": 1},
+            "\n",
+            {},
+            ["get", "open"],
+            {"font-scale": 0.8, "text-font": ["literal", ["Roboto Regular"]]}
+          ]
         ],
         "text-font": ["Roboto Regular"],
-        "text-size": {
-          "stops": [
-            [12, 14],
-            [16, 16],
-            [20, 20]
-          ]
-        },
+        "text-size": {"stops": [[12, 14], [16, 16], [20, 20]]},
         "text-justify": "left",
         "text-offset": {
-          "stops": [
-            [12, [1.2, 0]],
-            [16, [1.4, 0]],
-            [20, [1.6, 0]]
-          ]
+          "stops": [[12, [1.2, 0]], [16, [1.4, 0]], [20, [1.6, 0]]]
         },
         "text-anchor": "left"
       },
@@ -3617,77 +3756,67 @@
         "text-opacity": 0.6
       }
     },
-  {
-    "id": "pois",
-    "type": "circle",
-    "source": "pois",
-    "filter": ["has", "feature_type"],
-    "minzoom": 9,
-    "paint": {
-      "circle-radius": [
-        "step",
-        ["zoom"],
-        4,
-        15,
-        6,
-        17,
-        8
-      ],
-      "circle-color": [
-        "case",
-        ["==", ["get", "symbol"], "Alert"], "#ff6b6b",
-        ["==", ["get", "symbol"], "Construction"], "#ffd93d",
-        ["==", ["get", "symbol"], "Info"], "#4ecdc4",
-        "#4ecdc4"
-      ],
-      "circle-stroke-color": "#ffffff",
-      "circle-stroke-width": [
-        "step",
-        ["zoom"],
-        1,
-        15,
-        1.5,
-        17,
-        2
-      ],
-      "circle-opacity": 0.9
-    }
-  },
-  {
-    "id": "pois-labels",
-    "type": "symbol",
-    "source": "pois",
-    "minzoom": 15,
-    "layout": {
-              "text-field": [
+    {
+      "id": "pois",
+      "type": "circle",
+      "source": "pois",
+      "filter": ["has", "feature_type"],
+      "minzoom": 9,
+      "paint": {
+        "circle-radius": ["step", ["zoom"], 4, 15, 6, 17, 8],
+        "circle-color": [
+          "case",
+          ["==", ["get", "symbol"], "Alert"],
+          "#ff6b6b",
+          ["==", ["get", "symbol"], "Construction"],
+          "#ffd93d",
+          ["==", ["get", "symbol"], "Info"],
+          "#4ecdc4",
+          "#4ecdc4"
+        ],
+        "circle-stroke-color": "#ffffff",
+        "circle-stroke-width": ["step", ["zoom"], 1, 15, 1.5, 17, 2],
+        "circle-opacity": 0.9
+      }
+    },
+    {
+      "id": "pois-labels",
+      "type": "symbol",
+      "source": "pois",
+      "minzoom": 15,
+      "layout": {
+        "text-field": [
           "step",
           ["zoom"],
-          ["format", ["get", "name"], { "font-scale": 1.0 }],
+          ["format", ["get", "name"], {"font-scale": 1}],
           17,
-          ["format", ["get", "name"], { "font-scale": 1.0 }, "\n", {}, ["get", "description"], { "font-scale": 0.8, "text-font": ["literal", ["Roboto Condensed Regular"]] }]
-        ],
-      "text-font": ["Robot Regular"],
-      "text-size": {
-          "stops": [
-            [12, 11],
-            [16, 14],
-            [20, 20]
+          [
+            "format",
+            ["get", "name"],
+            {"font-scale": 1},
+            "\n",
+            {},
+            ["get", "description"],
+            {
+              "font-scale": 0.8,
+              "text-font": ["literal", ["Roboto Condensed Regular"]]
+            }
           ]
-        },
+        ],
+        "text-font": ["Robot Regular"],
+        "text-size": {"stops": [[12, 11], [16, 14], [20, 20]]},
         "text-justify": "left",
-      "text-offset": [0, 1.0],
-      "text-anchor": "top",
-      "text-max-width": 8
-    },
-    "paint": {
-      "text-color": "#ffffff",
-      "text-halo-color": "#000000",
-      "text-halo-width": 1
+        "text-offset": [0, 1],
+        "text-anchor": "top",
+        "text-max-width": 8
+      },
+      "paint": {
+        "text-color": "#ffffff",
+        "text-halo-color": "#000000",
+        "text-halo-width": 1
+      }
     }
-  }
-
   ],
-
   "projection": {"type": "globe"},
   "created": "2023-07-22T07:34:39.168Z",
   "modified": "2023-07-22T20:55:26.448Z",

@@ -35,6 +35,10 @@ You then need to install the python and ruby dependencies.  For Python, we're go
 1. Install [`uv`](https://github.com/astral-sh/uv). Run `uv help` to make sure
 your installation was successful.
 2. Run dependency installation: `uv sync` for python dependencies and `bundle install` for ruby dependencies.
+   The site needs Ruby 3.4 (see `.ruby-version`); newer Ruby cannot build
+   the pinned dependencies. On macOS: `brew install ruby@3.4` and put it
+   first on your `PATH` (it is keg-only), or use any version manager that
+   honors `.ruby-version`.
 3. Install [`entr`](https://github.com/eradman/entr), either via running:
 `brew install entr` (for macOS) or `sudo apt install entr`.
 
@@ -211,7 +215,10 @@ Extraction from a URL relies on the structure currently used by OnTheGoMap. Spec
       * track `name` (same as GPX file name)
       * track `desc`
 
-4. Run `./_bin/gpx-inplace-fixup.sh routes/_gpx/recently-added-route.gpx` to add elevation data to the route. Make sure you have python installed since this script invokes other python scripts.
+5. Run `./_bin/gpx-inplace-fixup.sh routes/_gpx/recently-added-route.gpx` to add elevation data to the route. Make sure you have python installed since this script invokes other python scripts.
+    * Running the script with `--wait SECONDS` may be helpful if the API frequently times out.
+
+6. Follow the instructions for `Building and Developing Locally`. Then run `make serve` to check that it works locally and the site looks right.
 
 
 ## Project Structure

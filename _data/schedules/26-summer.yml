@@ -1,0 +1,142 @@
+- date: "2026-06-20"
+  plan:
+    - time: "8:30"
+      route_id: northgate-interurban-shoreline-north
+    - time: "9:45"
+      route_id: northgate-interurban-shoreline-north
+      notes: Second leg is RUN IN REVERSE. Leaves from Shoreline North.
+
+- date: "2026-06-27"
+  plan:
+    - time: "8:30"
+      route_id: cse-lwb-cc
+      notes: RUN IN REVERSE. Leaves from Columbia City.
+    - time: "10:05"
+      route_id: cse-lake-union-westlake
+
+- date: "2026-07-04"
+  plan:
+    - time: "8:30"
+      route_id: federal-way-angle-lake-p2p
+    - time: "10:10"
+      route_id: angle-lake-des-moines-beach-loop
+
+- date: "2026-07-11"
+  plan:
+    - time: "8:30"
+      route_id: cse-520-trail-redmond-tech-center
+    - time: "10:10"
+      route:
+        name: Redmond Tech to Redmond
+        map: https://onthegomap.com/s/td5qshfr
+        distance_mi: 4.5
+
+- date: "2026-07-18"
+  plan:
+    - time: "8:30"
+      route_id: gas-works-kotkins-pier-salmon-bay-loop
+    - time: "10:20"
+      route_id: gas-works-lake-union-loop
+
+- date: "2026-07-25"
+  plan:
+    - time: "8:30"
+      route_id: sodo-luna-pier-ob
+    - time: "10:10"
+      route_id: westlake-waterfront-cranes-sodo
+      notes: Second leg is RUN IN REVERSE. Leaves SODO at 10:00.
+
+- date: "2026-08-01"
+  plan:
+    - time: "8:30"
+      route_id: cse-sobel-mercer-island
+    - time: "10:45"
+      route_id: mercer-id-p2p
+
+- date: "2026-08-08"
+  plan:
+    - time: "7:45"
+      route_id: bainbridge-coast-to-coast-loop
+      notes: "Take the 7:55 ferry from the terminal https://maps.app.goo.gl/ZtprmndPHd2rGWrGA"
+
+- date: "2026-08-15"
+  plan:
+    - time: "8:30"
+      route_id: westlake-elliot-bay-tracks-ship-canal-dexter-loop
+    - time: "10:45"
+      route_id: westlake-waterfront-cranes-sodo
+
+- date: "2026-08-22"
+  plan:
+    - time: "7:30"
+      route_id: cse-jays-cafe
+    - time: "9:30"
+      route_id: jays-cafe-woodinville-cafe
+      notes: Both parts shifted to start an hour earlier than usual!
+
+- date: "2026-08-29"
+  plan:
+    - time: "8:30"
+      route:
+        name: Angle Lake to Othello (LRR)
+        map: https://onthegomap.com/s/usshs825
+        distance_mi: 9.14
+    - time: "10:15"
+      route:
+        name: Othello to SODO (LRR)
+        map: https://onthegomap.com/s/5mmjh1fs
+        distance_mi: 4.95
+
+- date: "2026-09-05"
+  plan:
+    - time: "8:30"
+      route:
+        name: Redmond to South Bellevue Station (LRR)
+        map: https://onthegomap.com/s/nf263ppl
+        distance_mi: 11.2
+    - time: "10:40"
+      route:
+        name: South Bellevue to ID Station (LRR)
+        map: https://onthegomap.com/?route=01a01300-3eac-7e05-b52e-394df638d00e&context=share
+        distance_mi: 7.7
+
+- date: "2026-09-12"
+  plan:
+    - time: "8:30"
+      route:
+        name: Beacon Hill to Roosevelt (LRR)
+        map: https://onthegomap.com/s/e5mca9p3
+        distance_mi: 9.73
+    - time: "10:15"
+      route_id: roosevelt-green-lake-loop
+  cancelled: "RCR mostly out of town. Visit another run!"
+
+- date: "2026-09-19"
+  plan:
+    - time: "8:30"
+      route:
+        name: Westlake to Shoreline North (LRR)
+        map: https://onthegomap.com/s/7rt5e4c0
+        distance_mi: 13.20
+    - time: "10:50"
+      route:
+        name: Shoreline North to Lynnwood (LRR)
+        map: https://onthegomap.com/s/hsp6t05p
+        distance_mi: 5.16
+
+- date: "2026-09-26"
+  plan:
+    - time: "8:30"
+      route_id: beacon-cheasty-lwb-seward-loop-cc
+    - time: "10:35"
+      route_id: cc-chief-sealth-south-6-ob
+
+- date: "2026-10-03"
+  organized-event: true
+  plan:
+    - time: "8:30"
+      route:
+        name: Light Rail Relay 2026
+        map: /light-rail-relay-26/
+        distance_mi: 45
+      highlight-image: /img/lrr26/og-banner.jpg

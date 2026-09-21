@@ -9,9 +9,37 @@ const createFragmentShader = (options) => {
         blurAmount = 345,
         blurQuality = 7,
         blurExponentRange = [0.9, 1.2],
+        thirdWave = false,
+        waveYScale = 1.0, // multiplies the wave crest heights (1.2 = raise 20%)
+        bgWaveYScale = waveYScale, // Y-scale for the back wave only. lower to reveal more background at the top
+        backgroundSweep = null,
     } = options
 
+    let bgSweepFn = '';
+    if (backgroundSweep) {
+        const {
+            speed = 0.04,   // how fast the sweep drifts vertically
+            cycles = 1.0,   // gradient traversals across the height
+            noiseMix = 0.0, // 0 = pure sweep, 1 = original noise
+        } = backgroundSweep;
+        bgSweepFn = /* glsl */ `
+    float background_sweep() {
+      float yv = gl_FragCoord.y / u_h;
+      float t = yv * ${cycles.toFixed(5)} - u_time * ${speed.toFixed(5)};
+      float sweep = abs(2.0 * fract(t * 0.5) - 1.0); // seamless triangle, no wrap seam
+      return mix(sweep, background_noise(-192.4), ${noiseMix.toFixed(5)});
+    }`;
+    }
+
     const uniforms = {};
+
+    // Composite back-to-front: background, then each wave body on top of it.
+    // The third wave shares the front (wave1) green ramp.
+    const compositeCode = /* glsl */ `
+      vec3 color = calc_color(u_gradient_bg, bg_lightness);
+      color = mix(color, calc_color(u_gradient_w2, w2_lightness), w2_alpha);${thirdWave ? `
+      color = mix(color, calc_color(u_gradient_w1, w3_lightness), w3_alpha);` : ''}
+      color = mix(color, calc_color(u_gradient_w1, w1_lightness), w1_alpha);`;
 
     const shader = /* glsl */ `#version 300 es
 precision lowp float;
@@ -19,16 +47,20 @@ precision lowp float;
     uniform float u_time; // Time in seconds
     uniform float u_h;
     uniform float u_w;
-    uniform sampler2D u_gradient;
+    uniform sampler2D u_gradient_bg;
+    uniform sampler2D u_gradient_w1;
+    uniform sampler2D u_gradient_w2;
     
     out vec4 outColor;
   
     const float PI = 3.14159;
 
-    float WAVE1_Y(float x) { return 0.45 * x;} 
-    float WAVE2_Y(float x) { return 0.9 * x;}
-    float WAVE1_HEIGHT(float x) { return 0.195 * x;} 
-    float WAVE2_HEIGHT(float x) {return 0.144 * x;}
+    float WAVE1_Y(float x) { return ${(0.45 * waveYScale).toFixed(5)} * x;}
+    float WAVE2_Y(float x) { return ${(0.9 * bgWaveYScale).toFixed(5)} * x;}
+    float WAVE1_HEIGHT(float x) { return 0.195 * x;}
+    float WAVE2_HEIGHT(float x) {return 0.144 * x;}${thirdWave ? `
+    float WAVE3_Y(float x) { return ${(0.675 * waveYScale).toFixed(5)} * x;}
+    float WAVE3_HEIGHT(float x) {return 0.17 * x;}` : ''}
 
   
     ${noiseUtils}
@@ -133,24 +165,24 @@ precision lowp float;
       return sum;
     }
   
-    vec3 calc_color(float lightness) {
+    vec3 calc_color(sampler2D gradient, float lightness) {
       lightness = clamp(lightness, 0.0, 1.0);
-      return vec3(texture(u_gradient, vec2(lightness, 0.5)));
+      return vec3(texture(gradient, vec2(lightness, 0.5)));
     }
-  
+${bgSweepFn}
     void main() {
-      float bg_lightness = background_noise(-192.4);
+      float bg_lightness = ${backgroundSweep ? 'background_sweep()' : 'background_noise(-192.4)'};
       float w1_lightness = background_noise( 273.3);
       float w2_lightness = background_noise( 623.1);
 
       float w1_alpha = wave_alpha(WAVE1_Y(u_h), WAVE1_HEIGHT(u_h), 112.5 * 48.75);
-      float w2_alpha = wave_alpha(WAVE2_Y(u_h), WAVE2_HEIGHT(u_h), 225.0 * 36.00);
+      float w2_alpha = wave_alpha(WAVE2_Y(u_h), WAVE2_HEIGHT(u_h), 225.0 * 36.00);${thirdWave ? `
+      float w3_lightness = background_noise( 421.7);
+      float w3_alpha = wave_alpha(WAVE3_Y(u_h), WAVE3_HEIGHT(u_h), 175.0 * 39.0);` : ''}
 
-      float lightness = bg_lightness;
-      lightness = lerp(lightness, w2_lightness, w2_alpha);
-      lightness = lerp(lightness, w1_lightness, w1_alpha);
-
-      outColor = vec4(calc_color(lightness), 1.0);
+      // Composite in color space so each layer can carry its own gradient
+${compositeCode}
+      outColor = vec4(color, 1.0);
     }
   `;
     return { shader, uniforms };
@@ -161,7 +193,8 @@ function createGradientTexture(p, colors) {
     const gradientWidth = 256;
     const gradientHeight = 1;
 
-    const texture = p.createImage(gradientWidth, gradientHeight);
+    const texture = p.createGraphics(gradientWidth, gradientHeight);
+    texture.pixelDensity(1);
     texture.loadPixels();
     for (let i = 0; i < gradientWidth; i++) {
         const t = i / (gradientWidth - 1);
@@ -186,21 +219,66 @@ function createGradientTexture(p, colors) {
     return texture;
 }
 
-export let WavyScene = (gradientColors, options = {}) => p => {
+// Resolve the gradients argument into per-layer color stops.
+// Accepts either a single gradient (array of [r,g,b] stops) applied to every
+// layer, or an object { background, wave1, wave2 } for discrete layers. Any
+// omitted layer falls back to the background gradient.
+function resolveGradients(gradients) {
+    if (Array.isArray(gradients)) {
+        return { background: gradients, wave1: gradients, wave2: gradients };
+    }
+    const { background, wave1, wave2 } = gradients;
+    const base = background ?? wave1 ?? wave2;
+    return {
+        background: base,
+        wave1: wave1 ?? base,
+        wave2: wave2 ?? base,
+    };
+}
+
+export let WavyScene = (gradients, options = {}) => p => {
     let width;
     let height;
     let waveShader;
     let canvas;
-    let gradientTexture;
+    let gradientTextures;
     let hasRenderedFirstFrame = false;
     let isVisible = true;
     let observer;
+
+    // Reduced motion: freeze the wave animation on a single frame
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let reduceMotion = reducedMotionQuery.matches;
+    let frozenTime = 0;
+
+    function updateLoopState() {
+        if (isVisible && !reduceMotion) {
+            p.loop();
+        } else {
+            p.noLoop();
+        }
+    }
+
+    const onReducedMotionChange = (e) => {
+        reduceMotion = e.matches;
+        if (reduceMotion) {
+            frozenTime = p.millis() / 1000.0;
+        }
+        updateLoopState();
+        if (reduceMotion) {
+            p.redraw();
+        }
+    };
 
     const {
         pixelDensity = null,
         blurQuality = 6,
         blurAmount = 345,
-        blurExponentRange = [0.9, 1.2]
+        blurExponentRange = [0.9, 1.2],
+        thirdWave = false,
+        waveYScale = 1.0,
+        bgWaveYScale = waveYScale,
+        backgroundSweep = null
     } = options;
 
     p.setup = async () => {
@@ -217,11 +295,20 @@ export let WavyScene = (gradientColors, options = {}) => p => {
         p.imageMode(p.CENTER);
         p.noStroke();
 
-        gradientTexture = createGradientTexture(p, gradientColors);
+        const resolved = resolveGradients(gradients);
+        gradientTextures = {
+            bg: createGradientTexture(p, resolved.background),
+            w1: createGradientTexture(p, resolved.wave1),
+            w2: createGradientTexture(p, resolved.wave2),
+        };
         const shader = createFragmentShader({
             blurQuality,
             blurAmount,
-            blurExponentRange
+            blurExponentRange,
+            thirdWave,
+            waveYScale,
+            bgWaveYScale,
+            backgroundSweep
         });
         waveShader = p.createShader(DEFAULT_VERTEX_SHADER, shader['shader']);
         p.shader(waveShader);
@@ -229,7 +316,9 @@ export let WavyScene = (gradientColors, options = {}) => p => {
         // Set constant uniforms once
         waveShader.setUniform('u_h', height);
         waveShader.setUniform('u_w', width);
-        waveShader.setUniform('u_gradient', gradientTexture);
+        waveShader.setUniform('u_gradient_bg', gradientTextures.bg);
+        waveShader.setUniform('u_gradient_w1', gradientTextures.w1);
+        waveShader.setUniform('u_gradient_w2', gradientTextures.w2);
 
         // Start with canvas invisible for fade-in effect
         canvas.elt.style.opacity = '0';
@@ -237,6 +326,12 @@ export let WavyScene = (gradientColors, options = {}) => p => {
 
         // Set up intersection observer to pause when not visible
         setupVisibilityObserver();
+        
+        reducedMotionQuery.addEventListener('change', onReducedMotionChange);
+        if (reduceMotion) {
+            frozenTime = p.millis() / 1000.0;
+            p.noLoop();
+        }
     }
 
     function setupVisibilityObserver() {
@@ -244,11 +339,7 @@ export let WavyScene = (gradientColors, options = {}) => p => {
             observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     isVisible = entry.isIntersecting;
-                    if (isVisible) {
-                        p.loop();
-                    } else {
-                        p.noLoop();
-                    }
+                    updateLoopState();
                 });
             }, {
                 threshold: 0.1 // Trigger when 10% of element is visible
@@ -262,7 +353,7 @@ export let WavyScene = (gradientColors, options = {}) => p => {
         p.clear();
 
         // Only update time uniform (others are set once in setup)
-        waveShader.setUniform('u_time', p.millis() / 1000.0);
+        waveShader.setUniform('u_time', reduceMotion ? frozenTime : p.millis() / 1000.0);
 
         p.rect(0, 0, width, -height);
 
@@ -281,10 +372,16 @@ export let WavyScene = (gradientColors, options = {}) => p => {
         // Update size-dependent uniforms
         waveShader.setUniform('u_h', height);
         waveShader.setUniform('u_w', width);
+
+        // Not looping when frozen, so force the resized frame to render
+        if (reduceMotion) {
+            p.redraw();
+        }
     }
 
     // Cleanup when p5 instance is removed
     p.remove = function() {
+        reducedMotionQuery.removeEventListener('change', onReducedMotionChange);
         if (observer) {
             observer.disconnect();
             observer = null;

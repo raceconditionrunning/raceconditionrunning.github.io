@@ -297,6 +297,21 @@ export let LonelyRunnerToy = (numRings = NUM_RINGS) => p => {
 
     const TAU = Math.PI * 2;
 
+    // Reduced motion: freeze the ambient orbiting animation, redraw only on interaction
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let reduceMotion = reducedMotionQuery.matches;
+    let frozenTime = null;
+    const getTime = () => reduceMotion ? frozenTime : (Date.now() / 1000.0 - startStamp);
+    const onReducedMotionChange = (e) => {
+        reduceMotion = e.matches;
+        if (reduceMotion) {
+            frozenTime = Date.now() / 1000.0 - startStamp;
+            p.noLoop();
+        } else {
+            p.loop();
+        }
+    };
+
     // Visibility tracking
     let isVisible = true;
     let observer = null;
@@ -482,6 +497,11 @@ export let LonelyRunnerToy = (numRings = NUM_RINGS) => p => {
             intensity: 1.0,
             startTime: Date.now() / 1000.0 - startStamp
         };
+        if (reduceMotion) {
+            // No draw loop to pick up the flash or its decay, so force both ends of it
+            p.redraw();
+            setTimeout(() => p.redraw(), 650);
+        }
     }
 
     // Helper: Play percussive note for a ring
@@ -833,6 +853,13 @@ export let LonelyRunnerToy = (numRings = NUM_RINGS) => p => {
 
         // Set up intersection observer to pause when not visible
         setupVisibilityObserver();
+
+        // Freeze the ambient orbiting animation for reduced-motion users; interactions still redraw manually
+        reducedMotionQuery.addEventListener('change', onReducedMotionChange);
+        if (reduceMotion) {
+            frozenTime = Date.now() / 1000.0 - startStamp;
+            p.noLoop();
+        }
     }
 
     function setupVisibilityObserver() {
@@ -862,7 +889,7 @@ export let LonelyRunnerToy = (numRings = NUM_RINGS) => p => {
 
         hasUserInteractedWithCanvas = true;
 
-        const time = Date.now() / 1000.0 - startStamp;
+        const time = getTime();
 
         // Check which area was clicked
         const clickedRing = getClickedRing(p.mouseX, p.mouseY);
@@ -912,6 +939,10 @@ export let LonelyRunnerToy = (numRings = NUM_RINGS) => p => {
             runnerOffsets[ringIndex][runnerIndex] += dAngle;
 
             lastMouseAngle = currentMouseAngle;
+
+            if (reduceMotion) {
+                p.redraw();
+            }
         }
         return false; // Prevent default
     }
@@ -958,8 +989,9 @@ export let LonelyRunnerToy = (numRings = NUM_RINGS) => p => {
     p.draw = function () {
         p.clear();
 
-        // Calculate current time (continuous animation)
-        const time = Date.now() / 1000.0 - startStamp;
+        // Calculate current time
+        const time = getTime();
+        const wallTime = Date.now() / 1000.0 - startStamp;
 
         // Calculate geometry parameters in Normalized Device Coordinates (UV space)
         const minDim = Math.min(width, height);
@@ -1044,7 +1076,8 @@ export let LonelyRunnerToy = (numRings = NUM_RINGS) => p => {
             lonelyCountEl.textContent = totalLonely;
         }
 
-        if (infinitePulseHandle === null && totalLonely === totalRunners && totalRunners > 0) {
+        // Don't self-trigger a perpetual animation for reduced-motion users
+        if (infinitePulseHandle === null && totalLonely === totalRunners && totalRunners > 0 && !reduceMotion) {
             infinitePulseHandle = Symbol('infinite-pulse');
             pulseRingsWithLonely(infinitePulseHandle);
         }
@@ -1068,7 +1101,7 @@ export let LonelyRunnerToy = (numRings = NUM_RINGS) => p => {
         flashTexture.loadPixels();
         const flashDuration = 0.6;
         ringFlashStates.forEach((state, ringIndex) => {
-            const elapsed = time - state.startTime;
+            const elapsed = wallTime - state.startTime;
             const t = elapsed / flashDuration;
 
             // Ease-out quadratic: (1 - t)^2
@@ -1119,5 +1152,6 @@ export let LonelyRunnerToy = (numRings = NUM_RINGS) => p => {
             observer.disconnect();
             observer = null;
         }
+        reducedMotionQuery.removeEventListener('change', onReducedMotionChange);
     }
 }
