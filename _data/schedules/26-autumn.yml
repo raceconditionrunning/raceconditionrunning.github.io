@@ -32,11 +32,9 @@
     - time: "8:30"
       route_id: northgate-interurban-lynnwood
     - time: "10:10"
-      route:
-        name: NE Loop Near Lynnwood (route coming soon)
+      route_id: lynnwood-alderwood-mall-loop
     - time: "11:00"
-      route:
-        name: W Loop Near Lynnwood (route coming soon)
+      route_id: lynnwood-golf-course-interuban-loop
 
 - date: "2026-11-14"
   plan:
