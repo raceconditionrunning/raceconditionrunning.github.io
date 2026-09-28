@@ -76,7 +76,7 @@
       route_id: ferry-terminal-cranes-alki
       notes: "Recovery for Seattle Marathon"
 
-- date: "2026-12-12"
+- date: "2026-12-19"
   plan:
     - time: "8:30"
       route_id: cse-burke-salmon-bay-ship-canal-ob
