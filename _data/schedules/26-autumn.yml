@@ -9,7 +9,7 @@
   plan:
     - time: "9:00"
       route:
-        name: Dawg Dash 10K
+        name: Dawg Dash 5K/10K
         map: https://runsignup.com/Race/WA/Seattle/AlaskaAirlinesDawgDash
         distance_mi: 6.2
 
