@@ -68,8 +68,10 @@ def main():
                 continue
             if 'route_id' in phase.keys():
               route = lkup(phase['route_id'])
-            else:
+            elif 'route' in phase.keys():
               route = phase['route']
+            else:
+              route = { 'name': phase['name'] }
 
             name = route['name']
             gmap = route['map'] if 'map' in route else ''
