@@ -42,9 +42,11 @@
     - time: "8:30"
       route_id: northgate-interurban-lynnwood
     - time: "10:10"
-      name: NE Loop Near Lynnwood (route coming soon)
+      route:
+        name: NE Loop Near Lynnwood (route coming soon)
     - time: "11:00"
-      name: W Loop Near Lynnwood (route coming soon)
+      route:
+        name: W Loop Near Lynnwood (route coming soon)
 
 - date: "2026-11-14"
   plan:
@@ -67,9 +69,11 @@
 - date: "2026-11-29"
   plan:
     - time: "7:00"
-      name: 2026 Seattle Full Marathon (route coming soon)
+      route:
+        name: 2026 Seattle Full Marathon (route coming soon)
     - time: "7:30"
-      name: 2026 Seattle Half Marathon (route coming soon)
+      route:
+        name: 2026 Seattle Half Marathon (route coming soon)
       notes: "https://www.seattlemarathon.org/"
 
 - date: "2026-12-05"
@@ -88,4 +92,3 @@
   plan:
     - time: "8:30"
       route_id: cse-burke-salmon-bay-ship-canal-ob
-      notes: "Recovery for Seattle Marathon"
