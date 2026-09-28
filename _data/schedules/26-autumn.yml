@@ -1,0 +1,91 @@
+- date: "2026-10-03"
+  organized-event: true
+  plan:
+    - time: "8:30"
+      route:
+        name: Light Rail Relay 2026
+        map: /light-rail-relay-26/
+        distance_mi: 45
+      highlight-image: /img/lrr26/og-banner.jpg
+
+- date: "2026-10-10"
+  plan:
+    - time: "8:30"
+      route_id: cse-arb-lwb-cc
+    - time: "9:50"
+      route_id: cc-genessee-lwb-seward-loop-ob
+
+- date: "2026-10-18"
+  plan:
+    - time: "9:00"
+      route:
+        name: Dawg Dash 10K
+        map: https://www.washington.edu/alumni/events/alaska-airlines-dawg-dash-2025/
+        distance_mi: 6.2
+
+- date: "2026-10-24"
+  plan:
+    - time: "8:30"
+      route_id: cse-520-wetherill-ob
+    - time: "10:20"
+      route_id: cse-magnuson-park-loop-ob
+
+- date: "2026-10-31"
+  plan:
+    - time: "8:30"
+      route_id: roosevelt-golden-gardens-stone-way-loop
+    - time: "10:50"
+      route_id: roosevelt-magnuson-loop
+
+- date: "2026-11-07"
+  plan:
+    - time: "8:30"
+      route_id: northgate-interurban-lynnwood
+    - time: "10:10"
+      name: NE Loop Near Lynnwood (route coming soon)
+    - time: "11:00"
+      name: W Loop Near Lynnwood (route coming soon)
+
+- date: "2026-11-14"
+  plan:
+    - time: "8:30"
+      route_id: sodo-jack-block-ob
+    - time: "9:50"
+      route_id: sodo-4th-ave-airport-way-oxbow-park-industrial-loop
+
+- date: "2026-11-21"
+  plan:
+    - time: "8:30"
+      route_id: gas-works-lake-union-loop
+
+- date: "2026-11-28"
+  plan:
+    - time: "8:30"
+      route_id: westlake-2nd-seattle-center-5th-westin-loop
+      notes: "Seattle Marathon shakeout, then expo + bib pickup"
+
+- date: "2026-11-29"
+  plan:
+    - time: "7:00"
+      name: 2026 Seattle Full Marathon (route coming soon)
+    - time: "7:30"
+      name: 2026 Seattle Half Marathon (route coming soon)
+      notes: "https://www.seattlemarathon.org/"
+
+- date: "2026-12-05"
+  plan:
+    - time: "8:30"
+      route_id: westlake-waterfront-cranes-sodo
+      notes: "Recovery for Seattle Marathon"
+
+- date: "2026-12-12"
+  plan:
+    - time: "8:30"
+      route_id: ferry-terminal-cranes-alki
+      notes: "Recovery for Seattle Marathon"
+
+- date: "2026-12-12"
+  plan:
+    - time: "8:30"
+      route_id: cse-burke-salmon-bay-ship-canal-ob
+      notes: "Recovery for Seattle Marathon"
