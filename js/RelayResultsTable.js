@@ -1,6 +1,6 @@
 import {Tabulator, FormatModule, FrozenColumnsModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, SortModule, FilterModule} from 'tabulator-tables';
 Tabulator.registerModule([ FormatModule, FrozenColumnsModule, InteractionModule, ResizeColumnsModule, ResizeTableModule, SortModule, FilterModule]);
-import {formatDuration} from "./common.js";
+import {formatDuration, exchangeLineCode, exchangeStationCode} from "./common.js";
 
 
 
@@ -50,6 +50,14 @@ export class RelayResultsTable extends HTMLElement {
         return dnfIndex !== -1 && thisIndex === dnfIndex + 1
     }
 
+    static exchangeTitle(exchangeCode, name) {
+        const lineCode = exchangeLineCode(exchangeCode)
+        const stationCode = exchangeStationCode(exchangeCode)
+        return `<span class="link-station-label link-station-label-dark" title="${name}"><span
+                        class="line-name text-center line-name-${lineCode}">${lineCode}</span><span class="link-station-code">${stationCode}</span></span>`
+    }
+
+    static instanceCount = 0
     static NAME_COLUMN_BREAKPOINT = 700
     static NAME_COLUMN_NARROW_WIDTH = 150
 
@@ -113,12 +121,7 @@ export class RelayResultsTable extends HTMLElement {
                 title: name,
                 field: `exchangeTimes.${exchangeCode}`,
                 resizable: false,
-                titleFormatter: (cell) => {
-                    let lineCode = exchangeCode[0]
-                    let stationCode = exchangeCode.substring(1)
-                    return `<span class="link-station-label link-station-label-dark" title="${name}"><span
-                        class="line-name text-center line-name-${lineCode}">${lineCode}</span><span class="link-station-code">${stationCode}</span></span>`
-                },
+                titleFormatter: () => RelayResultsTable.exchangeTitle(exchangeCode, name),
                 formatter: cell => {
                     const value = cell.getValue()
                     if (value === undefined) {
@@ -148,12 +151,7 @@ export class RelayResultsTable extends HTMLElement {
                 title: name,
                 field: `exchangeSplits.${exchangeCode}`,
                 resizable: false,
-                titleFormatter: (cell) => {
-                    let lineCode = exchangeCode[0]
-                    let stationCode = exchangeCode.substring(1)
-                    return `<span class="link-station-label link-station-label-dark" title="${name}"><span
-                        class="line-name text-center line-name-${lineCode}">${lineCode}</span><span class="link-station-code">${stationCode}</span></span>`
-                },
+                titleFormatter: () => RelayResultsTable.exchangeTitle(exchangeCode, name),
                 formatter: cell => {
                     const value = cell.getValue()
                     if (value === undefined) {
@@ -176,13 +174,14 @@ export class RelayResultsTable extends HTMLElement {
         }
 
         let view
+        const switchId = `splitModeSwitch-${RelayResultsTable.instanceCount++}`
         return new Promise((resolve, reject) => {
             this.innerHTML = `
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div></div>
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="splitModeSwitch">
-                <label class="form-check-label" for="splitModeSwitch">Show splits</label>
+                <input class="form-check-input" type="checkbox" role="switch" id="${switchId}">
+                <label class="form-check-label" for="${switchId}">Show splits</label>
             </div>
         </div>
         <table class="results-table table table-sm" style="font-variant-numeric: tabular-nums;"></table>
@@ -203,7 +202,7 @@ export class RelayResultsTable extends HTMLElement {
             this.table = view
 
             // Add event listener for the split mode switch
-            const switchElement = this.querySelector('#splitModeSwitch')
+            const switchElement = this.querySelector(`#${switchId}`)
             switchElement.addEventListener('change', (e) => {
                 this.setSplitMode(e.target.checked)
             })

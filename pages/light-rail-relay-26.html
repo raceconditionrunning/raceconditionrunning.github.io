@@ -296,7 +296,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             background-color: var(--theme-primary-color-subdued);
             background: linear-gradient(rgba(0,0,0,.1), transparent, rgba(0,0,0,.1)), var(--theme-primary-color-subdued);
         }
-        
+
         .line-gradient-bg {
             background: linear-gradient(rgba(0,0,0,.1), transparent, rgba(0,0,0,.1)), linear-gradient(30deg, var(--theme-primary-color), var(--two-line-color));
         }
@@ -1311,18 +1311,20 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
     <img loading="lazy" src="{{img_name}}" class="w-100 z-0 image-washout" style="grid-area: 1/1"/>
 </section>
 
-{% comment %}
 <section>
     <div class="container-xxl">
         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-baseline">
             <h2 id="results">Results <a href="#results" class="anchor-link" aria-label="Link to this section. Results"></a></h2>
         </div>
 
-        <div id="results-table"></div>
+        <h5 class="mt-4">1 Line <span class="fw-light text-secondary">Federal Way to Lynnwood</span></h5>
+        <div id="one-line-results"></div>
+
+        <h5 class="mt-5">2 Line <span class="fw-light text-secondary">Redmond to Lynnwood</span></h5>
+        <div id="two-line-results"></div>
 
     </div>
 </section>
-{% endcomment %}
 
 <footer>
     <p class="imprint"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/happy-toast.svg" alt="A happy piece of toast running"/></a></p>
@@ -1482,24 +1484,33 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
 
-    const resultsTableEl = document.getElementById("results-table")
-    if (resultsTableEl) {
-        Promise.all([fetch('https://panto.raceconditionrunning.com/results.json').then(res => res.json()), processedRouteData]).then(([results, [legs, exchanges, pois, exchangeNames, resultExchangeNames]]) => {
-            results.results.forEach((result, index) => {
-                result.index = index
-
-            })
-            const relayResultsTable = new RelayResultsTable(results)
-
-            // Reverse the order of the exchangeNames object so that exchanges are listed from last to first
-            let exchangeColumns = []
-            Object.keys(resultExchangeNames).reverse().forEach(key => {
-                exchangeColumns.push([key, resultExchangeNames[key]])
-            })
-            relayResultsTable.initialize(results, exchangeColumns)
-            resultsTableEl.appendChild(relayResultsTable)
+    const resultsTables = [
+        {line: "lrr_1line", lines: ["1 Line", "Interline"], element: "one-line-results"},
+        {line: "lrr_2line", lines: ["2 Line", "Interline"], element: "two-line-results"},
+    ]
+    Promise.all([fetch('https://panto.raceconditionrunning.com/results.json').then(res => res.json()), processedRouteData]).then(([results, [legs, exchanges, pois, exchangeNames, resultExchangeNames]]) => {
+        results.results.forEach((result, index) => {
+            result.index = index
         })
-    }
+        const exchangeOrders = resultsTables.map(({line}) =>
+            exchangesForLegs(legsForLine(legs.features, line), exchanges.features).map(exchange => String(exchange.properties.id))
+        )
+        exchangeOrders.forEach((exchangeOrder, i) => {
+            const otherLines = exchangeOrders.filter((_, j) => j !== i).flat()
+            const lineOnly = exchangeOrder.filter(id => !otherLines.includes(id))
+            const otherLineOnly = otherLines.filter(id => !exchangeOrder.includes(id))
+            const hasTimeAt = (result, ids) => ids.some(id => result.exchangeTimes?.[id] !== undefined)
+            const lineResults = results.results.filter(result => result.lines
+                ? resultsTables[i].lines.includes(result.lines)
+                : hasTimeAt(result, lineOnly) || !hasTimeAt(result, otherLineOnly))
+
+            // Columns run in course order, start to finish
+            const exchangeColumns = exchangeOrder.map(id => [id, resultExchangeNames[id]])
+            const relayResultsTable = new RelayResultsTable()
+            relayResultsTable.initialize({...results, results: lineResults}, exchangeColumns)
+            document.getElementById(resultsTables[i].element).appendChild(relayResultsTable)
+        })
+    })
 
     // Fetch and update stats
     async function updateStats() {
