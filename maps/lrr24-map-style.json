@@ -14,7 +14,7 @@
       "encoding": "terrarium"
     },
     "planet": {
-      "url": "pmtiles://https://static.raceconditionrunning.com/seattle_25.pmtiles",
+      "url": "pmtiles://https://static.raceconditionrunning.com/seattle_26.pmtiles",
       "attribution": "<a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">&copy; OpenStreetMap contributors</a>",
       "type": "vector"
     },
