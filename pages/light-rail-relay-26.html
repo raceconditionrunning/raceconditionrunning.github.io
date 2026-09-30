@@ -1077,9 +1077,16 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             <accordion-item>
                 <accordion-header>Can our team do both lines at the same time?</accordion-header>
                 <accordion-body>
-                    <p>Yes. When creating a team you may select 1 Line, 2 Line or <a href="https://www.youtube.com/watch?v=cP1JAmIhQSs">Interline</a> (both). Interline teams will be expected to begin from both Federal Way Downtown and Redmond Downtown stations at 08:30. Where the trains <i>interline</i>, or share tracks (International District/Chinatown through Lynwood City Center), you only need to have a single runner complete the leg.</p>
+                    <p>Yes. When creating a team you may select 1 Line, 2 Line or <a href="https://www.youtube.com/watch?v=cP1JAmIhQSs">Interline</a> (both). Interline teams will be expected to begin from both Federal Way Downtown and Redmond Downtown stations at 08:30. Where the trains <i>interline</i>, or share tracks (International District/Chinatown through Lynnwood City Center), you only need to have a single runner complete the leg.</p>
 
                     <p>An interline teams' finish time is the sum of the <i>maximum</i> of the durations of the separate parts and the duration of the shared portion. This means its best if the two branches of the team reach International District/Chinatown at the same time.</p>
+                    <p>
+                      That is,
+                    <p><pre>InterlineFinishTime = max(
+                        Federal Way Downtown to CID,
+                          Downtown Redmond to CID
+                    ) + CID to Lynnwood</pre></p>
+                    </p>
                 </accordion-body>
             </accordion-item>
             <accordion-item>
