@@ -1,3 +1,13 @@
+- date: "2026-10-03"
+  organized-event: true
+  plan:
+    - time: "8:30"
+      route:
+        name: Light Rail Relay 2026
+        map: /light-rail-relay-26/
+        distance_mi: 63.8
+      highlight-image: /img/lrr26/og-banner.jpg
+
 - date: "2026-10-10"
   plan:
     - time: "8:30"
