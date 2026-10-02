@@ -53,8 +53,10 @@ export class RelayResultsTable extends HTMLElement {
     static exchangeTitle(exchangeCode, name) {
         const lineCode = exchangeLineCode(exchangeCode)
         const stationCode = exchangeStationCode(exchangeCode)
-        return `<span class="link-station-label link-station-label-dark" title="${name}"><span
-                        class="line-name text-center line-name-${lineCode}">${lineCode}</span><span class="link-station-code">${stationCode}</span></span>`
+        const lineBadges = [...(lineCode ?? '')].map(line =>
+            `<span class="line-name text-center line-name-${line}">${line}</span>`
+        ).join('')
+        return `<span class="link-station-label link-station-label-dark" title="${name}">${lineBadges}<span class="link-station-code">${stationCode}</span></span>`
     }
 
     static instanceCount = 0
