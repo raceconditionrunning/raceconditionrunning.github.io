@@ -865,8 +865,12 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                 <div class="gap-2 d-flex flex-wrap">
                     <a class="btn btn-outline-light btn-lg" role="button" data-bs-title=""  data-bs-placement="bottom" href="{{ page.registration_link }}" data-goatcounter-click="ext-join-team-hero" >Join Team
                         </a>
-                    <a class="btn btn-outline-light btn-lg" role="button" data-bs-title="by 10-01"  data-bs-placement="bottom" href="{{ page.team_registration_link }}" data-goatcounter-click="ext-add-team-hero">Add Team</a>
-                    <a class="btn btn-outline-light btn-lg" role="button" data-bs-title="by 10-01"  data-bs-placement="bottom" href="{{ page.solo_registration_link }}" data-goatcounter-click="ext-enter-solo-hero" >Enter Solo</a>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Registration closed October 1" aria-label="Add Team: registration closed October 1">
+                        <button type="button" class="btn btn-outline-light btn-lg" disabled>Add Team</button>
+                    </span>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Registration closed October 1" aria-label="Enter Solo: registration closed October 1">
+                        <button type="button" class="btn btn-outline-light btn-lg" disabled>Enter Solo</button>
+                    </span>
 
                     <!--a href="#results" class="btn btn-outline-light btn-lg" data-goatcounter-click="lrr25-results">Results</a>
                     <a href="#epilogue" class="btn btn-outline-light btn-lg" data-goatcounter-click="lrr25-epilogue">Epilogue</a-->
@@ -930,6 +934,19 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
     </div>
 </section>
 
+
+<section aria-label="From The Urbanist">
+    <div class="container px-4">
+        <figure class="mb-0 ps-4 border-start border-3" style="border-color: var(--theme-primary-color) !important;">
+            <blockquote class="blockquote fs-3 fw-light" cite="https://www.theurbanist.org/op-ed-join-relay-race-running-length-of-1-line-light-rail/">
+                <p>“explore unfamiliar pockets of the city, make new friends, and do something together that [you] probably wouldn’t do alone”</p>
+            </blockquote>
+            <figcaption class="text-secondary">
+                — Sara Morimoto, <a href="https://www.theurbanist.org/op-ed-join-relay-race-running-length-of-1-line-light-rail/"><cite>The Urbanist</cite></a>, August 2025
+            </figcaption>
+        </figure>
+    </div>
+</section>
 
 <section id="map">
     <relay-map id="relay-map"
@@ -1017,6 +1034,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         <p>
           We are using <a href="https://panto.raceconditionrunning.com">Pantograph</a> for registration and to let teams upload exchange photos for timing.
         </p>
+        <p>New team and solo registration closed October 1. You can still join an existing team.</p>
         <div class="row justify-content-center">
             <div class="col-md-4 mb-4">
                 <div class="card h-100 text-center line-gradient-border">
@@ -1040,7 +1058,9 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                             <span class="h4 text-light">$16*</span>
                             <div class="small text-secondary">$32 for Interline</div>
                         </div>
-                        <a href="{{ page.team_registration_link}}" class="btn btn-light" data-goatcounter-click="ext-add-team">Add Team</a>
+                        <span class="d-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Registration closed October 1" aria-label="Add Team: registration closed October 1">
+                            <button type="button" class="btn btn-light w-100" disabled>Add Team</button>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -1052,7 +1072,9 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                         <div class="mb-3">
                             <span class="h4 text-light">$16*</span>
                         </div>
-                        <a href="{{ page.solo_registration_link}}" class="btn btn-light" data-goatcounter-click="ext-enter-solo">Enter Solo</a>
+                        <span class="d-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Registration closed October 1" aria-label="Enter Solo: registration closed October 1">
+                            <button type="button" class="btn btn-light w-100" disabled>Enter Solo</button>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -1079,7 +1101,9 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
                 <accordion-body>
                     <p>Yes. When creating a team you may select 1 Line, 2 Line or <a href="https://www.youtube.com/watch?v=cP1JAmIhQSs">Interline</a> (both). Interline teams will be expected to begin from both Federal Way Downtown and Redmond Downtown stations at 08:30. Where the trains <i>interline</i>, or share tracks (International District/Chinatown through Lynnwood City Center), you only need to have a single runner complete the leg.</p>
 
-                    <p>An interline teams' finish time is the sum of the <i>maximum</i> of the durations of the separate parts and the duration of the shared portion. This means its best if the two branches of the team reach International District/Chinatown at the same time.</p>
+                    <p>You don't need to carry both batons for the interlined portion (you can pick your favorite)... but isn't it more satisfying if both of them get ferried all the way to Lynnwood?</p>
+
+                    <p>An interline teams' finish time is the <i>maximum</i> of the durations of the separate parts plus the duration of the shared portion. This means its best if the two branches of the team reach International District/Chinatown at the same time.</p>
                     <p>
                       That is,
                     <p><pre>InterlineFinishTime = max(
@@ -1116,7 +1140,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
                     <p>Teams are responsible for their own logistics and support during the event.</p>
 
-                    <p>If you're interested in forming a team, please complete the <a href="{{ page.team_registration_link}}">team signup</a>. The registration fee covers a custom event baton. Once your team is confirmed, you and your runners will be able to use the main <a href="{{ page.registration_link }}">sign-up form</a>.</p>
+                    <p>Use the team signup link on the page. The registration fee covers a custom event baton. Once your team is confirmed, you and your runners will be able to use the "Join Team" form.</p>
                 </accordion-body>
             </accordion-item>
             <accordion-item>
