@@ -89,32 +89,7 @@ export class RelayResultsTable extends HTMLElement {
             this.exchangeOrder.push(exchangeCode)
         }
 
-        // Precompute splits for all data
-        this._data.results = this._data.results.map(row => {
-            const exchangeSplits = {}
-            let previousTime = null
-
-            for (const exchangeCode of this.exchangeOrder) {
-                const currentTime = row.exchangeTimes?.[exchangeCode]
-                if (currentTime !== undefined) {
-                    if (exchangeCode === this.exchangeOrder[0]) {
-                        // First exchange - split is the same as cumulative time
-                        exchangeSplits[exchangeCode] = currentTime
-                    } else {
-                        // Calculate split from previous exchange
-                        if (previousTime !== undefined) {
-                            exchangeSplits[exchangeCode] = currentTime - previousTime
-                        }
-                    }
-                }
-                previousTime = currentTime
-            }
-
-            return {
-                ...row,
-                exchangeSplits
-            }
-        })
+        this._data.results = this.prepareRows(data.results)
 
         // Create cumulative columns
         this.cumulativeColumns = []
@@ -190,7 +165,7 @@ export class RelayResultsTable extends HTMLElement {
         <div class="last-updated text-secondary mt-2" style="display: none;"></div>
         `;
             view = new Tabulator(this.querySelector(".results-table"), {
-                reactiveData: true,
+                index: "name",
                 data: this._data.results,
                 layout: "fitData",
                 responsiveLayout: false,
@@ -236,9 +211,52 @@ export class RelayResultsTable extends HTMLElement {
                 lastUpdatedElement.style.display = 'block'
             }
 
-            resolve(view)
+            view.on("tableBuilt", () => resolve(view))
         })
 
+    }
+
+    prepareRows(rows) {
+        // Precompute splits for all data
+        return rows.map(row => {
+            const exchangeSplits = {}
+            let previousTime = null
+
+            for (const exchangeCode of this.exchangeOrder) {
+                const currentTime = row.exchangeTimes?.[exchangeCode]
+                if (currentTime !== undefined) {
+                    if (exchangeCode === this.exchangeOrder[0]) {
+                        // First exchange - split is the same as cumulative time
+                        exchangeSplits[exchangeCode] = currentTime
+                    } else {
+                        // Calculate split from previous exchange
+                        if (previousTime !== undefined) {
+                            exchangeSplits[exchangeCode] = currentTime - previousTime
+                        }
+                    }
+                }
+                previousTime = currentTime
+            }
+
+            return {
+                ...row,
+                exchangeSplits
+            }
+        })
+
+    }
+
+    async updateResults(data) {
+        this._data = data
+        const holder = this.querySelector('.tabulator-tableholder')
+        const left = holder?.scrollLeft
+        const top = holder?.scrollTop
+        await this.table.replaceData(this.prepareRows(data.results))
+        if (holder) { holder.scrollLeft = left; holder.scrollTop = top }
+        this.lastUpdated = data.lastUpdated
+        const label = this.querySelector('.last-updated')
+        label.textContent = data.lastUpdated ? `Latest photo upload ${new Date(data.lastUpdated).toLocaleString()}` : ''
+        label.style.display = data.lastUpdated ? 'block' : 'none'
     }
 
     setSplitMode(enabled) {

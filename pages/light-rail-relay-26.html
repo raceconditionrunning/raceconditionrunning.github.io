@@ -847,6 +847,15 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
             font-width: condensed;
         }
 
+
+        .relay-live-control { display: flex; align-items: center; gap: .75rem; margin: .5rem 0; }
+        .live-connected { color: #43d932; }
+        .team-photo-marker { border: 0; padding: 0; background: transparent; color: white; cursor: pointer; }
+        .photo-dot { display: block; background: #42275e; border: 2px solid #edb8ff; border-radius: 50%; width: 14px; height: 14px; }
+        .photo-old .photo-dot { background: #45404a; border-color: #a69bac; }
+        .photo-label { position: absolute; right: 22px; top: -6px; white-space: pre; text-align: right; padding: 4px 7px; border-radius: 4px; background: #16101ee6; font: 12px/1.5 var(--bs-font-sans-serif); }
+        .team-photo-details { max-height: 300px; overflow-y: auto; white-space: pre-line; }
+        .team-photo-details p { margin: .75rem 0; }
     </style>
 </head>
 
@@ -1462,6 +1471,8 @@ Lynnwood      3:00 PM    59°F (15°C)    Broken clouds</pre>
     import {AccordionGroup, AccordionItem, AccordionHeader, AccordionBody} from '{{ site.baseurl }}/js/accordion.js';
     import {RelayMap} from '{{ site.baseurl }}/js/RelayMap.js';
     import {LegCalculator} from '{{ site.baseurl }}/js/LegCalculator.js';
+    import {RelayLiveData, latestTeamPhotos, photoAge} from "../js/RelayLiveData.js";
+    import {RelayPhotoOverlay} from "../js/RelayPhotoOverlay.js";
     import {RelayResultsTable} from "../js/RelayResultsTable.js";
     import {TransitVehicleTracker} from '{{ site.baseurl }}/js/TransitVehicleTracker.js';
     import p5 from 'p5'
@@ -1610,29 +1621,72 @@ Lynnwood      3:00 PM    59°F (15°C)    Broken clouds</pre>
         {line: "lrr_1line", lines: ["1 Line", "Interline"], element: "one-line-results"},
         {line: "lrr_2line", lines: ["2 Line", "Interline"], element: "two-line-results"},
     ]
-    Promise.all([fetch('https://panto.raceconditionrunning.com/results.json').then(res => res.json()), processedRouteData]).then(([results, [legs, exchanges, pois, exchangeNames, resultExchangeNames]]) => {
-        results.results.forEach((result, index) => {
-            result.index = index
-        })
-        const exchangeOrders = resultsTables.map(({line}) =>
-            exchangesForLegs(legsForLine(legs.features, line), exchanges.features).map(exchange => String(exchange.properties.id))
-        )
-        exchangeOrders.forEach((exchangeOrder, i) => {
-            const otherLines = exchangeOrders.filter((_, j) => j !== i).flat()
-            const lineOnly = exchangeOrder.filter(id => !otherLines.includes(id))
-            const otherLineOnly = otherLines.filter(id => !exchangeOrder.includes(id))
-            const hasTimeAt = (result, ids) => ids.some(id => result.exchangeTimes?.[id] !== undefined)
-            const lineResults = results.results.filter(result => result.lines
-                ? resultsTables[i].lines.includes(result.lines)
-                : hasTimeAt(result, lineOnly) || !hasTimeAt(result, otherLineOnly))
-
-            // Columns run in course order, start to finish
-            const exchangeColumns = exchangeOrder.map(id => [id, resultExchangeNames[id]])
-            const relayResultsTable = new RelayResultsTable()
-            relayResultsTable.initialize({...results, results: lineResults}, exchangeColumns)
-            document.getElementById(resultsTables[i].element).appendChild(relayResultsTable)
-        })
-    })
+    const liveControls = [];
+    function createLiveControl(parent) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'relay-live-control';
+        const indicator = document.createElement('span'); indicator.className = 'small';
+        indicator.textContent = '● Live';
+        const status = document.createElement('span'); status.className = 'small text-secondary';
+        wrapper.append(indicator, status); parent.append(wrapper);
+        liveControls.push({indicator, status});
+    }
+    let overlay;
+    const ready = processedRouteData.then(async ([legs, exchanges, , , names]) => {
+        const courses = resultsTables.map(config => ({...config,
+            exchanges: exchangesForLegs(legsForLine(legs.features, config.line), exchanges.features).map(e => String(e.properties.id)),
+            table: new RelayResultsTable(), initialized: false,
+        }));
+        for (const course of courses) document.getElementById(course.element).append(course.table);
+        const relay = document.querySelector('#relay-map');
+        // Results need not wait for map tiles to finish loading.
+        relay.mapReady.then(() => {
+            overlay = new RelayPhotoOverlay(relay, exchanges);
+            if (latestResults) overlay.setPhotos(latestTeamPhotos(latestResults.results, courses));
+        });
+        return courses;
+    });
+    let latestResults;
+    const live = new RelayLiveData('https://panto.raceconditionrunning.com/results.json', async results => {
+        const courses = await ready;
+        for (const course of courses) {
+            const otherIds = courses.filter(c => c !== course).flatMap(c => c.exchanges);
+            const onlyHere = course.exchanges.filter(id => !otherIds.includes(id));
+            const onlyElsewhere = otherIds.filter(id => !course.exchanges.includes(id));
+            const hasTime = (row, ids) => ids.some(id => row.exchangeTimes?.[id] !== undefined);
+            const rows = results.results.filter(row => row.lines ? course.lines.includes(row.lines)
+                : hasTime(row, onlyHere) || !hasTime(row, onlyElsewhere));
+            const data = {...results, results: rows};
+            if (course.initialized) await course.table.updateResults(data);
+            else {
+                const [, , , , names] = await processedRouteData;
+                await course.table.initialize(data, course.exchanges.map(id => [id, names[id]]));
+                course.initialized = true;
+            }
+        }
+        latestResults = results;
+        overlay?.setPhotos(latestTeamPhotos(results.results, courses));
+    });
+    createLiveControl(document.querySelector('#results').parentElement);
+    const mapControls = document.createElement('div');
+    mapControls.className = 'container-xxl mb-2';
+    document.querySelector('#map').before(mapControls);
+    createLiveControl(mapControls);
+    function updateLiveStatus() {
+        const connected = !live.failures && !!live.checkedAt;
+        for (const {indicator, status} of liveControls) {
+            indicator.classList.toggle('live-connected', connected);
+            indicator.classList.toggle('text-secondary', !connected);
+            status.textContent = [live.failures ? 'Reconnecting' : document.hidden ? 'Paused while tab hidden' : '',
+                live.checkedAt ? `Checked ${photoAge(live.checkedAt)}` : live.failures ? 'Results unavailable' : 'Loading results…'].filter(Boolean).join(' · ');
+        }
+    }
+    live.addEventListener('status', updateLiveStatus);
+    const statusTimer = setInterval(updateLiveStatus, 15000);
+    updateLiveStatus(); live.refresh();
+    window.addEventListener('pagehide', event => {
+        if (!event.persisted) { live.destroy(); overlay?.destroy(); clearInterval(statusTimer); }
+    });
 
     // Fetch and update stats
     async function updateStats() {
