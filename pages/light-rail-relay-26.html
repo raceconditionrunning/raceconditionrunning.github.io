@@ -1454,6 +1454,9 @@ Lynnwood      3:00 PM    59°F (15°C)    Broken clouds</pre>
         <h5 class="mt-5">2 Line <span class="fw-light text-secondary">Redmond to Lynnwood</span></h5>
         <div id="two-line-results"></div>
 
+        <h5 class="mt-5">Interline <span class="fw-light text-secondary"></span></h5>
+        <div id="interline-results"></div>
+
     </div>
 </section>
 
@@ -1474,6 +1477,7 @@ Lynnwood      3:00 PM    59°F (15°C)    Broken clouds</pre>
     import {RelayLiveData, latestTeamPhotos, photoAge} from "../js/RelayLiveData.js";
     import {RelayPhotoOverlay} from "../js/RelayPhotoOverlay.js";
     import {RelayResultsTable} from "../js/RelayResultsTable.js";
+    import {RelayInterlineTable} from "../js/RelayInterlineTable.js";
     import {TransitVehicleTracker} from '{{ site.baseurl }}/js/TransitVehicleTracker.js';
     import p5 from 'p5'
     import {WavyScene} from "../js/lrr25/WavyScene.js";
@@ -1632,12 +1636,14 @@ Lynnwood      3:00 PM    59°F (15°C)    Broken clouds</pre>
         liveControls.push({indicator, status});
     }
     let overlay;
+    const interline = {table: new RelayInterlineTable(), initialized: false};
     const ready = processedRouteData.then(async ([legs, exchanges, , , names]) => {
         const courses = resultsTables.map(config => ({...config,
             exchanges: exchangesForLegs(legsForLine(legs.features, config.line), exchanges.features).map(e => String(e.properties.id)),
             table: new RelayResultsTable(), initialized: false,
         }));
         for (const course of courses) document.getElementById(course.element).append(course.table);
+        document.getElementById('interline-results').append(interline.table);
         const relay = document.querySelector('#relay-map');
         // Results need not wait for map tiles to finish loading.
         relay.mapReady.then(() => {
@@ -1663,6 +1669,16 @@ Lynnwood      3:00 PM    59°F (15°C)    Broken clouds</pre>
                 await course.table.initialize(data, course.exchanges.map(id => [id, names[id]]));
                 course.initialized = true;
             }
+        }
+        const interlineData = {...results, results: results.results.filter(row => row.lines === "Interline")};
+        if (interline.initialized) await interline.table.updateResults(interlineData);
+        else {
+            const [, , , , names] = await processedRouteData;
+            // The branches join at the first exchange the courses share and finish at the last
+            const merge = results.merge?.exchange ?? courses[0].exchanges.find(id => courses[1].exchanges.includes(id));
+            const finish = courses[0].exchanges.at(-1);
+            await interline.table.initialize(interlineData, [merge, names[merge]], [finish, names[finish]]);
+            interline.initialized = true;
         }
         latestResults = results;
         overlay?.setPhotos(latestTeamPhotos(results.results, courses));
