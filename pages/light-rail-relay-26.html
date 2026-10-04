@@ -848,6 +848,15 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
         }
 
 
+        .interline-team-size-badge {
+            border: 1px solid transparent;
+            background:
+                linear-gradient(var(--bs-secondary-bg-subtle), var(--bs-secondary-bg-subtle)) padding-box,
+                linear-gradient(30deg,
+                    color-mix(in srgb, var(--theme-primary-color) 80%, var(--bs-secondary-bg-subtle)),
+                    color-mix(in srgb, var(--two-line-color) 80%, var(--bs-secondary-bg-subtle))) border-box;
+        }
+
         .relay-live-control { display: flex; align-items: center; gap: .75rem; margin: .5rem 0; }
         .live-connected { color: #43d932; }
         .team-photo-marker { border: 0; padding: 0; background: transparent; color: white; cursor: pointer; }
@@ -1255,77 +1264,7 @@ email_list_link: https://forms.gle/fb9ybhSnQV8dgDsr9
 
 </section>
 
-<section>
-    <div class="container">
-        <h2 id="event-records">Event Records <a href="#event-records" class="anchor-link" aria-label="Link to this section. Event Records"></a></h2>
 
-        <h5 class="mb-0 mt-4">1 Line</h5>
-        <div class="row g-4 mt-1">
-
-            <div class="col-lg-4 col-md-6">
-                <div class="h6">Open Course Record</div>
-                <hr class="qa-divider">
-
-                <div class="qa-body">
-                     <p class="display-6">4:35:27*</p>
-                    <p>Seattle Green Line Running Group <span class="text-muted">&bullet; 7 members, 2025</span></p></div>
-                </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="h6">Competitive Course Record</div>
-                <hr class="qa-divider">
-
-                <div class="qa-body">
-                     <p class="display-6">4:50:05*</p>
-                    <p class="">Mobility Oriented Organisms <span class="text-muted"> &bullet; 6 members, mixed, 2025</span></p></div>
-                </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="h6">Solo Course Record</div>
-                <hr class="qa-divider">
-
-                <div class="qa-body">
-                    <p class="display-6">5:15:07*</p>
-                    <p>Nick Walker <span class="text-muted">&bullet; 2025</span></p></div>
-            </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="h6">Biggest Team</div>
-                <hr class="qa-divider">
-
-                <div class="qa-body">
-                    <p class="display-6">33</p>
-                    <p>Race Condition Running <span class="text-muted">&bullet; 2024</span></p></div>
-
-            </div>
-
-            <!-- Right Column -->
-            <div class="col-lg-4 col-md-12">
-                <div class="h6">Fastest Train</div>
-                <hr class="qa-divider">
-
-                <div class="qa-body">
-                    <p class="display-6">1:27:00</p>
-                    <p>Sound Transit <span class="text-muted">&bullet; 2026</span></p></div>
-            </div>
-        </div>
-
-        <p class="text-muted small mt-3 mb-0">*Set on the 2025 course, which was Angle Lake to Lynnwood (9.4 miles shorter).</p>
-
-        <h5 class="mb-0 mt-5">2 Line</h5>
-        <div class="row g-4 mt-1">
-
-            <div class="col-lg-4 col-md-6">
-                <div class="h6">Fastest Train</div>
-                <hr class="qa-divider">
-
-                <div class="qa-body">
-                    <p class="display-6">1:25:00</p>
-                    <p>Sound Transit <span class="text-muted">&bullet; 2026</span></p></div>
-            </div>
-        </div>
-    </div>
-</section>
 
 <section>
     <div class="container">
@@ -1457,6 +1396,106 @@ Lynnwood      3:00 PM    59°F (15°C)    Broken clouds</pre>
         <h5 class="mt-5">Interline <span class="fw-light text-secondary"></span></h5>
         <div id="interline-results"></div>
 
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <h2 id="event-records">Event Records <a href="#event-records" class="anchor-link" aria-label="Link to this section. Event Records"></a></h2>
+
+        <h5 class="mb-0 mt-4">1 Line</h5>
+        <div class="row g-4 mt-1">
+
+            <div class="col-lg-4 col-md-6">
+                <div class="h6">Open Course Record</div>
+                <hr class="qa-divider">
+
+                <div class="qa-body">
+                     <p class="display-6">6:30:14</p>
+                    <p>Husky Running Club <span class="text-muted">&bullet; 12 members, 2026</span></p></div>
+                </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="h6">Competitive Course Record</div>
+                <hr class="qa-divider">
+
+                <div class="qa-body">
+                     <p class="display-6">8:11:51</p>
+                    <p class="">All Best Friends <span class="text-muted"> &bullet; 6 members, 2026</span></p></div>
+                </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="h6">Biggest Team</div>
+                <hr class="qa-divider">
+
+                <div class="qa-body">
+                    <p class="display-6">33</p>
+                    <p>Race Condition Running <span class="text-muted">&bullet; 2024</span></p></div>
+
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-lg-4 col-md-12">
+                <div class="h6">Fastest Train</div>
+                <hr class="qa-divider">
+
+                <div class="qa-body">
+                    <p class="display-6">1:27:00</p>
+                    <p>Sound Transit <span class="text-muted">&bullet; 2026</span></p></div>
+            </div>
+        </div>
+
+        <h5 class="mb-0 mt-5">2 Line</h5>
+        <div class="row g-4 mt-1">
+
+            <div class="col-lg-4 col-md-6">
+                <div class="h6">Open Course Record</div>
+                <hr class="qa-divider">
+                <div class="qa-body">
+                    <p class="display-6">5:05:03</p>
+                    <p>North Shore Mathletes <span class="text-muted">&bullet; 8 members, 2026</span></p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="h6">Solo Course Record</div>
+                <hr class="qa-divider">
+                <div class="qa-body">
+                    <p class="display-6">5:47:36</p>
+                    <p>Ethan Pronovost <span class="text-muted">&bullet; 2026</span></p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="h6">Fastest Train</div>
+                <hr class="qa-divider">
+
+                <div class="qa-body">
+                    <p class="display-6">1:25:00</p>
+                    <p>Sound Transit <span class="text-muted">&bullet; 2026</span></p></div>
+            </div>
+        </div>
+
+        <h5 class="mb-0 mt-5">Interline</h5>
+        <div class="row g-4 mt-1">
+            <div class="col-lg-4 col-md-6">
+                <div class="h6">Open Course Record</div>
+                <hr class="qa-divider">
+                <div class="qa-body">
+                    <p class="display-6">5:27:32</p>
+                    <p>Seattle Green Line Running Group <span class="text-muted">&bullet; 8 members, 2026</span></p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="h6">Competitive Course Record</div>
+                <hr class="qa-divider">
+                <div class="qa-body">
+                    <p class="display-6">5:19:22</p>
+                    <p>Foamers <span class="text-muted">&bullet; 6 members, 2026</span></p>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
