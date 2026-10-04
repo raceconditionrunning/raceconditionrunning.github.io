@@ -1647,6 +1647,7 @@ Lynnwood      3:00 PM    59°F (15°C)    Broken clouds</pre>
         const relay = document.querySelector('#relay-map');
         // Results need not wait for map tiles to finish loading.
         relay.mapReady.then(() => {
+            if (!live.live) return;
             overlay = new RelayPhotoOverlay(relay, exchanges);
             if (latestResults) overlay.setPhotos(latestTeamPhotos(latestResults.results, courses));
         });
@@ -1683,11 +1684,15 @@ Lynnwood      3:00 PM    59°F (15°C)    Broken clouds</pre>
         latestResults = results;
         overlay?.setPhotos(latestTeamPhotos(results.results, courses));
     });
-    createLiveControl(document.querySelector('#results').parentElement);
-    const mapControls = document.createElement('div');
-    mapControls.className = 'container-xxl mb-2';
-    document.querySelector('#map').before(mapControls);
-    createLiveControl(mapControls);
+    // Enable during the event to show the map photo overlay, poll results, and show live indicators.
+    live.live = false;
+    if (live.live) {
+        createLiveControl(document.querySelector('#results').parentElement);
+        const mapControls = document.createElement('div');
+        mapControls.className = 'container-xxl mb-2';
+        document.querySelector('#map').before(mapControls);
+        createLiveControl(mapControls);
+    }
     function updateLiveStatus() {
         const connected = !live.failures && !!live.checkedAt;
         for (const {indicator, status} of liveControls) {
@@ -1697,9 +1702,13 @@ Lynnwood      3:00 PM    59°F (15°C)    Broken clouds</pre>
                 live.checkedAt ? `Checked ${photoAge(live.checkedAt)}` : live.failures ? 'Results unavailable' : 'Loading results…'].filter(Boolean).join(' · ');
         }
     }
-    live.addEventListener('status', updateLiveStatus);
-    const statusTimer = setInterval(updateLiveStatus, 15000);
-    updateLiveStatus(); live.refresh();
+    let statusTimer;
+    if (live.live) {
+        live.addEventListener('status', updateLiveStatus);
+        statusTimer = setInterval(updateLiveStatus, 15000);
+        updateLiveStatus();
+    }
+    live.refresh();
     window.addEventListener('pagehide', event => {
         if (!event.persisted) { live.destroy(); overlay?.destroy(); clearInterval(statusTimer); }
     });
