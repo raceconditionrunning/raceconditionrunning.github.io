@@ -18,12 +18,14 @@ export class RelayResultsTable extends HTMLElement {
 
     /**
      * The name cell's badge: the runner count, outlined in light gray for a Competitive-format
-     *  team, or "Solo" for solo runners.
+     *  team, with a gradient outline for Interline teams, or "Solo" for solo runners.
      */
     static formatNameCell(cell) {
         let row = cell.getRow().getData()
         let teamSize = ""
-        if (row.teamSize && row.category === "Competitive") {
+        if (row.teamSize && row.lines === "Interline" && row.category !== "Solo") {
+            teamSize = ` <span class="badge bg-secondary-subtle team-size-badge interline-team-size-badge fw-normal text-secondary" title="Interline team size">${row.teamSize}</span>`
+        } else if (row.teamSize && row.category === "Competitive") {
             teamSize = ` <span class="badge bg-secondary-subtle team-size-badge fw-normal border border-2 text-secondary" style="border-color: #ccc;" title="Competitive format team">${row.teamSize}</span>`
         } else if (row.category === "Solo") {
             teamSize = ` <span class="badge bg-secondary-subtle team-size-badge fw-normal text-secondary" title="Solo Runner">Solo</span>`
@@ -168,6 +170,8 @@ export class RelayResultsTable extends HTMLElement {
                 index: "name",
                 data: this._data.results,
                 layout: "fitData",
+                // Small, full-height tables should not redraw as they enter the viewport.
+                renderVertical: "basic",
                 responsiveLayout: false,
                 initialSort: [{column: "name", dir: "asc"}],
                 columns: [

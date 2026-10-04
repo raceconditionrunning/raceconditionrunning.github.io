@@ -55,6 +55,8 @@ export class RelayInterlineTable extends HTMLElement {
                 index: "name",
                 data: this.prepareRows(data.results),
                 layout: "fitData",
+                // Keep page scrolling independent of virtual row rendering.
+                renderVertical: "basic",
                 responsiveLayout: false,
                 initialSort: [{column: "name", dir: "asc"}, {column: "finish", dir: "asc"}],
                 columns: [
