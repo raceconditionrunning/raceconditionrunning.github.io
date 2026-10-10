@@ -27,7 +27,7 @@
   plan:
     - time: "8:30"
       route_id: cse-520-wetherill-ob
-    - time: "10:20"
+    - time: "10:25"
       route_id: cse-magnuson-park-loop-ob
 
 - date: "2026-10-31"
@@ -41,16 +41,16 @@
   plan:
     - time: "8:30"
       route_id: northgate-interurban-lynnwood
-    - time: "10:10"
+    - time: "10:30"
       route_id: lynnwood-alderwood-mall-loop
-    - time: "11:00"
+    - time: "11:10"
       route_id: lynnwood-golf-course-interuban-loop
 
 - date: "2026-11-14"
   plan:
     - time: "8:30"
       route_id: sodo-jack-block-ob
-    - time: "9:50"
+    - time: "10:10"
       route_id: sodo-4th-ave-airport-way-oxbow-park-industrial-loop
 
 - date: "2026-11-21"
