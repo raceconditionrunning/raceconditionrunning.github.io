@@ -67,7 +67,7 @@
 - date: "2026-11-29"
   plan:
     - time: "7:00"
-      route_id: 2026-seattle-full-marathon-v1
+      route_id: 2026-seattle-marathon-v1
     - time: "7:30"
       route_id: 2026-seattle-half-marathon-v1
       notes: "https://www.seattlemarathon.org/"
