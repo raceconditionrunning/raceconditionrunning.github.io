@@ -76,13 +76,13 @@
   plan:
     - time: "8:30"
       route_id: westlake-waterfront-cranes-sodo
-      notes: "Recovery for Seattle Marathon"
+      notes: "Recovery from Seattle Marathon"
 
 - date: "2026-12-12"
   plan:
     - time: "8:30"
       route_id: ferry-terminal-cranes-alki
-      notes: "Recovery for Seattle Marathon"
+      notes: "Recovery from Seattle Marathon"
 
 - date: "2026-12-19"
   plan:
