@@ -1,8 +1,25 @@
 import argparse
+import json
 import pathlib
 
 import gis
 import rcr
+
+
+def _add_location_hint(lat, lon):
+    loc_path = rcr.LOC_DB
+    coords = f"[{round(lon, 6)}, {round(lat, 6)}]"
+    maps_url = f"https://www.google.com/maps/place/{lat:.6f},+{lon:.6f}/@{lat:.6f},{lon:.6f}"
+    return (
+        f'python3 -c "'
+        f"import json; p='{loc_path}'; d=json.load(open(p)); "
+        f"d['features'].append({{'type':'Feature',"
+        f"'geometry':{{'type':'Point','coordinates':{coords}}},"
+        f"'properties':{{'id':'LOCATION_ID','name':'LOCATION_NAME',"
+        f"'maps_url':'{maps_url}','meeting_point_desc':None,'transit':None,"
+        f"'reachability':None,'neighborhood':None}}}}); "
+        f'json.dump(d,open(p,\'w\'),indent=2)"'
+    )
 
 
 class RogueRouteError(Exception):
@@ -120,8 +137,12 @@ def main():
         computed_end = gis.get_nearest_loc(locs, lls[-1].latitude, lls[-1].longitude)
         if computed_start[1] > 0.15:
             print(f"WARNING! {route['id']} distant from start loc: {computed_start[1]:.2f}")
+            print(f"You can add a new start location by editing the command below and pasting into your shell:")
+            print(f"  {_add_location_hint(lls[0].latitude, lls[0].longitude)}")
         if computed_end[1] > 0.15:
             print(f"WARNING! {route['id']} distant from end loc: {computed_end[1]:.2f}")
+            print(f"You can add a new end location by editing the command below and pasting into your shell:")
+            print(f"  {_add_location_hint(lls[-1].latitude, lls[-1].longitude)}")
         if route.get("start", None) and route["start"] != computed_start[0]:
             print(f"WARNING! {route['id']} start mismatch: {route['start']} vs {computed_start[0]}")
         if route.get("end", None) and route["end"] != computed_end[0]:
