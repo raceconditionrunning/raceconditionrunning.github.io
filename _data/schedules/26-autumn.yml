@@ -33,18 +33,16 @@
 - date: "2026-10-31"
   plan:
     - time: "8:30"
-      route_id: roosevelt-golden-gardens-stone-way-loop
+      route_id: cse-burke-locks-elliot-bay-westlake
     - time: "10:50"
-      route_id: roosevelt-magnuson-loop
+      route_id: westlake-sculpture-marina-ob
 
 - date: "2026-11-07"
   plan:
     - time: "8:30"
-      route_id: northgate-interurban-lynnwood
-    - time: "10:30"
-      route_id: lynnwood-alderwood-mall-loop
-    - time: "11:10"
-      route_id: lynnwood-golf-course-interuban-loop
+      route_id: lynnwood-jogn-interurban-northgate
+    - time: "11:20"
+      route_id: northgate-carkeek-roosevelt
 
 - date: "2026-11-14"
   plan:
