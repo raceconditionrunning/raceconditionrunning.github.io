@@ -22,7 +22,7 @@ rcc_weekends.ics
 
 # python virtual environment and caches
 .venv
-_bin/__pycache__
+__pycache__
 
 # Route preview image generation cache files
 .route-preview-cache-*
